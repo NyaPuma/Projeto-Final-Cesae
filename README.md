@@ -1,51 +1,216 @@
-## Projeto: Gestão e Manutenção de Avarias em Equipamentos
+# Sistema de Gestão e Manutenção de Avarias em Equipamentos
 
-Este repositório contém uma aplicação Laravel simples para gerir avarias em equipamentos.
+Uma aplicação desenvolvida em **Laravel** para o registo, acompanhamento e gestão de avarias em equipamentos, permitindo controlar todo o ciclo de vida de um ticket de manutenção.
 
-- Objetivo: Plataforma web para registo, acompanhamento e resolução de avarias em equipamentos.
-- Papéis de utilizador: utilizador comum, técnico e administrador.
+## Objetivo
 
-Funcionalidades principais:
+O objetivo deste projeto é disponibilizar uma plataforma web que facilite a comunicação entre utilizadores, técnicos e administradores, tornando o processo de gestão de avarias mais organizado, rápido e rastreável.
 
-- Um utilizador registado pode reportar uma avaria criando um `ticket` com título, descrição, equipamento (opcional) e sala (opcional).
-- Um painel de tickets abertos está disponível para técnicos (`GET /technician/tickets/open`).
-- O técnico pode iniciar a reparação (`PUT /technician/tickets/{id}/start`) e, quando concluída, fechar o ticket (`PUT /technician/tickets/{id}/close`) informando tempo gasto e custo.
-- Se o custo ultrapassar um limiar, o técnico pode pedir autorização de orçamento (`PUT /technician/tickets/{id}/request-budget`).
-- O administrador pode aprovar orçamentos pendentes (`PATCH /admin/tickets/{id}/approve-budget`).
-- Os estados de um ticket são: `aberta`, `em curso`, `fechada`.
-- São registadas as horas de `opened_at`, `in_progress_at` e `closed_at`.
-- Dados estatísticos disponíveis via `GET /analytics` (média de tempo de resolução e tempo de espera).
+---
 
-Como executar (local):
+## Funcionalidades
 
-1. Instale dependências via Composer e NPM conforme o seu ambiente.
-2. Configure o ficheiro `.env` e crie uma base de dados local.
-3. Execute migrations:
+### Utilizador
+
+- Registo e autenticação.
+- Criação de tickets de avaria.
+- Associação opcional do ticket a um equipamento e/ou sala.
+- Consulta do estado das avarias reportadas.
+
+### Técnico
+
+- Consulta de tickets abertos.
+- Início da reparação de um ticket.
+- Fecho da reparação com:
+  - Tempo gasto;
+  - Custo da intervenção.
+- Pedido de aprovação de orçamento quando necessário.
+
+### Administrador
+
+- Aprovação de pedidos de orçamento.
+- Consulta de estatísticas do sistema.
+
+---
+
+## Estados do Ticket
+
+Cada ticket percorre um conjunto de estados durante o seu ciclo de vida:
+
+- **Aberta**
+- **Em curso**
+- **Fechada**
+
+São igualmente registados os seguintes momentos:
+
+- `opened_at`
+- `in_progress_at`
+- `closed_at`
+
+---
+
+## Estatísticas
+
+O sistema disponibiliza indicadores através do endpoint `/analytics`, incluindo:
+
+- Tempo médio de resolução;
+- Tempo médio de espera;
+- Indicadores de desempenho da manutenção.
+
+---
+
+## Tecnologias Utilizadas
+
+- Laravel
+- PHP
+- Composer
+- MySQL (ou outro SGBD compatível)
+- PHPUnit
+- NPM
+
+---
+
+# Instalação
+
+## 1. Clonar o repositório
+
+```bash
+git clone https://github.com/seu-utilizador/seu-repositorio.git
+cd seu-repositorio
+```
+
+## 2. Instalar dependências
+
+```bash
+composer install
+npm install
+```
+
+## 3. Configurar o ambiente
+
+Copiar o ficheiro de configuração:
+
+```bash
+cp .env.example .env
+```
+
+Gerar a chave da aplicação:
+
+```bash
+php artisan key:generate
+```
+
+Configurar a ligação à base de dados no ficheiro `.env`.
+
+## 4. Executar as migrations
 
 ```bash
 php artisan migrate
 ```
 
-4. Execute testes:
+Caso existam seeders:
+
+```bash
+php artisan db:seed
+```
+
+## 5. Iniciar a aplicação
+
+```bash
+php artisan serve
+```
+
+---
+
+# Executar Testes
 
 ```bash
 php artisan test
 ```
 
-Endpoints rápidos (resumo):
+---
 
-- `POST /register` — registar utilizador
-- `POST /login` — iniciar sessão (gera `api_token`)
-- `POST /tickets` — criar ticket (utilizador comum)
-- `GET /technician/tickets/open` — ver tickets abertos (técnico/ADM)
-- `PUT /technician/tickets/{id}/start` — iniciar reparação (técnico)
-- `PUT /technician/tickets/{id}/close` — fechar e registar custo/tempo (técnico)
-- `PUT /technician/tickets/{id}/request-budget` — pedir autorização de orçamento (técnico)
-- `PATCH /admin/tickets/{id}/approve-budget` — aprovar orçamento (ADM)
-- `GET /analytics` — estatísticas (ADM/Técnico)
+# API Endpoints
 
-Sugestões futuras:
+## Autenticação
 
-- Notificações por email quando um orçamento é pedido/ aprovado.
-- Histórico detalhado de alterações em cada ticket (audit log).
-- Interface web com filtros por estado, equipamento, sala e técnico.
+| Método | Endpoint | Descrição |
+|---------|----------|-----------|
+| POST | `/register` | Registar utilizador |
+| POST | `/login` | Iniciar sessão |
+
+---
+
+## Tickets
+
+| Método | Endpoint | Permissão |
+|---------|----------|-----------|
+| POST | `/tickets` | Utilizador |
+| GET | `/technician/tickets/open` | Técnico / Administrador |
+| PUT | `/technician/tickets/{id}/start` | Técnico |
+| PUT | `/technician/tickets/{id}/close` | Técnico |
+| PUT | `/technician/tickets/{id}/request-budget` | Técnico |
+
+---
+
+## Administração
+
+| Método | Endpoint | Permissão |
+|---------|----------|-----------|
+| PATCH | `/admin/tickets/{id}/approve-budget` | Administrador |
+| GET | `/analytics` | Técnico / Administrador |
+
+---
+
+# Estrutura Geral do Fluxo
+
+```text
+Utilizador
+      │
+      ▼
+Criar Ticket
+      │
+      ▼
+Estado: Aberta
+      │
+      ▼
+Técnico inicia reparação
+      │
+      ▼
+Estado: Em curso
+      │
+      ├──────────────► Pedido de orçamento (opcional)
+      │                       │
+      │                       ▼
+      │              Administrador aprova
+      │
+      ▼
+Técnico conclui reparação
+      │
+      ▼
+Estado: Fechada
+```
+
+---
+
+# Melhorias Futuras
+
+- Notificações por email.
+- Notificações em tempo real.
+- Histórico completo de alterações (Audit Log).
+- Dashboard com gráficos e métricas.
+- Upload de fotografias das avarias.
+- Sistema de comentários entre utilizador e técnico.
+- Pesquisa e filtros avançados.
+- Gestão de equipamentos e salas.
+- Gestão de manutenção preventiva.
+- Exportação de relatórios (PDF/Excel).
+- API documentada com Swagger/OpenAPI.
+
+---
+
+# Licença
+
+Este projeto encontra-se licenciado sob a **MIT License**.
+
+Consulte o ficheiro **LICENSE** para mais informações.
