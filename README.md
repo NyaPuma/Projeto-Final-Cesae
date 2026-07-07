@@ -32,8 +32,8 @@ O objetivo deste projeto é disponibilizar uma plataforma web que facilite a com
 - **Consultar Painel de Avarias Ativas:** Visualizar a listagem global de todos os tickets em estado "Aberto" ou de cariz "Preventivo" agendados para a fábrica.
 - **Consultar Histórico de Ativos:** Acesso à ficha técnica e ao registo histórico de intervenções passadas de qualquer máquina para apoio ao diagnóstico.
 - **Iniciar Reparação:** Assumir a responsabilidade de um ticket. O sistema altera o estado para "Em Curso", injeta o timestamp automático de início e vincula o ID do técnico ao registo.
-- **Pedir Autorização Orçamental (Fluxo Excecional):** Caso identifique a necessidade de peças dispendiosas, move o ticket para "Pendente de Orçamento", suspendendo o cronómetro de SLA e anexando uma justificação financeira.
-- **Encerrar Ticket (Custo Baixo/Autorizado):** Submeter o encerramento da avaria (estado "Fechada"), com preenchimento obrigatório das horas de mão-de-obra investidas e do relatório técnico final.
+- **Pedir Autorização Orçamental (Fluxo Excecional):** Caso identifique a necessidade de peças dispendiosas, move o ticket para "Pendente de Orçamento", suspendo o cronómetro de SLA e anexando uma justificação financeira.
+- **Encerrar Ticket (Custo Baixo/Autorizado):** Submeter o encerramento da avaria (estado "Fechada"), com preenchimento obrigatório das horas de mano de obra investidas e do relatório técnico final.
 
 ### 3. Administrador (Diretor de Operações)
 - **Gestão Total de Utilizadores:** Controlo absoluto (CRUD) sobre as contas dos colaboradores, atribuição de Perfis (Roles) e bloqueio de acessos através de inativação.
@@ -47,14 +47,15 @@ O objetivo deste projeto é disponibilizar uma plataforma web que facilite a com
 
 ## 🔄 Workflow & Regras de Transição de Estados
 
-O ciclo de vida de uma avaria no sistema segue regras estritas de transição geridas via Eloquent ORM. Cada alteração de estado é auditada automaticamente pelo trait `Auditable.php`.
+O ciclo de vida de uma avaria no sistema segue regras estritas de transição geridas via Eloquent ORM. Cada alteração de estado é auditada em background através do trait `Auditable.php`, registando os timestamps de controlo (`opened_at`, `in_progress_at`, `closed_at`).
 
 ### 📋 Detalhe das Transições e Comportamento Esperado
 
 #### 1. De [Aberta] para [Em Curso]
 * **Gatilho:** O Técnico clica em "Iniciar Reparação" no seu painel.
-* **Regra de Negócio:** - O sistema associa automaticamente o ID do técnico ao campo `tecnico_atribuido_id`.
-  - É registado o timestamp exato de início de intervenção para cálculo do SLA de atendimento.
+* **Regra de Negócio:**
+  - O sistema associa automaticamente o ID do técnico ao campo `tecnico_atribuido_id`.
+  - É registado o timestamp exato em `in_progress_at` para cálculo do SLA de atendimento.
   - O ticket fica bloqueado para edição por outros técnicos.
 
 #### 2. De [Em Curso] para [Pendente de Orçamento] (Fluxo Excecional)
@@ -73,40 +74,24 @@ O ciclo de vida de uma avaria no sistema segue regras estritas de transição ge
 #### 4. De [Em Curso] para [Fechada]
 * **Gatilho:** O Técnico conclui a reparação física e clica em "Encerrar Ticket".
 * **Regra de Negócio:**
-  - Torna-se obrigatória a introdução das horas de mão-de-obra gastas e do relatório técnico final.
-  - O sistema injeta automaticamente o timestamp de conclusão (`closed_at`) e calcula o tempo total de resolução (MTTR).
+  - Torna-se obrigatória a introdução das horas de mano de obra gastas e do relatório técnico final.
+  - O sistema injeta automaticamente o timestamp de conclusão em `closed_at` e calcula o tempo total de resolução (MTTR).
 
 #### 5. De [Aberta] para [Cancelada]
 * **Gatilho:** O Funcionário que abriu o ticket decide anulá-lo por erro ou duplicação.
 * **Regra de Negócio:**
   - **Condição Estrita:** Esta ação só é permitida se o ticket ainda estiver no estado inicial "Aberto". Se um técnico já tiver iniciado a reparação, o utilizador comum deixa de ter permissão para cancelar.
 
-São igualmente registados os seguintes momentos:
-
-- `opened_at`
-- `in_progress_at`
-- `closed_at`
-
----
-
-## Estatísticas
-
-O sistema disponibiliza indicadores através do endpoint `/analytics`, incluindo:
-
-- Tempo médio de resolução;
-- Tempo médio de espera;
-- Indicadores de desempenho da manutenção.
-
 ---
 
 ## Tecnologias Utilizadas
 
-- Laravel
+- Laravel (Framework MVC)
 - PHP
-- Composer
-- MySQL (ou outro SGBD compatível)
-- PHPUnit
-- NPM
+- Composer (Gestão de dependências PHP)
+- MySQL (Base de dados relacional)
+- PHPUnit (Testes automatizados)
+- NPM / Vite (Compilação de Assets Frontend)
 
 ---
 
@@ -115,7 +100,7 @@ O sistema disponibiliza indicadores através do endpoint `/analytics`, incluindo
 ## 1. Clonar o repositório
 
 ```bash
-git clone https://github.com/seu-utilizador/seu-repositorio.git
+git clone [https://github.com/seu-utilizador/seu-repositorio.git](https://github.com/seu-utilizador/seu-repositorio.git)
 cd seu-repositorio
 ```
 
@@ -172,33 +157,46 @@ php artisan test
 
 # API Endpoints
 
-## Autenticação
+### 🔐 1. Autenticação & Gestão de Perfil
 
-| Método | Endpoint | Descrição |
-|---------|----------|-----------|
-| POST | `/register` | Registar utilizador |
-| POST | `/login` | Iniciar sessão |
+Estes endpoints gerem o ciclo de vida da sessão do utilizador e a segurança autónoma da conta. As rotas públicas usam o middleware `guest`, enquanto as protegidas exigem o middleware `auth`.
 
----
-
-## Tickets
-
-| Método | Endpoint | Permissão |
-|---------|----------|-----------|
-| POST | `/tickets` | Utilizador |
-| GET | `/technician/tickets/open` | Técnico / Administrador |
-| PUT | `/technician/tickets/{id}/start` | Técnico |
-| PUT | `/technician/tickets/{id}/close` | Técnico |
-| PUT | `/technician/tickets/{id}/request-budget` | Técnico |
+| Método | Endpoint | Proteção (Middleware) | Descrição / Comportamento Esperado |
+| :--- | :--- | :--- | :--- |
+| **POST** | `/register` | `guest` | Cria uma nova conta de colaborador na plataforma. Por omissão, o estado inicial do perfil é atribuído como 'Funcionário'. |
+| **POST** | `/login` | `guest` | Valida as credenciais, inicia a sessão e injeta o Cookie de Autenticação/Token no cliente. |
+| **POST** | `/logout` | `auth` | Destrói a sessão ativa do utilizador, invalida o token e limpa os cookies de autenticação de forma segura. |
+| **PUT** | `/user/password` | `auth` | Permite que qualquer utilizador autenticado altere autonomamente a sua palavra-passe de acesso, reforçando a segurança. |
 
 ---
 
-## Administração
+### 🎫 2. Fluxo de Tickets de Avaria (Operacional)
 
-| Método | Endpoint | Permissão |
-|---------|----------|-----------|
-| PATCH | `/admin/tickets/{id}/approve-budget` | Administrador |
-| GET | `/analytics` | Técnico / Administrador |
+Rotas responsáveis por controlar o ciclo de vida das ordens de trabalho. As permissões de acesso são validadas de forma estrita no Back-End através de Middlewares de Roles personalizados (ex: `role:funcionario`, `role:technician`).
+
+| Método | Endpoint | Permissão Exigida | Regras de Negócio & Efeitos no Back-End |
+| :--- | :--- | :--- | :--- |
+| **POST** | `/tickets` | `role:funcionario` | **Criar Ticket:** Submete uma avaria corretiva. Associa automaticamente o `Auth::id()` em `user_id` e define o estado como 'Aberto'. |
+| **GET** | `/tickets/my` | `role:funcionario` | **Meus Tickets:** Retorna apenas as avarias abertas pelo próprio utilizador para acompanhamento na interface. |
+| **PUT** | `/tickets/{id}/cancel` | `role:funcionario` | **Cancelar Ticket:** O criador pode anular o ticket, **apenas** se o estado atual for igual a 'Aberto'. |
+| **GET** | `/technician/tickets/open`| `role:technician,admin`| **Painel de Controlo:** Lista global de todas as avarias que se encontram 'Abertas' ou agendadas como 'Preventivas'. |
+| **PUT** | `/technician/tickets/{id}/start`| `role:technician` | **Iniciar Reparação:** Muda o estado para 'Em Curso', injeta o ID do técnico e regista o timestamp de início (`in_progress_at`). |
+| **PUT** | `/technician/tickets/{id}/close`| `role:technician` | **Encerrar Ticket:** Transita para 'Fechada'. Exige o preenchimento das horas gastas, parecer técnico e injeta o `closed_at`. |
+| **PUT** | `/technician/tickets/{id}/request-budget`| `role:technician` | **Pedir Orçamento:** Move para 'Pendente de Orçamento' e **suspende o cronómetro de SLA** até decisão do Administrador. |
+
+---
+
+### 👑 3. Administração & Backoffice
+
+Endpoints de controlo estrutural e análise de dados. Estas rotas estão trancadas sob o middleware global `role:admin`, garantindo o isolamento total das funções de Direção de Operações.
+
+| Método | Endpoint | Proteção (Middleware) | Descrição / Ações Estruturais |
+| :--- | :--- | :--- | :--- |
+| **PATCH**| `/admin/tickets/{id}/budget` | `role:admin` | **Decidir Orçamento:** Aprova (retoma para 'Em Curso' e reativa SLA) ou Rejeita (encerra o ticket com feedback descritivo). |
+| **POST** | `/admin/preventive` | `role:admin` | **Manutenção Preventiva:** Cria e injeta uma ordem de trabalho planeada diretamente na agenda de trabalho dos técnicos. |
+| **GET** | `/admin/analytics` | `role:admin` | **Dashboard Analítico:** Retorna as métricas cruciais compiladas via Eloquent ORM (MTTR, MTBF, eficiência e custos globais). |
+| **CRUD** | `/admin/users/*` | `role:admin` | **Gestão de Pessoal:** Rotas completas para Criar, Atualizar e Inativar (bloqueio lógico de acesso) contas de colaboradores. |
+| **CRUD** | `/admin/assets/*` | `role:admin` | **Gestão de Inventário:** Controlo total sobre Equipamentos, Salas e Categorias, utilizando *Soft Deletes* nativos do Laravel. |
 
 ---
 
@@ -250,7 +248,6 @@ Estado: Fechada
 - Sistema de comentários entre utilizador e técnico.
 - Pesquisa e filtros avançados.
 - Gestão de equipamentos e salas.
-- Gestão de manutenção preventiva.
 - Exportação de relatórios (PDF/Excel).
 - API documentada com Swagger/OpenAPI.
 
