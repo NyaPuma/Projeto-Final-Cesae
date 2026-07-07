@@ -8,7 +8,7 @@ O objetivo deste projeto é disponibilizar uma plataforma web que facilite a com
 
 ---
 
-## 📋 Product Backlog Inicial
+## Product Backlog Inicial
 
 | Prioridade | User Story (Funcionalidade) | Critérios de Aceitação / DoD Técnico |
 | :--- | :--- | :--- |
@@ -18,43 +18,30 @@ O objetivo deste projeto é disponibilizar uma plataforma web que facilite a com
 | 🟡 **Alta** | **Como:** Administrador<br>**Quero:** consultar dashboards com métricas operacionais<br>**Para:** avaliar a eficiência e tempos de resolução (MTTR). | • Painel dinâmico no Front-End alimentado por assets compilados via NPM (Vite).<br>• Consultas SQL otimizadas com *Eager Loading* (`with()`) no Eloquent para evitar o problema N+1. |
 | 🟡 **Alta** | **Como:** Sistema (Automação)<br>**Quero:** monitorizar a telemetria simulada dos ativos<br>**Para:** abrir avarias preventivas automaticamente em caso de anomalia. | • Execução de rotinas em segundo plano utilizando o *Laravel Task Scheduling*.<br>• Geração autónoma de ticket na base de dados caso os limites tolerados sejam violados. |
 
-## Matriz de Autorizações
+## 🔐 Matriz de Autorizações & Permissões (RBAC)
 
-### Utilizador Comum (Operário/Funcionário)
+### 1. Utilizador Comum (Operário/Funcionário)
+- **Alterar Password:** Gestão autónoma da sua segurança de acesso à plataforma.
+- **Consultar Catálogo de Ativos (Apenas Leitura):** Capacidade de listar salas e equipamentos ativos para poder popular corretamente a interface de reporte.
+- **Abrir Ticket (Manutenção Corretiva):** Reportar uma avaria real de forma cirúrgica, associando obrigatoriamente uma sala, um equipamento e uma descrição textual.
+- **Consultar os Seus Tickets:** Listagem restrita e exclusiva das avarias reportadas pelo próprio utilizador, para acompanhamento em tempo real do estado (Aberta, Em Curso, Fechada).
+- **Cancelar Ticket (Condicional):** Capacidade de anular o próprio alerta, desde que este ainda se encontre no estado inicial "Aberto".
 
-- Alterar Password: Gestão autónoma da sua segurança de acesso.
+### 2. Técnico de Manutenção
+- **Alterar Password:** Gestão autónoma da sua segurança de acesso.
+- **Consultar Painel de Avarias Ativas:** Visualizar a listagem global de todos os tickets em estado "Aberto" ou de cariz "Preventivo" agendados para a fábrica.
+- **Consultar Histórico de Ativos:** Acesso à ficha técnica e ao registo histórico de intervenções passadas de qualquer máquina para apoio ao diagnóstico.
+- **Iniciar Reparação:** Assumir a responsabilidade de um ticket. O sistema altera o estado para "Em Curso", injeta o timestamp automático de início e vincula o ID do técnico ao registo.
+- **Pedir Autorização Orçamental (Fluxo Excecional):** Caso identifique a necessidade de peças dispendiosas, move o ticket para "Pendente de Orçamento", suspendendo o cronómetro de SLA e anexando uma justificação financeira.
+- **Encerrar Ticket (Custo Baixo/Autorizado):** Submeter o encerramento da avaria (estado "Fechada"), com preenchimento obrigatório das horas de mão-de-obra investidas e do relatório técnico final.
 
-- Abrir Ticket (Manutenção Corretiva): Reportar uma avaria normal de forma cirúrgica, escolhendo a sala e o equipamento.
-
-- Consultar os Seus Tickets: Listagem exclusiva das avarias reportadas pelo próprio, para acompanhar o estado (Aberta, Em Curso, Fechada).
-
-### Técnico de Manutenção
-
-- Alterar Password: Gestão autónoma da sua segurança de acesso.
-
-- Consultar Painel de Avarias Ativas: Visualizar todos os tickets em estado "Aberto" ou de cariz "Preventivo" pendentes na fábrica.
-
-- Consultar Histórico de Ativos: Consultar a ficha dos equipamentos para perceber o histórico de avarias passadas daquela máquina.
-
-- Iniciar Reparação: Assumir o ticket. O sistema muda o estado para "Em Curso", injeta o timestamp automático e vincula o ID do técnico ao ticket.
-
-- Pedir Autorização Orçamental (Fluxo Excecional): Caso detete que a reparação exige peças de valor elevado, move o ticket para "Pendente de Orçamento", parando o cronómetro e justificando o valor.
-
-- Encerrar Ticket (Custo Baixo/Autorizado): Mudar o estado para "Fechada", sendo obrigado a introduzir o tempo gasto (horas) e os comentários técnicos da resolução.
-
-### Administrador (Diretor de Operações)
-
-- Gestão Total de Utilizadores: Criar utilizadores, atribuir Perfis (Roles) e inativar contas (bloquear acesso).
-
-- Gestão Total de Inventário (Ativos): Criar, atualizar e inativar Equipamentos e Categorias.
-
-- Gestão Total de Infraestrutura: Criar, atualizar e inativar Salas/Localizações.
-
-- Agendar Manutenções Preventivas: Gerar ordens de trabalho proativas do tipo "Preventiva" diretamente para a agenda dos técnicos.
-
-- Aprovar Orçamentos: Analisar os pedidos de alto valor feitos pelos técnicos, clicar em "Aprovar" para reativar o ticket para o estado "Em Curso".
-
-- Consultar Dashboard Analítico: Acesso exclusivo aos relatórios estatísticos calculados em LINQ (Tempos médios de espera, eficiência de técnicos e custos globais).
+### 3. Administrador (Diretor de Operações)
+- **Gestão Total de Utilizadores:** Controlo absoluto (CRUD) sobre as contas dos colaboradores, atribuição de Perfis (Roles) e bloqueio de acessos através de inativação.
+- **Gestão Total de Inventário (Ativos):** Operações estruturais (CRUD) sobre Equipamentos e Categorias, utilizando inativação lógica (*Soft Deletes* do Eloquent).
+- **Gestão Total de Infraestrutura:** Criação e configuração (CRUD) de Salas e Localizações físicas.
+- **Agendar Manutenções Preventivas:** Gerar ordens de trabalho proativas e planeadas cronologicamente, injetando os alertas diretamente no painel dos técnicos.
+- **Aprovar/Rejeitar Orçamentos:** Decidir sobre os pedidos de alto valor submetidos pelos técnicos. A aprovação reativa o ticket para "Em Curso"; a rejeição encerra o processo ou devolve-o para revisão técnica.
+- **Consultar Dashboard Analítico:** Acesso exclusivo aos relatórios estatísticos calculados via **Eloquent ORM** (Tempos médios de resolução - MTTR, eficiência da equipa técnica e custos gerais de manutenção).
 
 ---
 
