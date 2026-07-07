@@ -18,6 +18,7 @@ O objetivo deste projeto é disponibilizar uma plataforma web que facilite a com
 | 🟡 **Alta** | **Como:** Administrador<br>**Quero:** consultar dashboards com métricas operacionais<br>**Para:** avaliar a eficiência e tempos de resolução (MTTR). | • Painel dinâmico no Front-End alimentado por assets compilados via NPM (Vite).<br>• Consultas SQL otimizadas com *Eager Loading* (`with()`) no Eloquent para evitar o problema N+1. |
 | 🟡 **Alta** | **Como:** Sistema (Automação)<br>**Quero:** monitorizar a telemetria simulada dos ativos<br>**Para:** abrir avarias preventivas automaticamente em caso de anomalia. | • Execução de rotinas em segundo plano utilizando o *Laravel Task Scheduling*.<br>• Geração autónoma de ticket na base de dados caso os limites tolerados sejam violados. |
 
+
 ## 🔐 Matriz de Autorizações & Permissões (RBAC)
 
 ### 1. Utilizador Comum (Operário/Funcionário)
@@ -172,17 +173,21 @@ Estes endpoints gerem o ciclo de vida da sessão do utilizador e a segurança au
 
 ### 🎫 2. Fluxo de Tickets de Avaria (Operacional)
 
-Rotas responsáveis por controlar o ciclo de vida das ordens de trabalho. As permissões de acesso são validadas de forma estrita no Back-End através de Middlewares de Roles personalizados (ex: `role:funcionario`, `role:technician`).
+Rotas responsáveis por controlar todo o ciclo de vida das ordens de trabalho da fábrica. O acesso e os dados retornados são validados de forma estrita no Back-End através do ecossistema de *Middlewares* e *Policies* do Laravel baseado nas Roles (`funcionario`, `technician`, `admin`).
 
-| Método | Endpoint | Permissão Exigida | Regras de Negócio & Efeitos no Back-End |
+Cada transição gera uma salvaguarda automática de auditoria via `Auditable.php` para preenchimento dos carimbos de SLA (`opened_at`, `in_progress_at`, `closed_at`).
+
+| Método | Endpoint | Permissão Exigida (Middleware) | Regras de Negócio, UX & Efeitos no Back-End |
 | :--- | :--- | :--- | :--- |
-| **POST** | `/tickets` | `role:funcionario` | **Criar Ticket:** Submete uma avaria corretiva. Associa automaticamente o `Auth::id()` em `user_id` e define o estado como 'Aberto'. |
-| **GET** | `/tickets/my` | `role:funcionario` | **Meus Tickets:** Retorna apenas as avarias abertas pelo próprio utilizador para acompanhamento na interface. |
-| **PUT** | `/tickets/{id}/cancel` | `role:funcionario` | **Cancelar Ticket:** O criador pode anular o ticket, **apenas** se o estado atual for igual a 'Aberto'. |
-| **GET** | `/technician/tickets/open`| `role:technician,admin`| **Painel de Controlo:** Lista global de todas as avarias que se encontram 'Abertas' ou agendadas como 'Preventivas'. |
-| **PUT** | `/technician/tickets/{id}/start`| `role:technician` | **Iniciar Reparação:** Muda o estado para 'Em Curso', injeta o ID do técnico e regista o timestamp de início (`in_progress_at`). |
-| **PUT** | `/technician/tickets/{id}/close`| `role:technician` | **Encerrar Ticket:** Transita para 'Fechada'. Exige o preenchimento das horas gastas, parecer técnico e injeta o `closed_at`. |
-| **PUT** | `/technician/tickets/{id}/request-budget`| `role:technician` | **Pedir Orçamento:** Move para 'Pendente de Orçamento' e **suspende o cronómetro de SLA** até decisão do Administrador. |
+| **POST** | `/tickets` | `role:funcionario` | **Criar Ticket Corretivo:** Submete um alerta de avaria. O Laravel valida os campos (Equipamento, Sala, Descrição), vincula o utilizador autenticado (`Auth::id()`) e define o estado inicial como 'Aberta'. |
+| **GET** | `/tickets/my` | `role:funcionario` | **Painel do Funcionário:** Retorna as avarias ativas reportadas pelo próprio e, a pedido do cliente, disponibiliza o **histórico completo dos seus tickets já concluídos/fechados** para consulta autónoma. |
+| **PUT** | `/tickets/{id}/cancel` | `role:funcionario` | **Cancelar Ticket Próprio:** Permite ao funcionário anular um ticket emitido por si, **desde que este permaneça no estado inicial 'Aberto'**. Se um técnico já tiver iniciado os trabalhos, a rota bloqueia a ação (403). |
+| **GET** | `/technician/tickets/open` | `role:technician,admin` | **Fila de Espera Global:** Lista todas as avarias em estado 'Aberto' na fábrica ou de cariz 'Preventivo' agendado, prontas para serem triadas ou assumidas por qualquer técnico disponível. |
+| **GET** | `/technician/tickets/assigned` | `role:technician` | **Os Meus Tickets:** Retorna exclusivamente a listagem de avarias ativas que o técnico logado assumiu para si e se encontram atualmente sob a sua responsabilidade (`tecnico_id == Auth::id()`). |
+| **GET** | `/tickets/{id}` | `role:technician,admin` | **Detalhe Contextualizado (UX):** Carrega os dados do incidente e, de forma proativa, injeta na resposta Eloquent o **histórico das últimas 3 intervenções fechadas daquele equipamento específico** para apoiar o diagnóstico no local. |
+| **PUT** | `/technician/tickets/{id}/start` | `role:technician` | **Iniciar Reparação:** Transita o estado para 'Em Curso'. Vincula o ID do técnico ao ticket e injeta o timestamp exato em `in_progress_at` para inicializar a contagem de SLA de atendimento. |
+| **PUT** | `/technician/tickets/{id}/request-budget`| `role:technician` | **Fluxo Extraordinário de Orçamento:** Disparado caso a reparação exija peças dispendiosas. Move o ticket para 'Pendente de Orçamento', obriga a preencher uma estimativa e **suspende o cronómetro de SLA**. |
+| **PUT** | `/technician/tickets/{id}/close` | `role:technician` | **Encerrar Intervenção:** Finaliza o processo movendo para 'Fechada'. Exige obrigatoriamente o relatório técnico detalhado e as horas de mão de obra gastas. Trava o `closed_at` e calcula o MTTR. |
 
 ---
 
