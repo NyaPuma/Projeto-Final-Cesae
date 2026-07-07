@@ -26,7 +26,7 @@ Route::post('/password/change',                       [AuthController::class, 'c
 
 Route::post('/tickets',                               [TicketController::class, 'store']);
 Route::get('/tickets',                                [TicketController::class, 'index']);
-Route::get('/tickets/{id}',                            [TicketController::class, 'show']);
+Route::get('/tickets/{id}',                           [TicketController::class, 'show']);
 Route::get('/technician/tickets/open',                [TicketController::class, 'openTickets']);
 Route::put('/technician/tickets/{id}/start',          [TicketController::class, 'startTicket']);
 Route::put('/technician/tickets/{id}/close',          [TicketController::class, 'closeTicket']);

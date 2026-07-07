@@ -16,23 +16,23 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::factory()->create([
-            'name' => 'Administrador',
-            'email' => 'admin@example.com',
-            'role' => User::ROLE_ADMIN,
+            'name'     => 'Administrador',
+            'email'    => 'admin@example.com',
+            'role'     => User::ROLE_ADMIN,
             'password' => 'admin123',
         ]);
 
         User::factory()->create([
-            'name' => 'Técnico',
-            'email' => 'tech@example.com',
-            'role' => User::ROLE_TECHNICIAN,
+            'name'     => 'Técnico',
+            'email'    => 'tech@example.com',
+            'role'     => User::ROLE_TECHNICIAN,
             'password' => 'tech123',
         ]);
 
         User::factory()->create([
-            'name' => 'Utilizador',
-            'email' => 'user@example.com',
-            'role' => User::ROLE_USER,
+            'name'     => 'Utilizador',
+            'email'    => 'user@example.com',
+            'role'     => User::ROLE_USER,
             'password' => 'user123',
         ]);
     }
