@@ -19,11 +19,13 @@ Route::get('/', function () {
     return view('main');
 });
 
+//Auth routes
 Route::post('/register',                              [AuthController::class, 'register']);
 Route::post('/login',                                 [AuthController::class, 'login']);
 Route::post('/logout',                                [AuthController::class, 'logout']);
 Route::post('/password/change',                       [AuthController::class, 'changePassword']);
 
+//Ticket routes
 Route::post('/tickets',                               [TicketController::class, 'store']);
 Route::get('/tickets',                                [TicketController::class, 'index']);
 Route::get('/tickets/{id}',                           [TicketController::class, 'show']);
@@ -44,7 +46,7 @@ Route::get('/calendar',                               [TicketController::class, 
 // UI routes
 Route::get('/ui',                                     [UiController::class, 'index']);
 Route::get('/ui/tickets',                             [UiController::class, 'tickets']);
-Route::get('/ui/tickets/{id}',                         [UiController::class, 'ticketDetail']);
+Route::get('/ui/tickets/{id}',                        [UiController::class, 'ticketDetail']);
 Route::get('/ui/equipments',                          [UiController::class, 'equipments']);
 Route::get('/ui/users',                               [UiController::class, 'users']);
 Route::get('/ui/audits',                              [UiController::class, 'audits']);
@@ -58,18 +60,23 @@ Route::get('/admin/audits',                           [AuditController::class, '
 Route::get('/admin/users',                            [AdminController::class, 'users']);
 Route::patch('/admin/users/{id}/inactive',            [AdminController::class, 'inactivateUser']);
 
+//Equipamentos
 Route::get('/admin/equipment',                        [AdminController::class, 'equipments']);
 Route::post('/admin/equipment',                       [AdminController::class, 'storeEquipment']);
 Route::patch('/admin/equipment/{id}',                 [AdminController::class, 'updateEquipment']);
 Route::delete('/admin/equipment/{id}',                [AdminController::class, 'destroyEquipment']);
 Route::patch('/admin/tickets/{id}/approve-budget',    [AdminController::class, 'approveBudget']);
 
+//Salas
 Route::get('/admin/rooms',                            [AdminController::class, 'rooms']);
 Route::post('/admin/rooms',                           [AdminController::class, 'storeRoom']);
 Route::patch('/admin/rooms/{id}',                     [AdminController::class, 'updateRoom']);
 Route::patch('/admin/rooms/{id}/inactive',            [AdminController::class, 'inactivateRoom']);
 
+//Analytics
 Route::get('/analytics',                              [AnalyticsController::class, 'stats']);
 Route::get('/analytics/export/csv',                   [AnalyticsController::class, 'exportCsv']);
 Route::get('/analytics/export/pdf',                   [AnalyticsController::class, 'exportPdf']);
+
+//API Documentation
 Route::get('/docs/openapi',                           [ApiDocsController::class, 'swagger']);
