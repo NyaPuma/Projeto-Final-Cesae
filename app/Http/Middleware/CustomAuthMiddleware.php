@@ -31,7 +31,8 @@ class CustomAuthMiddleware
         }
 
         // Valida o token e se o utilizador está ativo
-        $user = User::where('api_token', $token)->where('active', true)->first();
+        // Com eager loading do perfil para evitar N+1 queries
+        $user = User::with('profile')->where('api_token', $token)->where('active', true)->first();
 
         if (!$user) {
             // Token inválido - limpar cookie se existir

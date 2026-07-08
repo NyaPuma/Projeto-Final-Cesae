@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -29,7 +30,12 @@ class AuthController extends Controller
         }
 
         // Verificar se o perfil existe e está ativo
-        $profileId = $data['profile_id'] ?? User::where('name', User::ROLE_USER)->first()?->profile_id;
+        if (isset($data['profile_id'])) {
+            $profileId = $data['profile_id'];
+        } else {
+            $defaultProfile = UserProfile::where('name', User::ROLE_USER)->first();
+            $profileId = $defaultProfile?->id;
+        }
         
         if (!$profileId) {
             return response()->json(['message' => 'Perfil inválido'], 422);
@@ -71,6 +77,14 @@ class AuthController extends Controller
         // Valida se o utilizador existe e se a password introduzida coincide com o hash gravado
         if (!$user || !Hash::check($data['password'], $user->password)) {
             return response()->json(['message' => 'Credenciais inválidas'], 401);
+        }
+
+        // Garantir que o utilizador tem um perfil válido
+        if (!$user->profile_id) {
+            $defaultProfile = UserProfile::where('name', User::ROLE_USER)->first();
+            if ($defaultProfile) {
+                $user->profile_id = $defaultProfile->id;
+            }
         }
 
         // Regenera o API Token a cada novo início de sessão bem-sucedido

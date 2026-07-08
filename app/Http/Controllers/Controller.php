@@ -29,7 +29,8 @@ abstract class Controller
         }
 
         // Procura na base de dados pelo utilizador que possui o respetivo token e se encontra ativo
-        $user = User::where('api_token', $token)->where('active', true)->first();
+        // Com eager loading do perfil para evitar N+1 queries
+        $user = User::with('profile')->where('api_token', $token)->where('active', true)->first();
 
         // Se o utilizador não for encontrado ou estiver inativo, interrompe o pedido
         if (!$user) {

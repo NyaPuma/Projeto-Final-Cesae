@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Equipment;
 use Illuminate\Http\Request;
 
 class UiController extends Controller
@@ -59,5 +60,15 @@ class UiController extends Controller
     {
         $user = $this->authenticatedUser($request);
         return view('ui.ticket-detail', ['ticketId' => $id, 'user' => $user]);
+    }
+
+    /**
+     * Retorna a lista de equipamentos para a interface (acessível a todos os utilizadores).
+     */
+    public function getEquipments(Request $request)
+    {
+        $user = $this->authenticatedUser($request);
+        // Retorna todos os equipamentos com as respetivas salas
+        return response()->json(['equipments' => Equipment::with('room')->orderBy('name')->paginate(15)]);
     }
 }

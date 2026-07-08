@@ -51,6 +51,7 @@ Route::middleware(['custom.auth'])->group(function () {
         Route::get('/ui/tickets',    [UiController::class, 'tickets']);
         Route::get('/ui/tickets/{id}', [UiController::class, 'ticketDetail']);
         Route::get('/ui/equipments', [UiController::class, 'equipments']);
+        Route::get('/equipments',    [UiController::class, 'getEquipments']);
     });
 
     // UI - Acesso para Técnicos e Administradores
