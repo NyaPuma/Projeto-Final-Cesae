@@ -10,9 +10,13 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
-    ->withMiddleware(function (Middleware $middleware): void {
-        //
+    ->withMiddleware(function (Middleware $middleware) {
+        // Registar os aliases para usar de forma limpa no ficheiro de rotas
+        $middleware->alias([
+            'custom.auth' => \App\Http\Middleware\CustomAuthMiddleware::class,
+            'role'        => \App\Http\Middleware\RoleMiddleware::class,
+        ]);
     })
-    ->withExceptions(function (Exceptions $exceptions): void {
+    ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();

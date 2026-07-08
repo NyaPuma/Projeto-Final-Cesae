@@ -2,16 +2,17 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Ticket;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Traits\Auditable;
 
 class User extends Authenticatable
 {
+    // Mantemos as constantes de mapeamento textual para bater com o 'name' do perfil
     public const ROLE_USER = 'user';
     public const ROLE_TECHNICIAN = 'technician';
     public const ROLE_ADMIN = 'admin';
@@ -29,7 +30,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role',
+        'profile_id',
         'active',
         'api_token',
     ];
@@ -56,6 +57,14 @@ class User extends Authenticatable
         'active'            => 'boolean',
     ];
 
+    /**
+     * Relação: O utilizador pertence a um perfil específico.
+     */
+    public function profile(): BelongsTo
+    {
+        return $this->belongsTo(UserProfile::class, 'profile_id');
+    }
+
     public function tickets()
     {
         return $this->hasMany(Ticket::class);
@@ -66,18 +75,19 @@ class User extends Authenticatable
         return $this->hasMany(Ticket::class, 'assigned_to');
     }
 
+    /**
+     * Verifica se o utilizador é Administrador através do relacionamento com a tabela de perfis.
+     */
     public function isAdmin(): bool
     {
-        return $this->role === self::ROLE_ADMIN;
+        return $this->profile?->name === self::ROLE_ADMIN;
     }
 
+    /**
+     * Verifica se o utilizador é Técnico através do relacionamento com a tabela de perfis.
+     */
     public function isTechnician(): bool
     {
-        return $this->role === self::ROLE_TECHNICIAN;
-    }
-
-    public function isCommon(): bool
-    {
-        return $this->role === self::ROLE_USER;
+        return $this->profile?->name === self::ROLE_TECHNICIAN;
     }
 }

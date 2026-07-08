@@ -16,6 +16,8 @@ class Equipment extends Model
     use HasFactory;
     use Auditable;
 
+    protected $table = 'equipments';
+
     protected $fillable = [
         'name',
         'serial',
