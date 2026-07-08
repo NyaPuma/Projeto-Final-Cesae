@@ -121,7 +121,11 @@ class TicketController extends Controller
         }
 
         if ($request->filled('status')) {
-            $query->where('status', $request->input('status'));
+            $statusName = $request->input('status');
+            $statusId = Ticket::getStatusIdByName($statusName);
+            if ($statusId) {
+                $query->where('status_id', $statusId);
+            }
         }
 
         // Substituído o 'get()' massivo por 'paginate()' para evitar quebras de memória
@@ -179,7 +183,7 @@ class TicketController extends Controller
     {
         $user = $this->authenticatedUser($request);
         $this->requireRole($user, [
-            $user::ROLE_TECHNICIAN,
+            User::ROLE_TECHNICIAN,
         ]);
 
         $ticket = Ticket::find($id);
@@ -208,7 +212,7 @@ class TicketController extends Controller
     {
         $user = $this->authenticatedUser($request);
         $this->requireRole($user, [
-            $user::ROLE_ADMIN,
+            User::ROLE_ADMIN,
         ]);
 
         $ticket = Ticket::find($id);
@@ -250,8 +254,8 @@ class TicketController extends Controller
     {
         $user = $this->authenticatedUser($request);
         $this->requireRole($user, [
-            $user::ROLE_TECHNICIAN,
-            $user::ROLE_ADMIN,
+            User::ROLE_TECHNICIAN,
+            User::ROLE_ADMIN,
         ]);
 
         $ticket = Ticket::find($id);
@@ -273,8 +277,8 @@ class TicketController extends Controller
     {
         $user = $this->authenticatedUser($request);
         $this->requireRole($user, [
-            $user::ROLE_TECHNICIAN,
-            $user::ROLE_ADMIN,
+            User::ROLE_TECHNICIAN,
+            User::ROLE_ADMIN,
         ]);
 
         $ticket = Ticket::find($id);
@@ -307,8 +311,8 @@ class TicketController extends Controller
     {
         $user = $this->authenticatedUser($request);
         $this->requireRole($user, [
-            $user::ROLE_TECHNICIAN,
-            $user::ROLE_ADMIN,
+            User::ROLE_TECHNICIAN,
+            User::ROLE_ADMIN,
         ]);
 
         $ticket = Ticket::with(['comments.user'])->find($id);
@@ -374,7 +378,7 @@ class TicketController extends Controller
     {
         $user = $this->authenticatedUser($request);
         $this->requireRole($user, [
-            $user::ROLE_TECHNICIAN,
+            User::ROLE_TECHNICIAN,
         ]);
 
         $data = $request->only(['minutes_spent', 'cost']);
@@ -415,7 +419,7 @@ class TicketController extends Controller
     {
         $user = $this->authenticatedUser($request);
         $this->requireRole($user, [
-            $user::ROLE_TECHNICIAN,
+            User::ROLE_TECHNICIAN,
         ]);
 
         $ticket = Ticket::find($id);
@@ -456,8 +460,8 @@ class TicketController extends Controller
     {
         $user = $this->authenticatedUser($request);
         $this->requireRole($user, [
-            $user::ROLE_TECHNICIAN,
-            $user::ROLE_ADMIN,
+            User::ROLE_TECHNICIAN,
+            User::ROLE_ADMIN,
         ]);
 
         $ticket = Ticket::find($id);
@@ -498,8 +502,8 @@ class TicketController extends Controller
     {
         $user = $this->authenticatedUser($request);
         $this->requireRole($user, [
-            $user::ROLE_TECHNICIAN,
-            $user::ROLE_ADMIN,
+            User::ROLE_TECHNICIAN,
+            User::ROLE_ADMIN,
         ]);
 
         $query = Ticket::query()->where('scheduled', true);
@@ -511,9 +515,10 @@ class TicketController extends Controller
         $tickets = $query->get();
 
         $events = $tickets->map(function ($t) {
+            $statusName = $t->status ? $t->status->name : 'desconhecido';
             return [
                 'id'            => $t->id,
-                'title'         => $t->title . ' (' . $t->status . ')',
+                'title'         => $t->title . ' (' . $statusName . ')',
                 'start'         => optional($t->scheduled_at)->toIso8601String(),
                 'end'           => optional($t->scheduled_end)->toIso8601String(),
                 'technician_id' => $t->assigned_to,
