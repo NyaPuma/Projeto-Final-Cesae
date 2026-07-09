@@ -17,13 +17,13 @@ class CustomAuthMiddleware
         // Procura pelo token no cabeçalho customizado, Bearer, ou cookie
         $token = $request->header('X-Auth-Token') 
                 ?: $request->bearerToken() 
-                ?: ($request->hasCookie('api_token') ? $request->cookie('api_token') : null);
+                ?: $request->cookie('api_token');
 
         // Log para debug
-        if (!$request->hasCookie('api_token')) {
-            \Log::debug('Cookie api_token nao encontrado. Headers: ', $request->header());
+        if (!$token) {
+            \Log::debug('Token nao encontrado. Headers: ', $request->header());
         } else {
-            \Log::debug('Cookie api_token encontrado: ' . $request->cookie('api_token'));
+            \Log::debug('Token encontrado: ' . $token);
         }
 
         if (!is_string($token) || $token === '') {

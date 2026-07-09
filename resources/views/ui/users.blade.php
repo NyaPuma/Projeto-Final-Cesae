@@ -1,6 +1,10 @@
 @extends('ui.layout')
 
 @section('content')
+<script>
+// Marcar que esta página requer autenticação
+window.requireAuthOnLoad = true;
+</script>
 @component('ui.partials.page-card', [
     'title' => 'Utilizadores',
     'subtitle' => 'Consulta os utilizadores e respetivos perfis.',

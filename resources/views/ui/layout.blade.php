@@ -60,6 +60,20 @@ function requireAuth() {
     return true;
 }
 
+// Função para verificar se o utilizador está autenticado
+function isAuthenticated() {
+    return !!localStorage.getItem('api_token');
+}
+
+// Função para redirecionar para login se não autenticado
+function requireAuth() {
+    if (!isAuthenticated()) {
+        window.location.href = '/ui/login';
+        return false;
+    }
+    return true;
+}
+
 // Renderizar a box de autenticação no header
 function renderAuthBox(){
     const box = document.getElementById('authBox');

@@ -128,7 +128,7 @@
             // Definir cookie para autenticação em páginas web
             const expires = new Date();
             expires.setTime(expires.getTime() + (30 * 24 * 60 * 60 * 1000));
-            document.cookie = `api_token=${data.token}; path=/; expires=${expires.toUTCString()}`;
+            document.cookie = `api_token=${data.token}; path=/; expires=${expires.toUTCString()}; SameSite=Lax`;
             showMessage('Sessão iniciada com sucesso.');
             // Aguardar para garantir que o cookie é salvo
             setTimeout(() => {
@@ -160,7 +160,7 @@
             // Definir cookie para autenticação em páginas web
             const expires = new Date();
             expires.setTime(expires.getTime() + (30 * 24 * 60 * 60 * 1000));
-            document.cookie = `api_token=${data.token}; path=/; expires=${expires.toUTCString()}`;
+            document.cookie = `api_token=${data.token}; path=/; expires=${expires.toUTCString()}; SameSite=Lax`;
             showMessage('Conta criada com sucesso.');
             // Aguardar para garantir que o cookie é salvo
             setTimeout(() => {
