@@ -13,12 +13,10 @@ class AuditController extends Controller
      */
     public function index(Request $request)
     {
-        // CORREÇÃO: Substituído o 'limit(200)->get()' por paginação paginada ('paginate').
-        // Isto evita problemas de performance quando a tabela de logs contiver milhares de registos,
-        // permitindo que o frontend consuma os dados em blocos (ex: 50 registos por página).
+        // A paginação protege a performance quando o histórico começar a crescer bastante.
         $audits = Audit::with('user')
             ->orderBy('created_at', 'desc')
-            ->paginate(50); // Retorna uma estrutura paginada com metadados (page, total, etc.)
+            ->paginate(50); // O frontend recebe metadados úteis para navegação entre páginas.
 
         return response()->json(['audits' => $audits]);
     }

@@ -4,11 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Session\Session as SessionContract;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Cookie;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class CsrfMiddleware
@@ -41,7 +39,7 @@ class CsrfMiddleware
      * Handle an incoming request and delegate to the next middleware in the chain.
      * Validates CSRF token from headers, cookies, or session storage.
      */
-    public function handle($request, Closure $next): Response
+    public function handle(Request $request, Closure $next): Response
     {
         // Skip CSRF validation for certain HTTP methods and routes
         if ($this->shouldSkipCsrfValidation($request)) {
@@ -71,16 +69,18 @@ class CsrfMiddleware
     /**
      * Determine if CSRF validation should be skipped.
      */
-    protected function shouldSkipCsrfValidation($request): bool
+    protected function shouldSkipCsrfValidation(Request $request): bool
     {
         // Skip for GET requests (typically safe)
         if ($request->isMethod('GET')) {
             return true;
         }
 
-        // Skip for internal API routes that use custom authentication
-        $routeName = $request->route()->getName();
-        
+        // Previne erro caso a rota atual não tenha nome definido (null)
+        $route = $request->route();
+        $routeName = $route ? $route->getName() : '';
+        $routeName = $routeName ?? '';
+
         // Allow authenticated API endpoints to skip CSRF validation
         if (in_array($routeName, [
             'api.auth.login',
@@ -92,7 +92,7 @@ class CsrfMiddleware
         ])) {
             // Check if user is authenticated via API token (not session)
             $token = $request->header('X-Auth-Token') ?: $request->bearerToken();
-            
+
             if ($token && !empty($this->session->get('_token'))) {
                 return true;
             }
@@ -101,23 +101,23 @@ class CsrfMiddleware
         // Skip for AJAX requests with custom auth token (application/json)
         if ($request->expectsJson() || $request->wantsJson()) {
             $hasCustomAuth = $request->header('X-Auth-Token') ?: $request->bearerToken();
-            
+
             if (!empty($hasCustomAuth)) {
                 return true;
             }
         }
 
         // Skip for internal system routes (admin, analytics)
-        if ($routeName && Str::startsWith(strtolower($routeName), ['api.admin', 'api.analytics'])) {
+        if ($routeName !== '' && Str::startsWith(strtolower($routeName), ['api.admin', 'api.analytics'])) {
             $token = $request->header('X-Admin-Token') ?: $request->bearerToken();
-            
+
             if (!empty($token)) {
                 return true;
             }
         }
 
         // Skip for health check and system routes
-        if ($routeName && Str::startsWith(strtolower($routeName), ['api.health', 'api.status'])) {
+        if ($routeName !== '' && Str::startsWith(strtolower($routeName), ['api.health', 'api.status'])) {
             return true;
         }
 
@@ -127,7 +127,7 @@ class CsrfMiddleware
     /**
      * Get CSRF token from request (header, cookie, or session).
      */
-    protected function getCsrfTokenFromRequest($request): ?string
+    protected function getCsrfTokenFromRequest(Request $request): ?string
     {
         // Try to get token from custom header first (X-CSRF-Token)
         $token = $request->header('X-CSRF-Token');
@@ -137,9 +137,7 @@ class CsrfMiddleware
         }
 
         // Fall back to session-based CSRF token
-        $token = $this->session->get('_token') ?: null;
-
-        return $token;
+        return $this->session->get('_token') ?: null;
     }
 
     /**
@@ -157,7 +155,7 @@ class CsrfMiddleware
 
         if ($storedToken !== trim($token)) {
             Log::debug('CsrfMiddleware - Token mismatch detected', [
-                'provided_token' => substr(trim($token), 0, 8) . '...', // Don't log full token
+                'provided_token' => substr(trim($token), 0, 8) . '...',
                 'stored_token' => $storedToken ?: null,
             ]);
 
@@ -181,11 +179,17 @@ class CsrfMiddleware
 
         if ($token && !empty($this->session->getId())) {
             try {
+                $oldId = $this->session->getId();
+
+                // Regenera a sessão
                 $this->session->regenerate();
-                
+
+                // Captura o novo ID gerado
+                $newId = $this->session->getId();
+
                 Log::debug('CsrfMiddleware - Session ID regenerated', [
-                    'old_session_id' => substr(str_replace('_', '', $this->session->getId()), 0, 8) . '...',
-                    'new_session_id' => substr(str_replace('_', '', $this->session->regenerateId()), 0, 8) . '...',
+                    'old_session_id' => substr(str_replace('_', '', $oldId), 0, 8) . '...',
+                    'new_session_id' => substr(str_replace('_', '', $newId), 0, 8) . '...',
                 ]);
             } catch (\Exception $e) {
                 Log::error('CsrfMiddleware - Failed to regenerate session ID', [

@@ -1,0 +1,909 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Gestão de Avarias API",
+        "description": "Documentação OpenAPI da aplicação de gestão de tickets, equipamentos, auditoria e relatórios.",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/"
+        }
+    ],
+    "paths": {
+        "/admin/users": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Listar utilizadores",
+                "description": "Retorna todos os utilizadores (Apenas para Administradores).",
+                "operationId": "7a629ec3ab4a321032bfa425c844d09d",
+                "responses": {
+                    "200": {
+                        "description": "Lista de utilizadores"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/admin/users/{id}/inactive": {
+            "patch": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Inativar utilizador",
+                "description": "Inativa um utilizador do sistema.",
+                "operationId": "7b6493e78a4c4a9f7bc8e3779329484b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Utilizador inativado"
+                    },
+                    "404": {
+                        "description": "Utilizador não encontrado"
+                    },
+                    "422": {
+                        "description": "Operação inválida"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/admin/equipment": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Listar equipamentos",
+                "description": "Lista equipamentos com a respetiva sala associada.",
+                "operationId": "87341b2fc0e90e9b75d9ca3e79d1d8be",
+                "responses": {
+                    "200": {
+                        "description": "Lista de equipamentos"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Criar equipamento",
+                "description": "Regista um novo equipamento no sistema.",
+                "operationId": "8ffa9ef4e838724e4f4d3219db2bc867",
+                "responses": {
+                    "201": {
+                        "description": "Equipamento criado"
+                    },
+                    "422": {
+                        "description": "Erro de validação"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/admin/equipment/{id}": {
+            "delete": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Eliminar equipamento",
+                "description": "Remove fisicamente um equipamento do sistema.",
+                "operationId": "cee3a5b031a31fee9e4e0f467310957d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Equipamento eliminado"
+                    },
+                    "404": {
+                        "description": "Equipamento não encontrado"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Atualizar equipamento",
+                "description": "Atualiza os dados de um equipamento existente.",
+                "operationId": "1cff2f6cda1a8b435b6bd0704a7ce77e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Equipamento atualizado"
+                    },
+                    "404": {
+                        "description": "Equipamento não encontrado"
+                    },
+                    "422": {
+                        "description": "Erro de validação"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/admin/rooms": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Listar salas",
+                "description": "Lista todas as salas registadas.",
+                "operationId": "1f3319f513efbd3420c84ba0caa106e3",
+                "responses": {
+                    "200": {
+                        "description": "Lista de salas"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Criar sala",
+                "description": "Cria uma nova sala de trabalho.",
+                "operationId": "6d52c96d143252ee80aa9be4f63727c4",
+                "responses": {
+                    "201": {
+                        "description": "Sala criada"
+                    },
+                    "422": {
+                        "description": "Erro de validação"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/admin/rooms/{id}": {
+            "patch": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Atualizar sala",
+                "description": "Atualiza os detalhes de uma sala.",
+                "operationId": "e459df36a3c4723a818b41786061a819",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sala atualizada"
+                    },
+                    "404": {
+                        "description": "Sala não encontrada"
+                    },
+                    "422": {
+                        "description": "Erro de validação"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/admin/rooms/{id}/inactive": {
+            "patch": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Inativar sala",
+                "description": "Inativa uma sala (Gestão lógica / Soft management).",
+                "operationId": "c551ae9a067c643951fedef3bab7be05",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sala inativada"
+                    },
+                    "404": {
+                        "description": "Sala não encontrada"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/admin/tickets/{id}/approve-budget": {
+            "patch": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Aprovar orçamento",
+                "description": "Aprova um pedido de orçamento associado a um ticket de avaria.",
+                "operationId": "5bb9e7d57449a03e864bf9b42b768abc",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Orçamento aprovado"
+                    },
+                    "422": {
+                        "description": "Pedido inválido"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/analytics/stats": {
+            "get": {
+                "tags": [
+                    "Analytics"
+                ],
+                "summary": "Métricas gerais",
+                "description": "Obtém métricas gerais de tickets fechados e tempos médios.\nOtimizado para executar agregações diretamente na base de dados.",
+                "operationId": "da050905766d97acc67747e316888442",
+                "responses": {
+                    "200": {
+                        "description": "KPIs agregados"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/analytics/charts": {
+            "get": {
+                "tags": [
+                    "Analytics"
+                ],
+                "summary": "Dados para dashboards",
+                "description": "Fornece dados JSON formatados para gráficos Chart.js no dashboard.\nInclui: distribuição por prioridade, tickets por mês (últimos 6 meses),\ncusto mensal acumulado e top 5 equipamentos com mais tickets.",
+                "operationId": "fbb102a8736556d8c0a6a0eab04bc917",
+                "responses": {
+                    "200": {
+                        "description": "Séries para gráficos"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/analytics/export/pdf": {
+            "get": {
+                "tags": [
+                    "Analytics"
+                ],
+                "summary": "Exportar PDF",
+                "description": "Exporta o relatório de tickets em formato PDF via DOMPDF.",
+                "operationId": "e811405e32f1aa3a802356b7c46b474f",
+                "responses": {
+                    "200": {
+                        "description": "Ficheiro PDF descarregado"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/analytics/export/excel": {
+            "get": {
+                "tags": [
+                    "Analytics"
+                ],
+                "summary": "Exportar Excel",
+                "description": "Exporta o relatório de tickets em formato Excel (.xlsx) usando Maatwebsite/Excel.\nInclui estilos de cabeçalho, auto-sizing das colunas e formatação de moeda.",
+                "operationId": "73d76b642b24a8e91eeaeada37e024e9",
+                "responses": {
+                    "200": {
+                        "description": "Ficheiro XLSX descarregado"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Registar utilizador",
+                "operationId": "0903f2e0df1a8857bee538fc055417f0",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "João Silva"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "joao@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password123"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password123"
+                                    },
+                                    "profile_id": {
+                                        "type": "integer",
+                                        "example": 1,
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Utilizador criado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "example": "abc123"
+                                        },
+                                        "user": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Erro de validação"
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Autenticar utilizador",
+                "operationId": "2dd578ff7aba2721293dac66833b27d1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "joao@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Autenticado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "example": "abc123"
+                                        },
+                                        "user": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas"
+                    }
+                }
+            }
+        },
+        "/notifications": {
+            "get": {
+                "tags": [
+                    "Notifications"
+                ],
+                "summary": "Listar notificações do utilizador",
+                "operationId": "0f031f66cd8c52bf73e89fb2d050ad83",
+                "responses": {
+                    "200": {
+                        "description": "Lista paginada de notificações"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/notifications/{id}": {
+            "patch": {
+                "tags": [
+                    "Notifications"
+                ],
+                "summary": "Marcar notificação como lida",
+                "operationId": "58fb6750c2d309a0bc5028c22b02f9f8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Notificação atualizada"
+                    },
+                    "404": {
+                        "description": "Notificação não encontrada"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/notifications/test-email": {
+            "post": {
+                "tags": [
+                    "Notifications"
+                ],
+                "summary": "Enviar email de teste via Mailgun",
+                "operationId": "c9f9ddcef1df2e8861c2e75c356531d1",
+                "responses": {
+                    "200": {
+                        "description": "Email de teste enviado"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/tickets": {
+            "get": {
+                "tags": [
+                    "Tickets"
+                ],
+                "summary": "Listar tickets",
+                "description": "Lista todos os tickets aplicando os filtros definidos.\n- Utilizadores normais veem exclusivamente os seus próprios tickets.\n- Técnicos e Administradores têm visibilidade global sobre os registos.",
+                "operationId": "aa5e80a6f31951862c4554396ce1b1fd",
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "priority",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "equipment_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "room_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "technician_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista paginada de tickets"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Tickets"
+                ],
+                "summary": "Criar ticket",
+                "description": "Cria um novo ticket de avaria.\n- Apenas utilizadores comuns (`ROLE_USER`) podem criar.\n- Valida título/descrição e a atividade do equipamento/sala.",
+                "operationId": "f9282cd452389d3cc5d06f0cf782b672",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "description"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Projetor não liga"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "O projetor da sala 4 não responde."
+                                    },
+                                    "equipment_id": {
+                                        "type": "integer",
+                                        "example": 12,
+                                        "nullable": true
+                                    },
+                                    "room_id": {
+                                        "type": "integer",
+                                        "example": 3,
+                                        "nullable": true
+                                    },
+                                    "priority": {
+                                        "type": "string",
+                                        "example": "alta"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Ticket criado"
+                    },
+                    "422": {
+                        "description": "Erro de validação"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/tickets/search": {
+            "get": {
+                "tags": [
+                    "Tickets"
+                ],
+                "summary": "Pesquisa avançada de tickets",
+                "description": "Pesquisa avançada de tickets com filtros combinados:\ntexto livre, estado, prioridade, intervalo de datas, equipamento e técnico.\nAcessível a qualquer utilizador autenticado (com scope de visibilidade por role).",
+                "operationId": "ea6b7c0ed74e970c57f829c67f0b1f24",
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "priority",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "equipment_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "technician_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "date_from",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "date_to",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Resultados da pesquisa"
+                    },
+                    "422": {
+                        "description": "Erro de validação"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "X-Auth-Token": {
+                "type": "apiKey",
+                "name": "X-Auth-Token",
+                "in": "header"
+            },
+            "BearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Admin",
+            "description": "Admin"
+        },
+        {
+            "name": "Analytics",
+            "description": "Analytics"
+        },
+        {
+            "name": "Auth",
+            "description": "Auth"
+        },
+        {
+            "name": "Notifications",
+            "description": "Notifications"
+        },
+        {
+            "name": "Tickets",
+            "description": "Tickets"
+        }
+    ]
+}

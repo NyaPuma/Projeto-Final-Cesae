@@ -49,6 +49,22 @@ return [
             'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url((string) env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
         ],
 
+        'mailgun' => [
+            'transport' => 'mailgun',
+        ],
+
+        'sendgrid' => [
+            'transport' => 'smtp',
+            'scheme' => env('SENDGRID_SCHEME', 'tls'),
+            'url' => env('SENDGRID_URL'),
+            'host' => env('SENDGRID_HOST', 'smtp.sendgrid.net'),
+            'port' => env('SENDGRID_PORT', 587),
+            'username' => env('SENDGRID_USERNAME', 'apikey'),
+            'password' => env('SENDGRID_PASSWORD'),
+            'timeout' => null,
+            'local_domain' => env('SENDGRID_EHLO_DOMAIN', parse_url((string) env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
+        ],
+
         'ses' => [
             'transport' => 'ses',
         ],
@@ -82,8 +98,17 @@ return [
         'failover' => [
             'transport' => 'failover',
             'mailers' => [
-                'smtp',
-                'log',
+                'mailgun',
+                'sendgrid',
+            ],
+            'retry_after' => 60,
+        ],
+
+        'mailgun_fallback' => [
+            'transport' => 'failover',
+            'mailers' => [
+                'mailgun',
+                'sendgrid',
             ],
             'retry_after' => 60,
         ],

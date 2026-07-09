@@ -32,9 +32,9 @@ window.requireAuthOnLoad = true;
             <p class="text-lg font-semibold text-white">Agenda</p>
             <p class="mt-2 text-sm text-slate-400">Abrir a vista de calendário para planeamento.</p>
         </a>
-        <a href="/analytics/export/pdf" class="rounded-2xl border border-white/10 bg-slate-950/60 p-5 transition hover:border-cyan-400/40 hover:bg-slate-800/70">
-            <p class="text-lg font-semibold text-white">Relatórios</p>
-            <p class="mt-2 text-sm text-slate-400">Exportar PDF/CSV com o estado das intervenções.</p>
+        <a href="/ui/analytics" class="rounded-2xl border border-violet-400/20 bg-violet-500/10 p-5 transition hover:border-violet-400/40 hover:bg-violet-500/20">
+            <p class="text-lg font-semibold text-white">Analytics & Gráficos</p>
+            <p class="mt-2 text-sm text-slate-400">KPIs, gráficos de desempenho e exportação de relatórios.</p>
         </a>
     </div>
 @endcomponent

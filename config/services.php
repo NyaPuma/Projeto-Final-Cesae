@@ -18,6 +18,21 @@ return [
         'key' => env('POSTMARK_API_KEY'),
     ],
 
+    'mailgun' => [
+        'domain' => env('MAILGUN_DOMAIN'),
+        'secret' => env('MAILGUN_SECRET'),
+        'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
+        'scheme' => env('MAILGUN_SCHEME', 'https'),
+    ],
+
+    'sendgrid' => [
+        'username' => env('SENDGRID_USERNAME', 'apikey'),
+        'password' => env('SENDGRID_PASSWORD'),
+        'host' => env('SENDGRID_HOST', 'smtp.sendgrid.net'),
+        'port' => env('SENDGRID_PORT', 587),
+        'scheme' => env('SENDGRID_SCHEME', 'tls'),
+    ],
+
     'resend' => [
         'key' => env('RESEND_API_KEY'),
     ],

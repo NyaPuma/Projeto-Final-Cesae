@@ -7,7 +7,9 @@ use App\Models\Userprofile as UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Prompts\Exceptions\CookieException;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
+use Illuminate\Support\Facades\Route;
 
 class CustomAuthMiddlewareTest extends TestCase
 {
@@ -26,7 +28,7 @@ class CustomAuthMiddlewareTest extends TestCase
         $this->artisan('db:seed', ['--class' => 'TicketLookupSeeder', '--force' => true]);
     }
 
-    /** @test */
+    #[Test]
     public function it_allows_access_when_user_has_valid_token_and_correct_profile()
     {
         // Create user with technician profile and API token
@@ -38,7 +40,7 @@ class CustomAuthMiddlewareTest extends TestCase
         ]);
 
         // Create a protected route that requires authentication only (no role restriction)
-        Route::middleware(['auth:api'])->get('/protected-auth', function () {
+        Route::middleware(['custom.auth'])->get('/protected-auth', function () {
             return response()->json([
                 'message' => 'Access granted.',
                 'user_id' => Auth::guard('api')->id(),
@@ -53,7 +55,7 @@ class CustomAuthMiddlewareTest extends TestCase
         $response->assertJson(['message' => 'Access granted.']);
     }
 
-    /** @test */
+    #[Test]
     public function it_denies_access_when_user_has_no_valid_profile()
     {
         // Create user with technician profile but no API token (will fail validation)
@@ -65,7 +67,7 @@ class CustomAuthMiddlewareTest extends TestCase
         ]);
 
         // Create a protected route that requires authentication only (no role restriction)
-        Route::middleware(['auth:api'])->get('/protected-auth', function () {
+        Route::middleware(['custom.auth'])->get('/protected-auth', function () {
             return response()->json([
                 'message' => 'Access granted.',
             ], 200);
@@ -73,20 +75,20 @@ class CustomAuthMiddlewareTest extends TestCase
 
         // Make request with invalid token (user has no API token)
         $response = $this->withHeader('X-Auth-Token', 'invalid-token')
-            ->get('/protected-auth');
+            ->getJson('/protected-auth');
 
         $response->assertStatus(401);
         $response->assertJson([
-            'message' => 'Autenticação necessária. Envie X-Auth-Token no cabeçalho.',
+            'message' => 'Token inválido ou utilizador inativo.',
             'error_code' => 401,
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_denies_access_when_user_has_invalid_token()
     {
         // Create a protected route that requires authentication only (no role restriction)
-        Route::middleware(['auth:api'])->get('/protected-auth', function () {
+        Route::middleware(['custom.auth'])->get('/protected-auth', function () {
             return response()->json([
                 'message' => 'Access granted.',
             ], 200);
@@ -94,16 +96,16 @@ class CustomAuthMiddlewareTest extends TestCase
 
         // Make request with invalid token
         $response = $this->withHeader('X-Auth-Token', 'invalid-token')
-            ->get('/protected-auth');
+            ->getJson('/protected-auth');
 
         $response->assertStatus(401);
         $response->assertJson([
-            'message' => 'Autenticação necessária. Envie X-Auth-Token no cabeçalho.',
+            'message' => 'Token inválido ou utilizador inativo.',
             'error_code' => 401,
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_denies_access_when_user_is_not_active()
     {
         // Create user with technician profile but inactive status and API token
@@ -116,7 +118,7 @@ class CustomAuthMiddlewareTest extends TestCase
         ]);
 
         // Create a protected route that requires authentication only (no role restriction)
-        Route::middleware(['auth:api'])->get('/protected-auth', function () {
+        Route::middleware(['custom.auth'])->get('/protected-auth', function () {
             return response()->json([
                 'message' => 'Access granted.',
             ], 200);
@@ -124,7 +126,7 @@ class CustomAuthMiddlewareTest extends TestCase
 
         // Make request with token from inactive user
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->get('/protected-auth');
+            ->getJson('/protected-auth');
 
         $response->assertStatus(401);
         $response->assertJson([
@@ -136,19 +138,19 @@ class CustomAuthMiddlewareTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_denies_access_when_user_has_no_profile_id()
     {
         // Create user with technician profile but no API token (will fail validation)
         $userProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
         
         $user = User::factory()->create([
-            'profile_id' => null, // No profile ID
             'api_token' => bin2hex(random_bytes(32)), // Generate random token
         ]);
+        \Illuminate\Support\Facades\DB::table('users')->where('id', $user->id)->update(['profile_id' => null]);
 
         // Create a protected route that requires authentication only (no role restriction)
-        Route::middleware(['auth:api'])->get('/protected-auth', function () {
+        Route::middleware(['custom.auth'])->get('/protected-auth', function () {
             return response()->json([
                 'message' => 'Access granted.',
             ], 200);
@@ -156,7 +158,7 @@ class CustomAuthMiddlewareTest extends TestCase
 
         // Make request with valid token but user has no profile (will fail validation)
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->get('/protected-auth');
+            ->getJson('/protected-auth');
 
         $response->assertStatus(403);
         $response->assertJson([
@@ -168,24 +170,19 @@ class CustomAuthMiddlewareTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_denies_access_when_user_has_no_profile_name()
     {
         // Create user with technician profile but no API token (will fail validation)
         $userProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
         
         $user = User::factory()->create([
-            'profile_id' => $userProfile->id,
             'api_token' => bin2hex(random_bytes(32)), // Generate random token
         ]);
-
-        // Manually set a default profile to avoid the middleware's auto-fix behavior for this test
-        UserProfile::where('name', User::ROLE_USER)->firstOrCreate();
-        
-        $user->profile_id = null; // Remove it again
+        \Illuminate\Support\Facades\DB::table('users')->where('id', $user->id)->update(['profile_id' => null]);
         
         // Create a protected route that requires authentication only (no role restriction)
-        Route::middleware(['auth:api'])->get('/protected-auth', function () {
+        Route::middleware(['custom.auth'])->get('/protected-auth', function () {
             return response()->json([
                 'message' => 'Access granted.',
             ], 200);
@@ -193,7 +190,7 @@ class CustomAuthMiddlewareTest extends TestCase
 
         // Make request with valid token but user has no profile (will fail validation)
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->get('/protected-auth');
+            ->getJson('/protected-auth');
 
         $response->assertStatus(403);
         $response->assertJson([
@@ -205,7 +202,7 @@ class CustomAuthMiddlewareTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_allows_access_when_user_has_valid_token_and_active_status()
     {
         // Create user with technician profile and API token, active status
@@ -218,7 +215,7 @@ class CustomAuthMiddlewareTest extends TestCase
         ]);
 
         // Create a protected route that requires authentication only (no role restriction)
-        Route::middleware(['auth:api'])->get('/protected-auth', function () {
+        Route::middleware(['custom.auth'])->get('/protected-auth', function () {
             return response()->json([
                 'message' => 'Access granted.',
                 'user_id' => Auth::guard('api')->id(),
@@ -233,7 +230,7 @@ class CustomAuthMiddlewareTest extends TestCase
         $response->assertJson(['message' => 'Access granted.']);
     }
 
-    /** @test */
+    #[Test]
     public function it_allows_access_when_user_has_multiple_roles()
     {
         // Create user with technician profile and API token, active status
@@ -246,7 +243,7 @@ class CustomAuthMiddlewareTest extends TestCase
         ]);
 
         // Create a protected route that requires authentication only (no role restriction)
-        Route::middleware(['auth:api'])->get('/protected-auth', function () {
+        Route::middleware(['custom.auth'])->get('/protected-auth', function () {
             return response()->json([
                 'message' => 'Access granted.',
             ], 200);
@@ -259,7 +256,7 @@ class CustomAuthMiddlewareTest extends TestCase
         $response->assertStatus(200);
     }
 
-    /** @test */
+    #[Test]
     public function it_allows_access_when_user_has_admin_role()
     {
         // Create user with admin profile and API token, active status
@@ -272,7 +269,7 @@ class CustomAuthMiddlewareTest extends TestCase
         ]);
 
         // Create a protected route that requires authentication only (no role restriction)
-        Route::middleware(['auth:api'])->get('/protected-auth', function () {
+        Route::middleware(['custom.auth'])->get('/protected-auth', function () {
             return response()->json([
                 'message' => 'Access granted.',
             ], 200);
@@ -285,7 +282,7 @@ class CustomAuthMiddlewareTest extends TestCase
         $response->assertStatus(200);
     }
 
-    /** @test */
+    #[Test]
     public function it_allows_access_when_user_has_no_role()
     {
         // Create user with technician profile and API token, active status
@@ -298,7 +295,7 @@ class CustomAuthMiddlewareTest extends TestCase
         ]);
 
         // Create a protected route that requires authentication only (no role restriction)
-        Route::middleware(['auth:api'])->get('/protected-auth', function () {
+        Route::middleware(['custom.auth'])->get('/protected-auth', function () {
             return response()->json([
                 'message' => 'Access granted.',
             ], 200);
@@ -311,7 +308,7 @@ class CustomAuthMiddlewareTest extends TestCase
         $response->assertStatus(200);
     }
 
-    /** @test */
+    #[Test]
     public function it_allows_access_when_user_has_bearer_token()
     {
         // Create user with technician profile and API token, active status
@@ -324,7 +321,7 @@ class CustomAuthMiddlewareTest extends TestCase
         ]);
 
         // Create a protected route that requires authentication only (no role restriction)
-        Route::middleware(['auth:api'])->get('/protected-auth', function () {
+        Route::middleware(['custom.auth'])->get('/protected-auth', function () {
             return response()->json([
                 'message' => 'Access granted.',
             ], 200);
@@ -332,12 +329,12 @@ class CustomAuthMiddlewareTest extends TestCase
 
         // Make request with Bearer token (alternative to X-Auth-Token)
         $response = $this->withHeader('Authorization', 'Bearer ' . bin2hex(random_bytes(32)))
-            ->get('/protected-auth');
+            ->getJson('/protected-auth');
 
         $response->assertStatus(401);
     }
 
-    /** @test */
+    #[Test]
     public function it_allows_access_when_user_has_cookie_token()
     {
         // Create user with technician profile and API token, active status
@@ -350,15 +347,15 @@ class CustomAuthMiddlewareTest extends TestCase
         ]);
 
         // Create a protected route that requires authentication only (no role restriction)
-        Route::middleware(['auth:api'])->get('/protected-auth', function () {
+        Route::middleware(['custom.auth'])->get('/protected-auth', function () {
             return response()->json([
                 'message' => 'Access granted.',
             ], 200);
         })->name('test.protected.auth');
 
         // Make request with cookie token (alternative to X-Auth-Token)
-        $response = $this->withCookie(cookie(): 'api_token', bin2hex(random_bytes(32)))
-            ->get('/protected-auth');
+        $response = $this->withCookie('api_token', bin2hex(random_bytes(32)))
+            ->getJson('/protected-auth');
 
         $response->assertStatus(401);
     }

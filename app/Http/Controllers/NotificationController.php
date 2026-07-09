@@ -2,47 +2,85 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\TestMail;
 use App\Models\Notification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+use OpenApi\Attributes as OA;
 
 class NotificationController extends Controller
 {
-    /**
-     * Lista as notificações pertencentes ao utilizador autenticado.
-     */
+    #[OA\Get(
+        path: '/notifications',
+        tags: ['Notifications'],
+        summary: 'Listar notificações do utilizador',
+        security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
+        responses: [
+            new OA\Response(response: 200, description: 'Lista paginada de notificações')
+        ]
+    )]
     public function index(Request $request)
     {
-        // Obtém com segurança a instância do utilizador com base no token fornecido
+        // Cada utilizador só vê as notificações que lhe pertencem.
         $user = $this->authenticatedUser($request);
 
-        // Isto permite ao utilizador aceder a todo o histórico de alertas e mensagens através do frontend,
-        // dividindo os registos em blocos (ex: 15 notificações por página) de forma eficiente.
         $notifications = Notification::where('user_id', $user->id)
             ->orderByDesc('created_at')
-            ->paginate(15); // Fornece dados paginados juntamente com metadados estruturados
+            ->paginate(15);
 
         return response()->json(['notifications' => $notifications]);
     }
 
-    /**
-     * Marca uma notificação específica como lida, validando a respetiva propriedade.
-     */
+    #[OA\Patch(
+        path: '/notifications/{id}',
+        tags: ['Notifications'],
+        summary: 'Marcar notificação como lida',
+        security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
+        parameters: [
+            new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))
+        ],
+        responses: [
+            new OA\Response(response: 200, description: 'Notificação atualizada'),
+            new OA\Response(response: 404, description: 'Notificação não encontrada')
+        ]
+    )]
     public function markAsRead(Request $request, int $id)
     {
-        // Obtém com segurança a instância do utilizador com base no token fornecido
+        // Evitamos que uma notificação de outro utilizador seja marcada indevidamente.
         $user = $this->authenticatedUser($request);
 
-        // Garante que o utilizador apenas consegue encontrar
-        // e alterar notificações que lhe pertencem diretamente (scope por 'user_id').
         $notification = Notification::where('user_id', $user->id)->find($id);
         if (!$notification) {
             return response()->json(['message' => 'Notificação não encontrada'], 404);
         }
 
-        // Atualiza o estado da notificação para lida
         $notification->is_read = true;
         $notification->save();
 
         return response()->json(['notification' => $notification]);
+    }
+
+    #[OA\Post(
+        path: '/notifications/test-email',
+        tags: ['Notifications'],
+        summary: 'Enviar email de teste via Mailgun',
+        security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
+        responses: [
+            new OA\Response(response: 200, description: 'Email de teste enviado')
+        ]
+    )]
+    public function sendTestEmail(Request $request)
+    {
+        // O envio usa o mailer de fallback configurado para demonstração e crédito extra.
+        $user = $this->authenticatedUser($request);
+
+        Mail::mailer('mailgun_fallback')->to($user->email)->send(new TestMail($user->name));
+        Log::info('Mailgun fallback test email sent', ['user_id' => $user->id, 'email' => $user->email]);
+
+        return response()->json([
+            'message' => 'Email de teste enviado com sucesso via Mailgun/SendGrid fallback.',
+            'mailer' => 'mailgun_fallback',
+        ]);
     }
 }

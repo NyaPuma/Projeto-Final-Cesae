@@ -71,4 +71,13 @@ class UiController extends Controller
         // Retorna todos os equipamentos com as respetivas salas
         return response()->json(['equipments' => Equipment::with('room')->orderBy('name')->paginate(15)]);
     }
+
+    /**
+     * Mostra a página de analytics com gráficos e relatórios.
+     */
+    public function analytics(Request $request)
+    {
+        $user = $this->authenticatedUser($request);
+        return view('ui.analytics', ['user' => $user]);
+    }
 }

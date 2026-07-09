@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\TicketCreated;
 use App\Models\Equipment;
 use App\Models\Room;
 use App\Models\Ticket;
 use App\Models\TicketAttachment;
 use App\Models\TicketComment;
 use App\Models\User;
+use App\Events\TicketCreatedBroadcast;
+use App\Events\TicketStatusUpdatedBroadcast;
+use App\Notifications\TicketStatusChanged;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use App\Mail\TicketCreated;
+use OpenApi\Attributes as OA;
 
 class TicketController extends Controller
 {
@@ -30,15 +34,38 @@ class TicketController extends Controller
      * - Apenas utilizadores comuns (`ROLE_USER`) podem criar.
      * - Valida título/descrição e a atividade do equipamento/sala.
      */
+    #[OA\Post(
+        path: '/tickets',
+        tags: ['Tickets'],
+        summary: 'Criar ticket',
+        security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                required: ['title', 'description'],
+                properties: [
+                    new OA\Property(property: 'title', type: 'string', example: 'Projetor não liga'),
+                    new OA\Property(property: 'description', type: 'string', example: 'O projetor da sala 4 não responde.'),
+                    new OA\Property(property: 'equipment_id', type: 'integer', nullable: true, example: 12),
+                    new OA\Property(property: 'room_id', type: 'integer', nullable: true, example: 3),
+                    new OA\Property(property: 'priority', type: 'string', example: 'alta'),
+                ],
+                type: 'object'
+            )
+        ),
+        responses: [
+            new OA\Response(response: 201, description: 'Ticket criado'),
+            new OA\Response(response: 422, description: 'Erro de validação')
+        ]
+    )]
     public function store(Request $request)
     {
-        // Alterado de $request->user() para o método centralizado da API
-        // para garantir a integridade da sessão baseada no token customizado.
+        // Usamos o método centralizado da API para garantir a sessão baseada no token customizado.
         $user = $this->authenticatedUser($request);
 
         $data = $request->only(['title', 'description', 'equipment_id', 'room_id', 'priority']);
 
-        // Validação dos campos recebidos pelo pedido
+        // Validamos apenas os dados que entram no ticket para manter o registo consistente.
         $validator = Validator::make($data, [
             'title'        => ['required', 'string', 'max:255'],
             'description'  => ['required', 'string'],
@@ -51,7 +78,7 @@ class TicketController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        // Se for informado um equipamento, valida que existe e está ativo
+        // Se o ticket apontar para equipamento, confirmamos que o registo existe e está ativo.
         if (!empty($data['equipment_id'])) {
             $equipment = Equipment::find($data['equipment_id']);
             if (!$equipment || !$equipment->active) {
@@ -59,7 +86,7 @@ class TicketController extends Controller
             }
         }
 
-        // Se for informada uma sala, valida que existe e está ativa
+        // O mesmo controlo aplica-se à sala associada ao ticket.
         if (!empty($data['room_id'])) {
             $room = Room::find($data['room_id']);
             if (!$room || !$room->active) {
@@ -81,13 +108,15 @@ class TicketController extends Controller
         ]);
 
         if ($user->email) {
-            // Carrega as relações antes do envio para que a View tenha acesso aos nomes
+            // Carregamos as relações antes do envio para a notificação ter contexto completo.
             $ticket->load(['equipment', 'room', 'user']);
 
-            // Dispara o email assíncrono (usando a classe TicketCreated)
+            // O email de criação é enviado através da mailable dedicada ao evento.
             \Illuminate\Support\Facades\Mail::to($user->email)
                 ->send(new \App\Mail\TicketCreated($ticket));
         }
+
+        event(new TicketCreatedBroadcast($ticket));
 
         return response()->json(['ticket' => $ticket], 201);
     }
@@ -97,13 +126,29 @@ class TicketController extends Controller
      * - Utilizadores normais veem exclusivamente os seus próprios tickets.
      * - Técnicos e Administradores têm visibilidade global sobre os registos.
      */
+    #[OA\Get(
+        path: '/tickets',
+        tags: ['Tickets'],
+        summary: 'Listar tickets',
+        security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
+        parameters: [
+            new OA\Parameter(name: 'status', in: 'query', required: false, schema: new OA\Schema(type: 'string')),
+            new OA\Parameter(name: 'priority', in: 'query', required: false, schema: new OA\Schema(type: 'string')),
+            new OA\Parameter(name: 'equipment_id', in: 'query', required: false, schema: new OA\Schema(type: 'integer')),
+            new OA\Parameter(name: 'room_id', in: 'query', required: false, schema: new OA\Schema(type: 'integer')),
+            new OA\Parameter(name: 'technician_id', in: 'query', required: false, schema: new OA\Schema(type: 'integer')),
+        ],
+        responses: [
+            new OA\Response(response: 200, description: 'Lista paginada de tickets')
+        ]
+    )]
     public function index(Request $request)
     {
         $user = $this->authenticatedUser($request);
 
         $query = Ticket::query()->with(['equipment', 'room', 'technician', 'user']);
 
-        // Filtro de scope: utilizadores comuns veem apenas os seus tickets
+        // O scope muda conforme o papel: utilizadores comuns só veem os próprios tickets.
         if ($user->isCommon()) {
             $query->where('user_id', $user->id);
         }
@@ -132,8 +177,7 @@ class TicketController extends Controller
             }
         }
 
-        // Substituído o 'get()' massivo por 'paginate()' para evitar quebras de memória
-        // em base de dados de produção volumosas, facilitando a navegação do frontend por páginas.
+        // Paginação evita respostas demasiado pesadas em bases de dados maiores.
         $tickets = $query->orderBy('created_at', 'desc')->paginate(15);
 
         return response()->json(['tickets' => $tickets]);
@@ -151,7 +195,7 @@ class TicketController extends Controller
             return response()->json(['message' => 'Ticket não encontrado'], 404);
         }
 
-        // Defesa contra quebra de privilégios (IDOR)
+        // Defesa contra IDOR: um utilizador comum só pode ver os próprios tickets.
         if ($user->isCommon() && $ticket->user_id !== $user->id) {
             return response()->json(['message' => 'Acesso negado'], 403);
         }
@@ -200,11 +244,19 @@ class TicketController extends Controller
             return response()->json(['message' => 'Só é possível iniciar tickets abertos'], 422);
         }
 
+        $oldStatus          = Ticket::STATUS_OPEN;
         $inProgressStatusId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
-        $ticket->status_id = $inProgressStatusId;
-        $ticket->assigned_to = $user->id;
+        $ticket->status_id  = $inProgressStatusId;
+        $ticket->assigned_to    = $user->id;
         $ticket->in_progress_at = now();
         $ticket->save();
+
+        // Notificamos o criador para manter o fluxo visível em tempo real e por email.
+        if ($ticket->user && $ticket->user->email) {
+            $ticket->user->notify(new TicketStatusChanged($ticket, $oldStatus, Ticket::STATUS_IN_PROGRESS));
+        }
+
+        event(new TicketStatusUpdatedBroadcast($ticket, $oldStatus, Ticket::STATUS_IN_PROGRESS));
 
         return response()->json(['ticket' => $ticket]);
     }
@@ -246,7 +298,8 @@ class TicketController extends Controller
             }
         }
 
-        $ticket->assignToTechnician($technician);
+        $ticket->assigned_to = $technician->id;
+        $ticket->save();
 
         return response()->json(['ticket' => $ticket]);
     }
@@ -347,17 +400,23 @@ class TicketController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $path = $request->file('photo')->store('tickets', 'public');
+        $file = $request->file('photo');
+        $path = $file->store('ticket_photos', 'public');
+        $url = Storage::disk('public')->url($path);
+
         $attachment = TicketAttachment::create([
             'ticket_id' => $ticket->id,
             'user_id'   => $user->id,
-            'file_name' => $request->file('photo')->getClientOriginalName(),
+            'file_name' => $file->getClientOriginalName(),
             'path'      => $path,
-            'mime_type' => $request->file('photo')->getClientMimeType(),
-            'size'      => $request->file('photo')->getSize(),
+            'mime_type' => $file->getClientMimeType(),
+            'size'      => $file->getSize(),
         ]);
 
-        return response()->json(['attachment' => $attachment], 201);
+        return response()->json([
+            'attachment' => $attachment,
+            'url' => $url,
+        ], 201);
     }
 
     /**
@@ -406,12 +465,20 @@ class TicketController extends Controller
             return response()->json(['message' => 'Só é possível encerrar tickets em curso'], 422);
         }
 
+        $oldStatus      = Ticket::STATUS_IN_PROGRESS;
         $closedStatusId = Ticket::getStatusIdByName(Ticket::STATUS_CLOSED);
-        $ticket->status_id = $closedStatusId;
+        $ticket->status_id    = $closedStatusId;
         $ticket->minutes_spent = $data['minutes_spent'];
-        $ticket->cost = $data['cost'];
-        $ticket->closed_at = now();
+        $ticket->cost          = $data['cost'];
+        $ticket->closed_at     = now();
         $ticket->save();
+
+        // Mantemos a mesma notificação quando o ticket é fechado.
+        if ($ticket->user && $ticket->user->email) {
+            $ticket->user->notify(new TicketStatusChanged($ticket, $oldStatus, Ticket::STATUS_CLOSED));
+        }
+
+        event(new TicketStatusUpdatedBroadcast($ticket, $oldStatus, Ticket::STATUS_CLOSED));
 
         return response()->json(['ticket' => $ticket]);
     }
@@ -538,5 +605,104 @@ class TicketController extends Controller
     public function calendarView(Request $request)
     {
         return view('calendar');
+    }
+
+    /**
+     * Pesquisa avançada de tickets com filtros combinados:
+     * texto livre, estado, prioridade, intervalo de datas, equipamento e técnico.
+     * Acessível a qualquer utilizador autenticado (com scope de visibilidade por role).
+     */
+    #[OA\Get(
+        path: '/tickets/search',
+        tags: ['Tickets'],
+        summary: 'Pesquisa avançada de tickets',
+        security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
+        parameters: [
+            new OA\Parameter(name: 'q', in: 'query', required: false, schema: new OA\Schema(type: 'string')),
+            new OA\Parameter(name: 'status', in: 'query', required: false, schema: new OA\Schema(type: 'string')),
+            new OA\Parameter(name: 'priority', in: 'query', required: false, schema: new OA\Schema(type: 'string')),
+            new OA\Parameter(name: 'equipment_id', in: 'query', required: false, schema: new OA\Schema(type: 'integer')),
+            new OA\Parameter(name: 'technician_id', in: 'query', required: false, schema: new OA\Schema(type: 'integer')),
+            new OA\Parameter(name: 'date_from', in: 'query', required: false, schema: new OA\Schema(type: 'string', format: 'date')),
+            new OA\Parameter(name: 'date_to', in: 'query', required: false, schema: new OA\Schema(type: 'string', format: 'date')),
+        ],
+        responses: [
+            new OA\Response(response: 200, description: 'Resultados da pesquisa'),
+            new OA\Response(response: 422, description: 'Erro de validação')
+        ]
+    )]
+    public function search(Request $request)
+    {
+        $user = $this->authenticatedUser($request);
+
+        $validator = Validator::make($request->all(), [
+            'q'              => ['nullable', 'string', 'max:255'],
+            'status'         => ['nullable', 'string'],
+            'priority'       => ['nullable', 'string', 'in:baixa,média,alta,crítica'],
+            'equipment_id'   => ['nullable', 'integer'],
+            'technician_id'  => ['nullable', 'integer'],
+            'date_from'      => ['nullable', 'date'],
+            'date_to'        => ['nullable', 'date', 'after_or_equal:date_from'],
+            'per_page'       => ['nullable', 'integer', 'min:5', 'max:100'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $query = Ticket::query()->with(['equipment', 'room', 'technician', 'user', 'status']);
+
+        // Scope por role: utilizadores comuns veem apenas os seus próprios tickets
+        if ($user->isCommon()) {
+            $query->where('user_id', $user->id);
+        }
+
+        // Pesquisa de texto livre no título e descrição
+        if ($request->filled('q')) {
+            $term = '%' . $request->input('q') . '%';
+            $query->where(function ($q) use ($term) {
+                $q->where('title', 'LIKE', $term)
+                  ->orWhere('description', 'LIKE', $term);
+            });
+        }
+
+        // Filtro por estado
+        if ($request->filled('status')) {
+            $statusId = Ticket::getStatusIdByName($request->input('status'));
+            if ($statusId) {
+                $query->where('status_id', $statusId);
+            }
+        }
+
+        // Filtro por prioridade
+        if ($request->filled('priority')) {
+            $query->where('priority', $request->input('priority'));
+        }
+
+        // Filtro por equipamento
+        if ($request->filled('equipment_id')) {
+            $query->where('equipment_id', intval($request->input('equipment_id')));
+        }
+
+        // Filtro por técnico atribuído
+        if ($request->filled('technician_id')) {
+            $query->where('assigned_to', intval($request->input('technician_id')));
+        }
+
+        // Filtro por intervalo de datas de abertura
+        if ($request->filled('date_from')) {
+            $query->whereDate('opened_at', '>=', $request->input('date_from'));
+        }
+        if ($request->filled('date_to')) {
+            $query->whereDate('opened_at', '<=', $request->input('date_to'));
+        }
+
+        $perPage = $request->input('per_page', 15);
+        $tickets = $query->orderBy('created_at', 'desc')->paginate($perPage);
+
+        return response()->json([
+            'tickets' => $tickets,
+            'filters' => $request->only(['q', 'status', 'priority', 'equipment_id', 'technician_id', 'date_from', 'date_to']),
+        ]);
     }
 }

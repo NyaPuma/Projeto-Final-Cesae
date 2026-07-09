@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AnalyticsController;
-use App\Http\Controllers\ApiDocsController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UiController;
 use App\Http\Controllers\AuditController;
@@ -23,9 +23,9 @@ Route::get('/ui/login', function () {
 })->name('ui.login');
 
 // Documentação da API
-Route::get('/docs/openapi', [ApiDocsController::class, 'swagger']);
+Route::redirect('/docs/openapi', '/api/documentation');
 
-// Endpoints Públicos de Autenticação (Guest) - com rate limiting
+// Endpoints Públicos de Autenticação (Guest) - Com Throttle nativo do Laravel
 Route::post('/register', [AuthController::class, 'register'])->middleware(['rate.limit:5,1']);
 Route::post('/login',    [AuthController::class, 'login'])->middleware(['rate.limit:5,1']);
 
@@ -40,33 +40,27 @@ Route::middleware(['custom.auth'])->group(function () {
     // Ações de conta comuns a qualquer utilizador logado
     Route::post('/logout',           [AuthController::class, 'logout']);
     Route::post('/password/change',  [AuthController::class, 'changePassword']);
+    Route::get('/notifications', [NotificationController::class, 'index']);
+    Route::patch('/notifications/{id}', [NotificationController::class, 'markAsRead']);
+    Route::post('/notifications/test-email', [NotificationController::class, 'sendTestEmail']);
 
     // ========================================
-    // Rotas de Interface Web (UI) Protegidas
+    // Rotas Gerais (Acesso para todos os autenticados)
     // ========================================
+    Route::get('/ui',              [UiController::class, 'index']);
+    Route::get('/ui/tickets',      [UiController::class, 'tickets']);
+    Route::get('/ui/tickets/{id}', [UiController::class, 'ticketDetail']);
+    Route::get('/ui/equipments',   [UiController::class, 'equipments']);
+    Route::get('/equipments',      [UiController::class, 'getEquipments']);
 
-    // UI - Acesso para todos os utilizadores autenticados
-    Route::middleware([])->group(function () {
-        Route::get('/ui',            [UiController::class, 'index']);
-        Route::get('/ui/tickets',    [UiController::class, 'tickets']);
-        Route::get('/ui/tickets/{id}', [UiController::class, 'ticketDetail']);
-        Route::get('/ui/equipments', [UiController::class, 'equipments']);
-        Route::get('/equipments',    [UiController::class, 'getEquipments']);
-    });
-
-    // UI - Acesso para Técnicos e Administradores
-    Route::middleware(['role:technician,admin'])->group(function () {
-        Route::get('/ui/users',      [UiController::class, 'users']);
-        Route::get('/ui/audits',     [UiController::class, 'audits']);
-    });
-
-    // Consultas gerais e interações nos tickets (Policiamento fino feito por ID nos métodos)
-    Route::get('/tickets',              [TicketController::class, 'index']);
-    Route::get('/tickets/{id}',         [TicketController::class, 'show']);
-    Route::post('/tickets/{id}/comments', [TicketController::class, 'addComment']);
-    Route::get('/tickets/{id}/comments',  [TicketController::class, 'listComments']);
-    Route::post('/tickets/{id}/photos',   [TicketController::class, 'uploadPhoto']);
-    Route::get('/tickets/{id}/photos',    [TicketController::class, 'listPhotos']);
+    // Consultas gerais e interações nos tickets
+    Route::get('/tickets/search',             [TicketController::class, 'search']);
+    Route::get('/tickets',                    [TicketController::class, 'index']);
+    Route::get('/tickets/{id}',               [TicketController::class, 'show']);
+    Route::post('/tickets/{id}/comments',     [TicketController::class, 'addComment']);
+    Route::get('/tickets/{id}/comments',      [TicketController::class, 'listComments']);
+    Route::post('/tickets/{id}/photos',       [TicketController::class, 'uploadPhoto']);
+    Route::get('/tickets/{id}/photos',        [TicketController::class, 'listPhotos']);
 
     // Rotas de Fluxo Misto/Avançado
     Route::post('/tickets/{id}/reopen',   [TicketController::class, 'reopenTicket']);
@@ -76,6 +70,7 @@ Route::middleware(['custom.auth'])->group(function () {
      |-- Área do Funcionário / Operário Comum
      |----------------------------------------------------------------------*/
     Route::middleware(['role:user'])->group(function () {
+        // Criar tickets
         Route::post('/tickets', [TicketController::class, 'store']);
     });
 
@@ -92,7 +87,12 @@ Route::middleware(['custom.auth'])->group(function () {
      |-- Área Partilhada (Técnicos e Administradores)
      |----------------------------------------------------------------------*/
     Route::middleware(['role:technician,admin'])->group(function () {
-        Route::get('/technician/tickets/open',      [TicketController::class, 'openTickets']);
+        // UI de acessos partilhados
+        Route::get('/ui/users',  [UiController::class, 'users']);
+        Route::get('/ui/audits', [UiController::class, 'audits']);
+
+        // Ações operacionais
+        Route::get('/technician/tickets/open',         [TicketController::class, 'openTickets']);
         Route::post('/tickets/{id}/assign-technician', [TicketController::class, 'assignTechnician']);
 
         // Calendário Operacional
@@ -100,9 +100,14 @@ Route::middleware(['custom.auth'])->group(function () {
         Route::get('/calendar',        [TicketController::class, 'calendarView']);
 
         // Módulo Analítico e Relatórios
-        Route::get('/analytics',            [AnalyticsController::class, 'stats']);
-        Route::get('/analytics/export/csv', [AnalyticsController::class, 'exportCsv']);
-        Route::get('/analytics/export/pdf', [AnalyticsController::class, 'exportPdf']);
+        Route::get('/analytics',                [AnalyticsController::class, 'stats']);
+        Route::get('/analytics/charts',         [AnalyticsController::class, 'charts']);
+        Route::get('/analytics/export/csv',     [AnalyticsController::class, 'exportCsv']);
+        Route::get('/analytics/export/pdf',     [AnalyticsController::class, 'exportPdf']);
+        Route::get('/analytics/export/excel',   [AnalyticsController::class, 'exportExcel']);
+
+        // UI de Analytics
+        Route::get('/ui/analytics',             [UiController::class, 'analytics']);
     });
 
     /*
@@ -113,12 +118,12 @@ Route::middleware(['custom.auth'])->group(function () {
         Route::get('/admin/audits', [AuditController::class, 'index']);
 
         // Gestão de Utilizadores (CRUD / Estado)
-        Route::get('/admin/users',               [AdminController::class, 'users']);
+        Route::get('/admin/users',                [AdminController::class, 'users']);
         Route::patch('/admin/users/{id}/inactive', [AdminController::class, 'inactivateUser']);
 
         // Gestão do Inventário de Equipamentos
-        Route::get('/admin/equipment',        [AdminController::class, 'equipments']);
-        Route::post('/admin/equipment',       [AdminController::class, 'storeEquipment']);
+        Route::get('/admin/equipment',         [AdminController::class, 'equipments']);
+        Route::post('/admin/equipment',        [AdminController::class, 'storeEquipment']);
         Route::patch('/admin/equipment/{id}',  [AdminController::class, 'updateEquipment']);
         Route::delete('/admin/equipment/{id}', [AdminController::class, 'destroyEquipment']);
 
@@ -126,9 +131,9 @@ Route::middleware(['custom.auth'])->group(function () {
         Route::patch('/admin/tickets/{id}/approve-budget', [AdminController::class, 'approveBudget']);
 
         // Gestão de Infraestrutura (Salas / Pavilhões)
-        Route::get('/admin/rooms',               [AdminController::class, 'rooms']);
-        Route::post('/admin/rooms',              [AdminController::class, 'storeRoom']);
-        Route::patch('/admin/rooms/{id}',        [AdminController::class, 'updateRoom']);
+        Route::get('/admin/rooms',                 [AdminController::class, 'rooms']);
+        Route::post('/admin/rooms',                [AdminController::class, 'storeRoom']);
+        Route::patch('/admin/rooms/{id}',          [AdminController::class, 'updateRoom']);
         Route::patch('/admin/rooms/{id}/inactive', [AdminController::class, 'inactivateRoom']);
     });
 });

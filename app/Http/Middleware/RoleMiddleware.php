@@ -3,92 +3,73 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Contracts\Auth\Factory as AuthFactory;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\User;
 use App\Models\Userprofile as UserProfile;
+use Illuminate\Support\Facades\Auth;
 
 class RoleMiddleware
 {
     /**
-     * The authentication factory instance.
-     */
-    protected AuthFactory $auth;
-
-    /**
-     * Create a new middleware instance.
-     */
-    public function __construct(AuthFactory $auth)
-    {
-        $this->auth = $auth;
-    }
-
-    /**
      * Handle an incoming request and delegate to the next middleware in the chain.
-     * 
+     *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
-     * @param  string...$roles The roles that are allowed to access this route
+     * @param  string  ...$roles The roles that are allowed to access this route
      * @return Response
      */
-    public function handle(Request $request, Closure $next, ...:roles): Response
+    public function handle(Request $request, Closure $next, string ...$roles): Response
     {
-        // Get the authenticated user via API token or session (CustomAuthMiddleware handles initial auth)
-        $token = $request->header('X-Auth-Token') ?: $request->bearerToken();
+        /** @var \App\Models\User|null $user */
+        $user = Auth::user();
 
-        if (!$token) {
-            return response()->json([
-                'message' => 'Autenticação necessária.',
-            ], 401);
-        }
-
-        // Get user with profile eager loading to avoid N+1 queries
-        try {
-            $user = User::where('api_token', $token)
-                ->with('profile')
-                ->first();
-        } catch (ModelNotFoundException $e) {
-            return response()->json([
-                'message' => 'Autenticação necessária.',
-            ], 401);
-        }
-
+        // Se por algum motivo o utilizador não estiver autenticado nesta requisição
         if (!$user || !$user->active) {
-            // Clear the API token cookie if it exists
-            if ($request->hasCookie('api_token')) {
-                $response = redirect('/ui/login')->withCookie(cookie()->forget('api_token'));
-                return $response;
+            if ($request->expectsJson() || $request->wantsJson()) {
+                return response()->json([
+                    'message' => 'Autenticação necessária.',
+                ], 401);
             }
 
-            return response()->json([
-                'message' => 'Autenticação necessária.',
-            ], 401);
+            // Se veio de um cookie (Web), limpa o cookie inválido e redireciona
+            if ($request->cookies->has('api_token')) {
+                return redirect('/ui/login')->withCookie(cookie()->forget('api_token'));
+            }
+
+            return redirect('/ui/login');
         }
 
-        // Ensure user has a valid profile
+        // Garante que o utilizador tem um perfil válido atribuído
         if (!$user->profile) {
             $defaultProfile = UserProfile::where('name', User::ROLE_USER)->first();
-            
+
             if ($defaultProfile && !$user->profile_id) {
                 $user->update(['profile_id' => $defaultProfile->id]);
+                // Recarrega a relação para atualizar o objeto em memória
+                $user->load('profile');
             } else {
-                return response()->json([
-                    'message' => 'Perfil inválido.',
-                ], 403);
+                if ($request->expectsJson() || $request->wantsJson()) {
+                    return response()->json([
+                        'message' => 'Perfil inválido.',
+                    ], 403);
+                }
+                return redirect('/ui/login');
             }
         }
 
-        // Verify if the user's role is in the allowed roles for this route
+        // Verifica se o cargo do utilizador está incluído nos cargos permitidos para esta rota
         if (!in_array($user->profile->name, $roles)) {
-            return response()->json([
-                'message' => 'Acesso proibido para o seu perfil.',
-            ], 403);
+            if ($request->expectsJson() || $request->wantsJson()) {
+                return response()->json([
+                    'message' => 'Acesso proibido para o seu perfil.',
+                ], 403);
+            }
+
+            // Se for na Interface Web, redireciona para a Dashboard geral com um aviso
+            return redirect('/ui')->with('error', 'Não tem permissões para aceder a esta página.');
         }
 
-        // Proceed with request
         return $next($request);
     }
 }

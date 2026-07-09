@@ -1,0 +1,182 @@
+<?php
+
+namespace Tests\Feature;
+
+use App\Models\User;
+use App\Models\Userprofile as UserProfile;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
+use Tests\TestCase;
+
+class UiAuthorizationTest extends TestCase
+{
+    use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        UserProfile::create(['name' => User::ROLE_USER]);
+        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
+        UserProfile::create(['name' => User::ROLE_ADMIN]);
+        $this->artisan('db:seed', ['--class' => 'TicketLookupSeeder', '--force' => true]);
+    }
+
+    public function test_guest_is_redirected_from_ui_pages(): void
+    {
+        $this->get('/ui')->assertRedirect('/ui/login');
+        $this->get('/ui/tickets')->assertRedirect('/ui/login');
+        $this->get('/ui/equipments')->assertRedirect('/ui/login');
+        $this->get('/ui/tickets/1')->assertRedirect('/ui/login');
+        $this->get('/ui/users')->assertRedirect('/ui/login');
+        $this->get('/ui/audits')->assertRedirect('/ui/login');
+        $this->get('/ui/analytics')->assertRedirect('/ui/login');
+    }
+
+    public function test_common_user_is_blocked_from_analytics_and_admin_ui(): void
+    {
+        $userProfile = UserProfile::where('name', User::ROLE_USER)->firstOrFail();
+        $user = User::factory()->create([
+            'profile_id' => $userProfile->id,
+            'api_token' => Str::random(60),
+        ]);
+
+        $this->withHeader('X-Auth-Token', $user->api_token)
+            ->getJson('/ui/analytics')
+            ->assertStatus(403);
+
+        $this->withHeader('X-Auth-Token', $user->api_token)
+            ->getJson('/ui/audits')
+            ->assertStatus(403);
+
+        $this->withHeader('X-Auth-Token', $user->api_token)
+            ->getJson('/ui/users')
+            ->assertStatus(403);
+
+        $this->withHeader('X-Auth-Token', $user->api_token)
+            ->getJson('/admin/users')
+            ->assertStatus(403);
+
+        $this->withHeader('X-Auth-Token', $user->api_token)
+            ->getJson('/admin/audits')
+            ->assertStatus(403);
+    }
+
+    public function test_technician_can_access_shared_ui_but_not_admin_backoffice(): void
+    {
+        $techProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->firstOrFail();
+        $technician = User::factory()->create([
+            'profile_id' => $techProfile->id,
+            'api_token' => Str::random(60),
+        ]);
+
+        $this->withHeader('X-Auth-Token', $technician->api_token)
+            ->get('/ui')
+            ->assertOk();
+
+        $this->withHeader('X-Auth-Token', $technician->api_token)
+            ->get('/ui/analytics')
+            ->assertOk();
+
+        $this->withHeader('X-Auth-Token', $technician->api_token)
+            ->get('/ui/audits')
+            ->assertOk();
+
+        $this->withHeader('X-Auth-Token', $technician->api_token)
+            ->get('/ui/equipments')
+            ->assertOk();
+
+        $this->withHeader('X-Auth-Token', $technician->api_token)
+            ->get('/ui/tickets/1')
+            ->assertOk();
+
+        $this->withHeader('X-Auth-Token', $technician->api_token)
+            ->getJson('/admin/users')
+            ->assertStatus(403);
+
+        $this->withHeader('X-Auth-Token', $technician->api_token)
+            ->getJson('/admin/audits')
+            ->assertStatus(403);
+
+        $this->withHeader('X-Auth-Token', $technician->api_token)
+            ->getJson('/admin/equipment')
+            ->assertStatus(403);
+
+        $this->withHeader('X-Auth-Token', $technician->api_token)
+            ->getJson('/admin/rooms')
+            ->assertStatus(403);
+    }
+
+    public function test_common_user_can_access_general_ui_pages_but_not_shared_backoffice_pages(): void
+    {
+        $userProfile = UserProfile::where('name', User::ROLE_USER)->firstOrFail();
+        $user = User::factory()->create([
+            'profile_id' => $userProfile->id,
+            'api_token' => Str::random(60),
+        ]);
+
+        $this->withHeader('X-Auth-Token', $user->api_token)
+            ->get('/ui')
+            ->assertOk();
+
+        $this->withHeader('X-Auth-Token', $user->api_token)
+            ->get('/ui/tickets')
+            ->assertOk();
+
+        $this->withHeader('X-Auth-Token', $user->api_token)
+            ->get('/ui/equipments')
+            ->assertOk();
+
+        $this->withHeader('X-Auth-Token', $user->api_token)
+            ->getJson('/ui/users')
+            ->assertStatus(403);
+
+        $this->withHeader('X-Auth-Token', $user->api_token)
+            ->getJson('/ui/audits')
+            ->assertStatus(403);
+
+        $this->withHeader('X-Auth-Token', $user->api_token)
+            ->getJson('/ui/analytics')
+            ->assertStatus(403);
+    }
+
+    public function test_only_common_user_role_can_create_tickets(): void
+    {
+        $userProfile = UserProfile::where('name', User::ROLE_USER)->firstOrFail();
+        $techProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->firstOrFail();
+        $adminProfile = UserProfile::where('name', User::ROLE_ADMIN)->firstOrFail();
+
+        $commonUser = User::factory()->create([
+            'profile_id' => $userProfile->id,
+            'api_token' => Str::random(60),
+        ]);
+        $technician = User::factory()->create([
+            'profile_id' => $techProfile->id,
+            'api_token' => Str::random(60),
+        ]);
+        $admin = User::factory()->create([
+            'profile_id' => $adminProfile->id,
+            'api_token' => Str::random(60),
+        ]);
+
+        $payload = [
+            'title' => 'Unauthorized ticket',
+            'description' => 'This should only be possible for the common user',
+            'priority' => 'média',
+            'equipment_id' => 1,
+            'room_id' => 1,
+        ];
+
+        $this->withHeader('X-Auth-Token', $commonUser->api_token)
+            ->postJson('/tickets', $payload)
+            ->assertStatus(422);
+
+        $this->withHeader('X-Auth-Token', $technician->api_token)
+            ->postJson('/tickets', $payload)
+            ->assertStatus(403);
+
+        $this->withHeader('X-Auth-Token', $admin->api_token)
+            ->postJson('/tickets', $payload)
+            ->assertStatus(403);
+    }
+}

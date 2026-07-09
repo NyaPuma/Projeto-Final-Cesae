@@ -119,7 +119,24 @@ async function fetchPhotos(){
         section.innerHTML = '<p>Nenhuma fotografia carregada.</p>';
         return;
     }
-    section.innerHTML = data.attachments.map((a) => `<div class="mt-2 rounded-xl border border-white/10 bg-slate-900/60 p-2"><p class="font-medium text-white">${a.file_name}</p><p class="text-xs text-slate-400">${a.mime_type || ''}</p></div>`).join('');
+    section.innerHTML = '<div class="grid grid-cols-2 gap-3 mt-2">' +
+        data.attachments.map((a) => {
+            const isImage = a.mime_type && a.mime_type.startsWith('image/');
+            const imgUrl  = '/storage/' + a.path;
+            if (isImage) {
+                return `<div class="rounded-xl overflow-hidden border border-white/10 bg-slate-900/60">
+                    <a href="${imgUrl}" target="_blank" title="${a.file_name}">
+                        <img src="${imgUrl}" alt="${a.file_name}" class="w-full h-28 object-cover hover:opacity-80 transition-opacity">
+                    </a>
+                    <p class="px-2 py-1 text-xs text-slate-400 truncate">${a.file_name}</p>
+                </div>`;
+            }
+            return `<div class="rounded-xl border border-white/10 bg-slate-900/60 p-2">
+                <p class="font-medium text-white text-xs">${a.file_name}</p>
+                <p class="text-xs text-slate-400">${a.mime_type || ''}</p>
+            </div>`;
+        }).join('') +
+    '</div>';
 }
 
 async function postComment(event){

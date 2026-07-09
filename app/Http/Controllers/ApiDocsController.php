@@ -11,6 +11,7 @@ class ApiDocsController extends Controller
      */
     public function swagger(Request $request)
     {
+        // Esta resposta é gerada manualmente para servir como fallback simples da documentação.
         $spec = [
             'openapi' => '3.0.0',
             'info' => [
@@ -18,7 +19,7 @@ class ApiDocsController extends Controller
                 'version'     => '1.0.0',
                 'description' => 'Documentação OpenAPI para gestão de tickets, equipamentos, salas e relatórios analíticos.',
             ],
-            // Define os esquemas de segurança aplicáveis a toda a API
+            // Esquemas de autenticação suportados pela aplicação e pela documentação.
             'components' => [
                 'securitySchemes' => [
                     'X-Auth-Token' => [
@@ -35,7 +36,7 @@ class ApiDocsController extends Controller
                     ],
                 ],
             ],
-            // Aplica os requisitos de segurança de forma global (pode ser sobrescrito por rotas específicas)
+            // Segurança global: as rotas públicas sobrescrevem isto quando necessário.
             'security' => [
                 ['X-Auth-Token' => []],
                 ['BearerAuth'   => []],
@@ -45,7 +46,8 @@ class ApiDocsController extends Controller
                     'post' => [
                         'summary'     => 'Iniciar sessão',
                         'description' => 'Autentica um utilizador e retorna o respetivo API Token.',
-                        'security'    => [], // Rota pública, não exige segurança
+                        // Rota pública: não exige token.
+                        'security'    => [],
                         'responses'   => [
                             '200' => ['description' => 'Autenticado com sucesso.'],
                             '401' => ['description' => 'Credenciais inválidas.'],
@@ -55,6 +57,7 @@ class ApiDocsController extends Controller
                 '/tickets' => [
                     'get' => [
                         'summary'     => 'Listar tickets',
+                        // A visibilidade dos tickets depende do papel do utilizador autenticado.
                         'description' => 'Retorna a lista de todos os tickets associados ou geridos conforme o perfil do utilizador.',
                         'responses'   => [
                             '200' => ['description' => 'Lista de tickets obtida com sucesso.'],

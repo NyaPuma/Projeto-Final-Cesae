@@ -53,6 +53,7 @@ class TicketPhotoUploadTest extends TestCase
 
         $response->assertStatus(201);
         $response->assertJsonPath('attachment.file_name', 'damage.jpg');
+        $this->assertStringStartsWith('ticket_photos/', $response->json('attachment.path'));
         $this->assertDatabaseHas('ticket_attachments', [
             'ticket_id' => $ticket->id,
             'user_id' => $user->id,
