@@ -1,85 +1,168 @@
 @extends('ui.layout')
 
 @section('content')
+
 <script>
-// Marcar que esta página requer autenticação
 window.requireAuthOnLoad = true;
 </script>
+
 @component('ui.partials.page-card', [
     'title' => 'Equipamentos',
-    'subtitle' => 'Lista dos ativos registados no sistema.',
-    'actions' => '<a href="/ui" class="rounded-full border border-cyan-400/30 bg-cyan-500/10 px-4 py-2 text-sm font-medium text-cyan-300 transition hover:bg-cyan-500/20">← Voltar ao painel</a>'
+    'subtitle' => 'Inventário centralizado de equipamentos, respetivas localizações e estado operacional.',
+    'actions' => '
+        <a href="/ui" class="btn btn-secondary">
+            📊 Dashboard
+        </a>
+    '
 ])
-    <div class="mb-4 flex flex-col gap-3 rounded-2xl border border-white/10 bg-slate-900/70 p-4 md:flex-row md:items-end">
-        <div class="flex-1">
-            <label for="equipmentSearch" class="mb-1 block text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Pesquisa</label>
-            <input id="equipmentSearch" type="text" placeholder="Pesquisar por nome, sala ou ID" class="w-full rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-2 text-sm text-white placeholder-slate-500 outline-none focus:border-cyan-500">
-        </div>
-        <div class="w-full md:w-44">
-            <label for="equipmentStatus" class="mb-1 block text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Estado</label>
-            <select id="equipmentStatus" class="w-full rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-2 text-sm text-white outline-none focus:border-cyan-500">
-                <option value="">Todos</option>
-                <option value="active">Ativos</option>
-                <option value="inactive">Inativos</option>
-            </select>
-        </div>
-    </div>
 
-    <div class="overflow-hidden rounded-2xl border border-white/10 bg-slate-950/60">
-        <table id="eqTable" class="min-w-full divide-y divide-white/10 text-sm text-slate-300">
-            <thead class="bg-slate-900/80 text-left text-slate-200"><tr><th class="px-4 py-3">ID</th><th class="px-4 py-3">Nome</th><th class="px-4 py-3">Sala</th><th class="px-4 py-3">Ativo</th></tr></thead>
-            <tbody></tbody>
-        </table>
-    </div>
+<div class="space-y-10">
+
+    {{-- SECÇÃO DE FILTROS E PESQUISA --}}
+    <section>
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <h2 class="text-lg font-bold tracking-tight">Pesquisa</h2>
+                <p class="text-sm text-soft mt-1">Filtre equipamentos por nome, localização ou estado atual.</p>
+            </div>
+            <span id="equipmentCount" class="badge badge-warning">0 equipamentos</span>
+        </div>
+
+        <div class="card p-6">
+            <div class="grid gap-6 lg:grid-cols-4">
+                <div class="lg:col-span-3">
+                    <label for="equipmentSearch" class="block text-sm font-semibold mb-2">Pesquisa Geral</label>
+                    <input
+                        id="equipmentSearch"
+                        type="text"
+                        placeholder="Pesquise por nome, localização ou código do ativo..."
+                        class="input w-full"
+                    >
+                </div>
+                <div>
+                    <label for="equipmentStatus" class="block text-sm font-semibold mb-2">Estado Operacional</label>
+                    <select id="equipmentStatus" class="input w-full">
+                        <option value="">Todos os estados</option>
+                        <option value="active">Operacionais</option>
+                        <option value="inactive">Fora de serviço</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- SECÇÃO DA TABELA DE EQUIPAMENTOS --}}
+    <section>
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <h2 class="text-lg font-bold tracking-tight">Inventário</h2>
+                <p class="text-sm text-soft mt-1">Lista detalhada de ativos e as suas localizações físicas.</p>
+            </div>
+            <span class="badge badge-success">Live</span>
+        </div>
+
+        <div class="card overflow-hidden p-0">
+            <div class="overflow-x-auto">
+                <table id="equipmentTable" class="w-full min-w-[800px]">
+                    <thead>
+                        <tr class="border-b border-[var(--border)] bg-[var(--surface-2)]">
+                            <th class="px-6 py-4 text-xs font-bold uppercase tracking-[0.12em]">Código</th>
+                            <th class="px-6 py-4 text-xs font-bold uppercase tracking-[0.12em]">Equipamento</th>
+                            <th class="px-6 py-4 text-xs font-bold uppercase tracking-[0.12em]">Localização</th>
+                            <th class="px-6 py-4 text-xs font-bold uppercase tracking-[0.12em]">Estado</th>
+                            <th class="px-6 py-4 text-right text-xs font-bold uppercase tracking-[0.12em]">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-[var(--border)]" id="equipmentTableBody">
+                        <tr>
+                            <td colspan="5" class="py-24 text-center">
+                                <div class="flex flex-col items-center justify-center gap-4">
+                                    <svg class="h-6 w-6 animate-spin text-[var(--color-primary)]" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-20" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle>
+                                        <path class="opacity-90" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.37 0 0 5.37 0 12h4z"></path>
+                                    </svg>
+                                    <p class="text-sm font-medium">A carregar inventário...</p>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+</div>
+
 @endcomponent
 @endsection
 
 @push('scripts')
 <script>
-let allEquipments = [];
+let initialEquipments = [];
 
-function isEquipmentActive(equipment) {
-    return equipment.active === true || equipment.active === 1 || equipment.active === '1' || String(equipment.active).toLowerCase() === 'true';
+document.addEventListener('DOMContentLoaded', () => {
+    loadEquipments();
+    setupFilters();
+});
+
+async function loadEquipments() {
+    const tbody = document.getElementById('equipmentTableBody');
+    try {
+        const response = await window.api.get('/api/equipments');
+        initialEquipments = response.data || [];
+        renderTable(initialEquipments);
+    } catch (error) {
+        console.error('Erro:', error);
+        tbody.innerHTML = `<tr><td colspan="5" class="py-16 text-center text-[var(--color-danger)]">Erro ao carregar equipamentos.</td></tr>`;
+    }
 }
 
-function renderEquipments() {
-    const searchValue = document.getElementById('equipmentSearch').value.toLowerCase();
-    const statusValue = document.getElementById('equipmentStatus').value;
-    const tbody = document.querySelector('#eqTable tbody');
-    tbody.innerHTML = '';
+function renderTable(equipments) {
+    const tbody = document.getElementById('equipmentTableBody');
+    const countBadge = document.getElementById('equipmentCount');
 
-    const filtered = allEquipments.filter((equipment) => {
-        const haystack = `${equipment.id} ${equipment.name || ''} ${equipment.room?.name || ''}`.toLowerCase();
-        const matchesSearch = !searchValue || haystack.includes(searchValue);
-        const matchesStatus = !statusValue || (statusValue === 'active' && isEquipmentActive(equipment)) || (statusValue === 'inactive' && !isEquipmentActive(equipment));
-        return matchesSearch && matchesStatus;
-    });
+    countBadge.textContent = `${equipments.length} equipamentos`;
 
-    if (!filtered.length) {
-        tbody.innerHTML = '<tr><td colspan="4" class="px-4 py-8 text-center text-slate-400">Nenhum equipamento encontrado.</td></tr>';
+    if (equipments.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="py-16 text-center text-soft">Nenhum registo encontrado.</td></tr>`;
         return;
     }
 
-    for (const equipment of filtered) {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td class="px-4 py-3">${equipment.id}</td><td class="px-4 py-3">${equipment.name || ''}</td><td class="px-4 py-3">${equipment.room ? equipment.room.name : ''}</td><td class="px-4 py-3">${isEquipmentActive(equipment) ? 'Sim' : 'Não'}</td>`;
-        tbody.appendChild(tr);
-    }
+    tbody.innerHTML = equipments.map(eq => `
+        <tr class="transition duration-150 hover:bg-[var(--surface-2)]">
+            <td class="px-6 py-4 font-mono text-xs font-semibold">${eq.code ?? `EQ-${String(eq.id).padStart(3, '0')}`}</td>
+            <td class="px-6 py-4">
+                <div class="font-medium text-sm">${eq.name}</div>
+                <div class="text-xs text-soft">${eq.category ?? 'Genérico'}</div>
+            </td>
+            <td class="px-6 py-4 text-sm text-soft">${eq.room ? `${eq.room.name} (${eq.room.building ?? 'Pavilhão A'})` : 'Não Alocado'}</td>
+            <td class="px-6 py-4">
+                ${eq.status === 'active' ? '<span class="badge badge-success">Operacional</span>' : '<span class="badge badge-danger">Fora de Serviço</span>'}
+            </td>
+            <td class="px-6 py-4 text-right">
+                <a href="/ui/tickets/create?equipment_id=${eq.id}" class="btn btn-sm btn-outline">Abrir Ticket</a>
+            </td>
+        </tr>
+    `).join('');
 }
 
-async function loadEquipments(){
-    const res = await fetch('/equipments', {headers: authHeader()});
-    if(res.status===401){ alert('Autenticação necessária.'); window.location='/ui/login'; return; }
-    if(res.status===403){ alert('Sem permissão para verificar equipamentos.'); return; }
-    const data = await res.json();
-    allEquipments = data.equipments || [];
-    renderEquipments();
-}
+function setupFilters() {
+    const searchInput = document.getElementById('equipmentSearch');
+    const statusSelect = document.getElementById('equipmentStatus');
 
-window.addEventListener('load', () => {
-    document.getElementById('equipmentSearch').addEventListener('input', renderEquipments);
-    document.getElementById('equipmentStatus').addEventListener('change', renderEquipments);
-    loadEquipments();
-});
+    const filter = () => {
+        const q = searchInput.value.toLowerCase();
+        const s = statusSelect.value;
+        const filtered = initialEquipments.filter(eq => {
+            const matchQ = eq.name.toLowerCase().includes(q) || (eq.code ?? '').toLowerCase().includes(q);
+            const matchS = !s || eq.status === s;
+            return matchQ && matchS;
+        });
+        renderTable(filtered);
+    };
+
+    searchInput.addEventListener('input', filter);
+    statusSelect.addEventListener('change', filter);
+}
 </script>
 @endpush

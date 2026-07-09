@@ -1,83 +1,292 @@
 @extends('ui.layout')
 
 @section('content')
+
 <script>
-// Marcar que esta página requer autenticação
+// Garante que o utilizador está autenticado antes de carregar o conteúdo da página
 window.requireAuthOnLoad = true;
 </script>
+
 @component('ui.partials.page-card', [
     'title' => 'Auditoria',
-    'subtitle' => 'Últimos 200 registos de atividade do sistema.',
-    'actions' => '<a href="/ui" class="rounded-full border border-cyan-400/30 bg-cyan-500/10 px-4 py-2 text-sm font-medium text-cyan-300 transition hover:bg-cyan-500/20">← Voltar ao painel</a>'
+    'subtitle' => 'Monitorização completa das operações efetuadas pelos utilizadores e pelos processos automáticos do sistema.',
+    'actions' => '
+        <a href="/ui" class="btn btn-secondary">
+            📊 Dashboard
+        </a>
+    '
 ])
-    <div class="mb-4 flex flex-col gap-3 rounded-2xl border border-white/10 bg-slate-900/70 p-4 md:flex-row md:items-end">
-        <div class="flex-1">
-            <label for="auditsSearch" class="mb-1 block text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Pesquisa</label>
-            <input id="auditsSearch" type="text" placeholder="Pesquisar por utilizador, entidade ou evento" class="w-full rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-2 text-sm text-white placeholder-slate-500 outline-none focus:border-cyan-500">
-        </div>
-        <div class="w-full md:w-56">
-            <label for="auditsEvent" class="mb-1 block text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Evento</label>
-            <select id="auditsEvent" class="w-full rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-2 text-sm text-white outline-none focus:border-cyan-500">
-                <option value="">Todos</option>
-            </select>
-        </div>
-    </div>
 
-    <div class="overflow-x-auto rounded-2xl border border-white/10 bg-slate-950/60">
-        <table id="auditsTable" class="min-w-full divide-y divide-white/10 text-sm text-slate-300">
-            <thead class="bg-slate-900/80 text-left text-slate-200"><tr><th class="px-4 py-3">ID</th><th class="px-4 py-3">Utilizador</th><th class="px-4 py-3">Entidade</th><th class="px-4 py-3">ID da entidade</th><th class="px-4 py-3">Evento</th><th class="px-4 py-3">Antigo</th><th class="px-4 py-3">Novo</th><th class="px-4 py-3">Quando</th></tr></thead>
-            <tbody></tbody>
-        </table>
-    </div>
+<div class="space-y-10">
+
+    {{-- SECÇÃO DE FILTROS E PESQUISA --}}
+    <section>
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <h2 class="text-lg font-bold tracking-tight">Pesquisa</h2>
+                <p class="text-sm text-soft mt-1">Filtre rapidamente qualquer registo de auditoria em tempo real.</p>
+            </div>
+            <span class="badge badge-warning">Últimos 200 registos</span>
+        </div>
+
+        <div class="card p-6">
+            <div class="grid gap-6 lg:grid-cols-4">
+                <div class="lg:col-span-3">
+                    <label for="auditsSearch" class="block text-sm font-semibold mb-2">Pesquisa Geral</label>
+                    <input
+                        id="auditsSearch"
+                        type="text"
+                        placeholder="Pesquise por utilizador, entidade, operação ou ID do log..."
+                        class="input">
+                </div>
+                <div>
+                    <label for="auditsEvent" class="block text-sm font-semibold mb-2">Filtrar por Evento</label>
+                    <select id="auditsEvent" class="input">
+                        <option value="">Todos os eventos</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- SECÇÃO DA TABELA DE REGISTOS --}}
+    <section>
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <h2 class="text-lg font-bold tracking-tight">Registos de Atividade</h2>
+                <p class="text-sm text-soft mt-1">Histórico cronológico detalhado das alterações efetuadas no ecossistema.</p>
+            </div>
+            <span class="badge badge-success">Live</span>
+        </div>
+
+        <div class="card overflow-hidden p-0">
+            <div class="overflow-x-auto">
+                <table id="auditsTable" class="w-full min-w-[1350px]">
+                    <thead>
+                        <tr class="border-b border-[var(--border)] bg-[var(--surface-2)]">
+                            <th class="px-6 py-4 text-xs font-bold uppercase tracking-[0.12em]">Log</th>
+                            <th class="px-6 py-4 text-xs font-bold uppercase tracking-[0.12em]">Utilizador / Operador</th>
+                            <th class="px-6 py-4 text-xs font-bold uppercase tracking-[0.12em]">Entidade</th>
+                            <th class="px-6 py-4 text-xs font-bold uppercase tracking-[0.12em]">Referência</th>
+                            <th class="px-6 py-4 text-xs font-bold uppercase tracking-[0.12em]">Evento</th>
+                            <th class="px-6 py-4 text-xs font-bold uppercase tracking-[0.12em]">Estado Anterior</th>
+                            <th class="px-6 py-4 text-xs font-bold uppercase tracking-[0.12em]">Novo Estado</th>
+                            <th class="px-6 py-4 text-right text-xs font-bold uppercase tracking-[0.12em]">Data</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-[var(--border)]">
+                        {{-- Estado Inicial de Carregamento (Spinner Animado) --}}
+                        <tr>
+                            <td colspan="8" class="py-24 text-center">
+                                <div class="flex flex-col items-center justify-center gap-4">
+                                    <svg class="h-6 w-6 animate-spin text-[var(--color-primary)]" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-20" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle>
+                                        <path class="opacity-90" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.37 0 0 5.37 0 12h4z"></path>
+                                    </svg>
+                                    <div class="space-y-1">
+                                        <p class="text-sm font-medium">A carregar registos de auditoria...</p>
+                                        <p class="text-xs text-soft">A sincronizar com os eventos mais recentes do sistema.</p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+</div>
+
 @endcomponent
+
 @endsection
 
 @push('scripts')
 <script>
+// Memória local para os registos vindos do servidor
 let allAudits = [];
 
-function renderAudits() {
-    const searchValue = document.getElementById('auditsSearch').value.toLowerCase();
-    const eventValue = document.getElementById('auditsEvent').value;
-    const tbody = document.querySelector('#auditsTable tbody');
-    tbody.innerHTML = '';
+document.addEventListener('DOMContentLoaded', () => {
+    fetchAudits();
+    setupFilters();
+});
 
-    const filtered = allAudits.filter((audit) => {
-        const haystack = `${audit.user?.name || ''} ${audit.auditable_type || ''} ${audit.event || ''} ${audit.auditable_id || ''}`.toLowerCase();
-        const matchesSearch = !searchValue || haystack.includes(searchValue);
-        const matchesEvent = !eventValue || (audit.event || '').toLowerCase() === eventValue.toLowerCase();
-        return matchesSearch && matchesEvent;
+/**
+ * Procura os dados na API interna do Laravel utilizando as credenciais guardadas
+ */
+async function fetchAudits() {
+    try {
+        // Faz uso do helper HTTP global configurado no seu bootstrap.js
+        const response = await window.api.get('/api/audits', {
+            headers: typeof authHeader === 'function' ? authHeader() : {}
+        });
+
+        // Assume o array de dados retornado pelo Axios
+        allAudits = response.data || [];
+
+        populateEventFilter(allAudits);
+        renderAudits(allAudits);
+    } catch (error) {
+        console.error('Erro ao ir buscar a auditoria:', error);
+        if (typeof window.showToast === 'function') {
+            window.showToast('Não foi possível carregar os registos de auditoria.', 'error');
+        }
+        renderErrorState();
+    }
+}
+
+/**
+ * Retorna o Badge HTML correto formatado de acordo com o tipo de evento detetado
+ */
+function getEventBadge(event) {
+    const value = String(event || "").toLowerCase().trim();
+
+    if (value.includes('create') || value.includes('criar') || value.includes('insert')) {
+        return `<span class="badge badge-success">Criar</span>`;
+    }
+    if (value.includes('update') || value.includes('editar') || value.includes('atualizar')) {
+        return `<span class="badge badge-warning">Editar</span>`;
+    }
+    if (value.includes('delete') || value.includes('eliminar') || value.includes('remover')) {
+        return `<span class="badge badge-danger">Eliminar</span>`;
+    }
+
+    // Caso seja um evento costumizado
+    return `<span class="badge border-soft surface-2 text-soft">${event}</span>`;
+}
+
+/**
+ * Formata os blocos de estado JSON estruturados ou dados textuais simples
+ */
+function formatStateData(state) {
+    if (!state) return `<span class="text-soft font-mono">-</span>`;
+
+    // Se já for um objeto estruturado
+    if (typeof state === 'object') {
+        return `<pre class="text-xs font-mono max-w-xs overflow-x-auto bg-[var(--surface-2)] p-2 rounded-lg text-soft border border-[var(--border)]">${JSON.stringify(state, null, 2)}</pre>`;
+    }
+
+    // Tenta interpretar se vier formatado como String de JSON do servidor
+    try {
+        const parsed = JSON.parse(state);
+        return `<pre class="text-xs font-mono max-w-xs overflow-x-auto bg-[var(--surface-2)] p-2 rounded-lg text-soft border border-[var(--border)]">${JSON.stringify(parsed, null, 2)}</pre>`;
+    } catch (e) {
+        return `<span class="text-xs font-mono break-all line-clamp-2" title="${state}">${state}</span>`;
+    }
+}
+
+/**
+ * Preenche o elemento select de forma dinâmica baseado nos tipos existentes nos resultados
+ */
+function populateEventFilter(audits) {
+    const eventSelect = document.getElementById('auditsEvent');
+    if (!eventSelect) return;
+
+    // Guarda e isola termos únicos de eventos
+    const uniqueEvents = [...new Set(audits.map(item => String(item.event || '').trim()))].filter(Boolean);
+
+    eventSelect.innerHTML = '<option value="">Todos os eventos</option>';
+
+    uniqueEvents.forEach(ev => {
+        const option = document.createElement('option');
+        option.value = ev.toLowerCase();
+        option.textContent = ev.charAt(0).toUpperCase() + ev.slice(1);
+        eventSelect.appendChild(option);
     });
+}
 
-    if (!filtered.length) {
-        tbody.innerHTML = '<tr><td colspan="8" class="px-4 py-8 text-center text-slate-400">Nenhum registo encontrado.</td></tr>';
+/**
+ * Configura os listeners de input para aplicar os filtros instantaneamente (Client-Side filtering)
+ */
+function setupFilters() {
+    const searchInput = document.getElementById('auditsSearch');
+    const eventSelect = document.getElementById('auditsEvent');
+
+    const triggerFilter = () => {
+        const query = (searchInput?.value || '').toLowerCase().trim();
+        const selectedEvent = (eventSelect?.value || '').toLowerCase();
+
+        const filteredResults = allAudits.filter(audit => {
+            const matchesSearch =
+                String(audit.id || '').toLowerCase().includes(query) ||
+                String(audit.user || audit.username || audit.operator || '').toLowerCase().includes(query) ||
+                String(audit.auditable_type || audit.entity || '').toLowerCase().includes(query) ||
+                String(audit.auditable_id || audit.reference || '').toLowerCase().includes(query);
+
+            const matchesEvent = !selectedEvent || String(audit.event || '').toLowerCase() === selectedEvent;
+
+            return matchesSearch && matchesEvent;
+        });
+
+        renderAudits(filteredResults);
+    };
+
+    searchInput?.addEventListener('input', triggerFilter);
+    eventSelect?.addEventListener('change', triggerFilter);
+}
+
+/**
+ * Injeta dinamicamente as linhas renderizadas dentro do corpo da tabela
+ */
+function renderAudits(audits) {
+    const tbody = document.querySelector('#auditsTable tbody');
+    if (!tbody) return;
+
+    if (audits.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="8" class="py-16 text-center text-soft">
+                    Nenhum registo de auditoria encontrado correspondente aos filtros atuais.
+                </td>
+            </tr>
+        `;
         return;
     }
 
-    for (const audit of filtered) {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td class="px-4 py-3">${audit.id}</td><td class="px-4 py-3">${audit.user ? audit.user.name : ''}</td><td class="px-4 py-3">${audit.auditable_type || ''}</td><td class="px-4 py-3">${audit.auditable_id || ''}</td><td class="px-4 py-3">${audit.event || ''}</td><td class="px-4 py-3"><pre class="whitespace-pre-wrap text-xs">${JSON.stringify(audit.old_values || {})}</pre></td><td class="px-4 py-3"><pre class="whitespace-pre-wrap text-xs">${JSON.stringify(audit.new_values || {})}</pre></td><td class="px-4 py-3">${audit.created_at || ''}</td>`;
-        tbody.appendChild(tr);
-    }
+    tbody.innerHTML = audits.map(audit => {
+        const logId = audit.id ? `#${audit.id}` : '-';
+        const user = audit.user || audit.username || audit.operator || 'Sistema / Automático';
+        const entity = audit.auditable_type || audit.entity || 'Geral';
+        const reference = audit.auditable_id || audit.reference ? `ID: ${audit.auditable_id || audit.reference}` : '-';
+        const badge = getEventBadge(audit.event);
+        const oldState = formatStateData(audit.old_values || audit.old_state);
+        const newState = formatStateData(audit.new_values || audit.new_state);
+
+        // Formatação nativa da data para o local de Portugal
+        const dateFormatted = audit.created_at
+            ? new Date(audit.created_at).toLocaleString('pt-PT', { hour12: false })
+            : '-';
+
+        return `
+            <tr class="transition duration-150">
+                <td class="px-6 py-4 font-mono text-xs text-soft">${logId}</td>
+                <td class="px-6 py-4 font-semibold text-sm">${user}</td>
+                <td class="px-6 py-4 text-sm text-soft">${entity}</td>
+                <td class="px-6 py-4 font-mono text-xs">${reference}</td>
+                <td class="px-6 py-4">${badge}</td>
+                <td class="px-6 py-4">${oldState}</td>
+                <td class="px-6 py-4">${newState}</td>
+                <td class="px-6 py-4 text-right text-xs text-soft font-medium font-mono">${dateFormatted}</td>
+            </tr>
+        `;
+    }).join('');
 }
 
-async function loadAudits(){
-    const res = await fetch('/admin/audits', {headers: authHeader()});
-    if(res.status===401){ alert('Autenticação necessária.'); window.location='/ui/login'; return; }
-    const data = await res.json();
-    allAudits = data.audits || [];
+/**
+ * Altera a tabela para um estado visual de falha de ligação
+ */
+function renderErrorState() {
+    const tbody = document.querySelector('#auditsTable tbody');
+    if (!tbody) return;
 
-    const eventSelect = document.getElementById('auditsEvent');
-    const events = [...new Set(allAudits.map((audit) => audit.event).filter(Boolean))].sort();
-    eventSelect.innerHTML = '<option value="">Todos</option>' + events.map((event) => `<option value="${event}">${event}</option>`).join('');
-
-    renderAudits();
+    tbody.innerHTML = `
+        <tr>
+            <td colspan="8" class="py-16 text-center text-[var(--color-danger)] font-medium">
+                ⚠️ Erro ao sincronizar dados. Por favor, recarregue a página ou verifique a sua ligação.
+            </td>
+        </tr>
+    `;
 }
-
-window.addEventListener('load', () => {
-    document.getElementById('auditsSearch').addEventListener('input', renderAudits);
-    document.getElementById('auditsEvent').addEventListener('change', renderAudits);
-    loadAudits();
-});
 </script>
 @endpush

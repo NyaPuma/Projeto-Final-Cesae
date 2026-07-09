@@ -1,11 +1,337 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+@source "../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php";
+@source "../../storage/framework/views/*.php";
+@source "../**/*.blade.php";
+@source "../**/*.js";
 
+/* Configuração de Tema Nativa do Tailwind v4 */
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: "Inter", "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+
+    --color-primary: #f59e0b;
+    --color-primary-hover: #d97706;
+
+    --color-success: #22c55e;
+    --color-warning: #f59e0b;
+    --color-danger: #ef4444;
+}
+
+/* ==========================================================
+   ROOT (LIGHT MODE)
+========================================================== */
+:root {
+    --bg: #f5f7fb;
+    --surface: #ffffff;
+    --surface-2: #f8fafc;
+
+    --sidebar: #ffffff;
+    --topbar: rgba(255, 255, 255, 0.8);
+
+    --border: #e5e7eb;
+
+    --text: #111827;
+    --text-soft: #6b7280;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 8px 25px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 15px 40px rgba(0, 0, 0, 0.12);
+
+    --radius: 16px;
+
+    /* CORREÇÃO V4: Mapeamento manual das cores de tema para variáveis nativas do CSS */
+    --c-primary: #f59e0b;
+    --c-primary-hover: #d97706;
+
+    /* Cores Semânticas Dinâmicas para Badges e Estados */
+    --badge-success-bg: rgba(34, 197, 94, 0.1);
+    --badge-warning-bg: rgba(245, 158, 11, 0.1);
+    --badge-danger-bg: rgba(239, 68, 68, 0.1);
+
+    color-scheme: light;
+}
+
+/* ==========================================================
+   DARK MODE
+========================================================== */
+.dark {
+    --bg: #09090b;
+
+    --surface: #111318;
+    --surface-2: #181b22;
+
+    --sidebar: #0f1116;
+
+    --topbar: rgba(15, 17, 22, 0.75);
+
+    --border: #272b35;
+
+    --text: #f3f4f6;
+    --text-soft: #9ca3af;
+
+    --shadow-sm: none;
+    --shadow-md: none;
+    --shadow-lg: none;
+
+    /* Ajuste de contraste dos badges para visualização em fundo escuro */
+    --badge-success-bg: rgba(34, 197, 94, 0.15);
+    --badge-warning-bg: rgba(245, 158, 11, 0.15);
+    --badge-danger-bg: rgba(239, 68, 68, 0.15);
+
+    color-scheme: dark;
+}
+
+/* ==========================================================
+   BODY
+========================================================== */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.25s ease, color 0.25s ease;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================================
+   SCROLLBAR
+========================================================== */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(156, 163, 175, 0.33);
+    border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(156, 163, 175, 0.6);
+}
+
+/* ==========================================================
+   LINKS
+========================================================== */
+a {
+    transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+    text-decoration: none;
+}
+
+/* ==========================================================
+   LAYOUT COMPONENTS (SIDEBAR & TOPBAR)
+========================================================== */
+.sidebar {
+    background: var(--sidebar);
+    border-right: 1px solid var(--border);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+.topbar {
+    background: var(--topbar);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border);
+}
+
+/* ==========================================================
+   CARDS
+========================================================== */
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* ==========================================================
+   BUTTONS
+========================================================== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 12px;
+    padding: 0.7rem 1rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: var(--c-primary);
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background: var(--c-primary-hover);
+}
+
+.btn-secondary {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+}
+
+.btn-secondary:hover {
+    background: var(--surface-2);
+}
+
+/* ==========================================================
+   INPUTS
+========================================================== */
+input,
+select,
+textarea {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    color: var(--text);
+    transition: all 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--c-primary);
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15);
+}
+
+/* ==========================================================
+   TABLES (CLASSES ESPECÍFICAS PARA BACKOFFICE)
+========================================================== */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.app-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.app-table thead {
+    background: var(--surface-2);
+}
+
+.app-table th {
+    text-align: left;
+    padding: 1rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-soft);
+}
+
+.app-table td {
+    padding: 1rem;
+    border-top: 1px solid var(--border);
+}
+
+.app-table tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.app-table tbody tr:hover {
+    background: rgba(245, 158, 11, 0.04);
+}
+
+/* ==========================================================
+   BADGES (OTIMIZADOS PARA ACESSIBILIDADE ESCURA)
+========================================================== */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.badge-success {
+    background: var(--badge-success-bg);
+    color: #22c55e;
+}
+
+.badge-warning {
+    background: var(--badge-warning-bg);
+    color: #f59e0b;
+}
+
+.badge-danger {
+    background: var(--badge-danger-bg);
+    color: #ef4444;
+}
+
+/* ==========================================================
+   MODALS
+========================================================== */
+.modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: var(--shadow-lg);
+}
+
+/* ==========================================================
+   UTILITIES
+========================================================== */
+.glass {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.border-soft {
+    border: 1px solid var(--border);
+}
+
+.surface {
+    background: var(--surface);
+}
+
+.surface-2 {
+    background: var(--surface-2);
+}
+
+.text-soft {
+    color: var(--text-soft);
+}
+
+.shadow-soft {
+    box-shadow: var(--shadow-md);
+}
+
+.rounded-xl {
+    border-radius: var(--radius);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+::selection {
+    background: rgba(245, 158, 11, 0.25);
 }

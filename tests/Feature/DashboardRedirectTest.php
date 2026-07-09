@@ -50,6 +50,18 @@ class DashboardRedirectTest extends TestCase
 
         // Conteúdo esperado (Blade layout do dashboard)
         $dashboard->assertSee('Tickets');
+
+        // Verifica que os links do menu apontam para rotas reais (sem '*')
+        // e que conseguem renderizar sem erro.
+        $dashboard->assertSee('href="/ui/tickets"', false);
+        $dashboard->assertSee('href="/ui/equipments"', false);
+        $dashboard->assertSee('href="/ui/users"', false);
+        $dashboard->assertSee('href="/ui/audits"', false);
+        $dashboard->assertSee('href="/ui/analytics"', false);
+        $dashboard->assertSee('href="/calendar"', false);
+        // A rota de swagger no menu lateral é hardcoded como /docs/openapi no layout.
+        // A versão real da app pode redirecionar para /api/documentation, então não é estável validar a href exata.
+        $dashboard->assertSee('Swagger', false);
     }
 }
 

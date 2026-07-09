@@ -22,7 +22,16 @@ class CustomAuthMiddleware
             ?: $request->session()->get('api_token');
 
         $hasCookie = $request->cookies->has('api_token');
-        $hasSessionToken = is_string($request->session()->get('api_token')) && $request->session()->get('api_token') !== '';
+
+        // Em alguns contextos (ex: testes sem session store), request()->session() pode lançar.
+        $sessionToken = null;
+        try {
+            $sessionToken = $request->session()->get('api_token');
+        } catch (\Throwable $e) {
+            // ignorar
+        }
+
+        $hasSessionToken = is_string($sessionToken) && $sessionToken !== '';
 
         if (!$hasCookie && !$hasSessionToken) {
             Log::debug('Cookie api_token nao encontrado. Headers: ', $request->header());

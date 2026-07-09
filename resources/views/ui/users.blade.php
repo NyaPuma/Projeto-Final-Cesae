@@ -5,25 +5,28 @@
 // Marcar que esta página requer autenticação
 window.requireAuthOnLoad = true;
 </script>
+
 @component('ui.partials.page-card', [
     'title' => 'Utilizadores',
-    'subtitle' => 'Consulta os utilizadores e respetivos perfis.',
-    'actions' => '<a href="/ui" class="rounded-full border border-cyan-400/30 bg-cyan-500/10 px-4 py-2 text-sm font-medium text-cyan-300 transition hover:bg-cyan-500/20">← Voltar ao painel</a>'
+    'subtitle' => 'Consulte as contas dos utilizadores e os respetivos perfis de acesso ao sistema.',
+    'actions' => '<a href="/ui" class="inline-flex items-center justify-center px-3 py-1.5 bg-[var(--surface)] text-xs font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all"><svg class="w-3.5 h-3.5 mr-1.5 text-[var(--text-soft)]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path></svg> Voltar ao painel</a>'
 ])
-    <div class="mb-4 flex flex-col gap-3 rounded-2xl border border-white/10 bg-slate-900/70 p-4 md:flex-row md:items-end">
-        <div class="flex-1">
-            <label for="usersSearch" class="mb-1 block text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Pesquisa</label>
-            <input id="usersSearch" type="text" placeholder="Pesquisar por nome, email ou perfil" class="w-full rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-2 text-sm text-white placeholder-slate-500 outline-none focus:border-cyan-500">
+
+    {{-- Painel de Filtros Bento-Style --}}
+    <div class="mb-6 grid gap-4 sm:grid-cols-3 p-5 bg-[var(--surface)] border border-[var(--border)] rounded-2xl shadow-sm animate-[fadeIn_0.2s_ease-out]">
+        <div>
+            <label for="usersSearch" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">Pesquisa</label>
+            <input id="usersSearch" type="text" placeholder="Nome, email ou perfil..." class="w-full text-xs rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2 text-[var(--text)] placeholder-[var(--text-soft)] outline-none focus:border-[var(--text)] transition-all">
         </div>
-        <div class="w-full md:w-44">
-            <label for="usersRole" class="mb-1 block text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Perfil</label>
-            <select id="usersRole" class="w-full rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-2 text-sm text-white outline-none focus:border-cyan-500">
+        <div>
+            <label for="usersRole" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">Perfil</label>
+            <select id="usersRole" class="w-full text-xs rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2 text-[var(--text)] outline-none focus:border-[var(--text)] transition-all">
                 <option value="">Todos</option>
             </select>
         </div>
-        <div class="w-full md:w-44">
-            <label for="usersStatus" class="mb-1 block text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Estado</label>
-            <select id="usersStatus" class="w-full rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-2 text-sm text-white outline-none focus:border-cyan-500">
+        <div>
+            <label for="usersStatus" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">Estado</label>
+            <select id="usersStatus" class="w-full text-xs rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2 text-[var(--text)] outline-none focus:border-[var(--text)] transition-all">
                 <option value="">Todos</option>
                 <option value="active">Ativos</option>
                 <option value="inactive">Inativos</option>
@@ -31,12 +34,33 @@ window.requireAuthOnLoad = true;
         </div>
     </div>
 
-    <div class="overflow-hidden rounded-2xl border border-white/10 bg-slate-950/60">
-        <table id="usersTable" class="min-w-full divide-y divide-white/10 text-sm text-slate-300">
-            <thead class="bg-slate-900/80 text-left text-slate-200"><tr><th class="px-4 py-3">ID</th><th class="px-4 py-3">Nome</th><th class="px-4 py-3">Email</th><th class="px-4 py-3">Perfil</th><th class="px-4 py-3">Ativo</th></tr></thead>
-            <tbody></tbody>
-        </table>
+    {{-- Tabela de Resultados Estruturada --}}
+    <div class="w-full overflow-hidden bg-[var(--surface)] border border-[var(--border)] rounded-2xl shadow-sm">
+        <div class="overflow-x-auto">
+            <table id="usersTable" class="min-w-full divide-y divide-[var(--border)] text-left text-xs">
+                <thead class="bg-[var(--surface-2)] text-[var(--text-soft)] uppercase tracking-wider font-bold text-[10px]">
+                    <tr>
+                        <th class="px-6 py-3.5 font-bold">ID</th>
+                        <th class="px-6 py-3.5 font-bold">Nome</th>
+                        <th class="px-6 py-3.5 font-bold">Email</th>
+                        <th class="px-6 py-3.5 font-bold">Perfil</th>
+                        <th class="px-6 py-3.5 font-bold">Estado</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-[var(--border)] text-[var(--text)]">
+                    <tr>
+                        <td colspan="5" class="px-6 py-12 text-center text-xs text-[var(--text-soft)]">
+                            <div class="flex items-center justify-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                                A carregar listagem de utilizadores...
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
+
 @endcomponent
 @endsection
 
@@ -50,6 +74,17 @@ function isUserActive(user) {
 
 function getUserRole(user) {
     return user.role || user.profile || '';
+}
+
+function authHeader(){
+    const token = localStorage.getItem('api_token');
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+    const headers = { 'Accept': 'application/json' };
+
+    if (token) headers['X-Auth-Token'] = token;
+    if (csrfToken) headers['X-CSRF-TOKEN'] = csrfToken;
+
+    return headers;
 }
 
 function renderUsers() {
@@ -68,13 +103,28 @@ function renderUsers() {
     });
 
     if (!filtered.length) {
-        tbody.innerHTML = '<tr><td colspan="5" class="px-4 py-8 text-center text-slate-400">Nenhum utilizador encontrado.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="5" class="px-6 py-12 text-center text-xs text-[var(--text-soft)] italic">Nenhum utilizador encontrado com os filtros selecionados.</td></tr>';
         return;
     }
 
     for (const user of filtered) {
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td class="px-4 py-3">${user.id}</td><td class="px-4 py-3">${user.name || ''}</td><td class="px-4 py-3">${user.email || ''}</td><td class="px-4 py-3">${getUserRole(user)}</td><td class="px-4 py-3">${isUserActive(user) ? 'Sim' : 'Não'}</td>`;
+        tr.className = 'hover:bg-[var(--surface-2)]/50 transition-colors duration-150';
+
+        // Customização de badge estilizado para o Estado (Ativo/Inativo)
+        const statusBadge = isUserActive(user)
+            ? `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-lg text-[11px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 uppercase tracking-tight"><span class="w-1 h-1 rounded-full bg-emerald-500"></span>Ativo</span>`
+            : `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-lg text-[11px] font-bold bg-[var(--text-soft)]/10 text-[var(--text-soft)] uppercase tracking-tight"><span class="w-1 h-1 rounded-full bg-[var(--text-soft)]"></span>Inativo</span>`;
+
+        tr.innerHTML = `
+            <td class="px-6 py-3.5 font-mono text-[var(--text-soft)] font-bold">#${user.id}</td>
+            <td class="px-6 py-3.5 font-semibold text-[var(--text)]">${user.name || ''}</td>
+            <td class="px-6 py-3.5 text-[var(--text-soft)] font-semibold">${user.email || ''}</td>
+            <td class="px-6 py-3.5">
+                <span class="px-2 py-0.5 border border-[var(--border)] bg-[var(--surface-2)] rounded-lg text-[11px] font-bold text-[var(--text)] shadow-sm uppercase tracking-tight">${getUserRole(user)}</span>
+            </td>
+            <td class="px-6 py-3.5">${statusBadge}</td>
+        `;
         tbody.appendChild(tr);
     }
 }
