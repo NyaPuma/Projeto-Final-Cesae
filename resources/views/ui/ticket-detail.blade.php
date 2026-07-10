@@ -39,6 +39,7 @@ window.requireAuthOnLoad = true;
             <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
                 <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)] mb-3">Adicionar comentário</h3>
                 <form id="commentForm" class="space-y-3">
+                    <label for="commentText" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">Mensagem</label>
                     <textarea id="commentText" rows="3" class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2 text-xs text-[var(--text)] placeholder-[var(--text-soft)] outline-none focus:border-[var(--text)] transition-all resize-none" placeholder="Escreva uma nota ou atualização para a equipa..."></textarea>
                     <button type="submit" class="inline-flex items-center justify-center px-4 py-2 bg-[var(--text)] text-[var(--surface)] text-xs font-bold rounded-xl shadow-sm hover:opacity-90 transition-all cursor-pointer">
                         Enviar comentário
@@ -50,6 +51,7 @@ window.requireAuthOnLoad = true;
             <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
                 <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)] mb-3">Evidências Fotográficas</h3>
                 <form id="photoForm" class="space-y-3 border-b border-[var(--border)] pb-4 mb-3">
+                    <label for="photoInput" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">Anexo de fotografia</label>
                     <div class="flex items-center justify-between w-full rounded-xl border border-dashed border-[var(--border)] bg-[var(--surface-2)] px-3 py-2.5">
                         <input id="photoInput" type="file" accept="image/*" class="block w-full text-xs text-[var(--text-soft)] file:mr-3 file:py-1 file:px-2 file:rounded-lg file:border-0 file:text-[11px] file:font-bold file:bg-[var(--text)]/5 dark:file:bg-[var(--surface)]/10 file:text-[var(--text)] cursor-pointer">
                     </div>
@@ -217,7 +219,7 @@ async function fetchPhotos(){
     const section = document.getElementById('photosSection');
 
     if(!data.attachments || !data.attachments.length){
-        section.innerHTML = '<p class="text-xs italic opacity-70">Nenhuma fotografia associada.</p>';
+        section.innerHTML = '<div class="rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface-2)] p-4 text-xs text-[var(--text-soft)]">Nenhuma fotografia associada.</div>';
         return;
     }
 

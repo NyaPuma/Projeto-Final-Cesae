@@ -7,14 +7,13 @@
 
 <div
     {{ $attributes->merge([
-        'class' => 'relative overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-sm)] transition-all duration-300',
+        'class' => 'group relative overflow-hidden rounded-[28px] border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-sm)] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--text)]/20 hover:shadow-[0_18px_45px_rgba(15,23,42,0.08)]',
     ]) }}
 >
     {{-- Glow decorativo superior --}}
     <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-400/70 to-transparent"></div>
-
-    {{-- Gradiente de fundo sutil (ajustado para Light/Dark mode) --}}
-    <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/60 via-transparent to-amber-50/40 dark:from-white/[0.02] dark:to-amber-500/[0.03]"></div>
+    <div class="pointer-events-none absolute -top-24 right-0 h-44 w-44 rounded-full bg-amber-500/10 blur-3xl transition duration-500 group-hover:scale-110"></div>
+    <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/70 via-transparent to-amber-50/40 dark:from-white/[0.02] dark:to-amber-500/[0.03]"></div>
 
     <div class="relative p-8">
         <div class="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
@@ -36,7 +35,7 @@
                 @endif
 
                 @if($title)
-                    <h1 class="text-4xl font-black tracking-tight text-[var(--text)]">
+                    <h1 class="text-4xl font-black tracking-tight text-[var(--text)] transition-transform duration-300 group-hover:translate-x-0.5">
                         {{ $title }}
                     </h1>
                 @endif
@@ -49,9 +48,9 @@
             </div>
 
             {{-- Slot de Ações à direita --}}
-            @if(isset($actions))
+            @if(isset($actions) && $actions !== '')
                 <div class="flex flex-wrap items-center gap-3">
-                    {{ $actions }}
+                    {!! $actions !!}
                 </div>
             @endif
 

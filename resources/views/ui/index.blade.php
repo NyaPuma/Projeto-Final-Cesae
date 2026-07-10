@@ -6,54 +6,89 @@
 window.requireAuthOnLoad = true;
 </script>
 
+@php
+    $profileName = $user->profile->name ?? 'user';
+    $profileLabel = match ($profileName) {
+        'admin' => 'Administrador',
+        'technician' => 'Técnico',
+        default => 'Funcionário',
+    };
+@endphp
+
 @component('ui.partials.page-card', [
     'title' => 'Painel Operacional',
     'subtitle' => 'Selecione uma dimensão do sistema para monitorização e gestão de ativos.',
     'actions' => ''
 ])
+    <div class="mb-6 rounded-2xl border border-[var(--border)] bg-[var(--surface-2)]/70 p-5 shadow-[0_10px_30px_rgba(15,23,42,0.04)]">
+        <div class="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+                <p class="text-[10px] font-bold uppercase tracking-[0.3em] text-[var(--text-soft)]">Sessão ativa</p>
+                <h2 class="mt-2 text-lg font-semibold text-[var(--text)]">Olá, {{ $user->name ?? 'utilizador' }}.</h2>
+                <p class="mt-2 text-sm text-[var(--text-soft)]">Perfil atual: <span class="font-semibold text-[var(--text)]">{{ $profileLabel }}</span>. Aceda aos módulos conforme as permissões do seu papel.</p>
+            </div>
+            <span class="inline-flex w-fit items-center rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary">
+                {{ $profileLabel }} • Acesso seguro
+            </span>
+        </div>
+    </div>
+
     {{-- Contentor Dinâmico de Métricas (Renderizado via JS) --}}
     <div id="metricsPanel" class="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"></div>
 
+    <div class="mb-5 flex items-center justify-between">
+        <div>
+            <p class="text-[10px] font-bold uppercase tracking-[0.3em] text-[var(--text-soft)]">Módulos</p>
+            <h2 class="mt-2 text-xl font-semibold tracking-tight text-[var(--text)]">Acesso rápido ao ecossistema operacional</h2>
+        </div>
+    </div>
+
     {{-- Grelha de Navegação Estruturada --}}
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" role="list" aria-label="Módulos principais do sistema">
 
         {{-- Card: Tickets --}}
-        <a href="/ui/tickets" class="group rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.01)] hover:border-[var(--text)] transition-all duration-200">
+        <a href="/ui/tickets" role="listitem" class="premium-card group rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.01)] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--text)]/20 hover:shadow-[0_16px_40px_rgba(15,23,42,0.08)]">
+            <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-amber-500/10 text-xl">🎫</div>
             <h3 class="text-sm font-semibold tracking-tight text-[var(--text)]">Tickets de Ocorrência</h3>
-            <p class="mt-1.5 text-xs text-[var(--text-soft)] leading-relaxed">Consultar, triar, atribuir responsabilidades e acompanhar o progresso em tempo real das avarias registadas.</p>
+            <p class="mt-1.5 text-xs leading-relaxed text-[var(--text-soft)]">Consultar, triar, atribuir responsabilidades e acompanhar o progresso em tempo real das avarias registadas.</p>
         </a>
 
         {{-- Card: Equipamentos --}}
-        <a href="/ui/equipments" class="group rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.01)] hover:border-[var(--text)] transition-all duration-200">
+        <a href="/ui/equipments" role="listitem" class="premium-card group rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.01)] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--text)]/20 hover:shadow-[0_16px_40px_rgba(15,23,42,0.08)]">
+            <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-500/10 text-xl">🖥️</div>
             <h3 class="text-sm font-semibold tracking-tight text-[var(--text)]">Frota de Equipamentos</h3>
-            <p class="mt-1.5 text-xs text-[var(--text-soft)] leading-relaxed">Mapear o inventário de ativos tecnológicos, histórico de manutenções e respetiva alocação física por salas.</p>
+            <p class="mt-1.5 text-xs leading-relaxed text-[var(--text-soft)]">Mapear o inventário de ativos tecnológicos, histórico de manutenções e respetiva alocação física por salas.</p>
         </a>
 
         {{-- Card: Utilizadores --}}
-        <a href="/ui/users" class="group rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.01)] hover:border-[var(--text)] transition-all duration-200">
+        <a href="/ui/users" role="listitem" class="premium-card group rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.01)] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--text)]/20 hover:shadow-[0_16px_40px_rgba(15,23,42,0.08)]">
+            <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-violet-500/10 text-xl">👥</div>
             <h3 class="text-sm font-semibold tracking-tight text-[var(--text)]">Utilizadores e Perfis</h3>
-            <p class="mt-1.5 text-xs text-[var(--text-soft)] leading-relaxed">Gerir credenciais de acesso, perfis de privilégios (administradores, técnicos, utilizadores) e equipas de piquete.</p>
+            <p class="mt-1.5 text-xs leading-relaxed text-[var(--text-soft)]">Gerir credenciais de acesso, perfis de privilégios (administradores, técnicos, utilizadores) e equipas de piquete.</p>
         </a>
 
         {{-- Card: Auditoria --}}
-        <a href="/ui/audits" class="group rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.01)] hover:border-[var(--text)] transition-all duration-200">
+        <a href="/ui/audits" role="listitem" class="premium-card group rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.01)] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--text)]/20 hover:shadow-[0_16px_40px_rgba(15,23,42,0.08)]">
+            <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-rose-500/10 text-xl">📝</div>
             <h3 class="text-sm font-semibold tracking-tight text-[var(--text)]">Registos de Auditoria</h3>
-            <p class="mt-1.5 text-xs text-[var(--text-soft)] leading-relaxed">Rastreabilidade total das ações do sistema. Rever logs imutáveis, alterações de estado e históricos de segurança.</p>
+            <p class="mt-1.5 text-xs leading-relaxed text-[var(--text-soft)]">Rastreabilidade total das ações do sistema. Rever logs imutáveis, alterações de estado e históricos de segurança.</p>
         </a>
 
         {{-- Card: Agenda --}}
-        <a href="/calendar" class="group rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.01)] hover:border-[var(--text)] transition-all duration-200">
+        <a href="/calendar" role="listitem" class="premium-card group rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.01)] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--text)]/20 hover:shadow-[0_16px_40px_rgba(15,23,42,0.08)]">
+            <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-cyan-500/10 text-xl">📅</div>
             <h3 class="text-sm font-semibold tracking-tight text-[var(--text)]">Agenda de Manutenções</h3>
-            <p class="mt-1.5 text-xs text-[var(--text-soft)] leading-relaxed">Visualizar planeamentos operacionais numa vista cronológica dedicada para otimização do fluxo de trabalho.</p>
+            <p class="mt-1.5 text-xs leading-relaxed text-[var(--text-soft)]">Visualizar planeamentos operacionais numa vista cronológica dedicada para otimização do fluxo de trabalho.</p>
         </a>
 
         {{-- Card Distinto: Analytics (Destaque Premium Discreto) --}}
-        <a href="/ui/analytics" class="group rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.01)] hover:border-amber-500/50 dark:hover:border-amber-400/50 transition-all duration-200 ring-1 ring-transparent hover:ring-amber-500/10 dark:hover:ring-amber-400/10">
-            <h3 class="text-sm font-semibold tracking-tight text-[var(--text)] flex items-center gap-1.5">
+        <a href="/ui/analytics" role="listitem" class="premium-card group rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.01)] transition-all duration-300 hover:-translate-y-1 hover:border-amber-500/50 dark:hover:border-amber-400/50 hover:ring-amber-500/10 dark:hover:ring-amber-400/10">
+            <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-500/10 text-xl">📈</div>
+            <h3 class="flex items-center gap-1.5 text-sm font-semibold tracking-tight text-[var(--text)]">
                 Analytics & Relatórios
-                <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-medium bg-amber-500/10 dark:bg-amber-400/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 dark:border-amber-400/20">KPIs</span>
+                <span class="inline-flex items-center rounded border border-amber-500/20 bg-amber-500/10 px-1.5 py-0.5 text-[9px] font-medium text-amber-600 dark:border-amber-400/20 dark:bg-amber-400/10 dark:text-amber-400">KPIs</span>
             </h3>
-            <p class="mt-1.5 text-xs text-[var(--text-soft)] leading-relaxed">Gráficos avançados de desempenho, tempos médios de resposta (SLA) e ferramentas para exportação analítica.</p>
+            <p class="mt-1.5 text-xs leading-relaxed text-[var(--text-soft)]">Gráficos avançados de desempenho, tempos médios de resposta (SLA) e ferramentas para exportação analítica.</p>
         </a>
     </div>
 @endcomponent

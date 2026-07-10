@@ -1,7 +1,17 @@
-@extends('layouts.layout') {{-- Ajusta o caminho do layout se necessário --}}
+@extends('layouts.layout')
 
 @section('content')
 <div class="max-w-7xl mx-auto py-2">
+    <div class="mb-8 flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-[var(--border)] bg-[var(--surface)]/70 px-6 py-4 shadow-sm backdrop-blur">
+        <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--text-soft)]">Gestão de Avarias</p>
+            <h1 class="mt-2 text-2xl font-black tracking-tight">Centro de Controlo Operacional</h1>
+        </div>
+        <div class="flex items-center gap-3">
+            <button type="button" onclick="toggleLandingTheme()" class="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] text-sm shadow-sm transition hover:bg-[var(--surface-2)]" aria-label="Alternar tema">🌙</button>
+            <div id="landingAuthActions" class="flex items-center gap-3"></div>
+        </div>
+    </div>
 
     <header class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 mb-12">
         <div>
@@ -301,3 +311,31 @@
 
 </div>
 @endsection
+
+@push('scripts')
+<script>
+function toggleLandingTheme() {
+    const html = document.documentElement;
+    const dark = html.classList.toggle('dark');
+    localStorage.setItem('theme', dark ? 'dark' : 'light');
+}
+
+(function () {
+    const container = document.getElementById('landingAuthActions');
+    if (!container) return;
+    const token = localStorage.getItem('api_token');
+    if (token) {
+        const userName = localStorage.getItem('user_name') || 'Utilizador';
+        container.innerHTML = `
+            <a href="/ui/profile" class="inline-flex items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-4 py-2.5 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">${userName}</a>
+            <a href="/ui" class="inline-flex items-center justify-center rounded-2xl bg-primary px-4 py-2.5 text-sm font-semibold text-black transition hover:opacity-90">Abrir painel</a>
+        `;
+    } else {
+        container.innerHTML = `
+            <a href="/ui/login" class="inline-flex items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-4 py-2.5 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">Login / Registo</a>
+            <a href="/ui" class="inline-flex items-center justify-center rounded-2xl bg-primary px-4 py-2.5 text-sm font-semibold text-black transition hover:opacity-90">Ver dashboard</a>
+        `;
+    }
+})();
+</script>
+@endpush

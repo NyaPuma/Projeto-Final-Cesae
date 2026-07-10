@@ -9,12 +9,7 @@ window.requireAuthOnLoad = true;
 
 @component('ui.partials.page-card', [
     'title' => 'Auditoria',
-    'subtitle' => 'Monitorização completa das operações efetuadas pelos utilizadores e pelos processos automáticos do sistema.',
-    'actions' => '
-        <a href="/ui" class="btn btn-secondary">
-            📊 Dashboard
-        </a>
-    '
+    'subtitle' => 'Monitorização completa das operações efetuadas pelos utilizadores e pelos processos automáticos do sistema.'
 ])
 
 <div class="space-y-10">

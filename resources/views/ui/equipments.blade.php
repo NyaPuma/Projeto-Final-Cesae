@@ -8,12 +8,7 @@ window.requireAuthOnLoad = true;
 
 @component('ui.partials.page-card', [
     'title' => 'Equipamentos',
-    'subtitle' => 'Inventário centralizado de equipamentos, respetivas localizações e estado operacional.',
-    'actions' => '
-        <a href="/ui" class="btn btn-secondary">
-            📊 Dashboard
-        </a>
-    '
+    'subtitle' => 'Inventário centralizado de equipamentos, respetivas localizações e estado operacional.'
 ])
 
 <div class="space-y-10">

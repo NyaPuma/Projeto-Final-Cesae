@@ -16,6 +16,9 @@
 </head>
 
 <body class="min-h-screen bg-[var(--bg)] text-[var(--text)] overflow-x-hidden antialiased">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-xl focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-black">
+        Skip to content
+    </a>
 
     {{-- Efeitos de Gradiente e Brilho de Fundo (Glow Blobs) --}}
     <div class="fixed inset-0 -z-50 pointer-events-none">
@@ -48,7 +51,7 @@
             </div>
 
             {{-- Links de Navegação Dinâmicos --}}
-            <nav class="flex-1 overflow-y-auto px-4 py-6 space-y-1">
+            <nav class="flex-1 overflow-y-auto px-4 py-6 space-y-1" aria-label="Navegação principal">
                 @php
                     $navItems = [
                         ['href' => '/', 'active' => '/', 'label' => 'Início', 'icon' => '🏠', 'exact' => true],
@@ -112,6 +115,7 @@
                     {{-- Ações de Perfil e Tema --}}
                     <div class="flex items-center gap-4">
                         <button
+                            type="button"
                             onclick="toggleTheme()"
                             class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] text-sm shadow-sm transition-all hover:bg-[var(--surface-2)] cursor-pointer"
                             aria-label="Alternar Tema"
@@ -121,25 +125,13 @@
 
                         <div class="h-8 w-px bg-[var(--border)]"></div>
 
-                        <div class="flex items-center gap-3">
-                            <div class="h-9 w-9 rounded-full bg-primary flex items-center justify-center font-bold text-xs text-black shadow-sm">
-                                A
-                            </div>
-                            <div class="hidden md:block">
-                                <div class="text-sm font-semibold text-[var(--text)] leading-none">
-                                    Administrador
-                                </div>
-                                <div class="text-[9px] font-bold uppercase tracking-wider text-[var(--text-soft)] mt-1">
-                                    Sistema
-                                </div>
-                            </div>
-                        </div>
+                        <div id="topbarUser" class="flex items-center gap-3"></div>
                     </div>
                 </div>
             </header>
 
             {{-- Viewport Injetada --}}
-            <main class="flex-1 px-8 py-8 max-w-7xl w-full mx-auto">
+            <main id="main-content" role="main" tabindex="-1" class="flex-1 px-8 py-8 max-w-7xl w-full mx-auto">
                 @yield('content')
             </main>
         </div>
@@ -175,27 +167,59 @@
 
     function renderAuthBox() {
         const box = document.getElementById('authBox');
-        if (!box) return;
+        const topbarUser = document.getElementById('topbarUser');
+        if (!box && !topbarUser) return;
 
         const token = localStorage.getItem('api_token');
         if (token) {
-            box.innerHTML = `
-                <button
-                    onclick="logout()"
-                    class="w-full inline-flex items-center justify-center rounded-xl bg-[var(--border)] hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-400 px-4 py-2.5 text-xs font-semibold text-[var(--text)] border border-transparent hover:border-red-500/20 transition-all duration-200 cursor-pointer"
-                >
-                    Terminar Sessão
-                </button>
-            `;
+            const userName = localStorage.getItem('user_name') || 'Utilizador';
+            const userRole = localStorage.getItem('user_role') || 'Utilizador';
+            if (box) {
+                box.innerHTML = `
+                    <div class="space-y-2">
+                        <a href="/ui/profile" class="w-full inline-flex items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-2.5 text-xs font-semibold text-[var(--text)] hover:bg-[var(--surface-2)] transition-all duration-200 text-center">
+                            Ver Perfil
+                        </a>
+                        <button
+                            onclick="logout()"
+                            class="w-full inline-flex items-center justify-center rounded-xl bg-[var(--border)] hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-400 px-4 py-2.5 text-xs font-semibold text-[var(--text)] border border-transparent hover:border-red-500/20 transition-all duration-200 cursor-pointer"
+                        >
+                            Terminar Sessão
+                        </button>
+                    </div>
+                `;
+            }
+            if (topbarUser) {
+                topbarUser.innerHTML = `
+                    <a href="/ui/profile" class="flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 transition hover:bg-[var(--surface-2)]">
+                        <div class="flex h-9 w-9 items-center justify-center rounded-full bg-primary font-bold text-xs text-black shadow-sm">
+                            ${userName.charAt(0).toUpperCase()}
+                        </div>
+                        <div class="hidden md:block">
+                            <div class="text-sm font-semibold text-[var(--text)] leading-none">${userName}</div>
+                            <div class="mt-1 text-[9px] font-bold uppercase tracking-wider text-[var(--text-soft)]">${userRole}</div>
+                        </div>
+                    </a>
+                `;
+            }
         } else {
-            box.innerHTML = `
-                <a
-                    href="/ui/login"
-                    class="w-full inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-black shadow-sm shadow-primary/10 transition-all duration-200 hover:opacity-90 text-center"
-                >
-                    Iniciar Sessão
-                </a>
-            `;
+            if (box) {
+                box.innerHTML = `
+                    <a
+                        href="/ui/login"
+                        class="w-full inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-black shadow-sm shadow-primary/10 transition-all duration-200 hover:opacity-90 text-center"
+                    >
+                        Iniciar Sessão
+                    </a>
+                `;
+            }
+            if (topbarUser) {
+                topbarUser.innerHTML = `
+                    <a href="/ui/login" class="inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-black shadow-sm shadow-primary/10 transition-all duration-200 hover:opacity-90">
+                        Login / Registo
+                    </a>
+                `;
+            }
         }
     }
 
@@ -211,6 +235,8 @@
         })
         .finally(() => {
             localStorage.removeItem('api_token');
+            localStorage.removeItem('user_name');
+            localStorage.removeItem('user_role');
             document.cookie = 'api_token=; path=/; max-age=0; SameSite=Lax';
             window.location = '/ui/login';
         });
@@ -237,6 +263,25 @@
             requireAuth();
         }
         renderAuthBox();
+        const token = localStorage.getItem('api_token');
+        if (token) {
+            const userName = localStorage.getItem('user_name') || 'Utilizador';
+            const userRole = localStorage.getItem('user_role') || 'Utilizador';
+            const topbarUser = document.getElementById('topbarUser');
+            if (topbarUser) {
+                topbarUser.innerHTML = `
+                    <a href="/ui/profile" class="flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 transition hover:bg-[var(--surface-2)]">
+                        <div class="flex h-9 w-9 items-center justify-center rounded-full bg-primary font-bold text-xs text-black shadow-sm">
+                            ${userName.charAt(0).toUpperCase()}
+                        </div>
+                        <div class="hidden md:block">
+                            <div class="text-sm font-semibold text-[var(--text)] leading-none">${userName}</div>
+                            <div class="mt-1 text-[9px] font-bold uppercase tracking-wider text-[var(--text-soft)]">${userRole}</div>
+                        </div>
+                    </a>
+                `;
+            }
+        }
     });
     </script>
 

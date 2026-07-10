@@ -26,6 +26,15 @@ class UiController extends Controller
     }
 
     /**
+     * Mostra a página de criação de um novo ticket.
+     */
+    public function ticketCreate(Request $request)
+    {
+        $user = $this->authenticatedUser($request);
+        return view('ui.ticket-create', ['user' => $user]);
+    }
+
+    /**
      * Mostra a página com os equipamentos registados.
      */
     public function equipments(Request $request)
@@ -79,5 +88,14 @@ class UiController extends Controller
     {
         $user = $this->authenticatedUser($request);
         return view('ui.analytics', ['user' => $user]);
+    }
+
+    /**
+     * Mostra a página de perfil do utilizador autenticado.
+     */
+    public function profile(Request $request)
+    {
+        $user = $this->authenticatedUser($request);
+        return view('ui.profile', ['user' => $user]);
     }
 }

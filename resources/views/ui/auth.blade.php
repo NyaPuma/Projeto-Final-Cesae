@@ -2,7 +2,7 @@
 
 @section('content')
 
-<body class="min-h-screen overflow-hidden bg-[var(--bg)] text-[var(--text)] antialiased">
+<div class="min-h-screen overflow-hidden bg-[var(--bg)] text-[var(--text)] antialiased">
 
 <div class="relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-8 lg:px-10">
 
@@ -177,7 +177,7 @@
                             </p>
                         </div>
 
-                        <div class="mb-10 rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-1.5">
+                        <div class="mb-8 rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-1.5">
                             <div class="flex">
                                 <button id="tabLogin" type="button" class="flex-1 rounded-xl py-3 text-sm font-semibold transition-all duration-200">Iniciar Sessão</button>
                                 <button id="tabRegister" type="button" class="flex-1 rounded-xl py-3 text-sm font-semibold transition-all duration-200">Criar Conta</button>
@@ -204,13 +204,8 @@
                             <div>
                                 <label for="loginEmail" class="mb-2 block text-xs font-bold uppercase tracking-[0.18em] text-[var(--text-soft)]">Endereço de Email</label>
                                 <div class="relative">
-                                    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
-                                        <svg class="h-5 w-5 text-[var(--text-soft)]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M16 12H8m8-4H8m10-3H6a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2z"/>
-                                        </svg>
-                                    </div>
                                     <input id="loginEmail" name="email" type="email" autocomplete="email" required placeholder="utilizador@empresa.pt"
-                                           class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface)] py-3.5 pl-12 pr-4 text-sm transition-all duration-200 outline-none placeholder:text-[var(--text-soft)] focus:border-primary focus:ring-4 focus:ring-primary/15">
+                                           class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface)] py-3.5 px-4 text-sm transition-all duration-200 outline-none placeholder:text-[var(--text-soft)] focus:border-primary focus:ring-4 focus:ring-primary/15">
                                 </div>
                             </div>
 
@@ -221,13 +216,8 @@
                                 </div>
 
                                 <div class="relative">
-                                    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
-                                        <svg class="h-5 w-5 text-[var(--text-soft)]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m6-6V9a6 6 0 10-12 0v2m12 0H6m12 0a2 2 0 012 2v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5a2 2 0 012-2"/>
-                                        </svg>
-                                    </div>
                                     <input id="loginPassword" name="password" type="password" autocomplete="current-password" required placeholder="••••••••"
-                                           class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface)] py-3.5 pl-12 pr-12 text-sm transition-all duration-200 outline-none placeholder:text-[var(--text-soft)] focus:border-primary focus:ring-4 focus:ring-primary/15">
+                                           class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface)] py-3.5 px-4 pr-12 text-sm transition-all duration-200 outline-none placeholder:text-[var(--text-soft)] focus:border-primary focus:ring-4 focus:ring-primary/15">
 
                                     <button type="button" id="passwordEye" class="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--text-soft)] transition hover:text-primary">
                                         <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -239,9 +229,9 @@
                             </div>
 
                             <div class="flex items-center justify-between">
-                                <label class="flex cursor-pointer items-center gap-3">
+                                <label class="flex cursor-pointer items-center gap-3 whitespace-nowrap">
                                     <input type="checkbox" class="h-4 w-4 rounded border-[var(--border)] text-primary focus:ring-primary">
-                                    <span class="text-sm text-[var(--text-soft)]">Manter sessão iniciada</span>
+                                    <span class="text-sm leading-none text-[var(--text-soft)]">Manter a sessão iniciada</span>
                                 </label>
                                 <a href="#" class="text-sm font-medium text-primary transition hover:opacity-70">Recuperar acesso</a>
                             </div>
@@ -445,7 +435,11 @@
 
             if (j.token) {
                 document.cookie = `api_token=${j.token}; path=/; max-age=2592000; SameSite=Lax`;
-                try { localStorage.setItem('api_token', j.token); } catch (e) {}
+                try {
+                    localStorage.setItem('api_token', j.token);
+                    localStorage.setItem('user_name', j.user?.name || 'Utilizador');
+                    localStorage.setItem('user_role', j.user?.profile?.name || 'user');
+                } catch (e) {}
             }
 
             setMsg('Autenticação bem-sucedida! A redirecionar...', 'success');
@@ -507,7 +501,11 @@
             // auto-login após register (token/cookie devolvidos pelo controller)
             if (j.token) {
                 document.cookie = `api_token=${j.token}; path=/; max-age=2592000; SameSite=Lax`;
-                try { localStorage.setItem('api_token', j.token); } catch (e) {}
+                try {
+                    localStorage.setItem('api_token', j.token);
+                    localStorage.setItem('user_name', j.user?.name || 'Utilizador');
+                    localStorage.setItem('user_role', j.user?.profile?.name || 'user');
+                } catch (e) {}
             }
 
             setMsg('Conta criada com sucesso! A redirecionar...', 'success');
@@ -526,7 +524,7 @@
 /* Mantém animações existentes; bloco CSS original foi removido/evitado para não quebrar render */
 </style>
 
-</body>
+</div>
 
 @endsection
 

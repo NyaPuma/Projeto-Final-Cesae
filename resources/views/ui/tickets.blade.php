@@ -9,7 +9,7 @@ window.requireAuthOnLoad = true;
 @component('ui.partials.page-card', [
     'title' => 'Tickets',
     'subtitle' => 'Pesquise, filtre e consulte as ocorrências registadas.',
-    'actions' => '<a href="/ui" class="inline-flex items-center justify-center px-3 py-1.5 bg-[var(--surface)] text-xs font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all"><svg class="w-3.5 h-3.5 mr-1.5 text-[var(--text-soft)]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path></svg> Voltar ao painel</a>'
+    'actions' => '<div class="flex flex-wrap gap-2"><a href="/ui" class="inline-flex items-center justify-center px-3 py-1.5 bg-[var(--surface)] text-xs font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all"><svg class="w-3.5 h-3.5 mr-1.5 text-[var(--text-soft)]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path></svg> Voltar ao painel</a><a href="/ui/tickets/create" class="inline-flex items-center justify-center px-3 py-1.5 bg-primary text-xs font-semibold text-black rounded-xl shadow-sm hover:opacity-90 transition-all">+ Criar Ticket</a></div>'
 ])
 
     {{-- Painel de Pesquisa Avançada Bento-Style --}}
@@ -70,7 +70,7 @@ window.requireAuthOnLoad = true;
     </div>
 
     {{-- Tabela de Resultados Estruturada --}}
-    <div class="w-full overflow-hidden bg-[var(--surface)] border border-[var(--border)] rounded-2xl shadow-sm">
+    <div class="w-full overflow-hidden bg-[var(--surface)] border border-[var(--border)] rounded-2xl shadow-sm" role="region" aria-live="polite" aria-label="Lista de tickets">
         <div class="overflow-x-auto">
             <table id="ticketsTable" class="min-w-full divide-y divide-[var(--border)] text-left text-xs">
                 <thead class="bg-[var(--surface-2)] text-[var(--text-soft)] uppercase tracking-wider font-bold text-[10px]">
@@ -150,8 +150,9 @@ async function loadTickets(page = 1) {
     tbody.innerHTML = `<tr><td colspan="8" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]">A atualizar dados...</td></tr>`;
 
     const res = await fetch(`${endpoint}?${params.toString()}`, { headers: authHeader() });
-    if (res.status === 401) { alert('Autenticação necessária. Faça login.'); window.location = '/ui/login'; return; }
-    const data = await res.json();
+    if (res.status === 401) { showFeedback('Autenticação necessária. Faça login.', true); window.location = '/ui/login'; return; }
+    if (!res.ok) { showFeedback('Não foi possível carregar os tickets de momento.', true); return; }
+    const data = await res.json().catch(() => ({}));
 
     const tickets = data.tickets?.data ?? data.tickets ?? [];
     const meta    = data.tickets?.meta ?? data.tickets ?? {};
@@ -160,7 +161,7 @@ async function loadTickets(page = 1) {
     document.getElementById('resultsCount').textContent = total > 0 ? `${total} resultado(s) encontrado(s)` : 'Sem resultados';
 
     if (!tickets.length) {
-        tbody.innerHTML = '<tr><td colspan="8" class="px-5 py-12 text-center text-xs text-[var(--text-soft)] italic">Nenhum ticket encontrado com os filtros aplicados.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="8" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]"><div class="mx-auto max-w-sm rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface-2)] p-5">Nenhum ticket encontrado com os filtros aplicados.</div></td></tr>';
         document.getElementById('pagination').innerHTML = '';
         return;
     }
@@ -207,6 +208,13 @@ async function loadTickets(page = 1) {
         <button onclick="loadTickets(${currPage + 1})" ${currPage >= lastPage ? 'disabled' : ''}
             class="inline-flex items-center justify-center px-3 py-1.5 bg-[var(--surface)] text-xs font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all disabled:opacity-40 disabled:cursor-not-allowed">Próxima →</button>
     `;
+}
+
+function showFeedback(message, error = false) {
+    const el = document.getElementById('resultsCount');
+    if (!el) return;
+    el.textContent = message;
+    el.className = `text-xs font-semibold ${error ? 'text-red-600 dark:text-red-400' : 'text-[var(--text-soft)]'}`;
 }
 
 document.getElementById('btnSearch').addEventListener('click', () => loadTickets(1));

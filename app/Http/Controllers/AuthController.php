@@ -83,6 +83,8 @@ class AuthController extends Controller
 
         $request->session()->put('api_token', $user->api_token);
 
+        $user->load('profile');
+
         return response()->json(['user' => $user, 'token' => $user->api_token], 201)
             ->cookie('api_token', $user->api_token, 60 * 24 * 30, '/', null, false, false);
     }
@@ -152,6 +154,8 @@ class AuthController extends Controller
 
         $request->session()->put('api_token', $user->api_token);
 
+        $user->load('profile');
+
         return response()->json(['user' => $user, 'token' => $user->api_token])
             ->cookie('api_token', $user->api_token, 60 * 24 * 30, '/', null, false, false);
     }
@@ -197,5 +201,43 @@ class AuthController extends Controller
         $user->save();
 
         return response()->json(['message' => 'Password alterada com sucesso.']);
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $user = $this->authenticatedUser($request);
+
+        $data = $request->only(['name', 'current_password', 'new_password']);
+
+        $validator = Validator::make($data, [
+            'name' => ['nullable', 'string', 'max:255'],
+            'current_password' => ['nullable', 'string'],
+            'new_password' => ['nullable', 'string', 'min:8'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        if (!empty($data['new_password'])) {
+            if (empty($data['current_password'])) {
+                return response()->json(['message' => 'A palavra-passe atual é obrigatória para alterar a password.'], 422);
+            }
+
+            if (!Hash::check($data['current_password'], $user->password)) {
+                return response()->json(['message' => 'Password atual incorreta'], 403);
+            }
+
+            $user->password = Hash::make($data['new_password']);
+        }
+
+        if (!empty($data['name'])) {
+            $user->name = $data['name'];
+        }
+
+        $user->save();
+        $user->load('profile');
+
+        return response()->json(['message' => 'Perfil atualizado com sucesso.', 'user' => $user]);
     }
 }
