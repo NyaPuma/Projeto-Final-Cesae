@@ -7,6 +7,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UiController;
 use App\Http\Controllers\AuditController;
+use App\Http\Controllers\AdminTicketController;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
@@ -55,6 +56,7 @@ Route::middleware(['custom.auth'])->group(function () {
     Route::withoutMiddleware([VerifyCsrfToken::class])->group(function () {
 
         // Ações de conta comuns a qualquer utilizador logado
+        // ----------------------------------------------------------------------
         Route::post('/logout',                  [AuthController::class, 'logout']);
         Route::post('/password/change',         [AuthController::class, 'changePassword']);
         Route::post('/profile/update',          [AuthController::class, 'updateProfile']);
@@ -120,7 +122,7 @@ Route::middleware(['custom.auth'])->group(function () {
             Route::get('/calendar',        [TicketController::class, 'calendarView']);
 
             // Módulo Analítico e Relatórios
-            Route::get('/analytics',              [AnalyticsController::class, 'stats']);
+            Route::get('/analytics',                [AnalyticsController::class, 'stats']);
             Route::get('/analytics/charts',         [AnalyticsController::class, 'charts']);
             Route::get('/analytics/export/csv',     [AnalyticsController::class, 'exportCsv']);
             Route::get('/analytics/export/pdf',     [AnalyticsController::class, 'exportPdf']);
@@ -134,6 +136,17 @@ Route::middleware(['custom.auth'])->group(function () {
          |-- Área de Administração e Backoffice (Direção de Operações)
          |----------------------------------------------------------------------*/
          Route::middleware(['role:admin'])->group(function () {
+            
+            // ========================================
+            // 🤖 MOTOR DE INTELIGÊNCIA ARTIFICIAL (Módulo Assistido)
+            // ========================================
+            // Interface de decisão onde o administrador visualiza a avaria com a sugestão da IA
+            Route::get('/admin/tickets/{id}', [AdminTicketController::class, 'show'])->name('admin.tickets.show');
+            
+            // Submissão imediata para gravar a recomendação escolhida pela IA no MySQL
+            Route::patch('/admin/tickets/{id}/atribuir', [AdminTicketController::class, 'atribuirTecnico'])->name('admin.tickets.atribuir');
+
+
             // Logs de Auditoria do Sistema
             Route::get('/admin/audits', [AuditController::class, 'index']);
 

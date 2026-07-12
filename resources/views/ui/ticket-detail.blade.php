@@ -6,7 +6,7 @@
 window.requireAuthOnLoad = true;
 </script>
 
-@component('ui.partials.page-card', [
+@component('ui.partials('page-card', [
     'title' => 'Detalhes do Ticket',
     'subtitle' => 'Consulte o estado detalhado da ocorrência, atribua técnicos e partilhe comentários internos.',
     'actions' => '<a href="/ui/tickets" class="inline-flex items-center justify-center px-3 py-1.5 bg-[var(--surface)] text-xs font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all"><svg class="w-3.5 h-3.5 mr-1.5 text-[var(--text-soft)]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path></svg> Voltar à listagem</a>'
@@ -15,7 +15,7 @@ window.requireAuthOnLoad = true;
     <div class="grid gap-6 xl:grid-cols-[1.2fr_0.8fr] animate-[fadeIn_0.3s_ease-out]">
 
         {{-- Coluna Esquerda: Informações Principais do Ticket --}}
-        <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm h-fit">
+        <div class="rounded-2xl border border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm h-fit">
             <div id="ticketDetails" class="space-y-4 text-xs text-[var(--text-soft)]">
                 <div class="flex items-center justify-center py-12 gap-2">
                     <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
@@ -27,8 +27,11 @@ window.requireAuthOnLoad = true;
         {{-- Coluna Direita: Interações, Comentários e Fotos --}}
         <div class="space-y-6">
 
+            {{-- 🤖 ASSISTENTE DE ALOCAÇÃO INTELIGENTE (Injetado via JS apenas para Admins) --}}
+            <div id="aiAssistantContainer"></div>
+
             {{-- Secção de Comentários Internos --}}
-            <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
+            <div class="rounded-2xl border border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
                 <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)] border-b border-[var(--border)] pb-2.5 mb-3">Comentários internos</h3>
                 <div id="commentsSection" class="text-xs text-[var(--text-soft)] max-h-60 overflow-y-auto pr-1">
                     <p class="italic py-2">A atualizar histórico de notas técnicas...</p>
@@ -36,7 +39,7 @@ window.requireAuthOnLoad = true;
             </div>
 
             {{-- Formulário para Adicionar Comentário --}}
-            <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
+            <div class="rounded-2xl border border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
                 <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)] mb-3">Adicionar comentário</h3>
                 <form id="commentForm" class="space-y-3">
                     <label for="commentText" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">Mensagem</label>
@@ -48,7 +51,7 @@ window.requireAuthOnLoad = true;
             </div>
 
             {{-- Secção e Upload de Fotografias --}}
-            <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
+            <div class="rounded-2xl border border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
                 <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)] mb-3">Evidências Fotográficas</h3>
                 <form id="photoForm" class="space-y-3 border-b border-[var(--border)] pb-4 mb-3">
                     <label for="photoInput" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">Anexo de fotografia</label>
@@ -65,7 +68,7 @@ window.requireAuthOnLoad = true;
             </div>
 
             {{-- Painel de Gestão e Atribuição Manual --}}
-            <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
+            <div class="rounded-2xl border border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
                 <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)] mb-3">Painel de Atribuição</h3>
                 <div class="space-y-4">
                     <div>
@@ -119,6 +122,23 @@ function authHeader(){
     if (csrfToken) headers['X-CSRF-TOKEN'] = csrfToken;
 
     return headers;
+}
+
+// Helper utilitário para decodificar JWT localmente e saber se o utilizador atual é Admin
+function checkCurrentUserIsAdmin() {
+    try {
+        const token = localStorage.getItem('api_token');
+        if (!token) return false;
+        // Divide as 3 secções do JWT e decodifica a secção Payload
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const payload = JSON.parse(window.atob(base64));
+        // Ajusta para o campo exato onde o vosso AuthController guarda a role (ex: role, profile, ou profile_id)
+        return payload.role === 'admin' || payload.isAdmin === true;
+    } catch (e) {
+        // Fallback defensivo por Blade caso o token local use encriptação opaca
+        return {{ auth()->user()?->isAdmin() ? 'true' : 'false' }};
+    }
 }
 
 async function fetchTicket(){
@@ -180,6 +200,85 @@ async function fetchTicket(){
             </div>
         </div>
     `;
+
+    // Ativar e renderizar o bloco da IA de forma assíncrona apenas se o utilizador for Admin
+    if (checkCurrentUserIsAdmin()) {
+        fetchAiRecommendation();
+    }
+}
+
+async function fetchAiRecommendation() {
+    const container = document.getElementById('aiAssistantContainer');
+    container.innerHTML = `
+        <div class="rounded-2xl border border-primary/20 bg-[var(--surface)] p-5 shadow-sm animate-pulse">
+            <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-primary">
+                <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                O Assistente IA está a processar a melhor alocação...
+            </div>
+        </div>
+    `;
+
+    try {
+        // Consome o endpoint real do vosso AdminTicketController que liga ao AIService
+        const res = await fetch('/admin/tickets/' + ticketId, { headers: authHeader() });
+        if (!res.ok) throw new Error('API Indisponível');
+        
+        // Como o endpoint do Admin devolve o JSON mastigado pelo prompt da OpenAI
+        const data = await res.json();
+        
+        if (data.tecnico_id) {
+            container.innerHTML = `
+                <div class="rounded-2xl border border-blue-500/20 bg-[var(--surface)] p-5 shadow-sm">
+                    <div class="flex items-center justify-between border-b border-[var(--border)] pb-2.5 mb-3">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)] flex items-center gap-1.5">
+                            <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                            Assistente de Alocação IA
+                        </h3>
+                        <span class="text-[9px] font-mono bg-blue-500/10 text-blue-600 px-1.5 py-0.5 rounded-md font-bold uppercase">gpt-4o-mini</span>
+                    </div>
+                    <div class="space-y-3">
+                        <p class="text-xs text-[var(--text-soft)] leading-relaxed">
+                            <span class="font-bold text-[var(--text)] block mb-1">💡 Sugestão Operacional:</span>
+                            ${data.justificacao}
+                        </p>
+                        <button onclick="approveAiRecommendation(${data.tecnico_id})" class="w-full inline-flex items-center justify-center px-4 py-2 bg-blue-600 text-white text-xs font-bold rounded-xl shadow-sm hover:bg-blue-700 transition-all cursor-pointer gap-1.5">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
+                            Aprovar e Atribuir Técnico
+                        </button>
+                    </div>
+                </div>
+            ];
+        } else {
+            container.innerHTML = `
+                <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 text-xs text-[var(--text-soft)] italic flex items-center gap-2">
+                    <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                    ${data.justificacao || 'A IA não conseguiu determinar o técnico ideal de momento.'}
+                </div>
+            `;
+        }
+    } catch (err) {
+        container.innerHTML = ''; // Oculta defensivamente se houver falha de rede
+    }
+}
+
+async function approveAiRecommendation(tecnicoId) {
+    const res = await fetch(`/admin/tickets/${ticketId}/atribuir`, {
+        method: 'POST', // Usamos POST com spoofing do PATCH nativo do Laravel
+        headers: authHeader(),
+        body: JSON.stringify({
+            _method: 'PATCH',
+            tecnico_id: tecnicoId
+        })
+    });
+    
+    if (res.ok) {
+        document.getElementById('aiAssistantContainer').innerHTML = '';
+        await fetchTicket();
+        showMessage('Técnico alocado com sucesso via Inteligência Artificial!');
+    } else {
+        const data = await res.json();
+        showMessage(data.message || 'Erro ao processar atribuição da IA.', true);
+    }
 }
 
 async function fetchComments(){
