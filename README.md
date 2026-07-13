@@ -157,6 +157,8 @@ Cada transição de estado ou novo comentário introduzido dispara adicionalment
 - **Chart.js** - Biblioteca JavaScript para renderização dos gráficos nos Dashboards.
 - **PHPUnit** - Testes automatizados unitários e de integração.
 - **NPM / Vite** - Compilação de Assets Frontend e scripts em tempo real.
+- **Interface:** Blade Templates + Tailwind CSS.
+- **IA:** Motor interno de triagem (NLP) e suporte à decisão (SAD).
 
 ---
 
