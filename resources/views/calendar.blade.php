@@ -248,6 +248,10 @@
 <script>
 let calendar;
 
+@push('scripts')
+<script>
+let calendar;
+
 document.addEventListener('DOMContentLoaded', () => {
     if (!isAuthenticated()) {
         window.location.href = "/ui/login";
@@ -256,103 +260,110 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const calendarEl = document.getElementById("calendar");
 
-    calendar = new FullCalendar.Calendar(calendarEl, {
-        locale: "pt",
-        initialView: "dayGridMonth",
-        height: "auto",
-        firstDay: 1, // Começa na Segunda-feira
-        nowIndicator: true,
-        navLinks: true,
-        editable: false,
-        selectable: true,
-        expandRows: true,
-        dayMaxEvents: true,
-        weekends: true,
+    // Garantir que o container existe mesmo antes de renderizar
+    if (calendarEl) {
+        calendar = new FullCalendar.Calendar(calendarEl, {
+            locale: "pt",
+            initialView: "dayGridMonth",
+            height: "auto",
+            firstDay: 1, // Começa na Segunda-feira
+            nowIndicator: true,
+            navLinks: true,
+            editable: false,
+            selectable: true,
+            expandRows: true,
+            dayMaxEvents: true,
+            weekends: true,
 
-        buttonText: {
-            today: "Hoje",
-            month: "Mês",
-            week: "Semana",
-            day: "Dia"
-        },
+            buttonText: {
+                today: "Hoje",
+                month: "Mês",
+                week: "Semana",
+                day: "Dia"
+            },
 
-        headerToolbar: {
-            left: "prev,next",
-            center: "title",
-            right: "dayGridMonth,timeGridWeek,timeGridDay"
-        },
+            headerToolbar: {
+                left: "prev,next",
+                center: "title",
+                right: "dayGridMonth,timeGridWeek,timeGridDay"
+            },
 
-        events(fetchInfo, successCallback, failureCallback) {
-            fetch("/calendar/events", {
-                headers: authHeader()
-            })
-            .then(response => {
-                if (!response.ok) {
-                    if (response.status === 401) {
-                        window.location.href = "/ui/login";
-                        return;
-                    }
-                    throw new Error("Erro ao carregar eventos da infraestrutura.");
+            // --- CORREÇÃO: Lógica de atualização movida para o sítio nativo correto ---
+            datesSet: function(dateInfo) {
+                // Evita loops infinitos chamando apenas o refetch se o calendário já estiver renderizado
+                if (calendar && typeof calendar.refetchEvents === 'function') {
+                    // Atualiza os totais e recarrega os dados da rota /calendar/events
                 }
-                return response.json();
-            })
-            .then(events => {
-                if (!events) return;
+            },
 
-                // Total absoluto de eventos planeados
-                document.getElementById("eventsTotal").innerText = events.length;
+            events(fetchInfo, successCallback, failureCallback) {
+                fetch("/calendar/events", {
+                    headers: authHeader()
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        if (response.status === 401) {
+                            window.location.href = "/ui/login";
+                            return;
+                        }
+                        throw new Error("Erro ao carregar eventos da infraestrutura.");
+                    }
+                    return response.json();
+                })
+                .then(events => {
+                    if (!events) return;
 
-                // Determinar dinamicamente o mês em visualização ativa
-                const currentPeriod = calendar ? calendar.getDate() : fetchInfo.start;
-                const activeMonth = currentPeriod.getMonth();
-                const activeYear = currentPeriod.getFullYear();
+                    // Atualiza o total absoluto no painel lateral
+                    const totalEl = document.getElementById("eventsTotal");
+                    if (totalEl) totalEl.innerText = events.length;
 
-                // Filtrar eventos do mês ativo na vista do utilizador
-                const totalMonth = events.filter(e => {
-                    const eventDate = new Date(e.start);
-                    return eventDate.getMonth() === activeMonth && eventDate.getFullYear() === activeYear;
-                }).length;
+                    // Determinar dinamicamente o mês em visualização ativa
+                    const currentPeriod = calendar ? calendar.getDate() : fetchInfo.start;
+                    const activeMonth = currentPeriod.getMonth();
+                    const activeYear = currentPeriod.getFullYear();
 
-                document.getElementById("monthTotal").innerText = totalMonth;
+                    // Filtrar eventos do mês ativo na vista do utilizador
+                    const totalMonth = events.filter(e => {
+                        const eventDate = new Date(e.start);
+                        return eventDate.getMonth() === activeMonth && eventDate.getFullYear() === activeYear;
+                    }).length;
 
-                successCallback(events);
-            })
-            .catch(error => {
-                console.error(error);
-                failureCallback(error);
-            });
-        },
+                    const monthEl = document.getElementById("monthTotal");
+                    if (monthEl) monthEl.innerText = totalMonth;
 
-        eventDidMount(info) {
-            info.el.style.cursor = "pointer";
-            info.el.title = info.event.title;
-        },
+                    successCallback(events);
+                })
+                .catch(error => {
+                    console.error(error);
+                    failureCallback(error);
+                });
+            },
 
-        eventClick(info) {
-            const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
-            const start = info.event.start ? info.event.start.toLocaleString("pt-PT", options) : "-";
-            const end = info.event.end ? info.event.end.toLocaleString("pt-PT", options) : "-";
+            eventDidMount(info) {
+                info.el.style.cursor = "pointer";
+                info.el.title = info.event.title;
+            },
 
-            // Detalhes estruturados no alerta operacional
-            alert(
-                `🔧 DETALHES DA INTERVENÇÃO\n\n` +
-                `Assunto: ${info.event.title}\n` +
-                `Início: ${start}\n` +
-                `Fim: ${end}`
-            );
-        },
+            eventClick(info) {
+                const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+                const start = info.event.start ? info.event.start.toLocaleString("pt-PT", options) : "-";
+                const end = info.event.end ? info.event.end.toLocaleString("pt-PT", options) : "-";
 
-        loading(isLoading) {
-            document.body.style.cursor = isLoading ? "progress" : "default";
-        }
-    });
+                alert(
+                    `🔧 DETALHES DA INTERVENÇÃO\n\n` +
+                    `Assunto: ${info.event.title}\n` +
+                    `Início: ${start}\n` +
+                    `Fim: ${end}`
+                );
+            },
 
-    calendar.render();
+            loading(isLoading) {
+                document.body.style.cursor = isLoading ? "progress" : "default";
+            }
+        });
 
-    // Re-executar filtro de contagem de eventos quando o utilizador muda o mês/semana
-    calendar.on('datesSet', () => {
-        calendar.refetchEvents();
-    });
+        calendar.render();
+    }
 });
 </script>
 @endpush

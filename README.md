@@ -1,11 +1,65 @@
-# Sistema de Gestão e Manutenção de Avarias em Equipamentos
+# 📑 Sistema Integrado de Gestão de Manutenção
 
-Uma aplicação desenvolvida em **Laravel** para o registo, acompanhamento e gestão de avarias em equipamentos, permitindo controlar todo o ciclo de vida de um ticket de manutenção.
+Uma plataforma web desenvolvida em **Laravel 11** para a digitalização, centralização e otimização de todo o ciclo de vida de avarias dentro do **Departamento de Manutenção** da organização. 
 
-## Objetivo
+O sistema mitiga falhas de comunicação e paragens prolongadas de infraestruturas, tornando o fluxo de trabalho mais organizado, rápido e rastreável ao distribuir inteligência operacional entre três perfis internos: **Operador (Funcionário)**, **Técnico** e **Administrador (Diretor de Operações)**.
 
-O objetivo deste projeto é disponibilizar uma plataforma web que facilite a comunicação entre utilizadores, técnicos e administradores, tornando o processo de gestão de avarias mais organizado, rápido, rastreável e totalmente automatizado através de notificações em tempo real, auditoria completa e dashboards interativos.
+---
 
+## 1. Âmbito e Objetivos Gerais
+O objetivo principal deste projeto é transformar processos reativos ou manuais numa operação totalmente automatizada através de:
+* **Comunicação Centralizada:** Canal direto entre quem deteta a avaria, quem a repara e quem gere a infraestrutura.
+* **Inteligência Operacional:** Automatização de triagens e suporte à decisão na escala de técnicos através de IA.
+* **Auditoria e Controlo:** Registo automático de *timestamps* em cada mudança de estado do ticket e dashboards interativos com métricas de tempo e custos para a Direção de Operações.
+
+---
+
+## 2. Divisão de Papéis da Equipa Técnica
+Para simular a dinâmica de uma equipa real de desenvolvimento de software, os 4 elementos do grupo assumem focos de liderança no Trello:
+
+* **Team Leader & Product Owner:** Gestão de projeto, planeamento, controlo de requisitos e interface pedagógica.
+* **Dev-End Developer (Frontend Lead):** Construção das interfaces Blade, calendarização reativa (FullCalendar v6) e dashboards estatísticos.
+* **Back-End Developer (Core Engineer):** Orquestração de rotas, middlewares de controlo de acessos (RBAC), controladores e lógica do workflow.
+* **Database Administrator (DBA):** Modelação de dados no MySQL, desenho do DER, indexação e execução física via Laravel Migrations.
+
+---
+
+## 3. Cronograma de Desenvolvimento (Estrutura de Sprints)
+
+O projeto foi planeado num ciclo de **4 Sprints Semanais** para garantir entregas incrementais e estáveis:
+
+### Sprint 1: Engenharia de Requisitos e Modelação de Dados
+* Levantamento completo de Requisitos Funcionais (RF) e Não-Funcionais (RNF).
+* Desenho e fecho do Diagrama Entidade-Relacionamento (DER) ajustado ao modelo *In-House*.
+* Configuração do repositório Git e criação do quadro de tarefas no Trello.
+* Execução física do banco de dados no MySQL usando **Laravel Migrations**.
+
+### Sprint 2: Core do Workflow e Matriz de Autenticação
+* Implementação do sistema de autenticação e proteção de rotas com base em perfis (RBAC).
+* Criação da lógica de transição obrigatória dos 3 estados do ticket (*Aberto ➔ Em Curso ➔ Fechada*) com registo automático de timestamps.
+* Criação dos ecrãs de submissão detalhada de avarias para os funcionários e painel de triagem para técnicos.
+
+### Sprint 3: Layer de Inteligência Artificial e Agenda Operacional
+* Injeção do `AIService` no controlador central (`TicketController`).
+* Lógica algorítmica para recomendação assistida de técnicos e diagnósticos prescritivos baseados no histórico do equipamento.
+* Construção do ecrã visual da **Agenda** integrando o **FullCalendar v6** para leitura de eventos agendados em tempo real a partir do MySQL.
+
+### Sprint 4: Painel Analítico, Automação de Ativos e Fecho
+* Desenvolvimento do Dashboard do Administrador com métricas operacionais (MTTR) e custos.
+
+* Implementação de um Background Service (rotina em segundo plano via Laravel Task Scheduling) para monitorização e leitura da Telemetria simulada dos equipamentos.
+
+* Execução do Plano de Testes (validação de fluxos e eliminação de Erros 500) e compilação do manual de utilizador.
+
+---
+
+## 4. Matriz de Riscos e Mitigação Operacional
+
+| Risco Identificado | Impacto | Estratégia de Mitigação Técnica |
+| :--- | :---: | :--- |
+| **Erros de Integridade de Dados** (Ex: eliminar uma sala com equipamentos associados) | Alto | Configuração rigorosa de chaves estrangeiras com restrição de eliminação (`onDelete('restrict')`) no MySQL. |
+| **Falha de Sessão / Token Expirado** (Avisos de autenticação em requisições AJAX do calendário) | Médio | Implementação de fallbacks silenciosos e tratamentos de erros em JavaScript para garantir resiliência visual na Agenda. |
+| **Gargalo Administrativo** (Erros manuais de triagem na classificação de avarias) | Alto | Automação na triagem inicial de severidade e categoria utilizando Processamento de Linguagem Natural (NLP) no momento da abertura do ticket. |
 ---
 
 ## 📋 Lista de Requisitos do Sistema
@@ -53,7 +107,7 @@ O objetivo deste projeto é disponibilizar uma plataforma web que facilite a com
   
 ---
 
-## Product Backlog Concluído
+## Product Backlog
 
 | Prioridade | User Story (Funcionalidade) | Critérios de Aceitação / DoD Técnico |
 | :--- | :--- | :--- |
@@ -61,9 +115,9 @@ O objetivo deste projeto é disponibilizar uma plataforma web que facilite a com
 | 🔴 **Crítica** | **Como:** Técnico<br>**Quero:** alterar o estado de uma avaria ("Em Curso" / "Fechada")<br>**Para:** comunicar o progresso atualizado dos trabalhos. | • Dropdown exclusivo de transição de estados no workflow.<br>• Bloqueio de rotas via Middleware do Laravel para perfis não autorizados (403).<br>• Estado 'Fechada' exige parecer técnico, relatório final e injeta o timestamp final. |
 | 🔴 **Crítica** | **Como:** Administrador<br>**Quero:** gerir o inventário de equipamentos e salas (CRUD)<br>**Para:** manter a infraestrutura física da empresa atualizada. | • CRUD completo integrado com *Soft Deletes* do Eloquent ORM.<br>• Validação no *Form Request* do Laravel impedindo números de série duplicados. |
 | 🟡 **Alta** | **Como:** Administrador<br>**Quero:** consultar dashboards com métricas operacionais e gráficos<br>**Para:** avaliar a eficiência e tempos de resolução (MTTR). | • Painel dinâmico no Front-End alimentado por assets compilados via NPM (Vite) com gráficos interativos em tempo real (Chart.js).<br>• Consultas SQL otimizadas com *Eager Loading* (`with()`) no Eloquent. |
-| 🟡 **Alta** | **Como:** Sistema (Automação)<br>**Quero:** monitorizar a telemetria simulada dos ativos<br>**Para:** abrir avarias preventivas automaticamente em caso de anomalia. | • Execução de rotinas em segundo plano utilizando o *Laravel Task Scheduling*.<br>• Geração autónoma de ticket na base de dados caso os limites tolerados sejam violados. |
-| 🟢 **Média** | **Como:** Utilizador / Técnico<br>**Quero:** comunicar via comentários e anexar fotografias no ticket<br>**Para:** detalhar a evolução da reparação de forma clara. | • Canal de comunicação bilateral dentro do ticket.<br>• Armazenamento seguro de evidências fotográficas via Laravel Storage (Local/S3). |
-| 🟢 **Média** | **Como:** Utilizador / Técnico<br>**Quero:** receber alertas imediatos por email e em tempo real<br>**Para:** saber quando um ticket muda de estado ou recebe mensagens. | • Integração com **Laravel Echo / Pusher** para notificações instantâneas no browser.<br>• Disparo de e-mails assíncronos em background utilizando *Laravel Queues*. |
+| 🟡 **Alta** | **Como:** Sistema (Automação)<br>**Quero:** analisar o fluxo de telemetria dos ativos em tempo real<br>**Para:** gerar um ticket de avaria preventiva no MySQL apenas quando os limites críticos de tolerância forem violados. | • Processamento contínuo de métricas simuladas em background através do *Laravel Task Scheduling*.<br> • Injeção automática de um incidente na tabela Avarias em caso de anomalia, disparando alertas imediatos para os técnicos na Agenda via WebSockets. |
+| 🟢 **Média** | **Como:** Utilizador / Técnico<br>**Quero:** comunicar via comentários e anexar fotografias no ticket<br>**Para:** detalhar a evolução da reparação de forma clara. | • Canal de comunicação bilateral dentro do ticket.<br> • Armazenamento seguro de evidências fotográficas via Laravel Storage (Local/S3). |
+| 🟢 **Média** | **Como:** Utilizador / Técnico<br>**Quero:** receber alertas imediatos por email e em tempo real<br>**Para:** saber quando um ticket muda de estado ou recebe mensagens. | • Integração com **Laravel Echo / Pusher** para notificações instantâneas no browser.<br> • Disparo de e-mails assíncronos em background utilizando *Laravel Queues*. |
 | 🟢 **Média** | **Como:** Administrador<br>**Quero:** exportar dados e consultar o histórico completo de alterações<br>**Para:** auditar o sistema e emitir relatórios físicos. | • Exportação de relatórios customizados com filtros avançados para **PDF e Excel**.<br>• Registo imutável de alterações (Audit Log) que detalha quem, quando e o que foi alterado. |
 | 🟢 **Média** | **Como:** Desenvolvedor / Integrador<br>**Quero:** aceder à documentação viva dos endpoints<br>**Para:** integrar outros sistemas com a plataforma de avarias. | • Documentação automatizada e interativa da API exposta via **Swagger/OpenAPI**. |
 

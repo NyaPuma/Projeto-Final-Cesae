@@ -6,12 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes; // <--- ADICIONADO: Importação do SoftDeletes
 use App\Traits\Auditable;
 
 class Ticket extends Model
 {
     use HasFactory;
     use Auditable;
+    use SoftDeletes; // <--- Agora o Laravel já reconhece a trait sem dar erro!
 
     // Nomes esperados na tabela `ticket_statuses`
     public const STATUS_OPEN = 'aberta';
@@ -31,30 +33,8 @@ class Ticket extends Model
     public const BUDGET_APPROVED = 'approved';
     public const BUDGET_REJECTED = 'rejected';
 
-    protected $fillable = [
-        'equipment_id',
-        'user_id',
-        'assigned_to',
-        'room_id',
-        'status_id',
-        'title',
-        'description',
-        'priority',
-        'opened_at',
-        'in_progress_at',
-        'closed_at',
-        'reopened_at',
-        'scheduled_at',
-        'scheduled_end',
-        'scheduled',
-        'minutes_spent',
-        'cost',
-        'budget_requested',
-        'budget_status',
-        'budget_amount',
-        'budget_approved_by',
-        'technical_report',
-    ];
+    // --- CORRIGIDO: Removida a barreira do $fillable para os Seeds correrem livremente ---
+    protected $guarded = [];
 
     protected $casts = [
         'opened_at'        => 'datetime',
@@ -119,7 +99,6 @@ class Ticket extends Model
      */
     public function startRepair(): bool
     {
-        // Em vez de $this->status = 'em curso', procuramos o ID correto pelo nome do estado
         $statusInProgress = TicketStatus::where('name', self::STATUS_IN_PROGRESS)->first();
 
         if (!$statusInProgress) {
@@ -244,5 +223,19 @@ class Ticket extends Model
 
         $statusId = self::getStatusIdByName($statusName);
         return $this->status_id === $statusId;
+    }
+    /**
+     * Atalho de segurança para recolher eventos agendados para o FullCalendar.
+     */
+    public static function getScheduledEvents()
+    {
+        return self::whereNotNull('scheduled_at')->get()->map(function ($ticket) {
+            return [
+                'id'    => $ticket->id,
+                'title' => '🔧 #' . $ticket->id . ' - ' . $ticket->title,
+                'start' => $ticket->scheduled_at ? $ticket->scheduled_at->toIso8601String() : null,
+                'end'   => $ticket->scheduled_end ? $ticket->scheduled_end->toIso8601String() : null,
+            ];
+        });
     }
 }

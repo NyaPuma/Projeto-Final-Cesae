@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -44,7 +45,7 @@ return new class extends Migration
             $table->timestamp('closed_at')->nullable();
             $table->timestamp('reopened_at')->nullable();
 
-            // Bloco de Agendamento unificado (evita o ficheiro secundário _add_scheduling...)
+            // Bloco de Agendamento unificado
             $table->timestamp('scheduled_at')->nullable();
             $table->timestamp('scheduled_end')->nullable();
             $table->boolean('scheduled')->default(false);
@@ -53,13 +54,16 @@ return new class extends Migration
             $table->integer('minutes_spent')->nullable();
             $table->decimal('cost', 10, 2)->nullable();
 
-            // Bloco de Orçamento unificado (evita o erro do ficheiro _add_budget_fields...)
+            // Bloco de Orçamento unificado
             $table->boolean('budget_requested')->default(false);
             $table->string('budget_status')->nullable();
             $table->decimal('budget_amount', 10, 2)->nullable();
             $table->foreignId('budget_approved_by')->nullable()->constrained('users')->nullOnDelete();
 
             $table->timestamps();
+            
+            // --- ADICIONADO: Suporte para Soft Deletes no banco ---
+            $table->softDeletes(); 
         });
 
         // 4. Tabela HistoricoWorkflowAvaria do teu DER
@@ -76,9 +80,14 @@ return new class extends Migration
 
     public function down(): void
     {
+        // --- ADICIONADO: Desativa validação de chaves temporariamente ao limpar o banco ---
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
+
         Schema::dropIfExists('ticket_workflow_history');
         Schema::dropIfExists('tickets');
         Schema::dropIfExists('ticket_statuses');
         Schema::dropIfExists('ticket_types');
+
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1;');
     }
 };
