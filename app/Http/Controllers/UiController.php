@@ -53,6 +53,48 @@ class UiController extends Controller
     }
 
     /**
+     * Mostra a página de criação de um novo ticket.
+     */
+    public function rooms(Request $request)
+    {
+        $user = $this->authenticatedUser($request);
+        return view('ui.rooms.index', ['user' => $user]);
+    }
+
+
+    /**
+     * Mostra a página de criação de uma nova sala.
+     */
+    public function roomCreate(Request $request)
+    {
+        $user = $this->authenticatedUser($request);
+        return view('ui.rooms.create', ['user' => $user]);
+    }
+
+    /**
+     * Mostra os detalhes de uma sala específica.
+     */
+    public function roomDetail(Request $request, int $id)
+    {
+        $user = $this->authenticatedUser($request);
+        // Busca a sala pelo ID para enviar para a view
+        $room = \App\Models\Room::findOrFail($id);
+        return view('ui.rooms.show', ['room' => $room, 'user' => $user]);
+    }
+
+    /**
+     * Mostra o formulário de edição de uma sala.
+     */
+    public function roomEdit(Request $request, int $id)
+    {
+        $user = $this->authenticatedUser($request);
+        // Busca a sala pelo ID para pré-preencher o formulário
+        $room = \App\Models\Room::findOrFail($id);
+        return view('ui.rooms.edit', ['room' => $room, 'user' => $user]);
+    }
+
+
+    /**
      * Mostra a página de auditoria.
      */
     public function audits(Request $request)
@@ -60,6 +102,7 @@ class UiController extends Controller
         $user = $this->authenticatedUser($request);
         return view('ui.audits', ['user' => $user]);
     }
+
 
     /**
      * Mostra os detalhes de um ticket específico.

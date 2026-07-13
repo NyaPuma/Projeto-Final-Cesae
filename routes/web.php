@@ -10,12 +10,15 @@ use App\Http\Controllers\AuditController;
 use App\Http\Controllers\AdminTicketController;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\RoomController;
 
 /*
 |--------------------------------------------------------------------------
 | Rotas Públicas (Acesso Aberto)
 |--------------------------------------------------------------------------
 */
+
 Route::get('/', function () {
     return view('main');
 });
@@ -23,6 +26,14 @@ Route::get('/', function () {
 Route::get('/ui/login', function () {
     return view('ui.auth');
 })->name('ui.login');
+
+Route::get('/test-email', function () {
+    Mail::raw('Teste de comunicação com Mailtrap!', function ($message) {
+        $message->to('teste@exemplo.com')
+            ->subject('Teste do Sistema de Avarias');
+    });
+    return 'E-mail enviado com sucesso!';
+});
 
 // Documentação da API
 Route::redirect('/docs/openapi', '/api/documentation');
@@ -135,14 +146,14 @@ Route::middleware(['custom.auth'])->group(function () {
         /*
          |-- Área de Administração e Backoffice (Direção de Operações)
          |----------------------------------------------------------------------*/
-         Route::middleware(['role:admin'])->group(function () {
-            
+        Route::middleware(['role:admin'])->group(function () {
+
             // ========================================
             // 🤖 MOTOR DE INTELIGÊNCIA ARTIFICIAL (Módulo Assistido)
             // ========================================
             // Interface de decisão onde o administrador visualiza a avaria com a sugestão da IA
             Route::get('/admin/tickets/{id}', [AdminTicketController::class, 'show'])->name('admin.tickets.show');
-            
+
             // Submissão imediata para gravar a recomendação escolhida pela IA no MySQL
             Route::patch('/admin/tickets/{id}/atribuir', [AdminTicketController::class, 'atribuirTecnico'])->name('admin.tickets.atribuir');
 
@@ -160,15 +171,22 @@ Route::middleware(['custom.auth'])->group(function () {
             Route::patch('/admin/equipment/{id}',  [AdminController::class, 'updateEquipment']);
             Route::delete('/admin/equipment/{id}', [AdminController::class, 'destroyEquipment']);
 
+            // Consulta e criação de salas
+            Route::get('/ui/rooms', [UiController::class, 'rooms']);
+            Route::get('/ui/rooms/create', [UiController::class, 'roomCreate']);
+            Route::get('/ui/rooms/{id}',     [UiController::class, 'roomDetail']);
+            Route::get('/ui/rooms/{id}/edit', [UiController::class, 'roomEdit']);
+
             // Decisão Orçamental de Engenharia
             Route::post('/admin/preventive', [AdminController::class, 'storePreventive']);
             Route::patch('/admin/tickets/{id}/approve-budget', [AdminController::class, 'approveBudget']);
 
             // Gestão de Infraestrutura (Salas / Pavilhões)
-            Route::get('/admin/rooms',                 [AdminController::class, 'rooms']);
-            Route::post('/admin/rooms',                [AdminController::class, 'storeRoom']);
-            Route::patch('/admin/rooms/{id}',          [AdminController::class, 'updateRoom']);
-            Route::patch('/admin/rooms/{id}/inactive', [AdminController::class, 'inactivateRoom']);
+            // Gestão de Infraestrutura (Salas / Pavilhões)
+            Route::get('/admin/rooms',                  [RoomController::class, 'indexRoom']);
+            Route::post('/admin/rooms',                 [RoomController::class, 'storeRoom']);
+            Route::patch('/admin/rooms/{id}',           [RoomController::class, 'updateRoom']);
+            Route::patch('/admin/rooms/{id}/inactive',  [RoomController::class, 'inactivateRoom']);
         });
     });
 });
