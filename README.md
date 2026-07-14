@@ -19,12 +19,21 @@ O sistema mitiga falhas de comunicação e paragens prolongadas de infraestrutur
 
 Para consultar o planeamento detalhado, requisitos e o desenho de processos da plataforma, aceda aos documentos técnicos específicos localizados na diretoria de documentação (`/docs`):
 
-* [Plano de Projeto](docs/plano-projeto.md) — Sprints de desenvolvimento, papéis da equipa e matriz de riscos.
-* [Análise de Processos (As-Is vs To-Be)](docs/analise-processos.md) — Mapeamento do impacto operacional do software e gestão por exceção.
-* [Lista Completa de Requisitos](docs/requisitos.md) — Detalhe estrito de Requisitos Funcionais (RF) e Não-Funcionais (RNF).
-* [Matriz de Autorizações & Permissões (RBAC)](docs/permissoes.md) — Definição estrita de acessos por perfil de utilizador.
-* [Plano de Testes](docs/plano-testes.md) — Cenários e matriz de validação lógica do sistema.
-* [Diagrama de Base de Dados (DER)](docs/Diagrama_Base_Dados.drawio.svg) — Representação física e relacional (MySQL).
+### Estratégia e Gestão
+* [Plano de Projeto](docs/plano-projeto.md) — Sprints, equipa e matriz de riscos.
+* [Product Backlog](docs/product-backlog.md) — Lista de funcionalidades e prioridades.
+* [Análise de Processos (As-Is vs To-Be)](docs/analise-processos.md) — Otimização e gestão por exceção.
+
+### Engenharia e Arquitetura
+* [Lista de Requisitos](docs/requisitos.md) — Funcionais (RF) e Não-Funcionais (RNF).
+* [Matriz de Autorizações & Permissões (RBAC)](docs/permissoes.md) — Controlo de acessos por perfil.
+* [Arquitetura de Dados (DER)](docs/diagrama-arquitetura.md) — Modelo relacional e integridade física.
+* [API Endpoints](docs/api-endpoints.md) — Documentação e contratos de integração.
+
+### Qualidade e Operação
+* [Guia do Utilizador](docs/guia-utilizador.md) — Manual de instruções por perfil.
+* [Plano de Testes](docs/plano-testes.md) — Cenários e matriz de validação.
+* [Workflow e Integrações](docs/workflow.md) — Estrutura de fluxo de dados e automações.
 
 ---
 
