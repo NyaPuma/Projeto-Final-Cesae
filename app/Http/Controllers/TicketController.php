@@ -6,7 +6,7 @@ use App\Models\Ticket;
 use App\Services\AIService;
 use Illuminate\Http\Request;
 
-class AdminTicketController extends Controller
+class TicketController extends Controller
 {
     protected $aiService;
 
@@ -14,6 +14,24 @@ class AdminTicketController extends Controller
     public function __construct(AIService $aiService)
     {
         $this->aiService = $aiService;
+    }
+
+    /**
+     * Lista os tickets na view index
+     */
+    public function index(Request $request)
+    {
+        // A lógica de busca que enviámos anteriormente
+        $query = Ticket::with(['equipment', 'room', 'technician', 'status']);
+
+        // Exemplo simples de filtro
+        if ($request->has('q')) {
+            $query->where('title', 'like', '%' . $request->q . '%');
+        }
+
+        return response()->json([
+        'tickets' => \App\Models\Ticket::with(['equipment', 'room', 'user'])->latest()->paginate(15)
+        ]);
     }
 
     /**
