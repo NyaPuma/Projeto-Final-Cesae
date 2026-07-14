@@ -43,16 +43,19 @@ class AIService
         // 2. Construção do Prompt Contextualizado
         $prompt = "Atuas como um Engenheiro Supervisor de Manutenção Industrial Inteligente.\n";
         $prompt .= "O teu objetivo é analisar um ticket de avaria e escolher o melhor técnico disponível.\n\n";
-        
+
         $prompt .= "--- DADOS DA AVARIA DE ENTRADA ---\n";
         $prompt .= "- Descrição do Problema: " . $ticket->descricao . "\n";
         $prompt .= "- Equipamento Afetado: " . ($ticket->equipment->name ?? 'Não Especificado') . "\n";
         $prompt .= "- Categoria Técnica: " . ($ticket->equipment->category->name ?? 'Geral') . "\n\n";
-        
+
         $prompt .= "--- LISTA DE TÉCNICOS ATIVOS NA FÁBRICA ---\n";
         foreach ($tecnicos as $index =>$tecnico) {
             // Atribui uma especialidade rotativa baseada no ID para a IA simular a decisão perfeita
-            $esp =$especialidades[($tecnico->id \% 3) + 1];$prompt .= "- ID: {$tecnico->id} \vert{} Nome: {$tecnico->name} | Especialidade Mapeada: {$esp} \vert{} Tickets em Curso: {$tecnico->tickets_ativos}\n";
+
+            $esp = $especialidades[($tecnico->id % 3) + 1] ?? 'Geral';
+
+            $prompt .= "- ID: " . $tecnico->id . " | Nome: " . $tecnico->name . " | Especialidade Mapeada: " . $esp . " | Tickets em Curso: " . $tecnico->tickets_ativos . "\n";
         }
 
         $prompt .= "\n--- REGRAS DE DECISÃO DA IA ---\n";

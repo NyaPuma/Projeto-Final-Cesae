@@ -7,7 +7,6 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UiController;
 use App\Http\Controllers\AuditController;
-use App\Http\Controllers\AdminTicketController;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
@@ -152,10 +151,10 @@ Route::middleware(['custom.auth'])->group(function () {
             // 🤖 MOTOR DE INTELIGÊNCIA ARTIFICIAL (Módulo Assistido)
             // ========================================
             // Interface de decisão onde o administrador visualiza a avaria com a sugestão da IA
-            Route::get('/admin/tickets/{id}', [AdminTicketController::class, 'show'])->name('admin.tickets.show');
+            Route::get('/admin/tickets/{id}', [TicketController::class, 'show'])->name('admin.tickets.show');
 
             // Submissão imediata para gravar a recomendação escolhida pela IA no MySQL
-            Route::patch('/admin/tickets/{id}/atribuir', [AdminTicketController::class, 'atribuirTecnico'])->name('admin.tickets.atribuir');
+            Route::patch('/admin/tickets/{id}/atribuir', [TicketController::class, 'atribuirTecnico'])->name('admin.tickets.atribuir');
 
 
             // Logs de Auditoria do Sistema
