@@ -8,7 +8,7 @@
 * **RF02:** Apenas utilizadores registados (Perfil Comum) podem submeter novas avarias no sistema.
 
 #### 1.2 Gestão de Ativos e Infraestrutura
-* **RF03:** O sistema deve permitir o registo, edição e eliminação de equipamentos.
+* **RF03:** CRUD completo (Criar, Ler, Atualizar, Eliminar) de equipamentos e salas pelo Administrador.
 * **RF04:** O sistema deve permitir associar um equipamento a uma sala específica (associação opcional/nullable).
 
 #### 1.3 Workflow de Avarias (Core)

@@ -1,4 +1,4 @@
-# 📐 Arquitetura de Dados - DER
+# Arquitetura de Dados - DER
 
 Este diagrama apresenta a modelação da base de dados relacional para o Sistema de Gestão de Manutenção.
 
