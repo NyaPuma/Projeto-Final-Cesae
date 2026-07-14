@@ -3,8 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ticket;
+use App\Models\User;
+use App\Models\TicketComment;
+use App\Models\TicketAttachment;
 use App\Services\AIService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class TicketController extends Controller
 {
@@ -17,62 +23,40 @@ class TicketController extends Controller
     }
 
     /**
-     * Lista os tickets na view index
-     */
-    public function index(Request $request)
-    {
-        // A lógica de busca que enviámos anteriormente
-        $query = Ticket::with(['equipment', 'room', 'technician', 'status']);
-
-        // Exemplo simples de filtro
-        if ($request->has('q')) {
-            $query->where('title', 'like', '%' . $request->q . '%');
-        }
-
-        return response()->json([
-        'tickets' => \App\Models\Ticket::with(['equipment', 'room', 'user'])->latest()->paginate(15)
-        ]);
-    }
-
-    /**
      * Exibe o detalhe do ticket injetando a sugestão em tempo real da IA
      */
     public function show($id)
     {
-        // Procura o ticket trazendo os relacionamentos exatos do teu projeto
         $ticket = Ticket::with(['equipment.category', 'room', 'user'])->findOrFail($id);
-
-        // Invoca o motor de Inteligência Artificial passando o objeto Ticket
         $recomendacaoIA = $this->aiService->recomendarTecnico($ticket);
 
-        // Envia os dados para a vossa view centralizada na pasta 'ui'
         return view('ui.ticketDetail', compact('ticket', 'recomendacaoIA'));
     }
 
     /**
-     * Grava a alocação do técnico sugerido pela IA ou escolhido manualmente
+     * Grava a alocação do técnico sugerido pela IA ou escolhido manualmente.
      */
     public function atribuirTecnico(Request $request, $id)
     {
         $request->validate([
-            'tecnico_id' => 'required|exists:users,id', // Valida se o ID existe na tabela users
+            'tecnico_id' => 'required|exists:users,id',
         ]);
 
         $ticket = Ticket::findOrFail($id);
+        $oldStatus = $ticket->status ? $ticket->status->name : Ticket::STATUS_OPEN;
 
-        // Vai buscar dinamicamente o ID do estado "Em Curso" definido no teu Model
         $inProgressStatusId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
-        $ticket->status_id  = $inProgressStatusId;
-        $ticket->assigned_to    = $user->id;
+
+        $ticket->status_id      = $inProgressStatusId;
+        $ticket->assigned_to    = $request->tecnico_id;
         $ticket->in_progress_at = now();
         $ticket->save();
 
-        // Notificamos o criador para manter o fluxo visível em tempo real e por email.
         if ($ticket->user && $ticket->user->email) {
-            $ticket->user->notify(new TicketStatusChanged($ticket, $oldStatus, Ticket::STATUS_IN_PROGRESS));
+            $ticket->user->notify(new \App\Notifications\TicketStatusChanged($ticket, $oldStatus, Ticket::STATUS_IN_PROGRESS));
         }
 
-        event(new TicketStatusUpdatedBroadcast($ticket, $oldStatus, Ticket::STATUS_IN_PROGRESS));
+        event(new \App\Events\TicketStatusUpdatedBroadcast($ticket, $oldStatus, Ticket::STATUS_IN_PROGRESS));
 
         return response()->json(['ticket' => $ticket]);
     }
@@ -83,9 +67,7 @@ class TicketController extends Controller
     public function assignTechnician(Request $request, int $id)
     {
         $user = $this->authenticatedUser($request);
-        $this->requireRole($user, [
-            User::ROLE_ADMIN,
-        ]);
+        $this->requireRole($user, [User::ROLE_ADMIN]);
 
         $ticket = Ticket::find($id);
         if (!$ticket) {
@@ -126,10 +108,7 @@ class TicketController extends Controller
     public function reopenTicket(Request $request, int $id)
     {
         $user = $this->authenticatedUser($request);
-        $this->requireRole($user, [
-            User::ROLE_TECHNICIAN,
-            User::ROLE_ADMIN,
-        ]);
+        $this->requireRole($user, [User::ROLE_TECHNICIAN, User::ROLE_ADMIN]);
 
         $ticket = Ticket::find($id);
         if (!$ticket) {
@@ -144,7 +123,7 @@ class TicketController extends Controller
     }
 
     /**
-     * Adiciona um comentário técnico ou de progresso ao ticket.
+     * Cancela um ticket aberto.
      */
     public function cancelTicket(Request $request, int $id)
     {
@@ -175,28 +154,24 @@ class TicketController extends Controller
         return response()->json(['ticket' => $ticket]);
     }
 
+    /**
+     * Adiciona um comentário técnico.
+     */
     public function addComment(Request $request, int $id)
     {
         $user = $this->authenticatedUser($request);
-
         $ticket = Ticket::find($id);
+
         if (!$ticket) {
             return response()->json(['message' => 'Ticket não encontrado'], 404);
         }
 
-        // Regra de autorização:
-        // - ROLE_TECHNICIAN / ROLE_ADMIN: podem comentar qualquer ticket.
-        // - ROLE_USER (common): só podem comentar o próprio ticket.
         if ($user->isCommon() && (int)$ticket->user_id !== (int)$user->id) {
             return response()->json(['message' => 'Acesso negado'], 403);
         }
 
-        // Valida role adicional apenas para common.
         if (!$user->isCommon()) {
-            $this->requireRole($user, [
-                User::ROLE_TECHNICIAN,
-                User::ROLE_ADMIN,
-            ]);
+            $this->requireRole($user, [User::ROLE_TECHNICIAN, User::ROLE_ADMIN]);
         }
 
         $data = $request->only(['comment']);
@@ -218,15 +193,12 @@ class TicketController extends Controller
     }
 
     /**
-     * Lista todos os comentários associados a um determinado ticket.
+     * Lista todos os comentários do ticket.
      */
     public function listComments(Request $request, int $id)
     {
         $user = $this->authenticatedUser($request);
-        $this->requireRole($user, [
-            User::ROLE_TECHNICIAN,
-            User::ROLE_ADMIN,
-        ]);
+        $this->requireRole($user, [User::ROLE_TECHNICIAN, User::ROLE_ADMIN]);
 
         $ticket = Ticket::with(['comments.user'])->find($id);
         if (!$ticket) {
@@ -237,20 +209,17 @@ class TicketController extends Controller
     }
 
     /**
-     * Faz o upload de um anexo fotográfico ou evidência para o ticket.
+     * Faz o upload de evidências fotográficas.
      */
     public function uploadPhoto(Request $request, int $id)
     {
         $user = $this->authenticatedUser($request);
-
         $ticket = Ticket::find($id);
+
         if (!$ticket) {
             return response()->json(['message' => 'Ticket não encontrado'], 404);
         }
 
-        // Regra de autorização:
-        // - ROLE_USER (common): só podem fazer upload no próprio ticket.
-        // - ROLE_TECHNICIAN / ROLE_ADMIN: podem anexar em qualquer ticket.
         if ($user->isCommon() && (int) $ticket->user_id !== (int) $user->id) {
             return response()->json(['message' => 'Acesso negado'], 403);
         }
@@ -276,14 +245,11 @@ class TicketController extends Controller
             'size'      => $file->getSize(),
         ]);
 
-        return response()->json([
-            'attachment' => $attachment,
-            'url' => $url,
-        ], 201);
+        return response()->json(['attachment' => $attachment, 'url' => $url], 201);
     }
 
     /**
-     * Lista os anexos multimédia carregados no âmbito do ticket.
+     * Lista as fotografias anexadas ao ticket.
      */
     public function listPhotos(Request $request, int $id)
     {
@@ -298,32 +264,39 @@ class TicketController extends Controller
     }
 
     /**
-     * Conclui de forma definitiva um ticket em curso, registando tempos e custos operacionais.
+     * Conclui de forma definitiva um ticket em curso.
      */
     public function closeTicket(Request $request, int $id)
     {
         $user = $this->authenticatedUser($request);
-        $this->requireRole($user, [
-            User::ROLE_TECHNICIAN,
+        $this->requireRole($user, [User::ROLE_TECHNICIAN, User::ROLE_ADMIN]);
+
+        $ticket = Ticket::findOrFail($id);
+
+        $request->validate([
+            'minutes_spent'    => 'required|integer|min:1',
+            'cost'             => 'required|numeric|min:0',
+            'technical_report' => 'required|string|min:10|max:5000',
         ]);
 
-        // Executa a atualização no MySQL com as colunas reais: assigned_to e status_id
+        $closedStatusId = Ticket::getStatusIdByName(Ticket::STATUS_CLOSED);
+        $oldStatusName  = $ticket->status ? $ticket->status->name : Ticket::STATUS_IN_PROGRESS;
+
         $ticket->update([
-            'assigned_to'    => $request->tecnico_id,
-            'status_id'      => $inProgressStatusId,
-            'in_progress_at' => now(), // Regista o início do carimbo temporal
+            'status_id'        => $closedStatusId,
+            'minutes_spent'    => $request->minutes_spent,
+            'cost'             => $request->cost,
+            'technical_report' => $request->technical_report,
+            'closed_at'        => now(),
         ]);
 
-        // Dispara o evento de Broadcast nativo que vocês já têm para atualizar os ecrãs
-        $oldStatus = Ticket::STATUS_OPEN;
-        event(new \App\Events\TicketStatusUpdatedBroadcast($ticket, $oldStatus, Ticket::STATUS_IN_PROGRESS));
+        event(new \App\Events\TicketStatusUpdatedBroadcast($ticket, $oldStatusName, Ticket::STATUS_CLOSED));
 
-        // Envia notificação por email para o utilizador que abriu o problema
         if ($ticket->user && $ticket->user->email) {
-            $ticket->user->notify(new \App\Notifications\TicketStatusChanged($ticket, $oldStatus, Ticket::STATUS_IN_PROGRESS));
+            $ticket->user->notify(new \App\Notifications\TicketStatusChanged($ticket, $oldStatusName, Ticket::STATUS_CLOSED));
         }
 
         return redirect()->route('admin.tickets.show', $id)
-                         ->with('success', 'Técnico alocado com sucesso via Assistente IA!');
+                         ->with('success', 'Intervenção concluída e ticket arquivado com sucesso!');
     }
 }
