@@ -42,3 +42,13 @@
 * **RNF07:** Conformidade do código-fonte com as normas PSR (*PHP Standards Recommendations*) do ecossistema Laravel.
 * **RNF08:** Base de dados MySQL otimizada com indexação eficiente para garantir performance à medida que o histórico de tickets cresce.
   
+## 3. Regras de Negócio e Fluxo Operacional
+
+### 3.1 Gestão por Exceção (Telemetria)
+* O sistema monitoriza fluxos de dados em tempo real. Leituras normais não são persistidas.
+* A violação de limites críticos (ex: temperatura > 80°C) dispara automaticamente a criação de um ticket de avaria preventiva no MySQL.
+
+### 3.2 Regras de Transição de Estado
+* **Início de Reparação:** O técnico torna-se o proprietário do ticket, iniciando o cálculo do SLA.
+* **Orçamento Excecional:** Se uma reparação exigir aprovação financeira, o SLA é suspenso automaticamente até que o Administrador aprove ou recuse.
+* **Cancelamento:** Apenas permitido se o ticket estiver no estado original "Aberto".  
