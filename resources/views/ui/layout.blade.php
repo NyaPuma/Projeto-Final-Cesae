@@ -77,7 +77,7 @@
                             href="{{ url($item['href'] === '/' ? '/' : $item['href']) }}"
                             class="group flex items-center gap-3.5 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200
                             {{ $isActive
-                                ? 'bg-primary text-[var(--surface)] font-semibold shadow-sm shadow-primary/20'
+                                ? 'bg-primary text-[var(--on-primary)] font-semibold shadow-sm shadow-primary/20'
                                 : 'text-[var(--text)] hover:bg-[var(--surface-2)]'
                             }}"
                         >
