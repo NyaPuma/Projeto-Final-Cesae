@@ -1,41 +1,39 @@
-
 ## Workflow & Regras de Transição de Estados e Auditoria
 
-O ciclo de vida de uma avaria é gerido de forma estrita via Eloquent ORM. Todas as ações disparam eventos que alimentam o histórico em background através do trait `Auditable.php`, registando os utilizadores, os campos modificados e os timestamps de controlo (`opened_at`, `in_progress_at`, `closed_at`). 
+O ciclo de vida de uma avaria é gerido de forma estrita via Eloquent ORM. Todas as ações operacionais disparam eventos que alimentam o histórico em background através da infraestrutura de migrações e tabelas de auditoria do sistema, registando na tabela `audits` os utilizadores, os payloads estruturados em JSON com os campos modificados (`old_values` e `new_values`) e os timestamps automáticos de controlo (`created_at`, `in_progress_at`, `closed_at`). 
 
-Cada transição de estado ou novo comentário introduzido dispara adicionalmente um **Job assíncrono** na fila (*Queue*) para despachar notificações em tempo real via **WebSockets** e e-mails formatados.
+Cada transição de estado ou novo comentário introduzido dispara adicionalmente um **Job assíncrono** na fila (*Queue*) para despachar notificações em tempo real via **WebSockets** (através do Laravel Echo / Pusher) e e-mails formatados.
 
 ### Detalhe das Transições e Comportamento Esperado
 
-#### 1. De [Aberta] para [Em Curso]
-* **Gatilho:** O Técnico clica em "Iniciar Reparação" no seu painel.
+#### 1. De [Aberto] para [Em Curso]
+* **Gatilho:** O Administrador aprova e submete a alocação técnica na interface assistida por IA (`PATCH /admin/tickets/{id}/atribuir`) ou o Técnico clica em "Iniciar Reparação" no seu painel exclusivo (`PUT /technician/tickets/{id}/start`).
 * **Regra de Negócio:**
-  - O sistema associa o ID do técnico ao campo `tecnico_atribuido_id`.
-  - Regista o timestamp em `in_progress_at` para cálculo do SLA.
-  - O ticket fica bloqueado para edição por outros técnicos.
-  - **Notificação:** O Funcionário recebe um alerta em tempo real e um e-mail a avisar que a reparação começou.
+  - O sistema associa o ID do técnico ao campo `assigned_to` na tabela `tickets`.
+  - O servidor injeta automaticamente o carimbo de data/hora atual na coluna `in_progress_at` via macro `now()`.
+  - O ticket fica bloqueado para edição ou reatribuição por outros utilizadores.
+  - **Notificação:** O criador do ticket (`user_id`) recebe um alerta em tempo real via WebSockets e uma notificação por e-mail a avisar que a intervenção começou.
 
 #### 2. De [Em Curso] para [Pendente de Orçamento] (Fluxo Excecional)
-* **Gatilho:** O Técnico deteta a necessidade de peças de alto custo e clica em "Solicitar Aprovação".
+* **Gatilho:** O Técnico deteta a necessidade de adquirir componentes externos de alto custo e dispara a rota `PUT /technician/tickets/{id}/request-budget`.
 * **Regra de Negócio:**
-  - A justificativa financeira, estimativa de custo e o upload de uma foto da peça danificada tornam-se obrigatórios.
-  - O cronómetro de tempo de resolução (SLA) é **suspenso**.
-  - **Notificação:** O Administrador recebe um aviso instantâneo no seu painel analítico.
+  - A inclusão da estimativa financeira (`budget_amount`) e a justificação técnica tornam-se campos obrigatórios no formulário.
+  - O estado do ticket muda para o identificador de pausa orçamental e o cronómetro operacional de resolução (SLA) é **suspenso**.
+  - **Notificação:** O Administrador recebe um aviso instantâneo no seu dashboard e os contadores reativos incrementam o alerta.
 
-#### 3. De [Pendente de Orçamento] para [Em Curso] ou [Recusada]
-* **Gatilho:** O Administrador toma uma ação sobre o orçamento pendente.
+#### 3. De [Pendente de Orçamento] para [Em Curso] ou [Cancelado]
+* **Gatilho:** O Administrador toma uma ação de decisão financeira sobre o orçamento na rota protegida `PATCH /admin/tickets/{id}/approve-budget`.
 * **Regra de Negócio:**
-  - **Se Aprovado:** Regressa a "Em Curso", o SLA é reativado e o técnico é notificado em tempo real para prosseguir.
-  - **Se Rejeitado:** Passa para "Recusada/Cancelada", exigindo feedback descritivo do Administrador. O funcionário original é avisado por e-mail.
+  - **Se Aprovado:** O ticket regressa ao estado `Em Curso`, o campo `budget_approved_by` grava o ID do administrador, o SLA é reativado no servidor e o técnico recebe um push em tempo real para prosseguir com a reparação.
+  - **Se Rejeitado:** O ticket é movido para o estado `Cancelado`, exigindo feedback do Administrador. A timestamp `closed_at` é preenchida.
 
-#### 4. De [Em Curso] para [Fechada]
-* **Gatilho:** O Técnico conclui a reparação física e clica em "Encerrar Ticket".
+#### 4. De [Em Curso] para [Fechado]
+* **Gatilho:** O Técnico conclui a reparação mecânica/elétrica física na fábrica e clica em "Encerrar Ticket" (`PUT /technician/tickets/{id}/close`).
 * **Regra de Negócio:**
-  - Torna-se obrigatória a introdução das horas de mão de obra e do relatório técnico.
-  - O sistema injeta o timestamp em `closed_at` e calcula o MTTR.
-  - **Notificação:** O Funcionário recebe um e-mail com o sumário e o relatório da reparação. O ticket é trancado para novos comentários.
+  - O *Form Request* obriga à introdução descritiva do relatório técnico final, dos minutos gastos (`minutes_spent`) e do registo das peças consumidas do stock interno.
+  - O sistema grava a timestamp final na coluna `closed_at` e atualiza reativamente os dashboards estatísticos (`Chart.js`) via WebSockets. O ticket é trancado, impedindo a inserção de novos comentários operacionais.
 
-#### 5. De [Aberta] para [Cancelada]
-* **Gatilho:** O Funcionário decide anular o ticket por erro ou duplicação.
+#### 5. De [Aberto] para [Cancelado]
+* **Gatilho:** O operador decide anular o alerta por erro de registo ou duplicação via rota `POST /tickets/{id}/cancel`.
 * **Regra de Negócio:**
-  - **Condição Estrita:** Só é permitido se o ticket estiver em "Aberto". Se já estiver "Em Curso", a rota bloqueia a ação (403).
+  - **Condição Estrita de Segurança:** A operação só é validada pelo controlador se o ticket permanecer com o estado original `Aberto` e se o `user_id` corresponder ao criador do registo. Se o ticket já tiver sido assumido por um técnico (`Em Curso`), o controlador bloqueia a requisição e devolve uma exceção HTTP `403 Access Denied`.

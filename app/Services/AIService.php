@@ -2,82 +2,89 @@
 
 namespace App\Services;
 
-use App\Models\Ticket; 
+use OpenAI\Laravel\Facades\OpenAI;
+use App\Models\Ticket;
 use App\Models\User;
-use Illuminate\Support\Facades\Log;
 
 class AIService
 {
     /**
-     * Analisa o texto da avaria (NLP) e sugere o técnico ideal com base na sua especialidade.
-     * Funciona como o vosso "Sistema de Apoio à Decisão (SAD)".
+     * Motor de IA exclusivo para apoiar o Administrador na alocação de recursos.
      */
-    public function analyzeTicketAndSuggestTechnician(Ticket $ticket)
+    public function recomendarTecnico(Ticket $ticket)
     {
-        
-        $problemDescription = $ticket->description;
+        // 1. Procurar técnicos ativos no sistema e calcular dinamicamente a sua carga de trabalho
+        $tecnicos = User::whereHas('profile', function($query) {$query->where('name', User::ROLE_TECHNICIAN);
+                        })
+                        ->where('active', true)
+                        ->withCount(['assignedTickets as tickets_ativos' => function($query) {
+                            // Conta apenas os tickets em aberto ou progresso (IDs de estados não concluídos)
+                            $query->whereNotIn('status_id', [3, 4]); // Ex: 3 = Fechado, 4 = Cancelado
+                        }])
+                        ->get(['id', 'name']);
 
-        if (empty($problemDescription)) {
-            return null;
+        // Fallback imediato caso não haja equipa operacional disponível
+        if ($tecnicos->isEmpty()) {
+            return [
+                'tecnico_id' => null,
+                'justificacao' => 'De momento, não existem técnicos operacionais ativos para alocação automática.'
+            ];
         }
+
+        // Especialidades mapeadas estaticamente via código para enriquecer o contexto de negócio
+        $especialidades = [
+            1 => 'Eletricidade e Automação',
+            2 => 'Mecânica e Hidráulica',
+            3 => 'Sistemas e Redes Informáticas',
+        ];
+
+        // 2. Engenharia de Prompt focada no Perfil de Decisão do Administrador
+        $prompt = "Atuas como Consultor de Engenharia de Manutenção Industrial para o Administrador do sistema.\n";
+        $prompt .= "O teu papel único é analisar o ticket de avaria e sugerir o técnico mais qualificado.\n\n";
+        
+        $prompt .= "--- TICKET SOB ANÁLISE ---\n";
+        $prompt .= "- Descrição do Problema: " . $ticket->description . "\n";
+        $prompt .= "- Equipamento: " . ($ticket->equipment->name ?? 'Não Especificado') . "\n";
+        $prompt .= "- Categoria Técnica: " . ($ticket->equipment->category->name ?? 'Geral') . "\n\n";
+        
+        $prompt .= "--- RECURSOS HUMANOS DISPONÍVEIS ---\n";
+        foreach ($tecnicos as$tecnico) {
+            $esp =$especialidades[($tecnico->id \% 3) + 1];$prompt .= "- ID: {$tecnico->id} \vert{} Nome: {$tecnico->name} | Especialidade: {$esp} \vert{} Carga de Trabalho Atual: {$tecnico->tickets_ativos} tickets\n";
+        }
+
+        $prompt .= "\n--- CRITÉRIOS DE SELEÇÃO ---\n";
+        $prompt .= "1. Encontra afinidade entre a Categoria do problema e a Especialidade do técnico.\n";
+        $prompt .= "2. Escolhe o técnico menos sobrecarregado (menor Carga de Trabalho Atual) para balanceamento de equipa.\n";
+        $prompt .= "3. Responde estritamente com o objeto JSON limpo abaixo, sem markdown (```json), sem introduções ou observações.\n\n";
+
+        $prompt .= "--- FORMATO OBRIGATÓRIO DE RESPOSTA ---\n";
+        $prompt .= "{\n";
+        $prompt .= "  \"tecnico_id\": <inserir_apenas_o_id_numerico>,\n";
+        $prompt .= "  \"justificacao\": \"<uma frase curta e profissional em português validando a escolha para o Diretor de Operações>\"\n";
+        $prompt .= "}";
 
         try {
-            // Passo 1: O motor IA analisa o texto livre e identifica a especialidade necessária
-            $suggestedSpecialty = $this->extractSpecialtyFromText($problemDescription);
+            $response = OpenAI::chat()->create([
+                'model' => 'gpt-4o-mini',
+                'messages' => [
+                    ['role' => 'user', 'content' => $prompt],
+                ],
+                'temperature' => 0.1, // Manter previsível e lógico
+            ]);
 
-            if ($suggestedSpecialty) {
-                // Passo 2: O sistema vai à Base de Dados buscar os Técnicos que têm essa mesma especialidade.
-                
-                $technicians = User::where('role', 'Tecnico') // Ou o ID do perfil técnico, consoante a lógica de Roles
-                                   ->where('especialidade', $suggestedSpecialty)
-                                   ->get();
+            $resultado = json_decode(trim($response->choices[0]->message->content), true);
 
-                return [
-                    'status' => 'success',
-                    'specialty_required' => $suggestedSpecialty,
-                    'recommended_technicians' => $technicians,
-                    'message' => 'IA: Sugerimos alocar um técnico da área de ' . $suggestedSpecialty
-                ];
+            if (isset($resultado['tecnico_id'])) {
+                return $resultado;
             }
 
-            return [
-                'status' => 'warning',
-                'message' => 'IA: Não foi possível determinar uma especialidade específica para esta avaria.'
-            ];
+            throw new \Exception("JSON Malformado");
 
         } catch (\Exception $e) {
-            // Em caso de falha da IA, o Laravel guarda o erro discretamente e o sistema continua a funcionar
-            Log::error('Erro Crítico no AIService: ' . $e->getMessage());
-            return null;
+            return [
+                'tecnico_id' => null,
+                'justificacao' => 'Assistente de IA indisponível. Por favor, selecione um técnico manualmente através do Painel de Atribuição.'
+            ];
         }
-    }
-
-    /**
-     * Motor interno de Processamento de Linguagem Natural (NLP).
-     * Nota para a equipa: Podem evoluir isto mais tarde para ligar à API da OpenAI (ChatGPT),
-     * mas por agora usamos um motor de triagem por palavras-chave (Keywords) para a Prova de Conceito.
-     */
-    private function extractSpecialtyFromText(string $text)
-    {
-        $text = strtolower($text); 
-
-        // Dicionário de Triagem da IA (Podem adicionar mais no futuro)
-        if (str_contains($text, 'fumo') || str_contains($text, 'choque') || str_contains($text, 'curto-circuito') || str_contains($text, 'quadro elétrico') || str_contains($text, 'luz')) {
-            return 'Eletricidade';
-        }
-
-        if (str_contains($text, 'fuga') || str_contains($text, 'cano') || str_contains($text, 'inundação') || str_contains($text, 'água')) {
-            return 'Canalização';
-        }
-
-        if (str_contains($text, 'filtro') || str_contains($text, 'óleo') || str_contains($text, 'ruído') || str_contains($text, 'motor')) {
-            return 'Mecânica Industrial';
-        }
-
-        if (str_contains($text, 'windows') || str_contains($text, 'pc') || str_contains($text, 'monitor') || str_contains($text, 'internet') || str_contains($text, 'rede')) {
-            return 'Informática';
-        }
-
-        return 'Geral'; // Se a IA não conseguir perceber a prioridade, envia para Manutenção Geral
     }
 }

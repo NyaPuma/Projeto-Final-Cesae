@@ -2,7 +2,7 @@
 
 Uma plataforma web desenvolvida em **Laravel 11** para a digitalização, centralização e otimização de todo o ciclo de vida de avarias dentro do **Departamento de Manutenção** da organização. 
 
-O sistema mitiga falhas de comunicação e paragens prolongadas de infraestruturas, tornando o fluxo de trabalho mais organizado, rápido e rastreável ao distribuir inteligência operacional entre três perfis internos: **Operador (Funcionário)**, **Técnico** e **Administrador (Diretor de Operações)**.
+O sistema mitiga falhas de comunicação e paragens prolongadas de infraestruturas industriais, tornando o fluxo de trabalho mais organizado, rápido e rastreável ao distribuir inteligência operacional entre três perfis internos: **Operador (Operário)**, **Técnico** e **Administrador (Diretor de Operações)**.
 
 ---
 
@@ -10,7 +10,7 @@ O sistema mitiga falhas de comunicação e paragens prolongadas de infraestrutur
 * **Framework Back-End:** Laravel 11 (PHP)
 * **Base de Dados Relacional:** MySQL
 * **Interface Front-End:** Blade Templates + Tailwind CSS + FullCalendar v6
-* **Inteligência Artificial:** Sistema de Apoio à Decisão (SAD) com motor interno de triagem (NLP)
+* **Inteligência Artificial:** Módulo Assistido (SAD) com motor de triagem por Processamento de Linguagem Natural (NLP) via OpenAI
 * **Comunicação em Tempo Real:** Pusher / Laravel Echo (WebSockets)
 
 ---
@@ -21,19 +21,19 @@ Para consultar o planeamento detalhado, requisitos e o desenho de processos da p
 
 ### Estratégia e Gestão
 * [Plano de Projeto](docs/plano-projeto.md) — Sprints, equipa e matriz de riscos.
-* [Product Backlog](docs/product-backlog.md) — Lista de funcionalidades e prioridades.
-* [Análise de Processos (As-Is vs To-Be)](docs/analise-processos.md) — Otimização e gestão por exceção.
+* [Product Backlog](docs/product-backlog.md) — Lista de funcionalidades, prioridades e critérios de aceitação.
+* [Análise de Processos (As-Is vs To-Be)](docs/analise-processos.md) — Otimização operacional e Módulo Assistido por IA.
 
 ### Engenharia e Arquitetura
-* [Lista de Requisitos](docs/requisitos.md) — Funcionais (RF) e Não-Funcionais (RNF).
-* [Matriz de Autorizações & Permissões (RBAC)](docs/permissoes.md) — Controlo de acessos por perfil.
-* [Arquitetura de Dados (DER)](docs/diagrama-arquitetura.md) — Modelo relacional e integridade física.
-* [API Endpoints](docs/api-endpoints.md) — Documentação e contratos de integração.
+* [Lista de Requisitos](docs/requisitos.md) — Requisitos Funcionais (RF) e Não-Funcionais (RNF) consolidados.
+* [Matriz de Autorizações & Permissões (RBAC)](docs/permissoes.md) — Controlo estrito de acessos por perfil e rotas.
+* [Arquitetura de Dados (DER)](docs/diagrama-arquitetura.md) — Modelo relacional, indexação e integridade física.
+* [API Endpoints](docs/api-endpoints.md) — Documentação e contratos de integração com a API.
 
 ### Qualidade e Operação
-* [Guia do Utilizador](docs/guia-utilizador.md) — Manual de instruções por perfil.
-* [Plano de Testes](docs/plano-testes.md) — Cenários e matriz de validação.
-* [Workflow e Integrações](docs/workflow.md) — Estrutura de fluxo de dados e automações.
+* [Guia do Utilizador](docs/guia-utilizador.md) — Manual de instruções passo a passo por perfil.
+* [Plano de Testes](docs/plano-testes.md) — Cenários de QA, segurança RBAC e matriz de validação.
+* [Workflow e Integrações](docs/workflow.md) — Estrutura unificada de fluxos de dados e notificações.
 
 ---
 
@@ -41,6 +41,7 @@ Para consultar o planeamento detalhado, requisitos e o desenho de processos da p
 
 ### 1. Clonar o repositório
 ```bash
+
 git clone https://github.com/NyaPuma/Projeto-Final-Cesae.git
 cd Projeto-Final-Cesae
 

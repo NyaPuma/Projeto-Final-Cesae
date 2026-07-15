@@ -1,4 +1,3 @@
-
 # API Endpoints & Documentação Interativa
 
 A documentação interativa completa (onde podes testar os parâmetros e ver as respostas JSON) está disponível localmente na rota pública:
@@ -7,35 +6,38 @@ A documentação interativa completa (onde podes testar os parâmetros e ver as 
 ### 1. Autenticação & Gestão de Perfil
 | Método | Endpoint | Proteção | Descrição / Comportamento |
 | :--- | :--- | :--- | :--- |
-| **POST** | `/api/register` | `guest` | Cria uma conta. Estado inicial: 'Funcionário'. |
 | **POST** | `/api/login` | `guest` | Valida credenciais e injeta o Cookie/Token de Autenticação. |
 | **POST** | `/api/logout` | `auth` | Destrói a sessão, invalida o token e limpa os cookies de forma segura. |
-| **PUT** | `/api/user/password` | `auth` | Altera autonomamente a palavra-passe do utilizador autenticado. |
+| **POST** | `/api/password/change` | `auth` | Altera autonomamente a palavra-passe do utilizador autenticado. |
+| **POST** | `/api/profile/update` | `auth` | Atualiza os dados cadastrais de perfil do utilizador autenticado. |
 
 ### 2. Fluxo de Tickets, Fotos e Comentários (Operacional)
-Todos os endpoints de listagem (`GET`) suportam agora parâmetros de **pesquisa e filtros avançados** (ex: `?search=motor&status=em_curso&sala_id=5`).
+Todos os endpoints de listagem (`GET`) suportam parâmetros de **pesquisa e filtros avançados** (ex: `?search=motor&status=em_curso&sala_id=5`).
 
 | Método | Endpoint | Permissão Exigida | Regras de Negócio & Efeitos |
 | :--- | :--- | :--- | :--- |
-| **POST** | `/api/tickets` | `role:funcionario` | **Criar Ticket:** Valida campos, associa `Auth::id()`, permite **upload de fotos** e define estado como 'Aberta'. |
-| **GET** | `/api/tickets/my` | `role:funcionario` | **Painel do Funcionário:** Retorna as suas avarias ativas e o histórico completo de tickets fechados com filtros. |
-| **PUT** | `/api/tickets/{id}/cancel` | `role:funcionario` | **Cancelar Ticket:** Anula se estiver 'Aberto'. Se estiver em curso, bloqueia (403). |
-| **GET** | `/api/technician/tickets/open` | `role:technician,admin`| **Fila Global:** Lista todas as avarias abertas ou preventivas prontas para triagem com filtros avançados. |
-| **GET** | `/api/technician/tickets/assigned`| `role:technician` | **Os Meus Tickets:** Lista as avarias sob a responsabilidade do técnico autenticado. |
-| **GET** | `/api/tickets/{id}` | `role:technician,admin`| **Detalhe Contextualizado:** Retorna o ticket, as fotos anexadas, a árvore de comentários e as últimas 3 intervenções daquela máquina. |
-| **POST** | `/api/tickets/{id}/comments` | `auth` | **Sistema de Comentários:** Adiciona uma mensagem ao ticket. Dispara notificação instantânea para a contraparte. |
-| **POST** | `/api/tickets/{id}/photos` | `auth` | **Upload de Fotos:** Permite anexar fotografias adicionais de evidências ao longo do ciclo de vida do ticket. |
-| **PUT** | `/api/technician/tickets/{id}/start` | `role:technician` | **Iniciar Reparação:** Transita para 'Em Curso', injeta `in_progress_at` e avisa o utilizador em tempo real. |
-| **PUT** | `/api/technician/tickets/{id}/request-budget`| `role:technician` | **Solicitar Orçamento:** Move para 'Pendente de Orçamento', exige valores e **suspende o SLA**. Alerta o Admin. |
-| **PUT** | `/api/technician/tickets/{id}/close` | `role:technician` | **Encerrar Intervenção:** Move para 'Fechada'. Exige relatório e horas. Grava `closed_at`, calcula MTTR e envia e-mail com PDF. |
+| **POST** | `/api/tickets` | `auth` | **Criar Ticket (Fluxo Global In-House):** Permite que qualquer utilizador logado (Operário, Técnico ou Admin) abra avarias. Associa `Auth::id()` e define o estado como 'Aberto'. |
+| **GET** | `/api/tickets` | `auth` | **Listagem Geral:** Retorna os tickets e avarias ativas com paginação e suporte a filtros de busca. |
+| **GET** | `/api/tickets/{id}` | `auth` | **Detalhe Contextualizado:** Retorna os dados puros do ticket, trazendo os relacionamentos (`equipment.category`, `room`, `user`) e injetando a sugestão em tempo real do `AIService`. |
+| **POST** | `/api/tickets/{id}/cancel` | `role:user` | **Cancelar Ticket:** Permite ao operário anular o ticket criado por si, desde que este permaneça com o estado 'Aberto'. |
+| **GET** | `/api/technician/tickets/open` | `role:technician,admin`| **Fila Global:** Lista todas as avarias em estado aberto prontas para triagem e atribuição técnica. |
+| **PUT** | `/api/technician/tickets/{id}/start` | `role:technician` | **Iniciar Reparação:** Transita o estado do ticket para 'Em Curso', injeta a timestamp `in_progress_at` via servidor e dispara o Broadcast. |
+| **PUT** | `/api/technician/tickets/{id}/close` | `role:technician` | **Encerrar Intervenção:** Move o estado para 'Fechado', exigindo o relatório técnico, registo de minutos gastos e custos de peças do stock interno. |
+| **POST** | `/api/tickets/{id}/comments` | `auth` | **Sistema de Comentários:** Adiciona uma mensagem ao ticket. Operários apenas comentam os seus próprios tickets; Técnicos e Admins comentam globalmente. |
+| **GET** | `/api/tickets/{id}/comments` | `role:technician,admin`| **Histórico de Diálogo:** Lista a árvore completa de comentários e notas técnicas associadas ao ticket. |
+| **POST** | `/api/tickets/{id}/photos` | `auth` | **Upload de Fotos:** Permite anexar ficheiros de imagem como evidências visuais do problema ou da resolução na fábrica. |
+| **GET** | `/api/tickets/{id}/photos` | `auth` | **Galeria de Evidências:** Retorna os metadados e URLs dos anexos multimédia carregados no âmbito do ticket. |
 
-### 3. Administração, Backoffice & Relatórios
+### 3. Administração, Backoffice, IA & Relatórios
 | Método | Endpoint | Proteção | Descrição / Ações Estruturais |
 | :--- | :--- | :--- | :--- |
-| **PATCH**| `/api/admin/tickets/{id}/budget` | `role:admin` | **Decidir Orçamento:** Aprova (SLA reativa, volta a 'Em Curso') ou Rejeita (encerra o processo com feedback). |
-| **POST** | `/api/admin/preventive` | `role:admin` | **Manutenção Preventiva:** Agenda e injeta uma ordem proativa diretamente na fila dos técnicos. |
-| **GET** | `/api/admin/analytics` | `role:admin` | **Dashboard Analítico:** Retorna os dados agregados para os **gráficos** (MTTR, MTBF, custos e desempenho). |
-| **GET** | `/api/admin/audit-logs` | `role:admin` | **Audit Log:** Retorna o histórico completo e imutável de logs e alterações efetuadas em qualquer tabela do sistema. |
-| **GET** | `/api/admin/reports/export` | `role:admin` | **Exportação de Relatórios:** Gera e descarrega ficheiros consolidados em formato **Excel (.xlsx)** ou **PDF** com base em filtros. |
-| **CRUD** | `/api/admin/users/*` | `role:admin` | **Gestão de Pessoal:** Controlo total sobre criação, atualização de perfis e inativação de contas de colaboradores. |
-| **CRUD** | `/api/admin/assets/*` | `role:admin` | **Gestão de Inventário:** Controlo total (Filtros, Criar, Editar, Soft Delete) de Equipamentos, Salas e Categorias. |
+| **POST** | `/api/admin/users/register` | `role:admin` | **Registo Restrito (Segurança Blindada):** Endpoint exclusivo do Administrador para criar e cadastrar novos utilizadores e funcionários na empresa. |
+| **PATCH** | `/api/admin/tickets/{id}/atribuir` | `role:admin` | **Despacho Assistido por IA:** Grava de forma definitiva a alocação do técnico sugerido pelo motor NLP do `AIService` ou selecionado manualmente. |
+| **PATCH**| `/api/admin/tickets/{id}/approve-budget` | `role:admin` | **Decidir Orçamento:** Analisa e aprova a requisição orçamental enviada por um técnico para intervenções de alto custo. |
+| **POST** | `/api/admin/preventive` | `role:admin` | **Manutenção Preventiva:** Agenda e injeta uma ordem de trabalho planeada diretamente na fila operacional dos técnicos. |
+| **GET** | `/api/admin/users` | `role:admin` | **Consulta de Funcionários:** Lista todos os colaboradores registados na plataforma para fins de gestão de recursos humanos. |
+| **PATCH**| `/api/admin/users/{id}/inactive` | `role:admin` | **Inativação de Contas:** Revoga o acesso à plataforma alterando logicamente o estado do utilizador para inativo. |
+| **GET** | `/api/admin/audits` | `role:admin` | **Logs de Auditoria:** Retorna o rasto imutável e estruturado em JSON com as alterações (`old_values` e `new_values`) efetuadas no sistema. |
+| **CRUD** | `/api/admin/rooms/*` | `role:admin` | **Gestão de Infraestrutura:** Cria, atualiza e inativa a árvore de salas, pavilhões e localizações físicas da fábrica. |
+| **CRUD** | `/api/admin/equipment/*` | `role:admin` | **Gestão de Inventário:** Controlo completo sobre o cadastro de ativos, números de série, marcas e categorias de equipamentos. |
+| **GET** | `/api/analytics/*` | `role:technician,admin`| **Módulo Analítico:** Consome as estatísticas agregadas e barramentos de dados para renderização dos gráficos de KPI e MTTR. |
