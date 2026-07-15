@@ -7,7 +7,7 @@
             'title' => 'Centro de Controlo Operacional',
             'subtitle' => 'Gerir ocorrências, equipamentos, utilizadores, auditorias e agenda numa experiência uniforme e acessível.',
             'badge' => 'Painel principal',
-            'actions' => '<div class="flex flex-wrap gap-2"><a href="/ui/login" class="inline-flex items-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">Iniciar sessão</a><a href="/ui" class="inline-flex items-center rounded-2xl bg-primary px-3 py-2 text-sm font-semibold text-black transition hover:opacity-90">Abrir painel</a></div>'
+            'actions' => '<div class="flex flex-wrap gap-2"><a href="/ui/login" class="ui-button inline-flex items-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">Iniciar sessão</a><a href="/ui" class="ui-button inline-flex items-center rounded-2xl bg-primary px-3 py-2 text-sm font-semibold text-black transition hover:opacity-90">Abrir painel</a></div>'
         ])
             <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
                 @php($stats = [

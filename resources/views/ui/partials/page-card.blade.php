@@ -7,7 +7,7 @@
 
 <div
     {{ $attributes->merge([
-        'class' => 'group relative overflow-hidden rounded-[28px] border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-sm)] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--text)]/20 hover:shadow-[0_18px_45px_rgba(15,23,42,0.08)]',
+        'class' => 'ui-card group relative overflow-hidden rounded-[28px] border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-sm)] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--text)]/20 hover:shadow-[0_18px_45px_rgba(15,23,42,0.08)]',
     ]) }}
 >
     {{-- Glow decorativo superior --}}
