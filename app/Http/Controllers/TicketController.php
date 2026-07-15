@@ -32,7 +32,10 @@ class TicketController extends Controller
         return response()->json([
         'tickets' => \App\Models\Ticket::with(['equipment', 'room', 'user'])->latest()->paginate(15)
         ]);
+        //teste merge
     }
+
+
 
     /**
      * Exibe o detalhe do ticket injetando a sugestão em tempo real da IA
