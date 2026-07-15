@@ -16,7 +16,7 @@
 </head>
 
 <body class="min-h-screen bg-[var(--bg)] text-[var(--text)] overflow-x-hidden antialiased">
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-xl focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-black">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-xl focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[var(--surface)]">
         Skip to content
     </a>
 
@@ -35,10 +35,10 @@
 
             {{-- Branding --}}
             <div class="h-20 px-8 flex items-center border-b border-[var(--border)]">
-                <div class="flex items-center gap-4">
-                    <div class="h-11 w-11 rounded-xl bg-primary text-black font-black flex items-center justify-center shadow-md shadow-primary/20">
-                        GA
-                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="h-11 w-11 rounded-xl bg-primary text-[var(--surface)] font-black flex items-center justify-center shadow-md shadow-primary/20">
+                            GA
+                        </div>
                     <div>
                         <h1 class="font-bold text-sm tracking-tight text-[var(--text)]">
                             Gestão de Avarias
@@ -79,7 +79,7 @@
                         href="{{ url($item['href'] === '/' ? '/' : $item['href']) }}"
                         class="group flex items-center gap-3.5 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200
                         {{ $isActive
-                            ? 'bg-primary text-black font-semibold shadow-sm shadow-primary/20'
+                            ? 'bg-primary text-[var(--surface)] font-semibold shadow-sm shadow-primary/20'
                             : 'text-[var(--text)] hover:bg-[var(--surface-2)]'
                         }}"
                     >
@@ -205,9 +205,9 @@
         } else {
             if (box) {
                 box.innerHTML = `
-                    <a
+                        <a
                         href="/ui/login"
-                        class="w-full inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-black shadow-sm shadow-primary/10 transition-all duration-200 hover:opacity-90 text-center"
+                        class="w-full inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-[var(--surface)] shadow-sm shadow-primary/10 transition-all duration-200 hover:opacity-90 text-center"
                     >
                         Iniciar Sessão
                     </a>
@@ -215,7 +215,7 @@
             }
             if (topbarUser) {
                 topbarUser.innerHTML = `
-                    <a href="/ui/login" class="inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-black shadow-sm shadow-primary/10 transition-all duration-200 hover:opacity-90">
+                    <a href="/ui/login" class="inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-[var(--surface)] shadow-sm shadow-primary/10 transition-all duration-200 hover:opacity-90">
                         Login / Registo
                     </a>
                 `;
