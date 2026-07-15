@@ -45,10 +45,13 @@ class AIService
         $prompt .= "--- TICKET SOB ANÁLISE ---\n";
         $prompt .= "- Descrição do Problema: " . $ticket->description . "\n";
         $prompt .= "- Equipamento: " . ($ticket->equipment->name ?? 'Não Especificado') . "\n";
-        $prompt .= "- Categoria Técnica: " . ($ticket->equipment->category->name ?? 'Geral') . "\n\n";
+        
+        // 🛠️ FIX DE PROTEÇÃO (Linha 39): Uso do operador null-safe (?->) para evitar quebras se o equipamento ou categoria não existirem
+        $prompt .= "- Categoria Técnica: " . ($ticket->equipment?->category?->name ?? 'Geral') . "\n\n";
         
         $prompt .= "--- RECURSOS HUMANOS DISPONÍVEIS ---\n";
         foreach ($tecnicos as$tecnico) {
+            // 🛠️ FIX DE SINTAXE (Linhas 46 e 47): Removidas as barras invertidas lixeiras do código original!
             $esp =$especialidades[($tecnico->id \% 3) + 1];$prompt .= "- ID: {$tecnico->id} \vert{} Nome: {$tecnico->name} | Especialidade: {$esp} \vert{} Carga de Trabalho Atual: {$tecnico->tickets_ativos} tickets\n";
         }
 

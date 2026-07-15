@@ -42,7 +42,11 @@ Route::get('/test-email', function () {
     return 'E-mail enviado com sucesso!';
 });
 
-
+// 🔒 SEGURANÇA CORRIGIDA: O endpoint público '/register' foi completamente removido daqui.
+// Apenas o endpoint de login permanece aberto ao público (Guest) com Throttle e isenção de CSRF
+Route::post('/login',    [AuthController::class, 'login'])
+    ->middleware(['rate.limit:5,1'])
+    ->withoutMiddleware([VerifyCsrfToken::class]);
 
 
 /*
@@ -56,11 +60,11 @@ Route::middleware(['custom.auth'])->group(function () {
 
         // Ações de conta comuns a qualquer utilizador logado
         // ----------------------------------------------------------------------
-        Route::post('/logout',                  [AuthController::class, 'logout']);
-        Route::post('/password/change',         [AuthController::class, 'changePassword']);
-        Route::post('/profile/update',          [AuthController::class, 'updateProfile']);
-        Route::get('/notifications',            [NotificationController::class, 'index']);
-        Route::patch('/notifications/{id}',     [NotificationController::class, 'markAsRead']);
+        Route::post('/logout',                   [AuthController::class, 'logout']);
+        Route::post('/password/change',          [AuthController::class, 'changePassword']);
+        Route::post('/profile/update',           [AuthController::class, 'updateProfile']);
+        Route::get('/notifications',             [NotificationController::class, 'index']);
+        Route::patch('/notifications/{id}',      [NotificationController::class, 'markAsRead']);
         Route::post('/notifications/test-email', [NotificationController::class, 'sendTestEmail']);
 
         // ========================================
@@ -88,12 +92,9 @@ Route::middleware(['custom.auth'])->group(function () {
         Route::post('/tickets/{id}/cancel',   [TicketController::class, 'cancelTicket']);
         Route::post('/tickets/{id}/schedule', [TicketController::class, 'scheduleTicket']);
 
-        /*
-         |-- Área do Funcionário / Operário Comum
-         |----------------------------------------------------------------------*/
-        Route::middleware(['role:user'])->group(function () {
-            Route::post('/tickets', [TicketController::class, 'store']);
-        });
+        // 🛠️ MODELO IN-HOUSE ALINHADO: Qualquer utilizador autenticado pode reportar uma avaria.
+        // Removido do middleware restritivo 'role:user' para que Técnicos e Admins também criem tickets em campo.
+        Route::post('/tickets', [TicketController::class, 'store']);
 
         /*
          |-- Área Exclusiva do Técnico de Manutenção
@@ -136,6 +137,12 @@ Route::middleware(['custom.auth'])->group(function () {
          |----------------------------------------------------------------------*/
         Route::middleware(['role:admin'])->group(function () {
 
+            // 🔐 SEGURANÇA BLINDADA: Endpoint de registo movido para a área protegida do Administrador.
+            // Protegido com o prefixo /admin e controlado pelo middleware de acessos baseado em roles.
+            Route::post('/admin/users/register', [AuthController::class, 'register'])
+                ->name('admin.users.register')
+                ->middleware(['rate.limit:5,1']);
+
             // ========================================
             // 🤖 MOTOR DE INTELIGÊNCIA ARTIFICIAL (Módulo Assistido)
             // ========================================
@@ -144,7 +151,6 @@ Route::middleware(['custom.auth'])->group(function () {
 
             // Submissão imediata para gravar a recomendação escolhida pela IA no MySQL
             Route::patch('/admin/tickets/{id}/atribuir', [TicketController::class, 'atribuirTecnico'])->name('admin.tickets.atribuir');
-
 
             // Logs de Auditoria do Sistema
             Route::get('/admin/audits', [AuditController::class, 'index']);
@@ -169,7 +175,6 @@ Route::middleware(['custom.auth'])->group(function () {
             Route::post('/admin/preventive', [AdminController::class, 'storePreventive']);
             Route::patch('/admin/tickets/{id}/approve-budget', [AdminController::class, 'approveBudget']);
 
-            // Gestão de Infraestrutura (Salas / Pavilhões)
             // Gestão de Infraestrutura (Salas / Pavilhões)
             Route::get('/admin/rooms',                  [RoomController::class, 'indexRoom']);
             Route::post('/admin/rooms',                 [RoomController::class, 'storeRoom']);

@@ -10,6 +10,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property-read \App\Models\Userprofile|null $profile
+ */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
@@ -139,7 +142,10 @@ class User extends Authenticatable
      */
     private static function ensureValidProfile(User $user): void
     {
-        $profileName = $user->profile?->name ?? '';
+        // 🛠️ FIX DE PROPRIEDADE (Linha 147): Acedemos ao método de relacionamento de forma direta e segura
+        // para contornar a limitação de propriedades dinâmicas que confunde o Larastan.
+        $profile = $user->profile_id ? $user->profile()->first() : null;
+        $profileName = $profile ? $profile->name : '';
 
         if (!$user->profile_id || !self::isValidProfile($profileName)) {
             $defaultRole = self::ROLE_USER;

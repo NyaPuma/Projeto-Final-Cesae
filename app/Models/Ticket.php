@@ -9,6 +9,16 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes; 
 use App\Traits\Auditable;
 
+// --- ADICIONA ESTES IMPORTS QUE FALTAM ---
+use App\Models\TicketStatus;
+use App\Models\TicketWorkflowHistory;
+use App\Models\Equipment;
+use App\Models\Room;
+use App\Models\TicketComment;
+use App\Models\TicketAttachment;
+use App\Models\User;
+// ----------------------------------------
+
 class Ticket extends Model
 {
     use HasFactory;
@@ -239,4 +249,39 @@ class Ticket extends Model
             ];
         });
     }
+    /**
+     * Adiciona isto para resolver o erro de "getLeastBusyTechnician" no Controller
+     */
+    public static function getLeastBusyTechnician()
+    {
+        return User::whereHas('profile', fn($q) => $q->where('name', User::ROLE_TECHNICIAN))
+            ->where('active', true)
+            ->withCount(['assignedTickets' => function($query) {
+                $query->whereNotIn('status_id', [3, 4]); // Ignora Fechados/Cancelados
+            }])
+            ->orderBy('assigned_tickets_count', 'asc')
+            ->first();
+    }
+
+    /**
+     * Adiciona isto para garantir que o reopen() funciona sem erros
+     */
+    public function reopen(): bool
+    {
+        // Verifica se o estado atual permite reabertura
+        // Assumindo que 3 é fechado
+        if ($this->status_id != 3) { 
+            return false;
+        }
+
+        $openStatus = TicketStatus::where('name', self::STATUS_OPEN)->first();
+        if ($openStatus) {
+            $this->status_id = $openStatus->id;
+            $this->reopened_at = now();
+            $this->closed_at = null;
+            return $this->save();
+        }
+        return false;
+    }
+    
 }
