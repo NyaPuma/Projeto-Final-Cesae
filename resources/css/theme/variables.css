@@ -11,7 +11,10 @@
     --primary: #f59e0b;
     --primary-hover: #d97706;
     --primary-light: rgba(245, 158, 11, 0.1);
+
+    /* Cor de texto adequada em cima do primary */
     --on-primary: #111827;
+
     --text-primary: #111827;
     --surface-secondary: #f8fafc;
     --surface-hover: #f1f5f9;
@@ -21,6 +24,11 @@
     --warning: #f59e0b;
     --danger: #ef4444;
     --info: #3b82f6;
+
+    /* Helpers para bibliotecas/estilos que usam var(--bg)/var(--text) */
+    --bg: var(--background);
+    --text: var(--text);
+
 
     /* ------------------------------------------------------------------
        Surface & Background (Light Default)
