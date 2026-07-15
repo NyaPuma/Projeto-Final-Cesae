@@ -1,262 +1,86 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
 <head>
-
     <meta charset="utf-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>
-        {{ config('app.name', 'Central de Operações') }}
-    </title>
-
+    <title>{{ config('app.name', 'Gestão de Avarias') }}</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
-
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800" rel="stylesheet">
-
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
 </head>
-
-<body class="min-h-screen">
-
-    <div class="app-background">
-
-        <div class="background-gradient background-gradient-primary"></div>
-
-        <div class="background-gradient background-gradient-secondary"></div>
-
-        <div class="background-gradient background-gradient-accent"></div>
-
-    </div>
-
-    <main class="landing-page">
-
-        <header class="landing-header sticky top-0 z-50">
-
-            <div class="container mx-auto flex h-20 items-center justify-between px-6 lg:px-8">
-
-                <a href="{{ url('/') }}" class="flex items-center gap-4">
-
-                    <div class="brand-logo">
-
-                        <span>GA</span>
-
+<body class="min-h-screen bg-[var(--bg)] text-[var(--text)] antialiased">
+    <div class="mx-auto max-w-7xl px-6 py-8 lg:px-8 lg:py-10">
+        @component('ui.partials.page-card', [
+            'title' => 'Gestão inteligente de avarias',
+            'subtitle' => 'Centralize pedidos de assistência, inventário, manutenção preventiva, auditorias e indicadores operacionais numa experiência moderna e consistente.',
+            'badge' => 'Sistema online',
+            'actions' => '<div class="flex flex-wrap gap-2"><a href="/ui/login" class="inline-flex items-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">Entrar</a><a href="/ui" class="inline-flex items-center rounded-2xl bg-primary px-3 py-2 text-sm font-semibold text-black transition hover:opacity-90">Aceder ao painel</a></div>'
+        ])
+            <div class="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
+                <div class="space-y-6">
+                    <div class="grid gap-4 sm:grid-cols-3">
+                        <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4">
+                            <p class="text-3xl font-black text-[var(--text)]">99.9%</p>
+                            <p class="mt-2 text-xs font-semibold uppercase tracking-[0.24em] text-[var(--text-soft)]">Disponibilidade</p>
+                        </div>
+                        <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4">
+                            <p class="text-3xl font-black text-[var(--text)]">24/7</p>
+                            <p class="mt-2 text-xs font-semibold uppercase tracking-[0.24em] text-[var(--text-soft)]">Monitorização</p>
+                        </div>
+                        <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4">
+                            <p class="text-3xl font-black text-[var(--text)]">100%</p>
+                            <p class="mt-2 text-xs font-semibold uppercase tracking-[0.24em] text-[var(--text-soft)]">Auditoria</p>
+                        </div>
                     </div>
 
-                    <div>
-
-                        <h1 class="text-lg font-bold">
-                            {{ config('app.name', 'Gestão de Avarias') }}
-                        </h1>
-
-                        <p class="text-sm text-secondary">
-                            Plataforma Enterprise
-                        </p>
-
+                    <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface-2)]/70 p-6">
+                        <h2 class="text-xl font-semibold tracking-tight text-[var(--text)]">O que a plataforma oferece</h2>
+                        <div class="mt-4 grid gap-3 sm:grid-cols-2">
+                            <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4">
+                                <p class="font-semibold text-[var(--text)]">Tickets e intervenções</p>
+                                <p class="mt-2 text-sm leading-7 text-[var(--text-soft)]">Registe, priorize e acompanhe ocorrências em tempo real.</p>
+                            </div>
+                            <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4">
+                                <p class="font-semibold text-[var(--text)]">Equipamentos e salas</p>
+                                <p class="mt-2 text-sm leading-7 text-[var(--text-soft)]">Mantenha a frota tecnológica e a sua localização organizadas.</p>
+                            </div>
+                            <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4">
+                                <p class="font-semibold text-[var(--text)]">Analytics e relatórios</p>
+                                <p class="mt-2 text-sm leading-7 text-[var(--text-soft)]">Aceda a indicadores e métricas para decisões operacionais.</p>
+                            </div>
+                            <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4">
+                                <p class="font-semibold text-[var(--text)]">API e documentação</p>
+                                <p class="mt-2 text-sm leading-7 text-[var(--text-soft)]">Consuma a API com documentação integrada e fluxo seguro.</p>
+                            </div>
+                        </div>
                     </div>
-
-                </a>
-
-
-                <nav class="hidden lg:flex items-center gap-8">
-
-                    <a href="#features" class="nav-link">
-                        Funcionalidades
-                    </a>
-
-                    <a href="#stats" class="nav-link">
-                        Estatísticas
-                    </a>
-
-                    <a href="#security" class="nav-link">
-                        Segurança
-                    </a>
-
-                    <a href="#contact" class="nav-link">
-                        Contacto
-                    </a>
-
-                </nav>
-
-
-                <div class="flex items-center gap-3">
-
-                    <button id="theme-toggle" class="btn btn-secondary btn-icon" type="button"
-                        aria-label="Alternar tema">
-
-                        <span class="theme-icon">🌙</span>
-
-                    </button>
-
-
-                    @auth
-
-                        <a href="{{ url('/ui') }}" class="btn btn-primary">
-                            Dashboard
-                        </a>
-                    @else
-                        <a href="{{ route('ui.login') }}" class="btn btn-secondary">
-                            Entrar
-                        </a>
-
-                        <a href="{{ route('ui.login') }}" class="btn btn-primary">
-                            Registar
-                        </a>
-
-                    @endauth
-
                 </div>
 
-            </div>
-
-        </header>
-
-        <section class="landing-hero py-20 lg:py-28">
-
-            <div class="container mx-auto px-6 lg:px-8">
-
-                <div class="grid items-center gap-16 lg:grid-cols-2">
-
-                    <div>
-
-                        <span class="badge badge-primary">
-
-                            <span class="status-dot"></span>
-
-                            Sistema Online
-
-                        </span>
-
-
-                        <h2 class="mt-8 text-5xl font-black leading-tight lg:text-6xl">
-
-                            Gestão inteligente
-                            <br>
-
-                            <span class="text-primary">
-                                de avarias
-                            </span>
-
-                            <br>
-
-                            para toda a infraestrutura.
-
-                        </h2>
-
-
-                        <p class="mt-8 max-w-xl text-lg text-secondary">
-
-                            Centralize pedidos de assistência, inventário,
-                            manutenção preventiva, auditorias e indicadores
-                            operacionais numa única plataforma moderna,
-                            rápida e preparada para ambientes empresariais.
-
-                        </p>
-
-
-                        <div class="mt-10 flex flex-wrap gap-4">
-
-                            @auth
-
-                                <a href="{{ url('/ui') }}" class="btn btn-primary btn-lg">
-                                    Aceder ao Painel
-                                </a>
-                            @else
-                                <a href="{{ route('ui.login') }}" class="btn btn-primary btn-lg">
-                                    Iniciar Sessão
-                                </a>
-
-                                <a href="#features" class="btn btn-secondary btn-lg">
-                                    Explorar Plataforma
-                                </a>
-
-                            @endauth
-
+                <div class="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm">
+                    <p class="text-[10px] font-bold uppercase tracking-[0.25em] text-[var(--text-soft)]">Visão rápida</p>
+                    <h3 class="mt-3 text-2xl font-semibold tracking-tight text-[var(--text)]">Preparada para operações empresariais</h3>
+                    <p class="mt-4 text-sm leading-8 text-[var(--text-soft)]">A plataforma centraliza o ciclo completo de gestão de avarias, desde a criação de tickets até à análise de desempenho e auditoria das ações.</p>
+                    <div class="mt-6 space-y-3">
+                        <div class="flex items-center justify-between rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3">
+                            <span class="text-sm font-semibold text-[var(--text)]">API REST</span>
+                            <span class="rounded-full bg-emerald-500/10 px-2.5 py-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400">Operacional</span>
                         </div>
-
-
-                        <div id="stats" class="mt-16 grid gap-5 sm:grid-cols-3">
-
-                            <div class="card">
-
-                                <div class="card-body">
-
-                                    <h3 class="text-3xl font-black">
-                                        99.9%
-                                    </h3>
-
-                                    <p class="mt-2 text-xs uppercase tracking-wider text-secondary">
-                                        Disponibilidade
-                                    </p>
-
-                                </div>
-
-                            </div>
-
-
-                            <div class="card">
-
-                                <div class="card-body">
-
-                                    <h3 class="text-3xl font-black">
-                                        24/7
-                                    </h3>
-
-                                    <p class="mt-2 text-xs uppercase tracking-wider text-secondary">
-                                        Monitorização
-                                    </p>
-
-                                </div>
-
-                            </div>
-
-
-                            <div class="card">
-
-                                <div class="card-body">
-
-                                    <h3 class="text-3xl font-black">
-                                        100%
-                                    </h3>
-
-                                    <p class="mt-2 text-xs uppercase tracking-wider text-secondary">
-                                        Auditoria
-                                    </p>
-
-                                </div>
-
-                            </div>
-
+                        <div class="flex items-center justify-between rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3">
+                            <span class="text-sm font-semibold text-[var(--text)]">Base de dados</span>
+                            <span class="rounded-full bg-primary/10 px-2.5 py-1 text-xs font-semibold text-primary">Sincronizada</span>
                         </div>
-
+                        <div class="flex items-center justify-between rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3">
+                            <span class="text-sm font-semibold text-[var(--text)]">Segurança</span>
+                            <span class="rounded-full bg-amber-500/10 px-2.5 py-1 text-xs font-semibold text-amber-600 dark:text-amber-400">TLS</span>
+                        </div>
                     </div>
-
-                    <div>
-
-                        <div class="card dashboard-preview">
-
-                            <div class="card-header">
-
-                                <div>
-
-                                    <span class="badge badge-success">
-                                        Sistema Operacional
-                                    </span>
-
-                                    <h3 class="mt-4 text-2xl font-bold">
-                                        Estado Geral da Plataforma
-                                    </h3>
-
-                                </div>
-
-                            </div>
-
-
-                            <div class="card-body">
+                </div>
+            </div>
+        @endcomponent
+    </div>
+</body>
+</html>
 
                                 <div class="space-y-4">
 
