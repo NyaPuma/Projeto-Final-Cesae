@@ -7,9 +7,9 @@ window.requireAuthOnLoad = true;
 </script>
 
 @component('ui.partials.page-card', [
-    'title' => 'Tickets',
-    'subtitle' => 'Pesquise, filtre e consulte as ocorrências registadas.',
-    'actions' => '<div class="flex flex-wrap gap-2"><a href="/ui" class="inline-flex items-center justify-center px-3 py-1.5 bg-[var(--surface)] text-xs font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all"><svg class="w-3.5 h-3.5 mr-1.5 text-[var(--text-soft)]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path></svg> Voltar ao painel</a><a href="/ui/tickets/create" class="inline-flex items-center justify-center px-3 py-1.5 bg-primary text-xs font-semibold text-black rounded-xl shadow-sm hover:opacity-90 transition-all">+ Criar Ticket</a></div>'
+    'title' => __('Tickets'),
+    'subtitle' => __('Pesquise, filtre e consulte as ocorrências registadas.'),
+    'actions' => '<div class="flex flex-wrap gap-2"><a href="/ui" class="inline-flex items-center justify-center px-3.5 py-2 bg-[var(--surface)] text-xs font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all"><svg class="w-3.5 h-3.5 mr-1.5 text-[var(--text-soft)]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path></svg> ' . __('Voltar ao painel') . '</a><a href="/ui/tickets/create" class="inline-flex items-center justify-center px-3.5 py-2 bg-primary text-xs font-bold text-[var(--on-primary)] rounded-xl shadow-sm hover:opacity-90 transition-all">+ ' . __('Criar Ticket') . '</a></div>'
 ])
 
     {{-- Painel de Pesquisa Avançada Bento-Style --}}
@@ -17,52 +17,52 @@ window.requireAuthOnLoad = true;
         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 
             <div class="sm:col-span-2 lg:col-span-3 xl:col-span-4">
-                <label for="filter_q" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">Termo de Pesquisa</label>
+                <label for="filter_q" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Termo de Pesquisa') }}</label>
                 <div class="relative">
-                    <input id="filter_q" placeholder="Pesquisar em título e descrição do ticket..."
-                        class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2 text-xs text-[var(--text)] placeholder-[var(--text-soft)] outline-none focus:border-[var(--text)] transition-all">
+                    <input id="filter_q" placeholder="{{ __('Pesquisar em título e descrição do ticket...') }}"
+                        class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2.5 text-xs text-[var(--text)] placeholder-[var(--text-soft)] outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all">
                 </div>
             </div>
 
             <div>
-                <label for="filter_status" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">Estado</label>
-                <select id="filter_status" class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2 text-xs text-[var(--text)] outline-none focus:border-[var(--text)] transition-all">
-                    <option value="">Todos</option>
-                    <option value="aberta">Aberta</option>
-                    <option value="em curso">Em Curso</option>
-                    <option value="fechada">Fechada</option>
+                <label for="filter_status" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Estado') }}</label>
+                <select id="filter_status" class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2.5 text-xs text-[var(--text)] outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all">
+                    <option value="">{{ __('Todos') }}</option>
+                    <option value="aberta">{{ __('Aberta') }}</option>
+                    <option value="em curso">{{ __('Em Curso') }}</option>
+                    <option value="fechada">{{ __('Fechada') }}</option>
                 </select>
             </div>
 
             <div>
-                <label for="filter_priority" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">Prioridade</label>
-                <select id="filter_priority" class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2 text-xs text-[var(--text)] outline-none focus:border-[var(--text)] transition-all">
-                    <option value="">Todas</option>
-                    <option value="baixa">Baixa</option>
-                    <option value="média">Média</option>
-                    <option value="alta">Alta</option>
-                    <option value="crítica">Crítica</option>
+                <label for="filter_priority" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Prioridade') }}</label>
+                <select id="filter_priority" class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2.5 text-xs text-[var(--text)] outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all">
+                    <option value="">{{ __('Todas') }}</option>
+                    <option value="baixa">{{ __('Baixa') }}</option>
+                    <option value="média">{{ __('Média') }}</option>
+                    <option value="alta">{{ __('Alta') }}</option>
+                    <option value="crítica">{{ __('Crítica') }}</option>
                 </select>
             </div>
 
             <div>
-                <label for="filter_date_from" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">Data de abertura (De)</label>
-                <input id="filter_date_from" type="date" class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2 text-xs text-[var(--text)] outline-none focus:border-[var(--text)] transition-all">
+                <label for="filter_date_from" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Data de abertura (De)') }}</label>
+                <input id="filter_date_from" type="date" class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2 text-xs text-[var(--text)] outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all">
             </div>
 
             <div>
-                <label for="filter_date_to" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">Data até</label>
-                <input id="filter_date_to" type="date" class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2 text-xs text-[var(--text)] outline-none focus:border-[var(--text)] transition-all">
+                <label for="filter_date_to" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Data até') }}</label>
+                <input id="filter_date_to" type="date" class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2 text-xs text-[var(--text)] outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all">
             </div>
         </div>
 
         <div class="mt-4 pt-4 border-t border-[var(--border)] flex flex-wrap items-center justify-between gap-2">
             <div class="flex items-center gap-2">
-                <button id="btnSearch" class="inline-flex items-center justify-center px-4 py-2 bg-primary text-[var(--surface)] text-xs font-bold rounded-xl shadow-sm hover:opacity-90 transition-all cursor-pointer">
-                    Pesquisar
+                <button id="btnSearch" class="inline-flex items-center justify-center px-4 py-2 bg-primary text-[var(--on-primary)] text-xs font-bold rounded-xl shadow-sm hover:opacity-90 transition-all cursor-pointer min-h-[36px]">
+                    {{ __('Pesquisar') }}
                 </button>
-                <button id="btnClear" class="inline-flex items-center justify-center px-4 py-2 bg-primary text-xs font-semibold text-[var(--surface)] border border-primary/50 rounded-xl shadow-sm hover:opacity-90 transition-all cursor-pointer">
-                    Limpar filtros
+                <button id="btnClear" class="inline-flex items-center justify-center px-4 py-2 bg-[var(--surface)] text-[var(--text)] border border-[var(--border)] text-xs font-semibold rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all cursor-pointer min-h-[36px]">
+                    {{ __('Limpar filtros') }}
                 </button>
             </div>
             <span id="resultsCount" class="text-xs font-semibold text-[var(--text-soft)]"></span>
@@ -70,19 +70,19 @@ window.requireAuthOnLoad = true;
     </div>
 
     {{-- Tabela de Resultados Estruturada --}}
-    <div class="w-full overflow-hidden bg-[var(--surface)] border border-[var(--border)] rounded-2xl shadow-sm" role="region" aria-live="polite" aria-label="Lista de tickets">
+    <div class="w-full overflow-hidden bg-[var(--surface)] border border-[var(--border)] rounded-2xl shadow-sm" role="region" aria-live="polite" aria-label="{{ __('Lista de tickets') }}">
         <div class="overflow-x-auto">
             <table id="ticketsTable" class="min-w-full divide-y divide-[var(--border)] text-left text-xs">
-                <thead class="bg-[var(--surface-2)] text-[var(--text-soft)] uppercase tracking-wider font-bold text-[10px]">
+                <thead class="bg-[var(--surface-2)] text-[var(--text)] uppercase tracking-wider font-bold text-[10px]">
                     <tr>
-                        <th class="px-5 py-3.5 font-bold">ID</th>
-                        <th class="px-5 py-3.5 font-bold">Título</th>
-                        <th class="px-5 py-3.5 font-bold">Prioridade</th>
-                        <th class="px-5 py-3.5 font-bold">Estado</th>
-                        <th class="px-5 py-3.5 font-bold">Equipamento</th>
-                        <th class="px-5 py-3.5 font-bold">Sala</th>
-                        <th class="px-5 py-3.5 font-bold">Técnico</th>
-                        <th class="px-5 py-3.5 font-bold text-right">Ações</th>
+                        <th class="px-5 py-4 font-bold">{{ __('ID') }}</th>
+                        <th class="px-5 py-4 font-bold">{{ __('Título') }}</th>
+                        <th class="px-5 py-4 font-bold">{{ __('Prioridade') }}</th>
+                        <th class="px-5 py-4 font-bold">{{ __('Estado') }}</th>
+                        <th class="px-5 py-4 font-bold">{{ __('Equipamento') }}</th>
+                        <th class="px-5 py-4 font-bold">{{ __('Sala') }}</th>
+                        <th class="px-5 py-4 font-bold">{{ __('Técnico') }}</th>
+                        <th class="px-5 py-4 font-bold text-right">{{ __('Ações') }}</th>
                     </tr>
                 </thead>
                 <tbody id="ticketsBody" class="divide-y divide-[var(--border)] text-[var(--text)]">
@@ -90,7 +90,7 @@ window.requireAuthOnLoad = true;
                         <td colspan="8" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]">
                             <div class="flex items-center justify-center gap-2">
                                 <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                                A carregar listagem de tickets...
+                                {{ __('A carregar listagem de tickets...') }}
                             </div>
                         </td>
                     </tr>
@@ -107,12 +107,27 @@ window.requireAuthOnLoad = true;
 
 @push('scripts')
 <script>
-// Mapeamento premium e sutil de cores para as prioridades (Estilo Badges Minimalistas)
+// Mapeamento premium e sutil de cores para as prioridades com cores de contraste WCAG compliant em light e dark mode
 const priorityColors = {
-    baixa:   'border border-emerald-500/10 bg-emerald-500/5 text-emerald-600 dark:text-emerald-400',
-    média:   'border border-amber-500/15 bg-amber-500/5 text-amber-600 dark:text-amber-400',
-    alta:    'border border-orange-500/15 bg-orange-500/5 text-orange-600 dark:text-orange-400',
-    crítica: 'border border-rose-500/20 bg-rose-500/5 text-rose-600 dark:text-rose-400',
+    baixa:   'border border-emerald-500/20 bg-emerald-500/10 text-emerald-800 dark:text-emerald-400',
+    média:   'border border-amber-500/20 bg-amber-500/10 text-amber-800 dark:text-amber-400',
+    alta:    'border border-orange-500/20 bg-orange-500/10 text-orange-800 dark:text-orange-400',
+    crítica: 'border border-rose-500/25 bg-rose-500/10 text-rose-800 dark:text-rose-400',
+};
+
+const priorityTranslations = {
+    baixa: "{{ __('Baixa') }}",
+    média: "{{ __('Média') }}",
+    alta: "{{ __('Alta') }}",
+    crítica: "{{ __('Crítica') }}"
+};
+
+const statusTranslations = {
+    aberta: "{{ __('Aberta') }}",
+    aberto: "{{ __('Aberta') }}",
+    'em curso': "{{ __('Em Curso') }}",
+    fechada: "{{ __('Fechada') }}",
+    fechado: "{{ __('Fechada') }}"
 };
 
 let currentPage = 1;
@@ -147,51 +162,54 @@ async function loadTickets(page = 1) {
     const endpoint = q || dateFrom || dateTo ? '/tickets/search' : '/tickets';
 
     const tbody = document.getElementById('ticketsBody');
-    tbody.innerHTML = `<tr><td colspan="8" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]">A atualizar dados...</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="8" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]">${"{{ __('A atualizar dados...') }}"}</td></tr>`;
 
     const res = await fetch(`${endpoint}?${params.toString()}`, { headers: authHeader() });
-    if (res.status === 401) { showFeedback('Autenticação necessária. Faça login.', true); window.location = '/ui/login'; return; }
-    if (!res.ok) { showFeedback('Não foi possível carregar os tickets de momento.', true); return; }
+    if (res.status === 401) { showFeedback("{{ __('Autenticação necessária. Faça login.') }}", true); window.location = '/ui/login'; return; }
+    if (!res.ok) { showFeedback("{{ __('Não foi possível carregar os tickets de momento.') }}", true); return; }
     const data = await res.json().catch(() => ({}));
 
     const tickets = data.tickets?.data ?? data.tickets ?? [];
     const meta    = data.tickets?.meta ?? data.tickets ?? {};
     const total   = meta.total ?? tickets.length;
 
-    document.getElementById('resultsCount').textContent = total > 0 ? `${total} resultado(s) encontrado(s)` : 'Sem resultados';
+    document.getElementById('resultsCount').textContent = total > 0 ? `${total} ${"{{ __('resultado(s) encontrado(s)') }}"}` : "{{ __('Sem resultados') }}";
 
     if (!tickets.length) {
-        tbody.innerHTML = '<tr><td colspan="8" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]"><div class="mx-auto max-w-sm rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface-2)] p-5">Nenhum ticket encontrado com os filtros aplicados.</div></td></tr>';
+        tbody.innerHTML = `<tr><td colspan="8" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]"><div class="mx-auto max-w-sm rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface-2)] p-5">${"{{ __('Nenhum ticket encontrado com os filtros aplicados.') }}"}</div></td></tr>`;
         document.getElementById('pagination').innerHTML = '';
         return;
     }
 
     tbody.innerHTML = tickets.map(t => {
-        const priColor = priorityColors[t.priority] ?? 'border border-[var(--border)] bg-[var(--surface-2)] text-[var(--text-soft)]';
+        const priorityKey = (t.priority || '').toLowerCase();
+        const priColor = priorityColors[priorityKey] ?? 'border border-[var(--border)] bg-[var(--surface-2)] text-[var(--text-soft)]';
+        const priorityLabel = priorityTranslations[priorityKey] ?? t.priority;
         const statusName = t.status?.name ?? t.status ?? 'N/A';
+        const statusKey = statusName.toLowerCase();
 
         // Customização visual dinâmica para o Estado do Ticket
-        let statusBadge = `<span class="inline-flex items-center gap-1.5 font-bold text-[var(--text)] text-[11px] uppercase tracking-tight">${statusName}</span>`;
-        if(statusName.toLowerCase() === 'aberta' || statusName.toLowerCase() === 'aberto') {
-            statusBadge = `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[11px] font-bold bg-blue-500/10 text-blue-600 dark:text-blue-400 uppercase tracking-tight">Aberta</span>`;
-        } else if (statusName.toLowerCase() === 'em curso') {
-            statusBadge = `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[11px] font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 uppercase tracking-tight">Em Curso</span>`;
-        } else if (statusName.toLowerCase() === 'fechada' || statusName.toLowerCase() === 'fechado') {
-            statusBadge = `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[11px] font-bold bg-[var(--text-soft)]/10 text-[var(--text-soft)] uppercase tracking-tight">Fechada</span>`;
+        let statusBadge = `<span class="inline-flex items-center gap-1.5 font-bold text-[var(--text)] text-[11px] uppercase tracking-tight">${statusTranslations[statusKey] || statusName}</span>`;
+        if(statusKey === 'aberta' || statusKey === 'aberto') {
+            statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-blue-500/10 text-blue-700 dark:text-blue-400 uppercase tracking-tight">${statusTranslations.aberta}</span>`;
+        } else if (statusKey === 'em curso') {
+            statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-amber-500/10 text-amber-800 dark:text-amber-400 uppercase tracking-tight">${statusTranslations['em curso']}</span>`;
+        } else if (statusKey === 'fechada' || statusKey === 'fechado') {
+            statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-[var(--text-soft)]/10 text-[var(--text-soft)] uppercase tracking-tight">${statusTranslations.fechada}</span>`;
         }
 
         return `<tr class="hover:bg-[var(--surface-2)]/50 transition-colors duration-150">
-            <td class="px-5 py-3.5 font-mono text-[var(--text-soft)] font-bold">#${t.id}</td>
-            <td class="px-5 py-3.5 font-semibold text-[var(--text)] max-w-xs truncate" title="${t.title}">${t.title}</td>
-            <td class="px-5 py-3.5">
-                <span class="inline-block px-2 py-0.5 rounded-lg text-[11px] font-bold uppercase tracking-tight ${priColor}">${t.priority}</span>
+            <td class="px-5 py-4 font-mono text-[var(--text-soft)] font-bold">#${t.id}</td>
+            <td class="px-5 py-4 font-semibold text-[var(--text)] max-w-xs truncate" title="${t.title}">${t.title}</td>
+            <td class="px-5 py-4">
+                <span class="inline-block px-2.5 py-1 rounded-lg text-[11px] font-bold uppercase tracking-tight ${priColor}">${priorityLabel}</span>
             </td>
-            <td class="px-5 py-3.5">${statusBadge}</td>
-            <td class="px-5 py-3.5 text-[var(--text-soft)] font-semibold">${t.equipment ? t.equipment.name : '—'}</td>
-            <td class="px-5 py-3.5 text-[var(--text-soft)] font-semibold">${t.room ? t.room.name : '—'}</td>
-            <td class="px-5 py-3.5 text-xs font-semibold text-[var(--text)]">${t.technician ? t.technician.name : '<span class="text-[var(--text-soft)] font-normal italic">—</span>'}</td>
-            <td class="px-5 py-3.5 text-right">
-                <a href="/ui/tickets/${t.id}" class="inline-flex items-center justify-center px-2.5 py-1 bg-[var(--surface)] text-[11px] font-semibold text-[var(--text)] border border-[var(--border)] rounded-lg shadow-sm hover:bg-[var(--surface-2)] transition-all">Ver</a>
+            <td class="px-5 py-4">${statusBadge}</td>
+            <td class="px-5 py-4 text-[var(--text-soft)] font-semibold">${t.equipment ? t.equipment.name : '—'}</td>
+            <td class="px-5 py-4 text-[var(--text-soft)] font-semibold">${t.room ? t.room.name : '—'}</td>
+            <td class="px-5 py-4 text-xs font-semibold text-[var(--text)]">${t.technician ? t.technician.name : '<span class="text-[var(--text-soft)] font-normal italic">—</span>'}</td>
+            <td class="px-5 py-4 text-right">
+                <a href="/ui/tickets/${t.id}" class="inline-flex items-center justify-center px-3 py-1.5 bg-[var(--surface)] text-[11px] font-semibold text-[var(--text)] border border-[var(--border)] rounded-lg shadow-sm hover:bg-[var(--surface-2)] transition-all min-h-[28px] min-w-[48px]">${"{{ __('Ver') }}"}</a>
             </td>
         </tr>`;
     }).join('');
@@ -203,10 +221,10 @@ async function loadTickets(page = 1) {
     if (lastPage <= 1) { pagEl.innerHTML = ''; return; }
     pagEl.innerHTML = `
         <button onclick="loadTickets(${currPage - 1})" ${currPage <= 1 ? 'disabled' : ''}
-            class="inline-flex items-center justify-center px-3 py-1.5 bg-primary text-xs font-semibold text-[var(--surface)] border border-primary/50 rounded-xl shadow-sm hover:opacity-90 transition-all disabled:opacity-40 disabled:cursor-not-allowed">← Anterior</button>
-        <span class="font-bold text-[var(--text-soft)]">Página ${currPage} de ${lastPage}</span>
+            class="inline-flex items-center justify-center px-3.5 py-2 bg-primary text-xs font-bold text-[var(--on-primary)] rounded-xl shadow-sm hover:opacity-90 transition-all disabled:opacity-40 disabled:cursor-not-allowed min-h-[36px]">← ${"{{ __('Anterior') }}"}</button>
+        <span class="font-bold text-[var(--text-soft)]">${"{{ __('Página') }}"} ${currPage} ${"{{ __('de') }}"} ${lastPage}</span>
         <button onclick="loadTickets(${currPage + 1})" ${currPage >= lastPage ? 'disabled' : ''}
-            class="inline-flex items-center justify-center px-3 py-1.5 bg-primary text-xs font-semibold text-[var(--surface)] border border-primary/50 rounded-xl shadow-sm hover:opacity-90 transition-all disabled:opacity-40 disabled:cursor-not-allowed">Próxima →</button>
+            class="inline-flex items-center justify-center px-3.5 py-2 bg-primary text-xs font-bold text-[var(--on-primary)] rounded-xl shadow-sm hover:opacity-90 transition-all disabled:opacity-40 disabled:cursor-not-allowed min-h-[36px]">${"{{ __('Próxima') }}"} →</button>
     `;
 }
 
@@ -214,7 +232,7 @@ function showFeedback(message, error = false) {
     const el = document.getElementById('resultsCount');
     if (!el) return;
     el.textContent = message;
-    el.className = `text-xs font-semibold ${error ? 'text-red-600 dark:text-red-400' : 'text-[var(--text-soft)]'}`;
+    el.className = `text-xs font-semibold ${error ? 'text-red-700 dark:text-red-400' : 'text-[var(--text-soft)]'}`;
 }
 
 document.getElementById('btnSearch').addEventListener('click', () => loadTickets(1));

@@ -1,35 +1,49 @@
-:root {
-  /* Cores Semânticas */
-  --color-primary: #2563eb;
-  --color-primary-hover: #1d4ed8;
-  --color-primary-light: rgba(37, 99, 235, 0.2);
+@theme {
+  /* Cores Semânticas (Light Mode defaults for Tailwind CSS v4) */
+  --color-primary: #ea580c;          /* Orange 600 */
+  --color-primary-hover: #c2410c;    /* Orange 700 */
+  --color-primary-light: rgba(234, 88, 12, 0.1);
+  --color-on-primary: #ffffff;       /* Text on primary */
+  
   --color-surface: #ffffff;
   --color-surface-2: #f8fafc;
   --color-surface-disabled: #e2e8f0;
-  --color-text: #111827;
-  --color-text-soft: #64748b;
+  
+  --color-text: #0f172a;             /* Slate 900 */
+  --color-text-soft: #475569;        /* Slate 600 */
   --color-border: #e2e8f0;
-  --color-success: #16a34a;
-  --color-danger: #dc2626;
-
-  /* Espaçamento */
-  --space-xs: 0.25rem;
-  --space-sm: 0.5rem;
-  --space-md: 1rem;
-  --space-lg: 1.5rem;
-
-  /* Sombras */
-  --shadow-sm: 0 2px 6px rgba(15, 23, 42, 0.06);
-  --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.12);
-
-  /* Raio */
-  --radius-md: 0.5rem;
+  
+  --color-success: #15803d;          /* Green 700 */
+  --color-success-light: rgba(21, 128, 61, 0.1);
+  --color-danger: #b91c1c;           /* Red 700 */
+  --color-danger-light: rgba(185, 28, 28, 0.1);
+  --color-warning: #c2410c;          /* Orange 700 */
+  --color-warning-light: rgba(194, 65, 12, 0.1);
+  --color-info: #0369a1;             /* Sky 700 */
+  --color-info-light: rgba(3, 105, 161, 0.1);
 }
 
-/* Dark Mode Support */
-[data-theme='dark'] {
-  --color-surface: #0f172a;
-  --color-surface-2: #1e293b;
-  --color-text: #f8fafc;
-  --color-border: #334155;
+/* Runtime overrides for Dark Mode */
+.dark, [data-theme='dark'] {
+  --color-primary: #f97316;          /* Orange 500 (Contrast on white: 3.0:1, but on dark bg: excellent) */
+  --color-primary-hover: #ea580c;    /* Orange 600 */
+  --color-primary-light: rgba(249, 115, 22, 0.15);
+  --color-on-primary: #ffffff;       /* White text on orange background */
+  
+  --color-surface: #0b0f19;          /* Slate 950 variant */
+  --color-surface-2: #161e2e;        /* Slate 900 variant */
+  --color-surface-disabled: #1e293b;
+  
+  --color-text: #f8fafc;             /* Slate 50 */
+  --color-text-soft: #cbd5e1;        /* Slate 300 */
+  --color-border: #2d3748;
+  
+  --color-success: #4ade80;          /* Green 400 */
+  --color-success-light: rgba(74, 222, 128, 0.1);
+  --color-danger: #f87171;           /* Red 400 */
+  --color-danger-light: rgba(248, 113, 113, 0.1);
+  --color-warning: #fb923c;          /* Orange 400 */
+  --color-warning-light: rgba(251, 146, 60, 0.1);
+  --color-info: #38bdf8;             /* Sky 400 */
+  --color-info-light: rgba(56, 189, 248, 0.1);
 }

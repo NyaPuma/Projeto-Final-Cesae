@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="pt">
+<html lang="{{ app()->getLocale() }}">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Gestão de Avarias</title>
+    <title>{{ __('Gestão de Avarias') }}</title>
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800" rel="stylesheet">
@@ -16,12 +16,12 @@
 </head>
 
 <body class="min-h-screen bg-[var(--bg)] text-[var(--text)] overflow-x-hidden antialiased">
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-xl focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[var(--surface)]">
-        Skip to content
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-xl focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[var(--on-primary)]">
+        {{ __('Ir para o conteúdo') }}
     </a>
 
     {{-- Efeitos de Gradiente e Brilho de Fundo (Glow Blobs) --}}
-    <div class="fixed inset-0 -z-50 pointer-events-none">
+    <div class="fixed inset-0 -z-50 pointer-events-none" aria-hidden="true">
         <div class="absolute inset-0 bg-[var(--bg)]"></div>
         <div class="absolute -top-60 left-1/2 -translate-x-1/2 h-[900px] w-[900px] rounded-full bg-primary/10 blur-[180px]"></div>
         <div class="absolute bottom-0 right-0 h-[600px] w-[600px] rounded-full bg-blue-500/10 blur-[180px]"></div>
@@ -36,28 +36,26 @@
             {{-- Branding --}}
             <div class="h-20 px-8 flex items-center border-b border-[var(--border)]">
                     <div class="flex items-center gap-4">
-                        <div class="h-11 w-11 rounded-xl bg-primary text-[var(--surface)] font-black flex items-center justify-center shadow-md shadow-primary/20">
+                        <div class="h-11 w-11 rounded-xl bg-primary text-[var(--on-primary)] font-black flex items-center justify-center shadow-md shadow-primary/20">
                             GA
                         </div>
                     <div>
                         <h1 class="font-bold text-sm tracking-tight text-[var(--text)]">
-                            Gestão de Avarias
+                            {{ __('Gestão de Avarias') }}
                         </h1>
                         <p class="text-[var(--text-soft)] text-xs font-medium">
-                            Enterprise Dashboard
+                            {{ __('Enterprise Dashboard') }}
                         </p>
                     </div>
                 </div>
             </div>
 
             {{-- Links de Navegação Dinâmicos --}}
-            <nav class="flex-1 overflow-y-auto px-4 py-6 space-y-1" aria-label="Navegação principal">
+            <nav class="flex-1 overflow-y-auto px-4 py-6 space-y-1" aria-label="{{ __('Navegação principal') }}">
                 @php
                     $navItems = [
                         ['href' => '/', 'active' => '/', 'label' => 'Início', 'icon' => '🏠', 'exact' => true],
                         ['href' => 'ui', 'active' => 'ui', 'label' => 'Dashboard', 'icon' => '📊', 'exact' => true],
-
-                        // Usar '*' apenas no pattern de active; o href tem de ser a rota real.
                         ['href' => 'ui/tickets', 'active' => 'ui/tickets*', 'label' => 'Tickets', 'icon' => '🎫', 'exact' => false],
                         ['href' => 'ui/equipments', 'active' => 'ui/equipments*', 'label' => 'Equipamentos', 'icon' => '🖥️', 'exact' => false],
                         ['href' => 'ui/users', 'active' => 'ui/users*', 'label' => 'Utilizadores', 'icon' => '👥', 'exact' => false],
@@ -67,10 +65,8 @@
                         ['href' => 'docs/openapi', 'active' => 'docs/openapi*', 'label' => 'Swagger', 'icon' => '📚', 'exact' => false],
                     ];
 
-                    $renderNavItem = function($item) {
-                        $isActive = $item['exact']
-                            ? request()->is($item['active'])
-                            : request()->is($item['active']);
+                    foreach($navItems as $item) {
+                        $isActive = request()->is($item['active']);
                 @endphp
 
                         <a
@@ -84,16 +80,12 @@
                             <span class="text-lg filter {{ $isActive ? 'none' : 'grayscale opacity-80' }}">
                                 {{ $item['icon'] }}
                             </span>
-                            <span>{{ $item['label'] }}</span>
+                            <span>{{ __($item['label']) }}</span>
                         </a>
 
                 @php
-                    };
+                    }
                 @endphp
-
-                @foreach($navItems as $item)
-                    @php $renderNavItem($item); @endphp
-                @endforeach
             </nav>
 
             {{-- Caixa de Autenticação/Sessão (Bottom) --}}
@@ -103,48 +95,47 @@
         </aside>
 
         {{-- Mobile Sidebar (Hamburger) --}}
-        <div class="lg:hidden">
+        <div class="lg:hidden fixed top-4 left-4 z-50">
             <button
                 type="button"
                 onclick="toggleMobileNav()"
                 class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] text-sm shadow-sm transition-all hover:bg-[var(--surface-2)] cursor-pointer"
-                aria-label="Abrir menu"
+                aria-label="{{ __('Abrir menu') }}"
+                id="mobileMenuBtn"
             >
                 ☰
             </button>
 
             {{-- Overlay --}}
-            <div id="mobileNavOverlay" class="fixed inset-0 bg-black/30 hidden" onclick="closeMobileNav()"></div>
+            <div id="mobileNavOverlay" class="fixed inset-0 bg-black/50 hidden z-40 transition-opacity duration-200" onclick="closeMobileNav()"></div>
 
             {{-- Drawer --}}
             <aside
                 id="mobileNav"
-                class="fixed inset-y-0 left-0 w-72 transform -translate-x-full transition-transform duration-200 bg-[var(--sidebar)] border-r border-[var(--border)] backdrop-blur-xl z-50"
+                class="fixed inset-y-0 left-0 w-72 transform -translate-x-full transition-transform duration-250 bg-[var(--sidebar)] border-r border-[var(--border)] backdrop-blur-xl z-50 flex flex-col"
             >
                 {{-- Branding --}}
                 <div class="h-20 px-8 flex items-center border-b border-[var(--border)]">
                     <div class="flex items-center gap-4">
-                        <div class="h-11 w-11 rounded-xl bg-primary text-[var(--surface)] font-black flex items-center justify-center shadow-md shadow-primary/20">
+                        <div class="h-11 w-11 rounded-xl bg-primary text-[var(--on-primary)] font-black flex items-center justify-center shadow-md shadow-primary/20">
                             GA
                         </div>
                         <div>
                             <h1 class="font-bold text-sm tracking-tight text-[var(--text)]">
-                                Gestão de Avarias
+                                {{ __('Gestão de Avarias') }}
                             </h1>
                             <p class="text-[var(--text-soft)] text-xs font-medium">
-                                Enterprise Dashboard
+                                {{ __('Enterprise Dashboard') }}
                             </p>
                         </div>
                     </div>
                 </div>
 
                 {{-- Links --}}
-                <nav class="flex-1 overflow-y-auto px-4 py-6 space-y-1" aria-label="Navegação principal mobile">
+                <nav class="flex-1 overflow-y-auto px-4 py-6 space-y-1" aria-label="{{ __('Navegação principal mobile') }}">
                     @foreach($navItems as $item)
                         @php
-                            $isActive = $item['exact']
-                                ? request()->is($item['active'])
-                                : request()->is($item['active']);
+                            $isActive = request()->is($item['active']);
                         @endphp
 
                         <a
@@ -152,14 +143,14 @@
                             onclick="closeMobileNav()"
                             class="group flex items-center gap-3.5 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200
                             {{ $isActive
-                                ? 'bg-primary text-[var(--surface)] font-semibold shadow-sm shadow-primary/20'
+                            ? 'bg-primary text-[var(--on-primary)] font-semibold shadow-sm shadow-primary/20'
                                 : 'text-[var(--text)] hover:bg-[var(--surface-2)]'
                             }}"
                         >
                             <span class="text-lg filter {{ $isActive ? 'none' : 'grayscale opacity-80' }}">
                                 {{ $item['icon'] }}
                             </span>
-                            <span>{{ $item['label'] }}</span>
+                            <span>{{ __($item['label']) }}</span>
                         </a>
                     @endforeach
                 </nav>
@@ -177,22 +168,49 @@
             {{-- Topbar --}}
             <header class="sticky top-0 z-40 h-20 border-b border-[var(--border)] bg-[var(--topbar)] backdrop-blur-xl">
                 <div class="h-full px-8 flex items-center justify-between">
-                    <div>
+                    <div class="pl-12 lg:pl-0">
                         <h2 class="text-lg font-bold tracking-tight text-[var(--text)]">
-                            Painel de Gestão
+                            {{ __('Painel de Gestão') }}
                         </h2>
                         <p class="text-[var(--text-soft)] text-xs">
-                            Monitorização em tempo real
+                            {{ __('Monitorização em tempo real') }}
                         </p>
                     </div>
 
-                    {{-- Ações de Perfil e Tema --}}
-                    <div class="flex items-center gap-4">
+                    {{-- Ações de Perfil, Idioma e Tema --}}
+                    <div class="flex items-center gap-3">
+                        {{-- Language Selector Dropdown --}}
+                        <div class="relative inline-block text-left" id="langSelectorDropdown">
+                            <button
+                                type="button"
+                                onclick="toggleLangDropdown()"
+                                class="inline-flex h-10 px-3 items-center justify-center gap-1.5 rounded-xl border border-[var(--border)] bg-[var(--surface)] text-sm text-[var(--text)] shadow-sm transition-all hover:bg-[var(--surface-2)] cursor-pointer"
+                                aria-label="{{ __('Alterar Idioma') }}"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                id="langDropdownBtn"
+                            >
+                                🌐
+                                <span class="font-semibold text-xs uppercase text-[var(--text)]">{{ app()->getLocale() }}</span>
+                                <svg class="h-3.5 w-3.5 text-[var(--text-soft)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </button>
+                            <div id="langDropdown" class="hidden absolute right-0 mt-2 w-36 rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-lg py-1.5 z-50 animate-[fadeIn_0.15s_ease-out]">
+                                <a href="/lang/pt" class="flex items-center px-4 py-2.5 text-xs font-semibold text-[var(--text)] hover:bg-[var(--surface-2)] {{ app()->getLocale() === 'pt' ? 'bg-primary/10 text-primary' : '' }}">
+                                    🇵🇹 Português
+                                </a>
+                                <a href="/lang/en" class="flex items-center px-4 py-2.5 text-xs font-semibold text-[var(--text)] hover:bg-[var(--surface-2)] {{ app()->getLocale() === 'en' ? 'bg-primary/10 text-primary' : '' }}">
+                                    🇬🇧 English
+                                </a>
+                            </div>
+                        </div>
+
                         <button
                             type="button"
                             onclick="toggleTheme()"
                             class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] text-sm shadow-sm transition-all hover:bg-[var(--surface-2)] cursor-pointer"
-                            aria-label="Alternar Tema"
+                            aria-label="{{ __('Alternar Tema') }}"
                         >
                             🌙
                         </button>
@@ -205,7 +223,7 @@
             </header>
 
             {{-- Viewport Injetada --}}
-            <main id="main-content" role="main" tabindex="-1" class="flex-1 px-8 py-8 max-w-7xl w-full mx-auto">
+            <main id="main-content" role="main" tabindex="-1" class="flex-1 px-8 py-8 max-w-7xl w-full mx-auto outline-none">
                 @yield('content')
             </main>
         </div>
@@ -270,6 +288,30 @@
         overlay.style.display = 'none';
     }
 
+    function toggleLangDropdown() {
+        const dropdown = document.getElementById('langDropdown');
+        const btn = document.getElementById('langDropdownBtn');
+        if (!dropdown) return;
+        const isHidden = dropdown.classList.contains('hidden');
+        if (isHidden) {
+            dropdown.classList.remove('hidden');
+            btn.setAttribute('aria-expanded', 'true');
+        } else {
+            dropdown.classList.add('hidden');
+            btn.setAttribute('aria-expanded', 'false');
+        }
+    }
+
+    // Close dropdown on click outside
+    document.addEventListener('click', (e) => {
+        const dropdown = document.getElementById('langDropdown');
+        const container = document.getElementById('langSelectorDropdown');
+        if (dropdown && container && !container.contains(e.target)) {
+            dropdown.classList.add('hidden');
+            document.getElementById('langDropdownBtn')?.setAttribute('aria-expanded', 'false');
+        }
+    });
+
     function renderAuthBox() {
         const box = document.getElementById('authBox');
         const boxMobile = document.getElementById('authBoxMobile');
@@ -285,14 +327,14 @@
             if (box) {
                 box.innerHTML = `
                     <div class="space-y-2">
-                        <a href="/ui/profile" class="w-full inline-flex items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-2.5 text-xs font-semibold text-[var(--text)] hover:bg-[var(--surface-2)] transition-all duration-200 text-center">
-                            Ver Perfil
+                        <a href="/ui/profile" class="w-full inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-[var(--on-primary)] shadow-sm shadow-primary/20 hover:bg-[var(--primary-hover)] transition-all duration-200 text-center">
+                            {{ __('Ver Perfil') }}
                         </a>
                         <button
                             onclick="logout()"
                             class="w-full inline-flex items-center justify-center rounded-xl bg-[var(--border)] hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-400 px-4 py-2.5 text-xs font-semibold text-[var(--text)] border border-transparent hover:border-red-500/20 transition-all duration-200 cursor-pointer"
                         >
-                            Terminar Sessão
+                            {{ __('Terminar Sessão') }}
                         </button>
                     </div>
                 `;
@@ -301,14 +343,14 @@
             if (boxMobile) {
                 boxMobile.innerHTML = `
                     <div class="space-y-2">
-                        <a href="/ui/profile" class="w-full inline-flex items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-2.5 text-xs font-semibold text-[var(--text)] hover:bg-[var(--surface-2)] transition-all duration-200 text-center">
-                            Ver Perfil
+                        <a href="/ui/profile" class="w-full inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-[var(--on-primary)] shadow-sm shadow-primary/20 hover:bg-[var(--primary-hover)] transition-all duration-200 text-center">
+                            {{ __('Ver Perfil') }}
                         </a>
                         <button
                             onclick="logout()"
                             class="w-full inline-flex items-center justify-center rounded-xl bg-[var(--border)] hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-400 px-4 py-2.5 text-xs font-semibold text-[var(--text)] border border-transparent hover:border-red-500/20 transition-all duration-200 cursor-pointer"
                         >
-                            Terminar Sessão
+                            {{ __('Terminar Sessão') }}
                         </button>
                     </div>
                 `;
@@ -317,12 +359,12 @@
             if (topbarUser) {
                 topbarUser.innerHTML = `
                     <a href="/ui/profile" class="flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 transition hover:bg-[var(--surface-2)]">
-                        <div class="flex h-9 w-9 items-center justify-center rounded-full bg-primary font-bold text-xs text-black shadow-sm">
+                        <div class="flex h-9 w-9 items-center justify-center rounded-full bg-primary font-bold text-xs text-[var(--on-primary)] shadow-sm">
                             ${userName.charAt(0).toUpperCase()}
                         </div>
                         <div class="hidden md:block">
                             <div class="text-sm font-semibold text-[var(--text)] leading-none">${userName}</div>
-                            <div class="mt-1 text-[9px] font-bold uppercase tracking-wider text-[var(--text-soft)]">${userRole}</div>
+                            <div class="mt-1.5 text-[9px] font-bold uppercase tracking-wider text-[var(--text-soft)]">${userRole}</div>
                         </div>
                     </a>
                 `;
@@ -330,30 +372,30 @@
         } else {
             if (box) {
                 box.innerHTML = `
-                        <a
+                    <a
                         href="/ui/login"
-                        class="w-full inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-[var(--surface)] shadow-sm shadow-primary/10 transition-all duration-200 hover:opacity-90 text-center"
+                        class="w-full inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-[var(--on-primary)] shadow-sm shadow-primary/10 transition-all duration-200 hover:opacity-90 text-center"
                     >
-                        Iniciar Sessão
+                        {{ __('Iniciar Sessão') }}
                     </a>
                 `;
             }
 
             if (boxMobile) {
                 boxMobile.innerHTML = `
-                        <a
+                    <a
                         href="/ui/login"
-                        class="w-full inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-[var(--surface)] shadow-sm shadow-primary/10 transition-all duration-200 hover:opacity-90 text-center"
+                        class="w-full inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-[var(--on-primary)] shadow-sm shadow-primary/10 transition-all duration-200 hover:opacity-90 text-center"
                     >
-                        Iniciar Sessão
+                        {{ __('Iniciar Sessão') }}
                     </a>
                 `;
             }
 
             if (topbarUser) {
                 topbarUser.innerHTML = `
-                    <a href="/ui/login" class="inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-[var(--surface)] shadow-sm shadow-primary/10 transition-all duration-200 hover:opacity-90">
-                        Login / Registo
+                    <a href="/ui/login" class="inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-[var(--on-primary)] shadow-sm shadow-primary/10 transition-all duration-200 hover:opacity-90">
+                        {{ __('Login / Registo') }}
                     </a>
                 `;
             }
@@ -383,6 +425,11 @@
         const html = document.documentElement;
         const dark = html.classList.toggle('dark');
         localStorage.setItem('theme', dark ? 'dark' : 'light');
+        if (dark) {
+            html.setAttribute('data-theme', 'dark');
+        } else {
+            html.removeAttribute('data-theme');
+        }
     }
 
     // Inicialização imediata do tema para prevenir flashes brancos (FOUC)
@@ -390,8 +437,10 @@
         const saved = localStorage.getItem('theme');
         if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
+            document.documentElement.setAttribute('data-theme', 'dark');
         } else {
             document.documentElement.classList.remove('dark');
+            document.documentElement.removeAttribute('data-theme');
         }
     })();
 
@@ -408,12 +457,12 @@
             if (topbarUser) {
                 topbarUser.innerHTML = `
                     <a href="/ui/profile" class="flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 transition hover:bg-[var(--surface-2)]">
-                        <div class="flex h-9 w-9 items-center justify-center rounded-full bg-primary font-bold text-xs text-black shadow-sm">
+                        <div class="flex h-9 w-9 items-center justify-center rounded-full bg-primary font-bold text-xs text-[var(--on-primary)] shadow-sm">
                             ${userName.charAt(0).toUpperCase()}
                         </div>
                         <div class="hidden md:block">
                             <div class="text-sm font-semibold text-[var(--text)] leading-none">${userName}</div>
-                            <div class="mt-1 text-[9px] font-bold uppercase tracking-wider text-[var(--text-soft)]">${userRole}</div>
+                            <div class="mt-1.5 text-[9px] font-bold uppercase tracking-wider text-[var(--text-soft)]">${userRole}</div>
                         </div>
                     </a>
                 `;

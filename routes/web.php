@@ -22,6 +22,14 @@ Route::get('/', function () {
     return view('main');
 });
 
+Route::get('/lang/{locale}', function ($locale) {
+    if (in_array($locale, ['en', 'pt'])) {
+        session(['locale' => $locale]);
+        return redirect()->back()->withCookie(cookie()->forever('locale', $locale));
+    }
+    return redirect()->back();
+})->name('lang.switch');
+
 Route::get('/ui/login', function () {
     return view('ui.auth');
 })->name('ui.login');

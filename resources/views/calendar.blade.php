@@ -14,15 +14,15 @@
         --fc-page-bg-color: transparent;
         --fc-neutral-bg-color: transparent;
         --fc-list-event-hover-bg-color: var(--surface-2);
-        --fc-today-bg-color: rgba(245, 158, 11, 0.06);
+        --fc-today-bg-color: rgba(79, 70, 229, 0.06);
 
         /* Mapeamento de Cores dos Botões para o Design System */
         --fc-button-bg-color: var(--surface);
         --fc-button-border-color: var(--border);
         --fc-button-hover-bg-color: var(--surface-2);
         --fc-button-hover-border-color: var(--border);
-        --fc-button-active-bg-color: var(--text);
-        --fc-button-active-border-color: var(--text);
+        --fc-button-active-bg-color: var(--primary);
+        --fc-button-active-border-color: var(--primary);
         --fc-button-text-color: var(--text);
 
         color: var(--text);
@@ -30,7 +30,7 @@
     }
 
     .dark .fc {
-        --fc-today-bg-color: rgba(251, 191, 36, 0.08);
+        --fc-today-bg-color: rgba(129, 140, 248, 0.08);
         --fc-button-active-bg-color: var(--surface-2);
         --fc-button-active-border-color: var(--border);
     }
@@ -66,14 +66,16 @@
 
     .fc-button-primary:not(:disabled).fc-button-active,
     .fc-button-primary:not(:disabled):active {
-        color: var(--bg) !important;
-        background-color: var(--text) !important;
+        color: var(--on-primary) !important;
+        background-color: var(--primary) !important;
+        border-color: var(--primary) !important;
     }
 
     .dark .fc-button-primary:not(:disabled).fc-button-active,
     .dark .fc-button-primary:not(:disabled):active {
-        color: var(--text) !important;
-        background-color: var(--surface-2) !important;
+        color: var(--on-primary) !important;
+        background-color: var(--primary) !important;
+        border-color: var(--primary) !important;
     }
 
     /* Grelha Principal do Calendário */
@@ -96,7 +98,7 @@
 
     .fc-col-header-cell-cushion {
         padding: 12px !important;
-        color: var(--text-soft) !important;
+        color: var(--text) !important; /* Fixed low-contrast text-soft */
         font-weight: 600;
         font-size: 13px;
         text-decoration: none !important;
@@ -116,28 +118,26 @@
         cursor: pointer;
     }
 
-    /* Estilização Bento dos Eventos Técnicos */
+    /* Estilização Bento dos Eventos Técnicos adaptada ao Design System */
     .fc-event {
         border: none !important;
-        background: linear-gradient(135deg, #f59e0b, #ea580c) !important;
-        color: #ffffff !important;
+        background: linear-gradient(135deg, var(--primary), var(--primary-hover)) !important;
+        color: var(--on-primary) !important;
         border-radius: 8px !important;
         padding: 4px 8px !important;
         font-size: 11px !important;
         font-weight: 600 !important;
-        box-shadow: 0 2px 4px rgba(234, 88, 12, 0.15);
+        box-shadow: 0 2px 4px rgba(79, 70, 229, 0.15);
         transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
 
     .dark .fc-event {
-        background: linear-gradient(135deg, #fbbf24, #d97706) !important;
-        color: #111827 !important;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 
     .fc-event:hover {
         transform: translateY(-1px);
-        box-shadow: 0 4px 8px rgba(234, 88, 12, 0.25);
+        box-shadow: 0 4px 8px rgba(79, 70, 229, 0.25);
     }
 
     .fc-timegrid-slot {
@@ -161,26 +161,26 @@
     {{-- Cabeçalho da Página --}}
     <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
         <div>
-            <span class="badge badge-warning">
-                Agenda Inteligente
+            <span class="inline-flex items-center rounded-full border border-indigo-500/20 bg-indigo-500/10 px-3 py-1 text-xs font-bold text-indigo-700 dark:text-indigo-400">
+                {{ __('Agenda Inteligente') }}
             </span>
             <h1 class="text-4xl lg:text-5xl font-black tracking-tight text-[var(--text)] mt-4">
-                Calendário Operacional
+                {{ __('Calendário Operacional') }}
             </h1>
             <p class="mt-3 text-[var(--text-soft)] max-w-3xl text-base lg:text-lg leading-relaxed">
-                Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.
+                {{ __('Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.') }}
             </p>
         </div>
 
         <div class="flex items-center gap-3 w-full sm:w-auto">
-            <a href="/ui" class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2.5 bg-[var(--surface)] text-sm font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all">
-                <svg class="w-4 h-4 mr-2 text-[var(--text-soft)]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <a href="/ui" class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2.5 bg-[var(--surface)] text-sm font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all min-h-[44px]">
+                <svg class="w-4 h-4 mr-2 text-[var(--text-soft)]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path>
                 </svg>
-                Dashboard
+                {{ __('Dashboard') }}
             </a>
-            <button onclick="calendar.today()" class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2.5 bg-[var(--text)] dark:bg-[var(--surface-2)] text-sm font-semibold text-[var(--surface)] dark:text-[var(--text)] border border-transparent dark:border-[var(--border)] rounded-xl shadow-sm hover:opacity-90 transition-all">
-                Hoje
+            <button onclick="calendar.today()" class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2.5 bg-primary text-sm font-bold text-[var(--on-primary)] border border-transparent rounded-xl shadow-sm hover:opacity-90 transition-all min-h-[44px]">
+                {{ __('Hoje') }}
             </button>
         </div>
     </div>
@@ -192,9 +192,9 @@
         <div class="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 shadow-sm h-fit space-y-6">
             <div>
                 <h3 class="font-bold text-lg text-[var(--text)]">
-                    Resumo Operacional
+                    {{ __('Resumo Operacional') }}
                 </h3>
-                <p class="text-xs text-[var(--text-soft)] mt-1">Métricas da agenda atual</p>
+                <p class="text-xs text-[var(--text-soft)] mt-1">{{ __('Métricas da agenda atual') }}</p>
             </div>
 
             <hr class="border-[var(--border)]">
@@ -202,7 +202,7 @@
             <div class="grid grid-cols-2 xl:grid-cols-1 gap-6">
                 <div class="p-4 bg-[var(--surface-2)] border border-[var(--border)] rounded-xl">
                     <p class="text-[var(--text-soft)] text-xs font-semibold uppercase tracking-wider">
-                        Total de Eventos
+                        {{ __('Total de Eventos') }}
                     </p>
                     <p class="text-3xl font-black text-[var(--text)] mt-1" id="eventsTotal">
                         --
@@ -211,7 +211,7 @@
 
                 <div class="p-4 bg-[var(--surface-2)] border border-[var(--border)] rounded-xl">
                     <p class="text-[var(--text-soft)] text-xs font-semibold uppercase tracking-wider">
-                        Este Mês
+                        {{ __('Este Mês') }}
                     </p>
                     <p class="text-3xl font-black text-[var(--text)] mt-1" id="monthTotal">
                         --
@@ -221,15 +221,15 @@
 
             <div class="p-4 border border-[var(--border)] rounded-xl bg-opacity-40 bg-[var(--surface-2)]">
                 <p class="text-[var(--text-soft)] text-xs font-semibold uppercase tracking-wider">
-                    Próxima Intervenção
+                    {{ __('Próxima Intervenção') }}
                 </p>
                 <div class="flex items-center gap-2 mt-2">
                     <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--color-primary)] opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-[var(--color-primary)]"></span>
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
                     </span>
                     <p class="text-sm font-medium text-[var(--text)]">
-                        Sincronização Automática
+                        {{ __('Sincronização Automática') }}
                     </p>
                 </div>
             </div>
@@ -248,10 +248,6 @@
 <script>
 let calendar;
 
-@push('scripts')
-<script>
-let calendar;
-
 document.addEventListener('DOMContentLoaded', () => {
     if (!isAuthenticated()) {
         window.location.href = "/ui/login";
@@ -263,7 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Garantir que o container existe mesmo antes de renderizar
     if (calendarEl) {
         calendar = new FullCalendar.Calendar(calendarEl, {
-            locale: "pt",
+            locale: "{{ app()->getLocale() === 'en' ? 'en' : 'pt' }}",
             initialView: "dayGridMonth",
             height: "auto",
             firstDay: 1, // Começa na Segunda-feira
@@ -276,10 +272,10 @@ document.addEventListener('DOMContentLoaded', () => {
             weekends: true,
 
             buttonText: {
-                today: "Hoje",
-                month: "Mês",
-                week: "Semana",
-                day: "Dia"
+                today: "{{ __('Hoje') }}",
+                month: "{{ __('Mês') }}",
+                week: "{{ __('Semana') }}",
+                day: "{{ __('Dia') }}"
             },
 
             headerToolbar: {
@@ -288,7 +284,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 right: "dayGridMonth,timeGridWeek,timeGridDay"
             },
 
-            // --- CORREÇÃO: Lógica de atualização movida para o sítio nativo correto ---
             datesSet: function(dateInfo) {
                 // Evita loops infinitos chamando apenas o refetch se o calendário já estiver renderizado
                 if (calendar && typeof calendar.refetchEvents === 'function') {
@@ -350,10 +345,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const end = info.event.end ? info.event.end.toLocaleString("pt-PT", options) : "-";
 
                 alert(
-                    `🔧 DETALHES DA INTERVENÇÃO\n\n` +
-                    `Assunto: ${info.event.title}\n` +
-                    `Início: ${start}\n` +
-                    `Fim: ${end}`
+                    `🔧 ${"{{ __('DETALHES DA INTERVENÇÃO') }}"}\n\n` +
+                    `${"{{ __('Assunto') }}"}: ${info.event.title}\n` +
+                    `${"{{ __('Início') }}"}: ${start}\n` +
+                    `${"{{ __('Fim') }}"}: ${end}`
                 );
             },
 

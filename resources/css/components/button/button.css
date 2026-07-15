@@ -77,8 +77,9 @@
 */
 
 .ui-button:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 3px var(--button-focus-ring);
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+    box-shadow: none;
 }
 
 /*
@@ -270,26 +271,38 @@
 
 /* Success */
 .ui-button--success {
-    --button-bg: var(--success);
-    --button-border: var(--success);
-    --button-color: white;
-    --button-focus-ring: rgba(var(--success-rgb, 46, 125, 50), 0.4);
+    --button-bg: #15803d; /* Green 700 */
+    --button-border: #15803d;
+    --button-color: #ffffff; /* White text */
+}
+.dark .ui-button--success, [data-theme='dark'] .ui-button--success {
+    --button-bg: #166534; /* Green 800 */
+    --button-border: #166534;
+    --button-color: #ffffff; /* White text */
 }
 
 /* Warning */
 .ui-button--warning {
-    --button-bg: var(--warning);
-    --button-border: var(--warning);
-    --button-color: white;
-    --button-focus-ring: rgba(var(--warning-rgb, 239, 108, 0), 0.4);
+    --button-bg: #c2410c; /* Orange 700 */
+    --button-border: #c2410c;
+    --button-color: #ffffff; /* White text */
+}
+.dark .ui-button--warning, [data-theme='dark'] .ui-button--warning {
+    --button-bg: #9a3412; /* Orange 800 */
+    --button-border: #9a3412;
+    --button-color: #ffffff; /* White text */
 }
 
 /* Danger */
 .ui-button--danger {
-    --button-bg: var(--danger);
-    --button-border: var(--danger);
-    --button-color: white;
-    --button-focus-ring: rgba(var(--danger-rgb, 198, 40, 40), 0.4);
+    --button-bg: #b91c1c; /* Red 700 */
+    --button-border: #b91c1c;
+    --button-color: #ffffff; /* White text */
+}
+.dark .ui-button--danger, [data-theme='dark'] .ui-button--danger {
+    --button-bg: #991b1b; /* Red 800 */
+    --button-border: #991b1b;
+    --button-color: #ffffff; /* White text */
 }
 
 /* Efeito dinâmico de hover para as variantes semáforas (Success, Warning, Danger) */

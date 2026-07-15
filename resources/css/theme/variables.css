@@ -1,117 +1,86 @@
 /*
 |--------------------------------------------------------------------------
-| Design System: Tokens Globais
+| Design System: Variables & Theme System
 |--------------------------------------------------------------------------
+| References tokens.css for visual styles and defines layout metrics.
 */
 
 :root {
-    /* ------------------------------------------------------------------
-       Brand & Semantic Colors
-    ------------------------------------------------------------------ */
-    --primary: #f59e0b;
-    --primary-hover: #d97706;
-    --primary-light: rgba(245, 158, 11, 0.1);
+    /* Brand & Semantic Colors mapped to tokens.css */
+    --primary: var(--color-primary);
+    --primary-hover: var(--color-primary-hover);
+    --primary-light: var(--color-primary-light);
+    --on-primary: var(--color-on-primary);
 
-    /* Cor de texto adequada em cima do primary */
-    --on-primary: #111827;
+    --text-primary: var(--color-text);
+    --text: var(--color-text);
+    --text-soft: var(--color-text-soft);
+    --text-muted: var(--color-text-soft); /* Simplified */
 
-    --text-primary: #111827;
-    --surface-secondary: #f8fafc;
-    --surface-hover: #f1f5f9;
-    --border-color: #e5e7eb;
+    --background: var(--color-surface-2);
+    --bg: var(--color-surface-2);
+    --surface: var(--color-surface);
+    --surface-2: var(--color-surface-2);
+    --surface-3: var(--color-surface-disabled); /* fallback */
+    --surface-secondary: var(--color-surface-2);
+    --surface-hover: var(--color-surface-2);
 
-    --success: #22c55e;
-    --warning: #f59e0b;
-    --danger: #ef4444;
-    --info: #3b82f6;
+    --border: var(--color-border);
+    --border-strong: var(--color-border);
+    --border-color: var(--color-border);
 
-    /* Helpers para bibliotecas/estilos que usam var(--bg)/var(--text) */
-    --bg: var(--background);
-    --text: var(--text);
+    --success: var(--color-success);
+    --warning: var(--color-warning);
+    --danger: var(--color-danger);
+    --info: var(--color-info);
 
+    --sidebar: var(--color-surface);
+    --topbar: rgba(255, 255, 255, 0.85);
 
-    /* ------------------------------------------------------------------
-       Surface & Background (Light Default)
-    ------------------------------------------------------------------ */
-    --background: #f5f7fb;
-    --surface: #ffffff;
-    --surface-2: #f8fafc;
-    --surface-3: #f1f5f9;
-
-    --sidebar: #ffffff;
-    --topbar: rgba(255, 255, 255, 0.82);
-
-    /* ------------------------------------------------------------------
-       Typography
-    ------------------------------------------------------------------ */
-    --text: #111827;
-    --text-soft: #6b7280;
-    --text-muted: #9ca3af;
-
-    /* ------------------------------------------------------------------
-       Spacing Scale (Base 4px = 0.25rem)
-    ------------------------------------------------------------------ */
+    /* Spacing Scale (Base 4px = 0.25rem) */
     --space-1: 0.25rem;  /* 4px */
     --space-2: 0.5rem;   /* 8px */
     --space-3: 0.75rem;  /* 12px */
     --space-4: 1rem;     /* 16px */
+    --space-5: 1.25rem;  /* 20px */
     --space-6: 1.5rem;   /* 24px */
-    --space-8: 2rem;     /* 32px */
+    --space-7: 2rem;     /* 32px */
+    --space-8: 2.5rem;   /* 40px */
 
-    /* ------------------------------------------------------------------
-       Radius (rem-based for accessibility)
-    ------------------------------------------------------------------ */
+    /* Spacing Scale aliases from tokens */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+
+    /* Radius (rem-based for accessibility resizing) */
     --radius-xs: 0.375rem;
     --radius-sm: 0.5rem;
     --radius-md: 0.75rem;
     --radius-lg: 1rem;
     --radius-xl: 1.5rem;
+    --radius-2xl: 2rem;
     --radius-round: 9999px;
 
-    /* ------------------------------------------------------------------
-       Borders & Shadows
-    ------------------------------------------------------------------ */
-    --border: #e5e7eb;
-    --border-strong: #d1d5db;
+    /* Borders & Shadows */
+    --shadow-sm: var(--shadow-sm);
+    --shadow-md: var(--shadow-md);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
 
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-
-    /* ------------------------------------------------------------------
-       Layout & Motion
-    ------------------------------------------------------------------ */
+    /* Layout & Motion */
     --sidebar-width: 17.5rem; /* 280px */
     --topbar-height: 4.5rem;  /* 72px */
-    --transition: 0.2s ease-in-out;
+    --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
     color-scheme: light;
 }
 
-/* ------------------------------------------------------------------
-   Dark Mode Overrides
------------------------------------------------------------------- */
-.dark {
-    --background: #09090b;
-    --surface: #111318;
-    --surface-2: #181b22;
-    --surface-3: #21252f;
+/* Dark Mode Overrides */
+.dark, [data-theme='dark'] {
+    --topbar: rgba(11, 15, 25, 0.85);
 
-    --sidebar: #0f1116;
-    --topbar: rgba(15, 17, 22, 0.82);
-
-    --text: #f3f4f6;
-    --text-soft: #9ca3af;
-    --text-muted: #6b7280;
-
-    --border: #272b35;
-    --border-strong: #3e4655;
-    --text-primary: #f3f4f6;
-    --surface-secondary: #181b22;
-    --surface-hover: #21252f;
-    --border-color: #272b35;
-
-    /* Mantemos sombras leves no dark mode para evitar aspeto de "sticker" */
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
