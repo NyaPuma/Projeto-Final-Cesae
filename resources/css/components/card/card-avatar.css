@@ -1,0 +1,215 @@
+/*
+|--------------------------------------------------------------------------
+| Card Avatar Component
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-avatar {
+    /* Variáveis de controlo padrão (Fallbacks seguros incluídos) */
+    --avatar-size: 44px;
+    --avatar-font-size: var(--text-md, 1rem);
+    --avatar-radius: 50%;
+    --avatar-status-size: 12px;
+    --avatar-status-border: 2px;
+    --avatar-status-offset: 0px;
+    --avatar-ring-color: var(--surface, #ffffff); /* Cor de fundo que contorna o status */
+
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--avatar-size);
+    height: var(--avatar-size);
+    border-radius: var(--avatar-radius);
+    flex-shrink: 0;
+    background: var(--surface-hover, #e9ecef);
+    color: var(--text-secondary, #495057);
+    font-weight: 700;
+    user-select: none;
+
+    /* Nota: overflow: hidden foi removido daqui para não cortar o indicador de status */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Sizes (Escalamento proporcional e limpo de todos os elementos)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-avatar--xs {
+    --avatar-size: 24px;
+    --avatar-font-size: 10px;
+    --avatar-status-size: 8px;
+    --avatar-status-border: 1.5px;
+}
+
+.ui-card-avatar--sm {
+    --avatar-size: 32px;
+    --avatar-font-size: var(--text-xs, 0.75rem);
+    --avatar-status-size: 10px;
+    --avatar-status-border: 1.5px;
+}
+
+.ui-card-avatar--md {
+    --avatar-size: 44px;
+    --avatar-font-size: var(--text-sm, 0.875rem);
+    --avatar-status-size: 12px;
+    --avatar-status-border: 2px;
+}
+
+.ui-card-avatar--lg {
+    --avatar-size: 56px;
+    --avatar-font-size: var(--text-md, 1rem);
+    --avatar-status-size: 14px;
+    --avatar-status-border: 2px;
+}
+
+.ui-card-avatar--xl {
+    --avatar-size: 72px;
+    --avatar-font-size: var(--text-xl, 1.25rem);
+    --avatar-status-size: 18px;
+    --avatar-status-border: 3px;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Shapes (Ajuste do posicionamento do status de acordo com a curvatura)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-avatar--full {
+    --avatar-radius: 50%;
+    --avatar-status-offset: 3%; /* Inset perfeito para círculos */
+}
+
+.ui-card-avatar--rounded {
+    --avatar-radius: var(--radius-lg, 12px);
+    --avatar-status-offset: 0%;
+}
+
+.ui-card-avatar--square {
+    --avatar-radius: var(--radius-md, 8px);
+    --avatar-status-offset: -2px; /* Margem negativa para transbordar ligeiramente nos cantos */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Image (Garante o recorte sem precisar de overflow no pai)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-avatar__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--avatar-radius); /* Herda o formato do avatar */
+    display: block;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Initials
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-avatar__initials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--avatar-radius);
+    font-size: var(--avatar-font-size);
+    line-height: 1;
+    text-transform: uppercase; /* Força iniciais em maiúsculas */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Status Indicator
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-avatar__status {
+    position: absolute;
+    right: var(--avatar-status-offset);
+    bottom: var(--avatar-status-offset);
+    width: var(--avatar-status-size);
+    height: var(--avatar-status-size);
+    border-radius: 50%;
+    border: var(--avatar-status-border) solid var(--avatar-ring-color);
+    z-index: 2; /* Garante que fica sempre acima da imagem/iniciais */
+    transition: background-color 0.2s ease;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Status Variants
+|--------------------------------------------------------------------------
+*/
+
+/* Online (Com efeito de pulsação de radar moderno) */
+.ui-card-avatar__status--online {
+    background: var(--success, #28a745);
+}
+
+.ui-card-avatar__status--online::after {
+    content: '';
+    position: absolute;
+    top: calc(-1 * var(--avatar-status-border));
+    left: calc(-1 * var(--avatar-status-border));
+    width: calc(100% + (2 * var(--avatar-status-border)));
+    height: calc(100% + (2 * var(--avatar-status-border)));
+    border-radius: 50%;
+    border: 1.5px solid var(--success, #28a745);
+    animation: ui-avatar-pulse 2s infinite ease-in-out;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Offline */
+.ui-card-avatar__status--offline {
+    background: var(--text-muted, #868e96);
+}
+
+/* Busy */
+.ui-card-avatar__status--busy {
+    background: var(--danger, #dc3545);
+}
+
+/* Away */
+.ui-card-avatar__status--away {
+    background: var(--warning, #ffc107);
+}
+
+/* Animação do pulso de presença */
+@keyframes ui-avatar-pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1.6);
+        opacity: 0;
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Interactive Mode (Micro-interações adicionadas)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-avatar--interactive {
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), filter 0.2s ease;
+}
+
+.ui-card-avatar--interactive:hover {
+    transform: scale(1.05);
+    filter: brightness(0.95);
+}
+
+.ui-card-avatar--interactive:active {
+    transform: scale(0.95);
+}

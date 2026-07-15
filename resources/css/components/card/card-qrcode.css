@@ -1,0 +1,156 @@
+/*
+|--------------------------------------------------------------------------
+| Card QR Code Component
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-qrcode {
+    /* Variáveis de Controlo Centralizado */
+    --qr-size: 160px;                  /* Tamanho padrão do QR (md) */
+    --qr-padding: var(--space-md, 16px);
+    --qr-bg: #ffffff;                  /* Fundo branco obrigatório para legibilidade do scanner */
+    --qr-radius: var(--radius-md, 12px);
+
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md, 16px);
+    width: fit-content;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/*
+|--------------------------------------------------------------------------
+| QR Container & Safe Area (Quiet Zone)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-qrcode__image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: var(--qr-size);
+    height: var(--qr-size);
+    padding: var(--qr-padding);
+    background-color: var(--qr-bg);
+    border-radius: var(--qr-radius);
+    border: 1px solid var(--border-color, #e5e7eb);
+    box-shadow: var(--shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.05));
+
+    /* Transição suave para efeitos de hover */
+    transition:
+        transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.3s ease;
+}
+
+/* Garante que o QR Code real (seja imagem ou SVG gerado) nunca quebre o layout */
+.ui-card-qrcode__image img,
+.ui-card-qrcode__image svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    image-rendering: pixelated; /* Mantém as bordas do QR super nítidas em qualquer ecrã */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Sizes (Otimizado DRY: Apenas ajusta as variáveis do bloco)
+|--------------------------------------------------------------------------
+*/
+
+/* Pequeno (sm) */
+.ui-card-qrcode--sm {
+    --qr-size: 120px;
+    --qr-padding: var(--space-sm, 10px);
+    --qr-radius: var(--radius-sm, 8px);
+}
+
+/* Médio (md) */
+.ui-card-qrcode--md {
+    --qr-size: 160px;
+    --qr-padding: var(--space-md, 16px);
+    --qr-radius: var(--radius-md, 12px);
+}
+
+/* Grande (lg) */
+.ui-card-qrcode--lg {
+    --qr-size: 200px;
+    --qr-padding: var(--space-lg, 24px);
+    --qr-radius: var(--radius-lg, 16px);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Label (Tipografia e Hierarquia)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-qrcode__label {
+    margin: 0;
+    font-size: var(--text-sm, 14px);
+    font-weight: 700; /* Peso normalizado para garantir consistência visual */
+    line-height: 1.4;
+    color: var(--text-primary, #111827);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Download Action (Transformado num botão de alto valor estético)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-qrcode__download {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 6px 16px;
+    border-radius: var(--radius-full, 999px);
+
+    font-size: var(--text-xs, 12px);
+    font-weight: 600;
+    color: var(--primary, #2563eb);
+    text-decoration: none;
+    background-color: color-mix(in srgb, var(--primary, #2563eb) 8%, transparent);
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.15s ease;
+}
+
+.ui-card-qrcode__download:hover {
+    background-color: var(--primary, #2563eb);
+    color: #ffffff; /* Fica preenchido no hover */
+    text-decoration: none;
+}
+
+.ui-card-qrcode__download:active {
+    transform: scale(0.97); /* Feedback tátil de clique */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Micro-Interactions (Efeito Foco no Elemento Completo)
+|--------------------------------------------------------------------------
+*/
+
+/* Quando o utilizador interage com o card, dá um feedback visual de "foco" no QR */
+.ui-card-qrcode:hover .ui-card-qrcode__image {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05));
+}
+
+/* Acessibilidade: Respeito pelo utilizador */
+@media (prefers-reduced-motion: reduce) {
+    .ui-card-qrcode__image {
+        transition: none;
+    }
+    .ui-card-qrcode:hover .ui-card-qrcode__image {
+        transform: none;
+    }
+}

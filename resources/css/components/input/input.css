@@ -1,0 +1,361 @@
+/*
+|--------------------------------------------------------------------------
+| Input Component (Otimizado)
+|--------------------------------------------------------------------------
+| • RTL-ready (Logical Properties)
+| • Fully Customizable via Local CSS Variables (DRY State Architecture)
+| • WCAG 2.2 / High Contrast Mode (Forced Colors) Support
+| • Dynamic Padding via modern CSS selectors (:has)
+| • Scale-friendly icon spacing tokens
+|--------------------------------------------------------------------------
+*/
+
+.ui-input-field {
+  /* Design Tokens Locais */
+  --ui-input-height: 2.75rem; /* ~44px */
+  --ui-input-padding-x: var(--space-md, 1rem);
+  --ui-input-bg: var(--surface, #ffffff);
+  --ui-input-color: var(--text-primary, #111827);
+  --ui-input-font-size: var(--text-sm, 0.875rem);
+  --ui-input-radius: var(--radius-md, 8px);
+
+  /* Tokens de Escala de Ícones (Garante harmonia visual entre tamanhos) */
+  --ui-input-icon-size: 1.25rem;
+  --ui-input-icon-width: 2.75rem;
+
+  /* Cores Calibradas para WCAG 2.2 AA */
+  --ui-input-border-color: var(--border-color, #d1d5db);
+  --ui-input-border-hover: var(--border-hover, #71717a);
+  --ui-input-primary: var(--primary, #2563eb);
+  --ui-input-focus-ring: var(--primary-light, rgba(37, 99, 235, 0.15));
+
+  --ui-input-transition-duration: 0.2s;
+  --ui-input-transition-timing: cubic-bezier(0.16, 1, 0.3, 1);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm, 0.5rem);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Opacidade unificada para todo o bloco quando desativado */
+.ui-input-field:has(.ui-input:disabled) {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Label
+|--------------------------------------------------------------------------
+*/
+.ui-input-field__label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs, 0.25rem);
+  font-size: var(--text-sm, 0.875rem);
+  font-weight: 600;
+  color: var(--text-primary, #111827);
+  user-select: none;
+  transition: color var(--ui-input-transition-duration) ease;
+}
+
+/* Asterisco para campo obrigatório */
+.ui-input-field__label span {
+  color: var(--danger, #dc2626);
+}
+
+/* Realce visual da label quando o campo focado está ativo */
+.ui-input-field:focus-within:not(:has(.ui-input:disabled)) .ui-input-field__label {
+  color: var(--ui-input-primary);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Wrapper
+|--------------------------------------------------------------------------
+*/
+.ui-input__wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+
+  /* Variáveis dinâmicas para o padding lateral do input */
+  --ui-input-pad-start: var(--ui-input-padding-x);
+  --ui-input-pad-end: var(--ui-input-padding-x);
+}
+
+/* Sobrescrita dinâmica e proporcional baseada no tamanho atual do input */
+.ui-input__wrapper:has(.ui-input__prefix) { --ui-input-pad-start: var(--ui-input-icon-width); }
+.ui-input__wrapper:has(.ui-input__icon)   { --ui-input-pad-start: var(--ui-input-icon-width); }
+.ui-input__wrapper:has(.ui-input__suffix) { --ui-input-pad-end: var(--ui-input-icon-width); }
+.ui-input__wrapper:has(.ui-input__loader) { --ui-input-pad-end: var(--ui-input-icon-width); }
+
+/*
+|--------------------------------------------------------------------------
+| Input Principal
+|--------------------------------------------------------------------------
+*/
+.ui-input {
+  width: 100%;
+  min-height: var(--ui-input-height);
+  padding-inline-start: var(--ui-input-pad-start);
+  padding-inline-end: var(--ui-input-pad-end);
+
+  border: 1px solid var(--ui-input-border-color);
+  border-radius: var(--ui-input-radius);
+  background-color: var(--ui-input-bg);
+  color: var(--ui-input-color);
+  font-size: var(--ui-input-font-size);
+  font-family: inherit;
+  box-sizing: border-box;
+
+  transition:
+    border-color var(--ui-input-transition-duration) var(--ui-input-transition-timing),
+    background-color var(--ui-input-transition-duration) var(--ui-input-transition-timing),
+    box-shadow var(--ui-input-transition-duration) var(--ui-input-transition-timing),
+    color var(--ui-input-transition-duration) var(--ui-input-transition-timing);
+}
+
+.ui-input::placeholder {
+  color: var(--text-muted, #6b7280);
+  opacity: 1; /* Resolve diferenças de consistência do Safari/Firefox */
+  transition: opacity var(--ui-input-transition-duration) ease;
+}
+
+.ui-input:focus::placeholder {
+  opacity: 0.5;
+}
+
+/* Interações & Estados */
+.ui-input:hover:not(:disabled):not([readonly]) {
+  border-color: var(--ui-input-border-hover);
+}
+
+.ui-input:focus {
+  outline: none; /* Reseta outline de fallback */
+  border-color: var(--ui-input-primary);
+  box-shadow:
+    0 0 0 1px var(--ui-input-primary),
+    0 0 0 4px var(--ui-input-focus-ring);
+}
+
+.ui-input:disabled {
+  cursor: not-allowed;
+  background-color: var(--surface-disabled, #f9fafb);
+  border-color: var(--border-disabled, #e5e7eb);
+  color: var(--text-disabled, #9ca3af);
+  pointer-events: none; /* Bloqueia cliques em estados desativados */
+}
+
+.ui-input:read-only {
+  background-color: var(--surface-secondary, #f9fafb);
+  border-color: var(--ui-input-border-color);
+  cursor: default;
+}
+
+/* Preserva o design em cenários de autofill do navegador */
+.ui-input:-webkit-autofill,
+.ui-input:-webkit-autofill:hover,
+.ui-input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--ui-input-color);
+  box-shadow: 0 0 0 1000px var(--ui-input-bg) inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Tamanhos (Variantes de Escala Coesas)
+|--------------------------------------------------------------------------
+*/
+.ui-input--sm {
+  --ui-input-height: 2.25rem; /* ~36px */
+  --ui-input-font-size: var(--text-xs, 0.75rem);
+  --ui-input-padding-x: var(--space-sm, 0.75rem);
+  --ui-input-icon-size: 1rem;
+  --ui-input-icon-width: 2.25rem;
+}
+
+.ui-input--md {
+  --ui-input-height: 2.75rem; /* ~44px */
+  --ui-input-font-size: var(--text-sm, 0.875rem);
+  --ui-input-icon-size: 1.25rem;
+  --ui-input-icon-width: 2.75rem;
+}
+
+.ui-input--lg {
+  --ui-input-height: 3.25rem; /* ~52px */
+  --ui-input-font-size: var(--text-md, 1rem);
+  --ui-input-padding-x: var(--space-lg, 1.25rem);
+  --ui-input-icon-size: 1.5rem;
+  --ui-input-icon-width: 3.25rem;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Prefixos, Sufixos, Ícones & Loader
+|--------------------------------------------------------------------------
+*/
+.ui-input__prefix,
+.ui-input__suffix,
+.ui-input__icon,
+.ui-input__loader {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin-block: auto; /* Centralização absoluta perfeita que liberta a propriedade transform */
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: var(--ui-input-icon-size);
+  height: var(--ui-input-icon-size);
+  color: var(--text-secondary, #4b5563);
+  pointer-events: none; /* Garante clique focado no input através do elemento */
+  transition: color var(--ui-input-transition-duration) ease;
+}
+
+/* Alinhamento usando propriedades lógicas (RTL e LTR automáticos) */
+.ui-input__prefix,
+.ui-input__icon {
+  inset-inline-start: var(--ui-input-padding-x);
+}
+
+.ui-input__suffix,
+.ui-input__loader {
+  inset-inline-end: var(--ui-input-padding-x);
+}
+
+/* Alteração subtil da cor dos elementos quando focado */
+.ui-input__wrapper:focus-within:not(:has(.ui-input:disabled)) .ui-input__prefix,
+.ui-input__wrapper:focus-within:not(:has(.ui-input:disabled)) .ui-input__suffix,
+.ui-input__wrapper:focus-within:not(:has(.ui-input:disabled)) .ui-input__icon {
+  color: var(--ui-input-primary);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Indicador de Carregamento (Loader Spinner)
+|--------------------------------------------------------------------------
+*/
+.ui-input__loader {
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  will-change: transform;
+  animation: ui-input-spin 0.7s linear infinite;
+}
+
+@keyframes ui-input-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Estados de Validação (Redefinição Elegante de Variáveis)
+|--------------------------------------------------------------------------
+*/
+
+/* Estado: Erro / Inválido */
+.ui-input-field--error,
+.ui-input--error {
+  --ui-input-border-color: var(--danger, #dc2626);
+  --ui-input-border-hover: var(--danger-hover, #b91c1c);
+  --ui-input-primary: var(--danger, #dc2626);
+  --ui-input-focus-ring: var(--danger-light, rgba(220, 38, 38, 0.15));
+}
+.ui-input-field--error .ui-input-field__label {
+  color: var(--danger, #dc2626);
+}
+
+/* Estado: Sucesso */
+.ui-input-field--success,
+.ui-input--success {
+  --ui-input-border-color: var(--success, #059669);
+  --ui-input-border-hover: var(--success-hover, #047857);
+  --ui-input-primary: var(--success, #059669);
+  --ui-input-focus-ring: var(--success-light, rgba(5, 150, 105, 0.15));
+}
+.ui-input-field--success .ui-input-field__label {
+  color: var(--success, #059669);
+}
+
+/* Estado: Aviso / Warning */
+.ui-input-field--warning,
+.ui-input--warning {
+  --ui-input-border-color: var(--warning, #d97706);
+  --ui-input-border-hover: var(--warning-hover, #b45309);
+  --ui-input-primary: var(--warning, #d97706);
+  --ui-input-focus-ring: var(--warning-light, rgba(217, 119, 6, 0.15));
+}
+.ui-input-field--warning .ui-input-field__label {
+  color: var(--warning, #d97706);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Textos de Ajuda & Validação (Hint / Error)
+|--------------------------------------------------------------------------
+*/
+.ui-input-field__hint,
+.ui-input-field__error {
+  margin: 0;
+  font-size: var(--text-xs, 0.75rem);
+  line-height: 1.4;
+  transition: color var(--ui-input-transition-duration) ease;
+}
+
+.ui-input-field__hint {
+  color: var(--text-secondary, #4b5563);
+}
+
+.ui-input-field__error {
+  font-weight: 500;
+  color: var(--danger, #dc2626);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Acessibilidade: Modo de Cores Forçadas (High Contrast)
+|--------------------------------------------------------------------------
+*/
+@media (forced-colors: active) {
+  .ui-input {
+    border: 2px solid ButtonBorder;
+  }
+  .ui-input:focus {
+    outline: 2px solid Highlight;
+    border-color: Highlight;
+  }
+  .ui-input:disabled {
+    border-color: GrayText;
+    color: GrayText;
+  }
+  .ui-input-field:has(.ui-input:disabled) {
+    opacity: 1; /* WHCM prefere opacidades completas */
+  }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Acessibilidade: Movimento Reduzido (Reduced Motion)
+|--------------------------------------------------------------------------
+*/
+@media (prefers-reduced-motion: reduce) {
+  .ui-input,
+  .ui-input__prefix,
+  .ui-input__suffix,
+  .ui-input__icon,
+  .ui-input__loader {
+    transition: none !important;
+  }
+  .ui-input__loader {
+    animation-duration: 2s; /* Desacelera significativamente para evitar tonturas */
+  }
+}

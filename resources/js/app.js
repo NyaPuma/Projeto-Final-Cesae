@@ -1,217 +1,149 @@
-import './bootstrap';
+import './api-client';
 import './analytics';
+import Echo from 'laravel-echo';
+import Pusher from 'pusher-js';
 
-/*
-|--------------------------------------------------------------------------
-| Gestão de Avarias - Core UI & Auth Integration
-|--------------------------------------------------------------------------
-*/
+/**
+ * CORE APPLICATION INITIALIZATION
+ */
+const App = {
+    // Configurações e Instâncias
+    echo: null,
 
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Verificar segurança e controlo de acessos antes de inicializar a UI
-    if (!checkAuthRequirement()) return;
+    init() {
+        if (!this.checkAuth()) return;
 
-    // 2. Inicializar componentes visuais do ecossistema
-    initTheme();
-    initSidebar();
-    initDropdowns();
-    initTooltips();
-    initAnimations();
-});
+        this.initTheme();
+        this.initSidebar();
+        this.initDropdowns();
+        this.initTooltips();
+        this.initAnimations();
+        this.initEcho();
+    },
 
-/* --------------------------------------------------------------------------
-   SEGURANÇA E AUTENTICAÇÃO (INTEGRAÇÃO SPA)
---------------------------------------------------------------------------- */
+    // --- SEGURANÇA ---
+    checkAuth() {
+        const token = localStorage.getItem('api_token') || this.getCookie('api_token');
+        if (window.requireAuthOnLoad && !token) {
+            window.location.href = '/ui/login';
+            return false;
+        }
+        return true;
+    },
 
-function checkAuthRequirement() {
-    const token = localStorage.getItem('api_token') || getCookie('api_token');
+    getAuthHeaders() {
+        const token = localStorage.getItem('api_token') || this.getCookie('api_token');
+        return {
+            'Authorization': `Bearer ${token}`,
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content
+        };
+    },
 
-    // Se a view Blade marcar que exige autenticação e não houver token, redireciona imediatamente
-    if (window.requireAuthOnLoad && !token) {
-        window.location.href = '/ui/login';
-        return false;
-    }
-    return true;
-}
+    getCookie(name) {
+        return document.cookie.split('; ').reduce((acc, cookie) => {
+            const [key, value] = cookie.split('=');
+            return key === name ? value : acc;
+        }, null);
+    },
 
-// Helper global para injetar o cabeçalho de autorização nos fetchs das tuas views
-window.authHeader = function () {
-    const token = localStorage.getItem('api_token') || getCookie('api_token');
-    return {
-        'Authorization': `Bearer ${token}`,
-        'Accept': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest'
-    };
-};
-
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-    return null;
-}
-
-/* --------------------------------------------------------------------------
-   THEME (SINCRO CORRETA COM O LOCALSTORAGE)
---------------------------------------------------------------------------- */
-
-function initTheme() {
-    const html = document.documentElement;
-    const savedTheme = localStorage.getItem('theme');
-
-    if (savedTheme === 'dark') {
-        html.classList.add('dark');
-    } else if (savedTheme === 'light') {
-        html.classList.remove('dark');
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        html.classList.add('dark');
-    }
-
-    document.querySelectorAll('[data-theme-toggle]').forEach(button => {
-        button.addEventListener('click', () => window.toggleTheme());
-    });
-}
-
-window.toggleTheme = function () {
-    const html = document.documentElement;
-    html.classList.toggle('dark');
-    localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
-};
-
-/* --------------------------------------------------------------------------
-   SIDEBAR
---------------------------------------------------------------------------- */
-
-function initSidebar() {
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('sidebarOverlay');
-
-    document.querySelectorAll('[data-sidebar-open]').forEach(btn => {
-        btn.addEventListener('click', () => {
-            sidebar?.classList.remove('-translate-x-full');
-            overlay?.classList.remove('hidden');
+    // --- PUSHER / ECHO ---
+    initEcho() {
+        window.Pusher = Pusher;
+        this.echo = new Echo({
+            broadcaster: 'pusher',
+            key: import.meta.env.VITE_PUSHER_APP_KEY,
+            cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
+            forceTLS: true
         });
-    });
 
-    document.querySelectorAll('[data-sidebar-close]').forEach(btn => {
-        btn.addEventListener('click', closeSidebar);
-    });
+        const userId = localStorage.getItem('user_id');
+        if (userId) {
+            this.echo.private(`user.${userId}`)
+                .notification((notification) => this.showToast(notification.title, notification.message));
+        }
+    },
 
-    overlay?.addEventListener('click', closeSidebar);
+    // --- UI COMPONENTS ---
+    initTheme() {
+        const isDark = localStorage.getItem('theme') === 'dark' ||
+                      (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
 
-    function closeSidebar() {
-        sidebar?.classList.add('-translate-x-full');
-        overlay?.classList.add('hidden');
-    }
-}
+        if (isDark) document.documentElement.classList.add('dark');
+    },
 
-/* --------------------------------------------------------------------------
-   DROPDOWNS (CORREÇÃO DE CONFLITOS DE MULTIPLOS MENUS)
---------------------------------------------------------------------------- */
+    toggleTheme() {
+        const isDark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    },
 
-function initDropdowns() {
-    document.querySelectorAll('[data-dropdown]').forEach(dropdown => {
-        const button = dropdown.querySelector('[data-dropdown-button]');
-        const menu = dropdown.querySelector('[data-dropdown-menu]');
+    initSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        const toggle = () => {
+            sidebar?.classList.toggle('-translate-x-full');
+            overlay?.classList.toggle('hidden');
+        };
 
-        if (!button || !menu) return;
+        document.querySelectorAll('[data-sidebar-toggle]').forEach(btn => btn.addEventListener('click', toggle));
+        overlay?.addEventListener('click', toggle);
+    },
 
-        button.addEventListener('click', (e) => {
-            e.stopPropagation();
+    initDropdowns() {
+        document.addEventListener('click', (e) => {
+            const isButton = e.target.closest('[data-dropdown-button]');
+            const allMenus = document.querySelectorAll('[data-dropdown-menu]');
 
-            // Fechar todos os outros dropdowns ativos para evitar sobreposição
-            document.querySelectorAll('[data-dropdown-menu]').forEach(otherMenu => {
-                if (otherMenu !== menu) otherMenu.classList.add('hidden');
-            });
-
-            menu.classList.toggle('hidden');
-        });
-    });
-
-    // Clicar fora fecha qualquer dropdown aberto
-    document.addEventListener('click', () => {
-        document.querySelectorAll('[data-dropdown-menu]').forEach(menu => {
-            menu.classList.add('hidden');
-        });
-    });
-}
-
-/* --------------------------------------------------------------------------
-   TOOLTIPS
---------------------------------------------------------------------------- */
-
-function initTooltips() {
-    document.querySelectorAll('[data-tooltip]').forEach(element => {
-        element.title = element.dataset.tooltip;
-    });
-}
-
-/* --------------------------------------------------------------------------
-   ANIMAÇÕES DE ENTRADA (INTERSECTION OBSERVER)
---------------------------------------------------------------------------- */
-
-function initAnimations() {
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.remove('opacity-0', 'translate-y-3');
-                entry.target.classList.add('opacity-100', 'translate-y-0');
-                observer.unobserve(entry.target); // Deixa de observar após animar uma vez
+            if (isButton) {
+                const menu = isButton.closest('[data-dropdown]').querySelector('[data-dropdown-menu]');
+                menu?.classList.toggle('hidden');
+            } else {
+                allMenus.forEach(m => m.classList.add('hidden'));
             }
         });
-    }, {
-        threshold: 0.05
-    });
+    },
 
-    document.querySelectorAll('[data-animate]').forEach(element => {
-        element.classList.add(
-            'opacity-0',
-            'translate-y-3',
-            'transition-all',
-            'duration-500',
-            'ease-out'
-        );
-        observer.observe(element);
-    });
-}
+    initTooltips() {
+        document.querySelectorAll('[data-tooltip]').forEach(el => {
+            el.setAttribute('title', el.dataset.tooltip);
+        });
+    },
 
-/* --------------------------------------------------------------------------
-   NOTIFICAÇÕES FLUTUANTES (TOAST SYSTEM COM TAILWIND CLASSHES)
---------------------------------------------------------------------------- */
+    initAnimations() {
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.replace('opacity-0', 'opacity-100');
+                    entry.target.classList.replace('translate-y-3', 'translate-y-0');
+                    observer.unobserve(entry.target); // Para de observar após a animação
+                }
+            });
+        }, { threshold: 0.1 });
 
-window.showToast = function (message, type = 'success') {
-    const toast = document.createElement('div');
+        document.querySelectorAll('[data-animate]').forEach(el => {
+            el.classList.add('opacity-0', 'translate-y-3', 'transition-all', 'duration-500');
+            observer.observe(el);
+        });
+    },
 
-    // Configuração base de classes Tailwind e transições de opacidade/transformação
-    toast.className = 'fixed top-6 right-6 z-50 rounded-xl px-4 py-3 shadow-2xl text-white font-medium text-sm ' +
-                      'transform translate-y-2 opacity-0 transition-all duration-300 ease-out flex items-center gap-2';
+    showToast(title, message) {
+        const toast = document.getElementById('notification-toast');
+        if (!toast) return;
 
-    // Atribuição de classes de cor com base no tipo sem injetar CSS inline rígido
-    switch (type) {
-        case 'error':
-            toast.classList.add('bg-red-500', 'dark:bg-red-600');
-            break;
-        case 'warning':
-            toast.classList.add('bg-amber-500', 'dark:bg-amber-600');
-            break;
-        default:
-            toast.classList.add('bg-emerald-500', 'dark:bg-emerald-600');
+        const titleEl = toast.querySelector('#toast-title');
+        const msgEl = toast.querySelector('#toast-message');
+
+        if (titleEl) titleEl.textContent = title;
+        if (msgEl) msgEl.textContent = message;
+
+        toast.classList.remove('translate-x-[120%]');
+        setTimeout(() => toast.classList.add('translate-x-[120%]'), 5000);
     }
-
-    toast.textContent = message;
-    document.body.appendChild(toast);
-
-    // Despoleta a animação de entrada no frame seguinte
-    requestAnimationFrame(() => {
-        toast.classList.remove('opacity-0', 'translate-y-2');
-        toast.classList.add('opacity-100', 'translate-y-0');
-    });
-
-    // Remove o elemento do DOM de forma limpa após o fade-out
-    setTimeout(() => {
-        toast.classList.remove('opacity-100', 'translate-y-0');
-        toast.classList.add('opacity-0', 'translate-y-[-8px]');
-
-        setTimeout(() => toast.remove(), 300);
-    }, 3500);
 };
+
+// Inicialização
+document.addEventListener('DOMContentLoaded', () => App.init());
+
+// Expor métodos necessários globalmente se ainda forem chamados via HTML (ex: onclick="toggleTheme()")
+window.App = App;

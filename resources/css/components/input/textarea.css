@@ -1,0 +1,174 @@
+/*
+|--------------------------------------------------------------------------
+| Textarea Component (Otimizado)
+|--------------------------------------------------------------------------
+|
+| Design System
+| • Acessibilidade WCAG 2.2 (Focus Visible)
+| • Suporte a Windows Forced Colors (Alto Contraste)
+| • Layout robusto e estados interativos consistentes via :has()
+| • RTL Ready (Logical Properties)
+|
+*/
+
+.ui-textarea-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm, 0.5rem);
+  width: 100%;
+  transition: opacity var(--transition-fast, 0.15s) ease;
+}
+
+/* --- Label --- */
+.ui-textarea-field__label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs, 0.25rem);
+  font-size: var(--text-sm, 0.875rem);
+  font-weight: 600;
+  color: var(--text-primary, #111827);
+  user-select: none;
+}
+
+.ui-textarea-field__label span {
+  color: var(--danger, #ef4444);
+  margin-inline-start: 2px;
+}
+
+/* --- Textarea Base --- */
+.ui-textarea {
+  width: 100%;
+  min-height: 8.75rem; /* ~140px, responsivo e adaptável ao zoom do utilizador */
+  padding: var(--space-md, 1rem);
+  border: 1px solid var(--border-color, #d1d5db);
+  border-radius: var(--radius-md, 6px);
+  background: var(--surface, #ffffff);
+  color: var(--text-primary, #111827);
+  font: inherit;
+  line-height: 1.6;
+  box-sizing: border-box;
+  scrollbar-gutter: stable; /* Evita que o layout "salte" quando a scrollbar aparece */
+  transition:
+    border-color var(--transition-normal, 0.2s) cubic-bezier(0.4, 0, 0.2, 1),
+    background var(--transition-normal, 0.2s) cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow var(--transition-normal, 0.2s) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ui-textarea::placeholder {
+  color: var(--text-muted, #9ca3af);
+  opacity: 1; /* Corrige a opacidade inconsistente do Firefox */
+}
+
+/* --- Interações --- */
+.ui-textarea:hover:not(:disabled):not(:read-only) {
+  border-color: var(--border-hover, #9ca3af);
+}
+
+.ui-textarea:focus-visible {
+  outline: 2px solid transparent; /* Remove outline padrão sem perder acessibilidade */
+  outline-offset: 2px;
+  border-color: var(--primary, #3b82f6);
+  box-shadow:
+    0 0 0 1px var(--primary, #3b82f6),
+    0 0 0 4px var(--primary-light, rgba(59, 130, 246, 0.15));
+}
+
+/* --- Estados (Disabled / Readonly) --- */
+.ui-textarea-field:has(.ui-textarea:disabled) {
+  opacity: 0.6; /* Desativa suavemente o campo inteiro, incluindo label e footer */
+}
+
+.ui-textarea:disabled {
+  cursor: not-allowed;
+  background: var(--surface-disabled, #f3f4f6);
+  color: var(--text-disabled, #9ca3af);
+}
+
+.ui-textarea:read-only {
+  background: var(--surface-secondary, #f9fafb);
+  border-color: var(--border-color, #d1d5db);
+  cursor: default;
+}
+
+/* --- Resizing (Dimensionamento) --- */
+.ui-textarea--none { resize: none; }
+.ui-textarea--vertical { resize: vertical; }
+.ui-textarea--horizontal { resize: horizontal; }
+.ui-textarea--both { resize: both; }
+
+/* --- Validação (Estados de Feedback) --- */
+
+/* Error */
+.ui-textarea--error { border-color: var(--danger, #ef4444); }
+.ui-textarea--error:hover:not(:disabled):not(:read-only) { border-color: var(--danger-hover, #dc2626); }
+.ui-textarea--error:focus-visible {
+  border-color: var(--danger, #ef4444);
+  box-shadow:
+    0 0 0 1px var(--danger, #ef4444),
+    0 0 0 4px var(--danger-light, rgba(239, 68, 68, 0.15));
+}
+
+/* Success */
+.ui-textarea--success { border-color: var(--success, #10b981); }
+.ui-textarea--success:hover:not(:disabled):not(:read-only) { border-color: var(--success-hover, #059669); }
+.ui-textarea--success:focus-visible {
+  border-color: var(--success, #10b981);
+  box-shadow:
+    0 0 0 1px var(--success, #10b981),
+    0 0 0 4px var(--success-light, rgba(16, 185, 129, 0.15));
+}
+
+/* Warning */
+.ui-textarea--warning { border-color: var(--warning, #f59e0b); }
+.ui-textarea--warning:hover:not(:disabled):not(:read-only) { border-color: var(--warning-hover, #d97706); }
+.ui-textarea--warning:focus-visible {
+  border-color: var(--warning, #f59e0b);
+  box-shadow:
+    0 0 0 1px var(--warning, #f59e0b),
+    0 0 0 4px var(--warning-light, rgba(245, 158, 11, 0.15));
+}
+
+/* --- Layout Auxiliar de Rodapé (Novo!) --- */
+.ui-textarea-field__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-md, 1rem);
+  margin-block-start: var(--space-xxs, 2px);
+}
+
+.ui-textarea-field__hint,
+.ui-textarea-field__error {
+  margin: 0;
+  font-size: var(--text-xs, 0.75rem);
+  line-height: 1.4;
+}
+
+.ui-textarea-field__hint {
+  color: var(--text-secondary, #6b7280);
+}
+
+.ui-textarea-field__error {
+  color: var(--danger, #ef4444);
+  font-weight: 500;
+}
+
+.ui-textarea-field__counter {
+  margin-inline-start: auto; /* Garante que fica sempre à direita, mesmo se estiver sozinho */
+  font-size: var(--text-xs, 0.75rem);
+  color: var(--text-muted, #9ca3af);
+  font-variant-numeric: tabular-nums; /* Evita que o contador salte ao mudar de números */
+  white-space: nowrap;
+}
+
+/* --- Acessibilidade: Alto Contraste (WHCM) --- */
+@media (forced-colors: active) {
+  .ui-textarea {
+    border: 2px solid ButtonText;
+  }
+  .ui-textarea:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 3px;
+    background: Canvas;
+  }
+}

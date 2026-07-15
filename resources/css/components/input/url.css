@@ -1,0 +1,166 @@
+/*
+|--------------------------------------------------------------------------
+| URL Input Component (Otimizado)
+|--------------------------------------------------------------------------
+| Design System:
+| • WCAG 2.2 Compliant (Focus Visible & Touch Target)
+| • Windows Forced Colors Support (High Contrast)
+| • Robust State Handling (Disabled/Read-only via CSS :has)
+| • RTL Ready (Logical Properties)
+*/
+
+.ui-url {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm, 0.5rem);
+  width: 100%;
+  transition: opacity var(--transition-fast, 0.15s) ease;
+}
+
+/* --- Label --- */
+.ui-url__label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs, 0.25rem);
+  font-size: var(--text-sm, 0.875rem);
+  font-weight: 600;
+  color: var(--text-primary, #111827);
+  user-select: none;
+}
+
+.ui-url__label span {
+  color: var(--danger, #ef4444);
+  margin-inline-start: 2px;
+}
+
+/* --- Wrapper --- */
+.ui-url__wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* --- Icon --- */
+.ui-url__icon {
+  position: absolute;
+  inset-inline-start: var(--space-md, 1rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary, #6b7280);
+  pointer-events: none;
+  z-index: 1;
+  transition: color var(--transition-fast, 0.15s) ease;
+}
+
+.ui-url__icon svg {
+  width: 1.125rem; /* 18px */
+  height: 1.125rem;
+  fill: currentColor;
+}
+
+/* --- Input --- */
+.ui-url__input {
+  width: 100%;
+  min-height: 2.75rem; /* 44px - Garantia de área de toque mínima (WCAG) */
+  padding-block: 0;
+  padding-inline-start: 2.75rem; /* Espaço para o ícone à esquerda */
+  padding-inline-end: var(--space-md, 1rem);
+  border: 1px solid var(--border-color, #d1d5db);
+  border-radius: var(--radius-md, 6px);
+  background: var(--surface, #ffffff);
+  color: var(--text-primary, #111827);
+  font-size: var(--text-sm, 0.875rem);
+  font-family: inherit;
+  transition:
+    border-color var(--transition-normal, 0.2s) cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow var(--transition-normal, 0.2s) cubic-bezier(0.4, 0, 0.2, 1),
+    background var(--transition-normal, 0.2s) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ui-url__input::placeholder {
+  color: var(--text-muted, #9ca3af);
+  opacity: 1; /* Corrige inconsistência de opacidade no Firefox */
+}
+
+/* --- Interações --- */
+.ui-url__input:hover:not(:disabled):not(:read-only) {
+  border-color: var(--border-hover, #9ca3af);
+}
+
+.ui-url__input:focus-visible {
+  outline: 2px solid transparent; /* Garante que o outline padrão não sobrepõe */
+  outline-offset: 2px;
+  border-color: var(--primary, #3b82f6);
+  box-shadow:
+    0 0 0 1px var(--primary, #3b82f6),
+    0 0 0 4px var(--primary-light, rgba(59, 130, 246, 0.15));
+}
+
+/* --- Estados: Disabled (Tratado globalmente) --- */
+.ui-url:has(.ui-url__input:disabled) {
+  opacity: 0.6; /* Dica visual suave para todo o componente */
+}
+
+.ui-url__input:disabled {
+  cursor: not-allowed;
+  background: var(--surface-disabled, #f3f4f6);
+  color: var(--text-disabled, #9ca3af);
+}
+
+/* --- Estados: Read-only --- */
+.ui-url__input:read-only {
+  background: var(--surface-secondary, #f9fafb);
+  border-color: var(--border-color, #d1d5db);
+  cursor: default;
+}
+
+/* --- Validação (Erro) --- */
+.ui-url__input--error {
+  border-color: var(--danger, #ef4444);
+}
+
+.ui-url__input--error:hover:not(:disabled):not(:read-only) {
+  border-color: var(--danger-hover, #dc2626);
+}
+
+.ui-url__input--error:focus-visible {
+  border-color: var(--danger, #ef4444);
+  box-shadow:
+    0 0 0 1px var(--danger, #ef4444),
+    0 0 0 4px var(--danger-light, rgba(239, 68, 68, 0.15));
+}
+
+/* --- Hint / Error --- */
+.ui-url__hint,
+.ui-url__error {
+  margin: 0;
+  margin-block-start: var(--space-xxs, 2px);
+  font-size: var(--text-xs, 0.75rem);
+  line-height: 1.4;
+}
+
+.ui-url__hint {
+  color: var(--text-secondary, #6b7280);
+}
+
+.ui-url__error {
+  color: var(--danger, #ef4444);
+  font-weight: 500;
+}
+
+/* --- Acessibilidade: Alto Contraste (WHCM) --- */
+@media (forced-colors: active) {
+  .ui-url__input {
+    border: 2px solid ButtonText;
+  }
+  .ui-url__input:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 3px;
+    background: Canvas;
+  }
+  .ui-url__icon {
+    color: CanvasText;
+  }
+}

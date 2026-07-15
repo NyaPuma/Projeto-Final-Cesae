@@ -1,0 +1,395 @@
+/*
+|--------------------------------------------------------------------------
+| Card System Component
+|--------------------------------------------------------------------------
+*/
+
+.ui-card {
+    /* Variáveis Geométricas Globais (Herdadas pelos filhos de forma inteligente) */
+    --card-padding: var(--space-lg, 24px);
+    --card-radius: var(--radius-lg, 12px);
+    --card-gap: var(--space-md, 16px);
+
+    /* Variáveis Cromáticas Globais */
+    --card-bg: var(--surface, #ffffff);
+    --card-text-primary: var(--text-primary, #111827);
+    --card-text-secondary: var(--text-secondary, #6b7280);
+    --card-border-color: var(--border-color, #e5e7eb);
+    --card-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.1));
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+
+    background-color: var(--card-bg);
+    color: var(--card-text-primary);
+    border-radius: var(--card-radius);
+    border: 1px solid var(--card-border-color);
+    box-shadow: var(--card-shadow);
+
+    /* NOTA: overflow: hidden pode ser sobrescrito se usar tooltips ou dropdowns */
+    overflow: hidden;
+
+    transition:
+        transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1),
+        box-shadow 0.25s cubic-bezier(0.25, 0.8, 0.25, 1),
+        border-color 0.2s ease,
+        background-color 0.2s ease;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Card Variants (Atualizam os tokens do pai em cascata)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card--default {
+    --card-bg: var(--surface, #ffffff);
+}
+
+.ui-card--flat {
+    --card-border-color: transparent;
+    --card-shadow: none;
+    border: none;
+}
+
+.ui-card--outlined {
+    --card-bg: transparent;
+    --card-shadow: none;
+}
+
+.ui-card--elevated {
+    --card-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1));
+}
+
+.ui-card--glass {
+    --card-bg: var(--glass-background, rgba(255, 255, 255, 0.7));
+    --card-border-color: var(--glass-border, rgba(255, 255, 255, 0.3));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* Variante de Gradiente com Adaptação de Contraste Automática */
+.ui-card--gradient {
+    --card-bg: var(--gradient-primary, linear-gradient(135deg, #3b82f6, #1d4ed8));
+    --card-border-color: transparent;
+    --card-text-primary: #ffffff;
+    --card-text-secondary: rgba(255, 255, 255, 0.75);
+    background: var(--card-bg);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Card Sizes (Controla a escala de todo o card de forma síncrona)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card--xs {
+    --card-padding: var(--space-xs, 8px);
+    --card-radius: var(--radius-sm, 4px);
+    --card-gap: var(--space-xs, 8px);
+}
+
+.ui-card--sm {
+    --card-padding: var(--space-sm, 12px);
+    --card-radius: var(--radius-md, 8px);
+    --card-gap: var(--space-sm, 12px);
+}
+
+.ui-card--md {
+    --card-padding: var(--space-md, 16px);
+    --card-radius: var(--radius-lg, 12px);
+    --card-gap: var(--space-md, 16px);
+}
+
+.ui-card--lg {
+    --card-padding: var(--space-lg, 24px);
+    --card-radius: var(--radius-xl, 16px);
+    --card-gap: var(--space-lg, 24px);
+}
+
+.ui-card--xl {
+    --card-padding: var(--space-xl, 32px);
+    --card-radius: var(--radius-2xl, 24px);
+    --card-gap: var(--space-xl, 32px);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Card States & Interactions
+|--------------------------------------------------------------------------
+*/
+
+/* Hover Inteligente: Só se ativa se for explicitamente definido */
+.ui-card--hoverable:hover {
+    transform: translateY(-4px);
+    --card-shadow: var(--shadow-xl, 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04));
+}
+
+.ui-card--clickable {
+    cursor: pointer;
+    user-select: none;
+}
+
+.ui-card--clickable:focus-visible {
+    outline: 2px solid var(--primary, #3b82f6);
+    outline-offset: 3px;
+}
+
+.ui-card--disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    user-select: none;
+}
+
+.ui-card--selected {
+    --card-border-color: var(--primary, #3b82f6);
+    box-shadow: 0 0 0 1px var(--primary, #3b82f6);
+}
+
+.ui-card--active {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary, #3b82f6) 40%, transparent);
+}
+
+.ui-card--loading {
+    pointer-events: none;
+    position: relative;
+}
+
+/* Opcional: Adiciona um overlay de loading suave sem quebrar o layout */
+.ui-card--loading::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: color-mix(in srgb, var(--card-bg) 60%, transparent);
+    z-index: 5;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Layout Compartimentado (Header, Body, Footer)
+|--------------------------------------------------------------------------
+*/
+
+/* --- HEADER --- */
+.ui-card-header {
+    display: flex;
+    align-items: flex-start; /* Alinhamento ao topo previne problemas se houver múltiplas linhas */
+    justify-content: space-between;
+    gap: var(--card-gap);
+    padding: var(--card-padding) var(--card-padding) 0; /* Sem padding inferior para evitar espaço duplo */
+}
+
+.ui-card-header--border {
+    padding-bottom: var(--card-padding);
+    border-bottom: 1px solid var(--card-border-color);
+}
+
+/* --- BODY --- */
+.ui-card-body {
+    flex: 1;
+    padding: var(--card-padding);
+}
+
+/* ARQUITETURA DE PADDING INTELIGENTE:
+   Se o header anterior NÃO tiver borda, reduzimos o padding superior do body
+   para manter o espaçamento visual perfeito.
+*/
+.ui-card-header:not(.ui-card-header--border) + .ui-card-body {
+    padding-top: calc(var(--card-padding) * 0.5);
+}
+
+.ui-card-body--scrollable {
+    overflow-y: auto;
+    max-height: 350px; /* Previne layouts infinitos */
+}
+
+.ui-card-body--flush {
+    padding: 0 !important;
+}
+
+/* --- FOOTER --- */
+.ui-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--card-gap);
+    padding: 0 var(--card-padding) var(--card-padding); /* Padding invertido para alinhar no fundo */
+}
+
+.ui-card-footer--border {
+    padding-top: var(--card-padding);
+    border-top: 1px solid var(--card-border-color);
+}
+
+/* Se existir um body antes de um footer com borda, desativamos o reset de padding */
+.ui-card-body + .ui-card-footer--border {
+    padding-top: var(--card-padding);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Internal Elements (Title, Subtitle, Actions, Icons)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-title {
+    margin: 0;
+    font-size: var(--text-lg, 18px);
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--card-text-primary);
+}
+
+/* Adaptador para quando o título estiver em cartões com gradiente escuro */
+.ui-card--gradient .ui-card-title {
+    color: #ffffff;
+}
+
+.ui-card-subtitle {
+    margin: 4px 0 0 0;
+    font-size: var(--text-sm, 14px);
+    font-weight: 400;
+    color: var(--card-text-secondary);
+}
+
+.ui-card-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm, 8px); /* Gap padrão resiliente */
+}
+
+/* Overrides opcionais de gap para actions */
+.ui-card-actions--gap-xs { gap: var(--space-xs, 4px); }
+.ui-card-actions--gap-sm { gap: var(--space-sm, 8px); }
+.ui-card-actions--gap-md { gap: var(--space-md, 16px); }
+
+.ui-card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--primary, #3b82f6);
+}
+
+/* Tamanhos de Ícone usando CSS variables adaptativas */
+.ui-card-icon--sm { width: 32px; height: 32px; font-size: 16px; }
+.ui-card-icon--md { width: 40px; height: 40px; font-size: 20px; }
+.ui-card-icon--lg { width: 48px; height: 48px; font-size: 24px; }
+
+.ui-card-icon svg {
+    width: 1.25em;
+    height: 1.25em;
+    fill: currentColor;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Skeleton Loading (Efeito Shimmer Premium)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-skeleton {
+    padding: var(--card-padding);
+    display: flex;
+    flex-direction: column;
+    gap: var(--card-gap);
+}
+
+.ui-card-skeleton__icon,
+.ui-card-skeleton__title,
+.ui-card-skeleton__subtitle,
+.ui-card-skeleton__line,
+.ui-card-skeleton__footer {
+    /* Gradiente que se move para criar o reflexo de luz shimmer */
+    background: linear-gradient(
+        90deg,
+        var(--skeleton, #f3f4f6) 25%,
+        color-mix(in srgb, var(--skeleton, #f3f4f6) 40%, #ffffff) 50%,
+        var(--skeleton, #f3f4f6) 75%
+    );
+    background-size: 200% 100%;
+    border-radius: var(--radius-md, 6px);
+    animation: ui-skeleton-shimmer 1.6s infinite linear;
+}
+
+.ui-card-skeleton__icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.ui-card-skeleton__title {
+    width: 60%;
+    height: 18px;
+}
+
+.ui-card-skeleton__subtitle {
+    width: 40%;
+    height: 12px;
+}
+
+.ui-card-skeleton__line {
+    height: 14px;
+    width: 100%;
+}
+
+.ui-card-skeleton__footer {
+    height: 24px;
+    width: 100%;
+    margin-top: auto; /* Empurra o footer do skeleton para o fundo */
+}
+
+/* Animação ultra suave de deslocamento de gradiente */
+@keyframes ui-skeleton-shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* Acessibilidade: Respeito pelas preferências do utilizador */
+@media (prefers-reduced-motion: reduce) {
+    .ui-card,
+    .ui-card-skeleton__icon,
+    .ui-card-skeleton__title,
+    .ui-card-skeleton__subtitle,
+    .ui-card-skeleton__line,
+    .ui-card-skeleton__footer {
+        transition: none;
+        animation: none;
+        background: var(--skeleton, #f3f4f6); /* Estático para evitar tonturas */
+    }
+    .ui-card--hoverable:hover {
+        transform: none;
+    }
+}
+
+/* ==========================================================
+   Compatibilidade (Legacy)
+========================================================== */
+
+.card {
+    display: flex;
+    flex-direction: column;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        transform .25s,
+        box-shadow .25s,
+        border-color .2s;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}

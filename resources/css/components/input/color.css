@@ -1,0 +1,269 @@
+/*
+|--------------------------------------------------------------------------
+| Color Input Component
+|--------------------------------------------------------------------------
+| Design System:
+| • Light / Dark Mode Friendly
+| • Accessible Keyboard Focus (WCAG 2.2)
+| • Cross-browser Native Picker styling (Chrome/Safari/Firefox)
+| • Forced Colors Mode compatible
+|--------------------------------------------------------------------------
+*/
+
+.ui-color {
+    /* Design Tokens Locais com Fallbacks Seguros */
+    --color-primary: var(--primary, #3b82f6);
+    --color-primary-light: var(--primary-light, rgba(59, 130, 246, 0.15));
+    --color-border: var(--border-color, #d1d5db);
+    --color-border-hover: var(--primary, #3b82f6);
+    --color-surface: var(--surface, #ffffff);
+    --color-text-primary: var(--text-primary, #111827);
+    --color-text-secondary: var(--text-secondary, #6b7280);
+    --color-danger: var(--danger, #ef4444);
+
+    --space-xs: var(--space-xs, 4px);
+    --space-sm: var(--space-sm, 8px);
+    --space-md: var(--space-md, 12px);
+    --radius-md: var(--radius-md, 8px);
+    --text-sm: var(--text-sm, 14px);
+    --text-xs: var(--text-xs, 12px);
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Label
+|--------------------------------------------------------------------------
+*/
+
+.ui-color__label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    line-height: 1.4;
+}
+
+/* Indicador de campo obrigatório */
+.ui-color__label span,
+.ui-color__label-required {
+    color: var(--color-danger);
+    font-weight: bold;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Wrapper
+|--------------------------------------------------------------------------
+*/
+
+.ui-color__wrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    width: 100%;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Preview (Padrão de Xadrez Premium para contraste/transparência)
+|--------------------------------------------------------------------------
+*/
+
+.ui-color__preview {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm, 0 1px 2px 0 rgba(0, 0, 0, 0.05));
+    box-sizing: border-box;
+
+    /* Padrão Xadrez (Checkerboard) com conic-gradient ultra moderno */
+    background-image: conic-gradient(#e5e7eb 25%, #ffffff 0 50%, #e5e7eb 0 75%, #ffffff 0);
+    background-size: 12px 12px;
+    overflow: hidden;
+}
+
+/* Camada superior que recebe a cor real */
+.ui-color__preview-fill {
+    position: absolute;
+    inset: 0;
+    background-color: var(--selected-color, transparent);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08); /* Evita que cores brancas se fundam com a borda */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Native Picker (Cross-Browser Normalization)
+|--------------------------------------------------------------------------
+*/
+
+.ui-color__picker {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    flex-shrink: 0;
+    box-sizing: border-box;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background-image: conic-gradient(#e5e7eb 25%, #ffffff 0 50%, #e5e7eb 0 75%, #ffffff 0);
+    background-size: 10px 10px;
+
+    cursor: pointer;
+    overflow: hidden; /* Garante que o swatch interno obedeça ao border-radius */
+    outline: none;
+
+    transition:
+        border-color 0.15s ease,
+        transform 0.1s ease,
+        box-shadow 0.15s ease;
+}
+
+/* Reset de pseudo-elementos - Google Chrome, Safari, Edge */
+.ui-color__picker::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.ui-color__picker::-webkit-color-swatch {
+    border: none;
+    background-color: transparent; /* Permite ver o padrão de xadrez por trás se necessário */
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+/* Reset de pseudo-elementos - Mozilla Firefox */
+.ui-color__picker::-moz-color-swatch {
+    border: none;
+    background-color: transparent;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+/* Estados interativos do Picker */
+.ui-color__picker:hover:not(:disabled) {
+    border-color: var(--color-border-hover);
+    transform: scale(1.04);
+}
+
+.ui-color__picker:active:not(:disabled) {
+    transform: scale(0.96);
+}
+
+.ui-color__picker:focus-visible {
+    box-shadow:
+        0 0 0 2px var(--color-surface),
+        0 0 0 4px var(--color-primary);
+}
+
+/*
+|--------------------------------------------------------------------------
+| HEX Input
+|--------------------------------------------------------------------------
+*/
+
+.ui-color__value {
+    flex: 1;
+    min-height: 44px;
+    padding: 0 var(--space-md);
+    box-sizing: border-box;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    color: var(--color-text-primary);
+
+    /* Font-family com fallback robusto para garantir espaçamento fixo de caracteres */
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: var(--text-sm);
+    text-transform: uppercase;
+
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease,
+        background-color 0.15s ease;
+}
+
+.ui-color__value:hover:not(:disabled) {
+    border-color: var(--color-border-hover);
+}
+
+.ui-color__value:focus-visible {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow:
+        0 0 0 2px var(--color-surface),
+        0 0 0 4px var(--color-primary-light);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Hint / Feedback adicional
+|--------------------------------------------------------------------------
+*/
+
+.ui-color__hint {
+    margin: 0;
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+    line-height: 1.4;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Validation State - Invalid (Fácil integração com forms)
+|--------------------------------------------------------------------------
+*/
+
+.ui-color--invalid {
+    --color-primary: var(--color-danger);
+    --color-primary-light: rgba(239, 68, 68, 0.15);
+    --color-border: var(--color-danger);
+    --color-border-hover: color-mix(in srgb, var(--color-danger) 80%, #000);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Disabled (Propagation via CSS :has)
+|--------------------------------------------------------------------------
+*/
+
+/* Aplica opacidade a todo o componente se algum dos inputs estiver disabled */
+.ui-color:has(.ui-color__picker:disabled),
+.ui-color:has(.ui-color__value:disabled),
+.ui-color--disabled {
+    opacity: 0.55;
+    pointer-events: none; /* Previne qualquer hover ou clique de forma segura */
+    cursor: not-allowed;
+}
+
+.ui-color__picker:disabled,
+.ui-color__value:disabled {
+    cursor: not-allowed;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Suporte para Modo de Alto Contraste (Windows Forced Colors - WCAG AAA)
+|--------------------------------------------------------------------------
+*/
+
+@media (forced-colors: active) {
+    .ui-color__picker,
+    .ui-color__value {
+        border: 2px solid ButtonText !important;
+    }
+
+    .ui-color__picker:focus-visible,
+    .ui-color__value:focus-visible {
+        outline: 2px dashed Highlight !important;
+    }
+}

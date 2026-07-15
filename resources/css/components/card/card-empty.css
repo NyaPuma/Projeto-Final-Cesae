@@ -1,0 +1,180 @@
+/*
+|--------------------------------------------------------------------------
+| Card Empty State Component
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-empty {
+    /* Variáveis padrão de controlo (Customizer) */
+    --empty-min-height: 240px;
+    --empty-padding: var(--space-xl, 32px);
+
+    --empty-icon-size: 64px; /* Ligeiramente maior para melhor balanço ótico */
+    --empty-icon-bg: var(--surface-hover, #f8f9fa);
+    --empty-icon-border: var(--border-color, #e9ecef);
+    --empty-icon-color: var(--text-secondary, #495057);
+
+    --empty-title-color: var(--text-primary, #212529);
+    --empty-desc-color: var(--text-secondary, #6c757d);
+    --empty-desc-max-width: 420px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    padding: var(--empty-padding);
+    min-height: var(--empty-min-height);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Sizes (Compacto vs. Espaçoso)
+|--------------------------------------------------------------------------
+*/
+
+/* Ideal para tabelas vazias, painéis pequenos ou sidebars */
+.ui-card-empty--sm {
+    --empty-min-height: 160px;
+    --empty-padding: var(--space-md, 16px);
+    --empty-icon-size: 48px;
+    --empty-desc-max-width: 320px;
+}
+
+/* Ideal para ecrãs inteiros vazios (Full Screen Empty States) */
+.ui-card-empty--lg {
+    --empty-min-height: 380px;
+    --empty-padding: calc(var(--space-xl, 32px) * 1.5);
+    --empty-icon-size: 80px;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Design Value-Add: Horizontal Layout (Excelente para listas horizontais)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-empty--horizontal {
+    flex-direction: row;
+    text-align: start;
+    justify-content: flex-start;
+    align-items: center;
+    gap: var(--space-lg, 24px);
+    --empty-min-height: auto;
+}
+
+/* Ajustes automáticos de margem no layout horizontal */
+.ui-card-empty--horizontal .ui-card-empty__icon {
+    margin-bottom: 0; /* Remove a margem inferior para alinhar lado a lado */
+}
+
+.ui-card-empty--horizontal .ui-card-empty__content {
+    flex: 1;
+}
+
+.ui-card-empty--horizontal .ui-card-empty__action {
+    margin-top: 0;
+    margin-inline-start: auto; /* Empurra o botão de ação para a extrema direita */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Icon Container (Com efeito Premium de flutuação e contorno)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-empty__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    width: var(--empty-icon-size);
+    height: var(--empty-icon-size);
+    margin-bottom: var(--space-md, 16px);
+    border-radius: var(--radius-full, 9999px);
+
+    background-color: var(--empty-icon-bg);
+    color: var(--empty-icon-color);
+    border: 1px solid var(--empty-icon-border);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+
+    /* Ativação da animação de flutuação suave */
+    animation: ui-empty-float 5s ease-in-out infinite;
+    will-change: transform;
+}
+
+/* Garante que qualquer SVG lá dentro herda o tamanho correto */
+.ui-card-empty__icon svg {
+    width: 40%;
+    height: 40%;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5; /* Traço fino e elegante (estilo heroicons/lucide) */
+}
+
+/* Animação Física de flutuação de gravidade */
+@keyframes ui-empty-float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-6px); /* Sobe suavemente 6px */
+    }
+}
+
+/* Desativa animações se o utilizador preferir acessibilidade sem movimento */
+@media (prefers-reduced-motion: reduce) {
+    .ui-card-empty__icon {
+        animation: none;
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Text Content
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-empty__content {
+    display: flex;
+    flex-direction: column;
+    align-items: inherit; /* Mantém o alinhamento centralizado ou à esquerda */
+}
+
+.ui-card-empty__title {
+    margin: 0;
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--empty-title-color);
+    line-height: 1.3;
+}
+
+/* Seletor irmão para ajustar título nos tamanhos compactos */
+.ui-card-empty--sm .ui-card-empty__title {
+    font-size: var(--text-md);
+}
+
+.ui-card-empty__description {
+    max-width: var(--empty-desc-max-width);
+    margin-block-start: var(--space-xs, 8px);
+    margin-block-end: 0;
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    color: var(--empty-desc-color);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Action Area
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-empty__action {
+    margin-top: var(--space-lg, 24px);
+    display: inline-flex;
+    gap: var(--space-sm, 12px);
+}

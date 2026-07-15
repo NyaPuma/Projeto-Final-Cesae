@@ -1,0 +1,50 @@
+/*
+|--------------------------------------------------------------------------
+| Design System: Shadow Scale
+|--------------------------------------------------------------------------
+|
+| Otimizado para suporte a temas (Light/Dark).
+| Não utilizar box-shadow diretamente. Utilizar estas variáveis.
+|
+*/
+
+:root {
+  /* Base de cores das sombras (RGB)
+     Definimos apenas os valores numéricos para usar com rgba()
+  */
+  --shadow-base-rgb: 15 23 42;
+  --shadow-focus-rgb: 245 158 11;
+
+  /* Shadow Scale */
+  --shadow-none: none;
+  --shadow-xs: 0 1px 2px rgba(var(--shadow-base-rgb), 0.04);
+  --shadow-sm: 0 2px 6px rgba(var(--shadow-base-rgb), 0.06);
+  --shadow-md: 0 8px 24px rgba(var(--shadow-base-rgb), 0.08);
+  --shadow-lg: 0 16px 40px rgba(var(--shadow-base-rgb), 0.12);
+  --shadow-xl: 0 24px 60px rgba(var(--shadow-base-rgb), 0.16);
+  --shadow-floating: 0 20px 50px rgba(var(--shadow-base-rgb), 0.18);
+
+  /* Focus Ring */
+  --shadow-focus: 0 0 0 4px rgba(var(--shadow-focus-rgb), 0.15);
+}
+
+/* Dark Mode
+   Em vez de remover as sombras, alteramos a base da cor para preto puro
+   para garantir que o componente ganhe profundidade sobre o fundo escuro.
+*/
+.dark {
+  --shadow-base-rgb: 0 0 0;
+  --shadow-focus-rgb: 245 158 11;
+
+  /* Aumentamos ligeiramente a opacidade no Dark Mode
+     para as sombras serem visíveis contra fundos muito escuros.
+  */
+  --shadow-xs: 0 1px 2px rgba(var(--shadow-base-rgb), 0.15);
+  --shadow-sm: 0 2px 6px rgba(var(--shadow-base-rgb), 0.20);
+  --shadow-md: 0 8px 24px rgba(var(--shadow-base-rgb), 0.25);
+  --shadow-lg: 0 16px 40px rgba(var(--shadow-base-rgb), 0.30);
+  --shadow-xl: 0 24px 60px rgba(var(--shadow-base-rgb), 0.35);
+  --shadow-floating: 0 20px 50px rgba(var(--shadow-base-rgb), 0.40);
+
+  --shadow-focus: 0 0 0 4px rgba(var(--shadow-focus-rgb), 0.25);
+}

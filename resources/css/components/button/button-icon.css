@@ -1,0 +1,282 @@
+/*
+|--------------------------------------------------------------------------
+| Icon Button Component
+|--------------------------------------------------------------------------
+*/
+
+.ui-icon-button {
+    --icon-button-size: 44px;
+    --icon-button-font-size: 1.25rem; /* ~20px padrão */
+    --focus-ring-color: var(--primary-light); /* Cor do foco padrão */
+
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: var(--icon-button-size);
+    height: var(--icon-button-size);
+    padding: 0;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--text-primary);
+    font-size: var(--icon-button-font-size);
+    line-height: 1;
+    cursor: pointer;
+    text-decoration: none;
+
+    /* Hardware acceleration para animações fluidas */
+    will-change: transform, box-shadow;
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        color .2s ease,
+        transform .15s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow .15s cubic-bezier(0.4, 0, 0.2, 1),
+        filter .2s ease;
+}
+
+/* Hack de Acessibilidade (WCAG): Garante que a área de toque
+  seja de pelo menos 44px em dispositivos móveis, mesmo em botões pequenos.
+*/
+.ui-icon-button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    min-width: 100%;
+    min-height: 100%;
+    transform: translate(-50%, -50%);
+    border-radius: inherit;
+    pointer-events: auto;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Hover & Active States
+|--------------------------------------------------------------------------
+*/
+
+.ui-icon-button:hover {
+    transform: translateY(-1.5px);
+}
+
+.ui-icon-button:active {
+    transform: translateY(0.5px);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Focus
+|--------------------------------------------------------------------------
+*/
+
+.ui-icon-button:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--focus-ring-color);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Rounded Styles
+|--------------------------------------------------------------------------
+*/
+
+.ui-icon-button--rounded {
+    border-radius: 50%;
+}
+
+.ui-icon-button:not(.ui-icon-button--rounded) {
+    border-radius: var(--radius-md);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Sizes (Escala proporcional de botão e ícone)
+|--------------------------------------------------------------------------
+*/
+
+.ui-icon-button--xs {
+    --icon-button-size: 28px;
+    --icon-button-font-size: 0.875rem; /* ~14px */
+}
+
+.ui-icon-button--sm {
+    --icon-button-size: 36px;
+    --icon-button-font-size: 1.125rem; /* ~18px */
+}
+
+.ui-icon-button--md {
+    --icon-button-size: 44px;
+    --icon-button-font-size: 1.25rem;  /* ~20px */
+}
+
+.ui-icon-button--lg {
+    --icon-button-size: 52px;
+    --icon-button-font-size: 1.5rem;   /* ~24px */
+}
+
+.ui-icon-button--xl {
+    --icon-button-size: 60px;
+    --icon-button-font-size: 1.75rem;  /* ~28px */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Icon & Transitions
+|--------------------------------------------------------------------------
+*/
+
+.ui-icon-button__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity .2s ease, transform .2s ease;
+}
+
+.ui-icon-button__icon svg {
+    width: 1.2em;
+    height: 1.2em;
+    fill: currentColor;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Spinner (Com transições e posicionamento perfeito)
+|--------------------------------------------------------------------------
+*/
+
+.ui-icon-button__spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1.2em;
+    height: 1.2em;
+    margin-top: -0.6em; /* Centralização perfeita */
+    margin-left: -0.6em;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    opacity: 0;
+    transform: scale(0.6);
+    pointer-events: none;
+    transition: opacity .2s ease, transform .2s ease;
+}
+
+@keyframes ui-icon-button-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Loading State Handler
+|--------------------------------------------------------------------------
+*/
+
+.ui-icon-button.is-loading {
+    pointer-events: none; /* Bloqueia cliques adicionais */
+}
+
+.ui-icon-button.is-loading .ui-icon-button__icon {
+    opacity: 0;
+    transform: scale(0.7);
+}
+
+.ui-icon-button.is-loading .ui-icon-button__spinner {
+    opacity: 1;
+    transform: scale(1);
+    animation: ui-icon-button-spin .7s linear infinite;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Disabled
+|--------------------------------------------------------------------------
+*/
+
+.ui-icon-button--disabled,
+.ui-icon-button:disabled {
+    opacity: .5;
+    pointer-events: none;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Variants (Com suporte a Hovers automáticos e anéis de foco personalizados)
+|--------------------------------------------------------------------------
+*/
+
+/* Primary */
+.ui-icon-button--primary {
+    background: var(--primary);
+    color: var(--on-primary);
+}
+
+.ui-icon-button--primary:hover {
+    background: var(--primary-hover);
+}
+
+/* Secondary */
+.ui-icon-button--secondary {
+    background: var(--surface-secondary);
+    border-color: var(--border-color);
+}
+
+.ui-icon-button--secondary:hover {
+    background: var(--surface-hover);
+}
+
+/* Outline */
+.ui-icon-button--outline {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.ui-icon-button--outline:hover {
+    background: var(--primary-light);
+}
+
+/* Ghost */
+.ui-icon-button--ghost:hover {
+    background: var(--surface-hover);
+}
+
+/* Success */
+.ui-icon-button--success {
+    --focus-ring-color: rgba(var(--success-rgb, 46, 125, 50), 0.4);
+    background: var(--success);
+    color: #fff;
+}
+
+/* Warning */
+.ui-icon-button--warning {
+    --focus-ring-color: rgba(var(--warning-rgb, 239, 108, 0), 0.4);
+    background: var(--warning);
+    color: #fff;
+}
+
+/* Danger */
+.ui-icon-button--danger {
+    --focus-ring-color: rgba(var(--danger-rgb, 198, 40, 40), 0.4);
+    background: var(--danger);
+    color: #fff;
+}
+
+/* Filtro de brilho inteligente aplicado apenas às variantes de estado sólido no Hover/Active */
+.ui-icon-button--success:hover,
+.ui-icon-button--warning:hover,
+.ui-icon-button--danger:hover {
+    filter: brightness(1.08);
+}
+
+.ui-icon-button--success:active,
+.ui-icon-button--warning:active,
+.ui-icon-button--danger:active {
+    filter: brightness(0.93);
+}

@@ -1,0 +1,144 @@
+/*
+|--------------------------------------------------------------------------
+| Input Error Component (Otimizado)
+|--------------------------------------------------------------------------
+| • Light / Dark Mode Friendly
+| • Native CSS Nesting Architecture
+| • Subpixel Antialiasing Safe (No will-change font blur)
+| • WCAG 2.2 & High Contrast Compliant
+|--------------------------------------------------------------------------
+*/
+
+.ui-input-error {
+  /* Design Tokens Locais com Fallbacks Seguros */
+  --error-color: var(--danger, #ef4444);
+  --error-color-hover: var(--danger-hover, #dc2626);
+  --error-space-xs: var(--space-xs, 4px);
+  --error-font-size: var(--text-xs, 12px);
+  --error-line-height: 1.5;
+  --error-icon-size: 16px;
+
+  /* Curva de animação elástica (subtil "bounce" ao entrar) */
+  --error-transition: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  display: flex;
+  align-items: flex-start;
+  gap: var(--error-space-xs);
+  margin: 0;
+
+  /* Propriedade Lógica para espaçamento superior */
+  margin-block-start: var(--error-space-xs);
+
+  font-size: var(--error-font-size);
+  line-height: var(--error-line-height);
+  color: var(--error-color);
+
+  /* Ativação de animação suave (Sem will-change para evitar texto desfocado) */
+  animation: ui-input-error-fade var(--error-transition) forwards;
+
+  /*
+  |--------------------------------------------------------------------------
+  | Icon (Alinhamento dinâmico perfeito com a primeira linha de texto)
+  |--------------------------------------------------------------------------
+  */
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    width: var(--error-icon-size);
+    height: var(--error-icon-size);
+
+    /* Centra o ícone verticalmente baseando-se na altura da linha do texto */
+    margin-top: calc((var(--error-line-height) * 1em - var(--error-icon-size)) / 2);
+
+    svg {
+      width: 100%;
+      height: 100%;
+      stroke: currentColor;
+      display: block;
+      pointer-events: none; /* Evita interferências no clique */
+    }
+  }
+
+  /*
+  |--------------------------------------------------------------------------
+  | Text Content
+  |--------------------------------------------------------------------------
+  */
+  &__text {
+    flex: 1;
+    min-width: 0;
+    word-break: break-word; /* Proteção contra quebras de URLs e termos longos */
+  }
+
+  /*
+  |--------------------------------------------------------------------------
+  | Inline Links (Acessibilidade & Estilo Premium)
+  |--------------------------------------------------------------------------
+  */
+  & a {
+    color: inherit;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    border-radius: var(--radius-xs, 2px);
+
+    transition:
+      color var(--error-transition),
+      text-decoration-color var(--error-transition),
+      text-decoration-thickness var(--error-transition);
+
+    &:hover {
+      color: var(--error-color-hover);
+      text-decoration-thickness: 2px; /* Transição de espessura mais limpa que 'double' */
+    }
+
+    /* Foco WCAG 2.2 */
+    &:focus-visible {
+      outline: 2px solid var(--error-color);
+      outline-offset: 2px;
+    }
+  }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Animation
+|--------------------------------------------------------------------------
+*/
+@keyframes ui-input-error-fade {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Accessibility: Reduced Motion & High Contrast Mode
+|--------------------------------------------------------------------------
+*/
+@media (prefers-reduced-motion: reduce) {
+  .ui-input-error {
+    animation: none !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .ui-input-error {
+    & a {
+      outline: 1px solid transparent;
+
+      &:focus-visible {
+        outline: 2px dashed Highlight !important;
+      }
+    }
+  }
+}

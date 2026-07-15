@@ -1,0 +1,203 @@
+/*
+|--------------------------------------------------------------------------
+| Input Addon Component
+|--------------------------------------------------------------------------
+| Prefixo, sufixo e elementos auxiliares para Input Groups.
+|--------------------------------------------------------------------------
+*/
+
+.ui-input-addon {
+    /* Variáveis locais de controlo */
+    --addon-height: 44px;
+    --addon-padding: var(--space-md, 16px);
+    --addon-font-size: var(--text-sm, 14px);
+    --icon-size: 18px;
+
+    /* Tokens de cores padrão */
+    --addon-bg: var(--surface-secondary, #f9fafb);
+    --addon-color: var(--text-secondary, #4b5563);
+    --addon-border-color: var(--border-color, #e5e7eb);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-sizing: border-box;
+
+    min-height: var(--addon-height);
+    padding-inline: var(--addon-padding);
+    font-size: var(--addon-font-size);
+    font-weight: 500;
+    white-space: nowrap;
+    user-select: none;
+
+    background-color: var(--addon-bg);
+    color: var(--addon-color);
+    border: 1px solid var(--addon-border-color);
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Positions & Group Border-Collapse (Evita bordas duplas)
+|--------------------------------------------------------------------------
+*/
+
+.ui-input-addon--start {
+    border-top-left-radius: var(--radius-md, 6px);
+    border-bottom-left-radius: var(--radius-md, 6px);
+    border-right: none; /* Evita sobreposição de borda com o input à direita */
+}
+
+.ui-input-addon--end {
+    border-top-right-radius: var(--radius-md, 6px);
+    border-bottom-right-radius: var(--radius-md, 6px);
+    border-left: none; /* Evita sobreposição de borda com o input à esquerda */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Sizes (Escala sincronizada de altura, padding e tipografia)
+|--------------------------------------------------------------------------
+*/
+
+.ui-input-addon--sm {
+    --addon-height: 36px;
+    --addon-padding: var(--space-sm, 12px);
+    --addon-font-size: var(--text-xs, 12px);
+    --icon-size: 14px;
+}
+
+.ui-input-addon--md {
+    --addon-height: 44px;
+    --addon-padding: var(--space-md, 16px);
+    --addon-font-size: var(--text-sm, 14px);
+    --icon-size: 18px;
+}
+
+.ui-input-addon--lg {
+    --addon-height: 52px;
+    --addon-padding: var(--space-lg, 20px);
+    --addon-font-size: var(--text-md, 16px);
+    --icon-size: 20px;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Variants (DRY: Redefinição semântica de cores de estado)
+|--------------------------------------------------------------------------
+*/
+
+.ui-input-addon--default {
+    --addon-bg: var(--surface-secondary, #f9fafb);
+    --addon-color: var(--text-secondary, #4b5563);
+}
+
+.ui-input-addon--primary {
+    --addon-bg: var(--primary-light, #eff6ff);
+    --addon-color: var(--primary, #3b82f6);
+    --addon-border-color: var(--primary, #3b82f6);
+}
+
+.ui-input-addon--success {
+    --addon-bg: var(--success-light, #f0fdf4);
+    --addon-color: var(--success, #10b981);
+    --addon-border-color: var(--success, #10b981);
+}
+
+.ui-input-addon--warning {
+    --addon-bg: var(--warning-light, #fffbeb);
+    --addon-color: var(--warning, #f59e0b);
+    --addon-border-color: var(--warning, #f59e0b);
+}
+
+.ui-input-addon--danger {
+    --addon-bg: var(--danger-light, #fef2f2);
+    --addon-color: var(--danger, #ef4444);
+    --addon-border-color: var(--danger, #ef4444);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Interactive Addons (Botões, Links de Ação)
+|--------------------------------------------------------------------------
+*/
+
+button.ui-input-addon,
+a.ui-input-addon {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/* Hover inteligente baseado na variante ativa */
+button.ui-input-addon:hover,
+a.ui-input-addon:hover {
+    --addon-bg: var(--surface-hover, #f3f4f6);
+    --addon-color: var(--text-primary, #111827);
+}
+
+/* Overrides de Hover para variantes semânticas */
+button.ui-input-addon--primary:hover,
+a.ui-input-addon--primary:hover {
+    --addon-bg: color-mix(in srgb, var(--primary, #3b82f6) 15%, #ffffff);
+}
+
+button.ui-input-addon--success:hover,
+a.ui-input-addon--success:hover {
+    --addon-bg: color-mix(in srgb, var(--success, #10b981) 15%, #ffffff);
+}
+
+button.ui-input-addon--warning:hover,
+a.ui-input-addon--warning:hover {
+    --addon-bg: color-mix(in srgb, var(--warning, #f59e0b) 15%, #ffffff);
+}
+
+button.ui-input-addon--danger:hover,
+a.ui-input-addon--danger:hover {
+    --addon-bg: color-mix(in srgb, var(--danger, #ef4444) 15%, #ffffff);
+}
+
+/* Estado de foco visível para acessibilidade no teclado */
+button.ui-input-addon:focus-visible,
+a.ui-input-addon:focus-visible {
+    outline: 2px solid var(--primary, #3b82f6);
+    outline-offset: -2px;
+    z-index: 2; /* Garante que o outline fica por cima do input vizinho */
+}
+
+/*
+|--------------------------------------------------------------------------
+| SVG & Media (Ícones internos)
+|--------------------------------------------------------------------------
+*/
+
+.ui-input-addon svg {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    display: block;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Disabled State
+|--------------------------------------------------------------------------
+*/
+
+/* Suporta tanto a classe dedicada como seletores modernos ':has' */
+.ui-input-addon:has(:disabled),
+.ui-input-addon--disabled {
+    opacity: 0.6;
+    pointer-events: none !important;
+    cursor: not-allowed;
+    background-color: var(--surface-disabled, #f3f4f6);
+    border-color: var(--border-disabled, #e5e7eb);
+    color: var(--text-disabled, #9ca3af);
+}

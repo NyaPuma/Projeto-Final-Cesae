@@ -1,0 +1,295 @@
+/*
+|--------------------------------------------------------------------------
+| Number Input Component (Otimizado)
+|--------------------------------------------------------------------------
+| • Fully responsive and mobile-optimized (44px tap targets)
+| • CSS Variables-driven for painless customization
+| • RTL/LTR support out-of-the-box via Logical Properties
+| • Overlapping border bug fixed with context-aware z-indexing
+| • WCAG 2.2 Compliant Focus Indicators & Forced Colors Mode
+| • No-gap micro-interactions (scales internal icons only)
+|--------------------------------------------------------------------------
+*/
+
+.ui-number {
+  /* Design Tokens Locais */
+  --ui-number-height: 2.75rem; /* ~44px para excelente acessibilidade ao toque */
+  --ui-number-radius: var(--radius-md, 8px);
+  --ui-number-border: var(--border-color, #d1d5db);
+  --ui-number-border-hover: var(--border-hover, #9ca3af);
+  --ui-number-border-focus: var(--primary, #2563eb); /* Contraste WCAG 2.2 melhorado */
+  --ui-number-ring-focus: var(--primary-light, rgba(37, 99, 235, 0.15));
+  --ui-number-bg-input: var(--surface, #ffffff);
+  --ui-number-bg-btn: var(--surface-secondary, #f3f4f6);
+  --ui-number-bg-btn-hover: var(--surface-hover, #e5e7eb);
+  --ui-number-bg-btn-active: #d1d5db;
+  --ui-number-text: var(--text-primary, #111827);
+  --ui-number-text-muted: var(--text-secondary, #6b7280);
+  --ui-number-transition: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm, 0.5rem);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Label
+|--------------------------------------------------------------------------
+*/
+.ui-number__label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs, 0.25rem);
+  font-size: var(--text-sm, 0.875rem);
+  font-weight: 600;
+  color: var(--ui-number-text);
+  user-select: none;
+}
+
+.ui-number__label span {
+  color: var(--danger, #dc2626);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Wrapper & Border Overlap Management
+|--------------------------------------------------------------------------
+*/
+.ui-number__wrapper {
+  display: flex;
+  align-items: stretch; /* Garante que os botões e o input têm rigorosamente a mesma altura */
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Input
+|--------------------------------------------------------------------------
+*/
+.ui-number__input {
+  flex: 1;
+  min-width: 0; /* Previne quebras e overflows em ecrãs muito pequenos */
+  height: var(--ui-number-height);
+  padding-inline: var(--space-md, 1rem);
+  border: 1px solid var(--ui-number-border);
+  border-radius: 0; /* Reseta cantos arredondados nativos do iOS/Safari */
+  background: var(--ui-number-bg-input);
+  color: var(--ui-number-text);
+  text-align: center;
+  font-family: inherit;
+  font-size: var(--text-sm, 0.875rem);
+  font-weight: 500;
+
+  /* Força números com largura uniforme para evitar que o cursor ou texto tremam */
+  font-variant-numeric: tabular-nums;
+
+  /* Puxa as laterais em -1px para fundir perfeitamente as bordas com os botões */
+  margin-inline: -1px;
+  position: relative;
+  z-index: 1; /* Mantém-se acima das bordas padrão dos botões inativos */
+
+  transition:
+    border-color var(--ui-number-transition),
+    box-shadow var(--ui-number-transition),
+    background var(--ui-number-transition);
+}
+
+.ui-number__input:hover:not(:disabled) {
+  border-color: var(--ui-number-border-hover);
+  z-index: 2; /* Sobrepõe a borda do input à dos botões no hover */
+}
+
+.ui-number__input:focus {
+  outline: none;
+  border-color: var(--ui-number-border-focus);
+  box-shadow:
+    0 0 0 1px var(--ui-number-border-focus),
+    0 0 0 4px var(--ui-number-ring-focus);
+  z-index: 3; /* Traz a borda e o anel de foco para a camada visual de topo */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Buttons (Increment / Decrement)
+|--------------------------------------------------------------------------
+*/
+.ui-number__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--ui-number-height);
+  height: var(--ui-number-height);
+  flex-shrink: 0;
+
+  border: 1px solid var(--ui-number-border);
+  background: var(--ui-number-bg-btn);
+  color: var(--ui-number-text);
+  font-family: inherit;
+  font-size: var(--text-lg, 1.125rem);
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+
+  position: relative;
+  z-index: 0;
+
+  transition:
+    background var(--ui-number-transition),
+    border-color var(--ui-number-transition);
+}
+
+/* Prepara os ícones/conteúdo interno dos botões para transições táteis */
+.ui-number__button > * {
+  display: inline-block;
+  will-change: transform;
+  transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ui-number__button:hover:not(:disabled) {
+  background: var(--ui-number-bg-btn-hover);
+  border-color: var(--ui-number-border-hover);
+  z-index: 2; /* Sobrepõe-se à borda do input inativo */
+}
+
+/* Micro-interação tátil premium: encolhe apenas o ícone, preservando a borda externa intacta */
+.ui-number__button:active:not(:disabled) {
+  background: var(--ui-number-bg-btn-active);
+}
+
+.ui-number__button:active:not(:disabled) > * {
+  transform: scale(0.82);
+}
+
+.ui-number__button:focus-visible {
+  outline: none;
+  border-color: var(--ui-number-border-focus);
+  box-shadow:
+    0 0 0 1px var(--ui-number-border-focus),
+    0 0 0 4px var(--ui-number-ring-focus);
+  z-index: 3;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Cantos Arredondados Lógicos (Suporte RTL/LTR Automático)
+|--------------------------------------------------------------------------
+*/
+.ui-number__wrapper > .ui-number__button:first-child {
+  border-start-start-radius: var(--ui-number-radius);
+  border-end-start-radius: var(--ui-number-radius);
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}
+
+.ui-number__wrapper > .ui-number__button:last-child {
+  border-start-end-radius: var(--ui-number-radius);
+  border-end-end-radius: var(--ui-number-radius);
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Estados: Erro
+|--------------------------------------------------------------------------
+*/
+.ui-number--error {
+  --ui-number-border: var(--danger, #dc2626);
+  --ui-number-border-hover: var(--danger-hover, #b91c1c);
+  --ui-number-border-focus: var(--danger, #dc2626);
+  --ui-number-ring-focus: var(--danger-light, rgba(220, 38, 38, 0.15));
+}
+
+/* Suporte legado se a classe de erro for aplicada diretamente no input */
+.ui-number__input--error {
+  border-color: var(--danger, #dc2626);
+}
+.ui-number__input--error:focus {
+  box-shadow:
+    0 0 0 1px var(--danger, #dc2626),
+    0 0 0 4px var(--danger-light, rgba(220, 38, 38, 0.15));
+}
+
+/*
+|--------------------------------------------------------------------------
+| Estados: Desativado (Disabled via :has() Smart Cascade)
+|--------------------------------------------------------------------------
+*/
+.ui-number:has(.ui-number__input:disabled) {
+  opacity: 0.55;
+}
+
+.ui-number__input:disabled,
+.ui-number__button:disabled {
+  cursor: not-allowed;
+  background: var(--surface-disabled, #f9fafb);
+  color: var(--text-disabled, #9ca3af);
+  border-color: var(--border-disabled, #e5e7eb);
+  pointer-events: none; /* Bloqueia todos os cliques, hovers e interações físicas */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Hint / Error Typography
+|--------------------------------------------------------------------------
+*/
+.ui-number__hint,
+.ui-number__error {
+  margin: 0;
+  font-size: var(--text-xs, 0.75rem);
+  line-height: 1.4;
+}
+
+.ui-number__hint {
+  color: var(--ui-number-text-muted);
+}
+
+.ui-number__error {
+  color: var(--danger, #dc2626);
+  font-weight: 500;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Acessibilidade: Modo de Cores Forçadas (High Contrast)
+|--------------------------------------------------------------------------
+*/
+@media (forced-colors: active) {
+  .ui-number__input:focus,
+  .ui-number__button:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: -2px; /* Mantém o contorno perfeitamente contido */
+  }
+
+  .ui-number__button:disabled,
+  .ui-number__input:disabled {
+    color: GrayText;
+    border-color: GrayText;
+  }
+
+  .ui-number:has(.ui-number__input:disabled) {
+    opacity: 1; /* Evita que o modo de alto contraste perca legibilidade por opacidades */
+  }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Acessibilidade: Movimento Reduzido (Reduced Motion)
+|--------------------------------------------------------------------------
+*/
+@media (prefers-reduced-motion: reduce) {
+  .ui-number__button,
+  .ui-number__button > *,
+  .ui-number__input {
+    transition: none !important;
+  }
+
+  .ui-number__button:active:not(:disabled) > * {
+    transform: none !important; /* Desativa a escala interna do ícone */
+  }
+}

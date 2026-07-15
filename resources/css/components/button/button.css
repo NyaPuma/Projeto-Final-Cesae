@@ -1,0 +1,306 @@
+/*
+|--------------------------------------------------------------------------
+| Button Component
+|--------------------------------------------------------------------------
+*/
+
+.ui-button {
+    --button-height: 44px;
+    --button-padding-x: var(--space-lg);
+    --button-gap: var(--space-sm);
+    --button-radius: var(--radius-md);
+    --button-font-size: var(--text-sm);
+    --button-font-weight: 600;
+    --button-transition: .2s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Variáveis dinâmicas para variantes */
+    --button-bg: transparent;
+    --button-border: transparent;
+    --button-color: var(--text-primary);
+    --button-hover-bg: transparent;
+    --button-hover-border: transparent;
+    --button-hover-color: var(--text-primary);
+    --button-focus-ring: var(--primary-light);
+
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--button-gap);
+    min-height: var(--button-height);
+    padding-inline: var(--button-padding-x);
+    border: 1px solid var(--button-border);
+    border-radius: var(--button-radius);
+    background: var(--button-bg);
+    color: var(--button-color);
+    font-size: var(--button-font-size);
+    font-weight: var(--button-font-weight);
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+
+    will-change: transform, box-shadow;
+    transition:
+        background var(--button-transition),
+        border-color var(--button-transition),
+        color var(--button-transition),
+        box-shadow var(--button-transition),
+        transform .15s ease,
+        filter .2s ease;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Hover & Active (Feedback tátil realista)
+|--------------------------------------------------------------------------
+*/
+
+.ui-button:hover {
+    text-decoration: none;
+    background: var(--button-hover-bg);
+    border-color: var(--button-hover-border);
+    color: var(--button-hover-color);
+    transform: translateY(-1.5px);
+}
+
+.ui-button:active {
+    transform: translateY(0.5px); /* Efeito real de "afundar" ao clicar */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Focus
+|--------------------------------------------------------------------------
+*/
+
+.ui-button:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--button-focus-ring);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Disabled (Fix do bug do cursor)
+|--------------------------------------------------------------------------
+*/
+
+.ui-button:disabled,
+.ui-button--disabled {
+    opacity: .5;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* Garante que o hover de botões desativados não mude de cor nem faça animações */
+.ui-button:disabled:hover,
+.ui-button--disabled:hover {
+    background: var(--button-bg);
+    border-color: var(--button-border);
+    color: var(--button-color);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Full Width
+|--------------------------------------------------------------------------
+*/
+
+.ui-button--block {
+    display: flex;
+    width: 100%;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Rounded
+|--------------------------------------------------------------------------
+*/
+
+.ui-button--rounded {
+    border-radius: 999px;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Sizes
+|--------------------------------------------------------------------------
+*/
+
+.ui-button--xs {
+    --button-height: 30px;
+    --button-padding-x: var(--space-sm);
+    --button-font-size: var(--text-xs);
+}
+
+.ui-button--sm {
+    --button-height: 36px;
+    --button-padding-x: var(--space-md);
+    --button-font-size: var(--text-sm);
+}
+
+.ui-button--md {
+    --button-height: 44px;
+    --button-padding-x: var(--space-lg);
+    --button-font-size: var(--text-sm);
+}
+
+.ui-button--lg {
+    --button-height: 52px;
+    --button-padding-x: var(--space-xl);
+    --button-font-size: var(--text-md);
+}
+
+.ui-button--xl {
+    --button-height: 60px;
+    --button-padding-x: calc(var(--space-xl) + var(--space-sm));
+    --button-font-size: var(--text-lg);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Inner Elements & Loading States
+|--------------------------------------------------------------------------
+*/
+
+/* Transição suave para ocultar os elementos quando o botão entra em loading */
+.ui-button__icon,
+.ui-button__label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: opacity .2s ease, transform .2s ease;
+}
+
+.ui-button__icon svg {
+    width: 1.15em;
+    height: 1.15em;
+    fill: currentColor;
+}
+
+/* Spinner posicionado no centro absoluto para não alterar a largura do botão */
+.ui-button__spinner {
+    position: absolute;
+    top: calc(50% - 0.5em);
+    left: calc(50% - 0.5em);
+    width: 1em;
+    height: 1em;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    opacity: 0;
+    transform: scale(0.6);
+    pointer-events: none;
+    transition: opacity .2s ease, transform .2s ease;
+}
+
+@keyframes ui-button-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Comportamento de carregamento ativado por classe */
+.ui-button.is-loading {
+    pointer-events: none; /* Bloqueia cliques adicionais */
+}
+
+.ui-button.is-loading .ui-button__icon,
+.ui-button.is-loading .ui-button__label {
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.ui-button.is-loading .ui-button__spinner {
+    opacity: 1;
+    transform: scale(1);
+    animation: ui-button-spin .7s linear infinite;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Variants (Super limpas usando herança de variáveis CSS)
+|--------------------------------------------------------------------------
+*/
+
+/* Primary */
+.ui-button--primary {
+    --button-bg: var(--primary);
+    --button-border: var(--primary);
+    --button-color: var(--on-primary);
+    --button-hover-bg: var(--primary-hover);
+    --button-hover-border: var(--primary-hover);
+    --button-hover-color: var(--on-primary);
+}
+
+/* Secondary */
+.ui-button--secondary {
+    --button-bg: var(--surface-secondary);
+    --button-border: var(--border-color);
+    --button-color: var(--text-primary);
+    --button-hover-bg: var(--surface-hover);
+    --button-hover-border: var(--border-color);
+    --button-hover-color: var(--text-primary);
+    --button-focus-ring: var(--border-color);
+}
+
+/* Outline */
+.ui-button--outline {
+    --button-bg: transparent;
+    --button-border: var(--primary);
+    --button-color: var(--primary);
+    --button-hover-bg: var(--primary-light);
+    --button-hover-border: var(--primary);
+    --button-hover-color: var(--primary);
+}
+
+/* Ghost */
+.ui-button--ghost {
+    --button-bg: transparent;
+    --button-border: transparent;
+    --button-color: var(--text-primary);
+    --button-hover-bg: var(--surface-hover);
+    --button-hover-border: transparent;
+    --button-hover-color: var(--text-primary);
+}
+
+/* Success */
+.ui-button--success {
+    --button-bg: var(--success);
+    --button-border: var(--success);
+    --button-color: white;
+    --button-focus-ring: rgba(var(--success-rgb, 46, 125, 50), 0.4);
+}
+
+/* Warning */
+.ui-button--warning {
+    --button-bg: var(--warning);
+    --button-border: var(--warning);
+    --button-color: white;
+    --button-focus-ring: rgba(var(--warning-rgb, 239, 108, 0), 0.4);
+}
+
+/* Danger */
+.ui-button--danger {
+    --button-bg: var(--danger);
+    --button-border: var(--danger);
+    --button-color: white;
+    --button-focus-ring: rgba(var(--danger-rgb, 198, 40, 40), 0.4);
+}
+
+/* Efeito dinâmico de hover para as variantes semáforas (Success, Warning, Danger) */
+.ui-button--success:hover,
+.ui-button--warning:hover,
+.ui-button--danger:hover {
+    filter: brightness(1.08);
+}
+
+.ui-button--success:active,
+.ui-button--warning:active,
+.ui-button--danger:active {
+    filter: brightness(0.93);
+}

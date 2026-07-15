@@ -1,0 +1,172 @@
+/*
+|--------------------------------------------------------------------------
+| Button Dropdown Component
+|--------------------------------------------------------------------------
+*/
+
+.ui-button-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Trigger
+|--------------------------------------------------------------------------
+*/
+
+.ui-button-dropdown__trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    min-height: 44px;
+    padding-inline: var(--space-lg);
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    background: var(--primary);
+    color: var(--on-primary);
+    font: inherit;
+    cursor: pointer;
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.ui-button-dropdown__trigger:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.ui-button-dropdown__trigger:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+/* Estado desativado nativo do botão trigger */
+.ui-button-dropdown__trigger:disabled,
+.ui-button-dropdown--disabled {
+    opacity: .6;
+    pointer-events: none;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Chevron
+|--------------------------------------------------------------------------
+*/
+
+.ui-button-dropdown__chevron {
+    width: 1rem;
+    height: 1rem;
+    transition: transform .2s ease;
+}
+
+/* Roda o chevron no Hover, Focus ou quando o Aria-Expanded for true */
+.ui-button-dropdown:hover .ui-button-dropdown__chevron,
+.ui-button-dropdown:focus-within .ui-button-dropdown__chevron,
+.ui-button-dropdown__trigger[aria-expanded="true"] .ui-button-dropdown__chevron {
+    transform: rotate(180deg);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Menu
+|--------------------------------------------------------------------------
+*/
+
+.ui-button-dropdown__menu {
+    position: absolute;
+    top: 100%; /* Encosta no limite inferior do botão */
+    margin-top: var(--space-sm); /* Cria o espaçamento visual */
+    min-width: 220px;
+    padding: var(--space-sm);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition:
+        opacity .2s ease,
+        visibility .2s ease,
+        transform .2s ease;
+    z-index: 100;
+}
+
+/* Ponte de Hover: Evita que o menu feche ao passar o rato
+  pelo espaço vazio entre o botão e o menu.
+*/
+.ui-button-dropdown__menu::before {
+    content: '';
+    position: absolute;
+    top: calc(-1 * var(--space-sm));
+    left: 0;
+    right: 0;
+    height: var(--space-sm);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Open States (CSS-only fallback e JS-friendly com ARIA)
+|--------------------------------------------------------------------------
+*/
+
+.ui-button-dropdown:hover .ui-button-dropdown__menu,
+.ui-button-dropdown:focus-within .ui-button-dropdown__menu,
+.ui-button-dropdown__trigger[aria-expanded="true"] + .ui-button-dropdown__menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Alignment (Logical Properties para suporte RTL/LTR)
+|--------------------------------------------------------------------------
+*/
+
+.ui-button-dropdown--left .ui-button-dropdown__menu {
+    inset-inline-start: 0;
+    inset-inline-end: auto;
+}
+
+.ui-button-dropdown--right .ui-button-dropdown__menu {
+    inset-inline-end: 0;
+    inset-inline-start: auto;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Menu Items
+|--------------------------------------------------------------------------
+*/
+
+.ui-button-dropdown__menu > * {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: background .2s ease, color .2s ease;
+
+    /* Resets para caso o item seja um <button> em vez de um <a> */
+    border: none;
+    background: transparent;
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+}
+
+/* Hover e Focus para navegação por teclado */
+.ui-button-dropdown__menu > *:hover,
+.ui-button-dropdown__menu > *:focus-visible {
+    background: var(--surface-hover);
+    outline: none;
+}

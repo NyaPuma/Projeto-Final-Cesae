@@ -1,0 +1,248 @@
+/*
+|--------------------------------------------------------------------------
+| Floating Label Input Component (Otimizado)
+|--------------------------------------------------------------------------
+| • Light / Dark Mode Friendly
+| • Safe-Height Centering (No layout shifts on error display)
+| • Native RTL Support (Logical transform-origin)
+| • Zero CSS Nesting leaks with Reactive Local Tokens
+|--------------------------------------------------------------------------
+*/
+
+.ui-floating {
+  /* Design Tokens Locais com Fallbacks Seguros */
+  --float-primary: var(--primary, #3b82f6);
+  --float-primary-light: var(--primary-light, rgba(59, 130, 246, 0.15));
+  --float-danger: var(--danger, #ef4444);
+  --float-danger-light: var(--danger-light, rgba(239, 68, 68, 0.15));
+  --float-success: var(--success, #10b981);
+  --float-success-light: var(--success-light, rgba(16, 185, 129, 0.15));
+  --float-border: var(--border-color, #d1d5db);
+  --float-border-hover: var(--border-hover, #9ca3af);
+  --float-surface: var(--surface, #ffffff);
+  --float-surface-disabled: var(--surface-disabled, #f3f4f6);
+
+  --float-text-primary: var(--text-primary, #111827);
+  --float-text-secondary: var(--text-secondary, #4b5563);
+  --float-text-muted: var(--text-muted, #9ca3af);
+
+  --float-space-xs: var(--space-xs, 4px);
+  --float-space-md: var(--space-md, 12px);
+  --float-radius-md: var(--radius-md, 8px);
+  --float-transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Controlo de Altura Estrito (Evita bugs com textos de erro) */
+  --ui-input-height: 56px;
+
+  /* Motores de Estado Reativos (Evita duplicação de seletores no CSS) */
+  --ui-input-border: var(--float-border);
+  --ui-input-shadow: 0 0 0 0 transparent;
+  --ui-label-color: var(--float-text-secondary);
+  --ui-label-bg: transparent; /* Transparente por padrão para não quebrar o visual interno */
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Input Field
+|--------------------------------------------------------------------------
+*/
+.ui-floating__input {
+  width: 100%;
+  min-height: var(--ui-input-height);
+
+  /* Propriedades lógicas para acomodar o texto abaixo da label flutuante */
+  padding-block-start: 1.625rem;
+  padding-block-end: 0.4rem;
+  padding-inline: var(--float-space-md);
+
+  border: 1px solid var(--ui-input-border);
+  border-radius: var(--float-radius-md);
+  background: var(--float-surface);
+  color: var(--float-text-primary);
+  font-size: var(--text-sm, 14px);
+  font-family: inherit;
+  box-sizing: border-box;
+  outline: none;
+
+  box-shadow: var(--ui-input-shadow);
+
+  transition:
+    border-color var(--float-transition),
+    box-shadow var(--float-transition),
+    background-color var(--float-transition);
+
+  /* Esconde o placeholder nativo sem quebrar a acessibilidade (ex: leitores de ecrã) */
+  &::placeholder {
+    color: transparent;
+    transition: color var(--float-transition);
+  }
+
+  /* Mostra o placeholder apenas quando o utilizador foca o campo */
+  &:focus::placeholder {
+    color: var(--float-text-muted);
+  }
+
+  &:hover:not(:disabled) {
+    --ui-input-border: var(--float-border-hover);
+  }
+
+  &:focus {
+    --ui-input-border: var(--float-primary);
+    --ui-label-focus-color: var(--float-primary); /* Força a cor ativa na label */
+    --ui-input-shadow:
+      0 0 0 2px var(--float-surface),
+      0 0 0 5px var(--float-primary-light);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: var(--float-surface-disabled);
+    --ui-input-border: var(--float-border);
+
+    /* A label do input desativado acompanha o estilo de forma harmoniosa */
+    & + .ui-floating__label {
+      --ui-label-color: var(--float-text-muted);
+      background: var(--float-surface-disabled);
+      cursor: not-allowed;
+      opacity: 0.8;
+    }
+  }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Label (Alinhamento Robusto & RTL Dinâmico)
+|--------------------------------------------------------------------------
+*/
+.ui-floating__label {
+  position: absolute;
+
+  /* Fix de Alinhamento Vertical Imune a alterações de altura do parent */
+  top: calc(var(--ui-input-height) / 2);
+  inset-inline-start: var(--float-space-md);
+
+  /* Posição inicial perfeitamente centrada verticalmente */
+  transform: translateY(-50%) scale(1);
+
+  padding-inline: 0.25rem;
+  background: var(--ui-label-bg);
+  color: var(--ui-label-focus-color, var(--ui-label-color));
+  font-size: var(--text-sm, 14px);
+  pointer-events: none;
+
+  /* Modern Logical Properties: Alinha a origem da escala em LTR e RTL nativamente */
+  transform-origin: inline-start center;
+
+  transition:
+    transform var(--float-transition),
+    color var(--float-transition),
+    background-color var(--float-transition);
+
+  span {
+    color: var(--float-danger);
+    font-weight: 600;
+    margin-inline-start: 2px;
+  }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Floating State (Apenas utiliza Transformações por GPU)
+|--------------------------------------------------------------------------
+*/
+.ui-floating__input:focus + .ui-floating__label,
+.ui-floating__input:not(:placeholder-shown) + .ui-floating__label,
+.ui-floating__input:autofill + .ui-floating__label,
+.ui-floating__input:-webkit-autofill + .ui-floating__label {
+  /* Move a label para a borda superior. Ativa o fundo apenas ao flutuar. */
+  transform: translateY(-1.75rem) scale(0.75);
+  --ui-label-bg: var(--float-surface);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Autofill Styling (Tratamento para inputs pré-preenchidos)
+|--------------------------------------------------------------------------
+*/
+.ui-floating__input:autofill,
+.ui-floating__input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px var(--float-surface) inset !important;
+  -webkit-text-fill-color: var(--float-text-primary) !important;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Semantics (Estados com Zero Duplicação de CSS)
+|--------------------------------------------------------------------------
+*/
+.ui-floating__input--error {
+  --ui-input-border: var(--float-danger);
+  --ui-label-color: var(--float-danger);
+  --ui-label-focus-color: var(--float-danger); /* Previne que o foco mude para azul */
+
+  &:focus {
+    --ui-input-border: var(--float-danger);
+    --ui-input-shadow:
+      0 0 0 2px var(--float-surface),
+      0 0 0 5px var(--float-danger-light);
+  }
+}
+
+.ui-floating__input--success {
+  --ui-input-border: var(--float-success);
+  --ui-label-color: var(--float-success);
+  --ui-label-focus-color: var(--float-success); /* Previne que o foco mude para azul */
+
+  &:focus {
+    --ui-input-border: var(--float-success);
+    --ui-input-shadow:
+      0 0 0 2px var(--float-surface),
+      0 0 0 5px var(--float-success-light);
+  }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Error Text
+|--------------------------------------------------------------------------
+*/
+.ui-floating__error {
+  margin: 0;
+  margin-block-start: var(--float-space-xs);
+  font-size: var(--text-xs, 12px);
+  color: var(--float-danger);
+  font-weight: 500;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Accessibility: Reduced Motion & High Contrast Mode
+|--------------------------------------------------------------------------
+*/
+@media (prefers-reduced-motion: reduce) {
+  .ui-floating__input,
+  .ui-floating__label {
+    transition: none !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .ui-floating__input:focus {
+    outline: 2px dashed Highlight !important;
+  }
+  .ui-floating__input--error {
+    border-color: Mark !important;
+  }
+  .ui-floating__label {
+    background: Canvas !important;
+    color: CanvasText !important;
+  }
+}

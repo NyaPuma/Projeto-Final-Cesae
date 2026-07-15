@@ -1,341 +1,917 @@
 @extends('layouts.layout')
 
 @section('content')
-<div class="max-w-7xl mx-auto py-2">
-    <div class="mb-8 flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-[var(--border)] bg-[var(--surface)]/70 px-6 py-4 shadow-sm backdrop-blur">
-        <div>
-            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--text-soft)]">Gestão de Avarias</p>
-            <h1 class="mt-2 text-2xl font-black tracking-tight">Centro de Controlo Operacional</h1>
-        </div>
-        <div class="flex items-center gap-3">
-            <button type="button" onclick="toggleLandingTheme()" class="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] text-sm shadow-sm transition hover:bg-[var(--surface-2)]" aria-label="Alternar tema">🌙</button>
-            <div id="landingAuthActions" class="flex items-center gap-3"></div>
-        </div>
-    </div>
 
-    <header class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 mb-12">
-        <div>
-            <span class="inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-amber-500/10 px-4 py-2 text-sm font-semibold text-amber-500">
-                <div class="h-2 w-2 rounded-full bg-amber-500 animate-pulse"></div>
-                Painel Principal
-            </span>
-            <h1 class="mt-6 text-5xl font-black tracking-tight">
-                Centro de Controlo
-            </h1>
-            <p class="mt-5 text-soft max-w-2xl leading-8">
-                Gerencie ocorrências, equipamentos, utilizadores, auditorias e operações da infraestrutura através de um único painel moderno.
-            </p>
-        </div>
-    </header>
+<div class="dashboard-page">
 
-    <section class="grid xl:grid-cols-4 gap-6 mb-10">
-        <div class="card p-6">
-            <div class="text-soft text-xs uppercase">
-                Tickets Abertos
-            </div>
-            <div class="mt-3 text-4xl font-black">
-                126
-            </div>
-            <div class="mt-2 text-green-500 text-sm">
-                ▲ +8 hoje
-            </div>
-        </div>
+    <div class="container mx-auto max-w-7xl px-6 py-8">
 
-        <div class="card p-6">
-            <div class="text-soft text-xs uppercase">
-                Equipamentos
-            </div>
-            <div class="mt-3 text-4xl font-black">
-                847
-            </div>
-            <div class="mt-2 text-soft text-sm">
-                Online
-            </div>
-        </div>
+        <header class="dashboard-header">
 
-        <div class="card p-6">
-            <div class="text-soft text-xs uppercase">
-                Utilizadores
-            </div>
-            <div class="mt-3 text-4xl font-black">
-                42
-            </div>
-            <div class="mt-2 text-soft text-sm">
-                Ativos
-            </div>
-        </div>
+            <div class="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
 
-        <div class="card p-6">
-            <div class="text-soft text-xs uppercase">
-                Disponibilidade
-            </div>
-            <div class="mt-3 text-4xl font-black text-green-500">
-                99.9%
-            </div>
-            <div class="mt-2 text-soft text-sm">
-                Sistema
-            </div>
-        </div>
-    </section>
-
-    <section class="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
-        <a href="/ui/tickets" class="card p-8 hover:scale-[1.02] transition">
-            <div class="flex justify-between items-start">
-                <div class="h-14 w-14 rounded-2xl bg-amber-500/15 flex items-center justify-center text-3xl">
-                    🎫
-                </div>
-                <span class="text-3xl">→</span>
-            </div>
-            <h2 class="mt-8 text-2xl font-bold">Tickets</h2>
-            <p class="mt-4 text-soft leading-7">
-                Consultar ocorrências, criar novos pedidos, acompanhar estados e histórico.
-            </p>
-        </a>
-
-        <a href="/ui/equipments" class="card p-8 hover:scale-[1.02] transition">
-            <div class="flex justify-between">
-                <div class="h-14 w-14 rounded-2xl bg-blue-500/15 flex items-center justify-center text-3xl">
-                    🖥️
-                </div>
-                <span class="text-3xl">→</span>
-            </div>
-            <h2 class="mt-8 text-2xl font-bold">Equipamentos</h2>
-            <p class="mt-4 text-soft leading-7">
-                Inventário, salas, ativos e informação técnica.
-            </p>
-        </a>
-
-        <a href="/ui/users" class="card p-8 hover:scale-[1.02] transition">
-            <div class="flex justify-between">
-                <div class="h-14 w-14 rounded-2xl bg-purple-500/15 flex items-center justify-center text-3xl">
-                    👥
-                </div>
-                <span class="text-3xl">→</span>
-            </div>
-            <h2 class="mt-8 text-2xl font-bold">Utilizadores</h2>
-            <p class="mt-4 text-soft leading-7">
-                Gestão de contas, permissões, equipas e perfis.
-            </p>
-        </a>
-
-        <a href="/ui/audits" class="card p-8 hover:scale-[1.02] transition">
-            <div class="flex justify-between">
-                <div class="h-14 w-14 rounded-2xl bg-red-500/15 flex items-center justify-center text-3xl">
-                    📝
-                </div>
-                <span class="text-3xl">→</span>
-            </div>
-            <h2 class="mt-8 text-2xl font-bold">Auditoria</h2>
-            <p class="mt-4 text-soft leading-7">
-                Histórico completo das alterações, logs do sistema, rastreabilidade e conformidade.
-            </p>
-        </a>
-
-        <a href="/ui/analytics" class="card p-8 hover:scale-[1.02] transition">
-            <div class="flex justify-between">
-                <div class="h-14 w-14 rounded-2xl bg-green-500/15 flex items-center justify-center text-3xl">
-                    📈
-                </div>
-                <span class="text-3xl">→</span>
-            </div>
-            <h2 class="mt-8 text-2xl font-bold">Analytics</h2>
-            <p class="mt-4 text-soft leading-7">
-                Indicadores em tempo real, gráficos, KPIs e desempenho operacional.
-            </p>
-        </a>
-
-        <a href="/calendar" class="card p-8 hover:scale-[1.02] transition">
-            <div class="flex justify-between">
-                <div class="h-14 w-14 rounded-2xl bg-cyan-500/15 flex items-center justify-center text-3xl">
-                    📅
-                </div>
-                <span class="text-3xl">→</span>
-            </div>
-            <h2 class="mt-8 text-2xl font-bold">Agenda</h2>
-            <p class="mt-4 text-soft leading-7">
-                Planeamento de intervenções, manutenções preventivas, calendário global.
-            </p>
-        </a>
-    </section>
-
-    <section class="mt-14">
-        <div class="card overflow-hidden">
-            <div class="grid lg:grid-cols-2">
-                <div class="p-10">
-                    <span class="text-amber-500 uppercase tracking-[0.3em] text-sm font-semibold">
-                        Estado do Sistema
-                    </span>
-                    <h2 class="mt-5 text-4xl font-black">
-                        Todos os serviços operacionais.
-                    </h2>
-                    <p class="mt-6 text-soft leading-8">
-                        A infraestrutura encontra-se operacional, com sincronização contínua entre clientes, API, WebSockets e base de dados.
-                    </p>
-
-                    <div class="mt-10 space-y-6">
-                        <div>
-                            <div class="flex justify-between mb-2 text-sm">
-                                <span>API</span>
-                                <span>100%</span>
-                            </div>
-                            <div class="h-3 rounded-full bg-black/10 dark:bg-white/10 overflow-hidden">
-                                <div class="h-full w-full bg-green-500 rounded-full"></div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="flex justify-between mb-2 text-sm">
-                                <span>Base de Dados</span>
-                                <span>99%</span>
-                            </div>
-                            <div class="h-3 rounded-full bg-black/10 dark:bg-white/10 overflow-hidden">
-                                <div class="h-full w-[99%] bg-blue-500 rounded-full"></div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="flex justify-between mb-2 text-sm">
-                                <span>WebSocket</span>
-                                <span>100%</span>
-                            </div>
-                            <div class="h-3 rounded-full bg-black/10 dark:bg-white/10 overflow-hidden">
-                                <div class="h-full w-full bg-amber-500 rounded-full"></div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="flex justify-between mb-2 text-sm">
-                                <span>Backups</span>
-                                <span>100%</span>
-                            </div>
-                            <div class="h-3 rounded-full bg-black/10 dark:bg-white/10 overflow-hidden">
-                                <div class="h-full w-full bg-purple-500 rounded-full"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="border-l border-[var(--border)] p-10 flex flex-col justify-center">
-                    <div class="grid grid-cols-2 gap-6">
-                        <div class="card p-6 text-center">
-                            <div class="text-4xl font-black text-amber-500">24/7</div>
-                            <div class="mt-3 text-soft text-sm">Monitorização</div>
-                        </div>
-                        <div class="card p-6 text-center">
-                            <div class="text-4xl font-black text-green-500">TLS</div>
-                            <div class="mt-3 text-soft text-sm">Segurança</div>
-                        </div>
-                        <div class="card p-6 text-center">
-                            <div class="text-4xl font-black text-blue-500">API</div>
-                            <div class="mt-3 text-soft text-sm">Integração</div>
-                        </div>
-                        <div class="card p-6 text-center">
-                            <div class="text-4xl font-black text-purple-500">99.9%</div>
-                            <div class="mt-3 text-soft text-sm">Disponibilidade</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="mt-16 border-t border-[var(--border)]">
-        <div class="py-10">
-            <div class="flex flex-col xl:flex-row justify-between items-center gap-8">
                 <div>
-                    <h3 class="text-xl font-bold">Central de Operações</h3>
-                    <p class="mt-3 text-soft max-w-lg leading-7">
-                        Plataforma desenvolvida para centralizar a gestão de avarias, equipamentos, auditorias, utilizadores, calendário operacional e análise da infraestrutura.
+
+                    <span class="badge badge-warning">
+
+                        <span class="status-dot"></span>
+
+                        Painel Principal
+
+                    </span>
+
+                    <h1 class="mt-6 text-5xl font-black tracking-tight">
+
+                        Centro de Controlo Operacional
+
+                    </h1>
+
+                    <p class="mt-6 max-w-3xl text-lg text-secondary">
+
+                        Gerencie ocorrências, equipamentos,
+                        utilizadores, auditorias e toda a
+                        infraestrutura através de um único painel.
+
                     </p>
+
                 </div>
 
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
-                    <div>
-                        <h4 class="font-semibold mb-4">Plataforma</h4>
-                        <div class="space-y-2">
-                            <a href="/ui" class="block hover:text-amber-500">Dashboard</a>
-                            <a href="/ui/tickets" class="block hover:text-amber-500">Tickets</a>
-                            <a href="/ui/equipments" class="block hover:text-amber-500">Equipamentos</a>
-                        </div>
+
+                <div class="flex flex-wrap items-center gap-3">
+
+                    <button
+                        id="theme-toggle"
+                        type="button"
+                        class="btn btn-secondary btn-icon"
+                        aria-label="Alternar tema"
+                    >
+
+                        <span class="theme-icon">🌙</span>
+
+                    </button>
+
+
+                    <div
+                        id="landingAuthActions"
+                        class="flex flex-wrap items-center gap-3"
+                    >
+
                     </div>
 
-                    <div>
-                        <h4 class="font-semibold mb-4">Gestão</h4>
-                        <div class="space-y-2">
-                            <a href="/ui/users" class="block hover:text-amber-500">Utilizadores</a>
-                            <a href="/ui/audits" class="block hover:text-amber-500">Auditoria</a>
-                            <a href="/ui/analytics" class="block hover:text-amber-500">Analytics</a>
-                        </div>
+                </div>
+
+            </div>
+
+        </header>
+
+                <section class="dashboard-overview mt-12">
+
+            <div class="grid gap-6 xl:grid-cols-4">
+
+                <article class="card stat-card">
+
+                    <div class="card-body">
+
+                        <span class="stat-label">
+                            Tickets Abertos
+                        </span>
+
+                        <h2 class="stat-value">
+                            126
+                        </h2>
+
+                        <span class="stat-change positive">
+                            ▲ +8 hoje
+                        </span>
+
                     </div>
 
-                    <div>
-                        <h4 class="font-semibold mb-4">Ferramentas</h4>
-                        <div class="space-y-2">
-                            <a href="/calendar" class="block hover:text-amber-500">Agenda</a>
-                            <a href="/docs/openapi" class="block hover:text-amber-500">Swagger</a>
-                        </div>
+                </article>
+
+
+                <article class="card stat-card">
+
+                    <div class="card-body">
+
+                        <span class="stat-label">
+                            Equipamentos
+                        </span>
+
+                        <h2 class="stat-value">
+                            847
+                        </h2>
+
+                        <span class="stat-change">
+                            Inventário ativo
+                        </span>
+
                     </div>
 
-                    <div>
-                        <h4 class="font-semibold mb-4">Estado</h4>
-                        <div class="space-y-2">
-                            <div class="flex items-center gap-2">
-                                <span class="h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
-                                <span>Online</span>
+                </article>
+
+
+                <article class="card stat-card">
+
+                    <div class="card-body">
+
+                        <span class="stat-label">
+                            Utilizadores
+                        </span>
+
+                        <h2 class="stat-value">
+                            42
+                        </h2>
+
+                        <span class="stat-change">
+                            Contas ativas
+                        </span>
+
+                    </div>
+
+                </article>
+
+
+                <article class="card stat-card">
+
+                    <div class="card-body">
+
+                        <span class="stat-label">
+                            Disponibilidade
+                        </span>
+
+                        <h2 class="stat-value text-success">
+                            99.9%
+                        </h2>
+
+                        <span class="stat-change">
+                            Sistema operacional
+                        </span>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+                <section class="dashboard-modules mt-12">
+
+            <div class="grid gap-8 lg:grid-cols-2 xl:grid-cols-3">
+
+                <a
+                    href="/ui/tickets"
+                    class="card module-card"
+                >
+
+                    <div class="card-body">
+
+                        <div class="flex items-start justify-between">
+
+                            <div class="module-icon">
+                                🎫
                             </div>
-                            <div>API Operacional</div>
-                            <div>TLS Ativo</div>
+
+                            <span class="module-arrow">
+                                →
+                            </span>
+
                         </div>
+
+                        <h2 class="mt-8 text-2xl font-bold">
+                            Tickets
+                        </h2>
+
+                        <p class="mt-4 text-secondary">
+
+                            Consultar ocorrências, criar novos pedidos,
+                            acompanhar estados e histórico das intervenções.
+
+                        </p>
+
                     </div>
-                </div>
+
+                </a>
+
+
+                <a
+                    href="/ui/equipments"
+                    class="card module-card"
+                >
+
+                    <div class="card-body">
+
+                        <div class="flex items-start justify-between">
+
+                            <div class="module-icon">
+                                🖥️
+                            </div>
+
+                            <span class="module-arrow">
+                                →
+                            </span>
+
+                        </div>
+
+                        <h2 class="mt-8 text-2xl font-bold">
+                            Equipamentos
+                        </h2>
+
+                        <p class="mt-4 text-secondary">
+
+                            Inventário completo, ativos tecnológicos,
+                            salas e informação técnica.
+
+                        </p>
+
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="/ui/users"
+                    class="card module-card"
+                >
+
+                    <div class="card-body">
+
+                        <div class="flex items-start justify-between">
+
+                            <div class="module-icon">
+                                👥
+                            </div>
+
+                            <span class="module-arrow">
+                                →
+                            </span>
+
+                        </div>
+
+                        <h2 class="mt-8 text-2xl font-bold">
+                            Utilizadores
+                        </h2>
+
+                        <p class="mt-4 text-secondary">
+
+                            Gestão de contas, equipas,
+                            permissões e perfis de acesso.
+
+                        </p>
+
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="/ui/audits"
+                    class="card module-card"
+                >
+
+                    <div class="card-body">
+
+                        <div class="flex items-start justify-between">
+
+                            <div class="module-icon">
+                                📝
+                            </div>
+
+                            <span class="module-arrow">
+                                →
+                            </span>
+
+                        </div>
+
+                        <h2 class="mt-8 text-2xl font-bold">
+                            Auditoria
+                        </h2>
+
+                        <p class="mt-4 text-secondary">
+
+                            Histórico de alterações,
+                            rastreabilidade e conformidade.
+
+                        </p>
+
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="/ui/analytics"
+                    class="card module-card"
+                >
+
+                    <div class="card-body">
+
+                        <div class="flex items-start justify-between">
+
+                            <div class="module-icon">
+                                📊
+                            </div>
+
+                            <span class="module-arrow">
+                                →
+                            </span>
+
+                        </div>
+
+                        <h2 class="mt-8 text-2xl font-bold">
+                            Analytics
+                        </h2>
+
+                        <p class="mt-4 text-secondary">
+
+                            Dashboards, KPIs,
+                            indicadores e relatórios operacionais.
+
+                        </p>
+
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="/calendar"
+                    class="card module-card"
+                >
+
+                    <div class="card-body">
+
+                        <div class="flex items-start justify-between">
+
+                            <div class="module-icon">
+                                📅
+                            </div>
+
+                            <span class="module-arrow">
+                                →
+                            </span>
+
+                        </div>
+
+                        <h2 class="mt-8 text-2xl font-bold">
+                            Agenda
+                        </h2>
+
+                        <p class="mt-4 text-secondary">
+
+                            Planeamento de intervenções,
+                            manutenção preventiva e calendário global.
+
+                        </p>
+
+                    </div>
+
+                </a>
+
             </div>
 
-            <div class="mt-12 pt-8 border-t border-[var(--border)] flex flex-col lg:flex-row items-center justify-between gap-6">
-                <div class="text-soft text-sm">
-                    © {{ date('Y') }} Central de Operações. Todos os direitos reservados.
+        </section>
+
+                <section class="dashboard-status mt-14">
+
+            <div class="card">
+
+                <div class="grid gap-0 lg:grid-cols-2">
+
+                    <div class="card-body p-10 lg:p-12">
+
+                        <span class="badge badge-success">
+                            Estado do Sistema
+                        </span>
+
+                        <h2 class="mt-6 text-4xl font-black">
+
+                            Todos os serviços operacionais
+
+                        </h2>
+
+                        <p class="mt-6 text-lg text-secondary leading-8">
+
+                            A infraestrutura encontra-se operacional, com
+                            sincronização contínua entre clientes, API,
+                            WebSockets e base de dados.
+
+                        </p>
+
+
+                        <div class="mt-10 space-y-8">
+
+                            <div>
+
+                                <div class="mb-2 flex items-center justify-between">
+
+                                    <span class="font-medium">
+                                        API REST
+                                    </span>
+
+                                    <span class="text-secondary">
+                                        100%
+                                    </span>
+
+                                </div>
+
+                                <div class="progress">
+
+                                    <div
+                                        class="progress-bar bg-success"
+                                        style="width:100%"
+                                    ></div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div>
+
+                                <div class="mb-2 flex items-center justify-between">
+
+                                    <span class="font-medium">
+                                        Base de Dados
+                                    </span>
+
+                                    <span class="text-secondary">
+                                        99%
+                                    </span>
+
+                                </div>
+
+                                <div class="progress">
+
+                                    <div
+                                        class="progress-bar bg-primary"
+                                        style="width:99%"
+                                    ></div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div>
+
+                                <div class="mb-2 flex items-center justify-between">
+
+                                    <span class="font-medium">
+                                        WebSockets
+                                    </span>
+
+                                    <span class="text-secondary">
+                                        100%
+                                    </span>
+
+                                </div>
+
+                                <div class="progress">
+
+                                    <div
+                                        class="progress-bar bg-warning"
+                                        style="width:100%"
+                                    ></div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div>
+
+                                <div class="mb-2 flex items-center justify-between">
+
+                                    <span class="font-medium">
+                                        Backups
+                                    </span>
+
+                                    <span class="text-secondary">
+                                        100%
+                                    </span>
+
+                                </div>
+
+                                <div class="progress">
+
+                                    <div
+                                        class="progress-bar"
+                                        style="width:100%"
+                                    ></div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="border-l border-default">
+
+                        <div class="grid h-full gap-6 p-10 md:grid-cols-2">
+
+                            <article class="card metric-card">
+
+                                <div class="card-body text-center">
+
+                                    <h3 class="metric-value-large">
+                                        24/7
+                                    </h3>
+
+                                    <p class="metric-label mt-3">
+                                        Monitorização
+                                    </p>
+
+                                </div>
+
+                            </article>
+
+
+                            <article class="card metric-card">
+
+                                <div class="card-body text-center">
+
+                                    <h3 class="metric-value-large">
+                                        TLS
+                                    </h3>
+
+                                    <p class="metric-label mt-3">
+                                        Segurança
+                                    </p>
+
+                                </div>
+
+                            </article>
+
+
+                            <article class="card metric-card">
+
+                                <div class="card-body text-center">
+
+                                    <h3 class="metric-value-large">
+                                        API
+                                    </h3>
+
+                                    <p class="metric-label mt-3">
+                                        Integração
+                                    </p>
+
+                                </div>
+
+                            </article>
+
+
+                            <article class="card metric-card">
+
+                                <div class="card-body text-center">
+
+                                    <h3 class="metric-value-large">
+                                        99.9%
+                                    </h3>
+
+                                    <p class="metric-label mt-3">
+                                        Disponibilidade
+                                    </p>
+
+                                </div>
+
+                            </article>
+
+                        </div>
+
+                    </div>
+
                 </div>
-                <div class="flex flex-wrap justify-center gap-6 text-sm text-soft">
-                    <span>Laravel 12</span>
-                    <span>•</span>
-                    <span>Tailwind CSS 4</span>
-                    <span>•</span>
-                    <span>Pusher</span>
-                    <span>•</span>
-                    <span>Enterprise UI</span>
-                    <span>•</span>
-                    <span>v2.4.0</span>
-                </div>
+
             </div>
-        </div>
-    </footer>
+
+        </section>
+
+                <footer class="dashboard-footer mt-16">
+
+            <div class="card">
+
+                <div class="card-body">
+
+                    <div class="grid gap-12 lg:grid-cols-4">
+
+                        <div>
+
+                            <div class="flex items-center gap-4">
+
+                                <div class="brand-logo">
+
+                                    <span>GA</span>
+
+                                </div>
+
+                                <div>
+
+                                    <h3 class="text-xl font-bold">
+                                        Central de Operações
+                                    </h3>
+
+                                    <p class="text-secondary">
+                                        Plataforma Enterprise
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                            <p class="mt-6 text-secondary leading-7">
+
+                                Plataforma desenvolvida para centralizar a
+                                gestão de avarias, equipamentos, utilizadores,
+                                auditorias, calendário operacional e análise
+                                da infraestrutura.
+
+                            </p>
+
+                        </div>
+
+
+                        <div>
+
+                            <h4 class="text-lg font-semibold">
+                                Plataforma
+                            </h4>
+
+                            <nav class="mt-6 space-y-3">
+
+                                <a
+                                    href="/ui"
+                                    class="footer-link"
+                                >
+                                    Dashboard
+                                </a>
+
+                                <a
+                                    href="/ui/tickets"
+                                    class="footer-link"
+                                >
+                                    Tickets
+                                </a>
+
+                                <a
+                                    href="/ui/equipments"
+                                    class="footer-link"
+                                >
+                                    Equipamentos
+                                </a>
+
+                            </nav>
+
+                        </div>
+
+
+                        <div>
+
+                            <h4 class="text-lg font-semibold">
+                                Gestão
+                            </h4>
+
+                            <nav class="mt-6 space-y-3">
+
+                                <a
+                                    href="/ui/users"
+                                    class="footer-link"
+                                >
+                                    Utilizadores
+                                </a>
+
+                                <a
+                                    href="/ui/audits"
+                                    class="footer-link"
+                                >
+                                    Auditoria
+                                </a>
+
+                                <a
+                                    href="/ui/analytics"
+                                    class="footer-link"
+                                >
+                                    Analytics
+                                </a>
+
+                                <a
+                                    href="/calendar"
+                                    class="footer-link"
+                                >
+                                    Agenda
+                                </a>
+
+                            </nav>
+
+                        </div>
+
+
+                        <div>
+
+                            <h4 class="text-lg font-semibold">
+                                Estado
+                            </h4>
+
+                            <div class="mt-6 space-y-4">
+
+                                <div class="flex items-center justify-between">
+
+                                    <span class="text-secondary">
+                                        Plataforma
+                                    </span>
+
+                                    <span class="badge badge-success">
+                                        Online
+                                    </span>
+
+                                </div>
+
+                                <div class="flex items-center justify-between">
+
+                                    <span class="text-secondary">
+                                        API
+                                    </span>
+
+                                    <span class="badge badge-success">
+                                        Operacional
+                                    </span>
+
+                                </div>
+
+                                <div class="flex items-center justify-between">
+
+                                    <span class="text-secondary">
+                                        Segurança
+                                    </span>
+
+                                    <span class="badge badge-success">
+                                        TLS
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="mt-12 border-t border-default pt-8">
+
+                        <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+
+                            <p class="text-sm text-secondary">
+
+                                © {{ date('Y') }}
+                                Central de Operações.
+                                Todos os direitos reservados.
+
+                            </p>
+
+                            <div class="flex flex-wrap items-center gap-4 text-sm text-secondary">
+
+                                <span>Laravel 12</span>
+
+                                <span>•</span>
+
+                                <span>Tailwind CSS</span>
+
+                                <span>•</span>
+
+                                <span>Pusher</span>
+
+                                <span>•</span>
+
+                                <span>Enterprise UI</span>
+
+                                <span>•</span>
+
+                                <span>v2.4.0</span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </footer>
+
+            </div>
 
 </div>
+
 @endsection
 
 @push('scripts')
-<script>
-function toggleLandingTheme() {
-    const html = document.documentElement;
-    const dark = html.classList.toggle('dark');
-    localStorage.setItem('theme', dark ? 'dark' : 'light');
-}
 
-(function () {
-    const container = document.getElementById('landingAuthActions');
-    if (!container) return;
-    const token = localStorage.getItem('api_token');
-    if (token) {
-        const userName = localStorage.getItem('user_name') || 'Utilizador';
-        container.innerHTML = `
-            <a href="/ui/profile" class="inline-flex items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-4 py-2.5 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">${userName}</a>
-            <a href="/ui" class="inline-flex items-center justify-center rounded-2xl bg-primary px-4 py-2.5 text-sm font-semibold text-black transition hover:opacity-90">Abrir painel</a>
-        `;
-    } else {
-        container.innerHTML = `
-            <a href="/ui/login" class="inline-flex items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-4 py-2.5 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">Login / Registo</a>
-            <a href="/ui" class="inline-flex items-center justify-center rounded-2xl bg-primary px-4 py-2.5 text-sm font-semibold text-black transition hover:opacity-90">Ver dashboard</a>
-        `;
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    /*
+    |--------------------------------------------------------------------------
+    | Alternância de Tema
+    |--------------------------------------------------------------------------
+    */
+
+    const themeButton = document.getElementById('theme-toggle');
+
+    if (themeButton) {
+
+        themeButton.addEventListener('click', () => {
+
+            if (window.toggleTheme) {
+
+                window.toggleTheme();
+
+            } else {
+
+                const html = document.documentElement;
+
+                const dark = html.classList.toggle('dark');
+
+                localStorage.setItem(
+                    'theme',
+                    dark ? 'dark' : 'light'
+                );
+
+            }
+
+        });
+
     }
-})();
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Ações de Autenticação
+    |--------------------------------------------------------------------------
+    */
+
+    const authContainer = document.getElementById('landingAuthActions');
+
+    if (!authContainer) {
+        return;
+    }
+
+    const token = localStorage.getItem('api_token');
+
+    if (token) {
+
+        const userName =
+            localStorage.getItem('user_name') ??
+            'Utilizador';
+
+        authContainer.innerHTML = `
+
+            <a
+                href="/ui/profile"
+                class="btn btn-secondary"
+            >
+                ${userName}
+            </a>
+
+            <a
+                href="/ui"
+                class="btn btn-primary"
+            >
+                Abrir Painel
+            </a>
+
+        `;
+
+    } else {
+
+        authContainer.innerHTML = `
+
+            <a
+                href="/ui/login"
+                class="btn btn-secondary"
+            >
+                Iniciar Sessão
+            </a>
+
+            <a
+                href="/"
+                class="btn btn-primary"
+            >
+                Página Inicial
+            </a>
+
+        `;
+
+    }
+
+});
+
 </script>
+
 @endpush

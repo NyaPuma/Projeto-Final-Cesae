@@ -1,0 +1,254 @@
+/*
+|--------------------------------------------------------------------------
+| Autocomplete Component
+|--------------------------------------------------------------------------
+*/
+
+.ui-autocomplete {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm, 8px);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Label
+|--------------------------------------------------------------------------
+*/
+
+.ui-autocomplete__label {
+    font-size: var(--text-sm, 14px);
+    font-weight: 600;
+    color: var(--text-primary, #111827);
+    align-self: flex-start;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Wrapper (Gestão dinâmica de slots de ícones)
+|--------------------------------------------------------------------------
+*/
+
+.ui-autocomplete__wrapper {
+    /* Paddings padrão quando não existem ícones */
+    --input-pad-left: var(--space-md, 16px);
+    --input-pad-right: var(--space-md, 16px);
+
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+/* Ativa espaço à esquerda se existir ícone de pesquisa (prefix) */
+.ui-autocomplete__wrapper--has-prefix {
+    --input-pad-left: 2.75rem; /* 44px */
+}
+
+/* Ativa espaço à direita se existir seta/spinner (suffix) */
+.ui-autocomplete__wrapper--has-suffix {
+    --input-pad-right: 2.75rem; /* 44px */
+}
+
+/* Posicionamento genérico para os ícones internos do input */
+.ui-autocomplete__icon-start,
+.ui-autocomplete__icon-end {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    color: var(--text-muted, #9ca3af);
+    pointer-events: none; /* Garante que clicar no ícone foca o input */
+    z-index: 2;
+}
+
+.ui-autocomplete__icon-start { left: 0; }
+.ui-autocomplete__icon-end   { right: 0; }
+
+/*
+|--------------------------------------------------------------------------
+| Input Principal
+|--------------------------------------------------------------------------
+*/
+
+.ui-autocomplete__input {
+    width: 100%;
+    min-height: 44px;
+    box-sizing: border-box;
+
+    /* Aplicação dos paddings inteligentes calculados no wrapper */
+    padding: 0 var(--input-pad-right) 0 var(--input-pad-left);
+
+    font-size: var(--text-sm, 14px);
+    border: 1px solid var(--border-color, #e5e7eb);
+    border-radius: var(--radius-md, 6px);
+    background-color: var(--surface, #ffffff);
+    color: var(--text-primary, #111827);
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.ui-autocomplete__input::placeholder {
+    color: var(--text-muted, #9ca3af);
+}
+
+.ui-autocomplete__input:hover {
+    border-color: var(--border-hover, #cbd5e1);
+}
+
+.ui-autocomplete__input:focus {
+    outline: none;
+    border-color: var(--primary, #3b82f6);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary, #3b82f6) 15%, transparent);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Dropdown Menu (Com animação de entrada controlada)
+|--------------------------------------------------------------------------
+*/
+
+.ui-autocomplete__dropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    z-index: 100;
+
+    border: 1px solid var(--border-color, #e5e7eb);
+    border-radius: var(--radius-lg, 10px);
+    background-color: var(--surface, #ffffff);
+    box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1));
+
+    max-height: 320px;
+    overflow-y: auto;
+    scrollbar-width: thin; /* Suporte nativo Firefox */
+
+    /* Animação suave: Invisível por padrão */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px) scale(0.98);
+    transform-origin: top center;
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+        visibility 0.2s;
+}
+
+/* Classe gatilho para o teu JavaScript mostrar o menu */
+.ui-autocomplete__dropdown.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Options (Com distinção de foco e seleção)
+|--------------------------------------------------------------------------
+*/
+
+.ui-autocomplete__option {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm, 10px);
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 14px;
+
+    border: 0;
+    background: transparent;
+    color: var(--text-primary, #111827);
+    font-size: var(--text-sm, 14px);
+    text-align: left;
+    cursor: pointer;
+    user-select: none;
+
+    transition:
+        background-color 0.15s ease,
+        color 0.15s ease;
+}
+
+/* Estado 1: Focado (Rato em cima ou navegação com setas do teclado) */
+.ui-autocomplete__option:hover,
+.ui-autocomplete__option.is-focused {
+    background-color: var(--surface-hover, #f3f4f6);
+    color: var(--text-primary, #111827);
+    outline: none;
+}
+
+/* Estado 2: Selecionado (O que já foi clicado e está guardado como valor) */
+.ui-autocomplete__option.is-selected {
+    background-color: color-mix(in srgb, var(--primary, #3b82f6) 8%, transparent);
+    color: var(--primary, #3b82f6);
+    font-weight: 600;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Loading / Empty States
+|--------------------------------------------------------------------------
+*/
+
+.ui-autocomplete__state {
+    padding: 24px var(--space-md, 16px);
+    text-align: center;
+    color: var(--text-secondary, #6b7280);
+    font-size: var(--text-sm, 14px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs, 6px);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Custom Scrollbar
+|--------------------------------------------------------------------------
+*/
+
+.ui-autocomplete__dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+
+.ui-autocomplete__dropdown::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.ui-autocomplete__dropdown::-webkit-scrollbar-thumb {
+    background-color: var(--border-color, #cbd5e1);
+    border-radius: var(--radius-full, 9999px);
+}
+
+.ui-autocomplete__dropdown::-webkit-scrollbar-thumb:hover {
+    background-color: var(--text-muted, #94a3b8);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Media Queries & Accessibility
+|--------------------------------------------------------------------------
+*/
+
+@media (max-width: 640px) {
+    .ui-autocomplete__dropdown {
+        max-height: 240px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ui-autocomplete__input,
+    .ui-autocomplete__dropdown,
+    .ui-autocomplete__option {
+        transition: none !important;
+        transform: none !important;
+    }
+}

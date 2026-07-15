@@ -1,160 +1,76 @@
 /*
 |--------------------------------------------------------------------------
-| Helpers
-|--------------------------------------------------------------------------
-|
-| Funções auxiliares utilizadas por toda a biblioteca Chart.js.
-|
-*/
-
-/*
-|--------------------------------------------------------------------------
-| CSS Variables
+| Helpers para Chart.js
 |--------------------------------------------------------------------------
 */
 
+/**
+ * Obtém uma variável CSS de forma eficiente.
+ */
 export function getCssVariable(name) {
-
-    return getComputedStyle(document.documentElement)
-        .getPropertyValue(name)
-        .trim();
-
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 }
+
+/**
+ * Detecta o tema atual.
+ * Sugestão: Se mudares para data-theme="dark" no futuro, altera apenas esta linha.
+ */
+export const isDarkMode = () => document.documentElement.classList.contains("dark");
 
 /*
 |--------------------------------------------------------------------------
-| Theme
+| Theme Colors (Agrupadas para performance)
 |--------------------------------------------------------------------------
 */
-
-export function isDarkMode() {
-
-    return document.documentElement.classList.contains("dark");
-
-}
+export const getThemeColors = () => {
+    const dark = isDarkMode();
+    return {
+        text: getCssVariable("--text") || "#1F2937",
+        textSoft: getCssVariable("--text-soft") || "#6B7280",
+        border: getCssVariable("--border") || "#E5E7EB",
+        surface: getCssVariable("--surface") || "#FFFFFF",
+        surfaceAlt: getCssVariable("--surface-2") || "#F8FAFC",
+        grid: dark ? "rgba(255,255,255,0.08)" : "rgba(15,23,42,0.08)",
+        tooltipBg: dark ? "#111827" : "#FFFFFF",
+        tooltipText: dark ? "#F9FAFB" : "#111827"
+    };
+};
 
 /*
 |--------------------------------------------------------------------------
-| Colors
+| Formatação de Dados
 |--------------------------------------------------------------------------
 */
 
-export function getTextColor() {
+export const formatNumber = (value) =>
+    new Intl.NumberFormat("pt-PT").format(value);
 
-    return getCssVariable("--text") || "#1F2937";
+export const formatCurrency = (value) =>
+    new Intl.NumberFormat("pt-PT", { style: "currency", currency: "EUR" }).format(value);
 
-}
-
-export function getSoftTextColor() {
-
-    return getCssVariable("--text-soft") || "#6B7280";
-
-}
-
-export function getBorderColor() {
-
-    return getCssVariable("--border") || "#E5E7EB";
-
-}
-
-export function getSurfaceColor() {
-
-    return getCssVariable("--surface") || "#FFFFFF";
-
-}
-
-export function getSurfaceAltColor() {
-
-    return getCssVariable("--surface-2") || "#F8FAFC";
-
-}
-
-export function getGridColor() {
-
-    return isDarkMode()
-
-        ? "rgba(255,255,255,0.08)"
-
-        : "rgba(15,23,42,0.08)";
-
-}
-
-export function getTooltipBackground() {
-
-    return isDarkMode()
-
-        ? "#111827"
-
-        : "#FFFFFF";
-
-}
-
-export function getTooltipText() {
-
-    return isDarkMode()
-
-        ? "#F9FAFB"
-
-        : "#111827";
-
-}
-
-/*
-|--------------------------------------------------------------------------
-| Numbers
-|--------------------------------------------------------------------------
-*/
-
-export function formatNumber(value) {
-
-    return new Intl.NumberFormat("pt-PT").format(value);
-
-}
-
-export function formatCurrency(value) {
-
+/**
+ * Formata percentagens seguindo as regras de i18n.
+ * @param {number} value - Ex: 50.5 (para 50.5%)
+ */
+export const formatPercent = (value) => {
     return new Intl.NumberFormat("pt-PT", {
-
-        style: "currency",
-
-        currency: "EUR"
-
-    }).format(value);
-
-}
-
-export function formatPercent(value) {
-
-    return `${Number(value).toFixed(1)}%`;
-
-}
+        style: "percent",
+        minimumFractionDigits: 1,
+        maximumFractionDigits: 1
+    }).format(Number(value) / 100);
+};
 
 /*
 |--------------------------------------------------------------------------
-| Arrays
+| Manipulação de Arrays (Robustez garantida)
 |--------------------------------------------------------------------------
 */
 
-export function sum(values = []) {
+export const sum = (values = []) =>
+    Array.isArray(values) ? values.reduce((acc, v) => acc + Number(v || 0), 0) : 0;
 
-    return values.reduce(
+export const max = (values = []) =>
+    Array.isArray(values) && values.length > 0 ? Math.max(...values) : 0;
 
-        (total, value) => total + Number(value),
-
-        0
-
-    );
-
-}
-
-export function max(values = []) {
-
-    return Math.max(...values);
-
-}
-
-export function min(values = []) {
-
-    return Math.min(...values);
-
-}
+export const min = (values = []) =>
+    Array.isArray(values) && values.length > 0 ? Math.min(...values) : 0;

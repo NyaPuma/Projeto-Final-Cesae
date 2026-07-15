@@ -1,0 +1,160 @@
+/*
+|--------------------------------------------------------------------------
+| Card Loader Component
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-loader {
+    /* Variáveis padrão de controlo (Tamanho Médio / MD por padrão) */
+    --loader-gap: var(--space-sm, 8px);
+    --loader-direction: row;
+    --loader-font-size: var(--text-sm, 14px);
+    --loader-text-color: var(--text-secondary, #6c757d);
+
+    --spinner-size: 32px;
+    --spinner-border-width: 3px;
+    --spinner-track-color: var(--border-color, #e9ecef);
+    --spinner-color: var(--primary, #007bff);
+
+    display: flex;
+    flex-direction: var(--loader-direction);
+    align-items: center;
+    justify-content: center;
+    gap: var(--loader-gap);
+    box-sizing: border-box;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Sizes (Escala dinamicamente o Spinner E o Texto de forma equilibrada)
+|--------------------------------------------------------------------------
+*/
+
+/* Loader Pequeno (Ideal para botões ou inputs) */
+.ui-card-loader--sm {
+    --spinner-size: 18px;
+    --spinner-border-width: 2px;
+    --loader-font-size: var(--text-xs, 12px);
+    --loader-gap: 6px;
+}
+
+/* Loader Médio (Herdado por padrão, não necessita de classe extra, mas mapeado por segurança) */
+.ui-card-loader--md {
+    --spinner-size: 32px;
+    --spinner-border-width: 3px;
+    --loader-font-size: var(--text-sm, 14px);
+}
+
+/* Loader Grande (Ideal para secções vazias inteiras ou dashboards) */
+.ui-card-loader--lg {
+    --spinner-size: 48px;
+    --spinner-border-width: 4px;
+    --loader-font-size: var(--text-md, 16px);
+    --loader-gap: var(--space-md, 12px);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Layout Variation: Vertical Layout
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-loader--vertical {
+    --loader-direction: column;
+    text-align: center;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Spinner (Performance melhorada com GPU Acceleration)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-loader__spinner {
+    width: var(--spinner-size);
+    height: var(--spinner-size);
+
+    border-radius: 50%;
+    border-style: solid;
+    border-width: var(--spinner-border-width);
+    border-color: var(--spinner-track-color);
+    border-top-color: var(--spinner-color);
+
+    /* Micro-animação contínua e suave */
+    animation: ui-card-loader-spin 0.75s linear infinite;
+    will-change: transform; /* Força o browser a usar aceleração gráfica */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Typography
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-loader__text {
+    font-size: var(--loader-font-size);
+    font-weight: 500;
+    color: var(--loader-text-color);
+    line-height: 1.2;
+    user-select: none;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Overlay State (Premium Glassmorphism & Fade-in)
+|--------------------------------------------------------------------------
+*/
+
+/* Nota: Para usar esta classe, certifique-se que o card/elemento pai
+   tem "position: relative" declarado! */
+.ui-card-loader--overlay,
+.ui-card-loader--fullscreen {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+
+    /* Fundo suave com efeito de desfoque de vidro translúcido */
+    background-color: color-mix(in srgb, var(--surface, #ffffff) 80%, transparent);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px); /* Compatibilidade Safari */
+
+    border-radius: inherit; /* Respeita as bordas arredondadas do card pai */
+
+    /* Transição suave de aparecimento */
+    animation: ui-loader-fade-in 0.25s ease-out forwards;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Animations Keyframes
+|--------------------------------------------------------------------------
+*/
+
+@keyframes ui-card-loader-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes ui-loader-fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Respeito pelas definições de acessibilidade do utilizador */
+@media (prefers-reduced-motion: reduce) {
+    .ui-card-loader__spinner {
+        animation-duration: 1.5s; /* Spinner roda de forma lenta e não agressiva */
+    }
+    .ui-card-loader--overlay,
+    .ui-card-loader--fullscreen {
+        animation: none; /* Remove transição de opacidade abrupta */
+    }
+}

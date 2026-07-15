@@ -1,0 +1,174 @@
+/*
+|--------------------------------------------------------------------------
+| Input Hint Component (Otimizado)
+|--------------------------------------------------------------------------
+| • Light / Dark Mode Friendly
+| • Responsive Dynamic Icon Alignment (No magic absolute pixels)
+| • WCAG 2.2 Compliant Colors & Safe Hover States
+| • Dual-mode SVG support (Solid & Outline)
+|--------------------------------------------------------------------------
+*/
+
+.ui-input-hint {
+  /* Design Tokens Locais */
+  --ui-hint-color: var(--text-secondary, #4b5563);
+  --ui-hint-font-size: var(--text-xs, 0.75rem); /* ~12px */
+  --ui-hint-line-height: 1.5;
+  --ui-hint-icon-size: 1.15em; /* Escala proporcionalmente ao tamanho do texto */
+
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-xs, 0.25rem); /* ~4px */
+  margin: 0;
+  font-size: var(--ui-hint-font-size);
+  line-height: var(--ui-hint-line-height);
+  color: var(--ui-hint-color);
+  box-sizing: border-box;
+
+  /* Transição suave para mudanças dinâmicas de estado (ex: de dica para erro) */
+  transition: color 0.2s ease;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Icon (Alinhamento Matemático Perfeito com o Texto)
+|--------------------------------------------------------------------------
+*/
+.ui-input-hint__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  width: var(--ui-hint-icon-size);
+  height: var(--ui-hint-icon-size);
+
+  /* Fórmula que calcula o offset exato para alinhar o topo do ícone à linha de texto */
+  margin-block-start: calc((var(--ui-hint-line-height) * 1em - var(--ui-hint-icon-size)) / 2);
+}
+
+.ui-input-hint__icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: currentColor; /* Padrão seguro para ícones sólidos (solid/fill) */
+}
+
+/* Suporte automático para ícones baseados em contorno (outline) */
+.ui-input-hint__icon svg[stroke] {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: var(--ui-hint-stroke-width, 2);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Text Area
+|--------------------------------------------------------------------------
+*/
+.ui-input-hint__text {
+  flex: 1;
+  min-width: 0;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Variants (Cores Semânticas com Alto Contraste WCAG 2.2)
+|--------------------------------------------------------------------------
+*/
+.ui-input-hint--default {
+  --ui-hint-color: var(--text-secondary, #4b5563);
+}
+
+.ui-input-hint--primary {
+  --ui-hint-color: var(--primary, #2563eb);
+}
+
+.ui-input-hint--success {
+  --ui-hint-color: var(--success, #059669); /* Calibrado para contraste AA em fundos claros */
+}
+
+.ui-input-hint--warning {
+  --ui-hint-color: var(--warning, #d97706); /* Calibrado para contraste AA em fundos claros */
+}
+
+.ui-input-hint--danger {
+  --ui-hint-color: var(--danger, #dc2626);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Links (Acessibilidade Estrita sem Perda de Contraste no Hover)
+|--------------------------------------------------------------------------
+*/
+.ui-input-hint a {
+  color: inherit;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  border-radius: var(--radius-xs, 2px);
+
+  transition:
+    color 0.15s ease,
+    text-decoration-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.ui-input-hint a:hover {
+  /* Evitamos usar opacity: 0.8 para não comprometer o contraste do texto pequeno */
+  color: var(--ui-hint-color-hover, var(--primary-hover, #1d4ed8));
+  text-decoration-thickness: 2px;
+}
+
+/* Foco amigável e visível para navegação por teclado (Tab) */
+.ui-input-hint a:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--ui-input-bg, #ffffff), 0 0 0 4px currentColor;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Lists (Suporte para Listas em Dicas Complexas)
+|--------------------------------------------------------------------------
+*/
+.ui-input-hint ul,
+.ui-input-hint ol {
+  margin-block: 0.375rem 0;
+  margin-inline: 0;
+  padding-inline-start: 1.25rem; /* Margem lógica adaptável para RTL */
+}
+
+.ui-input-hint li {
+  margin-block: 0.1875rem; /* ~3px para melhor legibilidade vertical */
+  margin-inline: 0;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Acessibilidade: Modo de Cores Forçadas (High Contrast)
+|--------------------------------------------------------------------------
+*/
+@media (forced-colors: active) {
+  .ui-input-hint a {
+    color: LinkText;
+    text-decoration-color: LinkText;
+  }
+  .ui-input-hint a:focus-visible {
+    outline: 2px solid ButtonText;
+  }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Acessibilidade: Movimento Reduzido (Reduced Motion)
+|--------------------------------------------------------------------------
+*/
+@media (prefers-reduced-motion: reduce) {
+  .ui-input-hint,
+  .ui-input-hint a {
+    transition: none !important;
+  }
+}

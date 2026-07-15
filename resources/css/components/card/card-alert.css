@@ -1,0 +1,217 @@
+/*
+|--------------------------------------------------------------------------
+| Card Alert Component
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-alert {
+    /* Variáveis padrão (Fallback neutro) */
+    --alert-bg: var(--surface-secondary, #f8f9fa);
+    --alert-border: var(--border-color, #e9ecef);
+    --alert-title: var(--text-primary, #212529);
+    --alert-text: var(--text-secondary, #495057);
+    --alert-icon: var(--text-secondary, #6c757d);
+    --alert-close-hover: rgba(0, 0, 0, 0.05);
+
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--alert-border);
+    background-color: var(--alert-bg);
+    color: var(--alert-text);
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Icon Container (Alinhamento geométrico perfeito)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-alert__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--alert-icon);
+    width: 24px;
+    height: 24px; /* Casado com a altura da linha de texto (line-height) */
+
+    transition: color 0.2s ease;
+}
+
+.ui-card-alert__icon svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: currentColor;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Content Box
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-alert__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    /* Alinha o início do texto perfeitamente ao centro vertical do ícone */
+    padding-top: 2px;
+}
+
+.ui-card-alert__title {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--alert-title);
+    line-height: 1.4;
+    transition: color 0.2s ease;
+}
+
+.ui-card-alert__message {
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    color: var(--alert-text);
+    transition: color 0.2s ease;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Interactive Close Button (UX Melhorada)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-alert__close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-sm, 4px);
+    color: var(--alert-icon);
+    outline: none;
+    flex-shrink: 0;
+
+    /* Compensação visual para o topo direito do card */
+    margin-top: 0px;
+    margin-inline-end: -4px;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.15s ease;
+}
+
+.ui-card-alert__close:hover {
+    background-color: var(--alert-close-hover);
+    color: var(--alert-title);
+}
+
+.ui-card-alert__close:focus-visible {
+    box-shadow: 0 0 0 2px var(--alert-icon);
+}
+
+.ui-card-alert__close svg {
+    width: 1rem;
+    height: 1rem;
+    fill: currentColor;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Soft Variants (Otimizadas para contraste e legibilidade)
+|--------------------------------------------------------------------------
+*/
+
+/* Info */
+.ui-card-alert--info {
+    --alert-bg: var(--info-light, #f0f7ff);
+    --alert-border: var(--info-border-color, #cce3ff);
+    --alert-title: var(--info-dark, #004085);
+    --alert-text: var(--info-text, #0c5460);
+    --alert-icon: var(--info, #007bff);
+    --alert-close-hover: rgba(0, 123, 255, 0.1);
+}
+
+/* Success */
+.ui-card-alert--success {
+    --alert-bg: var(--success-light, #f0fdf4);
+    --alert-border: var(--success-border-color, #bbf7d0);
+    --alert-title: var(--success-dark, #155724);
+    --alert-text: var(--success-text, #1e4620);
+    --alert-icon: var(--success, #28a745);
+    --alert-close-hover: rgba(40, 167, 69, 0.1);
+}
+
+/* Warning */
+.ui-card-alert--warning {
+    --alert-bg: var(--warning-light, #fffbeb);
+    --alert-border: var(--warning-border-color, #fef3c7);
+    --alert-title: var(--warning-dark, #856404);
+    --alert-text: var(--warning-text, #664d03);
+    --alert-icon: var(--warning, #ffc107);
+    --alert-close-hover: rgba(255, 193, 7, 0.15);
+}
+
+/* Danger */
+.ui-card-alert--danger {
+    --alert-bg: var(--danger-light, #fef2f2);
+    --alert-border: var(--danger-border-color, #fee2e2);
+    --alert-title: var(--danger-dark, #721c24);
+    --alert-text: var(--danger-text, #5c191e);
+    --alert-icon: var(--danger, #dc3545);
+    --alert-close-hover: rgba(220, 53, 69, 0.1);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Solid Variant (Opcional - Para banners de alto impacto visual)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-alert--solid {
+    --alert-close-hover: rgba(255, 255, 255, 0.15);
+}
+
+.ui-card-alert--solid.ui-card-alert--info {
+    --alert-bg: var(--info, #007bff);
+    --alert-border: var(--info, #007bff);
+    --alert-title: #ffffff;
+    --alert-text: rgba(255, 255, 255, 0.9);
+    --alert-icon: #ffffff;
+}
+
+.ui-card-alert--solid.ui-card-alert--success {
+    --alert-bg: var(--success, #28a745);
+    --alert-border: var(--success, #28a745);
+    --alert-title: #ffffff;
+    --alert-text: rgba(255, 255, 255, 0.9);
+    --alert-icon: #ffffff;
+}
+
+.ui-card-alert--solid.ui-card-alert--warning {
+    --alert-bg: var(--warning, #ffc107);
+    --alert-border: var(--warning, #ffc107);
+    --alert-title: #212529; /* Escuro para contraste com amarelo sólido */
+    --alert-text: rgba(33, 37, 41, 0.9);
+    --alert-icon: #212529;
+}
+
+.ui-card-alert--solid.ui-card-alert--danger {
+    --alert-bg: var(--danger, #dc3545);
+    --alert-border: var(--danger, #dc3545);
+    --alert-title: #ffffff;
+    --alert-text: rgba(255, 255, 255, 0.9);
+    --alert-icon: #ffffff;
+}

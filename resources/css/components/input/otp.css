@@ -1,0 +1,277 @@
+/*
+|--------------------------------------------------------------------------
+| OTP (One-Time Password) Component (Otimizado)
+|--------------------------------------------------------------------------
+| • Scalable CSS-Variables architecture (theme-friendly)
+| • WCAG 2.2 & High Contrast Mode compliant
+| • Safe focus transformation (avoids vertical misalignment)
+| • GPU-accelerated hardware shake animation
+| • Supports logical layouts, autofocus, and optional middle dividers
+|
+*/
+
+.ui-otp {
+  /* Design Tokens Locais */
+  --ui-otp-size: 3rem;
+  --ui-otp-height: 3.5rem;
+  --ui-otp-gap: var(--space-sm, 0.5rem);
+  --ui-otp-radius: var(--radius-md, 8px);
+  --ui-otp-font-size: 1.375rem;
+
+  /* Contraste WCAG 2.2 Polido */
+  --ui-otp-border: var(--border-color, #d1d5db);
+  --ui-otp-border-hover: var(--border-hover, #9ca3af);
+  --ui-otp-border-focus: var(--primary, #2563eb);
+  --ui-otp-ring-focus: var(--primary-light, rgba(37, 99, 235, 0.15));
+
+  --ui-otp-bg: var(--surface, #ffffff);
+  --ui-otp-bg-disabled: var(--surface-disabled, #f9fafb);
+  --ui-otp-text: var(--text-primary, #111827);
+  --ui-otp-text-disabled: var(--text-disabled, #9ca3af);
+
+  --ui-otp-transition: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Group Container
+|--------------------------------------------------------------------------
+*/
+.ui-otp__group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ui-otp-gap);
+  flex-wrap: wrap; /* Evita quebra drástica de layout em ecrãs extremamente pequenos */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Input Individual
+|--------------------------------------------------------------------------
+*/
+.ui-otp__input {
+  width: var(--ui-otp-size);
+  height: var(--ui-otp-height);
+  padding: 0;
+
+  border: 1px solid var(--ui-otp-border);
+  border-radius: var(--ui-otp-radius);
+  background: var(--ui-otp-bg);
+  color: var(--ui-otp-text);
+
+  font-family: inherit;
+  font-size: var(--ui-otp-font-size);
+  font-weight: 600;
+  text-align: center;
+  line-height: 1;
+
+  caret-color: var(--ui-otp-border-focus);
+  box-sizing: border-box;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+
+  /* Previne distorções de renderização de fontes */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  transition:
+    border-color var(--ui-otp-transition),
+    box-shadow var(--ui-otp-transition),
+    background var(--ui-otp-transition),
+    transform var(--ui-otp-transition);
+}
+
+/* Ocultar setas de incremento nativas (tipo número) */
+.ui-otp__input::-webkit-outer-spin-button,
+.ui-otp__input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.ui-otp__input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Hover (Apenas se não estiver desativado) */
+.ui-otp__input:hover:not(:disabled) {
+  border-color: var(--ui-otp-border-hover);
+}
+
+/* Foco Seguro e Tridimensional */
+.ui-otp__input:focus-visible {
+  position: relative; /* <-- CRITICAL: Permite ao z-index elevar o elemento acima dos vizinhos */
+  z-index: 2;
+  border-color: var(--ui-otp-border-focus);
+  box-shadow:
+    0 0 0 1px var(--ui-otp-border-focus),
+    0 0 0 4px var(--ui-otp-ring-focus);
+  transform: scale(1.05); /* Escala elegante */
+}
+
+/* Estado Preenchido (Acelera feedback visual do utilizador) */
+.ui-otp__input:not(:placeholder-shown) {
+  font-weight: 700;
+  border-color: var(--ui-otp-border-hover);
+}
+
+/* Preserva as cores do teu design system mesmo com o Autofill do browser */
+.ui-otp__input:-webkit-autofill,
+.ui-otp__input:-webkit-autofill:hover,
+.ui-otp__input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--ui-otp-text);
+  box-shadow: 0 0 0 1000px var(--ui-otp-bg) inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Design Upgrade: Divisor Opcional (Propriedades Lógicas)
+|--------------------------------------------------------------------------
+*/
+.ui-otp__divider {
+  color: var(--ui-otp-border);
+  font-size: var(--ui-otp-font-size);
+  font-weight: 500;
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: var(--space-xs, 0.25rem);
+  pointer-events: none;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Estados: Erro (Contraste WCAG 2.2)
+|--------------------------------------------------------------------------
+*/
+.ui-otp--error {
+  --ui-otp-border: var(--danger, #dc2626);
+  --ui-otp-border-hover: var(--danger-hover, #b91c1c);
+  --ui-otp-border-focus: var(--danger, #dc2626);
+  --ui-otp-ring-focus: var(--danger-light, rgba(220, 38, 38, 0.15));
+}
+
+/*
+|--------------------------------------------------------------------------
+| Estados: Sucesso (Contraste WCAG 2.2)
+|--------------------------------------------------------------------------
+*/
+.ui-otp--success {
+  --ui-otp-border: var(--success, #059669);
+  --ui-otp-border-hover: var(--success-hover, #047857);
+  --ui-otp-border-focus: var(--success, #059669);
+  --ui-otp-ring-focus: var(--success-light, rgba(5, 150, 105, 0.15));
+}
+
+/*
+|--------------------------------------------------------------------------
+| Estados: Desativado (Disabled via Sincronização de Cascata)
+|--------------------------------------------------------------------------
+*/
+.ui-otp:has(.ui-otp__input:disabled) {
+  opacity: 0.55;
+}
+
+.ui-otp__input:disabled {
+  cursor: not-allowed;
+  background: var(--ui-otp-bg-disabled);
+  color: var(--ui-otp-text-disabled);
+  border-color: var(--ui-otp-border);
+  pointer-events: none;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Animação de Erro (Shake 3D - Aceleração de Hardware)
+|--------------------------------------------------------------------------
+*/
+@keyframes ui-otp-shake {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  20%, 60% {
+    transform: translate3d(-5px, 0, 0);
+  }
+  40%, 80% {
+    transform: translate3d(5px, 0, 0);
+  }
+}
+
+.ui-otp--shake {
+  will-change: transform;
+  animation: ui-otp-shake 0.38s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Responsividade Inteligente (Mobile Adaptability)
+|--------------------------------------------------------------------------
+*/
+@media (max-width: 640px) {
+  .ui-otp {
+    --ui-otp-size: 2.5rem;
+    --ui-otp-height: 3rem;
+    --ui-otp-font-size: 1.125rem;
+    --ui-otp-gap: var(--space-xs, 0.25rem);
+  }
+
+  .ui-otp__divider {
+    padding-inline: 1px;
+  }
+}
+
+/* Suporte extra para ecrãs ultra pequenos (ex: iPhone SE) */
+@media (max-width: 360px) {
+  .ui-otp {
+    --ui-otp-size: 2.125rem;
+    --ui-otp-height: 2.625rem;
+    --ui-otp-font-size: 1rem;
+  }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Acessibilidade: Movimento Reduzido (Reduced Motion)
+|--------------------------------------------------------------------------
+*/
+@media (prefers-reduced-motion: reduce) {
+  .ui-otp__input {
+    transition: none !important;
+  }
+
+  .ui-otp__input:focus-visible {
+    transform: none !important; /* Desativa a escala 3D */
+  }
+
+  .ui-otp--shake {
+    animation: none !important;
+  }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Acessibilidade: Modo de Cores Forçadas (High Contrast)
+|--------------------------------------------------------------------------
+*/
+@media (forced-colors: active) {
+  .ui-otp__input:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+
+  .ui-otp__input:disabled {
+    border-color: GrayText;
+    color: GrayText;
+  }
+
+  .ui-otp:has(.ui-otp__input:disabled) {
+    opacity: 1; /* WHCM prefere opacidades a 100% para evitar fusão de cores */
+  }
+}

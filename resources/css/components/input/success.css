@@ -1,0 +1,169 @@
+/*
+|--------------------------------------------------------------------------
+| Input Success Component (Otimizado)
+|--------------------------------------------------------------------------
+|
+| Mensagens de sucesso reutilizáveis para todo o Design System.
+| • WCAG 2.2 Compliant (Rácio de contraste corrigido para > 4.5:1)
+| • Windows Forced Colors Support (High Contrast)
+| • RTL Ready (Logical Properties)
+| • Smooth GPU Animations & Reduced Motion
+|
+*/
+
+.ui-input-success {
+  /* Variáveis de Escopo Local para fácil customização e Dark Mode */
+  --ui-success-color: var(--success, #047857); /* Alterado de #10b981 para garantir contraste WCAG AA em fundos claros */
+  --ui-success-color-hover: var(--success-hover, #065f46);
+  --ui-success-color-light: var(--success-light, rgba(4, 120, 87, 0.15));
+  --ui-success-gap: var(--space-xs, 0.25rem); /* ~4px */
+  --ui-success-font-size: var(--text-xs, 0.75rem);
+  --ui-success-line-height: 1.5;
+
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ui-success-gap);
+  margin: 0;
+  margin-block-start: var(--ui-success-gap);
+  font-size: var(--ui-success-font-size);
+  line-height: var(--ui-success-line-height);
+  color: var(--ui-success-color);
+
+  /* Ativa otimização do browser para animações */
+  will-change: transform, opacity;
+  animation: ui-input-success-fade 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Icon (Alinhamento Dinâmico Perfeito com a Primeira Linha de Texto)
+|--------------------------------------------------------------------------
+*/
+.ui-input-success__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  /* Tamanho relativo proporcional ao tamanho do texto do componente */
+  width: 1em;
+  height: 1em;
+
+  /* Fórmula matemática: (line-height - icon-height) / 2 para centrar verticalmente na primeira linha */
+  margin-block-start: calc((var(--ui-success-line-height) - 1) / 2 * 1em);
+}
+
+.ui-input-success__icon svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Text
+|--------------------------------------------------------------------------
+*/
+.ui-input-success__text {
+  flex: 1;
+  min-width: 0;
+  word-break: break-word;
+  overflow-wrap: anywhere; /* Evita que termos extremamente longos quebrem o layout do formulário */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Links (Otimizados para Acessibilidade / WCAG 2.2)
+|--------------------------------------------------------------------------
+*/
+.ui-input-success a,
+.ui-input-success__link {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  border-radius: var(--radius-xs, 2px);
+  transition:
+    color 0.15s ease,
+    outline-color 0.15s ease,
+    text-decoration-color 0.15s ease;
+}
+
+.ui-input-success a:hover,
+.ui-input-success__link:hover {
+  color: var(--ui-success-color-hover);
+  text-decoration-thickness: 2px;
+}
+
+.ui-input-success a:focus-visible,
+.ui-input-success__link:focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  box-shadow:
+    0 0 0 2px var(--color-surface, #ffffff),
+    0 0 0 4px var(--ui-success-color);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Animation (Performance-first)
+|--------------------------------------------------------------------------
+*/
+@keyframes ui-input-success-fade {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Reduced Motion (Acessibilidade de Movimento)
+|--------------------------------------------------------------------------
+*/
+@media (prefers-reduced-motion: reduce) {
+  .ui-input-success {
+    animation: ui-input-success-fade-simple 0.15s ease-out;
+  }
+
+  @keyframes ui-input-success-fade-simple {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Forced Colors (Suporte para Modo de Alto Contraste - WCAG AAA)
+|--------------------------------------------------------------------------
+*/
+@media (forced-colors: active) {
+  .ui-input-success {
+    color: CanvasText;
+  }
+
+  .ui-input-success__icon svg {
+    stroke: CanvasText;
+  }
+
+  .ui-input-success a,
+  .ui-input-success__link {
+    color: LinkText;
+  }
+
+  .ui-input-success a:focus-visible,
+  .ui-input-success__link:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 3px;
+    box-shadow: none;
+  }
+}

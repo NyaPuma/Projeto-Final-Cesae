@@ -1,0 +1,103 @@
+/*
+|--------------------------------------------------------------------------
+| Design System: Tokens Globais
+|--------------------------------------------------------------------------
+*/
+
+:root {
+    /* ------------------------------------------------------------------
+       Brand & Semantic Colors
+    ------------------------------------------------------------------ */
+    --primary: #f59e0b;
+    --primary-hover: #d97706;
+    --primary-light: rgba(245, 158, 11, 0.1);
+
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --info: #3b82f6;
+
+    /* ------------------------------------------------------------------
+       Surface & Background (Light Default)
+    ------------------------------------------------------------------ */
+    --background: #f5f7fb;
+    --surface: #ffffff;
+    --surface-2: #f8fafc;
+    --surface-3: #f1f5f9;
+
+    --sidebar: #ffffff;
+    --topbar: rgba(255, 255, 255, 0.82);
+
+    /* ------------------------------------------------------------------
+       Typography
+    ------------------------------------------------------------------ */
+    --text: #111827;
+    --text-soft: #6b7280;
+    --text-muted: #9ca3af;
+
+    /* ------------------------------------------------------------------
+       Spacing Scale (Base 4px = 0.25rem)
+    ------------------------------------------------------------------ */
+    --space-1: 0.25rem;  /* 4px */
+    --space-2: 0.5rem;   /* 8px */
+    --space-3: 0.75rem;  /* 12px */
+    --space-4: 1rem;     /* 16px */
+    --space-6: 1.5rem;   /* 24px */
+    --space-8: 2rem;     /* 32px */
+
+    /* ------------------------------------------------------------------
+       Radius (rem-based for accessibility)
+    ------------------------------------------------------------------ */
+    --radius-xs: 0.375rem;
+    --radius-sm: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
+    --radius-round: 9999px;
+
+    /* ------------------------------------------------------------------
+       Borders & Shadows
+    ------------------------------------------------------------------ */
+    --border: #e5e7eb;
+    --border-strong: #d1d5db;
+
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+
+    /* ------------------------------------------------------------------
+       Layout & Motion
+    ------------------------------------------------------------------ */
+    --sidebar-width: 17.5rem; /* 280px */
+    --topbar-height: 4.5rem;  /* 72px */
+    --transition: 0.2s ease-in-out;
+
+    color-scheme: light;
+}
+
+/* ------------------------------------------------------------------
+   Dark Mode Overrides
+------------------------------------------------------------------ */
+.dark {
+    --background: #09090b;
+    --surface: #111318;
+    --surface-2: #181b22;
+    --surface-3: #21252f;
+
+    --sidebar: #0f1116;
+    --topbar: rgba(15, 17, 22, 0.82);
+
+    --text: #f3f4f6;
+    --text-soft: #9ca3af;
+    --text-muted: #6b7280;
+
+    --border: #272b35;
+    --border-strong: #3e4655;
+
+    /* Mantemos sombras leves no dark mode para evitar aspeto de "sticker" */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+
+    color-scheme: dark;
+}

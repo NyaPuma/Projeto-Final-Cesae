@@ -1,0 +1,206 @@
+/*
+|--------------------------------------------------------------------------
+| Card File Component
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-file {
+    /* Variáveis padrão de controlo */
+    --file-bg: var(--surface, #ffffff);
+    --file-border: var(--border-color, #e9ecef);
+    --file-hover-bg: var(--surface-hover, #f8f9fa);
+    --file-hover-border: var(--primary, #007bff);
+
+    --file-icon-bg: rgba(0, 123, 255, 0.08); /* Tom suave baseado no primary */
+    --file-icon-color: var(--primary, #007bff);
+    --file-icon-size: 44px;
+
+    display: flex;
+    align-items: center;
+    gap: var(--space-md, 16px);
+    width: 100%;
+    padding: var(--space-md, 16px);
+    border: 1px solid var(--file-border);
+    border-radius: var(--radius-md, 8px);
+    background-color: var(--file-bg);
+    position: relative; /* Necessário para ancorar a barra de progresso */
+    overflow: hidden; /* Garante que a barra de progresso respeita os cantos arredondados */
+    box-sizing: border-box;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+/* Hover no Card */
+.ui-card-file:hover {
+    background-color: var(--file-hover-bg);
+    border-color: var(--file-hover-border);
+}
+
+/* Foco por teclado no Card (se for interativo/link) */
+.ui-card-file:focus-visible {
+    outline: none;
+    border-color: var(--file-hover-border);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Icon Container (Com micro-interações no Hover)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-file__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    width: var(--file-icon-size);
+    height: var(--file-icon-size);
+    border-radius: var(--radius-md, 8px);
+    background-color: var(--file-icon-bg);
+    color: var(--file-icon-color);
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.ui-card-file__icon svg {
+    width: 1.35rem;
+    height: 1.35rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+}
+
+/* Feedback interativo no ícone quando o card recebe hover */
+.ui-card-file:hover .ui-card-file__icon {
+    transform: scale(1.06);
+    background-color: rgba(0, 123, 255, 0.12); /* Contraste perfeito no hover */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Content & Typography
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-file__content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0; /* Previne quebras e mantém o ellipsis funcional no flex */
+}
+
+.ui-card-file__name {
+    font-size: var(--text-sm, 14px);
+    font-weight: 600; /* Normalizado de 650 para excelente suporte cross-font */
+    color: var(--text-primary, #212529);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.4;
+}
+
+.ui-card-file__meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap; /* Evita quebra de layout em mobile */
+    gap: var(--space-xs, 8px);
+    margin-top: 4px;
+    font-size: var(--text-xs, 12px);
+    color: var(--text-secondary, #6c757d);
+    line-height: 1;
+}
+
+/* Design Value-Add: Criação automática de ponto separador entre os metadados */
+.ui-card-file__meta > * + *::before {
+    content: "•";
+    margin-inline-end: var(--space-xs, 8px);
+    color: var(--text-tertiary, #adb5bd);
+    pointer-events: none;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Action Buttons (UX & Acessibilidade refinados)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-file__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs, 8px);
+}
+
+.ui-card-file__action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px; /* Aumenta a área de toque */
+    font-size: var(--text-sm, 14px);
+    font-weight: 600;
+    color: var(--primary, #007bff);
+    text-decoration: none;
+    border-radius: var(--radius-sm, 4px);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    outline: none;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.1s ease;
+}
+
+.ui-card-file__action:hover {
+    background-color: var(--surface-hover, #f1f3f5);
+    color: var(--primary-dark, #0056b3);
+}
+
+/* Micro-feedback físico de pressão ao clicar */
+.ui-card-file__action:active {
+    transform: scale(0.95);
+}
+
+/* Foco acessível via teclado */
+.ui-card-file__action:focus-visible {
+    box-shadow: 0 0 0 2px var(--primary, #007bff);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Design Value-Add: Progress Bar & Upload State
+|--------------------------------------------------------------------------
+*/
+
+/* Classe a adicionar ao <div class="ui-card-file ui-card-file--uploading"> */
+.ui-card-file--uploading {
+    --file-border: var(--primary-light, #e7f5ff);
+    background-color: var(--surface, #ffffff);
+}
+
+/* Contentor da barra de progresso (fixado na base do card) */
+.ui-card-file__progress-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--border-color, #e9ecef);
+    pointer-events: none;
+}
+
+/* Barra de progresso interna dinamicamente controlada (via inline style width) */
+.ui-card-file__progress-bar {
+    height: 100%;
+    width: 0%; /* Alterado dinamicamente no seu script ex: style="width: 65%;" */
+    background-color: var(--primary, #007bff);
+
+    transition: width 0.3s ease;
+}

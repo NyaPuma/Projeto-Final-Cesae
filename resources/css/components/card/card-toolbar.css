@@ -1,0 +1,145 @@
+/*
+|--------------------------------------------------------------------------
+| Card Toolbar Component
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-toolbar {
+    /* Variáveis locais para fácil manutenção */
+    --toolbar-padding: var(--space-md, 16px);
+    --toolbar-bg: var(--surface, #ffffff);
+    --toolbar-border-color: var(--border-color, #e5e7eb);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Alinhamento padrão (distribuído) */
+    gap: var(--space-md, 16px);
+    width: 100%;
+    background-color: var(--toolbar-bg);
+    box-sizing: border-box;
+
+    /* CRÍTICO: Impede que botões quebrem o layout em ecrãs pequenos */
+    flex-wrap: wrap;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Design Value-Add: Toolbar Groups (Para alinhar botões internos)
+|--------------------------------------------------------------------------
+*/
+
+/* Permite agrupar botões à esquerda e filtros à direita de forma limpa */
+.ui-card-toolbar__group {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm, 12px);
+    flex-wrap: wrap;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Position (Flexbox Ordering)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-toolbar--top {
+    order: -1;
+}
+
+.ui-card-toolbar--bottom {
+    order: 1;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Alignment Overrides
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-toolbar--start {
+    justify-content: flex-start;
+}
+
+.ui-card-toolbar--center {
+    justify-content: center;
+}
+
+.ui-card-toolbar--end {
+    justify-content: flex-end;
+}
+
+.ui-card-toolbar--between {
+    justify-content: space-between;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Spacing / Padding
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-toolbar--sm {
+    --toolbar-padding: var(--space-sm, 12px);
+    padding: var(--toolbar-padding);
+}
+
+.ui-card-toolbar--md {
+    --toolbar-padding: var(--space-md, 16px);
+    padding: var(--toolbar-padding);
+}
+
+.ui-card-toolbar--lg {
+    --toolbar-padding: var(--space-lg, 24px);
+    padding: var(--toolbar-padding);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Borders (Com deteção inteligente de posição)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-toolbar--border {
+    border-bottom: 1px solid var(--toolbar-border-color);
+}
+
+/* Se a barra estiver no fundo, a borda deve passar automaticamente para o topo */
+.ui-card-toolbar--bottom.ui-card-toolbar--border {
+    border-top: 1px solid var(--toolbar-border-color);
+    border-bottom: none;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Design Value-Add: Sticky Toolbars (Fixação inteligente em scroll)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-toolbar--sticky {
+    position: sticky;
+    z-index: 10; /* Garante que fica por cima do conteúdo da lista em scroll */
+    box-shadow: var(--shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.05));
+}
+
+.ui-card-toolbar--top.ui-card-toolbar--sticky {
+    top: 0;
+}
+
+/* Se estiver no fundo, fixa-se no limite inferior do contentor do cartão */
+.ui-card-toolbar--bottom.ui-card-toolbar--sticky {
+    bottom: 0;
+    box-shadow: var(--shadow-sm-up, 0 -1px 2px rgba(0, 0, 0, 0.05));
+}
+
+/*
+|--------------------------------------------------------------------------
+| Accessibility & Focus
+|--------------------------------------------------------------------------
+*/
+
+/* Garante que elementos interativos dentro da toolbar tenham o espaçamento correto */
+.ui-card-toolbar a,
+.ui-card-toolbar button,
+.ui-card-toolbar input {
+    margin: 0;
+}

@@ -1,0 +1,105 @@
+/*
+|--------------------------------------------------------------------------
+| Design System: Typography
+|--------------------------------------------------------------------------
+|
+| Otimizado para suporte a Tipografia Fluida (Clamp) e Acessibilidade.
+|
+*/
+
+:root {
+  /* Font Families */
+  --font-sans: "Inter", "Instrument Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
+
+  /* Font Sizes (Base escalável) */
+  --text-xs: clamp(0.75rem, 0.70rem + 0.25vw, 0.8rem);
+  --text-sm: clamp(0.875rem, 0.82rem + 0.25vw, 0.95rem);
+  --text-md: 1rem;
+  --text-lg: clamp(1.125rem, 1.05rem + 0.4vw, 1.25rem);
+  --text-xl: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
+  --text-2xl: clamp(1.5rem, 1.35rem + 0.75vw, 2rem);
+  --text-3xl: clamp(1.875rem, 1.6rem + 1vw, 2.5rem);
+  --text-4xl: clamp(2.25rem, 1.9rem + 1.5vw, 3.5rem);
+  --text-5xl: clamp(3rem, 2.5rem + 2vw, 4.5rem);
+
+  /* Font Weights */
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-black: 800;
+
+  /* Leading & Tracking */
+  --leading-tight: 1.2;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.7;
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.04em;
+}
+
+/* ==========================================================
+   BASE & RESET
+========================================================== */
+html {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: var(--leading-normal);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  /* Otimiza a leitura de parágrafos */
+  text-wrap: pretty;
+}
+
+body {
+  background: var(--background);
+  font-size: var(--text-md);
+}
+
+/* ==========================================================
+   HEADINGS (Otimizados para legibilidade)
+========================================================== */
+h1, h2, h3, h4, h5, h6 {
+  line-height: var(--leading-tight);
+  color: var(--text);
+  /* Títulos com quebra equilibrada */
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--text-5xl); font-weight: var(--font-black); letter-spacing: var(--tracking-tight); }
+h2 { font-size: var(--text-4xl); font-weight: var(--font-bold); }
+h3 { font-size: var(--text-3xl); font-weight: var(--font-bold); }
+h4 { font-size: var(--text-2xl); font-weight: var(--font-semibold); }
+h5 { font-size: var(--text-xl); font-weight: var(--font-semibold); }
+h6 { font-size: var(--text-lg); font-weight: var(--font-semibold); }
+
+p {
+  color: var(--text-soft);
+  line-height: var(--leading-relaxed);
+  max-width: 75ch; /* Limite de largura ideal para leitura */
+}
+
+/* ==========================================================
+   UTILITIES
+========================================================== */
+.text-xs { font-size: var(--text-xs); }
+.text-sm { font-size: var(--text-sm); }
+.text-md { font-size: var(--text-md); }
+.text-lg { font-size: var(--text-lg); }
+
+.font-mono {
+  font-family: var(--font-mono);
+  font-feature-settings: "tnum"; /* Números tabulares para tabelas/KPIs */
+}
+
+/* Exemplo de uso de composições para evitar repetição */
+.label-uppercase {
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  font-weight: var(--font-semibold);
+  font-size: var(--text-xs);
+}

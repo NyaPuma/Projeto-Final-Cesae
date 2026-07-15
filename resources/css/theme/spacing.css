@@ -1,0 +1,36 @@
+/*
+|--------------------------------------------------------------------------
+| Design System: Spacing Scale
+|--------------------------------------------------------------------------
+|
+| Base: 4px = 0.25rem
+| Todos os espaçamentos devem ser derivados da unidade base para manter
+| a consistência visual e o suporte a acessibilidade (rem).
+|
+*/
+
+:root {
+  /* Unidade base para cálculos */
+  --space-unit: 0.25rem;
+
+  /* Micro (Spacing para dentro de componentes) */
+  --space-0: 0;
+  --space-1: calc(var(--space-unit) * 1);   /* 4px  */
+  --space-2: calc(var(--space-unit) * 2);   /* 8px  */
+  --space-3: calc(var(--space-unit) * 3);   /* 12px */
+
+  /* Small (Padding e Gaps entre elementos internos) */
+  --space-4: calc(var(--space-unit) * 4);   /* 16px */
+  --space-5: calc(var(--space-unit) * 5);   /* 20px */
+  --space-6: calc(var(--space-unit) * 6);   /* 24px */
+
+  /* Medium (Layout de componentes e separação de secções) */
+  --space-7: calc(var(--space-unit) * 8);   /* 32px */
+  --space-8: calc(var(--space-unit) * 10);  /* 40px */
+  --space-9: calc(var(--space-unit) * 12);  /* 48px */
+
+  /* Large (Layout de página e grandes blocos) */
+  --space-10: calc(var(--space-unit) * 16); /* 64px */
+  --space-11: calc(var(--space-unit) * 20); /* 80px */
+  --space-12: calc(var(--space-unit) * 24); /* 96px */
+}

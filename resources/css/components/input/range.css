@@ -1,0 +1,314 @@
+/*
+|--------------------------------------------------------------------------
+| Range Input Component (Otimizado)
+|--------------------------------------------------------------------------
+| • System-friendly local variables (easy theme matching)
+| • Mathematical centering for cross-browser thumbs (no magic numbers)
+| • Complete focus states (Webkit & Firefox compliant)
+| • Cascading color changes for disabled states via :has()
+| • RTL Ready & No-jitter tabular numbers
+|--------------------------------------------------------------------------
+*/
+
+.ui-range {
+  /* Design Tokens Locais */
+  --range-track-height: 6px;
+  --range-thumb-size: 1.25rem; /* ~20px */
+  --range-track-bg: var(--surface-hover, #e5e7eb);
+  --range-track-fill: var(--primary, #3b82f6);
+  --range-thumb-bg: var(--primary, #3b82f6);
+  --range-thumb-border: var(--surface, #ffffff);
+  --range-thumb-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06));
+  --range-focus-ring: var(--primary-light, rgba(59, 130, 246, 0.15));
+
+  /* Direção padrão do gradiente para suporte RTL */
+  --range-dir: to right;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm, 0.5rem);
+  width: 100%;
+  box-sizing: border-box;
+  transition: opacity var(--transition-normal, 0.2s) ease;
+}
+
+/* Suporte Automático a RTL (Right-to-Left) */
+[dir="rtl"] .ui-range,
+.ui-range:dir(rtl) {
+  --range-dir: to left;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Header
+|--------------------------------------------------------------------------
+*/
+.ui-range__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md, 1rem);
+  user-select: none;
+}
+
+.ui-range__label {
+  font-size: var(--text-sm, 0.875rem);
+  font-weight: 600;
+  color: var(--text-primary, #111827);
+}
+
+.ui-range__value {
+  min-width: 2.5rem;
+  padding: var(--space-xs, 0.25rem) var(--space-sm, 0.5rem);
+  border-radius: var(--radius-md, 6px);
+  background: var(--surface-secondary, #f3f4f6);
+  color: var(--text-primary, #111827);
+  font-size: var(--text-xs, 0.75rem);
+  font-weight: 600;
+  text-align: center;
+
+  /* Evita que o balão "trema" visualmente com a mudança rápida de números */
+  font-variant-numeric: tabular-nums;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Wrapper
+|--------------------------------------------------------------------------
+*/
+.ui-range__wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  /* Previne layout shifts e garante área de toque acessível */
+  min-height: calc(var(--range-thumb-size) + 8px);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Range Input Base Reset
+|--------------------------------------------------------------------------
+*/
+.ui-range__input {
+  width: 100%;
+  /* Altura ligeiramente superior ao thumb para evitar clipping do foco e transformações */
+  height: calc(var(--range-thumb-size) + 8px);
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  margin: 0;
+  outline: none;
+}
+
+/*
+|--------------------------------------------------------------------------
+| WebKit Track & Thumb (Chrome, Safari, Edge, Opera)
+|--------------------------------------------------------------------------
+*/
+.ui-range__input::-webkit-slider-runnable-track {
+  width: 100%;
+  height: var(--range-track-height);
+  border-radius: var(--radius-full, 9999px);
+  background: linear-gradient(
+    var(--range-dir),
+    var(--range-track-fill) 0%,
+    var(--range-track-fill) var(--range-progress, 50%),
+    var(--range-track-bg) var(--range-progress, 50%)
+  );
+  transition: background-color 0.2s ease;
+}
+
+.ui-range__input::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  box-sizing: border-box;
+  width: var(--range-thumb-size);
+  height: var(--range-thumb-size);
+
+  /* Alinhamento vertical exato considerando a margem de segurança do input */
+  margin-top: calc((var(--range-track-height) / 2) - (var(--range-thumb-size) / 2));
+
+  border-radius: 50%;
+  background: var(--range-thumb-bg);
+  border: 3px solid var(--range-thumb-border);
+  box-shadow: var(--range-thumb-shadow);
+  cursor: pointer;
+
+  will-change: transform;
+  transition:
+    transform 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.ui-range__input::-webkit-slider-thumb:hover {
+  transform: scale(1.12);
+}
+
+.ui-range__input:active::-webkit-slider-thumb {
+  transform: scale(0.95); /* Feedback tátil imediato ao arrastar */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Firefox Track, Progress & Thumb
+|--------------------------------------------------------------------------
+*/
+.ui-range__input::-moz-range-track {
+  width: 100%;
+  height: var(--range-track-height);
+  border-radius: var(--radius-full, 9999px);
+  background: var(--range-track-bg);
+  transition: background-color 0.2s ease;
+}
+
+.ui-range__input::-moz-range-progress {
+  height: var(--range-track-height);
+  border-radius: var(--radius-full, 9999px);
+  background: var(--range-track-fill);
+  transition: background-color 0.2s ease;
+}
+
+.ui-range__input::-moz-range-thumb {
+  box-sizing: border-box;
+  width: var(--range-thumb-size);
+  height: var(--range-thumb-size);
+  border-radius: 50%;
+  background: var(--range-thumb-bg);
+  border: 3px solid var(--range-thumb-border);
+  box-shadow: var(--range-thumb-shadow);
+  cursor: pointer;
+
+  will-change: transform;
+  transition:
+    transform 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.ui-range__input::-moz-range-thumb:hover {
+  transform: scale(1.12);
+}
+
+.ui-range__input:active::-moz-range-thumb {
+  transform: scale(0.95);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Focus States (Accessibility WCAG 2.2 Compliant)
+|--------------------------------------------------------------------------
+*/
+.ui-range__input:focus-visible::-webkit-slider-thumb {
+  border-color: var(--range-thumb-border);
+  box-shadow:
+    var(--range-thumb-shadow),
+    0 0 0 2px var(--color-surface, #ffffff),
+    0 0 0 5px var(--range-track-fill);
+}
+
+.ui-range__input:focus-visible::-moz-range-thumb {
+  border-color: var(--range-thumb-border);
+  box-shadow:
+    var(--range-thumb-shadow),
+    0 0 0 2px var(--color-surface, #ffffff),
+    0 0 0 5px var(--range-track-fill);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Disabled State (Sincronização Inteligente de Cascata)
+|--------------------------------------------------------------------------
+*/
+.ui-range:has(.ui-range__input:disabled) {
+  opacity: 0.55;
+}
+
+.ui-range__input:disabled {
+  --range-track-fill: var(--border-disabled, #d1d5db);
+  --range-track-bg: var(--surface-disabled, #f3f4f6);
+  --range-thumb-bg: var(--text-disabled, #9ca3af);
+  --range-thumb-border: var(--surface-disabled, #f9fafb);
+  --range-thumb-shadow: none;
+
+  cursor: not-allowed;
+}
+
+/* Garante que os seletores específicos herdam o cursor de bloqueio correto */
+.ui-range__input:disabled::-webkit-slider-thumb {
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.ui-range__input:disabled::-moz-range-thumb {
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Hint
+|--------------------------------------------------------------------------
+*/
+.ui-range__hint {
+  margin: 0;
+  font-size: var(--text-xs, 0.75rem);
+  color: var(--text-secondary, #6b7280);
+  line-height: 1.4;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Windows Forced Colors Mode (High Contrast Accessibility)
+|--------------------------------------------------------------------------
+*/
+@media (forced-colors: active) {
+  .ui-range__input::-webkit-slider-thumb {
+    background: SelectedItem;
+    border-color: ButtonBorder;
+  }
+
+  .ui-range__input::-moz-range-thumb {
+    background: SelectedItem;
+    border-color: ButtonBorder;
+  }
+
+  .ui-range__input:focus-visible::-webkit-slider-thumb {
+    outline: 2px solid Highlight;
+    outline-offset: 4px;
+    box-shadow: none;
+  }
+
+  .ui-range__input:focus-visible::-moz-range-thumb {
+    outline: 2px solid Highlight;
+    outline-offset: 4px;
+    box-shadow: none;
+  }
+
+  .ui-range:has(.ui-range__input:disabled) {
+    opacity: 1; /* WHCM prefere cores sólidas e sem opacidade para manter contraste visível */
+  }
+
+  .ui-range__input:disabled {
+    --range-track-fill: GrayText;
+    --range-thumb-bg: GrayText;
+    --range-thumb-border: Canvas;
+  }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Reduced Motion (Acessibilidade de Movimento)
+|--------------------------------------------------------------------------
+*/
+@media (prefers-reduced-motion: reduce) {
+  .ui-range__input::-webkit-slider-thumb,
+  .ui-range__input::-moz-range-thumb {
+    transition: none !important;
+    transform: none !important;
+  }
+}

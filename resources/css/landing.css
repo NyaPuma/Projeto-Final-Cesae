@@ -1,0 +1,99 @@
+/*
+|--------------------------------------------------------------------------
+| Landing Page Styles
+|--------------------------------------------------------------------------
+|
+| Estilos base e componentes para a landing page.
+| Certifica-te que este ficheiro está em: resources/css/landing.css
+|
+*/
+
+:root {
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --text-main: #1f2937;
+    --text-muted: #6b7280;
+    --bg-light: #f9fafb;
+}
+
+/* Base */
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--text-main);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Hero Section */
+.hero {
+    padding: 4rem 1rem;
+    text-align: center;
+    background-color: var(--bg-light);
+}
+
+.hero__title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    color: #111827;
+}
+
+.hero__subtitle {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto 2rem;
+}
+
+/* Componente de Botão */
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.btn--primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn--primary:hover {
+    background-color: var(--primary-hover);
+}
+
+/* Grid de Cards (Features) */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 4rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.card {
+    padding: 2rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    transition: transform 0.2s, shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.card__title {
+    font-size: 1.25rem;
+    margin-top: 0;
+}
+
+/* Utilitários */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}

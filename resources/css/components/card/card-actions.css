@@ -1,0 +1,94 @@
+/*
+|--------------------------------------------------------------------------
+| Card Actions Group Component
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-actions-group {
+    /* Variáveis padrão de controlo */
+    --actions-gap: var(--space-sm);
+    --actions-justify: flex-end; /* Por padrão de design, ações de cartões alinham à direita */
+    --actions-align: center;
+
+    display: flex;
+    flex-wrap: wrap; /* Evita quebra de layout/overflow em ecrãs móveis */
+    gap: var(--actions-gap);
+    justify-content: var(--actions-justify);
+    align-items: var(--actions-align);
+    width: 100%;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Direction (Adaptação inteligente de comportamento)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-actions-group--horizontal {
+    flex-direction: row;
+}
+
+.ui-card-actions-group--vertical {
+    flex-direction: column;
+    --actions-justify: flex-start;
+    --actions-align: stretch; /* Em vertical, os botões tendem a ocupar a largura total */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Alignment (Abstraído para variáveis para funcionar em Row e Column)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-actions-group--start {
+    --actions-justify: flex-start;
+    --actions-align: flex-start;
+}
+
+.ui-card-actions-group--center {
+    --actions-justify: center;
+    --actions-align: center;
+}
+
+.ui-card-actions-group--end {
+    --actions-justify: flex-end;
+    --actions-align: flex-end;
+}
+
+.ui-card-actions-group--between {
+    --actions-justify: space-between;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Spacing (Apenas atualiza a variável local, reduzindo repetição de código)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-actions-group--xs {
+    --actions-gap: var(--space-xs);
+}
+
+.ui-card-actions-group--sm {
+    --actions-gap: var(--space-sm);
+}
+
+.ui-card-actions-group--md {
+    --actions-gap: var(--space-md);
+}
+
+.ui-card-actions-group--lg {
+    --actions-gap: var(--space-lg);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Design Value: Stretch (Distribuição igualitária dos botões de ação)
+|--------------------------------------------------------------------------
+*/
+
+/* Excelente para interfaces mobile onde queres botões com larguras 50/50 ou 100% */
+.ui-card-actions-group--stretch > * {
+    flex: 1 1 0%;
+    min-width: 110px; /* Evita que os botões fiquem ilegíveis se houverem demasiados */
+}

@@ -1,0 +1,168 @@
+/*
+|--------------------------------------------------------------------------
+| Social Button Component
+|--------------------------------------------------------------------------
+*/
+
+.ui-social-button {
+    --social-icon-size: 20px;
+    --social-brand-color: var(--primary); /* Cor padrão para foco/interação */
+    --social-border-color: var(--border-color);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    min-height: 48px;
+    padding-inline: var(--space-lg);
+    border: 1px solid var(--social-border-color);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap; /* Evita quebras de linha estranhas */
+
+    /* Hardware acceleration para animações ultra-suaves */
+    will-change: transform, box-shadow;
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        color .2s ease,
+        transform .15s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow .15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Hover & Active States (feedback tátil moderno)
+|--------------------------------------------------------------------------
+*/
+
+.ui-social-button:hover {
+    transform: translateY(-1.5px);
+    border-color: var(--social-brand-color);
+    /* Cria um fundo sutil misturando 8% da cor da marca com o fundo */
+    background: color-mix(in srgb, var(--social-brand-color) 8%, var(--surface));
+}
+
+.ui-social-button:active {
+    transform: translateY(0.5px);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Focus (Anel de foco inteligente com a cor da marca correspondente)
+|--------------------------------------------------------------------------
+*/
+
+.ui-social-button:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--social-brand-color) 25%, transparent);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Block (Largura Total)
+|--------------------------------------------------------------------------
+*/
+
+.ui-social-button--block {
+    display: flex;
+    width: 100%;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Sizes (Escala proporcional de altura, fontes, paddings e ícones)
+|--------------------------------------------------------------------------
+*/
+
+.ui-social-button--sm {
+    min-height: 40px;
+    font-size: var(--text-xs);
+    --social-icon-size: 18px;
+    padding-inline: var(--space-md);
+}
+
+.ui-social-button--md {
+    min-height: 48px;
+    --social-icon-size: 20px;
+    padding-inline: var(--space-lg);
+}
+
+.ui-social-button--lg {
+    min-height: 56px;
+    font-size: var(--text-md);
+    --social-icon-size: 24px;
+    padding-inline: var(--space-xl);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Icon
+|--------------------------------------------------------------------------
+*/
+
+.ui-social-button__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0; /* Impede deformação do ícone */
+}
+
+.ui-social-button__icon svg {
+    width: var(--social-icon-size);
+    height: var(--social-icon-size);
+    /* Nota: Não forçamos currentColor para preservar cores originais de logos como Google e Microsoft */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Provider Colors (Declaramos apenas as variáveis. O hover herda automaticamente!)
+|--------------------------------------------------------------------------
+*/
+
+.ui-social-button--google {
+    --social-brand-color: #4285F4;
+}
+
+.ui-social-button--github {
+    --social-brand-color: #24292F;
+}
+
+.ui-social-button--microsoft {
+    --social-brand-color: #00A4EF;
+}
+
+.ui-social-button--apple {
+    --social-brand-color: #000000;
+}
+
+.ui-social-button--facebook {
+    --social-brand-color: #1877F2;
+}
+
+.ui-social-button--discord {
+    --social-brand-color: #5865F2;
+}
+
+.ui-social-button--linkedin {
+    --social-brand-color: #0A66C2;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Disabled
+|--------------------------------------------------------------------------
+*/
+
+.ui-social-button--disabled,
+.ui-social-button:disabled {
+    opacity: .5;
+    pointer-events: none;
+    box-shadow: none !important;
+    transform: none !important;
+}

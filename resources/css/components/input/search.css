@@ -1,0 +1,315 @@
+/*
+|--------------------------------------------------------------------------
+| Search Component (Otimizado)
+|--------------------------------------------------------------------------
+| Design System:
+| • Light / Dark Mode Friendly (Variáveis CSS customizáveis)
+| • Accessible Focus-visible (WCAG 2.2 Compliant)
+| • Collision-free Action Areas (Dynamic local paddings)
+| • Support for Loading & Disabled states via CSS :has()
+| • RTL Ready (Logical Properties)
+|
+*/
+
+.ui-search {
+  /* Variáveis locais para fácil manutenção e controlo de colisões */
+  --ui-search-height: 2.75rem; /* ~44px (Touch target recomendado) */
+  --ui-search-icon-size: 1.125rem; /* ~18px */
+  --ui-search-action-gap: 0.25rem; /* ~4px */
+
+  /* Espaçamentos calculados dinamicamente para evitar sobreposição */
+  --ui-search-pad-start: calc(var(--space-md, 1rem) + var(--ui-search-icon-size) + var(--space-xs, 0.25rem));
+  --ui-search-pad-end: calc(var(--space-sm, 0.5rem) + 3.5rem); /* Reserva espaço suficiente para loader + botão de limpar */
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm, 0.5rem);
+  width: 100%;
+  transition: opacity var(--transition-normal, 0.2s) ease;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Label
+|--------------------------------------------------------------------------
+*/
+.ui-search__label {
+  font-size: var(--text-sm, 0.875rem);
+  font-weight: 600;
+  color: var(--text-primary, #111827);
+  user-select: none;
+  transition: color var(--transition-fast, 0.15s) ease;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Wrapper
+|--------------------------------------------------------------------------
+*/
+.ui-search__wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Input
+|--------------------------------------------------------------------------
+*/
+.ui-search__input {
+  width: 100%;
+  min-height: var(--ui-search-height);
+
+  /* Uso de propriedades lógicas de padding baseadas nas variáveis do componente */
+  padding-block: 0;
+  padding-inline-start: var(--ui-search-pad-start);
+  padding-inline-end: var(--ui-search-pad-end);
+
+  border: 1px solid var(--border-color, #d1d5db);
+  border-radius: var(--radius-md, 8px);
+  background: var(--surface, #ffffff);
+  color: var(--text-primary, #111827);
+  font-family: inherit;
+  font-size: var(--text-sm, 0.875rem);
+  box-sizing: border-box;
+
+  transition:
+    border-color var(--transition-normal, 0.2s) ease,
+    background var(--transition-normal, 0.2s) ease,
+    box-shadow var(--transition-normal, 0.2s) ease;
+}
+
+.ui-search__input::placeholder {
+  color: var(--text-muted, #9ca3af);
+  opacity: 1; /* Firefox fix */
+}
+
+/* Hover (Apenas quando ativo) */
+.ui-search__input:not(:disabled):hover {
+  border-color: var(--border-hover, #9ca3af);
+}
+
+/* Focus State (Acessibilidade sem "foco fantasma" ao clicar com o rato) */
+.ui-search__input:focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  border-color: var(--primary, #3b82f6);
+  box-shadow:
+    0 0 0 1px var(--primary, #3b82f6),
+    0 0 0 4px var(--primary-light, rgba(59, 130, 246, 0.15));
+}
+
+/* Estado Desativado */
+.ui-search__input:disabled {
+  cursor: not-allowed;
+  background: var(--surface-disabled, #f3f4f6);
+  border-color: var(--border-color, #d1d5db);
+  color: var(--text-disabled, #9ca3af);
+}
+
+/* Sincronização de desativação global via :has() */
+.ui-search:has(.ui-search__input:disabled) {
+  opacity: 0.6;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Icon (Lupa - Esquerda / Propriedades Lógicas)
+|--------------------------------------------------------------------------
+*/
+.ui-search__icon {
+  position: absolute;
+  inset-inline-start: var(--space-md, 1rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary, #6b7280);
+  pointer-events: none;
+  transition: color var(--transition-normal, 0.2s) ease;
+}
+
+.ui-search__icon svg {
+  width: var(--ui-search-icon-size);
+  height: var(--ui-search-icon-size);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Altera a cor do ícone quando o input está focado (Sincronização moderna) */
+.ui-search:has(.ui-search__input:focus-visible) .ui-search__icon {
+  color: var(--primary, #3b82f6);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Área de Ações à Direita (Evita colisões de layout)
+|--------------------------------------------------------------------------
+*/
+.ui-search__actions {
+  position: absolute;
+  inset-inline-end: var(--space-sm, 0.5rem);
+  display: flex;
+  align-items: center;
+  gap: var(--ui-search-action-gap);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Clear Button
+|--------------------------------------------------------------------------
+*/
+.ui-search__clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem; /* ~28px */
+  height: 1.75rem;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-secondary, #6b7280);
+  cursor: pointer;
+  transition:
+    background var(--transition-fast, 0.15s) ease,
+    color var(--transition-fast, 0.15s) ease,
+    border-color var(--transition-fast, 0.15s) ease,
+    box-shadow var(--transition-fast, 0.15s) ease;
+}
+
+.ui-search__clear svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2px;
+}
+
+.ui-search__clear:hover {
+  background: var(--surface-hover, #f3f4f6);
+  color: var(--text-primary, #111827);
+}
+
+.ui-search__clear:focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 1px;
+  border-color: var(--primary, #3b82f6);
+  box-shadow: 0 0 0 3px var(--primary-light, rgba(59, 130, 246, 0.15));
+}
+
+/* Se o input estiver vazio ou o estado for Loading, oculta o botão de limpar */
+.ui-search__clear[hidden],
+.ui-search--loading .ui-search__clear {
+  display: none;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Loader (Spinner Otimizado na GPU)
+|--------------------------------------------------------------------------
+*/
+.ui-search__loader {
+  display: none; /* Oculto por defeito */
+  width: 1rem; /* ~16px */
+  height: 1rem;
+  border: 2px solid currentColor;
+  border-inline-end-color: transparent;
+  border-radius: 50%;
+  color: var(--primary, #3b82f6);
+  will-change: transform;
+  animation: ui-search-spin 0.65s linear infinite;
+  margin-inline-end: var(--space-xxs, 2px);
+}
+
+/* Mostra o loader apenas quando o componente está no estado de loading */
+.ui-search--loading .ui-search__loader {
+  display: inline-block;
+}
+
+@keyframes ui-search-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Hint / Feedback Text
+|--------------------------------------------------------------------------
+*/
+.ui-search__hint {
+  margin: 0;
+  font-size: var(--text-xs, 0.75rem);
+  color: var(--text-secondary, #6b7280);
+  line-height: 1.4;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Search Cancel (Remover nativos invasivos de browsers)
+|--------------------------------------------------------------------------
+*/
+.ui-search__input::-webkit-search-cancel-button,
+.ui-search__input::-webkit-search-decoration,
+.ui-search__input::-webkit-search-results-button,
+.ui-search__input::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+  display: none;
+}
+
+/*
+|--------------------------------------------------------------------------
+| High Contrast Support (Windows Forced Colors / WCAG AAA)
+|--------------------------------------------------------------------------
+*/
+@media (forced-colors: active) {
+  .ui-search__input {
+    border: 2px solid ButtonText;
+  }
+
+  .ui-search__input:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 3px;
+    background: Canvas;
+  }
+
+  .ui-search__icon {
+    color: CanvasText;
+  }
+
+  .ui-search__clear:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+
+  .ui-search:has(.ui-search__input:disabled) {
+    opacity: 1; /* WHCM prefere cores sem opacidade para manter contraste visível */
+  }
+
+  .ui-search__input:disabled {
+    border-color: GrayText;
+    color: GrayText;
+  }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Reduced Motion (Acessibilidade de Movimento)
+|--------------------------------------------------------------------------
+*/
+@media (prefers-reduced-motion: reduce) {
+  .ui-search__input,
+  .ui-search__icon,
+  .ui-search__clear {
+    transition: none !important;
+  }
+
+  .ui-search__loader {
+    animation-duration: 1.5s; /* Abranda significativamente o spinner para evitar náuseas ou distração */
+  }
+}
