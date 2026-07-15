@@ -46,6 +46,7 @@ Route::post('/login',    [AuthController::class, 'login'])
     ->middleware(['rate.limit:5,1'])
     ->withoutMiddleware([VerifyCsrfToken::class]);
 
+
 // Fluxo Público de Password Reset enviado por Email
 Route::get('/password/reset/{token}', function ($token) {
     return view('ui.auth-reset', ['token' => $token]);
