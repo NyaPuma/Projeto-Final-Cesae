@@ -16,7 +16,7 @@
 </head>
 
 <body class="min-h-screen bg-[var(--bg)] text-[var(--text)] overflow-x-hidden antialiased">
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-xl focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-black">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-xl focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[var(--surface)]">
         Skip to content
     </a>
 
@@ -35,10 +35,10 @@
 
             {{-- Branding --}}
             <div class="h-20 px-8 flex items-center border-b border-[var(--border)]">
-                <div class="flex items-center gap-4">
-                    <div class="h-11 w-11 rounded-xl bg-primary text-black font-black flex items-center justify-center shadow-md shadow-primary/20">
-                        GA
-                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="h-11 w-11 rounded-xl bg-primary text-[var(--surface)] font-black flex items-center justify-center shadow-md shadow-primary/20">
+                            GA
+                        </div>
                     <div>
                         <h1 class="font-bold text-sm tracking-tight text-[var(--text)]">
                             Gestão de Avarias
@@ -66,28 +66,33 @@
                         ['href' => 'calendar', 'active' => 'calendar*', 'label' => 'Agenda', 'icon' => '📅', 'exact' => false],
                         ['href' => 'docs/openapi', 'active' => 'docs/openapi*', 'label' => 'Swagger', 'icon' => '📚', 'exact' => false],
                     ];
-                @endphp
 
-                @foreach($navItems as $item)
-                    @php
+                    $renderNavItem = function($item) {
                         $isActive = $item['exact']
                             ? request()->is($item['active'])
                             : request()->is($item['active']);
-                    @endphp
+                @endphp
 
-                    <a
-                        href="{{ url($item['href'] === '/' ? '/' : $item['href']) }}"
-                        class="group flex items-center gap-3.5 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200
-                        {{ $isActive
-                            ? 'bg-primary text-black font-semibold shadow-sm shadow-primary/20'
-                            : 'text-[var(--text)] hover:bg-[var(--surface-2)]'
-                        }}"
-                    >
-                        <span class="text-lg filter {{ $isActive ? 'none' : 'grayscale opacity-80' }}">
-                            {{ $item['icon'] }}
-                        </span>
-                        <span>{{ $item['label'] }}</span>
-                    </a>
+                        <a
+                            href="{{ url($item['href'] === '/' ? '/' : $item['href']) }}"
+                            class="group flex items-center gap-3.5 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200
+                            {{ $isActive
+                                ? 'bg-primary text-[var(--surface)] font-semibold shadow-sm shadow-primary/20'
+                                : 'text-[var(--text)] hover:bg-[var(--surface-2)]'
+                            }}"
+                        >
+                            <span class="text-lg filter {{ $isActive ? 'none' : 'grayscale opacity-80' }}">
+                                {{ $item['icon'] }}
+                            </span>
+                            <span>{{ $item['label'] }}</span>
+                        </a>
+
+                @php
+                    };
+                @endphp
+
+                @foreach($navItems as $item)
+                    @php $renderNavItem($item); @endphp
                 @endforeach
             </nav>
 
@@ -96,6 +101,75 @@
                 <div id="authBox"></div>
             </div>
         </aside>
+
+        {{-- Mobile Sidebar (Hamburger) --}}
+        <div class="lg:hidden">
+            <button
+                type="button"
+                onclick="toggleMobileNav()"
+                class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] text-sm shadow-sm transition-all hover:bg-[var(--surface-2)] cursor-pointer"
+                aria-label="Abrir menu"
+            >
+                ☰
+            </button>
+
+            {{-- Overlay --}}
+            <div id="mobileNavOverlay" class="fixed inset-0 bg-black/30 hidden" onclick="closeMobileNav()"></div>
+
+            {{-- Drawer --}}
+            <aside
+                id="mobileNav"
+                class="fixed inset-y-0 left-0 w-72 transform -translate-x-full transition-transform duration-200 bg-[var(--sidebar)] border-r border-[var(--border)] backdrop-blur-xl z-50"
+            >
+                {{-- Branding --}}
+                <div class="h-20 px-8 flex items-center border-b border-[var(--border)]">
+                    <div class="flex items-center gap-4">
+                        <div class="h-11 w-11 rounded-xl bg-primary text-[var(--surface)] font-black flex items-center justify-center shadow-md shadow-primary/20">
+                            GA
+                        </div>
+                        <div>
+                            <h1 class="font-bold text-sm tracking-tight text-[var(--text)]">
+                                Gestão de Avarias
+                            </h1>
+                            <p class="text-[var(--text-soft)] text-xs font-medium">
+                                Enterprise Dashboard
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Links --}}
+                <nav class="flex-1 overflow-y-auto px-4 py-6 space-y-1" aria-label="Navegação principal mobile">
+                    @foreach($navItems as $item)
+                        @php
+                            $isActive = $item['exact']
+                                ? request()->is($item['active'])
+                                : request()->is($item['active']);
+                        @endphp
+
+                        <a
+                            href="{{ url($item['href'] === '/' ? '/' : $item['href']) }}"
+                            onclick="closeMobileNav()"
+                            class="group flex items-center gap-3.5 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200
+                            {{ $isActive
+                                ? 'bg-primary text-[var(--surface)] font-semibold shadow-sm shadow-primary/20'
+                                : 'text-[var(--text)] hover:bg-[var(--surface-2)]'
+                            }}"
+                        >
+                            <span class="text-lg filter {{ $isActive ? 'none' : 'grayscale opacity-80' }}">
+                                {{ $item['icon'] }}
+                            </span>
+                            <span>{{ $item['label'] }}</span>
+                        </a>
+                    @endforeach
+                </nav>
+
+                {{-- Auth box --}}
+                <div class="border-t border-[var(--border)] p-4 bg-[var(--surface-2)]/50">
+                    <div id="authBoxMobile"></div>
+                </div>
+            </aside>
+        </div>
 
         {{-- Área de Conteúdo Principal --}}
         <div class="flex-1 flex flex-col min-w-0">
@@ -165,15 +239,49 @@
         return true;
     }
 
+    function toggleMobileNav() {
+        const overlay = document.getElementById('mobileNavOverlay');
+        const drawer = document.getElementById('mobileNav');
+
+        if (!overlay || !drawer) return;
+
+        const isOpen = drawer.getAttribute('data-open') === 'true';
+
+        if (isOpen) {
+            closeMobileNav();
+            return;
+        }
+
+        drawer.setAttribute('data-open', 'true');
+        drawer.style.transform = 'translateX(0)';
+        overlay.classList.remove('hidden');
+        overlay.style.display = 'block';
+    }
+
+    function closeMobileNav() {
+        const overlay = document.getElementById('mobileNavOverlay');
+        const drawer = document.getElementById('mobileNav');
+
+        if (!overlay || !drawer) return;
+
+        drawer.setAttribute('data-open', 'false');
+        drawer.style.transform = 'translateX(-100%)';
+        overlay.classList.add('hidden');
+        overlay.style.display = 'none';
+    }
+
     function renderAuthBox() {
         const box = document.getElementById('authBox');
+        const boxMobile = document.getElementById('authBoxMobile');
         const topbarUser = document.getElementById('topbarUser');
-        if (!box && !topbarUser) return;
+
+        if (!box && !boxMobile && !topbarUser) return;
 
         const token = localStorage.getItem('api_token');
         if (token) {
             const userName = localStorage.getItem('user_name') || 'Utilizador';
             const userRole = localStorage.getItem('user_role') || 'Utilizador';
+
             if (box) {
                 box.innerHTML = `
                     <div class="space-y-2">
@@ -189,6 +297,23 @@
                     </div>
                 `;
             }
+
+            if (boxMobile) {
+                boxMobile.innerHTML = `
+                    <div class="space-y-2">
+                        <a href="/ui/profile" class="w-full inline-flex items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-2.5 text-xs font-semibold text-[var(--text)] hover:bg-[var(--surface-2)] transition-all duration-200 text-center">
+                            Ver Perfil
+                        </a>
+                        <button
+                            onclick="logout()"
+                            class="w-full inline-flex items-center justify-center rounded-xl bg-[var(--border)] hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-400 px-4 py-2.5 text-xs font-semibold text-[var(--text)] border border-transparent hover:border-red-500/20 transition-all duration-200 cursor-pointer"
+                        >
+                            Terminar Sessão
+                        </button>
+                    </div>
+                `;
+            }
+
             if (topbarUser) {
                 topbarUser.innerHTML = `
                     <a href="/ui/profile" class="flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 transition hover:bg-[var(--surface-2)]">
@@ -205,17 +330,29 @@
         } else {
             if (box) {
                 box.innerHTML = `
-                    <a
+                        <a
                         href="/ui/login"
-                        class="w-full inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-black shadow-sm shadow-primary/10 transition-all duration-200 hover:opacity-90 text-center"
+                        class="w-full inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-[var(--surface)] shadow-sm shadow-primary/10 transition-all duration-200 hover:opacity-90 text-center"
                     >
                         Iniciar Sessão
                     </a>
                 `;
             }
+
+            if (boxMobile) {
+                boxMobile.innerHTML = `
+                        <a
+                        href="/ui/login"
+                        class="w-full inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-[var(--surface)] shadow-sm shadow-primary/10 transition-all duration-200 hover:opacity-90 text-center"
+                    >
+                        Iniciar Sessão
+                    </a>
+                `;
+            }
+
             if (topbarUser) {
                 topbarUser.innerHTML = `
-                    <a href="/ui/login" class="inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-black shadow-sm shadow-primary/10 transition-all duration-200 hover:opacity-90">
+                    <a href="/ui/login" class="inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-[var(--surface)] shadow-sm shadow-primary/10 transition-all duration-200 hover:opacity-90">
                         Login / Registo
                     </a>
                 `;

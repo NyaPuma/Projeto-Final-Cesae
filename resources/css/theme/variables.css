@@ -12,10 +12,23 @@
     --primary-hover: #d97706;
     --primary-light: rgba(245, 158, 11, 0.1);
 
+    /* Cor de texto adequada em cima do primary */
+    --on-primary: #111827;
+
+    --text-primary: #111827;
+    --surface-secondary: #f8fafc;
+    --surface-hover: #f1f5f9;
+    --border-color: #e5e7eb;
+
     --success: #22c55e;
     --warning: #f59e0b;
     --danger: #ef4444;
     --info: #3b82f6;
+
+    /* Helpers para bibliotecas/estilos que usam var(--bg)/var(--text) */
+    --bg: var(--background);
+    --text: var(--text);
+
 
     /* ------------------------------------------------------------------
        Surface & Background (Light Default)
@@ -93,6 +106,10 @@
 
     --border: #272b35;
     --border-strong: #3e4655;
+    --text-primary: #f3f4f6;
+    --surface-secondary: #181b22;
+    --surface-hover: #21252f;
+    --border-color: #272b35;
 
     /* Mantemos sombras leves no dark mode para evitar aspeto de "sticker" */
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
