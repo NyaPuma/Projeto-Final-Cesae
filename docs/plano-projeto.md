@@ -1,4 +1,5 @@
 ## 1. Âmbito e Objetivos Gerais
+
 O objetivo principal deste projeto é transformar processos reativos ou manuais numa operação totalmente automatizada através de:
 * **Comunicação Centralizada:** Canal direto entre quem deteta a avaria, quem a repara e quem gere a infraestrutura.
 * **Inteligência Operacional:** Automatização de triagens e suporte à decisão na escala de técnicos através de IA.
@@ -7,6 +8,7 @@ O objetivo principal deste projeto é transformar processos reativos ou manuais 
 ---
 
 ## 2. Divisão de Papéis da Equipa Técnica
+
 Para simular a dinâmica de uma equipa real de desenvolvimento de software, os 4 elementos do grupo assumem focos de liderança no Trello:
 
 * **Team Leader & Product Owner:** Gestão de projeto, planeamento, controlo de requisitos e interface pedagógica.
