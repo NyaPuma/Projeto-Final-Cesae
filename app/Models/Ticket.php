@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes; // <--- ADICIONADO: Importação do SoftDeletes
+use Illuminate\Database\Eloquent\SoftDeletes; 
 use App\Traits\Auditable;
 
 class Ticket extends Model
 {
     use HasFactory;
     use Auditable;
-    use SoftDeletes; // <--- Agora o Laravel já reconhece a trait sem dar erro!
+    use SoftDeletes; 
 
     // Nomes esperados na tabela `ticket_statuses`
     public const STATUS_OPEN = 'aberta';
@@ -148,16 +148,16 @@ class Ticket extends Model
         return $this->save();
     }
 
-    public function requestBudgetAuthorization(float $threshold): bool
+    /**
+     * Solicitado pelo Técnico quando avalia que o custo estimado supera o limiar da empresa.
+     * Separamos o Custo Estimado ($estimatedBudget) do Custo Final ($this->cost).
+     */
+    public function requestBudgetAuthorization(float $estimatedBudget, float $threshold): bool
     {
-        if ($this->cost === null) {
-            return false;
-        }
-
-        if ($this->cost > $threshold) {
+        if ($estimatedBudget > $threshold) {
             $this->budget_requested = true;
             $this->budget_status = self::BUDGET_PENDING;
-            $this->budget_amount = $this->cost;
+            $this->budget_amount = $estimatedBudget; // Guarda a estimativa do técnico para avaliação do ADM
 
             $pendingStatus = TicketStatus::where('name', self::STATUS_PENDING_BUDGET)->first();
             if ($pendingStatus) {
@@ -224,6 +224,7 @@ class Ticket extends Model
         $statusId = self::getStatusIdByName($statusName);
         return $this->status_id === $statusId;
     }
+
     /**
      * Atalho de segurança para recolher eventos agendados para o FullCalendar.
      */
