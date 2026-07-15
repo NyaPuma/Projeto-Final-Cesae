@@ -6,7 +6,9 @@ use App\Models\Ticket;
 use App\Models\User;
 use App\Models\TicketComment;
 use App\Models\TicketAttachment;
+use App\Models\TicketStatus;
 use App\Services\AIService;
+use App\Traits\ControllerHelpers; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
@@ -15,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 
 class TicketController extends Controller
 {
+    use ControllerHelpers;
     protected $aiService;
 
     // Injeção de dependência do serviço de Inteligência Artificial

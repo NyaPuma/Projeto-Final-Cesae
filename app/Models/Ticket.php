@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes; 
 use App\Traits\Auditable;
 
-// --- ADICIONA ESTES IMPORTS QUE FALTAM ---
+// --- IMPORTAÇÕES NECESSÁRIAS PARA O VS CODE RECONHECER AS CLASSES ---
 use App\Models\TicketStatus;
 use App\Models\TicketWorkflowHistory;
 use App\Models\Equipment;
@@ -17,7 +17,7 @@ use App\Models\Room;
 use App\Models\TicketComment;
 use App\Models\TicketAttachment;
 use App\Models\User;
-// ----------------------------------------
+// ------------------------------------------------------------------
 
 class Ticket extends Model
 {
@@ -43,7 +43,6 @@ class Ticket extends Model
     public const BUDGET_APPROVED = 'approved';
     public const BUDGET_REJECTED = 'rejected';
 
-    // --- CORRIGIDO: Removida a barreira do $fillable para os Seeds correrem livremente ---
     protected $guarded = [];
 
     protected $casts = [
@@ -104,9 +103,6 @@ class Ticket extends Model
         return $this->hasMany(TicketAttachment::class);
     }
 
-    /**
-     * Inicia a reparação do ticket mudando o estado para 'em curso'.
-     */
     public function startRepair(): bool
     {
         $statusInProgress = TicketStatus::where('name', self::STATUS_IN_PROGRESS)->first();
@@ -120,9 +116,6 @@ class Ticket extends Model
         return $this->save();
     }
 
-    /**
-     * Fecha o ticket se o custo estiver abaixo do limiar.
-     */
     public function checkAutoClose(float $threshold): bool
     {
         if ($this->cost === null) {
@@ -158,16 +151,12 @@ class Ticket extends Model
         return $this->save();
     }
 
-    /**
-     * Solicitado pelo Técnico quando avalia que o custo estimado supera o limiar da empresa.
-     * Separamos o Custo Estimado ($estimatedBudget) do Custo Final ($this->cost).
-     */
     public function requestBudgetAuthorization(float $estimatedBudget, float $threshold): bool
     {
         if ($estimatedBudget > $threshold) {
             $this->budget_requested = true;
             $this->budget_status = self::BUDGET_PENDING;
-            $this->budget_amount = $estimatedBudget; // Guarda a estimativa do técnico para avaliação do ADM
+            $this->budget_amount = $estimatedBudget;
 
             $pendingStatus = TicketStatus::where('name', self::STATUS_PENDING_BUDGET)->first();
             if ($pendingStatus) {
@@ -214,17 +203,11 @@ class Ticket extends Model
         return $this->save();
     }
 
-    /**
-     * Obtém o ID do status pelo nome.
-     */
     public static function getStatusIdByName(string $statusName): ?int
     {
         return TicketStatus::where('name', $statusName)->value('id');
     }
 
-    /**
-     * Verifica se o ticket está num determinado estado pelo nome.
-     */
     public function hasStatus(string $statusName): bool
     {
         if (!$this->status_id) {
@@ -235,9 +218,6 @@ class Ticket extends Model
         return $this->status_id === $statusId;
     }
 
-    /**
-     * Atalho de segurança para recolher eventos agendados para o FullCalendar.
-     */
     public static function getScheduledEvents()
     {
         return self::whereNotNull('scheduled_at')->get()->map(function ($ticket) {
@@ -249,9 +229,7 @@ class Ticket extends Model
             ];
         });
     }
-    /**
-     * Adiciona isto para resolver o erro de "getLeastBusyTechnician" no Controller
-     */
+
     public static function getLeastBusyTechnician()
     {
         return User::whereHas('profile', fn($q) => $q->where('name', User::ROLE_TECHNICIAN))
@@ -262,26 +240,4 @@ class Ticket extends Model
             ->orderBy('assigned_tickets_count', 'asc')
             ->first();
     }
-
-    /**
-     * Adiciona isto para garantir que o reopen() funciona sem erros
-     */
-    public function reopen(): bool
-    {
-        // Verifica se o estado atual permite reabertura
-        // Assumindo que 3 é fechado
-        if ($this->status_id != 3) { 
-            return false;
-        }
-
-        $openStatus = TicketStatus::where('name', self::STATUS_OPEN)->first();
-        if ($openStatus) {
-            $this->status_id = $openStatus->id;
-            $this->reopened_at = now();
-            $this->closed_at = null;
-            return $this->save();
-        }
-        return false;
-    }
-    
 }
