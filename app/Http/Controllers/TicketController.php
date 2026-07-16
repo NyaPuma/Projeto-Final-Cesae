@@ -45,7 +45,7 @@ class TicketController extends Controller
         ]);
     }
 
-    /**
+/**
      * Exibe o detalhe do ticket injetando a sugestão em tempo real da IA
      */
     public function show(Request $request, $id)
@@ -55,15 +55,13 @@ class TicketController extends Controller
 
         // Se o pedido vier do teu frontend em JS (Accept: application/json ou AJAX)
         if ($request->wantsJson() || $request->ajax()) {
-            return response()->json($ticket);
+            // CORREÇÃO AQUI: Enviamos o objeto dentro da chave 'ticket'
+            return response()->json(['ticket' => $ticket]);
         }
 
         // Caso contrário (acesso direto do Admin à página), carrega a recomendação da IA e a View
         $recomendacaoIA = $this->aiService->recomendarTecnico($ticket);
 
-        // ⚠️ ATENÇÃO: Confirma o nome físico do teu ficheiro na pasta resources/views/ui/
-        // Se o ficheiro se chamar 'ticket-detail.blade.php', altera aqui para 'ui.ticket-detail'
-        // Se se chamar 'ticket_detail.blade.php', altera para 'ui.ticket_detail'
         return view('ui.ticketDetail', compact('ticket', 'recomendacaoIA'));
     }
 
