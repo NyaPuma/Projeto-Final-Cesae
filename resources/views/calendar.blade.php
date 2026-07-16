@@ -7,7 +7,7 @@
 
 <style>
     /* ==========================================================\
-       FULLCALENDAR - ENTERPRISE CUSTOM STYLING
+       FULLCALENDAR - ENTERPRISE CUSTOM STYLING & ACCESSIBILITY
     ========================================================== */
     .fc {
         --fc-border-color: var(--border);
@@ -64,16 +64,24 @@
         color: var(--text) !important;
     }
 
+    /* WCAG 2.1 - Estilo de Foco Visível para Teclado */
+    .fc-button:focus-visible,
+    a:focus-visible,
+    button:focus-visible {
+        outline: 3px solid var(--primary) !important;
+        outline-offset: 2px !important;
+    }
+
     .fc-button-primary:not(:disabled).fc-button-active,
     .fc-button-primary:not(:disabled):active {
-        color: var(--on-primary) !important;
+        color: #ffffff !important; /* Garantir contraste suficiente contra var(--primary) */
         background-color: var(--primary) !important;
         border-color: var(--primary) !important;
     }
 
     .dark .fc-button-primary:not(:disabled).fc-button-active,
     .dark .fc-button-primary:not(:disabled):active {
-        color: var(--on-primary) !important;
+        color: #ffffff !important;
         background-color: var(--primary) !important;
         border-color: var(--primary) !important;
     }
@@ -118,11 +126,11 @@
         cursor: pointer;
     }
 
-    /* Estilização Bento dos Eventos Técnicos adaptada ao Design System */
+    /* Estilização dos Eventos Técnicos adaptada ao Design System */
     .fc-event {
         border: none !important;
-        background: linear-gradient(135deg, var(--primary), var(--primary-hover)) !important;
-        color: var(--on-primary) !important;
+        background: var(--primary) !important; /* Cores sólidas oferecem rácios de contraste mais previsíveis */
+        color: #ffffff !important; /* Elevado contraste contra fundo primário */
         border-radius: 8px !important;
         padding: 6px 10px !important;
         font-size: 11px !important;
@@ -132,6 +140,7 @@
     }
 
     .dark .fc-event {
+        background: var(--primary-hover) !important;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     }
 
@@ -166,7 +175,7 @@
                 </svg>
                 ' . __('Dashboard') . '
             </a>
-            <button onclick="calendar.today()" class="w-full sm:w-auto inline-flex items-center justify-center px-5 py-2.5 bg-primary text-sm font-bold text-[var(--on-primary)] border border-transparent rounded-xl shadow-sm hover:opacity-90 transition-all min-h-[44px] cursor-pointer">
+            <button onclick="calendar.today()" class="w-full sm:w-auto inline-flex items-center justify-center px-5 py-2.5 bg-primary text-sm font-bold text-white border border-transparent rounded-xl shadow-sm hover:opacity-90 transition-all min-h-[44px] cursor-pointer">
                 ' . __('Hoje') . '
             </button>
         </div>',
@@ -178,26 +187,26 @@
     <div class="grid xl:grid-cols-4 gap-8 lg:gap-10">
 
         {{-- Painel de Resumo Lateral --}}
-        <div class="bg-[var(--surface)] border border-[var(--border)] rounded-3xl p-8 shadow-sm h-fit space-y-8">
+        <div class="bg-[var(--surface)] border border-[var(--border)] rounded-3xl p-8 shadow-sm h-fit space-y-8" aria-labelledby="summary-title">
             <div>
                 <span class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-primary">
-                    <span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span>
+                    <span class="h-2 w-2 rounded-full bg-primary" aria-hidden="true"></span>
                     {{ __('Agenda Inteligente') }}
                 </span>
-                <h3 class="font-bold text-xl text-[var(--text)] mt-4">
+                <h3 id="summary-title" class="font-bold text-xl text-[var(--text)] mt-4">
                     {{ __('Resumo Operacional') }}
                 </h3>
                 <p class="text-xs text-[var(--text-soft)] mt-1.5">{{ __('Métricas da agenda atual') }}</p>
             </div>
 
-            <hr class="border-[var(--border)]">
+            <hr class="border-[var(--border)]" aria-hidden="true">
 
             <div class="grid grid-cols-2 xl:grid-cols-1 gap-6 lg:gap-8">
                 <div class="p-6 bg-[var(--surface-2)] border border-[var(--border)] rounded-2xl">
                     <p class="text-[var(--text-soft)] text-xs font-semibold uppercase tracking-wider">
                         {{ __('Total de Eventos') }}
                     </p>
-                    <p class="text-4xl font-black text-[var(--text)] mt-2" id="eventsTotal">
+                    <p class="text-4xl font-black text-[var(--text)] mt-2" id="eventsTotal" aria-live="polite">
                         --
                     </p>
                 </div>
@@ -206,7 +215,7 @@
                     <p class="text-[var(--text-soft)] text-xs font-semibold uppercase tracking-wider">
                         {{ __('Este Mês') }}
                     </p>
-                    <p class="text-4xl font-black text-[var(--text)] mt-2" id="monthTotal">
+                    <p class="text-4xl font-black text-[var(--text)] mt-2" id="monthTotal" aria-live="polite">
                         --
                     </p>
                 </div>
@@ -217,7 +226,7 @@
                     {{ __('Próxima Intervenção') }}
                 </p>
                 <div class="flex items-center gap-3 mt-3">
-                    <span class="relative flex h-2.5 w-2.5">
+                    <span class="relative flex h-2.5 w-2.5" aria-hidden="true">
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                         <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
                     </span>
@@ -236,11 +245,73 @@
     </div>
 </div>
 @endcomponent
+
+{{-- WCAG COMPLIANT DIALOG/MODAL --}}
+<div id="eventModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="relative w-full max-w-md bg-[var(--surface)] border border-[var(--border)] rounded-3xl p-8 shadow-2xl animate-[fadeIn_0.15s_ease-out]" id="modalContent">
+        <h3 id="modalTitle" class="text-lg font-bold text-[var(--text)] mb-2"></h3>
+
+        <div class="space-y-4 my-6">
+            <div>
+                <p class="text-xs font-semibold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Início') }}</p>
+                <p id="modalStart" class="text-sm font-medium text-[var(--text)]"></p>
+            </div>
+            <div>
+                <p class="text-xs font-semibold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Fim') }}</p>
+                <p id="modalEnd" class="text-sm font-medium text-[var(--text)]"></p>
+            </div>
+        </div>
+
+        <div class="flex justify-end gap-3 mt-8">
+            <button onclick="closeModal()" id="closeModalBtn" class="px-5 py-2.5 bg-[var(--surface-2)] hover:bg-[var(--border)] text-sm font-bold text-[var(--text)] border border-[var(--border)] rounded-xl transition-all cursor-pointer min-h-[44px]">
+                {{ __('Fechar') }}
+            </button>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('scripts')
 <script>
 let calendar;
+let lastFocusedElement = null;
+
+function openModal(title, start, end) {
+    // Guarda o elemento focado para devolver o foco após fechar (WCAG 2.4.3)
+    lastFocusedElement = document.activeElement;
+
+    document.getElementById('modalTitle').innerText = `🔧 ${title}`;
+    document.getElementById('modalStart').innerText = start;
+    document.getElementById('modalEnd').innerText = end;
+
+    const modal = document.getElementById('eventModal');
+    modal.classList.remove('hidden');
+
+    // Coloca o foco no botão de fechar para rápida interação por teclado
+    setTimeout(() => {
+        document.getElementById('closeModalBtn').focus();
+    }, 50);
+
+    // Fechar modal ao pressionar ESC
+    document.addEventListener('keydown', handleEscapeKey);
+}
+
+function closeModal() {
+    const modal = document.getElementById('eventModal');
+    modal.classList.add('hidden');
+    document.removeEventListener('keydown', handleEscapeKey);
+
+    // Devolve o foco ao elemento original (WCAG)
+    if (lastFocusedElement) {
+        lastFocusedElement.focus();
+    }
+}
+
+function handleEscapeKey(e) {
+    if (e.key === 'Escape') {
+        closeModal();
+    }
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     if (!isAuthenticated()) {
@@ -250,7 +321,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const calendarEl = document.getElementById("calendar");
 
-    // Garantir que o container existe mesmo antes de renderizar
     if (calendarEl) {
         calendar = new FullCalendar.Calendar(calendarEl, {
             locale: "{{ app()->getLocale() === 'en' ? 'en' : 'pt' }}",
@@ -330,6 +400,18 @@ document.addEventListener('DOMContentLoaded', () => {
             eventDidMount(info) {
                 info.el.style.cursor = "pointer";
                 info.el.title = info.event.title;
+                // WCAG: Define atributos de acessibilidade nos eventos para leitores de ecrã
+                info.el.setAttribute('tabindex', '0');
+                info.el.setAttribute('role', 'button');
+                info.el.setAttribute('aria-label', `${info.event.title}, clique para ver detalhes`);
+
+                // Permitir acionar o evento via teclado (Enter)
+                info.el.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        info.el.click();
+                    }
+                });
             },
 
             eventClick(info) {
@@ -337,12 +419,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const start = info.event.start ? info.event.start.toLocaleString("pt-PT", options) : "-";
                 const end = info.event.end ? info.event.end.toLocaleString("pt-PT", options) : "-";
 
-                alert(
-                    `🔧 ${"{{ __('DETALHES DA INTERVENÇÃO') }}"}\n\n` +
-                    `${"{{ __('Assunto') }}"}: ${info.event.title}\n` +
-                    `${"{{ __('Início') }}"}: ${start}\n` +
-                    `${"{{ __('Fim') }}"}: ${end}`
-                );
+                openModal(info.event.title, start, end);
             },
 
             loading(isLoading) {
