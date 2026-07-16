@@ -3,10 +3,7 @@
 @section('content')
 <div class="min-h-screen bg-[var(--bg)] text-[var(--text)] antialiased flex flex-col justify-center">
     <div class="mx-auto max-w-3xl px-6 py-12 lg:px-8 text-center animate-[fadeIn_0.3s_ease-out]">
-        <div class="inline-flex h-16 w-16 items-center justify-center rounded-3xl bg-primary text-[var(--on-primary)] font-black shadow-lg shadow-primary/20 text-xl mb-8">
-            GA
-        </div>
-        
+
         <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-primary/20 bg-primary/10 text-xs font-bold uppercase tracking-[0.2em] text-primary mb-6">
             {{ __('Bem-vindo ao Sistema') }}
         </span>
@@ -14,7 +11,7 @@
         <h1 class="text-4xl font-black tracking-tight text-[var(--text)] sm:text-5xl">
             {{ __('Gestão de Avarias') }}
         </h1>
-        
+
         <p class="mt-6 text-base leading-8 text-[var(--text-soft)] max-w-xl mx-auto">
             {{ __('Plataforma centralizada de controlo operacional para gestão de ocorrências, manutenção de equipamentos e monitorização de salas.') }}
         </p>
@@ -27,7 +24,7 @@
                 </svg>
             </a>
         </div>
-        
+
         <div class="mt-16 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 max-w-lg mx-auto text-left flex items-start gap-4 shadow-sm">
             <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-500 font-bold text-sm">
                 ✓

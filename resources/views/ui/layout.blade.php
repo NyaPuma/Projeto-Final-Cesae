@@ -17,26 +17,32 @@
     <style>
         /* Transições suaves para a barra lateral em Desktop */
         #desktopSidebar.collapsed {
-            width: 5rem !important; /* w-20 */
+            width: 5rem !important;
+            /* w-20 */
         }
+
         #desktopSidebar.collapsed .sidebar-text {
             display: none !important;
         }
+
         #desktopSidebar.collapsed nav {
             padding-left: 0.5rem !important;
             padding-right: 0.5rem !important;
         }
+
         #desktopSidebar.collapsed nav a {
             justify-content: center !important;
             padding-left: 0 !important;
             padding-right: 0 !important;
             gap: 0 !important;
         }
+
         #desktopSidebar.collapsed #desktopBranding {
             padding-left: 1rem !important;
             padding-right: 1rem !important;
             justify-content: center !important;
         }
+
         #desktopSidebar.collapsed #authBoxContainer {
             display: none !important;
         }
@@ -45,20 +51,24 @@
         .pre-collapsed #desktopSidebar {
             width: 5rem !important;
         }
+
         .pre-collapsed #desktopSidebar .sidebar-text,
         .pre-collapsed #desktopSidebar #authBoxContainer {
             display: none !important;
         }
+
         .pre-collapsed #desktopSidebar nav {
             padding-left: 0.5rem !important;
             padding-right: 0.5rem !important;
         }
+
         .pre-collapsed #desktopSidebar nav a {
             justify-content: center !important;
             padding-left: 0 !important;
             padding-right: 0 !important;
             gap: 0 !important;
         }
+
         .pre-collapsed #desktopSidebar #desktopBranding {
             padding-left: 1rem !important;
             padding-right: 1rem !important;
@@ -93,45 +103,68 @@
             ['href' => '/', 'active' => '/', 'label' => 'Início', 'icon' => '🏠', 'exact' => true],
             ['href' => 'ui', 'active' => 'ui', 'label' => 'Dashboard', 'icon' => '📊', 'exact' => true],
             ['href' => 'ui/tickets', 'active' => 'ui/tickets*', 'label' => 'Tickets', 'icon' => '🎫', 'exact' => false],
-            ['href' => 'ui/equipments', 'active' => 'ui/equipments*', 'label' => 'Equipamentos', 'icon' => '🖥️', 'exact' => false],
+            [
+                'href' => 'ui/equipments',
+                'active' => 'ui/equipments*',
+                'label' => 'Equipamentos',
+                'icon' => '🖥️',
+                'exact' => false,
+            ],
             ['href' => 'ui/rooms', 'active' => 'ui/rooms*', 'label' => 'Salas', 'icon' => '🚪', 'exact' => false],
-            ['href' => 'ui/users', 'active' => 'ui/users*', 'label' => 'Utilizadores', 'icon' => '👥', 'exact' => false],
+            [
+                'href' => 'ui/users',
+                'active' => 'ui/users*',
+                'label' => 'Utilizadores',
+                'icon' => '👥',
+                'exact' => false,
+            ],
             ['href' => 'ui/audits', 'active' => 'ui/audits*', 'label' => 'Auditoria', 'icon' => '📝', 'exact' => false],
-            ['href' => 'ui/analytics', 'active' => 'ui/analytics*', 'label' => 'Analytics', 'icon' => '📈', 'exact' => false],
+            [
+                'href' => 'ui/analytics',
+                'active' => 'ui/analytics*',
+                'label' => 'Analytics',
+                'icon' => '📈',
+                'exact' => false,
+            ],
             ['href' => 'calendar', 'active' => 'calendar*', 'label' => 'Agenda', 'icon' => '📅', 'exact' => false],
-            ['href' => 'docs/openapi', 'active' => 'docs/openapi*', 'label' => 'Swagger', 'icon' => '📚', 'exact' => false],
+            [
+                'href' => 'docs/openapi',
+                'active' => 'docs/openapi*',
+                'label' => 'Swagger',
+                'icon' => '📚',
+                'exact' => false,
+            ],
         ];
     @endphp
 
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-xl focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[var(--on-primary)]">
+    <a href="#main-content"
+        class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-xl focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[var(--on-primary)]">
         {{ __('Ir para o conteúdo') }}
     </a>
 
     {{-- Efeitos de Gradiente e Brilho de Fundo (Glow Blobs) --}}
     <div class="fixed inset-0 -z-50 pointer-events-none" aria-hidden="true">
         <div class="absolute inset-0 bg-[var(--bg)]"></div>
-        <div class="absolute -top-60 left-1/2 -translate-x-1/2 h-[900px] w-[900px] rounded-full bg-primary/10 blur-[180px]"></div>
+        <div
+            class="absolute -top-60 left-1/2 -translate-x-1/2 h-[900px] w-[900px] rounded-full bg-primary/10 blur-[180px]">
+        </div>
         <div class="absolute bottom-0 right-0 h-[600px] w-[600px] rounded-full bg-blue-500/10 blur-[180px]"></div>
         <div class="absolute top-40 left-0 h-[450px] w-[450px] rounded-full bg-orange-500/10 blur-[140px]"></div>
     </div>
 
     {{-- Overlay Escuro para Mobile --}}
-    <div id="mobileNavOverlay" class="fixed inset-0 bg-black/60 hidden opacity-0 transition-opacity duration-300 z-40" onclick="closeMobileNav()"></div>
+    <div id="mobileNavOverlay" class="fixed inset-0 bg-black/60 hidden opacity-0 transition-opacity duration-300 z-40"
+        onclick="closeMobileNav()"></div>
 
     {{-- Drawer / Menu Lateral Móvel --}}
-    <aside
-        id="mobileNav"
-        class="fixed inset-y-0 left-0 w-72 -translate-x-full transition-transform duration-300 ease-in-out bg-[var(--sidebar)] border-r border-[var(--border)] backdrop-blur-xl z-50 flex flex-col shadow-2xl lg:hidden"
-    >
+    <aside id="mobileNav"
+        class="fixed inset-y-0 left-0 w-72 -translate-x-full transition-transform duration-300 ease-in-out bg-[var(--sidebar)] border-r border-[var(--border)] backdrop-blur-xl z-50 flex flex-col shadow-2xl lg:hidden">
         {{-- Branding Mobile --}}
         <div class="h-20 px-8 flex items-center border-b border-[var(--border)]">
             <div class="flex items-center gap-4">
-                <button
-                    type="button"
-                    onclick="closeMobileNav()"
+                <button type="button" onclick="closeMobileNav()"
                     class="h-11 w-11 rounded-xl bg-primary text-[var(--on-primary)] font-black flex items-center justify-center shadow-md shadow-primary/20 cursor-pointer hover:opacity-90 transition-all flex-shrink-0"
-                    aria-label="{{ __('Fechar menu') }}"
-                >
+                    aria-label="{{ __('Fechar menu') }}">
                     ☰
                 </button>
             </div>
@@ -139,20 +172,16 @@
 
         {{-- Links Mobile --}}
         <nav class="flex-1 overflow-y-auto px-4 py-6 space-y-1" aria-label="{{ __('Navegação principal mobile') }}">
-            @foreach($navItems as $item)
+            @foreach ($navItems as $item)
                 @php
                     $isActive = request()->is($item['active']);
                 @endphp
 
-                <a
-                    href="{{ url($item['href'] === '/' ? '/' : $item['href']) }}"
-                    onclick="closeMobileNav()"
+                <a href="{{ url($item['href'] === '/' ? '/' : $item['href']) }}" onclick="closeMobileNav()"
                     class="group flex items-center gap-3.5 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200
                     {{ $isActive
                         ? 'bg-primary text-[var(--on-primary)] font-semibold shadow-sm shadow-primary/20'
-                        : 'text-[var(--text)] hover:bg-[var(--surface-2)]'
-                    }}"
-                >
+                        : 'text-[var(--text)] hover:bg-[var(--surface-2)]' }}">
                     <span class="text-lg filter {{ $isActive ? 'none' : 'grayscale opacity-80' }}">
                         {{ $item['icon'] }}
                     </span>
@@ -170,39 +199,33 @@
     <div class="min-h-screen flex">
 
         {{-- Sidebar Desktop --}}
-        <aside
-            id="desktopSidebar"
-            class="hidden lg:flex w-72 flex-col border-r border-[var(--border)] bg-[var(--sidebar)] backdrop-blur-xl transition-all duration-300 ease-in-out"
-        >
+        <aside id="desktopSidebar"
+            class="hidden lg:flex fixed left-0 top-0 h-screen w-72 flex-col border-r border-[var(--border)] bg-[var(--sidebar)] backdrop-blur-xl transition-all duration-300 ease-in-out z-30">
             {{-- Branding Desktop --}}
-            <div id="desktopBranding" class="h-20 px-8 flex items-center border-b border-[var(--border)] transition-all duration-300">
+            <div id="desktopBranding"
+                class="h-20 px-8 flex items-center border-b border-[var(--border)] transition-all duration-300">
                 <div class="flex items-center gap-4">
-                    <button
-                        type="button"
-                        onclick="toggleDesktopSidebar()"
+                    <button type="button" onclick="toggleDesktopSidebar()"
                         class="h-11 w-11 rounded-xl bg-primary text-[var(--on-primary)] font-black flex items-center justify-center shadow-md shadow-primary/20 cursor-pointer hover:opacity-90 transition-all flex-shrink-0"
-                        aria-label="{{ __('Recolher menu') }}"
-                    >
+                        aria-label="{{ __('Recolher menu') }}">
                         ☰
                     </button>
                 </div>
             </div>
 
             {{-- Links de Navegação Desktop --}}
-            <nav class="flex-1 overflow-y-auto px-4 py-6 space-y-1 transition-all duration-300" aria-label="{{ __('Navegação principal') }}">
-                @foreach($navItems as $item)
+            <nav class="flex-1 overflow-y-auto px-4 py-6 space-y-1 transition-all duration-300"
+                aria-label="{{ __('Navegação principal') }}">
+                @foreach ($navItems as $item)
                     @php
                         $isActive = request()->is($item['active']);
                     @endphp
 
-                    <a
-                        href="{{ url($item['href'] === '/' ? '/' : $item['href']) }}"
+                    <a href="{{ url($item['href'] === '/' ? '/' : $item['href']) }}"
                         class="group flex items-center gap-3.5 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200
                         {{ $isActive
                             ? 'bg-primary text-[var(--on-primary)] font-semibold shadow-sm shadow-primary/20'
-                            : 'text-[var(--text)] hover:bg-[var(--surface-2)]'
-                        }}"
-                    >
+                            : 'text-[var(--text)] hover:bg-[var(--surface-2)]' }}">
                         <span class="text-lg filter {{ $isActive ? 'none' : 'grayscale opacity-80' }} flex-shrink-0">
                             {{ $item['icon'] }}
                         </span>
@@ -212,26 +235,23 @@
             </nav>
 
             {{-- Caixa de Autenticação Desktop --}}
-            <div id="authBoxContainer" class="border-t border-[var(--border)] p-4 bg-[var(--surface-2)]/50 transition-all duration-300">
+            <div id="authBoxContainer"
+                class="border-t border-[var(--border)] p-4 bg-[var(--surface-2)]/50 transition-all duration-300">
                 <div id="authBox"></div>
             </div>
         </aside>
 
         {{-- Botão Hamburger para Mobile --}}
         <div class="lg:hidden fixed top-[18px] left-8 z-30">
-            <button
-                type="button"
-                onclick="toggleMobileNav()"
+            <button type="button" onclick="toggleMobileNav()"
                 class="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary text-[var(--on-primary)] shadow-md shadow-primary/20 transition-all hover:opacity-90 cursor-pointer text-base"
-                aria-label="{{ __('Abrir menu') }}"
-                id="mobileMenuBtn"
-            >
+                aria-label="{{ __('Abrir menu') }}" id="mobileMenuBtn">
                 ☰
             </button>
         </div>
 
         {{-- Área de Conteúdo Principal --}}
-        <div class="flex-1 flex flex-col min-w-0">
+        <div id="mainWrapper" class="flex-1 flex flex-col min-w-0 lg:ml-72 transition-all duration-300">
 
             {{-- Topbar --}}
             <header class="sticky top-0 z-20 h-20 border-b border-[var(--border)] bg-[var(--topbar)] backdrop-blur-xl">
@@ -243,37 +263,34 @@
                     <div class="flex items-center gap-3">
                         {{-- Language Selector Dropdown --}}
                         <div class="relative inline-block text-left" id="langSelectorDropdown">
-                            <button
-                                type="button"
-                                onclick="toggleLangDropdown()"
+                            <button type="button" onclick="toggleLangDropdown()"
                                 class="inline-flex h-10 px-3 items-center justify-center gap-1.5 rounded-xl border border-[var(--border)] bg-[var(--surface)] text-sm text-[var(--text)] shadow-sm transition-all hover:bg-[var(--surface-2)] cursor-pointer"
-                                aria-label="{{ __('Alterar Idioma') }}"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                                id="langDropdownBtn"
-                            >
+                                aria-label="{{ __('Alterar Idioma') }}" aria-haspopup="true" aria-expanded="false"
+                                id="langDropdownBtn">
                                 🌐
-                                <span class="font-semibold text-xs uppercase text-[var(--text)]">{{ app()->getLocale() }}</span>
-                                <svg class="h-3.5 w-3.5 text-[var(--text-soft)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                                <span
+                                    class="font-semibold text-xs uppercase text-[var(--text)]">{{ app()->getLocale() }}</span>
+                                <svg class="h-3.5 w-3.5 text-[var(--text-soft)]" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor" stroke-width="2.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                                 </svg>
                             </button>
-                            <div id="langDropdown" class="hidden absolute right-0 mt-2 w-36 rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-lg py-1.5 z-50 animate-[fadeIn_0.15s_ease-out]">
-                                <a href="/lang/pt" class="flex items-center px-4 py-2.5 text-xs font-semibold text-[var(--text)] hover:bg-[var(--surface-2)] {{ app()->getLocale() === 'pt' ? 'bg-primary/10 text-primary' : '' }}">
+                            <div id="langDropdown"
+                                class="hidden absolute right-0 mt-2 w-36 rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-lg py-1.5 z-50 animate-[fadeIn_0.15s_ease-out]">
+                                <a href="/lang/pt"
+                                    class="flex items-center px-4 py-2.5 text-xs font-semibold text-[var(--text)] hover:bg-[var(--surface-2)] {{ app()->getLocale() === 'pt' ? 'bg-primary/10 text-primary' : '' }}">
                                     🇵🇹 Português
                                 </a>
-                                <a href="/lang/en" class="flex items-center px-4 py-2.5 text-xs font-semibold text-[var(--text)] hover:bg-[var(--surface-2)] {{ app()->getLocale() === 'en' ? 'bg-primary/10 text-primary' : '' }}">
+                                <a href="/lang/en"
+                                    class="flex items-center px-4 py-2.5 text-xs font-semibold text-[var(--text)] hover:bg-[var(--surface-2)] {{ app()->getLocale() === 'en' ? 'bg-primary/10 text-primary' : '' }}">
                                     🇬🇧 English
                                 </a>
                             </div>
                         </div>
 
-                        <button
-                            type="button"
-                            onclick="toggleTheme()"
+                        <button type="button" onclick="toggleTheme()"
                             class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] text-sm shadow-sm transition-all hover:bg-[var(--surface-2)] cursor-pointer"
-                            aria-label="{{ __('Alternar Tema') }}"
-                        >
+                            aria-label="{{ __('Alternar Tema') }}">
                             🌙
                         </button>
 
@@ -285,7 +302,8 @@
             </header>
 
             {{-- Viewport Injetada --}}
-            <main id="main-content" role="main" tabindex="-1" class="flex-1 px-8 py-8 max-w-7xl w-full mx-auto outline-none">
+            <main id="main-content" role="main" tabindex="-1"
+                class="flex-1 px-8 py-8 max-w-7xl w-full mx-auto outline-none">
                 @yield('content')
             </main>
         </div>
@@ -293,120 +311,131 @@
 
     {{-- Core Auth & Engine Scripts --}}
     <script>
-    function authHeader() {
-        const token = localStorage.getItem('api_token');
-        const headers = {
-            'Accept': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        };
+        function authHeader() {
+            const token = localStorage.getItem('api_token');
+            const headers = {
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            };
 
-        if (token) {
-            headers['X-Auth-Token'] = token;
-        }
-        return headers;
-    }
-
-    function isAuthenticated() {
-        return !!localStorage.getItem('api_token');
-    }
-
-    function requireAuth() {
-        if (!isAuthenticated()) {
-            window.location = '/ui/login';
-            return false;
-        }
-        return true;
-    }
-
-    // Toggle para recolher Sidebar em Desktop
-    function toggleDesktopSidebar() {
-        const sidebar = document.getElementById('desktopSidebar');
-        if (!sidebar) return;
-
-        const isCollapsed = sidebar.classList.toggle('collapsed');
-        localStorage.setItem('sidebar_collapsed', isCollapsed ? 'true' : 'false');
-    }
-
-    // Gestão dinâmica da navegação móvel via classes Tailwind
-    function toggleMobileNav() {
-        const overlay = document.getElementById('mobileNavOverlay');
-        const drawer = document.getElementById('mobileNav');
-
-        if (!overlay || !drawer) return;
-
-        const isOpen = drawer.classList.contains('translate-x-0');
-
-        if (isOpen) {
-            closeMobileNav();
-        } else {
-            overlay.classList.remove('hidden');
-            void overlay.offsetWidth; // Força reflow para animação perfeita
-            overlay.classList.remove('opacity-0');
-            overlay.classList.add('opacity-100');
-
-            drawer.classList.remove('-translate-x-full');
-            drawer.classList.add('translate-x-0');
-        }
-    }
-
-    function closeMobileNav() {
-        const overlay = document.getElementById('mobileNavOverlay');
-        const drawer = document.getElementById('mobileNav');
-
-        if (!overlay || !drawer) return;
-
-        overlay.classList.remove('opacity-100');
-        overlay.classList.add('opacity-0');
-
-        drawer.classList.remove('translate-x-0');
-        drawer.classList.add('-translate-x-full');
-
-        setTimeout(() => {
-            if (!drawer.classList.contains('translate-x-0')) {
-                overlay.classList.add('hidden');
+            if (token) {
+                headers['X-Auth-Token'] = token;
             }
-        }, 300);
-    }
-
-    function toggleLangDropdown() {
-        const dropdown = document.getElementById('langDropdown');
-        const btn = document.getElementById('langDropdownBtn');
-        if (!dropdown) return;
-        const isHidden = dropdown.classList.contains('hidden');
-        if (isHidden) {
-            dropdown.classList.remove('hidden');
-            btn.setAttribute('aria-expanded', 'true');
-        } else {
-            dropdown.classList.add('hidden');
-            btn.setAttribute('aria-expanded', 'false');
+            return headers;
         }
-    }
 
-    // Fechar dropdowns ao clicar fora
-    document.addEventListener('click', (e) => {
-        const dropdown = document.getElementById('langDropdown');
-        const container = document.getElementById('langSelectorDropdown');
-        if (dropdown && container && !container.contains(e.target)) {
-            dropdown.classList.add('hidden');
-            document.getElementById('langDropdownBtn')?.setAttribute('aria-expanded', 'false');
+        function isAuthenticated() {
+            return !!localStorage.getItem('api_token');
         }
-    });
 
-    function renderAuthBox() {
-        const box = document.getElementById('authBox');
-        const boxMobile = document.getElementById('authBoxMobile');
-        const topbarUser = document.getElementById('topbarUser');
+        function requireAuth() {
+            if (!isAuthenticated()) {
+                window.location = '/ui/login';
+                return false;
+            }
+            return true;
+        }
 
-        if (!box && !boxMobile && !topbarUser) return;
+        // Toggle para recolher Sidebar em Desktop
+        function toggleDesktopSidebar() {
+            const sidebar = document.getElementById('desktopSidebar');
+            const wrapper = document.getElementById('mainWrapper');
 
-        const token = localStorage.getItem('api_token');
-        if (token) {
-            const userName = localStorage.getItem('user_name') || 'Utilizador';
-            const userRole = localStorage.getItem('user_role') || 'Utilizador';
+            if (!sidebar || !wrapper) return;
 
-            if (box) {
-                box.innerHTML = `
+            const isCollapsed = sidebar.classList.toggle('collapsed');
+
+            if (isCollapsed) {
+                wrapper.classList.remove('lg:ml-72');
+                wrapper.classList.add('lg:ml-20');
+            } else {
+                wrapper.classList.remove('lg:ml-20');
+                wrapper.classList.add('lg:ml-72');
+            }
+
+            localStorage.setItem('sidebar_collapsed', isCollapsed ? 'true' : 'false');
+        }
+
+        // Gestão dinâmica da navegação móvel via classes Tailwind
+        function toggleMobileNav() {
+            const overlay = document.getElementById('mobileNavOverlay');
+            const drawer = document.getElementById('mobileNav');
+
+            if (!overlay || !drawer) return;
+
+            const isOpen = drawer.classList.contains('translate-x-0');
+
+            if (isOpen) {
+                closeMobileNav();
+            } else {
+                overlay.classList.remove('hidden');
+                void overlay.offsetWidth; // Força reflow para animação perfeita
+                overlay.classList.remove('opacity-0');
+                overlay.classList.add('opacity-100');
+
+                drawer.classList.remove('-translate-x-full');
+                drawer.classList.add('translate-x-0');
+            }
+        }
+
+        function closeMobileNav() {
+            const overlay = document.getElementById('mobileNavOverlay');
+            const drawer = document.getElementById('mobileNav');
+
+            if (!overlay || !drawer) return;
+
+            overlay.classList.remove('opacity-100');
+            overlay.classList.add('opacity-0');
+
+            drawer.classList.remove('translate-x-0');
+            drawer.classList.add('-translate-x-full');
+
+            setTimeout(() => {
+                if (!drawer.classList.contains('translate-x-0')) {
+                    overlay.classList.add('hidden');
+                }
+            }, 300);
+        }
+
+        function toggleLangDropdown() {
+            const dropdown = document.getElementById('langDropdown');
+            const btn = document.getElementById('langDropdownBtn');
+            if (!dropdown) return;
+            const isHidden = dropdown.classList.contains('hidden');
+            if (isHidden) {
+                dropdown.classList.remove('hidden');
+                btn.setAttribute('aria-expanded', 'true');
+            } else {
+                dropdown.classList.add('hidden');
+                btn.setAttribute('aria-expanded', 'false');
+            }
+        }
+
+        // Fechar dropdowns ao clicar fora
+        document.addEventListener('click', (e) => {
+            const dropdown = document.getElementById('langDropdown');
+            const container = document.getElementById('langSelectorDropdown');
+            if (dropdown && container && !container.contains(e.target)) {
+                dropdown.classList.add('hidden');
+                document.getElementById('langDropdownBtn')?.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        function renderAuthBox() {
+            const box = document.getElementById('authBox');
+            const boxMobile = document.getElementById('authBoxMobile');
+            const topbarUser = document.getElementById('topbarUser');
+
+            if (!box && !boxMobile && !topbarUser) return;
+
+            const token = localStorage.getItem('api_token');
+            if (token) {
+                const userName = localStorage.getItem('user_name') || 'Utilizador';
+                const userRole = localStorage.getItem('user_role') || 'Utilizador';
+
+                if (box) {
+                    box.innerHTML = `
                     <div class="space-y-2">
                         <a href="/ui/profile" class="w-full inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-[var(--on-primary)] shadow-sm shadow-primary/20 hover:bg-[var(--primary-hover)] transition-all duration-200 text-center">
                             {{ __('Ver Perfil') }}
@@ -419,10 +448,10 @@
                         </button>
                     </div>
                 `;
-            }
+                }
 
-            if (boxMobile) {
-                boxMobile.innerHTML = `
+                if (boxMobile) {
+                    boxMobile.innerHTML = `
                     <div class="space-y-2">
                         <a href="/ui/profile" class="w-full inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-[var(--on-primary)] shadow-sm shadow-primary/20 hover:bg-[var(--primary-hover)] transition-all duration-200 text-center">
                             {{ __('Ver Perfil') }}
@@ -435,10 +464,10 @@
                         </button>
                     </div>
                 `;
-            }
+                }
 
-            if (topbarUser) {
-                topbarUser.innerHTML = `
+                if (topbarUser) {
+                    topbarUser.innerHTML = `
                     <a href="/ui/profile" class="flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 transition hover:bg-[var(--surface-2)]">
                         <div class="flex h-9 w-9 items-center justify-center rounded-full bg-primary font-bold text-xs text-[var(--on-primary)] shadow-sm">
                             ${userName.charAt(0).toUpperCase()}
@@ -449,10 +478,10 @@
                         </div>
                     </a>
                 `;
-            }
-        } else {
-            if (box) {
-                box.innerHTML = `
+                }
+            } else {
+                if (box) {
+                    box.innerHTML = `
                     <a
                         href="/ui/login"
                         class="w-full inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-[var(--on-primary)] shadow-sm shadow-primary/10 transition-all duration-200 hover:opacity-90 text-center"
@@ -460,10 +489,10 @@
                         {{ __('Iniciar Sessão') }}
                     </a>
                 `;
-            }
+                }
 
-            if (boxMobile) {
-                boxMobile.innerHTML = `
+                if (boxMobile) {
+                    boxMobile.innerHTML = `
                     <a
                         href="/ui/login"
                         class="w-full inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-[var(--on-primary)] shadow-sm shadow-primary/10 transition-all duration-200 hover:opacity-90 text-center"
@@ -471,61 +500,71 @@
                         {{ __('Iniciar Sessão') }}
                     </a>
                 `;
-            }
+                }
 
-            if (topbarUser) {
-                topbarUser.innerHTML = `
+                if (topbarUser) {
+                    topbarUser.innerHTML = `
                     <a href="/ui/login" class="inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-[var(--on-primary)] shadow-sm shadow-primary/10 transition-all duration-200 hover:opacity-90">
                         {{ __('Login / Registo') }}
                     </a>
                 `;
+                }
             }
         }
-    }
 
-    function logout() {
-        const token = localStorage.getItem('api_token');
-        if (!token) return;
+        function logout() {
+            const token = localStorage.getItem('api_token');
+            if (!token) return;
 
-        fetch('/logout', {
-            method: 'POST',
-            headers: Object.assign({
-                'Content-Type': 'application/json'
-            }, authHeader())
-        })
-        .finally(() => {
-            localStorage.removeItem('api_token');
-            localStorage.removeItem('user_name');
-            localStorage.removeItem('user_role');
-            document.cookie = 'api_token=; path=/; max-age=0; SameSite=Lax';
-            window.location = '/ui/login';
+            fetch('/logout', {
+                    method: 'POST',
+                    headers: Object.assign({
+                        'Content-Type': 'application/json'
+                    }, authHeader())
+                })
+                .finally(() => {
+                    localStorage.removeItem('api_token');
+                    localStorage.removeItem('user_name');
+                    localStorage.removeItem('user_role');
+                    document.cookie = 'api_token=; path=/; max-age=0; SameSite=Lax';
+                    window.location = '/ui/login';
+                });
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const dark = html.classList.toggle('dark');
+            localStorage.setItem('theme', dark ? 'dark' : 'light');
+            if (dark) {
+                html.setAttribute('data-theme', 'dark');
+            } else {
+                html.removeAttribute('data-theme');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebar = document.getElementById('desktopSidebar');
+            const wrapper = document.getElementById('mainWrapper');
+
+            const collapsed = localStorage.getItem('sidebar_collapsed') === 'true';
+
+            if (sidebar && collapsed) {
+                sidebar.classList.add('collapsed');
+            }
+
+            if (wrapper) {
+                wrapper.classList.toggle('lg:ml-72', !collapsed);
+                wrapper.classList.toggle('lg:ml-20', collapsed);
+            }
+
+            document.documentElement.classList.remove('pre-collapsed');
+
+            if (typeof requireAuthOnLoad !== 'undefined' && requireAuthOnLoad) {
+                requireAuth();
+            }
+
+            renderAuthBox();
         });
-    }
-
-    function toggleTheme() {
-        const html = document.documentElement;
-        const dark = html.classList.toggle('dark');
-        localStorage.setItem('theme', dark ? 'dark' : 'light');
-        if (dark) {
-            html.setAttribute('data-theme', 'dark');
-        } else {
-            html.removeAttribute('data-theme');
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        // Atribui o estado colapsado guardado após o carregamento inicial do DOM
-        const sidebar = document.getElementById('desktopSidebar');
-        if (sidebar && localStorage.getItem('sidebar_collapsed') === 'true') {
-            sidebar.classList.add('collapsed');
-        }
-        document.documentElement.classList.remove('pre-collapsed');
-
-        if (typeof requireAuthOnLoad !== 'undefined' && requireAuthOnLoad) {
-            requireAuth();
-        }
-        renderAuthBox();
-    });
     </script>
 
     @stack('scripts-top')
