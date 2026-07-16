@@ -1,62 +1,42 @@
 @extends('layouts.layout')
 
 @section('content')
-<div class="min-h-screen bg-[var(--bg)] text-[var(--text)] antialiased">
-    <div class="mx-auto max-w-7xl px-6 py-8 lg:px-8 lg:py-10">
-        @component('ui.partials.page-card', [
-            'title' => __('Centro de Controlo Operacional'),
-            'subtitle' => __('Gerir ocorrências, equipamentos, utilizadores, auditorias e agenda numa experiência uniforme e acessível.'),
-            'badge' => __('Painel principal'),
-            'actions' => '<div class="flex flex-wrap gap-2"><a href="/ui/login" class="ui-button ui-button--outline inline-flex items-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">' . __('Iniciar sessão') . '</a><a href="/ui" class="ui-button ui-button--primary inline-flex items-center rounded-2xl bg-primary px-3 py-2 text-sm font-semibold text-[var(--on-primary)] transition hover:opacity-90">' . __('Abrir painel') . '</a></div>'
-        ])
-            <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-                @php($stats = [
-                    ['label' => __('Tickets abertos'), 'value' => '126', 'hint' => '▲ +8 ' . __('hoje')],
-                    ['label' => __('Equipamentos'), 'value' => '847', 'hint' => __('Inventário ativo')],
-                    ['label' => __('Utilizadores'), 'value' => '42', 'hint' => __('Contas ativas')],
-                    ['label' => __('Disponibilidade'), 'value' => '99.9%', 'hint' => __('Sistema operacional')],
-                ])
-                @foreach($stats as $stat)
-                    <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
-                        <p class="text-[10px] font-bold uppercase tracking-[0.25em] text-[var(--text-soft)]">{{ $stat['label'] }}</p>
-                        <p class="mt-3 text-3xl font-black tracking-tight text-[var(--text)]">{{ $stat['value'] }}</p>
-                        <p class="mt-2 text-sm text-[var(--text-soft)]">{{ $stat['hint'] }}</p>
-                    </div>
-                @endforeach
-            </div>
+<div class="min-h-screen bg-[var(--bg)] text-[var(--text)] antialiased flex flex-col justify-center">
+    <div class="mx-auto max-w-3xl px-6 py-12 lg:px-8 text-center animate-[fadeIn_0.3s_ease-out]">
+        <div class="inline-flex h-16 w-16 items-center justify-center rounded-3xl bg-primary text-[var(--on-primary)] font-black shadow-lg shadow-primary/20 text-xl mb-8">
+            GA
+        </div>
+        
+        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-primary/20 bg-primary/10 text-xs font-bold uppercase tracking-[0.2em] text-primary mb-6">
+            {{ __('Bem-vindo ao Sistema') }}
+        </span>
 
-            <div class="mt-8 grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
-                @php($modules = [
-                    ['href' => '/ui/tickets', 'icon' => '🎫', 'title' => __('Tickets'), 'description' => __('Consultar ocorrências e acompanhar estados em tempo real.')],
-                    ['href' => '/ui/equipments', 'icon' => '🖥️', 'title' => __('Equipamentos'), 'description' => __('Inventário completo, salas e informação técnica.')],
-                    ['href' => '/ui/users', 'icon' => '👥', 'title' => __('Utilizadores'), 'description' => __('Gestão de contas, equipas e acessos.')],
-                    ['href' => '/ui/audits', 'icon' => '📝', 'title' => __('Auditoria'), 'description' => __('Histórico de alterações e rastreabilidade.')],
-                    ['href' => '/ui/analytics', 'icon' => '📊', 'title' => __('Analytics'), 'description' => __('Indicadores e relatórios operacionais.')],
-                    ['href' => '/calendar', 'icon' => '📅', 'title' => __('Agenda'), 'description' => __('Planeamento de intervenções e manutenção.')],
-                ])
-                @foreach($modules as $module)
-                    <a href="{{ $module['href'] }}" class="group rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-[var(--text)]/20 hover:shadow-[0_18px_40px_rgba(15,23,42,0.08)]">
-                        <div class="flex items-start justify-between">
-                            <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-xl">{{ $module['icon'] }}</div>
-                            <span class="text-sm font-semibold text-[var(--text-soft)] transition group-hover:text-[var(--text)]">→</span>
-                        </div>
-                        <h2 class="mt-6 text-xl font-semibold tracking-tight text-[var(--text)]">{{ $module['title'] }}</h2>
-                        <p class="mt-3 text-sm leading-7 text-[var(--text-soft)]">{{ $module['description'] }}</p>
-                    </a>
-                @endforeach
-            </div>
+        <h1 class="text-4xl font-black tracking-tight text-[var(--text)] sm:text-5xl">
+            {{ __('Gestão de Avarias') }}
+        </h1>
+        
+        <p class="mt-6 text-base leading-8 text-[var(--text-soft)] max-w-xl mx-auto">
+            {{ __('Plataforma centralizada de controlo operacional para gestão de ocorrências, manutenção de equipamentos e monitorização de salas.') }}
+        </p>
 
-            <div class="mt-8 rounded-2xl border border-[var(--border)] bg-[var(--surface-2)]/70 p-6">
-                <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-                    <div>
-                        <p class="text-[10px] font-bold uppercase tracking-[0.25em] text-[var(--text-soft)]">{{ __('Estado do sistema') }}</p>
-                        <h3 class="mt-2 text-2xl font-semibold tracking-tight text-[var(--text)]">{{ __('Todos os serviços operacionais') }}</h3>
-                        <p class="mt-2 max-w-2xl text-sm leading-7 text-[var(--text-soft)]">{{ __('A infraestrutura encontra-se operacional, com sincronização contínua entre clientes, API, WebSockets e base de dados.') }}</p>
-                    </div>
-                    <div class="inline-flex items-center rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1.5 text-sm font-semibold text-emerald-700 dark:text-emerald-400">{{ __('Online • Seguro') }}</div>
-                </div>
+        <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="/ui/login" class="ui-button ui-button--primary inline-flex items-center justify-center rounded-2xl px-8 py-4 text-base font-bold shadow-lg shadow-primary/20 transition hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/30 w-full sm:w-auto min-h-[52px]">
+                {{ __('Iniciar Sessão') }}
+                <svg class="h-4 w-4 ml-2" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+        
+        <div class="mt-16 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 max-w-lg mx-auto text-left flex items-start gap-4 shadow-sm">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-500 font-bold text-sm">
+                ✓
             </div>
-        @endcomponent
+            <div>
+                <h3 class="font-bold text-sm text-[var(--text)]">{{ __('Ligação Segura SSL') }}</h3>
+                <p class="mt-1 text-xs text-[var(--text-soft)] leading-5">{{ __('Toda a comunicação com a nossa API é encriptada e os acessos são geridos através de tokens de autenticação individuais.') }}</p>
+            </div>
+        </div>
     </div>
 </div>
 @endsection

@@ -157,7 +157,14 @@ Route::middleware(['custom.auth'])->group(function () {
 
             // Gestão de Utilizadores (CRUD / Estado)
             Route::get('/admin/users',                [AdminController::class, 'users']);
+            Route::post('/admin/users',               [AdminController::class, 'storeUser']);
+            Route::patch('/admin/users/{id}',         [AdminController::class, 'updateUser']);
             Route::patch('/admin/users/{id}/inactive', [AdminController::class, 'inactivateUser']);
+            Route::get('/admin/profiles',             [AdminController::class, 'profiles']);
+
+            // UI de Utilizadores adicionais (Criação e Edição)
+            Route::get('/ui/users/create', [UiController::class, 'userCreate']);
+            Route::get('/ui/users/{id}/edit', [UiController::class, 'userEdit']);
 
             // Gestão do Inventário de Equipamentos
             Route::get('/admin/equipment',         [AdminController::class, 'equipments']);

@@ -1,163 +1,179 @@
 @extends('ui.layout')
 
 @section('content')
-
 <script>
 window.requireAuthOnLoad = true;
 </script>
 
 @component('ui.partials.page-card', [
-    'title' => 'Equipamentos',
-    'subtitle' => 'Inventário centralizado de equipamentos, respetivas localizações e estado operacional.'
+    'title' => __('Equipamentos'),
+    'subtitle' => __('Inventário centralizado de equipamentos, localizações e estado operacional.'),
+    'actions' => '<div class="flex flex-wrap gap-2"><a href="/ui" class="inline-flex items-center justify-center px-3.5 py-2 bg-[var(--surface)] text-xs font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all"><svg class="w-3.5 h-3.5 mr-1.5 text-[var(--text-soft)]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path></svg> ' . __('Voltar ao painel') . '</a></div>'
 ])
 
-<div class="space-y-10">
+    {{-- Painel de Pesquisa Avançada Bento-Style --}}
+    <div class="mb-6 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm animate-[fadeIn_0.2s_ease-out]">
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 
-    {{-- SECÇÃO DE FILTROS E PESQUISA --}}
-    <section>
-        <div class="flex items-center justify-between mb-6">
-            <div>
-                <h2 class="text-lg font-bold tracking-tight">Pesquisa</h2>
-                <p class="text-sm text-soft mt-1">Filtre equipamentos por nome, localização ou estado atual.</p>
-            </div>
-            <span id="equipmentCount" class="badge badge-warning">0 equipamentos</span>
-        </div>
-
-        <div class="card p-6">
-            <div class="grid gap-6 lg:grid-cols-4">
-                <div class="lg:col-span-3">
-                    <label for="equipmentSearch" class="block text-sm font-semibold mb-2">Pesquisa Geral</label>
-                    <input
-                        id="equipmentSearch"
-                        type="text"
-                        placeholder="Pesquise por nome, localização ou código do ativo..."
-                        class="input w-full"
-                    >
-                </div>
-                <div>
-                    <label for="equipmentStatus" class="block text-sm font-semibold mb-2">Estado Operacional</label>
-                    <select id="equipmentStatus" class="input w-full">
-                        <option value="">Todos os estados</option>
-                        <option value="active">Operacionais</option>
-                        <option value="inactive">Fora de serviço</option>
-                    </select>
+            <div class="sm:col-span-2 lg:col-span-3 xl:col-span-4">
+                <label for="filter_q" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Termo de Pesquisa') }}</label>
+                <div class="relative">
+                    <input id="filter_q" placeholder="{{ __('Pesquise por nome, categoria ou código...') }}"
+                        class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2.5 text-xs text-[var(--text)] placeholder-[var(--text-soft)] outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all">
                 </div>
             </div>
-        </div>
-    </section>
 
-    {{-- SECÇÃO DA TABELA DE EQUIPAMENTOS --}}
-    <section>
-        <div class="flex items-center justify-between mb-6">
             <div>
-                <h2 class="text-lg font-bold tracking-tight">Inventário</h2>
-                <p class="text-sm text-soft mt-1">Lista detalhada de ativos e as suas localizações físicas.</p>
-            </div>
-            <span class="badge badge-success">Live</span>
-        </div>
-
-        <div class="card overflow-hidden p-0">
-            <div class="overflow-x-auto">
-                <table id="equipmentTable" class="w-full min-w-[800px]">
-                    <thead>
-                        <tr class="border-b border-[var(--border)] bg-[var(--surface-2)]">
-                            <th class="px-6 py-4 text-xs font-bold uppercase tracking-[0.12em]">Código</th>
-                            <th class="px-6 py-4 text-xs font-bold uppercase tracking-[0.12em]">Equipamento</th>
-                            <th class="px-6 py-4 text-xs font-bold uppercase tracking-[0.12em]">Localização</th>
-                            <th class="px-6 py-4 text-xs font-bold uppercase tracking-[0.12em]">Estado</th>
-                            <th class="px-6 py-4 text-right text-xs font-bold uppercase tracking-[0.12em]">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-[var(--border)]" id="equipmentTableBody">
-                        <tr>
-                            <td colspan="5" class="py-24 text-center">
-                                <div class="flex flex-col items-center justify-center gap-4">
-                                    <svg class="h-6 w-6 animate-spin text-[var(--color-primary)]" fill="none" viewBox="0 0 24 24">
-                                        <circle class="opacity-20" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle>
-                                        <path class="opacity-90" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.37 0 0 5.37 0 12h4z"></path>
-                                    </svg>
-                                    <p class="text-sm font-medium">A carregar inventário...</p>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <label for="filter_status" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Estado Operacional') }}</label>
+                <select id="filter_status" class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2.5 text-xs text-[var(--text)] outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all">
+                    <option value="">{{ __('Todos') }}</option>
+                    <option value="active">{{ __('Operacional') }}</option>
+                    <option value="inactive">{{ __('Fora de Serviço') }}</option>
+                </select>
             </div>
         </div>
-    </section>
 
-</div>
+        <div class="mt-4 pt-4 border-t border-[var(--border)] flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+                <button id="btnSearch" class="ui-button ui-button--primary inline-flex items-center justify-center px-4 py-2 text-[var(--on-primary)] text-xs font-bold rounded-xl shadow-sm hover:opacity-90 transition-all cursor-pointer min-h-[36px]">
+                    {{ __('Pesquisar') }}
+                </button>
+                <button id="btnClear" class="ui-button ui-button--outline inline-flex items-center justify-center px-4 py-2 text-[var(--text)] border border-[var(--border)] text-xs font-semibold rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all cursor-pointer min-h-[36px]">
+                    {{ __('Limpar filtros') }}
+                </button>
+            </div>
+            <span id="resultsCount" class="text-xs font-semibold text-[var(--text-soft)]"></span>
+        </div>
+    </div>
+
+    {{-- Tabela de Resultados Estruturada --}}
+    <div class="w-full overflow-hidden bg-[var(--surface)] border border-[var(--border)] rounded-2xl shadow-sm" role="region" aria-live="polite" aria-label="{{ __('Lista de equipamentos') }}">
+        <div class="overflow-x-auto">
+            <table id="equipmentTable" class="min-w-full divide-y divide-[var(--border)] text-left text-xs">
+                <thead class="bg-[var(--surface-2)] text-[var(--text)] uppercase tracking-wider font-bold text-[10px]">
+                    <tr>
+                        <th class="px-5 py-4 font-bold">{{ __('Código') }}</th>
+                        <th class="px-5 py-4 font-bold">{{ __('Equipamento') }}</th>
+                        <th class="px-5 py-4 font-bold">{{ __('Localização') }}</th>
+                        <th class="px-5 py-4 font-bold">{{ __('Estado') }}</th>
+                        <th class="px-5 py-4 font-bold text-right">{{ __('Ações') }}</th>
+                    </tr>
+                </thead>
+                <tbody id="equipmentTableBody" class="divide-y divide-[var(--border)] text-[var(--text)]">
+                    <tr>
+                        <td colspan="5" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]">
+                            <div class="flex items-center justify-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                                {{ __('A carregar inventário de equipamentos...') }}
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {{-- Área de Paginação Alinhada --}}
+    <div id="pagination" class="mt-5 flex items-center justify-between text-xs text-[var(--text-soft)] px-1"></div>
 
 @endcomponent
 @endsection
 
 @push('scripts')
 <script>
-let initialEquipments = [];
+let currentPage = 1;
 
-document.addEventListener('DOMContentLoaded', () => {
-    loadEquipments();
-    setupFilters();
+function authHeader(){
+    const token = localStorage.getItem('api_token');
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+    const headers = { 'Accept': 'application/json' };
+
+    if (token) headers['X-Auth-Token'] = token;
+    if (csrfToken) headers['X-CSRF-TOKEN'] = csrfToken;
+
+    return headers;
+}
+
+async function loadEquipments(page = 1) {
+    currentPage = page;
+    const params = new URLSearchParams();
+    const q = document.getElementById('filter_q').value.trim();
+    const status = document.getElementById('filter_status').value;
+
+    if (q) params.append('q', q);
+    if (status) params.append('status', status);
+    params.append('page', page);
+
+    const tbody = document.getElementById('equipmentTableBody');
+    tbody.innerHTML = `<tr><td colspan="5" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]">${"{{ __('A atualizar dados...') }}"}</td></tr>`;
+
+    try {
+        const res = await fetch(`/equipments?${params.toString()}`, { headers: authHeader() });
+        if (res.status === 401) { window.location = '/ui/login'; return; }
+        if (!res.ok) { throw new Error('Falha ao carregar'); }
+        const data = await res.json();
+        
+        const equipments = data.equipments?.data ?? [];
+        const meta = data.equipments ?? {};
+        const total = meta.total ?? equipments.length;
+
+        document.getElementById('resultsCount').textContent = total > 0 ? `${total} ${"{{ __('resultado(s) encontrado(s)') }}"}` : "{{ __('Sem resultados') }}";
+
+        if (!equipments.length) {
+            tbody.innerHTML = `<tr><td colspan="5" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]"><div class="mx-auto max-w-sm rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface-2)] p-5">${"{{ __('Nenhum equipamento encontrado com os filtros aplicados.') }}"}</div></td></tr>`;
+            document.getElementById('pagination').innerHTML = '';
+            return;
+        }
+
+        tbody.innerHTML = equipments.map(eq => {
+            const is_active = eq.active === true || eq.active === 1 || eq.active === '1';
+            const statusBadge = is_active
+                ? `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 uppercase tracking-tight">${"{{ __('Operacional') }}"}</span>`
+                : `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-red-500/10 text-red-700 dark:text-red-400 uppercase tracking-tight">${"{{ __('Fora de Serviço') }}"}</span>`;
+
+            return `<tr class="hover:bg-[var(--surface-2)]/50 transition-colors duration-150">
+                <td class="px-5 py-4 font-mono text-[var(--text-soft)] font-bold">${eq.serial ?? `EQ-${String(eq.id).padStart(3, '0')}`}</td>
+                <td class="px-5 py-4">
+                    <div class="font-semibold text-[var(--text)]">${eq.name}</div>
+                    <div class="text-[10px] text-[var(--text-soft)] uppercase tracking-wider mt-0.5">${eq.category?.name ?? 'Genérico'}</div>
+                </td>
+                <td class="px-5 py-4 text-[var(--text-soft)] font-semibold">${eq.room ? `${eq.room.name} (${eq.room.location ?? '—'})` : '—'}</td>
+                <td class="px-5 py-4">${statusBadge}</td>
+                <td class="px-5 py-4 text-right">
+                    <a href="/ui/tickets/create?equipment_id=${eq.id}" class="inline-flex items-center justify-center px-3 py-1.5 bg-[var(--surface)] text-[11px] font-semibold text-[var(--text)] border border-[var(--border)] rounded-lg shadow-sm hover:bg-[var(--surface-2)] transition-all min-h-[28px]">${"{{ __('Abrir Ticket') }}"}</a>
+                </td>
+            </tr>`;
+        }).join('');
+
+        // Renderização do Bloco de Paginação Estilizado
+        const lastPage  = meta.last_page ?? 1;
+        const currPage  = meta.current_page ?? page;
+        const pagEl     = document.getElementById('pagination');
+        if (lastPage <= 1) { pagEl.innerHTML = ''; return; }
+        pagEl.innerHTML = `
+            <button onclick="loadEquipments(${currPage - 1})" ${currPage <= 1 ? 'disabled' : ''}
+                class="ui-button ui-button--primary inline-flex items-center justify-center px-3.5 py-2 text-xs font-bold text-[var(--on-primary)] rounded-xl shadow-sm hover:opacity-90 transition-all disabled:opacity-40 disabled:cursor-not-allowed min-h-[36px]">← ${"{{ __('Anterior') }}"}</button>
+            <span class="font-bold text-[var(--text-soft)]">${"{{ __('Página') }}"} ${currPage} ${"{{ __('de') }}"} ${lastPage}</span>
+            <button onclick="loadEquipments(${currPage + 1})" ${currPage >= lastPage ? 'disabled' : ''}
+                class="ui-button ui-button--primary inline-flex items-center justify-center px-3.5 py-2 text-xs font-bold text-[var(--on-primary)] rounded-xl shadow-sm hover:opacity-90 transition-all disabled:opacity-40 disabled:cursor-not-allowed min-h-[36px]">${"{{ __('Próxima') }}"} →</button>
+        `;
+    } catch (error) {
+        tbody.innerHTML = `<tr><td colspan="5" class="px-5 py-12 text-center text-xs text-[var(--color-danger)] font-medium">⚠️ ${"{{ __('Não foi possível carregar os equipamentos de momento.') }}"}</td></tr>`;
+    }
+}
+
+document.getElementById('btnSearch').addEventListener('click', () => loadEquipments(1));
+
+document.getElementById('btnClear').addEventListener('click', () => {
+    document.getElementById('filter_q').value = '';
+    document.getElementById('filter_status').value = '';
+    loadEquipments(1);
 });
 
-async function loadEquipments() {
-    const tbody = document.getElementById('equipmentTableBody');
-    try {
-        const response = await window.api.get('/api/equipments');
-        initialEquipments = response.data || [];
-        renderTable(initialEquipments);
-    } catch (error) {
-        console.error('Erro:', error);
-        tbody.innerHTML = `<tr><td colspan="5" class="py-16 text-center text-[var(--color-danger)]">Erro ao carregar equipamentos.</td></tr>`;
-    }
-}
+document.getElementById('filter_q').addEventListener('keydown', e => {
+    if (e.key === 'Enter') loadEquipments(1);
+});
 
-function renderTable(equipments) {
-    const tbody = document.getElementById('equipmentTableBody');
-    const countBadge = document.getElementById('equipmentCount');
-
-    countBadge.textContent = `${equipments.length} equipamentos`;
-
-    if (equipments.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" class="py-16 text-center text-soft">Nenhum registo encontrado.</td></tr>`;
-        return;
-    }
-
-    tbody.innerHTML = equipments.map(eq => `
-        <tr class="transition duration-150 hover:bg-[var(--surface-2)]">
-            <td class="px-6 py-4 font-mono text-xs font-semibold">${eq.code ?? `EQ-${String(eq.id).padStart(3, '0')}`}</td>
-            <td class="px-6 py-4">
-                <div class="font-medium text-sm">${eq.name}</div>
-                <div class="text-xs text-soft">${eq.category ?? 'Genérico'}</div>
-            </td>
-            <td class="px-6 py-4 text-sm text-soft">${eq.room ? `${eq.room.name} (${eq.room.building ?? 'Pavilhão A'})` : 'Não Alocado'}</td>
-            <td class="px-6 py-4">
-                ${eq.status === 'active' ? '<span class="badge badge-success">Operacional</span>' : '<span class="badge badge-danger">Fora de Serviço</span>'}
-            </td>
-            <td class="px-6 py-4 text-right">
-                <a href="/ui/tickets/create?equipment_id=${eq.id}" class="btn btn-sm btn-outline">Abrir Ticket</a>
-            </td>
-        </tr>
-    `).join('');
-}
-
-function setupFilters() {
-    const searchInput = document.getElementById('equipmentSearch');
-    const statusSelect = document.getElementById('equipmentStatus');
-
-    const filter = () => {
-        const q = searchInput.value.toLowerCase();
-        const s = statusSelect.value;
-        const filtered = initialEquipments.filter(eq => {
-            const matchQ = eq.name.toLowerCase().includes(q) || (eq.code ?? '').toLowerCase().includes(q);
-            const matchS = !s || eq.status === s;
-            return matchQ && matchS;
-        });
-        renderTable(filtered);
-    };
-
-    searchInput.addEventListener('input', filter);
-    statusSelect.addEventListener('change', filter);
-}
+window.addEventListener('load', () => loadEquipments(1));
 </script>
 @endpush

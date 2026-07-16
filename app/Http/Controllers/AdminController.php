@@ -24,8 +24,30 @@ class AdminController extends Controller
     )]
     public function users(Request $request)
     {
-        // Traz o perfil de cada utilizador já na mesma consulta para evitar N+1 queries.
-        return response()->json(['users' => User::with('profile')->orderBy('name')->paginate(15)]);
+        $q = $request->query('q');
+        $role = $request->query('role');
+        $status = $request->query('status'); // 'active' or 'inactive'
+
+        $query = User::with('profile');
+
+        if ($q) {
+            $query->where(function($sub) use ($q) {
+                $sub->where('name', 'like', "%{$q}%")
+                    ->orWhere('email', 'like', "%{$q}%");
+            });
+        }
+
+        if ($role) {
+            $query->whereHas('profile', function($sub) use ($role) {
+                $sub->where('name', $role);
+            });
+        }
+
+        if ($status !== null && $status !== '') {
+            $query->where('active', $status === 'active');
+        }
+
+        return response()->json(['users' => $query->orderBy('name')->paginate(15)]);
     }
 
     /**
@@ -62,6 +84,79 @@ class AdminController extends Controller
         $user->save();
 
         return response()->json(['message' => 'Utilizador inativado com sucesso']);
+    }
+
+    /**
+     * Regista um novo utilizador no sistema.
+     */
+    public function storeUser(Request $request)
+    {
+        $data = $request->only(['name', 'email', 'password', 'profile_id', 'active']);
+        $validator = Validator::make($data, [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:8'],
+            'profile_id' => ['required', 'integer', 'exists:user_profiles,id'],
+            'active' => ['sometimes', 'boolean'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $user = User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => \Illuminate\Support\Facades\Hash::make($data['password']),
+            'profile_id' => $data['profile_id'],
+            'active' => $data['active'] ?? true,
+            'api_token' => \Illuminate\Support\Str::random(60),
+        ]);
+
+        return response()->json(['user' => $user->load('profile')], 201);
+    }
+
+    /**
+     * Atualiza um utilizador existente.
+     */
+    public function updateUser(Request $request, int $id)
+    {
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json(['message' => 'Utilizador não encontrado'], 404);
+        }
+
+        $data = $request->only(['name', 'email', 'password', 'profile_id', 'active']);
+        $validator = Validator::make($data, [
+            'name' => ['sometimes', 'string', 'max:255'],
+            'email' => ['sometimes', 'email', 'max:255', 'unique:users,email,'.$id],
+            'password' => ['nullable', 'string', 'min:8'],
+            'profile_id' => ['sometimes', 'integer', 'exists:user_profiles,id'],
+            'active' => ['sometimes', 'boolean'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $validated = $validator->validated();
+        if (!empty($validated['password'])) {
+            $validated['password'] = \Illuminate\Support\Facades\Hash::make($validated['password']);
+        } else {
+            unset($validated['password']);
+        }
+
+        $user->update($validated);
+
+        return response()->json(['user' => $user->load('profile')]);
+    }
+
+    /**
+     * Retorna os perfis de utilizador disponíveis.
+     */
+    public function profiles()
+    {
+        return response()->json(['profiles' => \App\Models\UserProfile::all()]);
     }
 
     /**

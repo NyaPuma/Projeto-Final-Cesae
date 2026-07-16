@@ -53,6 +53,25 @@ class UiController extends Controller
     }
 
     /**
+     * Mostra o formulário de criação de utilizador.
+     */
+    public function userCreate(Request $request)
+    {
+        $user = $this->authenticatedUser($request);
+        return view('ui.users-create', ['user' => $user]);
+    }
+
+    /**
+     * Mostra o formulário de edição de utilizador.
+     */
+    public function userEdit(Request $request, int $id)
+    {
+        $user = $this->authenticatedUser($request);
+        $targetUser = \App\Models\User::with('profile')->findOrFail($id);
+        return view('ui.users-edit', ['user' => $user, 'targetUser' => $targetUser]);
+    }
+
+    /**
      * Mostra a página de criação de um novo ticket.
      */
     public function rooms(Request $request)
@@ -120,8 +139,24 @@ class UiController extends Controller
     public function getEquipments(Request $request)
     {
         $user = $this->authenticatedUser($request);
-        // Retorna todos os equipamentos com as respetivas salas
-        return response()->json(['equipments' => Equipment::with('room')->orderBy('name')->paginate(15)]);
+        
+        $q = $request->query('q');
+        $status = $request->query('status'); // 'active' or 'inactive'
+        
+        $query = Equipment::with('room');
+        
+        if ($q) {
+            $query->where(function($sub) use ($q) {
+                $sub->where('name', 'like', "%{$q}%")
+                    ->orWhere('serial', 'like', "%{$q}%");
+            });
+        }
+        
+        if ($status !== null && $status !== '') {
+            $query->where('active', $status === 'active');
+        }
+        
+        return response()->json(['equipments' => $query->orderBy('name')->paginate(15)]);
     }
 
     /**
