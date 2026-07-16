@@ -7,6 +7,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UiController;
 use App\Http\Controllers\AuditController;
+use app\Http\Controllers\CalendarController;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
@@ -95,6 +96,11 @@ Route::middleware(['custom.auth'])->group(function () {
         // 🛠️ MODELO IN-HOUSE ALINHADO: Qualquer utilizador autenticado pode reportar uma avaria.
         // Removido do middleware restritivo 'role:user' para que Técnicos e Admins também criem tickets em campo.
         Route::post('/tickets', [TicketController::class, 'store']);
+        // Se o método no TicketController se chamar apenas "calendar":
+        Route::get('/calendar', [TicketController::class, 'calendar'])->middleware(...);
+
+        // Ou se estiveres a usar um controller dedicado:
+        Route::get('/calendar', [CalendarController::class, 'index'])->middleware(...);
 
         /*
          |-- Área Exclusiva do Técnico de Manutenção

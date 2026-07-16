@@ -2,7 +2,7 @@
 
 @push('styles')
 <link rel="preconnect" href="https://fonts.bunny.net">
-<link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet">
+<link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
 
 <style>
@@ -14,7 +14,7 @@
         --fc-page-bg-color: transparent;
         --fc-neutral-bg-color: transparent;
         --fc-list-event-hover-bg-color: var(--surface-2);
-        --fc-today-bg-color: rgba(79, 70, 229, 0.06);
+        --fc-today-bg-color: rgba(79, 70, 229, 0.05);
 
         /* Mapeamento de Cores dos Botões para o Design System */
         --fc-button-bg-color: var(--surface);
@@ -26,7 +26,7 @@
         --fc-button-text-color: var(--text);
 
         color: var(--text);
-        font-family: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif !important;
+        font-family: 'Inter', ui-sans-serif, system-ui, sans-serif !important;
     }
 
     .dark .fc {
@@ -37,13 +37,13 @@
 
     /* Estrutura do Topbar do Calendário */
     .fc-toolbar {
-        margin-bottom: 2rem !important;
-        gap: 12px;
+        margin-bottom: 2.5rem !important;
+        gap: 16px;
     }
 
     .fc-toolbar-title {
         font-size: 1.5rem !important;
-        font-weight: 700 !important;
+        font-weight: 800 !important;
         letter-spacing: -0.02em;
         color: var(--text);
     }
@@ -55,7 +55,7 @@
     /* Botões de Navegação e Modos de Vista */
     .fc-button {
         border-radius: 12px !important;
-        padding: 0.55rem 1rem !important;
+        padding: 0.65rem 1.2rem !important;
         font-size: 13px !important;
         font-weight: 600 !important;
         text-transform: capitalize !important;
@@ -81,7 +81,7 @@
     /* Grelha Principal do Calendário */
     .fc-scrollgrid {
         border: 1px solid var(--border) !important;
-        border-radius: 16px;
+        border-radius: 24px !important;
         overflow: hidden;
         background: var(--surface);
     }
@@ -97,19 +97,19 @@
     }
 
     .fc-col-header-cell-cushion {
-        padding: 12px !important;
-        color: var(--text) !important; /* Fixed low-contrast text-soft */
-        font-weight: 600;
+        padding: 16px 12px !important;
+        color: var(--text) !important;
+        font-weight: 700;
         font-size: 13px;
         text-decoration: none !important;
     }
 
     /* Células de Dias Individuais */
     .fc-daygrid-day-number {
-        padding: 12px !important;
+        padding: 16px !important;
         color: var(--text) !important;
         text-decoration: none !important;
-        font-weight: 600;
+        font-weight: 700;
         font-size: 14px;
     }
 
@@ -124,24 +124,24 @@
         background: linear-gradient(135deg, var(--primary), var(--primary-hover)) !important;
         color: var(--on-primary) !important;
         border-radius: 8px !important;
-        padding: 4px 8px !important;
+        padding: 6px 10px !important;
         font-size: 11px !important;
         font-weight: 600 !important;
-        box-shadow: 0 2px 4px rgba(79, 70, 229, 0.15);
+        box-shadow: 0 4px 6px rgba(79, 70, 229, 0.12);
         transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
 
     .dark .fc-event {
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     }
 
     .fc-event:hover {
         transform: translateY(-1px);
-        box-shadow: 0 4px 8px rgba(79, 70, 229, 0.25);
+        box-shadow: 0 6px 12px rgba(79, 70, 229, 0.22);
     }
 
     .fc-timegrid-slot {
-        height: 3.5rem !important;
+        height: 4rem !important;
     }
 
     .fc-timegrid-now-indicator-line {
@@ -156,92 +156,86 @@
 @endpush
 
 @section('content')
-<div class="space-y-10 animate-[fadeIn_0.2s_ease-out]">
-
-    {{-- Cabeçalho da Página --}}
-    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
-        <div>
-            <span class="inline-flex items-center rounded-full border border-indigo-500/20 bg-indigo-500/10 px-3 py-1 text-xs font-bold text-indigo-700 dark:text-indigo-400">
-                {{ __('Agenda Inteligente') }}
-            </span>
-            <h1 class="text-4xl lg:text-5xl font-black tracking-tight text-[var(--text)] mt-4">
-                {{ __('Calendário Operacional') }}
-            </h1>
-            <p class="mt-3 text-[var(--text-soft)] max-w-3xl text-base lg:text-lg leading-relaxed">
-                {{ __('Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.') }}
-            </p>
-        </div>
-
-        <div class="flex items-center gap-3 w-full sm:w-auto">
-            <a href="/ui" class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2.5 bg-[var(--surface)] text-sm font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all min-h-[44px]">
+@component('ui.partials.page-card', [
+    'title' => __('Calendário Operacional'),
+    'subtitle' => __('Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.'),
+    'actions' => '<div class="flex flex-wrap items-center gap-3 w-full sm:w-auto">
+            <a href="/ui" class="w-full sm:w-auto inline-flex items-center justify-center px-4.5 py-2.5 bg-[var(--surface)] text-sm font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all min-h-[44px]">
                 <svg class="w-4 h-4 mr-2 text-[var(--text-soft)]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path>
                 </svg>
-                {{ __('Dashboard') }}
+                ' . __('Dashboard') . '
             </a>
-            <button onclick="calendar.today()" class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2.5 bg-primary text-sm font-bold text-[var(--on-primary)] border border-transparent rounded-xl shadow-sm hover:opacity-90 transition-all min-h-[44px]">
-                {{ __('Hoje') }}
+            <button onclick="calendar.today()" class="w-full sm:w-auto inline-flex items-center justify-center px-5 py-2.5 bg-primary text-sm font-bold text-[var(--on-primary)] border border-transparent rounded-xl shadow-sm hover:opacity-90 transition-all min-h-[44px] cursor-pointer">
+                ' . __('Hoje') . '
             </button>
-        </div>
-    </div>
+        </div>',
+])
+
+<div class="space-y-12 lg:space-y-16 animate-[fadeIn_0.2s_ease-out]">
 
     {{-- Grelha de Conteúdo Principal --}}
-    <div class="grid xl:grid-cols-4 gap-8">
+    <div class="grid xl:grid-cols-4 gap-8 lg:gap-10">
 
         {{-- Painel de Resumo Lateral --}}
-        <div class="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 shadow-sm h-fit space-y-6">
+        <div class="bg-[var(--surface)] border border-[var(--border)] rounded-3xl p-8 shadow-sm h-fit space-y-8">
             <div>
-                <h3 class="font-bold text-lg text-[var(--text)]">
+                <span class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-primary">
+                    <span class="h-2 w-2 rounded-full bg-primary animate-pulse"></span>
+                    {{ __('Agenda Inteligente') }}
+                </span>
+                <h3 class="font-bold text-xl text-[var(--text)] mt-4">
                     {{ __('Resumo Operacional') }}
                 </h3>
-                <p class="text-xs text-[var(--text-soft)] mt-1">{{ __('Métricas da agenda atual') }}</p>
+                <p class="text-xs text-[var(--text-soft)] mt-1.5">{{ __('Métricas da agenda atual') }}</p>
             </div>
 
             <hr class="border-[var(--border)]">
 
-            <div class="grid grid-cols-2 xl:grid-cols-1 gap-6">
-                <div class="p-4 bg-[var(--surface-2)] border border-[var(--border)] rounded-xl">
+            <div class="grid grid-cols-2 xl:grid-cols-1 gap-6 lg:gap-8">
+                <div class="p-6 bg-[var(--surface-2)] border border-[var(--border)] rounded-2xl">
                     <p class="text-[var(--text-soft)] text-xs font-semibold uppercase tracking-wider">
                         {{ __('Total de Eventos') }}
                     </p>
-                    <p class="text-3xl font-black text-[var(--text)] mt-1" id="eventsTotal">
+                    <p class="text-4xl font-black text-[var(--text)] mt-2" id="eventsTotal">
                         --
                     </p>
                 </div>
 
-                <div class="p-4 bg-[var(--surface-2)] border border-[var(--border)] rounded-xl">
+                <div class="p-6 bg-[var(--surface-2)] border border-[var(--border)] rounded-2xl">
                     <p class="text-[var(--text-soft)] text-xs font-semibold uppercase tracking-wider">
                         {{ __('Este Mês') }}
                     </p>
-                    <p class="text-3xl font-black text-[var(--text)] mt-1" id="monthTotal">
+                    <p class="text-4xl font-black text-[var(--text)] mt-2" id="monthTotal">
                         --
                     </p>
                 </div>
             </div>
 
-            <div class="p-4 border border-[var(--border)] rounded-xl bg-opacity-40 bg-[var(--surface-2)]">
+            <div class="p-6 border border-[var(--border)] rounded-2xl bg-opacity-40 bg-[var(--surface-2)]">
                 <p class="text-[var(--text-soft)] text-xs font-semibold uppercase tracking-wider">
                     {{ __('Próxima Intervenção') }}
                 </p>
-                <div class="flex items-center gap-2 mt-2">
-                    <span class="relative flex h-2 w-2">
+                <div class="flex items-center gap-3 mt-3">
+                    <span class="relative flex h-2.5 w-2.5">
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
                     </span>
-                    <p class="text-sm font-medium text-[var(--text)]">
-                        {{ __('Sincronização Automática') }}
+                    <p class="text-sm font-semibold text-[var(--text)]">
+                        {{ __('Sincronização Ativa') }}
                     </p>
                 </div>
             </div>
         </div>
 
         {{-- Contentor da Instância do Calendário --}}
-        <div class="xl:col-span-3 bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 lg:p-8 shadow-sm">
+        <div class="xl:col-span-3 bg-[var(--surface)] border border-[var(--border)] rounded-3xl p-8 lg:p-10 shadow-sm">
             <div id="calendar"></div>
         </div>
 
     </div>
 </div>
+@endcomponent
 @endsection
 
 @push('scripts')
@@ -285,7 +279,6 @@ document.addEventListener('DOMContentLoaded', () => {
             },
 
             datesSet: function(dateInfo) {
-                // Evita loops infinitos chamando apenas o refetch se o calendário já estiver renderizado
                 if (calendar && typeof calendar.refetchEvents === 'function') {
                     // Atualiza os totais e recarrega os dados da rota /calendar/events
                 }

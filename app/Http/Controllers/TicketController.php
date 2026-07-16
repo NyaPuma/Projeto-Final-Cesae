@@ -8,7 +8,7 @@ use App\Models\TicketComment;
 use App\Models\TicketAttachment;
 use App\Models\TicketStatus;
 use App\Services\AIService;
-use App\Traits\ControllerHelpers; 
+use App\Traits\ControllerHelpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
@@ -26,7 +26,7 @@ class TicketController extends Controller
         $this->aiService = $aiService;
     }
 
-    
+
 
     /**
      * Lista os tickets na view index
@@ -74,7 +74,7 @@ class TicketController extends Controller
 
         // Vai buscar dinamicamente o ID do estado "Em Curso" definido no teu Model
         $inProgressStatusId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
-        
+
         // CORRIGIDO: Atribuição usando o técnico validado da requisição
         $ticket->status_id     = $inProgressStatusId;
         $ticket->assigned_to   = $request->tecnico_id;
@@ -315,7 +315,7 @@ class TicketController extends Controller
         $ticket->update([
             'assigned_to'    => $request->tecnico_id,
             'status_id'      => $inProgressStatusId,
-            'in_progress_at' => now(), 
+            'in_progress_at' => now(),
         ]);
 
         // Dispara os eventos lógicos de reatividade e email em blocos protegidos
@@ -331,5 +331,11 @@ class TicketController extends Controller
         return redirect()->route('admin.tickets.show', $id)
                          ->with('success', 'Técnico alocado com sucesso via Assistente IA!');
     }
-    
+
+    public function calendarView()
+    {
+        // Exemplo de retorno da tua vista (ajusta o nome da vista para o teu caso real)
+        return view('/calendar');
+    }
+
 }

@@ -15,13 +15,13 @@ class AIService
     {
         // 1. Procurar técnicos ativos no sistema e calcular dinamicamente a sua carga de trabalho
         $tecnicos = User::whereHas('profile', function($query) {$query->where('name', User::ROLE_TECHNICIAN);
-                        })
-                        ->where('active', true)
-                        ->withCount(['assignedTickets as tickets_ativos' => function($query) {
-                            // Conta apenas os tickets em aberto ou progresso (IDs de estados não concluídos)
-                            $query->whereNotIn('status_id', [3, 4]); // Ex: 3 = Fechado, 4 = Cancelado
-                        }])
-                        ->get(['id', 'name']);
+        })
+        ->where('active', true)
+        ->withCount(['assignedTickets as tickets_ativos' => function($query) {
+            // Conta apenas os tickets em aberto ou progresso (IDs de estados não concluídos)
+            $query->whereNotIn('status_id', [3, 4]); // Ex: 3 = Fechado, 4 = Cancelado
+        }])
+        ->get(['id', 'name']);
 
         // Fallback imediato caso não haja equipa operacional disponível
         if ($tecnicos->isEmpty()) {
@@ -41,18 +41,18 @@ class AIService
         // 2. Engenharia de Prompt focada no Perfil de Decisão do Administrador
         $prompt = "Atuas como Consultor de Engenharia de Manutenção Industrial para o Administrador do sistema.\n";
         $prompt .= "O teu papel único é analisar o ticket de avaria e sugerir o técnico mais qualificado.\n\n";
-        
+
         $prompt .= "--- TICKET SOB ANÁLISE ---\n";
         $prompt .= "- Descrição do Problema: " . $ticket->description . "\n";
         $prompt .= "- Equipamento: " . ($ticket->equipment->name ?? 'Não Especificado') . "\n";
-        
-        // 🛠️ FIX DE PROTEÇÃO (Linha 39): Uso do operador null-safe (?->) para evitar quebras se o equipamento ou categoria não existirem
+
+        // Uso do operador null-safe (?->) para evitar quebras se o equipamento ou categoria não existirem
         $prompt .= "- Categoria Técnica: " . ($ticket->equipment?->category?->name ?? 'Geral') . "\n\n";
-        
+
         $prompt .= "--- RECURSOS HUMANOS DISPONÍVEIS ---\n";
         foreach ($tecnicos as$tecnico) {
-            // 🛠️ FIX DE SINTAXE (Linhas 46 e 47): Removidas as barras invertidas lixeiras do código original!
-            $esp =$especialidades[($tecnico->id \% 3) + 1];$prompt .= "- ID: {$tecnico->id} \vert{} Nome: {$tecnico->name} | Especialidade: {$esp} \vert{} Carga de Trabalho Atual: {$tecnico->tickets_ativos} tickets\n";
+        $esp = $especialidades[($tecnico->id % 3) + 1];
+        $prompt .= "- ID: {$tecnico->id} | Nome: {$tecnico->name} | Especialidade: {$esp} | Carga de Trabalho Atual: {$tecnico->tickets_ativos} tickets\n";
         }
 
         $prompt .= "\n--- CRITÉRIOS DE SELEÇÃO ---\n";

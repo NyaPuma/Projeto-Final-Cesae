@@ -13,9 +13,96 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
+
+    <style>
+        /* Transições suaves para a barra lateral em Desktop */
+        #desktopSidebar.collapsed {
+            width: 5rem !important; /* w-20 */
+        }
+        #desktopSidebar.collapsed .sidebar-text {
+            display: none !important;
+        }
+        #desktopSidebar.collapsed nav {
+            padding-left: 0.5rem !important;
+            padding-right: 0.5rem !important;
+        }
+        #desktopSidebar.collapsed nav a {
+            justify-content: center !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            gap: 0 !important;
+        }
+        #desktopSidebar.collapsed #desktopBranding {
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+            justify-content: center !important;
+        }
+        #desktopSidebar.collapsed #authBoxContainer {
+            display: none !important;
+        }
+
+        /* Prevenção de flashes visuais durante o carregamento inicial */
+        .pre-collapsed #desktopSidebar {
+            width: 5rem !important;
+        }
+        .pre-collapsed #desktopSidebar .sidebar-text,
+        .pre-collapsed #desktopSidebar #authBoxContainer {
+            display: none !important;
+        }
+        .pre-collapsed #desktopSidebar nav {
+            padding-left: 0.5rem !important;
+            padding-right: 0.5rem !important;
+        }
+        .pre-collapsed #desktopSidebar nav a {
+            justify-content: center !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            gap: 0 !important;
+        }
+        .pre-collapsed #desktopSidebar #desktopBranding {
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+            justify-content: center !important;
+        }
+    </style>
+
+    <script>
+        // Inicialização imediata do tema e estado do menu para evitar quebras visuais (FOUC)
+        (() => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.removeAttribute('data-theme');
+            }
+
+            const collapsed = localStorage.getItem('sidebar_collapsed') === 'true';
+            if (collapsed) {
+                document.documentElement.classList.add('pre-collapsed');
+            }
+        })();
+    </script>
 </head>
 
 <body class="min-h-screen bg-[var(--bg)] text-[var(--text)] overflow-x-hidden antialiased">
+
+    @php
+        $navItems = [
+            ['href' => '/', 'active' => '/', 'label' => 'Início', 'icon' => '🏠', 'exact' => true],
+            ['href' => 'ui', 'active' => 'ui', 'label' => 'Dashboard', 'icon' => '📊', 'exact' => true],
+            ['href' => 'ui/tickets', 'active' => 'ui/tickets*', 'label' => 'Tickets', 'icon' => '🎫', 'exact' => false],
+            ['href' => 'ui/equipments', 'active' => 'ui/equipments*', 'label' => 'Equipamentos', 'icon' => '🖥️', 'exact' => false],
+            ['href' => 'ui/rooms', 'active' => 'ui/rooms*', 'label' => 'Salas', 'icon' => '🚪', 'exact' => false],
+            ['href' => 'ui/users', 'active' => 'ui/users*', 'label' => 'Utilizadores', 'icon' => '👥', 'exact' => false],
+            ['href' => 'ui/audits', 'active' => 'ui/audits*', 'label' => 'Auditoria', 'icon' => '📝', 'exact' => false],
+            ['href' => 'ui/analytics', 'active' => 'ui/analytics*', 'label' => 'Analytics', 'icon' => '📈', 'exact' => false],
+            ['href' => 'calendar', 'active' => 'calendar*', 'label' => 'Agenda', 'icon' => '📅', 'exact' => false],
+            ['href' => 'docs/openapi', 'active' => 'docs/openapi*', 'label' => 'Swagger', 'icon' => '📚', 'exact' => false],
+        ];
+    @endphp
+
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-xl focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[var(--on-primary)]">
         {{ __('Ir para o conteúdo') }}
     </a>
@@ -28,154 +115,129 @@
         <div class="absolute top-40 left-0 h-[450px] w-[450px] rounded-full bg-orange-500/10 blur-[140px]"></div>
     </div>
 
+    {{-- Overlay Escuro para Mobile --}}
+    <div id="mobileNavOverlay" class="fixed inset-0 bg-black/60 hidden opacity-0 transition-opacity duration-300 z-40" onclick="closeMobileNav()"></div>
+
+    {{-- Drawer / Menu Lateral Móvel --}}
+    <aside
+        id="mobileNav"
+        class="fixed inset-y-0 left-0 w-72 -translate-x-full transition-transform duration-300 ease-in-out bg-[var(--sidebar)] border-r border-[var(--border)] backdrop-blur-xl z-50 flex flex-col shadow-2xl lg:hidden"
+    >
+        {{-- Branding Mobile --}}
+        <div class="h-20 px-8 flex items-center border-b border-[var(--border)]">
+            <div class="flex items-center gap-4">
+                <button
+                    type="button"
+                    onclick="closeMobileNav()"
+                    class="h-11 w-11 rounded-xl bg-primary text-[var(--on-primary)] font-black flex items-center justify-center shadow-md shadow-primary/20 cursor-pointer hover:opacity-90 transition-all flex-shrink-0"
+                    aria-label="{{ __('Fechar menu') }}"
+                >
+                    ☰
+                </button>
+            </div>
+        </div>
+
+        {{-- Links Mobile --}}
+        <nav class="flex-1 overflow-y-auto px-4 py-6 space-y-1" aria-label="{{ __('Navegação principal mobile') }}">
+            @foreach($navItems as $item)
+                @php
+                    $isActive = request()->is($item['active']);
+                @endphp
+
+                <a
+                    href="{{ url($item['href'] === '/' ? '/' : $item['href']) }}"
+                    onclick="closeMobileNav()"
+                    class="group flex items-center gap-3.5 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200
+                    {{ $isActive
+                        ? 'bg-primary text-[var(--on-primary)] font-semibold shadow-sm shadow-primary/20'
+                        : 'text-[var(--text)] hover:bg-[var(--surface-2)]'
+                    }}"
+                >
+                    <span class="text-lg filter {{ $isActive ? 'none' : 'grayscale opacity-80' }}">
+                        {{ $item['icon'] }}
+                    </span>
+                    <span>{{ __($item['label']) }}</span>
+                </a>
+            @endforeach
+        </nav>
+
+        {{-- Auth Box Mobile --}}
+        <div class="border-t border-[var(--border)] p-4 bg-[var(--surface-2)]/50">
+            <div id="authBoxMobile"></div>
+        </div>
+    </aside>
+
     <div class="min-h-screen flex">
 
-        {{-- Sidebar (Navegação Lateral) --}}
-        <aside class="hidden lg:flex w-72 flex-col border-r border-[var(--border)] bg-[var(--sidebar)] backdrop-blur-xl">
-
-            {{-- Branding --}}
-            <div class="h-20 px-8 flex items-center border-b border-[var(--border)]">
-                    <div class="flex items-center gap-4">
-                        <div class="h-11 w-11 rounded-xl bg-primary text-[var(--on-primary)] font-black flex items-center justify-center shadow-md shadow-primary/20">
-                            GA
-                        </div>
-                    <div>
-                        <h1 class="font-bold text-sm tracking-tight text-[var(--text)]">
-                            {{ __('Gestão de Avarias') }}
-                        </h1>
-                        <p class="text-[var(--text-soft)] text-xs font-medium">
-                            {{ __('Enterprise Dashboard') }}
-                        </p>
-                    </div>
+        {{-- Sidebar Desktop --}}
+        <aside
+            id="desktopSidebar"
+            class="hidden lg:flex w-72 flex-col border-r border-[var(--border)] bg-[var(--sidebar)] backdrop-blur-xl transition-all duration-300 ease-in-out"
+        >
+            {{-- Branding Desktop --}}
+            <div id="desktopBranding" class="h-20 px-8 flex items-center border-b border-[var(--border)] transition-all duration-300">
+                <div class="flex items-center gap-4">
+                    <button
+                        type="button"
+                        onclick="toggleDesktopSidebar()"
+                        class="h-11 w-11 rounded-xl bg-primary text-[var(--on-primary)] font-black flex items-center justify-center shadow-md shadow-primary/20 cursor-pointer hover:opacity-90 transition-all flex-shrink-0"
+                        aria-label="{{ __('Recolher menu') }}"
+                    >
+                        ☰
+                    </button>
                 </div>
             </div>
 
-            {{-- Links de Navegação Dinâmicos --}}
-            <nav class="flex-1 overflow-y-auto px-4 py-6 space-y-1" aria-label="{{ __('Navegação principal') }}">
-                @php
-                    $navItems = [
-                        ['href' => '/', 'active' => '/', 'label' => 'Início', 'icon' => '🏠', 'exact' => true],
-                        ['href' => 'ui', 'active' => 'ui', 'label' => 'Dashboard', 'icon' => '📊', 'exact' => true],
-                        ['href' => 'ui/tickets', 'active' => 'ui/tickets*', 'label' => 'Tickets', 'icon' => '🎫', 'exact' => false],
-                        ['href' => 'ui/equipments', 'active' => 'ui/equipments*', 'label' => 'Equipamentos', 'icon' => '🖥️', 'exact' => false],
-                        ['href' => 'ui/users', 'active' => 'ui/users*', 'label' => 'Utilizadores', 'icon' => '👥', 'exact' => false],
-                        ['href' => 'ui/audits', 'active' => 'ui/audits*', 'label' => 'Auditoria', 'icon' => '📝', 'exact' => false],
-                        ['href' => 'ui/analytics', 'active' => 'ui/analytics*', 'label' => 'Analytics', 'icon' => '📈', 'exact' => false],
-                        ['href' => 'calendar', 'active' => 'calendar*', 'label' => 'Agenda', 'icon' => '📅', 'exact' => false],
-                        ['href' => 'docs/openapi', 'active' => 'docs/openapi*', 'label' => 'Swagger', 'icon' => '📚', 'exact' => false],
-                    ];
-
-                    foreach($navItems as $item) {
+            {{-- Links de Navegação Desktop --}}
+            <nav class="flex-1 overflow-y-auto px-4 py-6 space-y-1 transition-all duration-300" aria-label="{{ __('Navegação principal') }}">
+                @foreach($navItems as $item)
+                    @php
                         $isActive = request()->is($item['active']);
-                @endphp
+                    @endphp
 
-                        <a
-                            href="{{ url($item['href'] === '/' ? '/' : $item['href']) }}"
-                            class="group flex items-center gap-3.5 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200
-                            {{ $isActive
-                                ? 'bg-primary text-[var(--on-primary)] font-semibold shadow-sm shadow-primary/20'
-                                : 'text-[var(--text)] hover:bg-[var(--surface-2)]'
-                            }}"
-                        >
-                            <span class="text-lg filter {{ $isActive ? 'none' : 'grayscale opacity-80' }}">
-                                {{ $item['icon'] }}
-                            </span>
-                            <span>{{ __($item['label']) }}</span>
-                        </a>
-
-                @php
-                    }
-                @endphp
+                    <a
+                        href="{{ url($item['href'] === '/' ? '/' : $item['href']) }}"
+                        class="group flex items-center gap-3.5 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200
+                        {{ $isActive
+                            ? 'bg-primary text-[var(--on-primary)] font-semibold shadow-sm shadow-primary/20'
+                            : 'text-[var(--text)] hover:bg-[var(--surface-2)]'
+                        }}"
+                    >
+                        <span class="text-lg filter {{ $isActive ? 'none' : 'grayscale opacity-80' }} flex-shrink-0">
+                            {{ $item['icon'] }}
+                        </span>
+                        <span class="sidebar-text transition-all duration-300">{{ __($item['label']) }}</span>
+                    </a>
+                @endforeach
             </nav>
 
-            {{-- Caixa de Autenticação/Sessão (Bottom) --}}
-            <div class="border-t border-[var(--border)] p-4 bg-[var(--surface-2)]/50">
+            {{-- Caixa de Autenticação Desktop --}}
+            <div id="authBoxContainer" class="border-t border-[var(--border)] p-4 bg-[var(--surface-2)]/50 transition-all duration-300">
                 <div id="authBox"></div>
             </div>
         </aside>
 
-        {{-- Mobile Sidebar (Hamburger) --}}
-        <div class="lg:hidden fixed top-4 left-4 z-50">
+        {{-- Botão Hamburger para Mobile --}}
+        <div class="lg:hidden fixed top-[18px] left-8 z-30">
             <button
                 type="button"
                 onclick="toggleMobileNav()"
-                class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] text-sm shadow-sm transition-all hover:bg-[var(--surface-2)] cursor-pointer"
+                class="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary text-[var(--on-primary)] shadow-md shadow-primary/20 transition-all hover:opacity-90 cursor-pointer text-base"
                 aria-label="{{ __('Abrir menu') }}"
                 id="mobileMenuBtn"
             >
                 ☰
             </button>
-
-            {{-- Overlay --}}
-            <div id="mobileNavOverlay" class="fixed inset-0 bg-black/50 hidden z-40 transition-opacity duration-200" onclick="closeMobileNav()"></div>
-
-            {{-- Drawer --}}
-            <aside
-                id="mobileNav"
-                class="fixed inset-y-0 left-0 w-72 transform -translate-x-full transition-transform duration-250 bg-[var(--sidebar)] border-r border-[var(--border)] backdrop-blur-xl z-50 flex flex-col"
-            >
-                {{-- Branding --}}
-                <div class="h-20 px-8 flex items-center border-b border-[var(--border)]">
-                    <div class="flex items-center gap-4">
-                        <div class="h-11 w-11 rounded-xl bg-primary text-[var(--on-primary)] font-black flex items-center justify-center shadow-md shadow-primary/20">
-                            GA
-                        </div>
-                        <div>
-                            <h1 class="font-bold text-sm tracking-tight text-[var(--text)]">
-                                {{ __('Gestão de Avarias') }}
-                            </h1>
-                            <p class="text-[var(--text-soft)] text-xs font-medium">
-                                {{ __('Enterprise Dashboard') }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Links --}}
-                <nav class="flex-1 overflow-y-auto px-4 py-6 space-y-1" aria-label="{{ __('Navegação principal mobile') }}">
-                    @foreach($navItems as $item)
-                        @php
-                            $isActive = request()->is($item['active']);
-                        @endphp
-
-                        <a
-                            href="{{ url($item['href'] === '/' ? '/' : $item['href']) }}"
-                            onclick="closeMobileNav()"
-                            class="group flex items-center gap-3.5 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200
-                            {{ $isActive
-                            ? 'bg-primary text-[var(--on-primary)] font-semibold shadow-sm shadow-primary/20'
-                                : 'text-[var(--text)] hover:bg-[var(--surface-2)]'
-                            }}"
-                        >
-                            <span class="text-lg filter {{ $isActive ? 'none' : 'grayscale opacity-80' }}">
-                                {{ $item['icon'] }}
-                            </span>
-                            <span>{{ __($item['label']) }}</span>
-                        </a>
-                    @endforeach
-                </nav>
-
-                {{-- Auth box --}}
-                <div class="border-t border-[var(--border)] p-4 bg-[var(--surface-2)]/50">
-                    <div id="authBoxMobile"></div>
-                </div>
-            </aside>
         </div>
 
         {{-- Área de Conteúdo Principal --}}
         <div class="flex-1 flex flex-col min-w-0">
 
             {{-- Topbar --}}
-            <header class="sticky top-0 z-40 h-20 border-b border-[var(--border)] bg-[var(--topbar)] backdrop-blur-xl">
+            <header class="sticky top-0 z-20 h-20 border-b border-[var(--border)] bg-[var(--topbar)] backdrop-blur-xl">
                 <div class="h-full px-8 flex items-center justify-between">
-                    <div class="pl-12 lg:pl-0">
-                        <h2 class="text-lg font-bold tracking-tight text-[var(--text)]">
-                            {{ __('Painel de Gestão') }}
-                        </h2>
-                        <p class="text-[var(--text-soft)] text-xs">
-                            {{ __('Monitorização em tempo real') }}
-                        </p>
-                    </div>
+                    {{-- Espaçador para manter o botão mobile livre sem sobrepor conteúdo --}}
+                    <div class="pl-14 lg:pl-0"></div>
 
                     {{-- Ações de Perfil, Idioma e Tema --}}
                     <div class="flex items-center gap-3">
@@ -257,23 +319,35 @@
         return true;
     }
 
+    // Toggle para recolher Sidebar em Desktop
+    function toggleDesktopSidebar() {
+        const sidebar = document.getElementById('desktopSidebar');
+        if (!sidebar) return;
+
+        const isCollapsed = sidebar.classList.toggle('collapsed');
+        localStorage.setItem('sidebar_collapsed', isCollapsed ? 'true' : 'false');
+    }
+
+    // Gestão dinâmica da navegação móvel via classes Tailwind
     function toggleMobileNav() {
         const overlay = document.getElementById('mobileNavOverlay');
         const drawer = document.getElementById('mobileNav');
 
         if (!overlay || !drawer) return;
 
-        const isOpen = drawer.getAttribute('data-open') === 'true';
+        const isOpen = drawer.classList.contains('translate-x-0');
 
         if (isOpen) {
             closeMobileNav();
-            return;
-        }
+        } else {
+            overlay.classList.remove('hidden');
+            void overlay.offsetWidth; // Força reflow para animação perfeita
+            overlay.classList.remove('opacity-0');
+            overlay.classList.add('opacity-100');
 
-        drawer.setAttribute('data-open', 'true');
-        drawer.style.transform = 'translateX(0)';
-        overlay.classList.remove('hidden');
-        overlay.style.display = 'block';
+            drawer.classList.remove('-translate-x-full');
+            drawer.classList.add('translate-x-0');
+        }
     }
 
     function closeMobileNav() {
@@ -282,10 +356,17 @@
 
         if (!overlay || !drawer) return;
 
-        drawer.setAttribute('data-open', 'false');
-        drawer.style.transform = 'translateX(-100%)';
-        overlay.classList.add('hidden');
-        overlay.style.display = 'none';
+        overlay.classList.remove('opacity-100');
+        overlay.classList.add('opacity-0');
+
+        drawer.classList.remove('translate-x-0');
+        drawer.classList.add('-translate-x-full');
+
+        setTimeout(() => {
+            if (!drawer.classList.contains('translate-x-0')) {
+                overlay.classList.add('hidden');
+            }
+        }, 300);
     }
 
     function toggleLangDropdown() {
@@ -302,7 +383,7 @@
         }
     }
 
-    // Close dropdown on click outside
+    // Fechar dropdowns ao clicar fora
     document.addEventListener('click', (e) => {
         const dropdown = document.getElementById('langDropdown');
         const container = document.getElementById('langSelectorDropdown');
@@ -432,42 +513,18 @@
         }
     }
 
-    // Inicialização imediata do tema para prevenir flashes brancos (FOUC)
-    (() => {
-        const saved = localStorage.getItem('theme');
-        if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-            document.documentElement.setAttribute('data-theme', 'dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-            document.documentElement.removeAttribute('data-theme');
-        }
-    })();
-
     document.addEventListener('DOMContentLoaded', () => {
+        // Atribui o estado colapsado guardado após o carregamento inicial do DOM
+        const sidebar = document.getElementById('desktopSidebar');
+        if (sidebar && localStorage.getItem('sidebar_collapsed') === 'true') {
+            sidebar.classList.add('collapsed');
+        }
+        document.documentElement.classList.remove('pre-collapsed');
+
         if (typeof requireAuthOnLoad !== 'undefined' && requireAuthOnLoad) {
             requireAuth();
         }
         renderAuthBox();
-        const token = localStorage.getItem('api_token');
-        if (token) {
-            const userName = localStorage.getItem('user_name') || 'Utilizador';
-            const userRole = localStorage.getItem('user_role') || 'Utilizador';
-            const topbarUser = document.getElementById('topbarUser');
-            if (topbarUser) {
-                topbarUser.innerHTML = `
-                    <a href="/ui/profile" class="flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 transition hover:bg-[var(--surface-2)]">
-                        <div class="flex h-9 w-9 items-center justify-center rounded-full bg-primary font-bold text-xs text-[var(--on-primary)] shadow-sm">
-                            ${userName.charAt(0).toUpperCase()}
-                        </div>
-                        <div class="hidden md:block">
-                            <div class="text-sm font-semibold text-[var(--text)] leading-none">${userName}</div>
-                            <div class="mt-1.5 text-[9px] font-bold uppercase tracking-wider text-[var(--text-soft)]">${userRole}</div>
-                        </div>
-                    </a>
-                `;
-            }
-        }
     });
     </script>
 
