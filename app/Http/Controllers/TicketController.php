@@ -18,15 +18,11 @@ use Illuminate\Support\Facades\DB;
 class TicketController extends Controller
 {
     use ControllerHelpers;
-    protected $aiService;
 
-    // Injeção de dependência do serviço de Inteligência Artificial
-    public function __construct(AIService $aiService)
-    {
-        $this->aiService = $aiService;
-    }
-
-
+    // The property is declared and assigned automatically here!
+    public function __construct(
+        protected AIService $aiService
+    ) {}
 
     /**
      * Lista os tickets na view index
@@ -45,10 +41,10 @@ class TicketController extends Controller
         ]);
     }
 
-/**
+    /**
      * Exibe o detalhe do ticket injetando a sugestão em tempo real da IA
      */
-    public function show(Request $request, $id)
+    public function show(Request $request, int $id)
     {
         // Procura o ticket trazendo os relacionamentos exatos do teu projeto
         $ticket = Ticket::with(['equipment.category', 'room', 'user'])->findOrFail($id);
@@ -68,7 +64,7 @@ class TicketController extends Controller
     /**
      * Grava a alocação do técnico sugerido pela IA ou escolhido manualmente
      */
-    public function atribuirTecnico(Request $request, $id)
+    public function atribuirTecnico(Request $request, int $id)
     {
         $request->validate([
             'tecnico_id' => 'required|exists:users,id', // Valida se o ID existe na tabela users
@@ -268,7 +264,7 @@ class TicketController extends Controller
 
         $file = $request->file('photo');
         $path = $file->store('ticket_photos', 'public');
-        $url = Storage::disk('public')->url($path);
+        $url = asset("storage/{$path}");
 
         $attachment = TicketAttachment::create([
             'ticket_id' => $ticket->id,
