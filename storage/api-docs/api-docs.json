@@ -193,128 +193,6 @@
                 ]
             }
         },
-        "/admin/rooms": {
-            "get": {
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Listar salas",
-                "description": "Lista todas as salas registadas.",
-                "operationId": "1f3319f513efbd3420c84ba0caa106e3",
-                "responses": {
-                    "200": {
-                        "description": "Lista de salas"
-                    }
-                },
-                "security": [
-                    {
-                        "X-Auth-Token": []
-                    },
-                    {
-                        "BearerAuth": []
-                    }
-                ]
-            },
-            "post": {
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Criar sala",
-                "description": "Cria uma nova sala de trabalho.",
-                "operationId": "6d52c96d143252ee80aa9be4f63727c4",
-                "responses": {
-                    "201": {
-                        "description": "Sala criada"
-                    },
-                    "422": {
-                        "description": "Erro de validação"
-                    }
-                },
-                "security": [
-                    {
-                        "X-Auth-Token": []
-                    },
-                    {
-                        "BearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/admin/rooms/{id}": {
-            "patch": {
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Atualizar sala",
-                "description": "Atualiza os detalhes de uma sala.",
-                "operationId": "e459df36a3c4723a818b41786061a819",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Sala atualizada"
-                    },
-                    "404": {
-                        "description": "Sala não encontrada"
-                    },
-                    "422": {
-                        "description": "Erro de validação"
-                    }
-                },
-                "security": [
-                    {
-                        "X-Auth-Token": []
-                    },
-                    {
-                        "BearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/admin/rooms/{id}/inactive": {
-            "patch": {
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Inativar sala",
-                "description": "Inativa uma sala (Gestão lógica / Soft management).",
-                "operationId": "c551ae9a067c643951fedef3bab7be05",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Sala inativada"
-                    },
-                    "404": {
-                        "description": "Sala não encontrada"
-                    }
-                },
-                "security": [
-                    {
-                        "X-Auth-Token": []
-                    },
-                    {
-                        "BearerAuth": []
-                    }
-                ]
-            }
-        },
         "/admin/tickets/{id}/approve-budget": {
             "patch": {
                 "tags": [
@@ -727,59 +605,17 @@
                 ]
             }
         },
-        "/tickets": {
+        "/admin/rooms": {
             "get": {
                 "tags": [
-                    "Tickets"
+                    "Admin"
                 ],
-                "summary": "Listar tickets",
-                "description": "Lista todos os tickets aplicando os filtros definidos.\n- Utilizadores normais veem exclusivamente os seus próprios tickets.\n- Técnicos e Administradores têm visibilidade global sobre os registos.",
-                "operationId": "aa5e80a6f31951862c4554396ce1b1fd",
-                "parameters": [
-                    {
-                        "name": "status",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "priority",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "equipment_id",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "room_id",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "technician_id",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
+                "summary": "Listar salas",
+                "description": "Lista todas as salas registadas.",
+                "operationId": "e314a74e53273536a378fc5bfb2c3666",
                 "responses": {
                     "200": {
-                        "description": "Lista paginada de tickets"
+                        "description": "Lista de salas"
                     }
                 },
                 "security": [
@@ -793,52 +629,14 @@
             },
             "post": {
                 "tags": [
-                    "Tickets"
+                    "Admin"
                 ],
-                "summary": "Criar ticket",
-                "description": "Cria um novo ticket de avaria.\n- Apenas utilizadores comuns (`ROLE_USER`) podem criar.\n- Valida título/descrição e a atividade do equipamento/sala.",
-                "operationId": "f9282cd452389d3cc5d06f0cf782b672",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "title",
-                                    "description"
-                                ],
-                                "properties": {
-                                    "title": {
-                                        "type": "string",
-                                        "example": "Projetor não liga"
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "example": "O projetor da sala 4 não responde."
-                                    },
-                                    "equipment_id": {
-                                        "type": "integer",
-                                        "example": 12,
-                                        "nullable": true
-                                    },
-                                    "room_id": {
-                                        "type": "integer",
-                                        "example": 3,
-                                        "nullable": true
-                                    },
-                                    "priority": {
-                                        "type": "string",
-                                        "example": "alta"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
+                "summary": "Criar sala",
+                "description": "Cria uma nova sala de trabalho.",
+                "operationId": "ce2c4c7bfbc0091348ab12f6047b06ff",
                 "responses": {
                     "201": {
-                        "description": "Ticket criado"
+                        "description": "Sala criada"
                     },
                     "422": {
                         "description": "Erro de validação"
@@ -854,80 +652,69 @@
                 ]
             }
         },
-        "/tickets/search": {
-            "get": {
+        "/admin/rooms/{id}": {
+            "patch": {
                 "tags": [
-                    "Tickets"
+                    "Admin"
                 ],
-                "summary": "Pesquisa avançada de tickets",
-                "description": "Pesquisa avançada de tickets com filtros combinados:\ntexto livre, estado, prioridade, intervalo de datas, equipamento e técnico.\nAcessível a qualquer utilizador autenticado (com scope de visibilidade por role).",
-                "operationId": "ea6b7c0ed74e970c57f829c67f0b1f24",
+                "summary": "Atualizar sala",
+                "description": "Atualiza os detalhes de uma sala.",
+                "operationId": "70f7ed947701e0f65b56da349ef910b5",
                 "parameters": [
                     {
-                        "name": "q",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "status",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "priority",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "equipment_id",
-                        "in": "query",
-                        "required": false,
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
                         "schema": {
                             "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "technician_id",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "date_from",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "format": "date"
-                        }
-                    },
-                    {
-                        "name": "date_to",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "format": "date"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Resultados da pesquisa"
+                        "description": "Sala atualizada"
+                    },
+                    "404": {
+                        "description": "Sala não encontrada"
                     },
                     "422": {
                         "description": "Erro de validação"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/admin/rooms/{id}/inactive": {
+            "patch": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Inativar sala",
+                "description": "Inativa uma sala (Gestão lógica / Soft management).",
+                "operationId": "49645ae257ed61ab928f8473f1f530a6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sala inativada"
+                    },
+                    "404": {
+                        "description": "Sala não encontrada"
                     }
                 },
                 "security": [
@@ -971,10 +758,6 @@
         {
             "name": "Notifications",
             "description": "Notifications"
-        },
-        {
-            "name": "Tickets",
-            "description": "Tickets"
         }
     ]
 }

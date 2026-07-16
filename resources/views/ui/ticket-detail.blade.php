@@ -7,9 +7,9 @@ window.requireAuthOnLoad = true;
 </script>
 
 @component('ui.partials.page-card', [
-    'title' => 'Detalhes do Ticket',
-    'subtitle' => 'Consulte o estado detalhado da ocorrência, atribua técnicos e partilhe comentários internos.',
-    'actions' => '<a href="/ui/tickets" class="inline-flex items-center justify-center px-3 py-1.5 bg-[var(--surface)] text-xs font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all"><svg class="w-3.5 h-3.5 mr-1.5 text-[var(--text-soft)]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path></svg> Voltar à listagem</a>'
+    'title' => __('Detalhes do Ticket'),
+    'subtitle' => __('Consulte o estado detalhado da ocorrência, atribua técnicos e partilhe comentários internos.'),
+    'actions' => '<a href="/ui/tickets" class="inline-flex items-center justify-center px-3 py-1.5 bg-[var(--surface)] text-xs font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all"><svg class="w-3.5 h-3.5 mr-1.5 text-[var(--text-soft)]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path></svg> ' . __('Voltar à listagem') . '</a>'
 ])
 
     <div class="grid gap-6 xl:grid-cols-[1.2fr_0.8fr] animate-[fadeIn_0.3s_ease-out]">
@@ -19,7 +19,7 @@ window.requireAuthOnLoad = true;
             <div id="ticketDetails" class="space-y-4 text-xs text-[var(--text-soft)]">
                 <div class="flex items-center justify-center py-12 gap-2">
                     <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                    <p class="text-sm font-medium text-[var(--text-soft)]">A carregar dados estruturados do ticket...</p>
+                    <p class="text-sm font-medium text-[var(--text-soft)]">{{ __('A carregar dados estruturados do ticket...') }}</p>
                 </div>
             </div>
         </div>
@@ -32,62 +32,62 @@ window.requireAuthOnLoad = true;
 
             {{-- Secção de Comentários Internos --}}
             <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
-                <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)] border-b border-[var(--border)] pb-2.5 mb-3">Comentários internos</h3>
+                <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)] border-b border-[var(--border)] pb-2.5 mb-3">{{ __('Comentários internos') }}</h3>
                 <div id="commentsSection" class="text-xs text-[var(--text-soft)] max-h-60 overflow-y-auto pr-1">
-                    <p class="italic py-2">A atualizar histórico de notas técnicas...</p>
+                    <p class="italic py-2">{{ __('A atualizar histórico de notas técnicas...') }}</p>
                 </div>
             </div>
 
             {{-- Formulário para Adicionar Comentário --}}
             <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
-                <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)] mb-3">Adicionar comentário</h3>
+                <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)] mb-3">{{ __('Adicionar comentário') }}</h3>
                 <form id="commentForm" class="space-y-3">
-                    <label for="commentText" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">Mensagem</label>
-                    <textarea id="commentText" rows="3" class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2 text-xs text-[var(--text)] placeholder-[var(--text-soft)] outline-none focus:border-[var(--text)] transition-all resize-none" placeholder="Escreva uma nota ou atualização para a equipa..."></textarea>
+                    <label for="commentText" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Mensagem') }}</label>
+                    <textarea id="commentText" rows="3" class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2 text-xs text-[var(--text)] placeholder-[var(--text-soft)] outline-none focus:border-[var(--text)] transition-all resize-none" placeholder="{{ __('Escreva uma nota ou atualização para a equipa...') }}"></textarea>
                     <button type="submit" class="inline-flex items-center justify-center px-4 py-2 bg-[var(--text)] text-[var(--surface)] text-xs font-bold rounded-xl shadow-sm hover:opacity-90 transition-all cursor-pointer">
-                        Enviar comentário
+                        {{ __('Enviar comentário') }}
                     </button>
                 </form>
             </div>
 
             {{-- Secção e Upload de Fotografias --}}
             <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
-                <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)] mb-3">Evidências Fotográficas</h3>
+                <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)] mb-3">{{ __('Evidências Fotográficas') }}</h3>
                 <form id="photoForm" class="space-y-3 border-b border-[var(--border)] pb-4 mb-3">
-                    <label for="photoInput" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">Anexo de fotografia</label>
+                    <label for="photoInput" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Anexo de fotografia') }}</label>
                     <div class="flex items-center justify-between w-full rounded-xl border border-dashed border-[var(--border)] bg-[var(--surface-2)] px-3 py-2.5">
                         <input id="photoInput" type="file" accept="image/*" class="block w-full text-xs text-[var(--text-soft)] file:mr-3 file:py-1 file:px-2 file:rounded-lg file:border-0 file:text-[11px] file:font-bold file:bg-[var(--text)]/5 dark:file:bg-[var(--surface)]/10 file:text-[var(--text)] cursor-pointer">
                     </div>
                     <button type="submit" class="inline-flex items-center justify-center px-3 py-2 bg-[var(--surface)] text-xs font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all cursor-pointer">
-                        Enviar fotografia
+                        {{ __('Enviar fotografia') }}
                     </button>
                 </form>
                 <div id="photosSection" class="text-xs text-[var(--text-soft)]">
-                    <p class="italic">Nenhuma evidência carregada.</p>
+                    <p class="italic">{{ __('Nenhuma evidência carregada.') }}</p>
                 </div>
             </div>
 
             {{-- Painel de Gestão e Atribuição Manual --}}
             <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
-                <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)] mb-3">Painel de Atribuição</h3>
+                <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)] mb-3">{{ __('Painel de Atribuição') }}</h3>
                 <div class="space-y-4">
                     <div>
-                        <label for="assignTechnicianId" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">ID do Técnico (Manual)</label>
-                        <input id="assignTechnicianId" type="number" min="1" placeholder="Ex: 12" class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-1.5 text-xs text-[var(--text)] outline-none focus:border-[var(--text)] transition-all">
+                        <label for="assignTechnicianId" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('ID do Técnico (Manual)') }}</label>
+                        <input id="assignTechnicianId" type="number" min="1" placeholder="{{ __('Ex: 12') }}" class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-1.5 text-xs text-[var(--text)] outline-none focus:border-[var(--text)] transition-all">
                     </div>
 
                     <div class="flex flex-wrap gap-2 pt-1">
                         <button id="btnAssignManual" type="button" class="inline-flex items-center justify-center px-4 py-2 bg-[var(--text)] text-[var(--surface)] text-xs font-bold rounded-xl shadow-sm hover:opacity-90 transition-all cursor-pointer">
-                            Atribuir Técnico
+                            {{ __('Atribuir Técnico') }}
                         </button>
                         <button id="btnAssignAuto" type="button" class="inline-flex items-center justify-center px-3 py-2 bg-[var(--surface)] text-xs font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all cursor-pointer">
-                            Atribuição Automática
+                            {{ __('Atribuição Automática') }}
                         </button>
                     </div>
 
                     <div class="border-t border-[var(--border)] pt-3">
                         <button id="btnReopen" type="button" class="w-full inline-flex items-center justify-center px-3 py-2 bg-amber-500/10 hover:bg-amber-500/15 border border-amber-500/20 text-xs font-bold text-amber-600 dark:text-amber-400 rounded-xl transition-all cursor-pointer">
-                            Reabrir Este Ticket
+                            {{ __('Reabrir Este Ticket') }}
                         </button>
                     </div>
                 </div>
@@ -112,6 +112,23 @@ const priorityColors = {
     média:   'border border-amber-500/15 bg-amber-500/5 text-amber-600 dark:text-amber-400',
     alta:    'border border-orange-500/15 bg-orange-500/5 text-orange-600 dark:text-orange-400',
     crítica: 'border border-rose-500/20 bg-rose-500/5 text-rose-600 dark:text-rose-400',
+};
+
+// Dicionário de tradução para prioridades dinâmicas vindas da API
+const priorityLabels = {
+    baixa:   "{{ __('Baixa') }}",
+    média:   "{{ __('Média') }}",
+    alta:    "{{ __('Alta') }}",
+    crítica: "{{ __('Crítica') }}"
+};
+
+// Dicionário de tradução para estados dinâmicos vindos da API
+const statusLabels = {
+    'aberto':    "{{ __('Aberto') }}",
+    'aberta':    "{{ __('Aberta') }}",
+    'em curso':  "{{ __('Em Curso') }}",
+    'fechado':   "{{ __('Fechado') }}",
+    'fechada':   "{{ __('Fechada') }}"
 };
 
 function authHeader() {
@@ -145,60 +162,61 @@ function checkCurrentUserIsAdmin() {
 
 async function fetchTicket(){
     const res = await fetch('/tickets/' + ticketId, {headers: authHeader()});
-    if(res.status===401){ alert('Autenticação necessária. Faça login.'); window.location='/ui/login'; return; }
-    if(!res.ok){ const j=await res.json(); alert(j.message || 'Erro a carregar ticket'); return; }
+    if(res.status===401){ alert("{{ __('Autenticação necessária. Faça login.') }}"); window.location='/ui/login'; return; }
+    if(!res.ok){ const j=await res.json(); alert(j.message || "{{ __('Erro a carregar ticket') }}"); return; }
     const data = await res.json();
     const ticket = data.ticket;
 
     const priColor = priorityColors[ticket.priority] ?? 'border border-[var(--border)] bg-[var(--surface-2)] text-[var(--text-soft)]';
     const statusClean = (ticket.status ?? 'N/A').toLowerCase();
 
-    let statusBadge = `<span class="inline-block px-2 py-0.5 rounded-lg text-[11px] font-bold bg-blue-500/10 text-blue-600 dark:text-blue-400 uppercase tracking-tight">${ticket.status}</span>`;
+    const statusLabel = statusLabels[statusClean] ?? ticket.status;
+    let statusBadge = `<span class="inline-block px-2 py-0.5 rounded-lg text-[11px] font-bold bg-blue-500/10 text-blue-600 dark:text-blue-400 uppercase tracking-tight">\${statusLabel}</span>`;
     if (statusClean === 'em curso') {
-        statusBadge = `<span class="inline-block px-2 py-0.5 rounded-lg text-[11px] font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 uppercase tracking-tight">Em Curso</span>`;
+        statusBadge = `<span class="inline-block px-2 py-0.5 rounded-lg text-[11px] font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 uppercase tracking-tight">{{ __('Em Curso') }}</span>`;
     } else if (statusClean === 'fechada' || statusClean === 'fechado') {
-        statusBadge = `<span class="inline-block px-2 py-0.5 rounded-lg text-[11px] font-bold bg-[var(--text-soft)]/10 text-[var(--text-soft)] uppercase tracking-tight">Fechada</span>`;
+        statusBadge = `<span class="inline-block px-2 py-0.5 rounded-lg text-[11px] font-bold bg-[var(--text-soft)]/10 text-[var(--text-soft)] uppercase tracking-tight">{{ __('Fechada') }}</span>`;
     }
 
     document.getElementById('ticketDetails').innerHTML = `
         <div class="border-b border-[var(--border)] pb-4 mb-5">
             <div class="flex items-center justify-between gap-4">
-                <span class="text-[10px] font-mono font-bold text-[var(--text-soft)] uppercase tracking-wider bg-[var(--surface-2)] px-2 py-0.5 rounded-lg">ID Ocorrência #${ticket.id}</span>
-                <div class="flex gap-1.5">${statusBadge}</div>
+                <span class="text-[10px] font-mono font-bold text-[var(--text-soft)] uppercase tracking-wider bg-[var(--surface-2)] px-2 py-0.5 rounded-lg">{{ __('ID Ocorrência') }} #\${ticket.id}</span>
+                <div class="flex gap-1.5">\${statusBadge}</div>
             </div>
-            <h2 class="text-base font-bold text-[var(--text)] mt-3">${ticket.title}</h2>
+            <h2 class="text-base font-bold text-[var(--text)] mt-3">\${ticket.title}</h2>
         </div>
 
         <div class="space-y-5">
             <div>
-                <span class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)] block mb-1.5">Descrição da Ocorrência</span>
-                <div class="text-xs bg-[var(--surface-2)] p-3.5 rounded-xl text-[var(--text)] leading-relaxed whitespace-pre-wrap border border-[var(--border)]">${ticket.description || 'Nenhuma descrição detalhada providenciada.'}</div>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)] block mb-1.5">{{ __('Descrição da Ocorrência') }}</span>
+                <div class="text-xs bg-[var(--surface-2)] p-3.5 rounded-xl text-[var(--text)] leading-relaxed whitespace-pre-wrap border border-[var(--border)]">\${ticket.description || "{{ __('Nenhuma descrição detalhada providenciada.') }}"}</div>
             </div>
 
             <div class="grid grid-cols-2 gap-x-4 gap-y-4 pt-2">
                 <div>
-                    <span class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)] block">Nível de Prioridade</span>
-                    <span class="inline-block mt-1 px-2 py-0.5 rounded-lg text-[11px] font-bold uppercase tracking-tight ${priColor}">${ticket.priority}</span>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)] block">{{ __('Nível de Prioridade') }}</span>
+                    <span class="inline-block mt-1 px-2 py-0.5 rounded-lg text-[11px] font-bold uppercase tracking-tight \${priColor}">\${priorityLabels[ticket.priority] ?? ticket.priority}</span>
                 </div>
                 <div>
-                    <span class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)] block">Equipamento / Ativo</span>
-                    <p class="text-xs font-semibold mt-1 text-[var(--text)]">${ticket.equipment ? ticket.equipment.name : '<span class="text-[var(--text-soft)] font-normal">—</span>'}</p>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)] block">{{ __('Equipamento / Ativo') }}</span>
+                    <p class="text-xs font-semibold mt-1 text-[var(--text)]">\${ticket.equipment ? ticket.equipment.name : '<span class="text-[var(--text-soft)] font-normal">—</span>'}</p>
                 </div>
                 <div>
-                    <span class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)] block">Sala / Localização</span>
-                    <p class="text-xs font-semibold mt-1 text-[var(--text)]">${ticket.room ? ticket.room.name : '<span class="text-[var(--text-soft)] font-normal">—</span>'}</p>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)] block">{{ __('Sala / Localização') }}</span>
+                    <p class="text-xs font-semibold mt-1 text-[var(--text)]">\${ticket.room ? ticket.room.name : '<span class="text-[var(--text-soft)] font-normal">—</span>'}</p>
                 </div>
                 <div>
-                    <span class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)] block">Especialista Atribuído</span>
-                    <p class="text-xs font-semibold mt-1 text-[var(--text)]">${ticket.technician ? ticket.technician.name : '<span class="text-rose-500 dark:text-rose-400 font-normal italic">Pendente de atribuição</span>'}</p>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)] block">{{ __('Especialista Atribuído') }}</span>
+                    <p class="text-xs font-semibold mt-1 text-[var(--text)]">\${ticket.technician ? ticket.technician.name : '<span class="text-rose-500 dark:text-rose-400 font-normal italic">{{ __('Pendente de atribuição') }}</span>'}</p>
                 </div>
             </div>
 
             <div class="border-t border-[var(--border)] pt-4 grid grid-cols-2 gap-3 text-[11px] text-[var(--text-soft)] font-semibold">
-                <div class="flex justify-between border-b border-[var(--border)]/50 pb-1.5"><span>Abertura:</span> <span class="font-mono text-[var(--text)]">${ticket.opened_at || '—'}</span></div>
-                <div class="flex justify-between border-b border-[var(--border)]/50 pb-1.5"><span>Em Curso:</span> <span class="font-mono text-[var(--text)]">${ticket.in_progress_at || '—'}</span></div>
-                <div class="flex justify-between border-b border-[var(--border)]/50 pb-1.5"><span>Fecho:</span> <span class="font-mono text-[var(--text)]">${ticket.closed_at || '—'}</span></div>
-                <div class="flex justify-between border-b border-[var(--border)]/50 pb-1.5"><span>Reabertura:</span> <span class="font-mono text-[var(--text)]">${ticket.reopened_at || '—'}</span></div>
+                <div class="flex justify-between border-b border-[var(--border)]/50 pb-1.5"><span>{{ __('Abertura:') }}</span> <span class="font-mono text-[var(--text)]">\${ticket.opened_at || '—'}</span></div>
+                <div class="flex justify-between border-b border-[var(--border)]/50 pb-1.5"><span>{{ __('Em Curso:') }}</span> <span class="font-mono text-[var(--text)]">\${ticket.in_progress_at || '—'}</span></div>
+                <div class="flex justify-between border-b border-[var(--border)]/50 pb-1.5"><span>{{ __('Fecho:') }}</span> <span class="font-mono text-[var(--text)]">\${ticket.closed_at || '—'}</span></div>
+                <div class="flex justify-between border-b border-[var(--border)]/50 pb-1.5"><span>{{ __('Reabertura:') }}</span> <span class="font-mono text-[var(--text)]">\${ticket.reopened_at || '—'}</span></div>
             </div>
         </div>
     `;
@@ -214,7 +232,7 @@ async function fetchAiRecommendation() {
         <div class="rounded-2xl border border-primary/20 bg-[var(--surface)] p-5 shadow-sm animate-pulse">
             <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-primary">
                 <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
-                O Assistente IA está a processar a melhor alocação...
+                {{ __('O Assistente IA está a processar a melhor alocação...') }}
             </div>
         </div>
     `;
@@ -231,18 +249,18 @@ async function fetchAiRecommendation() {
                     <div class="flex items-center justify-between border-b border-[var(--border)] pb-2.5 mb-3">
                         <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)] flex items-center gap-1.5">
                             <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
-                            Assistente de Alocação IA
+                            {{ __('Assistente de Alocação IA') }}
                         </h3>
                         <span class="text-[9px] font-mono bg-blue-500/10 text-blue-600 px-1.5 py-0.5 rounded-md font-bold uppercase">gpt-4o-mini</span>
                     </div>
                     <div class="space-y-3">
                         <p class="text-xs text-[var(--text-soft)] leading-relaxed">
-                            <span class="font-bold text-[var(--text)] block mb-1">💡 Sugestão Operacional:</span>
-                            ${data.justificacao}
+                            <span class="font-bold text-[var(--text)] block mb-1">💡 {{ __('Sugestão Operacional:') }}</span>
+                            \${data.justificacao}
                         </p>
-                        <button onclick="approveAiRecommendation(${data.tecnico_id})" class="w-full inline-flex items-center justify-center px-4 py-2 bg-blue-600 text-white text-xs font-bold rounded-xl shadow-sm hover:bg-blue-700 transition-all cursor-pointer gap-1.5">
+                        <button onclick="approveAiRecommendation(\${data.tecnico_id})" class="w-full inline-flex items-center justify-center px-4 py-2 bg-blue-600 text-white text-xs font-bold rounded-xl shadow-sm hover:bg-blue-700 transition-all cursor-pointer gap-1.5">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
-                            Aprovar e Atribuir Técnico
+                            {{ __('Aprovar e Atribuir Técnico') }}
                         </button>
                     </div>
                 </div>
@@ -251,7 +269,7 @@ async function fetchAiRecommendation() {
             container.innerHTML = `
                 <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 text-xs text-[var(--text-soft)] italic flex items-center gap-2">
                     <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                    ${data.justificacao || 'A IA não conseguiu determinar o técnico ideal de momento.'}
+                    \${data.justificacao || "{{ __('A IA não conseguiu determinar o técnico ideal de momento.') }}"}
                 </div>
             `;
         }
@@ -261,7 +279,7 @@ async function fetchAiRecommendation() {
 }
 
 async function approveAiRecommendation(tecnicoId) {
-    const res = await fetch(`/admin/tickets/${ticketId}/atribuir`, {
+    const res = await fetch(`/admin/tickets/\${ticketId}/atribuir`, {
         method: 'PATCH', // Correção: Uso direto de PATCH para evitar falhas no spoofing de JSON do Laravel
         headers: {
             ...authHeader(),
@@ -275,39 +293,39 @@ async function approveAiRecommendation(tecnicoId) {
     if (res.ok) {
         document.getElementById('aiAssistantContainer').innerHTML = '';
         await fetchTicket();
-        showMessage('Técnico alocado com sucesso via Inteligência Artificial!');
+        showMessage("{{ __('Técnico alocado com sucesso via Inteligência Artificial!') }}");
     } else {
         const data = await res.json();
-        showMessage(data.message || 'Erro ao processar atribuição da IA.', true);
+        showMessage(data.message || "{{ __('Erro ao processar atribuição da IA.') }}", true);
     }
 }
 
 async function fetchComments(){
     const res = await fetch('/tickets/' + ticketId + '/comments', {headers: authHeader()});
-    if(res.status===401){ alert('Autenticação necessária. Faça login.'); window.location='/ui/login'; return; }
-    if(!res.ok){ document.getElementById('commentsSection').innerText = 'Erro a carregar comentários'; return; }
+    if(res.status===401){ alert("{{ __('Autenticação necessária. Faça login.') }}"); window.location='/ui/login'; return; }
+    if(!res.ok){ document.getElementById('commentsSection').innerText = "{{ __('Erro a carregar comentários') }}"; return; }
     const data = await res.json();
     const section = document.getElementById('commentsSection');
 
     if(!data.comments.length){
-        section.innerHTML = '<p class="text-xs italic py-1 opacity-70">Nenhum comentário registado neste ticket.</p>';
+        section.innerHTML = '<p class="text-xs italic py-1 opacity-70">{{ __('Nenhum comentário registado neste ticket.') }}</p>';
         return;
     }
 
     section.innerHTML = '<div class="space-y-2.5">' + data.comments.map(c => `
         <div class="p-3 rounded-xl border border-[var(--border)] bg-[var(--surface-2)]">
             <div class="flex items-center justify-between mb-1 gap-4">
-                <span class="font-bold text-[var(--text)]">${c.user ? c.user.name : 'Técnico'}</span>
-                <span class="text-[10px] font-mono text-[var(--text-soft)]">${c.created_at}</span>
+                <span class="font-bold text-[var(--text)]">\${c.user ? c.user.name : "{{ __('Técnico') }}"}</span>
+                <span class="text-[10px] font-mono text-[var(--text-soft)]">\${c.created_at}</span>
             </div>
-            <p class="text-xs text-[var(--text)] whitespace-pre-wrap leading-relaxed">${c.comment}</p>
+            <p class="text-xs text-[var(--text)] whitespace-pre-wrap leading-relaxed">\${c.comment}</p>
         </div>
     `).join('') + '</div>';
 }
 
 async function showMessage(message, error = false){
     const el = document.getElementById('ticketMessage');
-    el.className = `mt-4 min-h-6 text-xs font-semibold p-2.5 rounded-xl border ${error ? 'bg-red-500/5 border-red-500/20 text-red-600 dark:text-red-400' : 'bg-emerald-500/5 border-emerald-500/20 text-emerald-600 dark:text-emerald-400'}`;
+    el.className = `mt-4 min-h-6 text-xs font-semibold p-2.5 rounded-xl border \${error ? 'bg-red-500/5 border-red-500/20 text-red-600 dark:text-red-400' : 'bg-emerald-500/5 border-emerald-500/20 text-emerald-600 dark:text-emerald-400'}`;
     el.innerText = message;
     setTimeout(() => { el.innerText = ''; el.className = 'mt-4 min-h-6 text-xs font-medium px-1'; }, 5000);
 }
@@ -319,7 +337,7 @@ async function fetchPhotos(){
     const section = document.getElementById('photosSection');
 
     if(!data.attachments || !data.attachments.length){
-        section.innerHTML = '<div class="rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface-2)] p-4 text-xs text-[var(--text-soft)]">Nenhuma fotografia associada.</div>';
+        section.innerHTML = '<div class="rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface-2)] p-4 text-xs text-[var(--text-soft)]">{{ __('Nenhuma fotografia associada.') }}</div>';
         return;
     }
 
@@ -329,17 +347,17 @@ async function fetchPhotos(){
             const imgUrl  = '/storage/' + a.path;
             if (isImage) {
                 return `<div class="rounded-xl overflow-hidden border border-[var(--border)] bg-[var(--surface-2)] group shadow-sm">
-                    <a href="${imgUrl}" target="_blank" title="${a.file_name}">
-                        <img src="${imgUrl}" alt="${a.file_name}" class="w-full h-24 object-cover group-hover:opacity-85 transition-opacity duration-150">
+                    <a href="\${imgUrl}" target="_blank" title="\${a.file_name}">
+                        <img src="\${imgUrl}" alt="\${a.file_name}" class="w-full h-24 object-cover group-hover:opacity-85 transition-opacity duration-150">
                     </a>
                     <div class="p-1.5 border-t border-[var(--border)]">
-                        <p class="text-[10px] text-[var(--text-soft)] truncate font-semibold">${a.file_name}</p>
+                        <p class="text-[10px] text-[var(--text-soft)] truncate font-semibold">\${a.file_name}</p>
                     </div>
                 </div>`;
             }
             return `<div class="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-2.5 flex flex-col justify-between shadow-sm min-h-[96px]">
-                <p class="font-bold text-[var(--text)] text-[11px] line-clamp-2">${a.file_name}</p>
-                <p class="text-[9px] font-mono text-[var(--text-soft)] uppercase tracking-wider mt-2">${a.mime_type || 'Ficheiro'}</p>
+                <p class="font-bold text-[var(--text)] text-[11px] line-clamp-2">\${a.file_name}</p>
+                <p class="text-[9px] font-mono text-[var(--text-soft)] uppercase tracking-wider mt-2">\${a.mime_type || "{{ __('Ficheiro') }}"}</p>
             </div>`;
         }).join('') +
     '</div>';
@@ -348,7 +366,7 @@ async function fetchPhotos(){
 async function postComment(event){
     event.preventDefault();
     const comment = document.getElementById('commentText').value.trim();
-    if(!comment){ showMessage('Escreva um comentário antes de enviar.', true); return; }
+    if(!comment){ showMessage("{{ __('Escreva um comentário antes de enviar.') }}", true); return; }
 
     const res = await fetch('/tickets/' + ticketId + '/comments', {
         method: 'POST',
@@ -362,13 +380,13 @@ async function postComment(event){
     if(!res.ok){ showMessage(data.message || JSON.stringify(data), true); return; }
     document.getElementById('commentText').value = '';
     await fetchComments();
-    showMessage('Comentário adicionado com sucesso.');
+    showMessage("{{ __('Comentário adicionado com sucesso.') }}");
 }
 
 async function uploadPhoto(event){
     event.preventDefault();
     const input = document.getElementById('photoInput');
-    if(!input.files.length){ showMessage('Selecione uma fotografia antes de enviar.', true); return; }
+    if(!input.files.length){ showMessage("{{ __('Selecione uma fotografia antes de enviar.') }}", true); return; }
     const formData = new FormData();
     formData.append('photo', input.files[0]);
 
@@ -381,14 +399,14 @@ async function uploadPhoto(event){
     if(!res.ok){ showMessage(data.message || JSON.stringify(data), true); return; }
     input.value = '';
     await fetchPhotos();
-    showMessage('Fotografia enviada com sucesso.');
+    showMessage("{{ __('Fotografia enviada com sucesso.') }}");
 }
 
 async function assignTechnician(manual){
     const payload = {};
     if(manual){
         const technicianId = document.getElementById('assignTechnicianId').value;
-        if(!technicianId){ showMessage('Informe o ID do técnico para atribuição manual.', true); return; }
+        if(!technicianId){ showMessage("{{ __('Informe o ID do técnico para atribuição manual.') }}", true); return; }
         payload.technician_id = parseInt(technicianId, 10);
     }
 
@@ -404,7 +422,7 @@ async function assignTechnician(manual){
     if(!res.ok){ showMessage(data.message || JSON.stringify(data), true); return; }
     document.getElementById('assignTechnicianId').value = '';
     await fetchTicket();
-    showMessage('Técnico atribuído com sucesso.');
+    showMessage("{{ __('Técnico atribuído com sucesso.') }}");
 }
 
 async function reopenTicket(){
@@ -415,7 +433,7 @@ async function reopenTicket(){
     const data = await res.json();
     if(!res.ok){ showMessage(data.message || JSON.stringify(data), true); return; }
     await fetchTicket();
-    showMessage('Ticket reaberto com sucesso.');
+    showMessage("{{ __('Ticket reaberto com sucesso.') }}");
 }
 
 window.addEventListener('load', () => {

@@ -6,38 +6,38 @@ window.requireAuthOnLoad = true;
 </script>
 
 @component('ui.partials.page-card', [
-    'title' => 'Criar Ticket',
-    'subtitle' => 'Registe uma nova ocorrência de manutenção com contexto técnico e prioridade.',
-    'actions' => '<a href="/ui/tickets" class="inline-flex items-center justify-center px-3 py-1.5 bg-[var(--surface)] text-xs font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all">← Voltar aos tickets</a>'
+    'title' => __('Criar Ticket'),
+    'subtitle' => __('Registe uma nova ocorrência de manutenção com contexto técnico e prioridade.'),
+    'actions' => '<a href="/ui/tickets" class="inline-flex items-center justify-center px-3 py-1.5 bg-[var(--surface)] text-xs font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all">← ' . __('Voltar aos tickets') . '</a>'
 ])
     <div class="mx-auto max-w-3xl rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-sm">
-        <h2 class="text-xl font-semibold text-[var(--text)]">Novo pedido de intervenção</h2>
-        <p class="mt-2 text-sm text-[var(--text-soft)]">Descreva a situação de forma objetiva para que a equipa técnica possa agir rapidamente.</p>
+        <h2 class="text-xl font-semibold text-[var(--text)]">{{ __('Novo pedido de intervenção') }}</h2>
+        <p class="mt-2 text-sm text-[var(--text-soft)]">{{ __('Descreva a situação de forma objetiva para que a equipa técnica possa agir rapidamente.') }}</p>
 
         <form id="createTicketForm" class="mt-8 space-y-6" novalidate>
             <div>
-                <label for="ticketTitle" class="mb-2 block text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-soft)]">Título</label>
+                <label for="ticketTitle" class="mb-2 block text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-soft)]">{{ __('Título') }}</label>
                 <input id="ticketTitle" name="title" type="text" required class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm text-[var(--text)] focus:border-primary focus:outline-none">
             </div>
 
             <div>
-                <label for="ticketDescription" class="mb-2 block text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-soft)]">Descrição</label>
+                <label for="ticketDescription" class="mb-2 block text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-soft)]">{{ __('Descrição') }}</label>
                 <textarea id="ticketDescription" name="description" rows="6" required class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm text-[var(--text)] focus:border-primary focus:outline-none"></textarea>
             </div>
 
             <div class="grid gap-6 md:grid-cols-2">
                 <div>
-                    <label for="ticketPriority" class="mb-2 block text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-soft)]">Prioridade</label>
+                    <label for="ticketPriority" class="mb-2 block text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-soft)]">{{ __('Prioridade') }}</label>
                     <select id="ticketPriority" name="priority" class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm text-[var(--text)] focus:border-primary focus:outline-none">
-                        <option value="baixa">Baixa</option>
-                        <option value="média" selected>Média</option>
-                        <option value="alta">Alta</option>
-                        <option value="crítica">Crítica</option>
+                        <option value="baixa">{{ __('Baixa') }}</option>
+                        <option value="média" selected>{{ __('Média') }}</option>
+                        <option value="alta">{{ __('Alta') }}</option>
+                        <option value="crítica">{{ __('Crítica') }}</option>
                     </select>
                 </div>
 
                 <div>
-                    <label for="ticketEquipmentId" class="mb-2 block text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-soft)]">ID do Equipamento (opcional)</label>
+                    <label for="ticketEquipmentId" class="mb-2 block text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-soft)]">{{ __('ID do Equipamento (opcional)') }}</label>
                     <input id="ticketEquipmentId" name="equipment_id" type="number" min="1" class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm text-[var(--text)] focus:border-primary focus:outline-none">
                 </div>
             </div>
@@ -45,7 +45,7 @@ window.requireAuthOnLoad = true;
             <div id="ticketMessage" class="min-h-6 text-sm font-medium text-[var(--text-soft)]"></div>
 
             <button type="submit" class="inline-flex items-center justify-center rounded-2xl bg-primary px-5 py-3 text-sm font-semibold text-black shadow-sm shadow-primary/20 transition hover:opacity-90">
-                Guardar ticket
+                {{ __('Guardar ticket') }}
             </button>
         </form>
     </div>
@@ -76,12 +76,13 @@ async function handleCreateTicket(event) {
     if (equipmentId) payload.equipment_id = Number(equipmentId);
 
     if (!payload.title || !payload.description) {
-        message.textContent = 'Preencha título e descrição para criar o ticket.';
+        // Tradução injetada diretamente de forma limpa no JS
+        message.textContent = "{{ __('Preencha título e descrição para criar o ticket.') }}";
         message.className = 'min-h-6 text-sm font-medium text-red-600 dark:text-red-400';
         return;
     }
 
-    message.textContent = 'A criar ticket...';
+    message.textContent = "{{ __('A criar ticket...') }}";
     message.className = 'min-h-6 text-sm font-medium text-[var(--text-soft)]';
     form.querySelector('button[type="submit"]').disabled = true;
 
@@ -93,11 +94,11 @@ async function handleCreateTicket(event) {
         });
         const data = await res.json().catch(() => ({}));
         if (!res.ok) {
-            throw new Error(data.message || 'Não foi possível criar o ticket.');
+            throw new Error(data.message || "{{ __('Não foi possível criar o ticket.') }}");
         }
         window.location.href = '/ui/tickets';
     } catch (error) {
-        message.textContent = error.message || 'Não foi possível criar o ticket.';
+        message.textContent = error.message || "{{ __('Não foi possível criar o ticket.') }}";
         message.className = 'min-h-6 text-sm font-medium text-red-600 dark:text-red-400';
         form.querySelector('button[type="submit"]').disabled = false;
     }

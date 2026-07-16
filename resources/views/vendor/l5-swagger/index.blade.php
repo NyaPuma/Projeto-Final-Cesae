@@ -20,11 +20,37 @@
 
     <style>
         /* ==========================================================\
+           SISTEMA DE CORES DE FALLBACK (Garante consistência mesmo sem Tailwind ativo)
+        ========================================================== */
+        :root {
+            --bg: #ffffff;
+            --text: #0f172a;
+            --text-soft: #475569;
+            --border: #e2e8f0;
+            --surface: #ffffff;
+            --surface-2: #f8fafc;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #090d16;
+                --text: #f8fafc;
+                --text-soft: #94a3b8;
+                --border: #1e293b;
+                --surface: #0f172a;
+                --surface-2: #1e293b;
+                --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+            }
+        }
+
+        /* ==========================================================\
            SWAGGER UI - ENTERPRISE DESIGN SYSTEM OVERRIDES
         ========================================================== */
 
         body, .swagger-ui {
             font-family: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif !important;
+            background-color: var(--bg) !important;
         }
 
         /* Ocultar a topbar legada do Swagger */
@@ -32,7 +58,7 @@
 
         /* Ajustes de Tipografia e Cabeçalhos */
         .swagger-ui .info { margin: 30px 0 !important; }
-        .swagger-ui .info .title { font-size: 32px; font-weight: 700; tracking: -0.02em; color: var(--text) !important; }
+        .swagger-ui .info .title { font-size: 32px; font-weight: 700; letter-spacing: -0.02em; color: var(--text) !important; }
         .swagger-ui .info p, .swagger-ui .info li, .swagger-ui p, .swagger-ui table, .swagger-ui label { color: var(--text-soft) !important; }
         .swagger-ui h1, .swagger-ui h2, .swagger-ui h3, .swagger-ui h4, .swagger-ui h5 { color: var(--text) !important; font-weight: 600 !important; }
 
@@ -104,6 +130,7 @@
             border-width: 1px !important;
             margin: 0 0 12px 0 !important;
             overflow: hidden;
+            background: var(--surface) !important;
         }
         .swagger-ui .opblock .opblock-summary { padding: 10px 20px !important; }
         .swagger-ui .opblock .opblock-summary-method {
@@ -114,7 +141,7 @@
             min-width: 80px !important;
             text-align: center;
             text-transform: uppercase;
-            tracking: 0.05em;
+            letter-spacing: 0.05em;
         }
 
         /* Variantes de Métodos baseadas nos Tokens de Cor da Aplicação */
@@ -162,7 +189,7 @@
     </header>
 
     {{-- Enquadramento da Documentação --}}
-    <main class="mx-auto w-full max-w-5xl px-4 py-6 flex-grow animate-[fadeIn_0.2s_ease-out]">
+    <main class="mx-auto w-full max-w-5xl px-4 py-6 flex-grow">
         <div id="swagger-ui"></div>
     </main>
 

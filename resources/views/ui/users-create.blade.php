@@ -27,8 +27,8 @@ window.requireAuthOnLoad = true;
                 </div>
                 <div>
                     <label class="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">Perfil de Acesso</label>
-                    <select id="userProfileId" name="profile_id" required class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm text-[var(--text)] outline-none focus:border-primary focus:ring-4 focus:ring-primary/15">
-                        <option value="">Selecione um perfil...</option>
+                    <select id="userProfileId" name="profile_id" required disabled class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm text-[var(--text)] outline-none focus:border-primary focus:ring-4 focus:ring-primary/15 disabled:opacity-60 disabled:cursor-not-allowed">
+                        <option value="">A carregar perfis...</option>
                     </select>
                 </div>
                 <div>
@@ -43,7 +43,7 @@ window.requireAuthOnLoad = true;
             <div id="formMessage" class="min-h-6 text-sm font-medium text-[var(--text-soft)]"></div>
 
             <div class="mt-6 flex flex-wrap gap-3">
-                <button type="submit" class="ui-button ui-button--primary inline-flex items-center justify-center rounded-2xl px-5 py-3 text-sm font-semibold transition hover:opacity-90">Guardar Utilizador</button>
+                <button type="submit" id="submitBtn" class="ui-button ui-button--primary inline-flex items-center justify-center rounded-2xl px-5 py-3 text-sm font-semibold transition hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed">Guardar Utilizador</button>
                 <a href="/ui/users" class="ui-button ui-button--outline inline-flex items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-5 py-3 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">Cancelar</a>
             </div>
         </form>
@@ -53,6 +53,7 @@ window.requireAuthOnLoad = true;
 
 @push('scripts')
 <script>
+// Obtém os cabeçalhos padrão com os tokens necessários para a API
 function authHeader() {
     const token = localStorage.getItem('api_token');
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
@@ -62,34 +63,44 @@ function authHeader() {
     return headers;
 }
 
+// Carrega os perfis de acesso da API e preenche o elemento select
 async function loadProfiles() {
     const select = document.getElementById('userProfileId');
     try {
         const res = await fetch('/admin/profiles', { headers: authHeader() });
-        if (res.ok) {
-            const data = await res.json();
-            const profiles = data.profiles || [];
-            profiles.forEach(p => {
-                const opt = document.createElement('option');
-                opt.value = p.id;
-                let label = p.name;
-                if (p.name === 'admin') label = 'Administrador';
-                else if (p.name === 'technician') label = 'Técnico de Manutenção';
-                else if (p.name === 'user') label = 'Utilizador Comum';
-                opt.textContent = label;
-                select.appendChild(opt);
-            });
-        }
+        if (!res.ok) throw new Error('Não foi possível carregar os perfis.');
+
+        const data = await res.json();
+        const profiles = data.profiles || [];
+
+        select.innerHTML = '<option value="">Selecione um perfil...</option>';
+        select.removeAttribute('disabled');
+
+        profiles.forEach(p => {
+            const opt = document.createElement('option');
+            opt.value = p.id;
+
+            // Tradução e mapeamento amigável para PT-PT
+            let label = p.name;
+            if (p.name === 'admin') label = 'Administrador';
+            else if (p.name === 'technician') label = 'Técnico de Manutenção';
+            else if (p.name === 'user') label = 'Utilizador Comum';
+
+            opt.textContent = label;
+            select.appendChild(opt);
+        });
     } catch (e) {
         console.error('Erro ao carregar perfis:', e);
+        select.innerHTML = '<option value="">Erro ao carregar perfis de acesso</option>';
     }
 }
 
+// Submete os dados do formulário para criar o novo utilizador
 document.getElementById('createUserForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const form = e.target;
     const message = document.getElementById('formMessage');
-    const submitBtn = form.querySelector('button[type="submit"]');
+    const submitBtn = document.getElementById('submitBtn');
 
     const name = document.getElementById('userName').value.trim();
     const email = document.getElementById('userEmail').value.trim();
@@ -107,8 +118,9 @@ document.getElementById('createUserForm').addEventListener('submit', async (e) =
             headers: authHeader(),
             body: JSON.stringify({ name, email, password, profile_id, active })
         });
-        
+
         const data = await res.json().catch(() => ({}));
+
         if (!res.ok) {
             let errorText = data.message || 'Erro ao criar utilizador.';
             if (data.errors) {
