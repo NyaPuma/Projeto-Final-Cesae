@@ -6,7 +6,7 @@
 window.requireAuthOnLoad = true;
 </script>
 
-@component('ui.partials('page-card', [
+@component('ui.partials.page-card', [
     'title' => 'Detalhes do Ticket',
     'subtitle' => 'Consulte o estado detalhado da ocorrência, atribua técnicos e partilhe comentários internos.',
     'actions' => '<a href="/ui/tickets" class="inline-flex items-center justify-center px-3 py-1.5 bg-[var(--surface)] text-xs font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all"><svg class="w-3.5 h-3.5 mr-1.5 text-[var(--text-soft)]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path></svg> Voltar à listagem</a>'
@@ -15,7 +15,7 @@ window.requireAuthOnLoad = true;
     <div class="grid gap-6 xl:grid-cols-[1.2fr_0.8fr] animate-[fadeIn_0.3s_ease-out]">
 
         {{-- Coluna Esquerda: Informações Principais do Ticket --}}
-        <div class="rounded-2xl border border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm h-fit">
+        <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm h-fit">
             <div id="ticketDetails" class="space-y-4 text-xs text-[var(--text-soft)]">
                 <div class="flex items-center justify-center py-12 gap-2">
                     <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
@@ -31,7 +31,7 @@ window.requireAuthOnLoad = true;
             <div id="aiAssistantContainer"></div>
 
             {{-- Secção de Comentários Internos --}}
-            <div class="rounded-2xl border border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
+            <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
                 <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)] border-b border-[var(--border)] pb-2.5 mb-3">Comentários internos</h3>
                 <div id="commentsSection" class="text-xs text-[var(--text-soft)] max-h-60 overflow-y-auto pr-1">
                     <p class="italic py-2">A atualizar histórico de notas técnicas...</p>
@@ -39,7 +39,7 @@ window.requireAuthOnLoad = true;
             </div>
 
             {{-- Formulário para Adicionar Comentário --}}
-            <div class="rounded-2xl border border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
+            <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
                 <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)] mb-3">Adicionar comentário</h3>
                 <form id="commentForm" class="space-y-3">
                     <label for="commentText" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">Mensagem</label>
@@ -51,7 +51,7 @@ window.requireAuthOnLoad = true;
             </div>
 
             {{-- Secção e Upload de Fotografias --}}
-            <div class="rounded-2xl border border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
+            <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
                 <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)] mb-3">Evidências Fotográficas</h3>
                 <form id="photoForm" class="space-y-3 border-b border-[var(--border)] pb-4 mb-3">
                     <label for="photoInput" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">Anexo de fotografia</label>
@@ -68,7 +68,7 @@ window.requireAuthOnLoad = true;
             </div>
 
             {{-- Painel de Gestão e Atribuição Manual --}}
-            <div class="rounded-2xl border border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
+            <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
                 <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)] mb-3">Painel de Atribuição</h3>
                 <div class="space-y-4">
                     <div>
@@ -103,9 +103,10 @@ window.requireAuthOnLoad = true;
 
 @push('scripts')
 <script>
-const ticketId = {{ json_encode($ticketId) }};
+// Fallback defensivo caso o controller envie $ticket em vez de $ticketId diretamente
+const ticketId = {{ json_encode($ticketId ?? $ticket->id ?? null) }};
 
-// Mapeamento de cores para consistência visual global usando backgrounds translúcidos nativos
+// Mapeamento de cores para consistência visual global
 const priorityColors = {
     baixa:   'border border-emerald-500/10 bg-emerald-500/5 text-emerald-600 dark:text-emerald-400',
     média:   'border border-amber-500/15 bg-amber-500/5 text-amber-600 dark:text-amber-400',
@@ -113,31 +114,32 @@ const priorityColors = {
     crítica: 'border border-rose-500/20 bg-rose-500/5 text-rose-600 dark:text-rose-400',
 };
 
-function authHeader(){
+function authHeader() {
     const token = localStorage.getItem('api_token');
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
     const headers = { 'Accept': 'application/json' };
 
-    if (token) headers['X-Auth-Token'] = token;
+    // Suporte robusto para tokens baseados em Bearer (Laravel Sanctum/Passport) e header personalizado
+    if (token) {
+        headers['Authorization'] = 'Bearer ' + token;
+        headers['X-Auth-Token'] = token;
+    }
     if (csrfToken) headers['X-CSRF-TOKEN'] = csrfToken;
 
     return headers;
 }
 
-// Helper utilitário para decodificar JWT localmente e saber se o utilizador atual é Admin
+// Verificação defensiva que suporta o método isAdmin() ou a propriedade is_admin de forma segura
 function checkCurrentUserIsAdmin() {
     try {
         const token = localStorage.getItem('api_token');
         if (!token) return false;
-        // Divide as 3 secções do JWT e decodifica a secção Payload
         const base64Url = token.split('.')[1];
         const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
         const payload = JSON.parse(window.atob(base64));
-        // Ajusta para o campo exato onde o vosso AuthController guarda a role (ex: role, profile, ou profile_id)
         return payload.role === 'admin' || payload.isAdmin === true;
     } catch (e) {
-        // Fallback defensivo por Blade caso o token local use encriptação opaca
-        return {{ auth()->user()?->isAdmin() ? 'true' : 'false' }};
+        return {{ (auth()->user() && (auth()->user()->is_admin || (method_exists(auth()->user(), 'isAdmin') && auth()->user()->isAdmin()))) ? 'true' : 'false' }};
     }
 }
 
@@ -201,7 +203,6 @@ async function fetchTicket(){
         </div>
     `;
 
-    // Ativar e renderizar o bloco da IA de forma assíncrona apenas se o utilizador for Admin
     if (checkCurrentUserIsAdmin()) {
         fetchAiRecommendation();
     }
@@ -219,13 +220,11 @@ async function fetchAiRecommendation() {
     `;
 
     try {
-        // Consome o endpoint real do vosso AdminTicketController que liga ao AIService
         const res = await fetch('/admin/tickets/' + ticketId, { headers: authHeader() });
         if (!res.ok) throw new Error('API Indisponível');
-        
-        // Como o endpoint do Admin devolve o JSON mastigado pelo prompt da OpenAI
+
         const data = await res.json();
-        
+
         if (data.tecnico_id) {
             container.innerHTML = `
                 <div class="rounded-2xl border border-blue-500/20 bg-[var(--surface)] p-5 shadow-sm">
@@ -247,7 +246,7 @@ async function fetchAiRecommendation() {
                         </button>
                     </div>
                 </div>
-            ];
+            `;
         } else {
             container.innerHTML = `
                 <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 text-xs text-[var(--text-soft)] italic flex items-center gap-2">
@@ -257,20 +256,22 @@ async function fetchAiRecommendation() {
             `;
         }
     } catch (err) {
-        container.innerHTML = ''; // Oculta defensivamente se houver falha de rede
+        container.innerHTML = ''; // Ocultar em caso de erro de rede
     }
 }
 
 async function approveAiRecommendation(tecnicoId) {
     const res = await fetch(`/admin/tickets/${ticketId}/atribuir`, {
-        method: 'POST', // Usamos POST com spoofing do PATCH nativo do Laravel
-        headers: authHeader(),
+        method: 'PATCH', // Correção: Uso direto de PATCH para evitar falhas no spoofing de JSON do Laravel
+        headers: {
+            ...authHeader(),
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify({
-            _method: 'PATCH',
             tecnico_id: tecnicoId
         })
     });
-    
+
     if (res.ok) {
         document.getElementById('aiAssistantContainer').innerHTML = '';
         await fetchTicket();
@@ -348,9 +349,13 @@ async function postComment(event){
     event.preventDefault();
     const comment = document.getElementById('commentText').value.trim();
     if(!comment){ showMessage('Escreva um comentário antes de enviar.', true); return; }
+
     const res = await fetch('/tickets/' + ticketId + '/comments', {
         method: 'POST',
-        headers: authHeader(),
+        headers: {
+            ...authHeader(),
+            'Content-Type': 'application/json' // Correção: Cabeçalho JSON obrigatório
+        },
         body: JSON.stringify({comment}),
     });
     const data = await res.json();
@@ -366,9 +371,10 @@ async function uploadPhoto(event){
     if(!input.files.length){ showMessage('Selecione uma fotografia antes de enviar.', true); return; }
     const formData = new FormData();
     formData.append('photo', input.files[0]);
+
     const res = await fetch('/tickets/' + ticketId + '/photos', {
         method: 'POST',
-        headers: authHeader(),
+        headers: authHeader(), // Atenção: Sem 'Content-Type' aqui para que o browser calcule o boundary do FormData
         body: formData,
     });
     const data = await res.json();
@@ -388,7 +394,10 @@ async function assignTechnician(manual){
 
     const res = await fetch('/tickets/' + ticketId + '/assign-technician', {
         method: 'POST',
-        headers: authHeader(),
+        headers: {
+            ...authHeader(),
+            'Content-Type': 'application/json' // Correção: Cabeçalho JSON obrigatório
+        },
         body: JSON.stringify(payload),
     });
     const data = await res.json();

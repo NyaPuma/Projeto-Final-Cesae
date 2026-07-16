@@ -1,7 +1,8 @@
 import './api-client';
 import './analytics';
-import Echo from 'laravel-echo';
-import Pusher from 'pusher-js';
+// 1. Comentados os imports do Echo e Pusher para evitar carregar bibliotecas desnecessárias
+// import Echo from 'laravel-echo';
+// import Pusher from 'pusher-js';
 
 /**
  * CORE APPLICATION INITIALIZATION
@@ -18,7 +19,9 @@ const App = {
         this.initDropdowns();
         this.initTooltips();
         this.initAnimations();
-        this.initEcho();
+
+        // 2. Comentada a inicialização do Echo para não disparar o erro
+        // this.initEcho();
     },
 
     // --- SEGURANÇA ---
@@ -48,8 +51,10 @@ const App = {
         }, null);
     },
 
-    // --- PUSHER / ECHO ---
+    // --- PUSHER / ECHO (Desativado) ---
     initEcho() {
+        // Mantemos o método vazio ou comentado para evitar que chamadas externas quebrem o JS
+        /*
         window.Pusher = Pusher;
         this.echo = new Echo({
             broadcaster: 'pusher',
@@ -63,6 +68,7 @@ const App = {
             this.echo.private(`user.${userId}`)
                 .notification((notification) => this.showToast(notification.title, notification.message));
         }
+        */
     },
 
     // --- UI COMPONENTS ---
@@ -116,7 +122,7 @@ const App = {
                 if (entry.isIntersecting) {
                     entry.target.classList.replace('opacity-0', 'opacity-100');
                     entry.target.classList.replace('translate-y-3', 'translate-y-0');
-                    observer.unobserve(entry.target); // Para de observar após a animação
+                    observer.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.1 });
@@ -145,5 +151,4 @@ const App = {
 // Inicialização
 document.addEventListener('DOMContentLoaded', () => App.init());
 
-// Expor métodos necessários globalmente se ainda forem chamados via HTML (ex: onclick="toggleTheme()")
 window.App = App;

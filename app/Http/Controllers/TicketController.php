@@ -48,15 +48,22 @@ class TicketController extends Controller
     /**
      * Exibe o detalhe do ticket injetando a sugestão em tempo real da IA
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         // Procura o ticket trazendo os relacionamentos exatos do teu projeto
         $ticket = Ticket::with(['equipment.category', 'room', 'user'])->findOrFail($id);
 
-        // Invoca o motor de Inteligência Artificial passando o objeto Ticket
+        // Se o pedido vier do teu frontend em JS (Accept: application/json ou AJAX)
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json($ticket);
+        }
+
+        // Caso contrário (acesso direto do Admin à página), carrega a recomendação da IA e a View
         $recomendacaoIA = $this->aiService->recomendarTecnico($ticket);
 
-        // Envia os dados para a vossa view centralizada na pasta 'ui'
+        // ⚠️ ATENÇÃO: Confirma o nome físico do teu ficheiro na pasta resources/views/ui/
+        // Se o ficheiro se chamar 'ticket-detail.blade.php', altera aqui para 'ui.ticket-detail'
+        // Se se chamar 'ticket_detail.blade.php', altera para 'ui.ticket_detail'
         return view('ui.ticketDetail', compact('ticket', 'recomendacaoIA'));
     }
 
@@ -329,7 +336,7 @@ class TicketController extends Controller
         }
 
         return redirect()->route('admin.tickets.show', $id)
-                         ->with('success', 'Técnico alocado com sucesso via Assistente IA!');
+            ->with('success', 'Técnico alocado com sucesso via Assistente IA!');
     }
 
     public function calendarView()
@@ -337,5 +344,4 @@ class TicketController extends Controller
         // Exemplo de retorno da tua vista (ajusta o nome da vista para o teu caso real)
         return view('/calendar');
     }
-
 }
