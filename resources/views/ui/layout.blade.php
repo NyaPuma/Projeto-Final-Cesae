@@ -99,6 +99,9 @@
 <body class="min-h-screen bg-[var(--bg)] text-[var(--text)] overflow-x-hidden antialiased">
 
     @php
+        $userRole = $user->profile->name ?? null;
+
+        // Menu lateral: apenas Admin vê Utilizadores/Auditoria/Analytics/Swagger
         $navItems = [
             ['href' => 'ui', 'active' => 'ui', 'label' => 'Dashboard', 'icon' => '📊', 'exact' => true],
             ['href' => 'ui/tickets', 'active' => 'ui/tickets*', 'label' => 'Tickets', 'icon' => '🎫', 'exact' => false],
@@ -110,31 +113,37 @@
                 'exact' => false,
             ],
             ['href' => 'ui/rooms', 'active' => 'ui/rooms*', 'label' => 'Salas', 'icon' => '🚪', 'exact' => false],
-            [
-                'href' => 'ui/users',
-                'active' => 'ui/users*',
-                'label' => 'Utilizadores',
-                'icon' => '👥',
-                'exact' => false,
-            ],
-            ['href' => 'ui/audits', 'active' => 'ui/audits*', 'label' => 'Auditoria', 'icon' => '📝', 'exact' => false],
-            [
-                'href' => 'ui/analytics',
-                'active' => 'ui/analytics*',
-                'label' => 'Analytics',
-                'icon' => '📈',
-                'exact' => false,
-            ],
             ['href' => 'calendar', 'active' => 'calendar*', 'label' => 'Agenda', 'icon' => '📅', 'exact' => false],
-            [
-                'href' => 'docs/openapi',
-                'active' => 'docs/openapi*',
-                'label' => 'Swagger',
-                'icon' => '📚',
-                'exact' => false,
-            ],
         ];
+
+        if ($userRole === 'admin') {
+            $navItems = array_merge($navItems, [
+                [
+                    'href' => 'ui/users',
+                    'active' => 'ui/users*',
+                    'label' => 'Utilizadores',
+                    'icon' => '👥',
+                    'exact' => false,
+                ],
+                ['href' => 'ui/audits', 'active' => 'ui/audits*', 'label' => 'Auditoria', 'icon' => '📝', 'exact' => false],
+                [
+                    'href' => 'ui/analytics',
+                    'active' => 'ui/analytics*',
+                    'label' => 'Analytics',
+                    'icon' => '📈',
+                    'exact' => false,
+                ],
+                [
+                    'href' => 'docs/openapi',
+                    'active' => 'docs/openapi*',
+                    'label' => 'Swagger',
+                    'icon' => '📚',
+                    'exact' => false,
+                ],
+            ]);
+        }
     @endphp
+
 
     <a href="#main-content"
         class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-xl focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[var(--on-primary)]">
