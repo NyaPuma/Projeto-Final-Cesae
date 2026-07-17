@@ -14,7 +14,8 @@ window.requireAuthOnLoad = true;
         <h2 class="text-xl font-semibold text-[var(--text)]">{{ __('Novo pedido de intervenção') }}</h2>
         <p class="mt-2 text-sm text-[var(--text-soft)]">{{ __('Descreva a situação de forma objetiva para que a equipa técnica possa agir rapidamente.') }}</p>
 
-        <form id="createTicketForm" class="mt-8 space-y-6" novalidate>
+        <form id="createTicketForm" class="mt-8 space-y-6" novalidate enctype="multipart/form-data">
+
             <div>
                 <label for="ticketTitle" class="mb-2 block text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-soft)]">{{ __('Título') }}</label>
                 <input id="ticketTitle" name="title" type="text" required class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm text-[var(--text)] focus:border-primary focus:outline-none">
@@ -36,10 +37,16 @@ window.requireAuthOnLoad = true;
                     </select>
                 </div>
 
-                <div>
-                    <label for="ticketEquipmentId" class="mb-2 block text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-soft)]">{{ __('ID do Equipamento (opcional)') }}</label>
-                    <input id="ticketEquipmentId" name="equipment_id" type="number" min="1" class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm text-[var(--text)] focus:border-primary focus:outline-none">
-                </div>
+            <div>
+                <label for="ticketEquipmentId" class="mb-2 block text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-soft)]">{{ __('ID do Equipamento (opcional)') }}</label>
+                <input id="ticketEquipmentId" name="equipment_id" type="number" min="1" class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm text-[var(--text)] focus:border-primary focus:outline-none">
+            </div>
+
+            <div class="md:col-span-2">
+                <label for="ticketPhoto" class="mb-2 block text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-soft)]">{{ __('Inserir imagem (opcional)') }}</label>
+                <input id="ticketPhoto" name="photo" type="file" accept="image/*" class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm text-[var(--text)] focus:border-primary focus:outline-none" />
+            </div>
+
             </div>
 
             <div id="ticketMessage" class="min-h-6 text-sm font-medium text-[var(--text-soft)]"></div>
