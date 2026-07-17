@@ -74,7 +74,7 @@ Route::middleware(['custom.auth'])->group(function () {
         Route::get('/ui',              [UiController::class, 'index']);
         Route::get('/ui/profile',      [UiController::class, 'profile']);
         Route::get('/ui/tickets',      [UiController::class, 'tickets']);
-        Route::get('/ui/tickets/create', [UiController::class, 'ticketCreate']);
+        Route::get('/ui/tickets/create', [UiController::class, 'ticketCreate'])->middleware('role:admin,user');
         Route::get('/ui/tickets/{id}', [UiController::class, 'ticketDetail']); // Interface Web do Ticket
         Route::get('/ui/equipments',   [UiController::class, 'equipments']);
         Route::get('/equipments',      [UiController::class, 'getEquipments']);
@@ -114,10 +114,11 @@ Route::middleware(['custom.auth'])->group(function () {
         /*
          |-- Área Partilhada (Técnicos e Administradores)
          |----------------------------------------------------------------------*/
-        Route::middleware(['role:technician,admin'])->group(function () {
-            // UI de acessos partilhados
+        Route::middleware(['role:admin'])->group(function () {
+            // UI de acessos restritos ao admin
             Route::get('/ui/users',  [UiController::class, 'users']);
             Route::get('/ui/audits', [UiController::class, 'audits']);
+
 
             // Ações operacionais
             Route::get('/technician/tickets/open',         [TicketController::class, 'openTickets']);
@@ -127,15 +128,8 @@ Route::middleware(['custom.auth'])->group(function () {
             Route::get('/calendar/events', [TicketController::class, 'calendarEvents']);
             Route::get('/calendar',        [TicketController::class, 'calendarView']);
 
-            // Módulo Analítico e Relatórios
-            Route::get('/analytics',                [AnalyticsController::class, 'stats']);
-            Route::get('/analytics/charts',         [AnalyticsController::class, 'charts']);
-            Route::get('/analytics/export/csv',     [AnalyticsController::class, 'exportCsv']);
-            Route::get('/analytics/export/pdf',     [AnalyticsController::class, 'exportPdf']);
-            Route::get('/analytics/export/excel',   [AnalyticsController::class, 'exportExcel']);
+            // (analytics fica apenas para admin)
 
-            // UI de Analytics
-            Route::get('/ui/analytics',             [UiController::class, 'analytics']);
         });
 
         /*
@@ -143,7 +137,18 @@ Route::middleware(['custom.auth'])->group(function () {
          |----------------------------------------------------------------------*/
         Route::middleware(['role:admin'])->group(function () {
 
+            // ========================================
+            // Módulo Analítico e Relatórios (apenas admin)
+            // ========================================
+            Route::get('/analytics',                [AnalyticsController::class, 'stats']);
+            Route::get('/analytics/charts',         [AnalyticsController::class, 'charts']);
+            Route::get('/analytics/export/csv',     [AnalyticsController::class, 'exportCsv']);
+            Route::get('/analytics/export/pdf',     [AnalyticsController::class, 'exportPdf']);
+            Route::get('/analytics/export/excel',   [AnalyticsController::class, 'exportExcel']);
+            Route::get('/ui/analytics',             [UiController::class, 'analytics']);
+
             // 🔐 SEGURANÇA BLINDADA: Endpoint de registo movido para a área protegida do Administrador.
+
             // Protegido com o prefixo /admin e controlado pelo middleware de acessos baseado em roles.
             Route::post('/admin/users/register', [AuthController::class, 'register'])
                 ->name('admin.users.register')
