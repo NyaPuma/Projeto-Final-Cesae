@@ -1,0 +1,217 @@
+/* ==========================================================
+   RESPONSES • SCHEMAS • REQUESTS
+   - Estilos coerentes para respostas, esquemas e requests
+   - Feedback visual claro para status codes
+   - Design consistente com o tema
+========================================================== */
+
+:root {
+    /* Cores de status HTTP */
+    --status-success: 34, 197, 94;
+    --status-warning: 249, 115, 22;
+    --status-error: 239, 68, 68;
+    --status-muted: 100, 116, 139;
+
+    /* Cores de código */
+    --code-bg: 11, 17, 32;
+    --code-bg-dark: 5, 9, 19;
+    --code-text: 219, 234, 254;
+}
+
+/* ==========================================================
+   📋 SECÇÕES PRINCIPAIS
+========================================================== */
+.swagger-ui .responses-wrapper,
+.swagger-ui .responses-inner,
+.swagger-ui .parameters-container,
+.swagger-ui .request-body {
+    margin-top: 28px;
+}
+
+/* ==========================================================
+   📌 CABEÇALHOS
+========================================================== */
+.swagger-ui h4 {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 18px;
+    letter-spacing: -0.02em;
+}
+
+/* ==========================================================
+   📦 CARTÕES DE RESPOSTAS
+========================================================== */
+.swagger-ui .responses-table tbody tr {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition:
+        box-shadow 0.25s ease,
+        transform 0.25s ease;
+}
+
+.swagger-ui .responses-table tbody tr:hover {
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+.swagger-ui .responses-table td {
+    padding: 18px;
+    border: none;
+}
+
+/* ==========================================================
+   🔢 STATUS CODE
+========================================================== */
+.swagger-ui .response-col_status {
+    width: 120px;
+    font-size: 13px;
+    font-weight: 800;
+    color: rgb(var(--status-success));
+}
+
+.swagger-ui .response-col_status .response-undocumented {
+    color: rgb(var(--status-muted));
+}
+
+.swagger-ui tr[data-code^="4"] .response-col_status {
+    color: rgb(var(--status-warning));
+}
+
+.swagger-ui tr[data-code^="5"] .response-col_status {
+    color: rgb(var(--status-error));
+}
+
+/* ==========================================================
+   📝 DESCRIÇÃO
+========================================================== */
+.swagger-ui .response-col_description {
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* ==========================================================
+   💻 BLOCOS DE CÓDIGO
+========================================================== */
+.swagger-ui pre {
+    background: rgb(var(--code-bg));
+    color: rgb(var(--code-text));
+    border: none;
+    border-radius: 18px;
+    padding: 22px;
+    font-size: 13px;
+    line-height: 1.7;
+    overflow: auto;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.dark .swagger-ui pre {
+    background: rgb(var(--code-bg-dark));
+}
+
+/* ==========================================================
+   📄 EXAMPLE VALUE
+========================================================== */
+.swagger-ui .highlight-code {
+    border-radius: 18px;
+    overflow: hidden;
+    margin-top: 18px;
+}
+
+/* ==========================================================
+   📤 REQUEST BODY
+========================================================== */
+.swagger-ui .body-param {
+    border-radius: 18px;
+    border: 1px solid var(--border);
+    padding: 20px;
+    background: var(--surface);
+}
+
+/* ==========================================================
+   📊 SCHEMAS / MODELOS
+========================================================== */
+.swagger-ui section.models {
+    margin-top: 42px;
+    border: none;
+    border-radius: 24px;
+    overflow: hidden;
+    background: var(--surface);
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05);
+}
+
+.dark .swagger-ui section.models {
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+}
+
+.swagger-ui section.models h4 {
+    margin: 0;
+    padding: 22px 28px;
+    background: linear-gradient(180deg, var(--surface), var(--surface-2));
+    border-bottom: 1px solid var(--border);
+    font-size: 22px;
+    font-weight: 800;
+}
+
+/* ==========================================================
+   🏗️ MODEL
+========================================================== */
+.swagger-ui .model-container {
+    margin: 18px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    background: var(--surface);
+}
+
+.swagger-ui .model-box {
+    background: transparent;
+    padding: 18px;
+}
+
+.swagger-ui .model-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+/* ==========================================================
+   🔧 PROPERTY
+========================================================== */
+.swagger-ui .property {
+    padding: 8px 0;
+}
+
+.swagger-ui .property-row {
+    border-bottom: 1px solid var(--border);
+    padding: 10px 0;
+}
+
+.swagger-ui .property-row:last-child {
+    border-bottom: none;
+}
+
+/* ==========================================================
+   🏷️ EXAMPLE LABELS
+========================================================== */
+.swagger-ui .example {
+    font-size: 13px;
+    color: var(--text-soft);
+}
+
+/* ==========================================================
+   📑 TABS
+========================================================== */
+.swagger-ui .tab li {
+    border-radius: 12px 12px 0 0;
+    transition:
+        background 0.25s ease,
+        font-weight 0.25s ease;
+}
+
+.swagger-ui .tab li.active {
+    background: var(--surface);
+    font-weight: 700;
+}

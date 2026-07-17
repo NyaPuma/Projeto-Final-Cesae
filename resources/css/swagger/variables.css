@@ -1,0 +1,288 @@
+/* ==========================================================
+   L5-SWAGGER DESIGN SYSTEM
+   Variáveis Globais CSS
+   - Sistema de cores completo (claro/escuro)
+   - Tokens de design (animações, espaçamento, tipografia)
+   - Variáveis semânticas e de componentes
+========================================================== */
+
+/* ==========================================================
+   🎨 SISTEMA DE CORES BASE
+   Tema claro por padrão
+========================================================== */
+:root {
+    /* --- FUNDOS --- */
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --surface-2: #f8fafc;
+    --surface-3: #f1f5f9;
+    --topbar: rgba(255, 255, 255, 0.8);
+
+    /* --- TEXTOS --- */
+    --text: #0f172a;
+    --text-soft: #475569;
+    --text-muted: #94a3b8;
+    --topbar-text: #0f172a;
+
+    /* --- BORDAS --- */
+    --border: #e2e8f0;
+    --border-strong: #cbd5e1;
+
+    /* --- SOMBRAS --- */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================================
+   🌙 TEMA ESCURO
+   Aplicado via classe .dark no <html>
+========================================================== */
+.dark {
+    --bg: #090d16;
+    --surface: #0f172a;
+    --surface-2: #1e293b;
+    --surface-3: #334155;
+    --text: #f8fafc;
+    --text-soft: #94a3b8;
+    --text-muted: #64748b;
+    --topbar: rgba(15, 23, 42, 0.8);
+    --topbar-text: #f8fafc;
+    --border: #1e293b;
+    --border-strong: #334155;
+    --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+/* ==========================================================
+   🖥️ PREFERÊNCIA DO SISTEMA
+   Respeita a preferência do utilizador
+========================================================== */
+@media (prefers-color-scheme: dark) {
+    :root:not(.light) {
+        --bg: #090d16;
+        --surface: #0f172a;
+        --surface-2: #1e293b;
+        --surface-3: #334155;
+        --text: #f8fafc;
+        --text-soft: #94a3b8;
+        --text-muted: #64748b;
+        --topbar: rgba(15, 23, 42, 0.8);
+        --topbar-text: #f8fafc;
+        --border: #1e293b;
+        --border-strong: #334155;
+        --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+    }
+}
+
+/* ==========================================================
+   🎯 CORES SEMÂNTICAS
+   Cores com significado no UI
+========================================================== */
+:root {
+    /* Primária (laranja do painel L5) */
+    --primary: #f97316;
+    --primary-hover: #ea580c;
+    --primary-active: #c2410c;
+    --primary-rgb: 249, 115, 22;
+
+    /* Estados */
+    --success: #22c55e;
+    --success-hover: #16a34a;
+    --warning: #f97316;
+    --warning-hover: #ea580c;
+    --danger: #ef4444;
+    --danger-hover: #dc2626;
+    --info: #3b82f6;
+    --info-hover: #2563eb;
+}
+
+/* ==========================================================
+   🏷️ CORES DE STATUS HTTP
+   Para respostas API
+========================================================== */
+:root {
+    --status-2xx: 34, 197, 94;    /* Verde */
+    --status-4xx: 249, 115, 22;   /* Laranja */
+    --status-5xx: 239, 68, 68;    /* Vermelho */
+    --status-undocumented: 100, 116, 139; /* Cinza */
+}
+
+/* ==========================================================
+   🔧 CORES DE MÉTODOS HTTP
+   Para badges de métodos
+========================================================== */
+:root {
+    --method-get: 59, 130, 246;
+    --method-post: 34, 197, 94;
+    --method-put: 249, 115, 22;
+    --method-delete: 239, 68, 68;
+    --method-patch: 139, 92, 246;
+    --method-head: 14, 165, 233;
+    --method-options: 100, 116, 139;
+}
+
+/* ==========================================================
+   ⚡ ANIMAÇÕES
+   Tokens de timing e easing
+========================================================== */
+:root {
+    --anim-fast: 0.18s;
+    --anim-normal: 0.2s;
+    --anim-slow: 0.45s;
+    --anim-ease: ease;
+    --anim-ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ==========================================================
+   📏 ESPAÇAMENTO
+   Sistema de spacing consistente
+========================================================== */
+:root {
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 12px;
+    --space-lg: 16px;
+    --space-xl: 20px;
+    --space-2xl: 24px;
+    --space-3xl: 28px;
+    --space-4xl: 32px;
+    --space-5xl: 36px;
+    --space-6xl: 42px;
+}
+
+/* ==========================================================
+   🔵 Z-INDEX
+   Camadas de profundidade
+========================================================== */
+:root {
+    --z-dropdown: 10;
+    --z-sticky: 20;
+    --z-toolbar: 30;
+    --z-fixed: 100;
+    --z-modal-backdrop: 100;
+    --z-modal: 101;
+    --z-popover: 200;
+    --z-tooltip: 300;
+    --z-scroll-btn: 200;
+}
+
+/* ==========================================================
+   🎨 BORDAS
+   Raio de borda consistente
+========================================================== */
+:root {
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 14px;
+    --radius-xl: 16px;
+    --radius-2xl: 18px;
+    --radius-3xl: 22px;
+    --radius-4xl: 24px;
+    --radius-full: 999px;
+}
+
+/* ==========================================================
+   📄 TIPOGRAFIA
+   Sistema tipográfico
+========================================================== */
+:root {
+    /* Famílias */
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", "Fira Code", Consolas, monospace;
+
+    /* Tamanhos */
+    --text-xs: 10px;
+    --text-sm: 12px;
+    --text-base: 14px;
+    --text-lg: 16px;
+    --text-xl: 18px;
+    --text-2xl: 20px;
+    --text-3xl: 22px;
+    --text-4xl: 24px;
+    --text-5xl: 28px;
+    --text-6xl: 34px;
+
+    /* Pesos */
+    --font-normal: 400;
+    --font-medium: 500;
+    --font-bold: 700;
+    --font-black: 800;
+
+    /* Altura de linha */
+    --leading-tight: 1.4;
+    --leading-normal: 1.6;
+    --leading-relaxed: 1.7;
+    --leading-loose: 1.8;
+}
+
+/* ==========================================================
+   💡 GRADIENTES
+   Gradientes reutilizáveis
+========================================================== */
+:root {
+    --gradient-primary: linear-gradient(180deg, #fb923c, #f97316);
+    --gradient-surface: linear-gradient(135deg,
+        rgba(249, 115, 22, 0.08),
+        rgba(249, 115, 22, 0.02));
+    --gradient-hero: linear-gradient(135deg,
+        rgba(249, 115, 22, 0.08),
+        rgba(249, 115, 22, 0.02));
+    --gradient-avarias: linear-gradient(135deg,
+        rgba(239, 68, 68, 0.07),
+        rgba(249, 115, 22, 0.02));
+}
+
+/* ==========================================================
+   🎯 FOCUS & SELEÇÃO
+   Estados de interação
+========================================================== */
+:root {
+    --focus-ring: 0 0 0 4px rgba(249, 115, 22, 0.15);
+    --focus-ring-strong: 0 0 0 4px rgba(249, 115, 22, 0.25);
+    --selection-bg: rgba(249, 115, 22, 0.25);
+    --selection-color: inherit;
+}
+
+/* ==========================================================
+   🎨 CORES DE COMPONENTES ESPECÍFICOS
+   Variáveis para elementos únicos
+========================================================== */
+:root {
+    /* Código */
+    --code-bg: 11, 17, 32;
+    --code-bg-dark: 5, 9, 19;
+    --code-text: 219, 234, 254;
+    --code-border: rgba(255, 255, 255, 0.04);
+
+    /* Avarias */
+    --avarias-primary: 239, 68, 68;
+    --avarias-border: rgba(239, 68, 68, 0.10);
+    --avarias-text: #ef4444;
+
+    /* Tag padrão */
+    --tag-gradient: linear-gradient(180deg, var(--surface), var(--surface-2));
+
+    /* Sombras de botões */
+    --btn-shadow: 0 10px 22px rgba(249, 115, 22, 0.25);
+    --btn-shadow-hover: 0 18px 34px rgba(249, 115, 22, 0.35);
+    --scroll-btn-shadow: 0 12px 28px rgba(249, 115, 22, 0.25);
+}
+
+/* ==========================================================
+   ♿ ACESSIBILIDADE
+   Variáveis para reduzir movimento
+========================================================== */
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --anim-fast: 0.01ms;
+        --anim-normal: 0.01ms;
+        --anim-slow: 0.01ms;
+    }
+}

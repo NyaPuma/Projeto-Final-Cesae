@@ -1,0 +1,46 @@
+/* ==========================================================
+   SWAGGER UI - LAYOUT FLUIDO (REMOVE ESPAÇO VERTICAL DESNECESSÁRIO)
+   - Remove alturas fixas que causam "abismo vertical"
+   - Mantém o layout nativo do Swagger UI
+   - Aplicação limpa e específica
+========================================================== */
+
+/* Container principal - permite altura dinâmica */
+#swagger-ui {
+  height: auto;
+  min-height: 100%;
+  max-height: none;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Reset suave do corpo para integrar com o tema */
+body {
+  font-family: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+  background-color: transparent;
+  color: var(--text, #3b4151); /* Fallback para --text */
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* Ajustes específicos do Swagger UI */
+.swagger-ui {
+  font-family: inherit;
+  background-color: transparent;
+  color: inherit;
+  height: auto;
+  min-height: 100%;
+}
+
+/* Remove a barra superior legada */
+.swagger-ui .topbar {
+  display: none;
+}
+
+/* Garante que o conteúdo principal ocupa o espaço disponível */
+.swagger-ui .swagger-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}

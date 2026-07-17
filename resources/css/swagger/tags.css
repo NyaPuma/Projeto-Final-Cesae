@@ -1,0 +1,180 @@
+/* ==========================================================
+   TAGS / MÓDULOS
+   - Estilos para seções de tags com ícones
+   - Destaque especial para módulo de Avarias
+   - Design responsivo
+========================================================== */
+
+:root {
+    /* Cores para módulo Avarias */
+    --avarias-primary: 239, 68, 68;
+    --avarias-gradient: linear-gradient(135deg, rgba(239, 68, 68, 0.07), rgba(249, 115, 22, 0.02));
+    --avarias-border: rgba(239, 68, 68, 0.10);
+    --avarias-text: #ef4444;
+
+    /* Cores para tag padrão */
+    --tag-gradient: linear-gradient(180deg, var(--surface), var(--surface-2));
+}
+
+/* ==========================================================
+   📌 SECÇÃO DE TAGS
+========================================================== */
+.swagger-ui .opblock-tag-section {
+    margin-bottom: 42px;
+}
+
+/* ==========================================================
+   🏷️ CARTÃO DE TAG
+========================================================== */
+.swagger-ui .opblock-tag {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 22px 26px;
+    margin: 0 0 26px;
+    border: none;
+    border-radius: 22px;
+    background: var(--tag-gradient);
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05);
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.dark .swagger-ui .opblock-tag {
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+}
+
+.swagger-ui .opblock-tag:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 24px 50px rgba(15, 23, 42, 0.10);
+}
+
+/* Barra lateral colorida */
+.swagger-ui .opblock-tag::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 18px;
+    bottom: 18px;
+    width: 5px;
+    border-radius: 999px;
+    background: var(--primary);
+}
+
+/* Ícone do módulo */
+.swagger-ui .opblock-tag::before {
+    content: "";
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+    background: linear-gradient(180deg, rgba(249, 115, 22, 0.16), rgba(249, 115, 22, 0.06));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 26px;
+    font-size: 24px;
+}
+
+/* Título do módulo */
+.swagger-ui .opblock-tag > a {
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    text-decoration: none;
+    flex: 1;
+}
+
+/* Descrição do módulo */
+.swagger-ui .opblock-tag small {
+    display: block;
+    margin-top: 6px;
+    color: var(--text-soft);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+/* Badge "MÓDULO" */
+.swagger-ui .opblock-tag small::after {
+    content: "MÓDULO";
+    margin-left: 12px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: rgba(249, 115, 22, 0.10);
+    color: var(--primary);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.10em;
+}
+
+/* Botão de expandir */
+.swagger-ui .expand-operation {
+    transition: transform 0.25s ease;
+}
+.swagger-ui .is-open .expand-operation {
+    transform: rotate(90deg);
+}
+
+/* ==========================================================
+   🔧 ÍCONES POR MÓDULO
+========================================================== */
+/* Autenticação */
+.swagger-ui .opblock-tag[data-tag*="Aut"]::before { content: "🔐"; }
+
+/* Utilizadores */
+.swagger-ui .opblock-tag[data-tag*="User"]::before,
+.swagger-ui .opblock-tag[data-tag*="Utilizador"]::before {
+    content: "👤";
+}
+
+/* Outros módulos */
+.swagger-ui .opblock-tag[data-tag*="Cliente"]::before { content: "🏢"; }
+.swagger-ui .opblock-tag[data-tag*="Equip"]::before { content: "💻"; }
+.swagger-ui .opblock-tag[data-tag*="Art"]::before { content: "📦"; }
+.swagger-ui .opblock-tag[data-tag*="Fornecedor"]::before { content: "🚚"; }
+.swagger-ui .opblock-tag[data-tag*="Ticket"]::before { content: "🎫"; }
+.swagger-ui .opblock-tag[data-tag*="Admin"]::before { content: "⚙"; }
+
+/* ==========================================================
+   🚨 MÓDULO AVARIAS (DESTAQUE)
+========================================================== */
+.swagger-ui .opblock-tag[data-tag*="Avar"] {
+    background: var(--avarias-gradient);
+    border: 1px solid var(--avarias-border);
+}
+.swagger-ui .opblock-tag[data-tag*="Avar"]::after {
+    background: rgb(var(--avarias-primary));
+}
+.swagger-ui .opblock-tag[data-tag*="Avar"] a {
+    color: var(--avarias-text);
+}
+
+.dark .swagger-ui .opblock-tag[data-tag*="Avar"] {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.14), rgba(15, 23, 42, 0.45));
+}
+
+/* ==========================================================
+   📱 RESPONSIVO
+========================================================== */
+@media (max-width: 768px) {
+    .swagger-ui .opblock-tag {
+        padding: 18px;
+        gap: 14px;
+    }
+
+    .swagger-ui .opblock-tag > a {
+        font-size: 18px;
+    }
+
+    .swagger-ui .opblock-tag::before {
+        width: 48px;
+        height: 48px;
+        font-size: 20px;
+    }
+}

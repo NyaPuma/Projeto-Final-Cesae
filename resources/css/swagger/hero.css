@@ -1,0 +1,123 @@
+/* ==========================================================
+   HERO DA DOCUMENTAÇÃO
+   - Container com gradiente sutil e elemento decorativo
+   - Tipografia hierárquica e legível
+   - Design coerente com tema claro/escuro
+========================================================== */
+
+:root {
+  --hero-accent: 249, 115, 22; /* #F97316 */
+}
+
+/* Container principal do hero */
+.swagger-ui .information-container {
+  margin: 0 0 24px;
+  padding: 32px;
+
+  background:
+    linear-gradient(135deg,
+      rgba(var(--hero-accent), 0.08),
+      rgba(var(--hero-accent), 0.02)),
+    var(--surface);
+
+  border: 1px solid var(--border);
+  border-radius: 24px;
+
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Tema escuro */
+.dark .swagger-ui .information-container {
+  background:
+    linear-gradient(135deg,
+      rgba(var(--hero-accent), 0.10),
+      rgba(15, 23, 42, 0.65)),
+    var(--surface);
+
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+}
+
+/* Elemento decorativo (círculo com gradiente radial) */
+.swagger-ui .information-container::before {
+  content: "";
+  position: absolute;
+  top: -140px;
+  right: -140px;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(
+    rgba(var(--hero-accent), 0.18),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* Reset de margens/padding do info container */
+.swagger-ui .info {
+  margin: 0;
+  padding: 0;
+}
+
+/* Título principal */
+.swagger-ui .info .title {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0;
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.04em;
+}
+
+/* Ícone decorativo do título */
+.swagger-ui .info .title::before {
+  content: "📚";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  background: rgba(var(--hero-accent), 0.12);
+  font-size: 26px;
+}
+
+/* Badge da versão */
+.swagger-ui .info .version {
+  margin-left: 16px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(var(--hero-accent), 0.12);
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* Descrição */
+.swagger-ui .info .description {
+  margin-top: 22px;
+  font-size: 15px;
+  color: var(--text-soft);
+  line-height: 1.8;
+  max-width: 850px;
+}
+
+.swagger-ui .info .description p {
+  margin: 0 0 16px;
+}
+
+/* Links na descrição */
+.swagger-ui .info a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+  transition: text-decoration 0.2s ease;
+}
+
+.swagger-ui .info a:hover {
+  text-decoration: underline;
+}

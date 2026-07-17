@@ -1,5 +1,6 @@
 import './api-client';
 import './analytics';
+import './swagger/init';
 // 1. Comentados os imports do Echo e Pusher para evitar carregar bibliotecas desnecessárias
 // import Echo from 'laravel-echo';
 // import Pusher from 'pusher-js';
