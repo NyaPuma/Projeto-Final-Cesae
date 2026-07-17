@@ -8,12 +8,15 @@ window.requireAuthOnLoad = true;
 
 @php
     $profileName = $user->profile->name ?? 'user';
+    $isAdmin = $profileName === 'admin';
+
     $profileLabel = match ($profileName) {
         'admin' => __('Administrador'),
         'technician' => __('Técnico'),
         default => __('Funcionário'),
     };
 @endphp
+
 
 @component('ui.partials.page-card', [
     'title' => __('Painel Operacional'),
@@ -38,7 +41,14 @@ window.requireAuthOnLoad = true;
     </div>
 
     {{-- Contentor Dinâmico de Métricas (Renderizado via JS) --}}
-    <div id="metricsPanel" class="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"></div>
+    @if($isAdmin)
+        <div id="metricsPanel" class="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"></div>
+    @else
+        <div class="mb-8 rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface-2)] p-5 col-span-full text-center">
+            <p class="text-xs text-[var(--text-soft)]">{{ __('Métricas disponíveis apenas para Administrador.') }}</p>
+        </div>
+    @endif
+
 
     <div class="mb-5 flex items-center justify-between">
         <div>
@@ -64,19 +74,7 @@ window.requireAuthOnLoad = true;
             <p class="mt-1.5 text-xs leading-relaxed text-[var(--text-soft)]">{{ __('Mapear o inventário de ativos tecnológicos, histórico de manutenções e respetiva alocação física por salas.') }}</p>
         </a>
 
-        {{-- Card: Utilizadores --}}
-        <a href="/ui/users" role="listitem" class="premium-card group rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.01)] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--text)]/20 hover:shadow-[0_16px_40px_rgba(15,23,42,0.08)]">
-            <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-violet-500/10 text-xl">👥</div>
-            <h3 class="text-sm font-semibold tracking-tight text-[var(--text)]">{{ __('Utilizadores e Perfis') }}</h3>
-            <p class="mt-1.5 text-xs leading-relaxed text-[var(--text-soft)]">{{ __('Gerir credenciais de acesso, perfis de privilégios (administradores, técnicos, utilizadores) e equipas de piquete.') }}</p>
-        </a>
 
-        {{-- Card: Auditoria --}}
-        <a href="/ui/audits" role="listitem" class="premium-card group rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.01)] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--text)]/20 hover:shadow-[0_16px_40px_rgba(15,23,42,0.08)]">
-            <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-rose-500/10 text-xl">📝</div>
-            <h3 class="text-sm font-semibold tracking-tight text-[var(--text)]">{{ __('Registos de Auditoria') }}</h3>
-            <p class="mt-1.5 text-xs leading-relaxed text-[var(--text-soft)]">{{ __('Rastreabilidade total das ações do sistema. Rever logs imutáveis, alterações de estado e históricos de segurança.') }}</p>
-        </a>
 
         {{-- Card: Agenda --}}
         <a href="/calendar" role="listitem" class="premium-card group rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.01)] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--text)]/20 hover:shadow-[0_16px_40px_rgba(15,23,42,0.08)]">
@@ -85,30 +83,53 @@ window.requireAuthOnLoad = true;
             <p class="mt-1.5 text-xs leading-relaxed text-[var(--text-soft)]">{{ __('Visualizar planeamentos operacionais numa vista cronológica dedicada para otimização do fluxo de trabalho.') }}</p>
         </a>
 
-        {{-- Card Distinto: Analytics (Destaque Premium Discreto) --}}
-        <a href="/ui/analytics" role="listitem" class="premium-card group rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.01)] transition-all duration-300 hover:-translate-y-1 hover:border-indigo-500/50 dark:hover:border-indigo-400/50 hover:ring-indigo-500/10 dark:hover:ring-indigo-400/10">
-            <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-500/10 text-xl">📈</div>
+        @if($isAdmin)
+            {{-- Card: Utilizadores --}}
+            <a href="/ui/users" role="listitem" class="premium-card group rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.01)] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--text)]/20 hover:shadow-[0_16px_40px_rgba(15,23,42,0.08)]">
+                <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-violet-500/10 text-xl">👥</div>
+                <h3 class="text-sm font-semibold tracking-tight text-[var(--text)]">{{ __('Utilizadores e Perfis') }}</h3>
+                <p class="mt-1.5 text-xs leading-relaxed text-[var(--text-soft)]">{{ __('Gerir credenciais de acesso, perfis de privilégios (administradores, técnicos, utilizadores) e equipas de piquete.') }}</p>
+            </a>
+
+            {{-- Card: Auditoria --}}
+            <a href="/ui/audits" role="listitem" class="premium-card group rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.01)] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--text)]/20 hover:shadow-[0_16px_40px_rgba(15,23,42,0.08)]">
+                <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-rose-500/10 text-xl">📝</div>
+                <h3 class="text-sm font-semibold tracking-tight text-[var(--text)]">{{ __('Registos de Auditoria') }}</h3>
+                <p class="mt-1.5 text-xs leading-relaxed text-[var(--text-soft)]">{{ __('Rastreabilidade total das ações do sistema. Rever logs imutáveis, alterações de estado e históricos de segurança.') }}</p>
+            </a>
+
+            {{-- Card Distinto: Analytics --}}
+            <a href="/ui/analytics" role="listitem" class="premium-card group rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.01)] transition-all duration-300 hover:-translate-y-1 hover:border-indigo-500/50 dark:hover:border-indigo-400/50 hover:ring-indigo-500/10 dark:hover:ring-indigo-400/10">
+                <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-500/10 text-xl">📈</div>
             <h3 class="flex items-center gap-1.5 text-sm font-semibold tracking-tight text-[var(--text)]">
-                {{ __('Analytics & Relatórios') }}
-                <span class="inline-flex items-center rounded border border-indigo-500/20 bg-indigo-500/10 px-1.5 py-0.5 text-[9px] font-medium text-indigo-600 dark:border-indigo-400/20 dark:bg-indigo-400/10 dark:text-indigo-400">KPIs</span>
+                    {{ __('Analytics & Relatórios') }}
+                    <span class="inline-flex items-center rounded border border-indigo-500/20 bg-indigo-500/10 px-1.5 py-0.5 text-[9px] font-medium text-indigo-600 dark:border-indigo-400/20 dark:bg-indigo-400/10 dark:text-indigo-400">KPIs</span>
             </h3>
             <p class="mt-1.5 text-xs leading-relaxed text-[var(--text-soft)]">{{ __('Gráficos avançados de desempenho, tempos médios de resposta (SLA) e ferramentas para exportação analítica.') }}</p>
-        </a>
+
+            </a>
+        @endif
+
     </div>
+
+
 @endcomponent
 @endsection
 
 @push('scripts')
 <script>
 async function loadMetrics() {
-    // Restrição estrutural: apenas técnicos e administradores têm acesso visual às métricas
+    // Painel de métricas: apenas admin vê (técnicos/utilizadores não)
     const userRole = '{{ $user->profile->name ?? "" }}';
+
+
     const panel = document.getElementById('metricsPanel');
 
     if (!panel) return;
 
-    if (userRole !== 'technician' && userRole !== 'admin') {
+    if (userRole !== 'admin') {
         panel.innerHTML = `
+
             <div class="rounded-xl border border-dashed border-[var(--border)] bg-[var(--surface-2)] p-5 col-span-full text-center">
                 <p class="text-xs text-[var(--text-soft)]">${"{{ __('Painel de métricas operacionais disponível apenas para perfis autorizados (Técnicos/Gestores).') }}"}</p>
             </div>
