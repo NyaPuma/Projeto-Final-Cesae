@@ -67,8 +67,10 @@ window.requireAuthOnLoad = true;
                 </div>
             </div>
 
-            {{-- Painel de Gestão e Atribuição Manual --}}
+            {{-- Painel de Gestão e Atribuição Manual (Apenas Admin) --}}
+            @if(($user->profile->name ?? null) === 'admin')
             <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
+
                 <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)] mb-3">{{ __('Painel de Atribuição') }}</h3>
                 <div class="space-y-4">
                     <div>
@@ -83,6 +85,7 @@ window.requireAuthOnLoad = true;
                         <button id="btnAssignAuto" type="button" class="inline-flex items-center justify-center px-3 py-2 bg-[var(--surface)] text-xs font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all cursor-pointer">
                             {{ __('Atribuição Automática') }}
                         </button>
+
                     </div>
 
                     <div class="border-t border-[var(--border)] pt-3">
@@ -95,7 +98,10 @@ window.requireAuthOnLoad = true;
         </div>
     </div>
 
+            @endif
+
     {{-- Sistema Dinâmico de Notificações Internas --}}
+
     <div id="ticketMessage" class="mt-4 min-h-6 text-xs font-medium transition-all duration-300 px-1"></div>
 
 @endcomponent
