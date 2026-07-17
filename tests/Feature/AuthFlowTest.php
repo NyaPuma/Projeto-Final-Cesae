@@ -22,7 +22,7 @@ class AuthFlowTest extends TestCase
 
     public function test_user_can_register_login_change_password_and_logout(): void
     {
-        $register = $this->postJson('/register', [
+        $register = $this->withSession([])->postJson('/api/register', [
             'name' => 'Teacher Demo',
             'email' => 'demo@example.com',
             'password' => 'password123',
@@ -34,7 +34,7 @@ class AuthFlowTest extends TestCase
 
         $user = User::where('email', 'demo@example.com')->firstOrFail();
 
-        $login = $this->postJson('/login', [
+        $login = $this->withSession([])->postJson('/api/login', [
             'email' => 'demo@example.com',
             'password' => 'password123',
         ]);
@@ -44,7 +44,7 @@ class AuthFlowTest extends TestCase
 
         $token = $login->json('token');
 
-        $change = $this->withHeader('X-Auth-Token', $token)->postJson('/password/change', [
+        $change = $this->withHeader('X-Auth-Token', $token)->postJson('/api/password/change', [
             'current_password' => 'password123',
             'new_password' => 'password456',
         ]);
@@ -54,7 +54,7 @@ class AuthFlowTest extends TestCase
         $user->refresh();
         $this->assertTrue(Hash::check('password456', $user->password));
 
-        $logout = $this->withHeader('X-Auth-Token', $token)->postJson('/logout');
+        $logout = $this->withHeader('X-Auth-Token', $token)->postJson('/api/logout');
         $logout->assertOk();
 
         $user->refresh();
@@ -65,7 +65,7 @@ class AuthFlowTest extends TestCase
     {
         UserProfile::query()->delete();
 
-        $response = $this->postJson('/register', [
+        $response = $this->withSession([])->postJson('/api/register', [
             'name' => 'Fresh User',
             'email' => 'fresh@example.com',
             'password' => 'password123',
@@ -90,7 +90,7 @@ class AuthFlowTest extends TestCase
             'api_token' => Str::random(60),
         ]);
 
-        $response = $this->postJson('/login', [
+        $response = $this->withSession([])->postJson('/api/login', [
             'email' => 'demo@example.com',
             'password' => 'password123',
         ]);
@@ -101,7 +101,7 @@ class AuthFlowTest extends TestCase
 
     public function test_register_rejects_invalid_payload(): void
     {
-        $response = $this->postJson('/register', [
+        $response = $this->withSession([])->postJson('/api/register', [
             'name' => '',
             'email' => 'invalid',
             'password' => 'short',
@@ -120,7 +120,7 @@ class AuthFlowTest extends TestCase
             'active' => false,
         ]);
 
-        $response = $this->postJson('/login', [
+        $response = $this->withSession([])->postJson('/api/login', [
             'email' => 'inactive@example.com',
             'password' => 'password123',
         ]);

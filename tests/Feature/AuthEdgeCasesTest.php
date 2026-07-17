@@ -33,7 +33,7 @@ class AuthEdgeCasesTest extends TestCase
             'active' => true,
         ]);
 
-        $response = $this->postJson('/register', [
+        $response = $this->postJson('/api/register', [
             'name' => 'Dup User',
             'email' => $email,
             'password' => 'password123',
@@ -53,7 +53,7 @@ class AuthEdgeCasesTest extends TestCase
             'password' => Hash::make('password123'),
         ]);
 
-        $response = $this->postJson('/login', [
+        $response = $this->postJson('/api/login', [
             'email' => $user->email,
             'password' => 'password123',
         ]);
@@ -73,7 +73,7 @@ class AuthEdgeCasesTest extends TestCase
 
         $oldToken = $user->api_token;
 
-        $login = $this->postJson('/login', [
+        $login = $this->postJson('/api/login', [
             'email' => $user->email,
             'password' => 'password123',
         ]);
@@ -82,7 +82,7 @@ class AuthEdgeCasesTest extends TestCase
         $newToken = $login->json('token');
         $this->assertNotEquals($oldToken, $newToken);
 
-        $logoutOld = $this->withHeader('X-Auth-Token', $oldToken)->postJson('/logout');
+        $logoutOld = $this->withHeader('X-Auth-Token', $oldToken)->postJson('/api/logout');
         $logoutOld->assertStatus(401);
     }
 
@@ -96,7 +96,7 @@ class AuthEdgeCasesTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->postJson('/password/change', [
+            ->postJson('/api/password/change', [
                 'current_password' => 'wrong-password',
                 'new_password' => 'newpassword456',
             ]);
@@ -119,7 +119,7 @@ class AuthEdgeCasesTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->postJson('/password/change', [
+            ->postJson('/api/password/change', [
                 'current_password' => 'password123',
                 'new_password' => 'short',
             ]);
@@ -139,7 +139,7 @@ class AuthEdgeCasesTest extends TestCase
 
         $this->assertNotNull($user->api_token);
 
-        $logout = $this->withHeader('X-Auth-Token', $user->api_token)->postJson('/logout');
+        $logout = $this->withHeader('X-Auth-Token', $user->api_token)->postJson('/api/logout');
         $logout->assertOk();
 
         $user->refresh();
