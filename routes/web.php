@@ -74,7 +74,7 @@ Route::middleware(['custom.auth'])->group(function () {
         Route::get('/ui',              [UiController::class, 'index']);
         Route::get('/ui/profile',      [UiController::class, 'profile']);
         Route::get('/ui/tickets',      [UiController::class, 'tickets']);
-        Route::get('/ui/tickets/create', [UiController::class, 'ticketCreate']);
+        Route::get('/ui/tickets/create', [UiController::class, 'ticketCreate'])->middleware('role:admin,user');
         Route::get('/ui/tickets/{id}', [UiController::class, 'ticketDetail']); // Interface Web do Ticket
         Route::get('/ui/equipments',   [UiController::class, 'equipments']);
         Route::get('/equipments',      [UiController::class, 'getEquipments']);

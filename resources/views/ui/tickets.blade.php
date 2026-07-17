@@ -9,7 +9,17 @@ window.requireAuthOnLoad = true;
 @component('ui.partials.page-card', [
     'title' => __('Tickets'),
     'subtitle' => __('Pesquise, filtre e consulte as ocorrências registadas.'),
-    'actions' => '<div class="flex flex-wrap gap-2"><a href="/ui" class="inline-flex items-center justify-center px-3.5 py-2 bg-[var(--surface)] text-xs font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all"><svg class="w-3.5 h-3.5 mr-1.5 text-[var(--text-soft)]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path></svg> ' . __('Voltar ao painel') . '</a><a href="/ui/tickets/create" class="ui-button ui-button--primary inline-flex items-center justify-center px-3.5 py-2 text-xs font-bold text-[var(--on-primary)] rounded-xl shadow-sm hover:opacity-90 transition-all">+ ' . __('Criar Ticket') . '</a></div>'
+    'actions' => '<div class="flex flex-wrap gap-2">'
+        . '<a href="/ui" class="inline-flex items-center justify-center px-3.5 py-2 bg-[var(--surface)] text-xs font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all">'
+            . '<svg class="w-3.5 h-3.5 mr-1.5 text-[var(--text-soft)]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">'
+                . '<path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path>'
+            . '</svg> '
+            . __('Voltar ao painel')
+        . '</a>'
+        . (auth()->check() && (auth()->user()->isAdmin() || auth()->user()->isCommonUser())
+            ? '<a href="/ui/tickets/create" class="ui-button ui-button--primary inline-flex items-center justify-center px-3.5 py-2 text-xs font-bold text-[var(--on-primary)] rounded-xl shadow-sm hover:opacity-90 transition-all">+ ' . __('Criar Ticket') . '</a>'
+            : '')
+        . '</div>'
 ])
 
     {{-- Painel de Pesquisa Avançada Bento-Style --}}
@@ -107,7 +117,6 @@ window.requireAuthOnLoad = true;
 
 @push('scripts')
 <script>
-// Mapeamento premium e sutil de cores para as prioridades com cores de contraste WCAG compliant em light e dark mode
 const priorityColors = {
     baixa:   'border border-emerald-500/20 bg-emerald-500/10 text-emerald-800 dark:text-emerald-400',
     média:   'border border-amber-500/20 bg-amber-500/10 text-amber-800 dark:text-amber-400',
@@ -188,7 +197,6 @@ async function loadTickets(page = 1) {
         const statusName = t.status?.name ?? t.status ?? 'N/A';
         const statusKey = statusName.toLowerCase();
 
-        // Customização visual dinâmica para o Estado do Ticket
         let statusBadge = `<span class="inline-flex items-center gap-1.5 font-bold text-[var(--text)] text-[11px] uppercase tracking-tight">${statusTranslations[statusKey] || statusName}</span>`;
         if(statusKey === 'aberta' || statusKey === 'aberto') {
             statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-blue-500/10 text-blue-700 dark:text-blue-400 uppercase tracking-tight">${statusTranslations.aberta}</span>`;
@@ -214,7 +222,6 @@ async function loadTickets(page = 1) {
         </tr>`;
     }).join('');
 
-    // Renderização do Bloco de Paginação Estilizado
     const lastPage  = meta.last_page ?? 1;
     const currPage  = meta.current_page ?? page;
     const pagEl     = document.getElementById('pagination');
@@ -252,3 +259,4 @@ document.getElementById('filter_q').addEventListener('keydown', e => {
 window.addEventListener('load', () => loadTickets(1));
 </script>
 @endpush
+
