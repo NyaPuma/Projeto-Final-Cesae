@@ -8,11 +8,17 @@ return new class extends Migration
 {
     public function up(): void
     {
+        // SQLite pode falhar se a coluna deleted_at já existir.
+        // Tornamos a migration idempotente verificando antes.
+        if (Schema::hasColumn('tickets', 'deleted_at')) {
+            return;
+        }
+
         Schema::table('tickets', function (Blueprint $table) {
-            // Adiciona a coluna deleted_at
             $table->softDeletes();
         });
     }
+
 
     public function down(): void
     {
