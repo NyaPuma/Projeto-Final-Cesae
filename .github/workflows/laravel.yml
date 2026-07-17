@@ -21,9 +21,16 @@ jobs:
         extensions: mbstring, dom, curl, libxml, sqlite3
         coverage: none
 
-    # 3. Copiar o ficheiro de ambiente
-    - name: Copy .env
-      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+    # 3. Copiar ou criar o ficheiro de ambiente de forma segura
+    - name: Copy or Create .env
+      run: |
+        if [ -f .env.example ]; then
+          cp .env.example .env
+        else
+          echo "APP_ENV=testing" > .env
+          echo "APP_KEY=" >> .env
+          echo "DB_CONNECTION=sqlite" >> .env
+        fi
 
     # 4. Instalar as dependências sem restrições antigas
     - name: Install Dependencies
