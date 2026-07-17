@@ -171,7 +171,7 @@ async function fetchTicket(){
     const statusClean = (ticket.status ?? 'N/A').toLowerCase();
 
     const statusLabel = statusLabels[statusClean] ?? ticket.status;
-    let statusBadge = `<span class="inline-block px-2 py-0.5 rounded-lg text-[11px] font-bold bg-blue-500/10 text-blue-600 dark:text-blue-400 uppercase tracking-tight">\${statusLabel}</span>`;
+    let statusBadge = `<span class="inline-block px-2 py-0.5 rounded-lg text-[11px] font-bold bg-blue-500/10 text-blue-600 dark:text-blue-400 uppercase tracking-tight">${statusLabel}</span>`;
     if (statusClean === 'em curso') {
         statusBadge = `<span class="inline-block px-2 py-0.5 rounded-lg text-[11px] font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 uppercase tracking-tight">{{ __('Em Curso') }}</span>`;
     } else if (statusClean === 'fechada' || statusClean === 'fechado') {
@@ -181,42 +181,42 @@ async function fetchTicket(){
     document.getElementById('ticketDetails').innerHTML = `
         <div class="border-b border-[var(--border)] pb-4 mb-5">
             <div class="flex items-center justify-between gap-4">
-                <span class="text-[10px] font-mono font-bold text-[var(--text-soft)] uppercase tracking-wider bg-[var(--surface-2)] px-2 py-0.5 rounded-lg">{{ __('ID Ocorrência') }} #\${ticket.id}</span>
-                <div class="flex gap-1.5">\${statusBadge}</div>
+                <span class="text-[10px] font-mono font-bold text-[var(--text-soft)] uppercase tracking-wider bg-[var(--surface-2)] px-2 py-0.5 rounded-lg">{{ __('ID Ocorrência') }} #${ticket.id}</span>
+                <div class="flex gap-1.5">${statusBadge}</div>
             </div>
-            <h2 class="text-base font-bold text-[var(--text)] mt-3">\${ticket.title}</h2>
+            <h2 class="text-base font-bold text-[var(--text)] mt-3">${ticket.title}</h2>
         </div>
 
         <div class="space-y-5">
             <div>
                 <span class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)] block mb-1.5">{{ __('Descrição da Ocorrência') }}</span>
-                <div class="text-xs bg-[var(--surface-2)] p-3.5 rounded-xl text-[var(--text)] leading-relaxed whitespace-pre-wrap border border-[var(--border)]">\${ticket.description || "{{ __('Nenhuma descrição detalhada providenciada.') }}"}</div>
+                <div class="text-xs bg-[var(--surface-2)] p-3.5 rounded-xl text-[var(--text)] leading-relaxed whitespace-pre-wrap border border-[var(--border)]">${ticket.description || "{{ __('Nenhuma descrição detalhada providenciada.') }}"}</div>
             </div>
 
             <div class="grid grid-cols-2 gap-x-4 gap-y-4 pt-2">
                 <div>
                     <span class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)] block">{{ __('Nível de Prioridade') }}</span>
-                    <span class="inline-block mt-1 px-2 py-0.5 rounded-lg text-[11px] font-bold uppercase tracking-tight \${priColor}">\${priorityLabels[ticket.priority] ?? ticket.priority}</span>
+                    <span class="inline-block mt-1 px-2 py-0.5 rounded-lg text-[11px] font-bold uppercase tracking-tight ${priColor}">${priorityLabels[ticket.priority] ?? ticket.priority}</span>
                 </div>
                 <div>
                     <span class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)] block">{{ __('Equipamento / Ativo') }}</span>
-                    <p class="text-xs font-semibold mt-1 text-[var(--text)]">\${ticket.equipment ? ticket.equipment.name : '<span class="text-[var(--text-soft)] font-normal">—</span>'}</p>
+                    <p class="text-xs font-semibold mt-1 text-[var(--text)]">${ticket.equipment ? ticket.equipment.name : '<span class="text-[var(--text-soft)] font-normal">—</span>'}</p>
                 </div>
                 <div>
                     <span class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)] block">{{ __('Sala / Localização') }}</span>
-                    <p class="text-xs font-semibold mt-1 text-[var(--text)]">\${ticket.room ? ticket.room.name : '<span class="text-[var(--text-soft)] font-normal">—</span>'}</p>
+                    <p class="text-xs font-semibold mt-1 text-[var(--text)]">${ticket.room ? ticket.room.name : '<span class="text-[var(--text-soft)] font-normal">—</span>'}</p>
                 </div>
                 <div>
                     <span class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)] block">{{ __('Especialista Atribuído') }}</span>
-                    <p class="text-xs font-semibold mt-1 text-[var(--text)]">\${ticket.technician ? ticket.technician.name : '<span class="text-rose-500 dark:text-rose-400 font-normal italic">{{ __('Pendente de atribuição') }}</span>'}</p>
+                    <p class="text-xs font-semibold mt-1 text-[var(--text)]">${ticket.technician ? ticket.technician.name : '<span class="text-rose-500 dark:text-rose-400 font-normal italic">{{ __('Pendente de atribuição') }}</span>'}</p>
                 </div>
             </div>
 
             <div class="border-t border-[var(--border)] pt-4 grid grid-cols-2 gap-3 text-[11px] text-[var(--text-soft)] font-semibold">
-                <div class="flex justify-between border-b border-[var(--border)]/50 pb-1.5"><span>{{ __('Abertura:') }}</span> <span class="font-mono text-[var(--text)]">\${ticket.opened_at || '—'}</span></div>
-                <div class="flex justify-between border-b border-[var(--border)]/50 pb-1.5"><span>{{ __('Em Curso:') }}</span> <span class="font-mono text-[var(--text)]">\${ticket.in_progress_at || '—'}</span></div>
-                <div class="flex justify-between border-b border-[var(--border)]/50 pb-1.5"><span>{{ __('Fecho:') }}</span> <span class="font-mono text-[var(--text)]">\${ticket.closed_at || '—'}</span></div>
-                <div class="flex justify-between border-b border-[var(--border)]/50 pb-1.5"><span>{{ __('Reabertura:') }}</span> <span class="font-mono text-[var(--text)]">\${ticket.reopened_at || '—'}</span></div>
+                <div class="flex justify-between border-b border-[var(--border)]/50 pb-1.5"><span>{{ __('Abertura:') }}</span> <span class="font-mono text-[var(--text)]">${ticket.opened_at || '—'}</span></div>
+                <div class="flex justify-between border-b border-[var(--border)]/50 pb-1.5"><span>{{ __('Em Curso:') }}</span> <span class="font-mono text-[var(--text)]">${ticket.in_progress_at || '—'}</span></div>
+                <div class="flex justify-between border-b border-[var(--border)]/50 pb-1.5"><span>{{ __('Fecho:') }}</span> <span class="font-mono text-[var(--text)]">${ticket.closed_at || '—'}</span></div>
+                <div class="flex justify-between border-b border-[var(--border)]/50 pb-1.5"><span>{{ __('Reabertura:') }}</span> <span class="font-mono text-[var(--text)]">${ticket.reopened_at || '—'}</span></div>
             </div>
         </div>
     `;
@@ -256,9 +256,9 @@ async function fetchAiRecommendation() {
                     <div class="space-y-3">
                         <p class="text-xs text-[var(--text-soft)] leading-relaxed">
                             <span class="font-bold text-[var(--text)] block mb-1">💡 {{ __('Sugestão Operacional:') }}</span>
-                            \${data.justificacao}
+                            ${data.justificacao}
                         </p>
-                        <button onclick="approveAiRecommendation(\${data.tecnico_id})" class="w-full inline-flex items-center justify-center px-4 py-2 bg-blue-600 text-white text-xs font-bold rounded-xl shadow-sm hover:bg-blue-700 transition-all cursor-pointer gap-1.5">
+                        <button onclick="approveAiRecommendation(${data.tecnico_id})" class="w-full inline-flex items-center justify-center px-4 py-2 bg-blue-600 text-white text-xs font-bold rounded-xl shadow-sm hover:bg-blue-700 transition-all cursor-pointer gap-1.5">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
                             {{ __('Aprovar e Atribuir Técnico') }}
                         </button>
@@ -269,7 +269,7 @@ async function fetchAiRecommendation() {
             container.innerHTML = `
                 <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 text-xs text-[var(--text-soft)] italic flex items-center gap-2">
                     <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                    \${data.justificacao || "{{ __('A IA não conseguiu determinar o técnico ideal de momento.') }}"}
+                    ${data.justificacao || "{{ __('A IA não conseguiu determinar o técnico ideal de momento.') }}"}
                 </div>
             `;
         }
@@ -279,7 +279,7 @@ async function fetchAiRecommendation() {
 }
 
 async function approveAiRecommendation(tecnicoId) {
-    const res = await fetch(`/admin/tickets/\${ticketId}/atribuir`, {
+    const res = await fetch(`/admin/tickets/${ticketId}/atribuir`, {
         method: 'PATCH', // Correção: Uso direto de PATCH para evitar falhas no spoofing de JSON do Laravel
         headers: {
             ...authHeader(),
@@ -315,17 +315,17 @@ async function fetchComments(){
     section.innerHTML = '<div class="space-y-2.5">' + data.comments.map(c => `
         <div class="p-3 rounded-xl border border-[var(--border)] bg-[var(--surface-2)]">
             <div class="flex items-center justify-between mb-1 gap-4">
-                <span class="font-bold text-[var(--text)]">\${c.user ? c.user.name : "{{ __('Técnico') }}"}</span>
-                <span class="text-[10px] font-mono text-[var(--text-soft)]">\${c.created_at}</span>
+                <span class="font-bold text-[var(--text)]">${c.user ? c.user.name : "{{ __('Técnico') }}"}</span>
+                <span class="text-[10px] font-mono text-[var(--text-soft)]">${c.created_at}</span>
             </div>
-            <p class="text-xs text-[var(--text)] whitespace-pre-wrap leading-relaxed">\${c.comment}</p>
+            <p class="text-xs text-[var(--text)] whitespace-pre-wrap leading-relaxed">${c.comment}</p>
         </div>
     `).join('') + '</div>';
 }
 
 async function showMessage(message, error = false){
     const el = document.getElementById('ticketMessage');
-    el.className = `mt-4 min-h-6 text-xs font-semibold p-2.5 rounded-xl border \${error ? 'bg-red-500/5 border-red-500/20 text-red-600 dark:text-red-400' : 'bg-emerald-500/5 border-emerald-500/20 text-emerald-600 dark:text-emerald-400'}`;
+    el.className = `mt-4 min-h-6 text-xs font-semibold p-2.5 rounded-xl border ${error ? 'bg-red-500/5 border-red-500/20 text-red-600 dark:text-red-400' : 'bg-emerald-500/5 border-emerald-500/20 text-emerald-600 dark:text-emerald-400'}`;
     el.innerText = message;
     setTimeout(() => { el.innerText = ''; el.className = 'mt-4 min-h-6 text-xs font-medium px-1'; }, 5000);
 }
@@ -347,17 +347,17 @@ async function fetchPhotos(){
             const imgUrl  = '/storage/' + a.path;
             if (isImage) {
                 return `<div class="rounded-xl overflow-hidden border border-[var(--border)] bg-[var(--surface-2)] group shadow-sm">
-                    <a href="\${imgUrl}" target="_blank" title="\${a.file_name}">
-                        <img src="\${imgUrl}" alt="\${a.file_name}" class="w-full h-24 object-cover group-hover:opacity-85 transition-opacity duration-150">
+                    <a href="${imgUrl}" target="_blank" title="${a.file_name}">
+                        <img src="${imgUrl}" alt="${a.file_name}" class="w-full h-24 object-cover group-hover:opacity-85 transition-opacity duration-150">
                     </a>
                     <div class="p-1.5 border-t border-[var(--border)]">
-                        <p class="text-[10px] text-[var(--text-soft)] truncate font-semibold">\${a.file_name}</p>
+                        <p class="text-[10px] text-[var(--text-soft)] truncate font-semibold">${a.file_name}</p>
                     </div>
                 </div>`;
             }
             return `<div class="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-2.5 flex flex-col justify-between shadow-sm min-h-[96px]">
-                <p class="font-bold text-[var(--text)] text-[11px] line-clamp-2">\${a.file_name}</p>
-                <p class="text-[9px] font-mono text-[var(--text-soft)] uppercase tracking-wider mt-2">\${a.mime_type || "{{ __('Ficheiro') }}"}</p>
+                <p class="font-bold text-[var(--text)] text-[11px] line-clamp-2">${a.file_name}</p>
+                <p class="text-[9px] font-mono text-[var(--text-soft)] uppercase tracking-wider mt-2">${a.mime_type || "{{ __('Ficheiro') }}"}</p>
             </div>`;
         }).join('') +
     '</div>';
