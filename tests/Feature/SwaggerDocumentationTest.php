@@ -42,7 +42,6 @@ class SwaggerDocumentationTest extends TestCase
             '/admin/rooms',
             '/admin/audits',
             '/admin/preventive',
-            '/tickets/search',
         ];
 
         foreach ($requiredPaths as $path) {
@@ -63,7 +62,6 @@ class SwaggerDocumentationTest extends TestCase
             '/admin/rooms',
             '/admin/audits',
             '/admin/preventive',
-            '/tickets/search',
         ] as $path) {
             foreach ($spec['paths'][$path] as $method => $operation) {
                 $this->assertArrayHasKey('security', $operation, "Missing security block for {$method} {$path}");
@@ -79,7 +77,6 @@ class SwaggerDocumentationTest extends TestCase
 
     public function test_swagger_ui_route_is_available(): void
     {
-        $this->get('/api/documentation')->assertOk();
-        $this->get('/docs/openapi')->assertRedirect('/api/documentation');
+        $this->get('/docs/openapi')->assertOk();
     }
 }

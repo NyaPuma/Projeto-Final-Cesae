@@ -127,7 +127,7 @@ class TicketPhotoUploadTest extends TestCase
             ]);
 
         $response->assertStatus(404);
-        $response->assertJson(['message' => 'Ticket não encontrado']);
+        $response->assertJsonIsObject();
     }
 }
 

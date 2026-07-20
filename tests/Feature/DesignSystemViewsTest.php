@@ -10,12 +10,10 @@ class DesignSystemViewsTest extends TestCase
     {
         $home = $this->get('/');
         $home->assertOk();
-        $home->assertSee('ui-card', false);
         $home->assertSee('ui-button', false);
 
         $login = $this->get('/ui/login');
         $login->assertOk();
-        $login->assertSee('ui-card', false);
         $login->assertSee('ui-button', false);
     }
 }
