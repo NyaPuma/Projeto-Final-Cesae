@@ -79,6 +79,10 @@ Route::middleware(['custom.auth'])->group(function () {
         Route::get('/ui/equipments',   [UiController::class, 'equipments']);
         Route::get('/equipments',      [UiController::class, 'getEquipments']);
 
+        // 🚪 Salas - consulta disponível para todos os utilizadores autenticados
+        Route::get('/ui/rooms',     [UiController::class, 'rooms']);
+        Route::get('/ui/rooms/{id}', [UiController::class, 'roomDetail']);
+
         // Consultas gerais e interações nos tickets (Endpoints de dados / JSON)
         Route::get('/tickets/search',             [TicketController::class, 'search']);
         Route::get('/tickets',                    [TicketController::class, 'index']);
@@ -179,9 +183,7 @@ Route::middleware(['custom.auth'])->group(function () {
             Route::delete('/admin/equipment/{id}', [AdminController::class, 'destroyEquipment']);
 
             // Consulta e criação de salas
-            Route::get('/ui/rooms', [UiController::class, 'rooms']);
             Route::get('/ui/rooms/create', [UiController::class, 'roomCreate']);
-            Route::get('/ui/rooms/{id}',     [UiController::class, 'roomDetail']);
             Route::get('/ui/rooms/{id}/edit', [UiController::class, 'roomEdit']);
 
             // Decisão Orçamental de Engenharia
