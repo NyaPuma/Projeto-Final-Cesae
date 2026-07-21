@@ -753,6 +753,12 @@ class TicketController extends Controller
             $ticket->budget_details = $request->budget_details;
         }
 
+        // 🐛 FIX: Garantir que o técnico fica atribuído ao ticket
+        // para receber notificações quando o admin aprovar/recusar o orçamento
+        if (!$ticket->assigned_to) {
+            $ticket->assigned_to = $user->id;
+        }
+
         // 🐛 FIX: Marcar budget_requested=true em AMBOS os casos para
         // que o frontend saiba que o orçamento já foi processado.
         $ticket->budget_requested = true;
@@ -828,6 +834,12 @@ class TicketController extends Controller
         // Guarda detalhes do orçamento
         if ($request->has('budget_details')) {
             $ticket->budget_details = $request->budget_details;
+        }
+
+        // 🐛 FIX: Garantir que o técnico fica atribuído ao ticket
+        // para receber notificações quando o admin aprovar/recusar o orçamento
+        if (!$ticket->assigned_to) {
+            $ticket->assigned_to = $user->id;
         }
 
         if ($estimatedBudget > $threshold) {

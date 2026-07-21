@@ -697,8 +697,8 @@ function addBudgetItem(description = '', qty = 1, price = 0, type = 'material') 
     const pricePlaceholder = type === 'material' ? 'P. Unit' : '\u20AC/Hora';
     div.innerHTML = `
         <select class="item-type rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-1.5 py-1.5 text-[10px] font-bold uppercase tracking-wider text-[var(--text)] outline-none focus:border-[var(--text)] transition-all cursor-pointer">
-            <option value="material" ${type === 'material' ? 'selected' : ''}>🔩 {{ __('Mat.') }}</option>
-            <option value="labor" ${type === 'labor' ? 'selected' : ''}>👷 {{ __('M.O.') }}</option>
+            <option value="material" ${type === 'material' ? 'selected' : ''}>🔩 {{ __('Materiais') }}</option>
+            <option value="labor" ${type === 'labor' ? 'selected' : ''}>👷 {{ __('Mão de Obra') }}</option>
         </select>
         <input type="text" class="item-desc rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-2.5 py-1.5 text-[11px] text-[var(--text)] outline-none focus:border-[var(--text)] transition-all" placeholder="{{ __('Descrição') }}" value="${description}">
         <input type="number" class="item-qty rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-2 py-1.5 text-[11px] font-mono text-[var(--text)] outline-none focus:border-[var(--text)] transition-all" placeholder="{{ __('Qtd/H') }}" min="1" value="${qty}">
@@ -814,7 +814,7 @@ function renderBudgetDetailsForAdmin(details) {
         total += subtotal;
         
         const icon = type === 'labor' ? '👷' : '🔩';
-        const typeLabel = type === 'labor' ? 'M.O.' : 'Mat.';
+        const typeLabel = type === 'labor' ? 'Mão de Obra' : 'Materiais';
         
         return `<div class="flex justify-between items-center text-[11px] py-1 ${i > 0 ? 'border-t border-[var(--border)]/50' : ''}">
             <span class="text-[var(--text)] flex-1 truncate mr-2">${icon} ${item.description || 'Item'}</span>
