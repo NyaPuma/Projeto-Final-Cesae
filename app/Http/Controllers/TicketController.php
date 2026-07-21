@@ -338,4 +338,14 @@ class TicketController extends Controller
         $user = $this->authenticatedUser($request);
         return view('calendar', ['user' => $user]);
     }
+
+    /**
+     * Retorna os eventos do calendário (tickets programados com scheduled_at) em formato JSON.
+     */
+    public function calendarEvents(Request $request)
+    {
+        $user = $this->authenticatedUser($request);
+        $events = Ticket::getScheduledEvents();
+        return response()->json($events);
+    }
 }

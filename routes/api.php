@@ -20,17 +20,12 @@ Route::get('/user', function (Request $request) {
 // Documentação da API
 Route::redirect('/docs/openapi', '/api/documentation');
 
-// Endpoints Públicos de Autenticação (Guest) - Com Throttle nativo do Laravel e isenção de CSRF
-Route::post('/register', [AuthController::class, 'register'])
-    ->middleware(['rate.limit:5,1'])
-    ->withoutMiddleware([VerifyCsrfToken::class]);
-
+// Endpoints Públicos de Autenticação (Guest) - Apenas login e password reset
 Route::post('/login',    [AuthController::class, 'login'])
     ->middleware(['rate.limit:5,1'])
     ->withoutMiddleware([VerifyCsrfToken::class]);
 
-
-// Fluxo Público de Password Reset enviado por Email
+// Password reset - público (fluxo de email)
 Route::get('/password/reset/{token}', function ($token) {
     return view('ui.auth-reset', ['token' => $token]);
 })->name('password.reset');

@@ -151,7 +151,7 @@
                     <td class="font-bold" style="color: #1b1b18;">{{ $t->title }}</td>
                     <td>
                         <span class="status-text">
-                            {{ $t->status }}
+                            {{ $t->status->name ?? $t->status ?? '—' }}
                         </span>
                     </td>
                     <td class="font-mono">{{ $t->opened_at?->toDateTimeString() ?? '—' }}</td>

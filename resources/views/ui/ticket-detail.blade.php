@@ -67,7 +67,7 @@ window.requireAuthOnLoad = true;
                 </div>
             </div>
 
-            {{-- Painel de Gestão e Atribuição Manual (Apenas Admin) --}}
+        {{-- Painel de Gestão e Atribuição Manual (Apenas Admin) --}}
             @if(($user->profile->name ?? null) === 'admin')
             <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
 
@@ -95,10 +95,10 @@ window.requireAuthOnLoad = true;
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
             @endif
+
+        </div>{{-- Fim coluna direita --}}
+    </div>{{-- Fim grid --}}
 
     {{-- Sistema Dinâmico de Notificações Internas --}}
 
@@ -152,18 +152,10 @@ function authHeader() {
     return headers;
 }
 
-// Verificação defensiva que suporta o método isAdmin() ou a propriedade is_admin de forma segura
+// Verificação defensiva - usa o role armazenado no localStorage no login
 function checkCurrentUserIsAdmin() {
-    try {
-        const token = localStorage.getItem('api_token');
-        if (!token) return false;
-        const base64Url = token.split('.')[1];
-        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        const payload = JSON.parse(window.atob(base64));
-        return payload.role === 'admin' || payload.isAdmin === true;
-    } catch (e) {
-        return {{ (auth()->user() && (auth()->user()->is_admin || (method_exists(auth()->user(), 'isAdmin') && auth()->user()->isAdmin()))) ? 'true' : 'false' }};
-    }
+    const role = localStorage.getItem('user_role');
+    return role === 'admin';
 }
 
 async function fetchTicket(){
