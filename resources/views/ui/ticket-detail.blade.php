@@ -326,7 +326,6 @@ async function fetchTicket() {
     const priColor = priorityColors[ticket.priority] ?? 'border border-[var(--border)] bg-[var(--surface-2)] text-[var(--text-soft)]';
     const statusClean = (ticket.status ?? ticket.status_id ?? 'N/A').toString().toLowerCase();
 
-    // Renderização do Badge de Estado conforme especificações do ACCEPT
     let statusBadge = `<span class="inline-block px-2 py-0.5 rounded-lg text-[11px] font-bold bg-blue-500/10 text-blue-600 dark:text-blue-400 uppercase tracking-tight">${statusLabels[statusClean] ?? ticket.status}</span>`;
 
     if (statusClean === 'em curso') {
@@ -339,7 +338,6 @@ async function fetchTicket() {
         statusBadge = `<span class="inline-block px-2 py-0.5 rounded-lg text-[11px] font-bold bg-[var(--text-soft)]/10 text-[var(--text-soft)] uppercase tracking-tight">{{ __('Fechada') }}</span>`;
     }
 
-    // Preenchimento dos Detalhes
     document.getElementById('ticketDetails').innerHTML = `
         <div class="border-b border-[var(--border)] pb-4 mb-5">
             <div class="flex items-center justify-between gap-4">
@@ -376,21 +374,16 @@ async function fetchTicket() {
         </div>
     `;
 
-    // -------------------------------------------------------------
-    // GESTÃO DINÂMICA DE VISIBILIDADE SEGUNDO O FLUXO DO ACCEPT
-    // -------------------------------------------------------------
     const isPendenteOrcamento = statusClean === 'pendente orçamento' || statusClean === 'pendente_orçamento';
     const isRecusada = statusClean === 'recusada' || statusClean === 'recusado';
     const estimatedAmount = parseFloat(ticket.budget_amount || ticket.estimated_cost || ticket.estimatedBudget || 0);
     const threshold = parseFloat(ticket.threshold || 50.00);
 
-    // Gestão do Painel Técnico
     const techCompletionCard = document.getElementById('techCompletionCard');
     const techBlockedCard = document.getElementById('techBlockedCard');
     const techRejectedCard = document.getElementById('techRejectedCard');
 
     if (techCompletionCard && techBlockedCard && techRejectedCard) {
-        // Reset às visibilidades
         techCompletionCard.classList.add('hidden');
         techBlockedCard.classList.add('hidden');
         techRejectedCard.classList.add('hidden');
@@ -403,12 +396,10 @@ async function fetchTicket() {
         } else if (isPendenteOrcamento) {
             techBlockedCard.classList.remove('hidden');
         } else {
-            // Se o ticket está "Em Curso" ou "Aberto" (Dentro do limiar ou Aprovado)
             techCompletionCard.classList.remove('hidden');
         }
     }
 
-    // Gestão do Painel Admin (Apenas Visível se "Pendente Orçamento" ou Solicitado)
     const budgetCard = document.getElementById('budgetApprovalCard');
     if (budgetCard && checkCurrentUserIsAdmin()) {
         if (isPendenteOrcamento || ticket.budget_requested) {
@@ -422,7 +413,6 @@ async function fetchTicket() {
     }
 }
 
-// Submeter Custo Estimado pelo Técnico ($estimatedBudget)
 async function submitEstimatedBudget() {
     const estimatedBudget = parseFloat(document.getElementById('techEstimatedCostInput')?.value) || 0;
 
@@ -446,11 +436,9 @@ async function submitEstimatedBudget() {
     }
 }
 
-// Ação de Decisão do Administrador (Aprovar / Recusar)
 async function handleBudgetAction(action) {
     const feedback = document.getElementById('budgetFeedback')?.value.trim();
 
-    // Regra: Em caso de recusa, exige justificação (technical_report)
     if (action === 'reject' && !feedback) {
         showMessage("{{ __('Ao recusar o orçamento, é obrigatório inserir uma justificação/feedback.') }}", true);
         return;
@@ -459,10 +447,7 @@ async function handleBudgetAction(action) {
     const res = await fetch(`/admin/tickets/${ticketId}/budget-decision`, {
         method: 'POST',
         headers: { ...authHeader(), 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            action: action, // 'approve' ou 'reject'
-            feedback: feedback
-        })
+        body: JSON.stringify({ action: action, feedback: feedback })
     });
 
     const data = await res.json();
@@ -508,28 +493,60 @@ async function fetchPhotos() {
         const res = await fetch(`/tickets/${ticketId}/photos`, { headers: authHeader() });
         if (!res.ok) return;
         const data = await res.json();
-        const photos = data.photos || data;
-        if (!photos || photos.length === 0) {
+        const attachments = data.attachments || data;
+        if (!attachments || attachments.length === 0) {
             sec.innerHTML = `<p class="italic text-[var(--text-soft)]">{{ __('Nenhuma evidência carregada.') }}</p>`;
             return;
         }
-        sec.innerHTML = `<div class="grid grid-cols-2 gap-2 pt-1">${photos.map(p => `
-            <a href="${p.url}" target="_blank" class="block rounded-xl overflow-hidden border border-[var(--border)] hover:opacity-80 transition-all">
-                <img src="${p.url}" class="w-full h-24 object-cover" alt="{{ __('Evidência') }}">
-            </a>
-        `).join('')}</div>`;
+        sec.innerHTML = `<div class="grid grid-cols-2 gap-3">${attachments.map(a => {
+            const isImage = a.mime_type && a.mime_type.startsWith('image/');
+            const imgUrl = '/storage/' + a.path;
+            if (isImage) {
+                return `<div class="rounded-xl overflow-hidden border border-[var(--border)] bg-[var(--surface-2)] group shadow-sm relative">
+                    <a href="${imgUrl}" target="_blank" title="${a.file_name}">
+                        <img src="${imgUrl}" alt="${a.file_name}" class="w-full h-24 object-cover group-hover:opacity-85 transition-opacity duration-150">
+                    </a>
+                    <button onclick="deletePhoto(${a.id})" type="button" class="absolute top-1 right-1 bg-red-500/80 hover:bg-red-600 text-white rounded-lg p-1 shadow-sm transition-all cursor-pointer z-10" title="{{ __('Remover fotografia') }}">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"></path></svg>
+                    </button>
+                    <div class="p-1.5 border-t border-[var(--border)]">
+                        <p class="text-[10px] text-[var(--text-soft)] truncate font-semibold">${a.file_name}</p>
+                    </div>
+                </div>`;
+            }
+            return `<div class="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-2.5 flex flex-col justify-between shadow-sm min-h-[96px] relative">
+                <div class="flex items-start justify-between gap-2">
+                    <p class="font-bold text-[var(--text)] text-[11px] line-clamp-2">${a.file_name}</p>
+                    <button onclick="deletePhoto(${a.id})" type="button" class="flex-shrink-0 bg-red-500/80 hover:bg-red-600 text-white rounded-lg p-1 shadow-sm transition-all cursor-pointer" title="{{ __('Remover ficheiro') }}">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"></path></svg>
+                    </button>
+                </div>
+                <p class="text-[9px] font-mono text-[var(--text-soft)] uppercase tracking-wider mt-2">${a.mime_type || "{{ __('Ficheiro') }}"}</p>
+            </div>`;
+        }).join('')}</div>`;
     } catch (e) {
         sec.innerHTML = `<p class="italic text-rose-500">{{ __('Erro ao carregar fotografias.') }}</p>`;
     }
 }
 
-// Inicialização de Listeners
+async function deletePhoto(photoId) {
+    if (!confirm("{{ __('Tem a certeza que pretende remover esta fotografia?') }}")) return;
+
+    const res = await fetch('/tickets/' + ticketId + '/photos/' + photoId, {
+        method: 'DELETE',
+        headers: authHeader(),
+    });
+    const data = await res.json();
+    if (!res.ok) { showMessage(data.message || "{{ __('Erro ao remover fotografia.') }}", true); return; }
+    await fetchPhotos();
+    showMessage("{{ __('Fotografia removida com sucesso.') }}");
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     fetchTicket();
     fetchComments();
     fetchPhotos();
 
-    // Eventos do Técnico
     document.getElementById('btnSubmitEstimatedBudget')?.addEventListener('click', submitEstimatedBudget);
 
     document.getElementById('btnFinishTicket')?.addEventListener('click', async () => {
@@ -551,11 +568,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Eventos do Administrador
     document.getElementById('btnApproveBudget')?.addEventListener('click', () => handleBudgetAction('approve'));
     document.getElementById('btnRejectBudget')?.addEventListener('click', () => handleBudgetAction('reject'));
 
-    // Formulário de Comentários
     document.getElementById('commentForm')?.addEventListener('submit', async (e) => {
         e.preventDefault();
         const text = document.getElementById('commentText').value.trim();
@@ -574,7 +589,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Formulário de Fotos
     document.getElementById('photoForm')?.addEventListener('submit', async (e) => {
         e.preventDefault();
         const fileInput = document.getElementById('photoInput');
@@ -601,3 +615,4 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 @endpush
+

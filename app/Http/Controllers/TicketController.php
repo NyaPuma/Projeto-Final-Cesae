@@ -293,6 +293,36 @@ class TicketController extends Controller
     }
 
     /**
+     * Remove uma fotografia/anexo do ticket (Evidências Fotográficas).
+     * Elimina o ficheiro físico do disco e o registo da base de dados.
+     */
+    public function deletePhoto(Request $request, int $id, int $photoId)
+    {
+        $user = $this->authenticatedUser($request);
+        $ticket = Ticket::findOrFail($id);
+
+        $attachment = TicketAttachment::where('ticket_id', $ticket->id)
+            ->findOrFail($photoId);
+
+        // Regra de autorização:
+        // - ROLE_ADMIN / ROLE_TECHNICIAN: podem remover qualquer foto.
+        // - ROLE_USER (common): só pode remover as suas próprias fotos.
+        if ($user->isCommon() && (int) $attachment->user_id !== (int) $user->id) {
+            return response()->json(['message' => 'Acesso negado'], 403);
+        }
+
+        // Apaga o ficheiro físico do storage
+        if (Storage::disk('public')->exists($attachment->path)) {
+            Storage::disk('public')->delete($attachment->path);
+        }
+
+        // Apaga o registo da base de dados
+        $attachment->delete();
+
+        return response()->json(['message' => 'Fotografia removida com sucesso.'], 200);
+    }
+
+    /**
      * Conclui de forma definitiva um ticket em curso, registando tempos e custos operacionais.
      */
     public function closeTicket(Request $request, int $id)
