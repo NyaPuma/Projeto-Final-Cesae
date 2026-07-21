@@ -93,14 +93,8 @@ window.requireAuthOnLoad = true;
                             <label class="mb-1 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">
                                 {{ __('Itens do Orçamento Detalhado') }}
                             </label>
-                            <div id="budgetItemsContainer" class="space-y-2">
-                                {{-- Linha de item modelo (será clonada) --}}
-                                <div class="budget-item grid grid-cols-[1fr_80px_80px_60px] gap-2 items-center" data-index="0">
-                                    <input type="text" class="item-desc rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-2.5 py-1.5 text-[11px] text-[var(--text)] outline-none focus:border-[var(--text)] transition-all" placeholder="{{ __('Descrição (ex: Peça X)') }}">
-                                    <input type="number" class="item-qty rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-2 py-1.5 text-[11px] font-mono text-[var(--text)] outline-none focus:border-[var(--text)] transition-all" placeholder="{{ __('Qtd') }}" min="1" value="1">
-                                    <input type="number" step="0.01" class="item-price rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-2 py-1.5 text-[11px] font-mono text-[var(--text)] outline-none focus:border-[var(--text)] transition-all" placeholder="{{ __('P. Unit') }}" min="0" value="0">
-                                    <span class="item-subtotal text-[11px] font-mono font-bold text-[var(--text)] pt-2 text-right">0.00€</span>
-                                </div>
+<div id="budgetItemsContainer" class="space-y-2">
+                                {{-- Itens adicionados dinamicamente via JS com event listeners automáticos --}}
                             </div>
                             <button type="button" id="btnAddBudgetItem" class="inline-flex items-center gap-1 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wider text-primary border border-dashed border-[var(--border)] rounded-xl hover:bg-[var(--surface-2)] transition-all cursor-pointer">
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path></svg>
@@ -624,8 +618,8 @@ async function deletePhoto(photoId) {
     showMessage("{{ __('Fotografia removida com sucesso.') }}");
 }
 
-// ─── Orçamento Detalhado: Gestão de Itens ───
-let budgetItemCounter = 1;
+// ─── Orçamento Detalhado: Gestão de Itens com Recalculo Automático ───
+let budgetItemCounter = 0;
 
 function recalcBudgetTotal() {
     let total = 0;
@@ -640,7 +634,7 @@ function recalcBudgetTotal() {
     const display = document.getElementById('techTotalEstimatedDisplay');
     if (display) display.textContent = total.toFixed(2) + ' €';
     const input = document.getElementById('techEstimatedCostInput');
-    if (input && !input.dataset.manuallySet) {
+    if (input) {
         input.value = total.toFixed(2);
     }
     return total;
@@ -662,23 +656,30 @@ function addBudgetItem(description = '', qty = 1, price = 0) {
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
     `;
-    // Event listeners para recalcular
-    div.querySelector('.item-qty')?.addEventListener('input', recalcBudgetTotal);
-    div.querySelector('.item-price')?.addEventListener('input', recalcBudgetTotal);
-    div.querySelector('.btn-remove-item')?.addEventListener('click', () => {
-        div.remove();
-        recalcBudgetTotal();
-    });
-    // Listeners para detetar alteração manual no input global
-    div.querySelector('.item-qty')?.addEventListener('input', () => {
-        document.getElementById('techEstimatedCostInput').dataset.manuallySet = '';
-    });
-    div.querySelector('.item-price')?.addEventListener('input', () => {
-        document.getElementById('techEstimatedCostInput').dataset.manuallySet = '';
-    });
     container.appendChild(div);
+    // Atualizar automaticamente sem precisar de event listeners individuais
     recalcBudgetTotal();
 }
+
+// 🎯 Event Delegation: captura input em QUALQUER .item-qty ou .item-price
+// Isto funciona para itens existentes e futuros sem precisar de attach manual
+document.addEventListener('input', function(e) {
+    if (e.target.classList.contains('item-qty') || e.target.classList.contains('item-price')) {
+        recalcBudgetTotal();
+    }
+});
+
+// 🎯 Para cliques no botão de remover (delegação)
+document.addEventListener('click', function(e) {
+    const removeBtn = e.target.closest('.btn-remove-item');
+    if (removeBtn) {
+        const item = removeBtn.closest('.budget-item');
+        if (item) {
+            item.remove();
+            recalcBudgetTotal();
+        }
+    }
+});
 
 function getBudgetDetails() {
     const items = [];
@@ -724,12 +725,13 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchPhotos();
 
     // ─── Orçamento Detalhado ───
+    // Adicionar primeira linha automaticamente para o utilizador começar a preencher
+    addBudgetItem('', 1, 0);
+
     document.getElementById('btnAddBudgetItem')?.addEventListener('click', () => addBudgetItem());
 
-    // Recalcular total ao alterar o input global manualmente
-    document.getElementById('techEstimatedCostInput')?.addEventListener('input', function() {
-        this.dataset.manuallySet = 'true';
-    });
+    // Input global apenas para leitura (o total é automático via recalcBudgetTotal)
+    document.getElementById('techEstimatedCostInput')?.setAttribute('readonly', 'readonly');
 
     document.getElementById('btnSubmitEstimatedBudget')?.addEventListener('click', async () => {
         const estimatedBudget = parseFloat(document.getElementById('techEstimatedCostInput')?.value) || 0;

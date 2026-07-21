@@ -296,6 +296,36 @@
                             </div>
                         </div>
 
+                        {{-- 🔔 Notificações - Sino com contador --}}
+                        <div class="relative" id="notificationBellContainer">
+                            <button type="button" onclick="toggleNotifications()"
+                                class="relative inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] text-sm shadow-sm transition-all hover:bg-[var(--surface-2)] cursor-pointer"
+                                aria-label="{{ __('Notificações') }}" id="notificationBellBtn">
+                                🔔
+                                <span id="notificationBadge"
+                                    class="hidden absolute -top-1 -right-1 inline-flex items-center justify-center h-4.5 min-w-[18px] px-1 rounded-full bg-rose-500 text-[9px] font-extrabold text-white shadow-sm shadow-rose-500/30 leading-none"
+                                    style="font-size:9px;line-height:1">
+                                    0
+                                </span>
+                            </button>
+                            {{-- Dropdown de Notificações --}}
+                            <div id="notificationDropdown"
+                                class="hidden absolute right-0 mt-2 w-96 rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-2xl py-2 z-50 animate-[fadeIn_0.15s_ease-out] max-h-[420px] flex flex-col">
+                                <div class="px-4 pb-2 border-b border-[var(--border)] flex items-center justify-between">
+                                    <h4 class="text-xs font-bold uppercase tracking-wider text-[var(--text)]">{{ __('Notificações') }}</h4>
+                                    <span id="notifCountLabel" class="text-[10px] text-[var(--text-soft)]">0 {{ __('por ler') }}</span>
+                                </div>
+                                <div id="notificationList" class="overflow-y-auto flex-1 py-1 space-y-0.5 px-1">
+                                    <p class="text-xs text-[var(--text-soft)] text-center py-6 italic">{{ __('A carregar...') }}</p>
+                                </div>
+                                <div class="border-t border-[var(--border)] pt-2 px-4">
+                                    <a href="/ui/tickets" class="text-[10px] font-bold uppercase tracking-wider text-primary hover:underline block text-center py-1">
+                                        {{ __('Ver todos os tickets') }} →
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
                         <button type="button" onclick="toggleTheme()"
                             class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] text-sm shadow-sm transition-all hover:bg-[var(--surface-2)] cursor-pointer"
                             aria-label="{{ __('Alternar Tema') }}">
@@ -572,6 +602,143 @@
             }
 
             renderAuthBox();
+        });
+    </script>
+
+    {{-- 🔔 Notificações - Lógica JS --}}
+    <script>
+        // Estado das notificações
+        let notificationCount = 0;
+        let notificationsVisible = false;
+        let notifPollInterval = null;
+
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notificationDropdown');
+            if (!dropdown) return;
+            notificationsVisible = !notificationsVisible;
+            dropdown.classList.toggle('hidden', !notificationsVisible);
+            if (notificationsVisible) {
+                fetchNotifications();
+            }
+        }
+
+        async function fetchNotifications() {
+            const list = document.getElementById('notificationList');
+            const badge = document.getElementById('notificationBadge');
+            const countLabel = document.getElementById('notifCountLabel');
+            if (!list) return;
+
+            try {
+                const res = await fetch('/notifications', { headers: authHeader() });
+                if (!res.ok) throw new Error('Failed');
+
+                const data = await res.json();
+                const notifications = data.notifications || data.data || data || [];
+
+                // Se não houver notificações
+                if (!notifications.length || notifications.length === 0) {
+                    list.innerHTML = `
+                        <p class="text-xs text-[var(--text-soft)] text-center py-6 italic">
+                            🔕 {{ __('Sem notificações') }}
+                        </p>
+                    `;
+                    if (badge) badge.classList.add('hidden');
+                    if (countLabel) countLabel.innerText = '0 {{ __('por ler') }}';
+                    notificationCount = 0;
+                    return;
+                }
+
+                // Contar não lidas
+                const unreadCount = notifications.filter(n => !n.is_read && !n.read_at).length;
+                notificationCount = unreadCount;
+
+                // Atualizar badge
+                if (badge) {
+                    if (unreadCount > 0) {
+                        badge.innerText = unreadCount > 99 ? '99+' : unreadCount;
+                        badge.classList.remove('hidden');
+                    } else {
+                        badge.classList.add('hidden');
+                    }
+                }
+                if (countLabel) {
+                    countLabel.innerText = unreadCount + ' {{ __('por ler') }}';
+                }
+
+                // Renderizar lista (mostrar últimas 20)
+                const items = notifications.slice(0, 20);
+                list.innerHTML = items.map(n => {
+                    const isUnread = !n.is_read && !n.read_at;
+                    const icon = n.type?.includes('approved') ? '✅' :
+                                n.type?.includes('rejected') ? '❌' :
+                                n.type?.includes('budget_request') ? '💰' :
+                                n.type?.includes('auto_approved') ? '🟢' :
+                                n.type?.includes('closed') ? '🔧' :
+                                n.type?.includes('budget_submitted') ? '📋' : '📌';
+                    return `
+                        <div class="flex items-start gap-3 px-3 py-2.5 rounded-xl hover:bg-[var(--surface-2)] transition-all ${isUnread ? 'bg-primary/5 border-l-2 border-primary' : ''} ${n.link ? 'cursor-pointer' : ''}" onclick="${n.link ? `window.location='${n.link}'; markNotifRead(${n.id})` : ''}">
+                            <span class="text-base flex-shrink-0 mt-0.5">${icon}</span>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-xs font-bold text-[var(--text)] leading-tight ${isUnread ? '' : 'opacity-70'}">${n.title || ''}</p>
+                                <p class="text-[10px] text-[var(--text-soft)] mt-0.5 line-clamp-2">${n.message || n.description || ''}</p>
+                                <p class="text-[9px] text-[var(--text-soft)] mt-1 opacity-50">${n.created_at ? new Date(n.created_at).toLocaleDateString('pt-PT', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : ''}</p>
+                            </div>
+                            ${isUnread ? '<span class="w-2 h-2 rounded-full bg-primary flex-shrink-0 mt-1.5"></span>' : ''}
+                        </div>
+                    `;
+                }).join('') + (notifications.length > 20 ? `
+                    <div class="text-center pt-2">
+                        <span class="text-[9px] text-[var(--text-soft)] font-medium">+${notifications.length - 20} {{ __('mais') }}</span>
+                    </div>
+                ` : '');
+            } catch (e) {
+                console.warn('Erro ao carregar notificações:', e);
+                if (list) {
+                    list.innerHTML = `
+                        <p class="text-xs text-[var(--text-soft)] text-center py-6 italic">⚠️ {{ __('Erro ao carregar') }}</p>
+                    `;
+                }
+            }
+        }
+
+        async function markNotifRead(id) {
+            try {
+                await fetch('/notifications/' + id, {
+                    method: 'PATCH',
+                    headers: authHeader()
+                });
+                fetchNotifications();
+            } catch (e) {}
+        }
+
+        // Polling automático a cada 30 segundos se autenticado
+        function startNotificationPolling() {
+            if (notifPollInterval) clearInterval(notifPollInterval);
+            // Buscar imediatamente
+            if (isAuthenticated()) {
+                fetchNotifications();
+            }
+            // Repetir a cada 30s
+            notifPollInterval = setInterval(() => {
+                if (isAuthenticated()) {
+                    fetchNotifications();
+                }
+            }, 30000);
+        }
+
+        // Fechar dropdown ao clicar fora
+        document.addEventListener('click', (e) => {
+            const container = document.getElementById('notificationBellContainer');
+            const dropdown = document.getElementById('notificationDropdown');
+            if (container && dropdown && !container.contains(e.target) && !dropdown.classList.contains('hidden')) {
+                dropdown.classList.add('hidden');
+                notificationsVisible = false;
+            }
+        });
+
+        // Iniciar polling após DOM carregado
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(startNotificationPolling, 500);
         });
     </script>
 

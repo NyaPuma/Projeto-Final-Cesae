@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ticket;
 use App\Models\User;
+use App\Models\Notification;
 use App\Models\TicketComment;
 use App\Models\TicketAttachment;
 use App\Models\TicketStatus;
@@ -380,6 +381,100 @@ class TicketController extends Controller
     }
 
     /**
+     * Cria notificações de orçamento para os utilizadores relevantes.
+     * - submitted: notifica TODOS os admins + criador do ticket
+     * - approved/rejected: notifica técnico atribuído + criador
+     * - auto_approved: notifica técnico + criador
+     * - closed: notifica criador
+     */
+    private function notifyBudgetEvent(Ticket $ticket, string $eventType, string $message): void
+    {
+        try {
+            if ($eventType === 'submitted') {
+                // Notificar todos os admins
+                $admins = User::whereHas('profile', function ($q) {
+                    $q->where('name', User::ROLE_ADMIN);
+                })->get();
+                foreach ($admins as $admin) {
+                    Notification::create([
+                        'user_id' => $admin->id,
+                        'title' => "💰 Orçamento Pendente - Ticket #{$ticket->id}",
+                        'message' => $message,
+                        'type' => 'budget_request',
+                        'link' => "/ui/tickets/{$ticket->id}",
+                    ]);
+                }
+                // Também notificar criador
+                if ($ticket->user_id) {
+                    Notification::create([
+                        'user_id' => $ticket->user_id,
+                        'title' => "📋 Orçamento Submetido - Ticket #{$ticket->id}",
+                        'message' => $message,
+                        'type' => 'budget_submitted',
+                        'link' => "/ui/tickets/{$ticket->id}",
+                    ]);
+                }
+            } elseif ($eventType === 'auto_approved') {
+                // Notificar técnico
+                if ($ticket->assigned_to) {
+                    Notification::create([
+                        'user_id' => $ticket->assigned_to,
+                        'title' => "✅ Auto-Aprovado - Ticket #{$ticket->id}",
+                        'message' => $message,
+                        'type' => 'budget_auto_approved',
+                        'link' => "/ui/tickets/{$ticket->id}",
+                    ]);
+                }
+                // Notificar criador
+                if ($ticket->user_id) {
+                    Notification::create([
+                        'user_id' => $ticket->user_id,
+                        'title' => "✅ Orçamento Auto-Aprovado - Ticket #{$ticket->id}",
+                        'message' => $message,
+                        'type' => 'budget_auto_approved',
+                        'link' => "/ui/tickets/{$ticket->id}",
+                    ]);
+                }
+            } elseif (in_array($eventType, ['approved', 'rejected'])) {
+                // Notificar o técnico
+                if ($ticket->assigned_to) {
+                    $icon = $eventType === 'approved' ? '✅' : '❌';
+                    Notification::create([
+                        'user_id' => $ticket->assigned_to,
+                        'title' => "{$icon} Orçamento " . ($eventType === 'approved' ? 'Aprovado' : 'Recusado') . " - Ticket #{$ticket->id}",
+                        'message' => $message,
+                        'type' => "budget_{$eventType}",
+                        'link' => "/ui/tickets/{$ticket->id}",
+                    ]);
+                }
+                // Notificar criador
+                if ($ticket->user_id) {
+                    Notification::create([
+                        'user_id' => $ticket->user_id,
+                        'title' => "📋 Decisão Orçamental - Ticket #{$ticket->id}",
+                        'message' => $message,
+                        'type' => "budget_{$eventType}",
+                        'link' => "/ui/tickets/{$ticket->id}",
+                    ]);
+                }
+            } elseif ($eventType === 'closed') {
+                // Notificar criador que o ticket foi fechado
+                if ($ticket->user_id) {
+                    Notification::create([
+                        'user_id' => $ticket->user_id,
+                        'title' => "🔧 Ticket Fechado - #{$ticket->id}",
+                        'message' => $message,
+                        'type' => 'ticket_closed',
+                        'link' => "/ui/tickets/{$ticket->id}",
+                    ]);
+                }
+            }
+        } catch (\Exception $e) {
+            // Silencia falhas de notificação
+        }
+    }
+
+    /**
      * Submete o custo estimado pelo técnico e aciona o fluxo orçamental.
      * Se o custo exceder o threshold, o ticket fica "Pendente Orçamento".
      * Rota: POST /tickets/{id}/budget
@@ -423,6 +518,11 @@ class TicketController extends Controller
 
             $ticket->save();
 
+            // 🔔 Notificar admins
+            $this->notifyBudgetEvent($ticket, 'submitted', 
+                "O técnico submeteu um orçamento de {$estimatedBudget}€ para o ticket #{$ticket->id} - {$ticket->title}. Aguarda aprovação."
+            );
+
             return response()->json([
                 'message' => __('Custo estimado excede o limiar. Ticket pendente de aprovação orçamental.'),
                 'ticket' => $ticket->load(['equipment', 'room', 'technician', 'status']),
@@ -436,6 +536,11 @@ class TicketController extends Controller
             $ticket->status_id = $inProgressId;
         }
         $ticket->save();
+
+        // 🔔 Notificar técnico e criador sobre auto-aprovação
+        $this->notifyBudgetEvent($ticket, 'auto_approved',
+            "Orçamento de {$estimatedBudget}€ para o ticket #{$ticket->id} foi auto-aprovado (dentro do limiar de {$threshold}€). Pode prosseguir."
+        );
 
         return response()->json([
             'message' => __('Custo estimado dentro da autonomia. Pode prosseguir com a intervenção.'),
@@ -483,6 +588,11 @@ class TicketController extends Controller
 
             $ticket->save();
 
+            // 🔔 Notificar admins sobre pedido de orçamento detalhado
+            $this->notifyBudgetEvent($ticket, 'submitted',
+                "O técnico submeteu um orçamento detalhado de {$estimatedBudget}€ para o ticket #{$ticket->id} - {$ticket->title}. Aguarda aprovação."
+            );
+
             return response()->json([
                 'message' => __('Pedido de orçamento submetido com detalhes. Aguarde aprovação.'),
                 'ticket' => $ticket->load(['equipment', 'room', 'technician', 'status']),
@@ -494,6 +604,11 @@ class TicketController extends Controller
             $ticket->status_id = $inProgressId;
         }
         $ticket->save();
+
+        // 🔔 Notificar auto-aprovação
+        $this->notifyBudgetEvent($ticket, 'auto_approved',
+            "Orçamento detalhado de {$estimatedBudget}€ para o ticket #{$ticket->id} foi auto-aprovado (dentro do limiar)."
+        );
 
         return response()->json([
             'message' => __('Custo dentro do limiar. Intervenção autorizada automaticamente.'),
@@ -527,6 +642,11 @@ class TicketController extends Controller
         $ticket->technical_report = $request->report ?? $ticket->technical_report;
         $ticket->closed_at = now();
         $ticket->save();
+
+        // 🔔 Notificar criador que o ticket foi fechado
+        $this->notifyBudgetEvent($ticket, 'closed',
+            "O ticket #{$ticket->id} - {$ticket->title} foi concluído e fechado com custo final de {$request->actual_cost}€."
+        );
 
         return response()->json([
             'message' => __('Intervenção concluída e ticket fechado com sucesso.'),

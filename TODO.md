@@ -13,10 +13,12 @@
 - `submitEstimatedBudget()` (POST /tickets/{id}/budget) - submissão com orçamento detalhado
 - `requestBudget()` (PUT /technician/tickets/{id}/request-budget) - pedido com detalhes
 - `closeTicketFinal()` (POST /tickets/{id}/close) - fechar com custo + relatório
+- 🔔 `notifyBudgetEvent()` - notifica admins quando técnico submete orçamento
 
 ## ✅ 4. Backend - AdminController.php
 - `approveBudget()` suporta `{decision, feedback}` e `{action, feedback}`
 - Guarda feedback em `budget_feedback` na recusa
+- 🔔 Notifica técnico + criador quando admin aprova/recusa
 
 ## ✅ 5. Routes (web.php)
 - POST /tickets/{id}/budget → submitEstimatedBudget
@@ -27,24 +29,30 @@
 ## ✅ 6. Frontend (ticket-detail.blade.php)
 - Orçamento detalhado com adicionar/remover itens, cálculo automático do total
 - Admin vê a lista detalhada de itens antes de decidir
+- 🔔 Notificações aparecem no painel de notificações
 
 ## 🐛 7. Bugs Corrigidos
 1. **[FIX] `@if` condições de role** → Troquei `auth()->check()` por `$user->isTechnician()` e `$user->isAdmin()` passados pela view
 2. **[FIX] Status API como objeto** → `fetchTicket()` lê `ticket.status.name` quando status é objeto (como retorna da API)
 3. **[FIX] `budget_requested` sempre true** → Marcado como `true` mesmo em auto-aprovação (<= threshold)
 4. **[FIX] Cartão "Orçamento Aprovado" faltava** → Adicionado `techApprovedCard` com lógica de visibilidade
-5. **[FIX] Orçamento "fechada" mostrava "Reparação Abortada"** → Separado `isRecusada` de `isClosed`:
-   - `isRecusada` → mostra "Reparação Abortada" (com feedback)
-   - `isClosed` → mostra "Reparação Concluída" (estado de sucesso)
+5. **[FIX] Orçamento "fechada" mostrava "Reparação Abortada"** → Separado `isRecusada` de `isClosed`
 6. **[FIX] Lógica de visibilidade dos cartões** → Condições corrigidas para cada estado
+
+## 🔔 Notificações Implementadas
+| Evento | Quem Recebe | Tipo |
+|--------|------------|------|
+| Técnico submete orçamento (>50€) | Todos os Admins | `budget_request` 🔴 |
+| Admin Aprova orçamento | Técnico + Criador | `budget_approved` ✅ |
+| Admin Recusa orçamento | Técnico + Criador | `budget_rejected` ❌ |
 
 ## Fluxo Final
 ```
 Aberto → Técnico preenche itens do orçamento detalhado
   ├→ Total ≤ 50€ → Auto-aprovado → "Concluir Intervenção"
-  └→ Total > 50€ → Pendente Orçamento
+  └→ Total > 50€ → Pendente Orçamento → 🔔 NOTIFICA Admin
                     └→ Admin vê itens detalhados
-                        ├→ Aprova → "Aprovado!" → Concluir
-                        └→ Recusa + feedback → "Recusada" com feedback
+                        ├→ Aprova → 🔔 NOTIFICA Técnico → "Aprovado!" → Concluir
+                        └→ Recusa + feedback → 🔔 NOTIFICA Técnico → "Recusada"
 ```
 
