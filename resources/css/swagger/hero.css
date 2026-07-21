@@ -11,7 +11,7 @@
 
 /* Container principal do hero */
 .swagger-ui .information-container {
-  margin: 0 0 24px;
+  margin: 0 0 20px;
   padding: 32px;
 
   background:
@@ -91,10 +91,33 @@
   margin-left: 16px;
   padding: 6px 14px;
   border-radius: 999px;
-  background: rgba(var(--hero-accent), 0.12);
+  background: rgba(var(--hero-accent), 0.16);
   color: var(--primary);
   font-size: 12px;
   font-weight: 700;
+}
+
+/* Badge nativo do Swagger (v3.0, OAS3) que acompanha o título —
+   por defeito vem com baixo contraste: o swagger-ui.css nativo tem
+   ".info .title small pre { color: #fff }" que força texto branco
+   sobre este fundo laranja claro. O seletor mais específico abaixo
+   (repetindo .swagger-ui) vence essa regra sem precisar de !important. */
+.swagger-ui.swagger-ui .info .version-stamp,
+.swagger-ui.swagger-ui .info small.version-stamp,
+.swagger-ui.swagger-ui .info pre.version,
+.swagger-ui .info .title small pre.version {
+  background: rgba(var(--hero-accent), 0.16);
+  color: var(--primary);
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+/* Garante que qualquer texto dentro destas pills (incluindo <pre>
+   herdado do nativo) segue a mesma cor, e não o branco forçado */
+.swagger-ui .info .version-stamp pre,
+.swagger-ui .info .version-stamp small,
+.swagger-ui .info .title small.version-stamp pre {
+  color: inherit;
 }
 
 /* Descrição */
@@ -120,4 +143,104 @@
 
 .swagger-ui .info a:hover {
   text-decoration: underline;
+}
+
+/* ==========================================================
+   BLOCO DE SERVIDOR + AUTHORIZE
+   O Swagger UI gera <section class="schemes wrapper block col-12">
+   com o dropdown de servers e o botão Authorize. Nenhum ficheiro
+   tinha uma regra para ".schemes" (só existia ".scheme-container",
+   que já não corresponde ao markup atual), por isso este bloco
+   herdava o CSS nativo genérico de grid (pensado para larguras de
+   12 colunas) e ficava com um espaço vazio enorme.
+========================================================== */
+.swagger-ui .schemes.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  gap: 12px;
+  margin: 0 0 20px;
+  padding: 12px 18px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface-2);
+}
+
+.dark .swagger-ui .schemes.wrapper {
+  background: var(--surface-2);
+}
+
+.swagger-ui.swagger-ui .schemes-server-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 0;
+  height: auto;
+  padding: 0;
+  margin: 0;
+}
+
+.swagger-ui .servers-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.swagger-ui .servers select {
+  width: auto;
+  min-width: 120px;
+  min-height: 36px;
+  padding: 6px 12px;
+  font-size: 13px;
+}
+
+/* Sobrepõe explicitamente uma regra genérica ".auth-wrapper" (sem
+   prefixo .swagger-ui) que existe noutro ficheiro do projeto — parece
+   pertencer a uma página de login/autenticação — e que define
+   min-height:100vh + padding:clamp(1rem,5vw,3rem). Essa classe tem
+   o mesmo nome e, sem escopo, aplicava-se também aqui, causando o
+   espaço vazio gigante e o comportamento de mudar de tamanho com o
+   zoom (min-height:100vh recalcula com vh). O seletor duplicado
+   .swagger-ui.swagger-ui aumenta a especificidade para garantir
+   que esta regra vence sem depender da ordem dos ficheiros. */
+.swagger-ui.swagger-ui .auth-wrapper,
+.swagger-ui .auth-wrapper.auth-wrapper {
+  min-height: 0;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0;
+  margin: 0;
+}
+
+.swagger-ui .auth-wrapper .authorize {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: auto;
+  min-height: 36px;
+  padding: 0 14px;
+  font-size: 13px;
+}
+
+/* Barra "Filter by tag" (input nativo de filtro de tags) */
+.swagger-ui .operation-filter-input {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 18px;
+  margin: 0 0 20px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 14px;
+}
+
+.swagger-ui .operation-filter-input::placeholder {
+  color: var(--text-muted);
 }

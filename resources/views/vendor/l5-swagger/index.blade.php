@@ -9,9 +9,28 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
 
+    {{-- 1) CSS base oficial do Swagger UI --}}
     <link rel="stylesheet" type="text/css" href="{{ l5_swagger_asset($documentation, 'swagger-ui.css') }}">
 
-    {{-- Seu bundle de estilos do Swagger (usa @import internos) --}}
+    {{--
+        2) Design system principal da app (Tailwind + tokens de cor/tipografia).
+           Carrega ANTES do swagger.css customizado de propósito: assim o
+           swagger.css consegue sobrepor-se ao Tailwind Preflight sem precisar
+           de !important, e ainda tem acesso a todas as variáveis --bg,
+           --surface, --text, --border, --text-xs..--text-5xl, etc.
+    --}}
+    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @else
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    @endif
+
+    {{--
+        3) Bundle de estilos customizados do Swagger (usa @import internos).
+           Carrega POR ÚLTIMO — depois do Tailwind — para que as regras
+           .swagger-ui ... definidas aqui vençam o Preflight sem conflitos
+           de especificidade.
+    --}}
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         @vite('resources/css/swagger/swagger.css')
     @endif
@@ -20,12 +39,6 @@
         sizes="32x32" />
     <link rel="icon" type="image/png" href="{{ l5_swagger_asset($documentation, 'favicon-16x16.png') }}"
         sizes="16x16" />
-
-    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @else
-        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    @endif
 
     {{-- Swagger UI custom theme (js) --}}
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))

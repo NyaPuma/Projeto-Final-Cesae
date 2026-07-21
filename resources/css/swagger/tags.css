@@ -63,9 +63,12 @@
     background: var(--primary);
 }
 
-/* Ícone do módulo */
+/* Ícone do módulo (fallback genérico — as regras [data-tag*="..."]
+   abaixo substituem o conteúdo quando existe correspondência;
+   sem fallback, o Swagger UI ficaria com uma caixa de 56x56px
+   vazia sempre que a tag não tivesse data-tag reconhecido) */
 .swagger-ui .opblock-tag::before {
-    content: "";
+    content: "📁";
     width: 56px;
     height: 56px;
     border-radius: 18px;
@@ -78,6 +81,7 @@
     background-position: center;
     background-size: 26px;
     font-size: 24px;
+    line-height: 1;
 }
 
 /* Título do módulo */

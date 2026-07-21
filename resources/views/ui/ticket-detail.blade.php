@@ -8,20 +8,163 @@ window.requireAuthOnLoad = true;
 
 @component('ui.partials.page-card', [
     'title' => __('Detalhes do Ticket'),
-    'subtitle' => __('Consulte o estado detalhado da ocorrência, atribua técnicos e partilhe comentários internos.'),
+    'subtitle' => __('Consulte o estado detalhado da ocorrência, aprove orçamentos e atribua técnicos.'),
     'actions' => '<a href="/ui/tickets" class="inline-flex items-center justify-center px-3 py-1.5 bg-[var(--surface)] text-xs font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all"><svg class="w-3.5 h-3.5 mr-1.5 text-[var(--text-soft)]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path></svg> ' . __('Voltar à listagem') . '</a>'
 ])
 
     <div class="grid gap-6 xl:grid-cols-[1.2fr_0.8fr] animate-[fadeIn_0.3s_ease-out]">
 
-        {{-- Coluna Esquerda: Informações Principais do Ticket --}}
-        <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm h-fit">
-            <div id="ticketDetails" class="space-y-4 text-xs text-[var(--text-soft)]">
-                <div class="flex items-center justify-center py-12 gap-2">
-                    <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                    <p class="text-sm font-medium text-[var(--text-soft)]">{{ __('A carregar dados estruturados do ticket...') }}</p>
+        {{-- Coluna Esquerda: Informações Principais do Ticket + Menu do Técnico + Aprovação de Orçamento (Admin) --}}
+        <div class="space-y-6">
+
+            {{-- Detalhes da Ocorrência --}}
+            <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm h-fit">
+                <div id="ticketDetails" class="space-y-4 text-xs text-[var(--text-soft)]">
+                    <div class="flex items-center justify-center py-12 gap-2">
+                        <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                        <p class="text-sm font-medium text-[var(--text-soft)]">{{ __('A carregar dados estruturados do ticket...') }}</p>
+                    </div>
                 </div>
             </div>
+
+            {{-- 🛠️ NOVO: PAINEL DE INTERVENÇÃO E ORÇAMENTO (Apenas Visível para Técnicos) --}}
+            @if(($user->profile->name ?? null) === 'tecnico' || ($user->role ?? null) === 'tecnico' || (auth()->user() && auth()->user()->is_technician))
+            <div id="techInterventionSection" class="space-y-6">
+
+                {{-- Estado 1: Concluir Intervenção (Autonomia Aprovada / Dentro do Limiar) --}}
+                <div id="techCompletionCard" class="rounded-2xl border border-emerald-500/20 bg-[var(--surface)] p-6 shadow-sm space-y-5">
+                    <div class="flex items-center justify-between border-b border-[var(--border)] pb-3">
+                        <div class="space-y-1">
+                            <span class="inline-block bg-emerald-500/10 text-emerald-500 text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-md border border-emerald-500/20">
+                                {{ __('Autonomia Aprovada') }}
+                            </span>
+                            <h3 class="text-sm font-bold text-[var(--text)] flex items-center gap-2 pt-1">
+                                <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.428 15.428a2 2 0 002.143-.231l5.531-5.531a2 2 0 000-2.828l-1.257-1.257a2 2 0 00-2.828 0l-5.531 5.531a2 2 0 00-.231 2.143L3 21l3.571-3.571z"></path>
+                                </svg>
+                                {{ __('Concluir Intervenção') }}
+                            </h3>
+                            <p class="text-xs text-[var(--text-soft)]">
+                                {{ __('Registe os custos finais das peças/mão de obra para fechar a ocorrência.') }}
+                            </p>
+                        </div>
+                    </div>
+
+                    <form id="techCompletionForm" class="space-y-4">
+                        {{-- Custo Total Registado --}}
+                        <div class="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-4 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <label for="techTotalCost" class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)] block">
+                                    {{ __('Custo Total Registado (€)') }}
+                                </label>
+                                <span class="text-[10px] font-bold text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/20">
+                                    ✓ ≤ 50.00 € ({{ __('Isento de Admin') }})
+                                </span>
+                            </div>
+                            <input id="techTotalCost" type="number" step="0.01" value="49.00" class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-lg font-mono font-extrabold text-emerald-500 outline-none focus:border-emerald-500 transition-all">
+                        </div>
+
+                        {{-- Relatório Técnico Final --}}
+                        <div>
+                            <label for="techFinalReport" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">
+                                {{ __('Relatório Técnico Final') }}
+                            </label>
+                            <textarea id="techFinalReport" rows="3" class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2 text-xs text-[var(--text)] placeholder-[var(--text-soft)] outline-none focus:border-[var(--text)] transition-all resize-none" placeholder="{{ __('Descreva a intervenção efetuada...') }}">{{ __('Fusível de 10A substituído e testes de carga efetuados com sucesso. Maquinaria pronta a operar.') }}</textarea>
+                        </div>
+
+                        <button type="button" id="btnFinishTicket" class="w-full inline-flex items-center justify-center px-4 py-3 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold uppercase tracking-wider rounded-xl shadow-sm transition-all cursor-pointer gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
+                            {{ __('Finalizar e Fechar Ticket') }}
+                        </button>
+                    </form>
+                </div>
+
+                {{-- Bloco de Notas Rápidas do Técnico --}}
+                <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm space-y-3">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)]">{{ __('Notas Rápidas') }}</h3>
+                    <textarea id="techQuickNotes" rows="2" class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2 text-xs text-[var(--text)] placeholder-[var(--text-soft)] outline-none focus:border-[var(--text)] transition-all resize-none" placeholder="{{ __('Notas de apoio interno...') }}">{{ __('Peça adquirida no stock interno da fábrica.') }}</textarea>
+                </div>
+
+                {{-- Estado 2: Submeter Novo Orçamento (Caso necessite de aprovação > 50€) --}}
+                <div id="techBudgetSubmitCard" class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm space-y-3">
+                    <div class="flex items-center justify-between border-b border-[var(--border)] pb-2.5">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)]">{{ __('Submeter Novo Orçamento') }}</h3>
+                        <span class="text-[9px] font-mono bg-[var(--surface-2)] text-[var(--text-soft)] px-2 py-0.5 rounded-md font-bold">{{ __('Exemplo') }}</span>
+                    </div>
+                    <p class="text-xs text-[var(--text-soft)]">
+                        {{ __('Se detetar custos de componentes durante a reparação que excedam os 50.00 €:') }}
+                    </p>
+
+                    <form id="techBudgetForm" class="space-y-3 pt-1">
+                        <div>
+                            <label for="techEstimatedCostInput" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">
+                                {{ __('Custo Estimado (€)') }}
+                            </label>
+                            <input id="techEstimatedCostInput" type="number" step="0.01" placeholder="{{ __('Ex: 150.00') }}" class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2 text-xs font-mono text-[var(--text)] outline-none focus:border-[var(--text)] transition-all">
+                        </div>
+
+                        <button type="button" id="btnRequestAuthorization" class="w-full inline-flex items-center justify-center px-4 py-2.5 bg-amber-800/80 hover:bg-amber-700 text-white text-xs font-bold rounded-xl shadow-sm transition-all cursor-pointer">
+                            {{ __('Solicitar Autorização') }}
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+            @endif
+
+            {{-- 💰 PAINEL DE AUTORIZAÇÃO ORÇAMENTAL (Apenas Visível para Admins - INTACTO) --}}
+            @if(($user->profile->name ?? null) === 'admin')
+            <div id="budgetApprovalCard" class="relative rounded-2xl border border-amber-500/30 bg-[var(--surface)] p-6 shadow-sm space-y-4 overflow-hidden hidden">
+                {{-- Etiqueta Superior AÇÃO REQUERIDA --}}
+                <div class="absolute top-0 left-0">
+                    <span class="inline-block bg-amber-500 text-black text-[9px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-br-xl shadow-sm">
+                        {{ __('Ação Requerida') }}
+                    </span>
+                </div>
+
+                <div class="pt-2">
+                    <h3 class="text-sm font-bold text-[var(--text)] flex items-center gap-2">
+                        <span class="text-base">💰</span> {{ __('Autorização Orçamental') }}
+                    </h3>
+                    <p class="text-xs text-[var(--text-soft)] mt-1">
+                        {{ __('O custo estimado pela equipa técnica ultrapassa o limiar de autonomia') }} (<strong class="text-[var(--text)] font-mono" id="budgetThreshold">50.00 €</strong>).
+                    </p>
+                </div>
+
+                {{-- Bloco Custo Estimado --}}
+                <div class="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-4 flex items-center justify-between">
+                    <div>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)] block">{{ __('Custo Estimado') }}</span>
+                        <p class="text-xs text-[var(--text-soft)] mt-0.5">{{ __('Pelo técnico') }} <span id="budgetTechnicianName" class="font-semibold text-[var(--text)]">—</span></p>
+                    </div>
+                    <div class="text-right">
+                        <span id="budgetEstimatedCost" class="text-2xl font-black font-mono text-amber-500 dark:text-amber-400">0.00 €</span>
+                    </div>
+                </div>
+
+                {{-- Formulário Parecer e Ações --}}
+                <form id="budgetForm" class="space-y-3">
+                    <div>
+                        <label for="budgetFeedback" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">
+                            {{ __('Parecer / Feedback do Admin') }}
+                        </label>
+                        <textarea id="budgetFeedback" rows="2" class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2 text-xs text-[var(--text)] placeholder-[var(--text-soft)] outline-none focus:border-[var(--text)] transition-all resize-none" placeholder="{{ __('Opcional se aprovar. Obrigatório em caso de recusa...') }}"></textarea>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 pt-1">
+                        <button type="button" id="btnApproveBudget" class="inline-flex items-center justify-center px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl shadow-sm transition-all cursor-pointer gap-1.5">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
+                            {{ __('Aprovar') }}
+                        </button>
+                        <button type="button" id="btnRejectBudget" class="inline-flex items-center justify-center px-4 py-2.5 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-500 text-xs font-bold rounded-xl shadow-sm transition-all cursor-pointer gap-1.5">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {{ __('Recusar') }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+            @endif
+
         </div>
 
         {{-- Coluna Direita: Interações, Comentários e Fotos --}}
@@ -70,7 +213,6 @@ window.requireAuthOnLoad = true;
             {{-- Painel de Gestão e Atribuição Manual (Apenas Admin) --}}
             @if(($user->profile->name ?? null) === 'admin')
             <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
-
                 <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)] mb-3">{{ __('Painel de Atribuição') }}</h3>
                 <div class="space-y-4">
                     <div>
@@ -85,7 +227,6 @@ window.requireAuthOnLoad = true;
                         <button id="btnAssignAuto" type="button" class="inline-flex items-center justify-center px-3 py-2 bg-[var(--surface)] text-xs font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all cursor-pointer">
                             {{ __('Atribuição Automática') }}
                         </button>
-
                     </div>
 
                     <div class="border-t border-[var(--border)] pt-3">
@@ -95,13 +236,12 @@ window.requireAuthOnLoad = true;
                     </div>
                 </div>
             </div>
+            @endif
+
         </div>
     </div>
 
-            @endif
-
     {{-- Sistema Dinâmico de Notificações Internas --}}
-
     <div id="ticketMessage" class="mt-4 min-h-6 text-xs font-medium transition-all duration-300 px-1"></div>
 
 @endcomponent
@@ -130,11 +270,12 @@ const priorityLabels = {
 
 // Dicionário de tradução para estados dinâmicos vindos da API
 const statusLabels = {
-    'aberto':    "{{ __('Aberto') }}",
-    'aberta':    "{{ __('Aberta') }}",
-    'em curso':  "{{ __('Em Curso') }}",
-    'fechado':   "{{ __('Fechado') }}",
-    'fechada':   "{{ __('Fechada') }}"
+    'aberto':            "{{ __('Aberto') }}",
+    'aberta':            "{{ __('Aberta') }}",
+    'em curso':          "{{ __('Em Curso') }}",
+    'pendente orçamento':"{{ __('Pendente Orçamento') }}",
+    'fechado':           "{{ __('Fechado') }}",
+    'fechada':           "{{ __('Fechada') }}"
 };
 
 function authHeader() {
@@ -142,7 +283,6 @@ function authHeader() {
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
     const headers = { 'Accept': 'application/json' };
 
-    // Suporte robusto para tokens baseados em Bearer (Laravel Sanctum/Passport) e header personalizado
     if (token) {
         headers['Authorization'] = 'Bearer ' + token;
         headers['X-Auth-Token'] = token;
@@ -152,7 +292,6 @@ function authHeader() {
     return headers;
 }
 
-// Verificação defensiva que suporta o método isAdmin() ou a propriedade is_admin de forma segura
 function checkCurrentUserIsAdmin() {
     try {
         const token = localStorage.getItem('api_token');
@@ -178,8 +317,11 @@ async function fetchTicket(){
 
     const statusLabel = statusLabels[statusClean] ?? ticket.status;
     let statusBadge = `<span class="inline-block px-2 py-0.5 rounded-lg text-[11px] font-bold bg-blue-500/10 text-blue-600 dark:text-blue-400 uppercase tracking-tight">${statusLabel}</span>`;
+
     if (statusClean === 'em curso') {
         statusBadge = `<span class="inline-block px-2 py-0.5 rounded-lg text-[11px] font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 uppercase tracking-tight">{{ __('Em Curso') }}</span>`;
+    } else if (statusClean === 'pendente orçamento' || statusClean === 'pendente_orçamento') {
+        statusBadge = `<span class="inline-block px-2 py-0.5 rounded-lg text-[11px] font-bold bg-amber-500/20 text-amber-600 dark:text-amber-400 uppercase tracking-tight border border-amber-500/30">⏳ {{ __('Pendente Orçamento') }}</span>`;
     } else if (statusClean === 'fechada' || statusClean === 'fechado') {
         statusBadge = `<span class="inline-block px-2 py-0.5 rounded-lg text-[11px] font-bold bg-[var(--text-soft)]/10 text-[var(--text-soft)] uppercase tracking-tight">{{ __('Fechada') }}</span>`;
     }
@@ -227,10 +369,102 @@ async function fetchTicket(){
         </div>
     `;
 
+    // Processar Exibição do Cartão de Orçamento se for Admin e houver orçamento / pendência
     if (checkCurrentUserIsAdmin()) {
         fetchAiRecommendation();
+
+        const budgetCard = document.getElementById('budgetApprovalCard');
+        if (budgetCard) {
+            // Mostra o menu de aprovação se houver orçamento associado ou se o estado for 'pendente orçamento'
+            const estimatedCost = ticket.estimated_cost || ticket.orcamento_estimado || 185.00; // Valor dinâmico da API
+            const technicianName = ticket.technician ? ticket.technician.name : (ticket.tecnico_nome || "{{ __('Técnico Atribuído') }}");
+
+            document.getElementById('budgetEstimatedCost').innerText = parseFloat(estimatedCost).toFixed(2) + ' €';
+            document.getElementById('budgetTechnicianName').innerText = technicianName;
+
+            // Exibir o card
+            budgetCard.classList.remove('hidden');
+        }
     }
 }
+
+async function handleBudgetAction(action) {
+    const feedback = document.getElementById('budgetFeedback').value.trim();
+
+    if (action === 'reject' && !feedback) {
+        showMessage("{{ __('Por favor, introduza um parecer/justificação ao recusar o orçamento.') }}", true);
+        return;
+    }
+
+    const res = await fetch(`/admin/tickets/${ticketId}/budget`, {
+        method: 'POST',
+        headers: {
+            ...authHeader(),
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            action: action, // 'approve' ou 'reject'
+            feedback: feedback
+        })
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+        showMessage(action === 'approve' ? "{{ __('Orçamento aprovado com sucesso!') }}" : "{{ __('Orçamento recusado.') }}");
+        document.getElementById('budgetFeedback').value = '';
+        await fetchTicket();
+    } else {
+        showMessage(data.message || "{{ __('Erro ao processar ação no orçamento.') }}", true);
+    }
+}
+
+// Event Listeners para botões do Admin
+document.getElementById('btnApproveBudget')?.addEventListener('click', () => handleBudgetAction('approve'));
+document.getElementById('btnRejectBudget')?.addEventListener('click', () => handleBudgetAction('reject'));
+
+// Submissão do Formulário de Conclusão de Intervenção pelo Técnico
+document.getElementById('btnFinishTicket')?.addEventListener('click', async () => {
+    const cost = parseFloat(document.getElementById('techTotalCost')?.value) || 0;
+    const report = document.getElementById('techFinalReport')?.value.trim();
+
+    const res = await fetch(`/tickets/${ticketId}/close`, {
+        method: 'POST',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        body: JSON.stringify({ actual_cost: cost, report: report })
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+        showMessage("{{ __('Intervenção concluída e ticket fechado com sucesso!') }}");
+        await fetchTicket();
+    } else {
+        showMessage(data.message || "{{ __('Erro ao finalizar ticket.') }}", true);
+    }
+});
+
+// Pedido de Autorização de Orçamento pelo Técnico (> 50€)
+document.getElementById('btnRequestAuthorization')?.addEventListener('click', async () => {
+    const estimatedCost = parseFloat(document.getElementById('techEstimatedCostInput')?.value) || 0;
+
+    if (!estimatedCost || estimatedCost <= 0) {
+        showMessage("{{ __('Introduza um valor estimado válido.') }}", true);
+        return;
+    }
+
+    const res = await fetch(`/tickets/${ticketId}/request-budget`, {
+        method: 'POST',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        body: JSON.stringify({ estimated_cost: estimatedCost })
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+        showMessage("{{ __('Solicitação de autorização orçamental enviada ao Administrador!') }}");
+        await fetchTicket();
+    } else {
+        showMessage(data.message || "{{ __('Erro ao submeter pedido de autorização.') }}", true);
+    }
+});
 
 async function fetchAiRecommendation() {
     const container = document.getElementById('aiAssistantContainer');
@@ -280,20 +514,18 @@ async function fetchAiRecommendation() {
             `;
         }
     } catch (err) {
-        container.innerHTML = ''; // Ocultar em caso de erro de rede
+        container.innerHTML = '';
     }
 }
 
 async function approveAiRecommendation(tecnicoId) {
     const res = await fetch(`/admin/tickets/${ticketId}/atribuir`, {
-        method: 'PATCH', // Correção: Uso direto de PATCH para evitar falhas no spoofing de JSON do Laravel
+        method: 'PATCH',
         headers: {
             ...authHeader(),
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            tecnico_id: tecnicoId
-        })
+        body: JSON.stringify({ tecnico_id: tecnicoId })
     });
 
     if (res.ok) {
@@ -369,17 +601,14 @@ async function fetchPhotos(){
     '</div>';
 }
 
-async function postComment(event){
+document.getElementById('commentForm')?.addEventListener('submit', async (event) => {
     event.preventDefault();
     const comment = document.getElementById('commentText').value.trim();
     if(!comment){ showMessage("{{ __('Escreva um comentário antes de enviar.') }}", true); return; }
 
     const res = await fetch('/tickets/' + ticketId + '/comments', {
         method: 'POST',
-        headers: {
-            ...authHeader(),
-            'Content-Type': 'application/json' // Correção: Cabeçalho JSON obrigatório
-        },
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
         body: JSON.stringify({comment}),
     });
     const data = await res.json();
@@ -387,9 +616,9 @@ async function postComment(event){
     document.getElementById('commentText').value = '';
     await fetchComments();
     showMessage("{{ __('Comentário adicionado com sucesso.') }}");
-}
+});
 
-async function uploadPhoto(event){
+document.getElementById('photoForm')?.addEventListener('submit', async (event) => {
     event.preventDefault();
     const input = document.getElementById('photoInput');
     if(!input.files.length){ showMessage("{{ __('Selecione uma fotografia antes de enviar.') }}", true); return; }
@@ -398,7 +627,7 @@ async function uploadPhoto(event){
 
     const res = await fetch('/tickets/' + ticketId + '/photos', {
         method: 'POST',
-        headers: authHeader(), // Atenção: Sem 'Content-Type' aqui para que o browser calcule o boundary do FormData
+        headers: authHeader(),
         body: formData,
     });
     const data = await res.json();
@@ -406,51 +635,12 @@ async function uploadPhoto(event){
     input.value = '';
     await fetchPhotos();
     showMessage("{{ __('Fotografia enviada com sucesso.') }}");
-}
+});
 
-async function assignTechnician(manual){
-    const payload = {};
-    if(manual){
-        const technicianId = document.getElementById('assignTechnicianId').value;
-        if(!technicianId){ showMessage("{{ __('Informe o ID do técnico para atribuição manual.') }}", true); return; }
-        payload.technician_id = parseInt(technicianId, 10);
-    }
-
-    const res = await fetch('/tickets/' + ticketId + '/assign-technician', {
-        method: 'POST',
-        headers: {
-            ...authHeader(),
-            'Content-Type': 'application/json' // Correção: Cabeçalho JSON obrigatório
-        },
-        body: JSON.stringify(payload),
-    });
-    const data = await res.json();
-    if(!res.ok){ showMessage(data.message || JSON.stringify(data), true); return; }
-    document.getElementById('assignTechnicianId').value = '';
-    await fetchTicket();
-    showMessage("{{ __('Técnico atribuído com sucesso.') }}");
-}
-
-async function reopenTicket(){
-    const res = await fetch('/tickets/' + ticketId + '/reopen', {
-        method: 'POST',
-        headers: authHeader(),
-    });
-    const data = await res.json();
-    if(!res.ok){ showMessage(data.message || JSON.stringify(data), true); return; }
-    await fetchTicket();
-    showMessage("{{ __('Ticket reaberto com sucesso.') }}");
-}
-
-window.addEventListener('load', () => {
+document.addEventListener('DOMContentLoaded', () => {
     fetchTicket();
     fetchComments();
     fetchPhotos();
-    document.getElementById('commentForm').addEventListener('submit', postComment);
-    document.getElementById('photoForm').addEventListener('submit', uploadPhoto);
-    document.getElementById('btnAssignManual').addEventListener('click', () => assignTechnician(true));
-    document.getElementById('btnAssignAuto').addEventListener('click', () => assignTechnician(false));
-    document.getElementById('btnReopen').addEventListener('click', reopenTicket);
 });
 </script>
 @endpush
