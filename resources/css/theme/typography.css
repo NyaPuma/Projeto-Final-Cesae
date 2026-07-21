@@ -4,6 +4,7 @@
 |--------------------------------------------------------------------------
 |
 | Otimizado para suporte a Tipografia Fluida (Clamp) e Acessibilidade.
+| Escala calibrada para dashboard/aplicação (não marketing/landing).
 |
 */
 
@@ -12,16 +13,16 @@
   --font-sans: "Inter", "Instrument Sans", system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
 
-  /* Font Sizes (Base escalável) */
-  --text-xs: clamp(0.75rem, 0.70rem + 0.25vw, 0.8rem);
-  --text-sm: clamp(0.875rem, 0.82rem + 0.25vw, 0.95rem);
-  --text-md: 1rem;
-  --text-lg: clamp(1.125rem, 1.05rem + 0.4vw, 1.25rem);
-  --text-xl: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
-  --text-2xl: clamp(1.5rem, 1.35rem + 0.75vw, 2rem);
-  --text-3xl: clamp(1.875rem, 1.6rem + 1vw, 2.5rem);
-  --text-4xl: clamp(2.25rem, 1.9rem + 1.5vw, 3.5rem);
-  --text-5xl: clamp(3rem, 2.5rem + 2vw, 4.5rem);
+  /* Font Sizes — escala fluida completa, 1:1 com as classes Tailwind usadas na app */
+  --text-xs: clamp(0.8rem, 0.775rem + 0.125vw, 0.875rem);   /* labels, badges — nunca abaixo de 0.875rem no fim da escala */
+  --text-sm: clamp(0.875rem, 0.85rem + 0.125vw, 0.95rem);    /* texto secundário */
+  --text-md: clamp(1rem, 0.98rem + 0.1vw, 1.0625rem);        /* texto principal / body */
+  --text-lg: clamp(1.0625rem, 1.02rem + 0.2vw, 1.125rem);    /* texto principal maior */
+  --text-xl: clamp(1.125rem, 1.06rem + 0.3vw, 1.25rem);      /* h5 / subtítulos de secção */
+  --text-2xl: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);       /* h4 */
+  --text-3xl: clamp(1.5rem, 1.35rem + 0.75vw, 2rem);         /* h3 */
+  --text-4xl: clamp(1.875rem, 1.6rem + 1.1vw, 2.5rem);       /* h2 */
+  --text-5xl: clamp(2.2rem, 1.9rem + 1.3vw, 3rem);           /* h1 — dashboard, não hero de marketing */
 
   /* Font Weights */
   --font-light: 300;
@@ -33,6 +34,7 @@
 
   /* Leading & Tracking */
   --leading-tight: 1.2;
+  --leading-snug: 1.35;
   --leading-normal: 1.5;
   --leading-relaxed: 1.7;
   --tracking-tight: -0.02em;
@@ -50,9 +52,17 @@ html {
   color: var(--text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-smooth: always;
   text-rendering: optimizeLegibility;
-  /* Otimiza a leitura de parágrafos */
   text-wrap: pretty;
+  /* Padrão sem prefixo, a par do -webkit-text-size-adjust definido
+     pelo Tailwind Preflight — cobre browsers que já não precisam
+     do prefixo (Firefox, browsers mais recentes) */
+  text-size-adjust: 100%;
+  /* Remove o flash azul/cinza padrão ao tocar em elementos no
+     mobile (Safari/Chrome Android); browsers sem suporte ignoram
+     graciosamente esta propriedade */
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -66,40 +76,68 @@ body {
 h1, h2, h3, h4, h5, h6 {
   line-height: var(--leading-tight);
   color: var(--text);
-  /* Títulos com quebra equilibrada */
   text-wrap: balance;
 }
 
 h1 { font-size: var(--text-5xl); font-weight: var(--font-black); letter-spacing: var(--tracking-tight); }
-h2 { font-size: var(--text-4xl); font-weight: var(--font-bold); }
+h2 { font-size: var(--text-4xl); font-weight: var(--font-bold); letter-spacing: var(--tracking-tight); }
 h3 { font-size: var(--text-3xl); font-weight: var(--font-bold); }
 h4 { font-size: var(--text-2xl); font-weight: var(--font-semibold); }
 h5 { font-size: var(--text-xl); font-weight: var(--font-semibold); }
 h6 { font-size: var(--text-lg); font-weight: var(--font-semibold); }
 
+/* Espaçamento consistente título -> parágrafo seguinte */
+h1 + p, h2 + p, h3 + p, h4 + p, h5 + p, h6 + p {
+  margin-top: 0.5em;
+}
+
 p {
   color: var(--text-soft);
   line-height: var(--leading-relaxed);
-  max-width: 75ch; /* Limite de largura ideal para leitura */
+}
+
+/* Limite de largura só onde é conteúdo de leitura longa (prose), não em UI chrome geral */
+.prose p {
+  max-width: 75ch;
 }
 
 /* ==========================================================
-   UTILITIES
+   UTILITIES — cobre TODAS as classes de tamanho usadas na app
+   (mapeamento 1:1 com Tailwind text-* para que o clamp() prevaleça)
 ========================================================== */
-.text-xs { font-size: var(--text-xs); }
-.text-sm { font-size: var(--text-sm); }
-.text-md { font-size: var(--text-md); }
-.text-lg { font-size: var(--text-lg); }
+.text-xs  { font-size: var(--text-xs); }
+.text-sm  { font-size: var(--text-sm); }
+.text-md  { font-size: var(--text-md); }
+.text-base{ font-size: var(--text-md); }
+.text-lg  { font-size: var(--text-lg); }
+.text-xl  { font-size: var(--text-xl); }
+.text-2xl { font-size: var(--text-2xl); }
+.text-3xl { font-size: var(--text-3xl); }
+.text-4xl { font-size: var(--text-4xl); }
+.text-5xl { font-size: var(--text-5xl); }
 
 .font-mono {
   font-family: var(--font-mono);
-  font-feature-settings: "tnum"; /* Números tabulares para tabelas/KPIs */
+  font-feature-settings: "tnum";
 }
 
-/* Exemplo de uso de composições para evitar repetição */
+/* Labels uppercase (usado nos kickers "Dashboard Analítico", "Estado", etc.) */
 .label-uppercase {
   text-transform: uppercase;
   letter-spacing: var(--tracking-wide);
   font-weight: var(--font-semibold);
   font-size: var(--text-xs);
+}
+
+/* ==========================================================
+   ACESSIBILIDADE — WCAG 2.2
+========================================================== */
+/* Garante contraste e tamanho mínimo legível mesmo se algo escapar à escala */
+small, .text-tiny {
+  font-size: max(var(--text-xs), 0.8rem);
+}
+
+/* Respeita preferência do utilizador para texto maior / menos animação */
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; }
 }

@@ -1,107 +1,15 @@
 /* ==========================================================
    L5-SWAGGER DESIGN SYSTEM
    Variáveis Globais CSS
-   - Sistema de cores completo (claro/escuro)
-   - Tokens de design (animações, espaçamento, tipografia)
-   - Variáveis semânticas e de componentes
+   - Tokens EXCLUSIVOS do Swagger (métodos HTTP, status, módulos)
+   - Cores base (--bg, --surface, --text, --border, --shadow-*,
+     --primary, --success, --warning, --danger, --info) e tema
+     escuro NÃO são redefinidos aqui: já existem no design
+     system principal da app (app.css / typography.css) e são
+     herdados. Redefini-los aqui duplicava tokens com valores
+     ligeiramente diferentes e causava inconsistência entre
+     a app principal e esta página.
 ========================================================== */
-
-/* ==========================================================
-   🎨 SISTEMA DE CORES BASE
-   Tema claro por padrão
-========================================================== */
-:root {
-    /* --- FUNDOS --- */
-    --bg: #ffffff;
-    --surface: #ffffff;
-    --surface-2: #f8fafc;
-    --surface-3: #f1f5f9;
-    --topbar: rgba(255, 255, 255, 0.8);
-
-    /* --- TEXTOS --- */
-    --text: #0f172a;
-    --text-soft: #475569;
-    --text-muted: #94a3b8;
-    --topbar-text: #0f172a;
-
-    /* --- BORDAS --- */
-    --border: #e2e8f0;
-    --border-strong: #cbd5e1;
-
-    /* --- SOMBRAS --- */
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-}
-
-/* ==========================================================
-   🌙 TEMA ESCURO
-   Aplicado via classe .dark no <html>
-========================================================== */
-.dark {
-    --bg: #090d16;
-    --surface: #0f172a;
-    --surface-2: #1e293b;
-    --surface-3: #334155;
-    --text: #f8fafc;
-    --text-soft: #94a3b8;
-    --text-muted: #64748b;
-    --topbar: rgba(15, 23, 42, 0.8);
-    --topbar-text: #f8fafc;
-    --border: #1e293b;
-    --border-strong: #334155;
-    --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-}
-
-/* ==========================================================
-   🖥️ PREFERÊNCIA DO SISTEMA
-   Respeita a preferência do utilizador
-========================================================== */
-@media (prefers-color-scheme: dark) {
-    :root:not(.light) {
-        --bg: #090d16;
-        --surface: #0f172a;
-        --surface-2: #1e293b;
-        --surface-3: #334155;
-        --text: #f8fafc;
-        --text-soft: #94a3b8;
-        --text-muted: #64748b;
-        --topbar: rgba(15, 23, 42, 0.8);
-        --topbar-text: #f8fafc;
-        --border: #1e293b;
-        --border-strong: #334155;
-        --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
-        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
-        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-    }
-}
-
-/* ==========================================================
-   🎯 CORES SEMÂNTICAS
-   Cores com significado no UI
-========================================================== */
-:root {
-    /* Primária (laranja do painel L5) */
-    --primary: #f97316;
-    --primary-hover: #ea580c;
-    --primary-active: #c2410c;
-    --primary-rgb: 249, 115, 22;
-
-    /* Estados */
-    --success: #22c55e;
-    --success-hover: #16a34a;
-    --warning: #f97316;
-    --warning-hover: #ea580c;
-    --danger: #ef4444;
-    --danger-hover: #dc2626;
-    --info: #3b82f6;
-    --info-hover: #2563eb;
-}
 
 /* ==========================================================
    🏷️ CORES DE STATUS HTTP
@@ -190,37 +98,10 @@
 
 /* ==========================================================
    📄 TIPOGRAFIA
-   Sistema tipográfico
+   Herdada do typography.css principal (--font-sans, --text-xs
+   a --text-5xl em clamp(), --font-normal a --font-black,
+   --leading-*). Não redefinir aqui — ver typography.css.
 ========================================================== */
-:root {
-    /* Famílias */
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
-    --font-mono: "JetBrains Mono", "Fira Code", Consolas, monospace;
-
-    /* Tamanhos */
-    --text-xs: 10px;
-    --text-sm: 12px;
-    --text-base: 14px;
-    --text-lg: 16px;
-    --text-xl: 18px;
-    --text-2xl: 20px;
-    --text-3xl: 22px;
-    --text-4xl: 24px;
-    --text-5xl: 28px;
-    --text-6xl: 34px;
-
-    /* Pesos */
-    --font-normal: 400;
-    --font-medium: 500;
-    --font-bold: 700;
-    --font-black: 800;
-
-    /* Altura de linha */
-    --leading-tight: 1.4;
-    --leading-normal: 1.6;
-    --leading-relaxed: 1.7;
-    --leading-loose: 1.8;
-}
 
 /* ==========================================================
    💡 GRADIENTES

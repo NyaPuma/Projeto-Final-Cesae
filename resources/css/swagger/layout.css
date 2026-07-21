@@ -5,13 +5,25 @@
    - Aplicação limpa e específica
 ========================================================== */
 
-/* Container principal - permite altura dinâmica */
+/* Container principal - cresce com o conteúdo, não com a viewport */
 #swagger-ui {
   height: auto;
-  min-height: 100%;
   max-height: none;
   display: flex;
   flex-direction: column;
+}
+
+/* Reafirma box-sizing dentro do escopo do Swagger UI.
+   O swagger-ui.css oficial já define isto, mas se o Tailwind
+   Preflight carregar depois (reset global de box-sizing/margin/
+   border), esta regra garante que os tamanhos fixos definidos
+   nos outros ficheiros (pills, ícones, inputs, botões) continuam
+   a incluir padding e border em vez de somarem por cima. */
+.swagger-ui,
+.swagger-ui *,
+.swagger-ui *::before,
+.swagger-ui *::after {
+  box-sizing: border-box;
 }
 
 /* Reset suave do corpo para integrar com o tema */
@@ -21,16 +33,19 @@ body {
   color: var(--text, #3b4151); /* Fallback para --text */
   margin: 0;
   padding: 0;
-  min-height: 100vh;
 }
 
-/* Ajustes específicos do Swagger UI */
+/* Ajustes específicos do Swagger UI — SEM min-height:100%.
+   min-height:100% aqui herdava (indiretamente) a altura da
+   viewport do body, e como .swagger-container tinha flex:1,
+   esticava-se para preencher esse espaço todo — daí a caixa
+   vazia gigante à volta do bloco .schemes (servers + Authorize)
+   e o facto de mudar de tamanho ao dar zoom (porque vh recalcula). */
 .swagger-ui {
   font-family: inherit;
   background-color: transparent;
   color: inherit;
   height: auto;
-  min-height: 100%;
 }
 
 /* Remove a barra superior legada */
@@ -38,9 +53,8 @@ body {
   display: none;
 }
 
-/* Garante que o conteúdo principal ocupa o espaço disponível */
+/* O conteúdo cresce naturalmente com o que tem lá dentro */
 .swagger-ui .swagger-container {
-  flex: 1;
   display: flex;
   flex-direction: column;
 }
