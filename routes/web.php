@@ -79,9 +79,15 @@ Route::middleware(['custom.auth'])->group(function () {
         Route::get('/ui/equipments',   [UiController::class, 'equipments']);
         Route::get('/equipments',      [UiController::class, 'getEquipments']);
 
-        // 🚪 Salas - consulta disponível para todos os utilizadores autenticados
+        // 🚪 Salas - Vistas da Interface (UI)
         Route::get('/ui/rooms',     [UiController::class, 'rooms']);
         Route::get('/ui/rooms/{id}', [UiController::class, 'roomDetail']);
+
+        // 📡 API de Salas - Endpoints chamados pelo JavaScript (fetch)
+        Route::get('/api/rooms',        [RoomController::class, 'indexRoom']);
+        Route::post('/api/rooms',       [RoomController::class, 'storeRoom']);
+        Route::put('/api/rooms/{id}',   [RoomController::class, 'updateRoom']);
+        Route::patch('/api/rooms/{id}', [RoomController::class, 'updateRoom']);
 
         // Consultas gerais e interações nos tickets (Endpoints de dados / JSON)
         Route::get('/tickets/search',             [TicketController::class, 'search']);
@@ -122,13 +128,11 @@ Route::middleware(['custom.auth'])->group(function () {
             Route::get('/ui/users',  [UiController::class, 'users']);
             Route::get('/ui/audits', [UiController::class, 'audits']);
 
-
             // Ações operacionais
             Route::get('/technician/tickets/open',         [TicketController::class, 'openTickets']);
             Route::post('/tickets/{id}/assign-technician', [TicketController::class, 'assignTechnician']);
 
             // (analytics fica apenas para admin)
-
         });
 
         /*
@@ -182,7 +186,7 @@ Route::middleware(['custom.auth'])->group(function () {
             Route::patch('/admin/equipment/{id}',  [AdminController::class, 'updateEquipment']);
             Route::delete('/admin/equipment/{id}', [AdminController::class, 'destroyEquipment']);
 
-            // Consulta e criação de salas
+            // Consulta e criação de salas (UI Admin)
             Route::get('/ui/rooms/create', [UiController::class, 'roomCreate']);
             Route::get('/ui/rooms/{id}/edit', [UiController::class, 'roomEdit']);
 
@@ -190,7 +194,7 @@ Route::middleware(['custom.auth'])->group(function () {
             Route::post('/admin/preventive', [AdminController::class, 'storePreventive']);
             Route::patch('/admin/tickets/{id}/approve-budget', [AdminController::class, 'approveBudget']);
 
-            // Gestão de Infraestrutura (Salas / Pavilhões)
+            // Gestão de Infraestrutura (Salas / Pavilhões) - Endpoints Admin legados
             Route::get('/admin/rooms',                  [RoomController::class, 'indexRoom']);
             Route::post('/admin/rooms',                 [RoomController::class, 'storeRoom']);
             Route::patch('/admin/rooms/{id}',           [RoomController::class, 'updateRoom']);
