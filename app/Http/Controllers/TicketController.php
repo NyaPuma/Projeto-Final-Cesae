@@ -148,7 +148,7 @@ class TicketController extends Controller
     public function show(Request $request, int $id)
     {
         // Procura o ticket trazendo os relacionamentos exatos do teu projeto
-        $ticket = Ticket::with(['equipment.category', 'room', 'user'])->findOrFail($id);
+        $ticket = Ticket::with(['equipment.category', 'room', 'user', 'technician', 'status'])->findOrFail($id);
 
         // Se o pedido vier do teu frontend em JS (Accept: application/json ou AJAX)
         if ($request->wantsJson() || $request->ajax()) {
@@ -618,5 +618,160 @@ class TicketController extends Controller
         $user = $this->authenticatedUser($request);
         $events = Ticket::getScheduledEvents();
         return response()->json($events);
+    }
+
+    /**
+     * Submete o custo estimado pelo técnico e aciona o fluxo orçamental.
+     * Se o custo exceder o threshold, o ticket fica "Pendente Orçamento".
+     * Rota: POST /tickets/{id}/budget
+     */
+    public function submitEstimatedBudget(Request $request, int $id)
+    {
+        $user = $this->authenticatedUser($request);
+        $this->requireRole($user, [User::ROLE_TECHNICIAN, User::ROLE_ADMIN]);
+
+        $request->validate([
+            'estimatedBudget' => 'required|numeric|min:0.01',
+            'budget_details'  => 'nullable|array',
+            'budget_details.*.description' => 'required_with:budget_details|string|max:255',
+            'budget_details.*.quantity'    => 'required_with:budget_details|numeric|min:1',
+            'budget_details.*.unit_price'  => 'required_with:budget_details|numeric|min:0',
+        ]);
+
+        $ticket = Ticket::findOrFail($id);
+        $estimatedBudget = $request->estimatedBudget;
+        $threshold = 50.00; // Threshold financeiro (pode vir de configuração)
+
+        // Guarda os detalhes do orçamento se fornecidos
+        if ($request->has('budget_details')) {
+            $ticket->budget_details = $request->budget_details;
+        }
+
+        // 🐛 FIX: Marcar budget_requested=true em AMBOS os casos para
+        // que o frontend saiba que o orçamento já foi processado.
+        $ticket->budget_requested = true;
+        $ticket->budget_amount = $estimatedBudget;
+
+        if ($estimatedBudget > $threshold) {
+            // Acima do threshold → solicita autorização
+            $ticket->budget_status = Ticket::BUDGET_PENDING;
+            $ticket->budget_requested_at = now();
+
+            $pendingStatusId = Ticket::getStatusIdByName(Ticket::STATUS_PENDING_BUDGET);
+            if ($pendingStatusId) {
+                $ticket->status_id = $pendingStatusId;
+            }
+
+            $ticket->save();
+
+            return response()->json([
+                'message' => __('Custo estimado excede o limiar. Ticket pendente de aprovação orçamental.'),
+                'ticket' => $ticket->load(['equipment', 'room', 'technician', 'status']),
+            ]);
+        }
+
+        // Abaixo do threshold → autonomia do técnico (mantém estado Em Curso)
+        $ticket->budget_status = null; // auto-aprovado (sem intervenção do admin)
+        $inProgressId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
+        if ($inProgressId) {
+            $ticket->status_id = $inProgressId;
+        }
+        $ticket->save();
+
+        return response()->json([
+            'message' => __('Custo estimado dentro da autonomia. Pode prosseguir com a intervenção.'),
+            'ticket' => $ticket->load(['equipment', 'room', 'technician', 'status']),
+        ]);
+    }
+
+    /**
+     * Técnico solicita autorização orçamental com orçamento detalhado.
+     * Rota: PUT /technician/tickets/{id}/request-budget
+     */
+    public function requestBudget(Request $request, int $id)
+    {
+        $user = $this->authenticatedUser($request);
+        $this->requireRole($user, [User::ROLE_TECHNICIAN, User::ROLE_ADMIN]);
+
+        $request->validate([
+            'budget_amount'          => 'required|numeric|min:0.01',
+            'budget_details'         => 'nullable|array',
+            'budget_details.*.description' => 'required_with:budget_details|string|max:255',
+            'budget_details.*.quantity'    => 'required_with:budget_details|numeric|min:1',
+            'budget_details.*.unit_price'  => 'required_with:budget_details|numeric|min:0',
+        ]);
+
+        $ticket = Ticket::findOrFail($id);
+        $threshold = 50.00;
+
+        $estimatedBudget = $request->budget_amount;
+
+        // Guarda detalhes do orçamento
+        if ($request->has('budget_details')) {
+            $ticket->budget_details = $request->budget_details;
+        }
+
+        if ($estimatedBudget > $threshold) {
+            $ticket->budget_requested = true;
+            $ticket->budget_status = Ticket::BUDGET_PENDING;
+            $ticket->budget_amount = $estimatedBudget;
+            $ticket->budget_requested_at = now();
+
+            $pendingStatusId = Ticket::getStatusIdByName(Ticket::STATUS_PENDING_BUDGET);
+            if ($pendingStatusId) {
+                $ticket->status_id = $pendingStatusId;
+            }
+
+            $ticket->save();
+
+            return response()->json([
+                'message' => __('Pedido de orçamento submetido com detalhes. Aguarde aprovação.'),
+                'ticket' => $ticket->load(['equipment', 'room', 'technician', 'status']),
+            ]);
+        }
+
+        $inProgressId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
+        if ($inProgressId) {
+            $ticket->status_id = $inProgressId;
+        }
+        $ticket->save();
+
+        return response()->json([
+            'message' => __('Custo dentro do limiar. Intervenção autorizada automaticamente.'),
+            'ticket' => $ticket->load(['equipment', 'room', 'technician', 'status']),
+        ]);
+    }
+
+    /**
+     * Finaliza o ticket com custo final e relatório técnico.
+     * Rota: POST /tickets/{id}/close
+     */
+    public function closeTicketFinal(Request $request, int $id)
+    {
+        $user = $this->authenticatedUser($request);
+        $this->requireRole($user, [User::ROLE_TECHNICIAN, User::ROLE_ADMIN]);
+
+        $request->validate([
+            'actual_cost' => 'required|numeric|min:0',
+            'report'      => 'nullable|string|max:5000',
+        ]);
+
+        $ticket = Ticket::findOrFail($id);
+
+        $closedStatusId = Ticket::getStatusIdByName(Ticket::STATUS_CLOSED);
+        if (!$closedStatusId) {
+            return response()->json(['message' => __('Estado "fechada" não encontrado.')], 500);
+        }
+
+        $ticket->status_id = $closedStatusId;
+        $ticket->cost = $request->actual_cost;
+        $ticket->technical_report = $request->report ?? $ticket->technical_report;
+        $ticket->closed_at = now();
+        $ticket->save();
+
+        return response()->json([
+            'message' => __('Intervenção concluída e ticket fechado com sucesso.'),
+            'ticket' => $ticket->load(['equipment', 'room', 'technician', 'status']),
+        ]);
     }
 }
