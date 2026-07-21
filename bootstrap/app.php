@@ -24,8 +24,9 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
         
         // Adicionar middleware global para proteger contra CSRF em formulários web
-        $middleware->validateCsrfTokens([
-            'photo' => 'POST,PATCH,PUT,DELETE',
+        $middleware->validateCsrfTokens(except: [
+            'login',
+            'register',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

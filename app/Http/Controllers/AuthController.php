@@ -165,7 +165,6 @@ class AuthController extends Controller
         // O logout limpa token persistido e cookie para fechar a sessão em todos os canais.
         $user = $this->authenticatedUser($request);
         $user->api_token = null;
-        $user->save();
         $user->setRememberToken(null);
         $user->save();
 

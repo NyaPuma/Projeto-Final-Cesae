@@ -333,9 +333,19 @@ class TicketController extends Controller
             ->with('success', 'Técnico alocado com sucesso via Assistente IA!');
     }
 
-    public function calendarView()
+    public function calendarView(Request $request)
     {
-        // Exemplo de retorno da tua vista (ajusta o nome da vista para o teu caso real)
-        return view('/calendar');
+        $user = $this->authenticatedUser($request);
+        return view('calendar', ['user' => $user]);
+    }
+
+    /**
+     * Retorna os eventos do calendário (tickets programados com scheduled_at) em formato JSON.
+     */
+    public function calendarEvents(Request $request)
+    {
+        $user = $this->authenticatedUser($request);
+        $events = Ticket::getScheduledEvents();
+        return response()->json($events);
     }
 }

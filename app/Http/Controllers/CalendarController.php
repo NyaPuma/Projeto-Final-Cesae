@@ -11,8 +11,8 @@ class CalendarController extends Controller
     // Apresenta a vista do calendário com os tickets correspondentes.
     public function index(Request $request)
     {
-        // Recuperar o utilizador autenticado e o seu perfil
-        $user = Auth::user();
+        // Recuperar o utilizador autenticado através do resolver comum (token/cookie/sessão)
+        $user = $this->authenticatedUser($request);
 
         // Query base para os tickets
         $query = Ticket::with(['equipment', 'equipment.category']);
@@ -36,6 +36,6 @@ class CalendarController extends Controller
             ];
         });
 
-        return view('tickets.calendar', compact('events'));
+        return view('calendar', compact('events', 'user'));
     }
 }
