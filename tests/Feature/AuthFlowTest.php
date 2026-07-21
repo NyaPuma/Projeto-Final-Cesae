@@ -18,15 +18,25 @@ class AuthFlowTest extends TestCase
         parent::setUp();
 
         UserProfile::create(['name' => User::ROLE_USER]);
+        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
+        UserProfile::create(['name' => User::ROLE_ADMIN]);
     }
 
     public function test_register_rejects_invalid_payload(): void
     {
-        $response = $this->withSession([])->postJson('/api/register', [
-            'name' => '',
-            'email' => 'invalid',
-            'password' => 'short',
+        $adminProfile = UserProfile::where('name', User::ROLE_ADMIN)->firstOrFail();
+
+        $admin = User::factory()->create([
+            'profile_id' => $adminProfile->id,
+            'api_token' => \Illuminate\Support\Str::random(60),
         ]);
+
+        $response = $this->withHeader('X-Auth-Token', $admin->api_token)
+            ->postJson('/admin/users/register', [
+                'name' => '',
+                'email' => 'invalid',
+                'password' => 'short',
+            ]);
 
         $response->assertStatus(422);
     }
@@ -47,7 +57,7 @@ class AuthFlowTest extends TestCase
         ]);
 
         $response->assertStatus(401);
-        $response->assertJson(['message' => 'Credenciais inválidas']);
+        $response->assertJson(['message' => 'Invalid credentials.']);
     }
 
     public function test_login_does_not_require_csrf_token(): void
@@ -85,6 +95,6 @@ class AuthFlowTest extends TestCase
             ]);
 
         $response->assertStatus(403);
-        $response->assertJson(['message' => 'Password atual incorreta']);
+        $response->assertJson(['message' => 'Current password is incorrect']);
     }
 }

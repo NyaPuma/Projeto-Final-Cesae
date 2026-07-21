@@ -16,13 +16,6 @@ class CustomAuthMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $token = $request->header('X-Auth-Token')
-            ?: $request->bearerToken()
-            ?: $request->cookie('api_token')
-            ?: $request->session()->get('api_token');
-
-        $hasCookie = $request->cookies->has('api_token');
-
         // Em alguns contextos (ex: testes sem session store), request()->session() pode lançar.
         $sessionToken = null;
         try {
@@ -31,6 +24,12 @@ class CustomAuthMiddleware
             // ignorar
         }
 
+        $token = $request->header('X-Auth-Token')
+            ?: $request->bearerToken()
+            ?: $request->cookie('api_token')
+            ?: $sessionToken;
+
+        $hasCookie = $request->cookies->has('api_token');
         $hasSessionToken = is_string($sessionToken) && $sessionToken !== '';
 
         if (!$hasCookie && !$hasSessionToken) {

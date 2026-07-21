@@ -43,9 +43,9 @@ class TicketSearchTest extends TestCase
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
             ->getJson('/tickets/search?q=compressor&priority=' . Ticket::PRIORITY_HIGH . '&date_from=' . now()->subDays(7)->toDateString());
 
-        // TicketController::search() não existe neste estado do projeto (falha: undefined method),
-        // logo a aplicação retorna 500.
-        $response->assertStatus(500);
+        // CORRIGIDO: O método search() foi implementado - retorna 200 com resultados
+        $response->assertOk();
+        $response->assertJsonStructure(['tickets']);
     }
 
     public function test_ticket_search_returns_empty_results_when_no_match(): void
@@ -60,7 +60,10 @@ class TicketSearchTest extends TestCase
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
             ->getJson('/tickets/search?q=this-should-not-match-anything');
 
-        $response->assertStatus(500);
+        // CORRIGIDO: O método search() foi implementado - retorna 200 com lista vazia
+        $response->assertOk();
+        $response->assertJsonStructure(['tickets']);
+        $this->assertCount(0, $response->json('tickets.data'));
     }
 
     public function test_ticket_search_rejects_invalid_date_range(): void
@@ -75,7 +78,9 @@ class TicketSearchTest extends TestCase
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
             ->getJson('/tickets/search?date_from=' . now()->toDateString() . '&date_to=' . now()->subDays(1)->toDateString());
 
-        $response->assertStatus(500);
+        // CORRIGIDO: O método search() agora valida o intervalo de datas e retorna 422
+        $response->assertStatus(422);
+        $response->assertJson(['message' => 'A data de início não pode ser posterior à data de fim.']);
     }
 
     public function test_ticket_search_validates_priority_enum(): void
@@ -90,7 +95,9 @@ class TicketSearchTest extends TestCase
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
             ->getJson('/tickets/search?priority=invalid-priority');
 
-        $response->assertStatus(500);
+        // CORRIGIDO: O método search() agora valida a prioridade e retorna 422
+        $response->assertStatus(422);
+        $response->assertJson(['message' => 'Prioridade inválida. Valores válidos: baixa, média, alta.']);
     }
 
 }
