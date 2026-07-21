@@ -674,7 +674,8 @@
                                 n.type?.includes('budget_request') ? '💰' :
                                 n.type?.includes('auto_approved') ? '🟢' :
                                 n.type?.includes('closed') ? '🔧' :
-                                n.type?.includes('budget_submitted') ? '📋' : '📌';
+                                n.type?.includes('budget_submitted') ? '📋' :
+                                n.type?.includes('priority_override') ? '⚠️' : '📌';
                     return `
                         <div class="flex items-start gap-3 px-3 py-2.5 rounded-xl hover:bg-[var(--surface-2)] transition-all ${isUnread ? 'bg-primary/5 border-l-2 border-primary' : ''} ${n.link ? 'cursor-pointer' : ''}" onclick="${n.link ? `window.location='${n.link}'; markNotifRead(${n.id})` : ''}">
                             <span class="text-base flex-shrink-0 mt-0.5">${icon}</span>

@@ -426,6 +426,9 @@ class TicketController extends Controller
 
     /**
      * Inicia a reparação de um ticket (Técnico assume o ticket como "Em Curso").
+     * 
+     * Se existirem tickets de prioridade mais alta pendentes, o sistema avisa o técnico.
+     * Se o técnico forçar (force=true), o admin é notificado da decisão.
      */
     public function startTicket(Request $request, int $id)
     {
@@ -441,6 +444,34 @@ class TicketController extends Controller
             return response()->json(['message' => 'Apenas tickets em estado "Aberto" podem ser iniciados.'], 422);
         }
 
+        // 🔔 VERIFICAÇÃO DE URGÊNCIA: Existem tickets de prioridade mais alta pendentes?
+        $priorityOrder = ['alta' => 3, 'média' => 2, 'baixa' => 1];
+        $currentPriority = $priorityOrder[$ticket->priority] ?? 0;
+        $force = $request->boolean('force', false);
+
+        // Procurar tickets abertos com prioridade superior à atual
+        $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $higherPriorityTickets = Ticket::where('status_id', $openStatusId)
+            ->where('id', '!=', $ticket->id)
+            ->where(function ($q) use ($currentPriority, $priorityOrder) {
+                foreach ($priorityOrder as $pName => $pVal) {
+                    if ($pVal > $currentPriority) {
+                        $q->orWhere('priority', $pName);
+                    }
+                }
+            })
+->count();
+
+        if ($higherPriorityTickets > 0 && !$force) {
+            return response()->json([
+                'warning' => true,
+                'message' => "⚠️ Existem {$higherPriorityTickets} ticket(s) de prioridade mais alta por atender. Recomenda-se resolver os mais urgentes primeiro.",
+                'urgent_tickets_count' => $higherPriorityTickets,
+                'current_priority' => $ticket->priority,
+                'can_force' => true,
+            ], 409); // 409 Conflict - indica que há conflito de prioridades
+        }
+
         $inProgressStatusId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
 
         $ticket->update([
@@ -448,6 +479,27 @@ class TicketController extends Controller
             'status_id'      => $inProgressStatusId,
             'in_progress_at' => now(),
         ]);
+
+        // 🔔 Se o técnico forçou o início mesmo havendo tickets mais urgentes, notificar o admin
+        if ($force && $higherPriorityTickets > 0) {
+            try {
+                $admins = User::whereHas('profile', function ($q) {
+                    $q->where('name', User::ROLE_ADMIN);
+                })->get();
+                
+                foreach ($admins as $admin) {
+                    Notification::create([
+                        'user_id' => $admin->id,
+                        'title' => "⚠️ Ticket Não Prioritário Iniciado - #{$ticket->id}",
+                        'message' => "O técnico {$user->name} iniciou o ticket #{$ticket->id} ({$ticket->title}) com prioridade '{$ticket->priority}', ignorando {$higherPriorityTickets} ticket(s) mais urgente(s) pendentes.",
+                        'type' => 'priority_override',
+                        'link' => "/ui/tickets/{$ticket->id}",
+                    ]);
+                }
+            } catch (\Exception $e) {
+                // Silencia falhas de notificação
+            }
+        }
 
         try {
             event(new \App\Events\TicketStatusUpdatedBroadcast($ticket, $oldStatus, Ticket::STATUS_IN_PROGRESS));
@@ -458,7 +510,10 @@ class TicketController extends Controller
             // Silencia falhas de envio
         }
 
-        return response()->json(['ticket' => $ticket]);
+        return response()->json([
+            'ticket' => $ticket,
+            'overridden' => $force && $currentPriority < 3,
+        ]);
     }
 
     /**
@@ -682,8 +737,11 @@ class TicketController extends Controller
             'estimatedBudget' => 'required|numeric|min:0.01',
             'budget_details'  => 'nullable|array',
             'budget_details.*.description' => 'required_with:budget_details|string|max:255',
-            'budget_details.*.quantity'    => 'required_with:budget_details|numeric|min:1',
-            'budget_details.*.unit_price'  => 'required_with:budget_details|numeric|min:0',
+            'budget_details.*.type'        => 'nullable|string|in:material,labor',
+            'budget_details.*.quantity'    => 'nullable|numeric|min:0',
+            'budget_details.*.unit_price'  => 'nullable|numeric|min:0',
+            'budget_details.*.hours'       => 'nullable|numeric|min:0',
+            'budget_details.*.hourly_rate' => 'nullable|numeric|min:0',
         ]);
 
         $ticket = Ticket::findOrFail($id);
@@ -755,8 +813,11 @@ class TicketController extends Controller
             'budget_amount'          => 'required|numeric|min:0.01',
             'budget_details'         => 'nullable|array',
             'budget_details.*.description' => 'required_with:budget_details|string|max:255',
-            'budget_details.*.quantity'    => 'required_with:budget_details|numeric|min:1',
-            'budget_details.*.unit_price'  => 'required_with:budget_details|numeric|min:0',
+            'budget_details.*.type'        => 'nullable|string|in:material,labor',
+            'budget_details.*.quantity'    => 'nullable|numeric|min:0',
+            'budget_details.*.unit_price'  => 'nullable|numeric|min:0',
+            'budget_details.*.hours'       => 'nullable|numeric|min:0',
+            'budget_details.*.hourly_rate' => 'nullable|numeric|min:0',
         ]);
 
         $ticket = Ticket::findOrFail($id);

@@ -294,6 +294,39 @@ window.requireAuthOnLoad = true;
     {{-- Sistema Dinâmico de Notificações --}}
     <div id="ticketMessage" class="mt-4 min-h-6 text-xs font-medium transition-all duration-300 px-1"></div>
 
+    {{-- ⚠️ Modal de Aviso de Prioridade (Ticket Urgente não Atendido) --}}
+    <div id="priorityWarningModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-300">
+        <div class="bg-[var(--surface)] border border-[var(--border)] rounded-2xl shadow-2xl p-6 max-w-md w-full mx-4 animate-[fadeIn_0.2s_ease-out] space-y-4">
+            <div class="flex items-start gap-3">
+                <div class="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0">
+                    <span class="text-xl">⚠️</span>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-sm font-bold text-[var(--text)]">{{ __('Atenção: Tickets Urgentes Pendentes') }}</h3>
+                    <p id="priorityWarningText" class="text-xs text-[var(--text-soft)] mt-1">
+                        {{ __('Existem tickets de prioridade mais alta por atender. Recomenda-se resolvê-los primeiro.') }}
+                    </p>
+                    <div id="priorityWarningDetails" class="mt-2 p-3 rounded-xl bg-amber-500/5 border border-amber-500/20 text-xs space-y-1 hidden">
+                        <p class="font-semibold text-amber-600 dark:text-amber-400">{{ __('Detalhes:') }}</p>
+                        <p id="priorityWarningCount" class="text-[var(--text-soft)]"></p>
+                        <p id="priorityWarningCurrent" class="text-[var(--text-soft)]"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex gap-2 pt-2">
+                <button id="btnViewUrgentTickets" type="button" class="flex-1 inline-flex items-center justify-center px-4 py-2.5 bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold rounded-xl shadow-sm transition-all cursor-pointer">
+                    🔥 {{ __('Ver Tickets Urgentes') }}
+                </button>
+                <button id="btnForceStartTicket" type="button" class="flex-1 inline-flex items-center justify-center px-4 py-2.5 bg-[var(--border)] hover:bg-rose-500/10 hover:text-rose-500 text-[var(--text)] text-xs font-bold rounded-xl transition-all cursor-pointer border border-transparent hover:border-rose-500/20">
+                    {{ __('Iniciar Mesmo Assim') }}
+                </button>
+                <button id="btnCancelPriority" type="button" class="inline-flex items-center justify-center px-3 py-2.5 bg-[var(--surface-2)] text-[var(--text-soft)] text-xs font-semibold rounded-xl hover:bg-[var(--border)] transition-all cursor-pointer">
+                    ✕
+                </button>
+            </div>
+        </div>
+    </div>
+
 @endcomponent
 @endsection
 
@@ -623,10 +656,24 @@ let budgetItemCounter = 0;
 
 function recalcBudgetTotal() {
     let total = 0;
+    let materialTotal = 0;
+    let laborTotal = 0;
     document.querySelectorAll('.budget-item').forEach(item => {
+        const type = item.querySelector('.item-type')?.value || 'material';
         const qty = parseFloat(item.querySelector('.item-qty')?.value) || 0;
         const price = parseFloat(item.querySelector('.item-price')?.value) || 0;
-        const subtotal = qty * price;
+        let subtotal = 0;
+        
+        if (type === 'labor') {
+            // Mão de obra: horas × taxa horária
+            subtotal = qty * price;
+            laborTotal += subtotal;
+        } else {
+            // Material: quantidade × preço unitário
+            subtotal = qty * price;
+            materialTotal += subtotal;
+        }
+        
         const subEl = item.querySelector('.item-subtotal');
         if (subEl) subEl.textContent = subtotal.toFixed(2) + '€';
         total += subtotal;
@@ -640,18 +687,23 @@ function recalcBudgetTotal() {
     return total;
 }
 
-function addBudgetItem(description = '', qty = 1, price = 0) {
+function addBudgetItem(description = '', qty = 1, price = 0, type = 'material') {
     const container = document.getElementById('budgetItemsContainer');
     if (!container) return;
     const index = budgetItemCounter++;
     const div = document.createElement('div');
-    div.className = 'budget-item grid grid-cols-[1fr_80px_80px_60px_30px] gap-2 items-center';
+    div.className = 'budget-item grid grid-cols-[auto_1fr_80px_80px_60px_30px] gap-2 items-center';
     div.dataset.index = index;
+    const pricePlaceholder = type === 'material' ? 'P. Unit' : '\u20AC/Hora';
     div.innerHTML = `
+        <select class="item-type rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-1.5 py-1.5 text-[10px] font-bold uppercase tracking-wider text-[var(--text)] outline-none focus:border-[var(--text)] transition-all cursor-pointer">
+            <option value="material" ${type === 'material' ? 'selected' : ''}>🔩 {{ __('Mat.') }}</option>
+            <option value="labor" ${type === 'labor' ? 'selected' : ''}>👷 {{ __('M.O.') }}</option>
+        </select>
         <input type="text" class="item-desc rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-2.5 py-1.5 text-[11px] text-[var(--text)] outline-none focus:border-[var(--text)] transition-all" placeholder="{{ __('Descrição') }}" value="${description}">
-        <input type="number" class="item-qty rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-2 py-1.5 text-[11px] font-mono text-[var(--text)] outline-none focus:border-[var(--text)] transition-all" placeholder="{{ __('Qtd') }}" min="1" value="${qty}">
-        <input type="number" step="0.01" class="item-price rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-2 py-1.5 text-[11px] font-mono text-[var(--text)] outline-none focus:border-[var(--text)] transition-all" placeholder="{{ __('P. Unit') }}" min="0" value="${price}">
-        <span class="item-subtotal text-[11px] font-mono font-bold text-[var(--text)] pt-2 text-right">${(qty * price).toFixed(2)}€</span>
+        <input type="number" class="item-qty rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-2 py-1.5 text-[11px] font-mono text-[var(--text)] outline-none focus:border-[var(--text)] transition-all" placeholder="{{ __('Qtd/H') }}" min="1" value="${qty}">
+        <input type="number" step="0.01" class="item-price rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-2 py-1.5 text-[11px] font-mono text-[var(--text)] outline-none focus:border-[var(--text)] transition-all" placeholder="${pricePlaceholder}" min="0" value="${price}">
+        <span class="item-subtotal text-[11px] font-mono font-bold text-[var(--text)] pt-2 text-right">${(qty * price).toFixed(2)}\u20AC</span>
         <button type="button" class="btn-remove-item text-rose-400 hover:text-rose-500 transition-all cursor-pointer p-1" title="{{ __('Remover item') }}">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
@@ -661,10 +713,22 @@ function addBudgetItem(description = '', qty = 1, price = 0) {
     recalcBudgetTotal();
 }
 
-// 🎯 Event Delegation: captura input em QUALQUER .item-qty ou .item-price
+// 🎯 Event Delegation: captura input/change em itens do orçamento
 // Isto funciona para itens existentes e futuros sem precisar de attach manual
 document.addEventListener('input', function(e) {
-    if (e.target.classList.contains('item-qty') || e.target.classList.contains('item-price')) {
+    if (e.target.classList.contains('item-qty') || e.target.classList.contains('item-price') || e.target.classList.contains('item-desc')) {
+        recalcBudgetTotal();
+    }
+});
+
+// 🎯 Para mudanças no select de tipo (Material ↔ Mão de Obra)
+document.addEventListener('change', function(e) {
+    if (e.target.classList.contains('item-type')) {
+        const item = e.target.closest('.budget-item');
+        if (!item) return;
+        const priceInput = item.querySelector('.item-price');
+        const isLabor = e.target.value === 'labor';
+        priceInput.placeholder = isLabor ? '€/Hora' : 'P. Unit';
         recalcBudgetTotal();
     }
 });
@@ -684,11 +748,29 @@ document.addEventListener('click', function(e) {
 function getBudgetDetails() {
     const items = [];
     document.querySelectorAll('.budget-item').forEach(item => {
+        const type = item.querySelector('.item-type')?.value || 'material';
         const description = item.querySelector('.item-desc')?.value.trim();
         const quantity = parseFloat(item.querySelector('.item-qty')?.value) || 0;
         const unitPrice = parseFloat(item.querySelector('.item-price')?.value) || 0;
-        if (description && quantity > 0) {
-            items.push({ description, quantity, unit_price: unitPrice });
+        
+        if (!description) return;
+        
+        if (type === 'labor') {
+            // Mão de obra: hours × hourly_rate
+            items.push({
+                type: 'labor',
+                description: description,
+                hours: quantity,
+                hourly_rate: unitPrice
+            });
+        } else {
+            // Material: quantity × unit_price
+            items.push({
+                type: 'material',
+                description: description,
+                quantity: quantity,
+                unit_price: unitPrice
+            });
         }
     });
     return items;
@@ -707,15 +789,58 @@ function renderBudgetDetailsForAdmin(details) {
 
     container.classList.remove('hidden');
     let total = 0;
+    let materialTotal = 0;
+    let laborTotal = 0;
+    
     list.innerHTML = details.map((item, i) => {
-        const subtotal = (item.quantity || 0) * (item.unit_price || 0);
+        const type = item.type || 'material';
+        let subtotal = 0;
+        let detailStr = '';
+        
+        if (type === 'labor') {
+            const hours = item.hours || 0;
+            const rate = item.hourly_rate || 0;
+            subtotal = hours * rate;
+            laborTotal += subtotal;
+            detailStr = `${hours}h × ${rate.toFixed(2)}€/h`;
+        } else {
+            const qty = item.quantity || 0;
+            const price = item.unit_price || 0;
+            subtotal = qty * price;
+            materialTotal += subtotal;
+            detailStr = `${qty} × ${price.toFixed(2)}€`;
+        }
+        
         total += subtotal;
+        
+        const icon = type === 'labor' ? '👷' : '🔩';
+        const typeLabel = type === 'labor' ? 'M.O.' : 'Mat.';
+        
         return `<div class="flex justify-between items-center text-[11px] py-1 ${i > 0 ? 'border-t border-[var(--border)]/50' : ''}">
-            <span class="text-[var(--text)] flex-1">${item.description || 'Item'}</span>
-            <span class="text-[var(--text-soft)] mx-2">${item.quantity || 0} × ${(item.unit_price || 0).toFixed(2)}€</span>
-            <span class="font-bold font-mono text-[var(--text)]">${subtotal.toFixed(2)}€</span>
+            <span class="text-[var(--text)] flex-1 truncate mr-2">${icon} ${item.description || 'Item'}</span>
+            <span class="text-[var(--text-soft)] mx-2 whitespace-nowrap text-[10px]">${detailStr}</span>
+            <span class="font-bold font-mono text-[var(--text)] whitespace-nowrap">${subtotal.toFixed(2)}€</span>
         </div>`;
     }).join('');
+    
+    // Add summary with material vs labor breakdown
+    if (materialTotal > 0 || laborTotal > 0) {
+        list.innerHTML += `
+            <div class="border-t-2 border-[var(--border)] pt-2 mt-2 space-y-1">
+                ${materialTotal > 0 ? `
+                <div class="flex justify-between items-center text-[10px]">
+                    <span class="text-[var(--text-soft)] font-medium">🔩 {{ __('Total Materiais') }}</span>
+                    <span class="font-bold font-mono text-[var(--text)]">${materialTotal.toFixed(2)}€</span>
+                </div>` : ''}
+                ${laborTotal > 0 ? `
+                <div class="flex justify-between items-center text-[10px]">
+                    <span class="text-[var(--text-soft)] font-medium">👷 {{ __('Total Mão de Obra') }}</span>
+                    <span class="font-bold font-mono text-[var(--text)]">${laborTotal.toFixed(2)}€</span>
+                </div>` : ''}
+            </div>
+        `;
+    }
+    
     if (totalSpan) totalSpan.textContent = total.toFixed(2) + ' €';
 }
 
@@ -830,6 +955,117 @@ document.addEventListener('DOMContentLoaded', () => {
             showMessage("{{ __('Fotografia enviada!') }}");
         }
     });
+
+    // ⚠️ Verificação de urgência ao iniciar reparação (se existir botão "Iniciar" no tech panel)
+    // A lógica é disparada quando um técnico tenta iniciar um ticket
+    // e o backend responde com 409 + warning
+    
+    // Estado global para controlar o fluxo de urgência
+    window._pendingForceStart = false;
+    
+    const modal = document.getElementById('priorityWarningModal');
+    const btnViewUrgent = document.getElementById('btnViewUrgentTickets');
+    const btnForceStart = document.getElementById('btnForceStartTicket');
+    const btnCancelPri = document.getElementById('btnCancelPriority');
+    
+    function showPriorityWarning(urgentCount, currentPriority, ticketId) {
+        const modal = document.getElementById('priorityWarningModal');
+        const countEl = document.getElementById('priorityWarningCount');
+        const currentEl = document.getElementById('priorityWarningCurrent');
+        const detailsEl = document.getElementById('priorityWarningDetails');
+        
+        if (!modal) return;
+        
+        if (countEl) {
+            countEl.textContent = `🔥 ${urgentCount} {{ __('ticket(s) de prioridade mais alta à espera') }}`;
+        }
+        if (currentEl) {
+            currentEl.textContent = `📌 {{ __('Tentou iniciar:') }} ${currentPriority}`;
+        }
+        if (detailsEl) {
+            detailsEl.classList.remove('hidden');
+        }
+        
+        // Guardar referência para usar nos handlers
+        window._pendingTicketId = ticketId;
+        
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    }
+    
+    function hidePriorityWarning() {
+        const modal = document.getElementById('priorityWarningModal');
+        if (modal) {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+        window._pendingTicketId = null;
+        window._pendingForceStart = false;
+    }
+    
+    // Botão "Ver Tickets Urgentes" → redireciona para lista com filtro por prioridade
+    btnViewUrgent?.addEventListener('click', function() {
+        hidePriorityWarning();
+        window.location.href = '/ui/tickets?priority=alta';
+    });
+    
+    // Botão "Iniciar Mesmo Assim" → força o start com force=true
+    btnForceStart?.addEventListener('click', async function() {
+        hidePriorityWarning();
+        const pendingId = window._pendingTicketId || ticketId;
+        if (!pendingId) return;
+        
+        try {
+            const res = await fetch(`/technician/tickets/${pendingId}/start`, {
+                method: 'PUT',
+                headers: { ...authHeader(), 'Content-Type': 'application/json' },
+                body: JSON.stringify({ force: true })
+            });
+            
+            const data = await res.json();
+            if (res.ok) {
+                showMessage("{{ __('Reparação iniciada com sucesso!') }}");
+                await fetchTicket();
+            } else {
+                showMessage(data.message || "{{ __('Erro ao iniciar reparação.') }}", true);
+            }
+        } catch (e) {
+            showMessage("{{ __('Erro de conexão ao iniciar reparação.') }}", true);
+        }
+    });
+    
+    // Botão "✕" → fechar modal
+    btnCancelPri?.addEventListener('click', hidePriorityWarning);
+    
+    // Intercetar o fetch original para começar o startTicket e tratar warning 409
+    // Vamos modificar como os pedidos PUT /start funcionam interceptando globalmente
+    const originalFetch = window.fetch;
+    window.fetch = async function(url, options = {}) {
+        const response = await originalFetch(url, options);
+        
+        // Intercetar respostas 409 (Conflict) de startTicket
+        if (response.status === 409) {
+            try {
+                const data = await response.clone().json();
+                if (data.warning && data.urgent_tickets_count > 0) {
+                    showPriorityWarning(
+                        data.urgent_tickets_count, 
+                        data.current_priority || '{{ __("média") }}', 
+                        data.ticket_id || ticketId
+                    );
+                    // Devolve um response modificado para não quebrar o fluxo
+                    return new Response(JSON.stringify({ overridden: false, warning: true }), {
+                        status: 200,
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+                }
+            } catch (e) {
+                // Se não conseguir parsear, passa a resposta original
+            }
+        }
+        
+        return response;
+    };
 });
 </script>
 @endpush
