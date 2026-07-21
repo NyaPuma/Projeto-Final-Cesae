@@ -507,53 +507,6 @@ class TicketController extends Controller
     }
 
     /**
-     * Solicita orçamento para um ticket em curso (Técnico deteta necessidade de peças externas).
-     */
-    public function requestBudget(Request $request, int $id)
-    {
-        $user = $this->authenticatedUser($request);
-        $this->requireRole($user, [
-            User::ROLE_TECHNICIAN,
-        ]);
-
-        $ticket = Ticket::findOrFail($id);
-
-        if (!$ticket->hasStatus(Ticket::STATUS_IN_PROGRESS)) {
-            return response()->json(['message' => 'Apenas tickets em "Em Curso" podem solicitar orçamento.'], 422);
-        }
-
-        $validator = Validator::make($request->all(), [
-            'budget_amount' => ['required', 'numeric', 'min:0.01'],
-            'budget_justification' => ['required', 'string', 'max:2000'],
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        $pendingBudgetStatusId = Ticket::getStatusIdByName(Ticket::STATUS_PENDING_BUDGET);
-
-        $ticket->update([
-            'status_id'          => $pendingBudgetStatusId,
-            'budget_requested'   => true,
-            'budget_status'      => Ticket::BUDGET_PENDING,
-            'budget_amount'      => $request->budget_amount,
-            'budget_requested_at' => now(),
-            'technical_report'   => $request->budget_justification,
-        ]);
-
-        try {
-            if ($ticket->user && $ticket->user->email) {
-                $ticket->user->notify(new \App\Notifications\TicketStatusChanged($ticket, $ticket->status_id, Ticket::STATUS_PENDING_BUDGET));
-            }
-        } catch (\Exception $e) {
-            // Silencia falhas de envio
-        }
-
-        return response()->json(['ticket' => $ticket]);
-    }
-
-    /**
      * Agenda um ticket para uma data futura (Operador ou Admin).
      */
     public function scheduleTicket(Request $request, int $id)
