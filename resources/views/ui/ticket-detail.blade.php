@@ -210,7 +210,7 @@ window.requireAuthOnLoad = true;
                 </div>
             </div>
 
-        {{-- Painel de Gestão e Atribuição Manual (Apenas Admin) --}}
+            {{-- Painel de Gestão e Atribuição Manual (Apenas Admin) --}}
             @if(($user->profile->name ?? null) === 'admin')
             <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
                 <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)] mb-3">{{ __('Painel de Atribuição') }}</h3>
@@ -238,13 +238,8 @@ window.requireAuthOnLoad = true;
             </div>
             @endif
 
-<<<<<<< HEAD
         </div>
     </div>
-=======
-        </div>{{-- Fim coluna direita --}}
-    </div>{{-- Fim grid --}}
->>>>>>> 0c55c31eac7123a9e250ac85af60119cf1eaab5b
 
     {{-- Sistema Dinâmico de Notificações Internas --}}
     <div id="ticketMessage" class="mt-4 min-h-6 text-xs font-medium transition-all duration-300 px-1"></div>
@@ -297,13 +292,17 @@ function authHeader() {
     return headers;
 }
 
-<<<<<<< HEAD
-=======
-// Verificação defensiva - usa o role armazenado no localStorage no login
->>>>>>> 0c55c31eac7123a9e250ac85af60119cf1eaab5b
 function checkCurrentUserIsAdmin() {
-    const role = localStorage.getItem('user_role');
-    return role === 'admin';
+    try {
+        const token = localStorage.getItem('api_token');
+        if (!token) return false;
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const payload = JSON.parse(window.atob(base64));
+        return payload.role === 'admin' || payload.isAdmin === true;
+    } catch (e) {
+        return {{ (auth()->user() && (auth()->user()->is_admin || (method_exists(auth()->user(), 'isAdmin') && auth()->user()->isAdmin()))) ? 'true' : 'false' }};
+    }
 }
 
 async function fetchTicket(){
