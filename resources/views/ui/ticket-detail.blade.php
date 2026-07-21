@@ -28,7 +28,7 @@ window.requireAuthOnLoad = true;
             </div>
 
             {{-- 🛠️ PAINEL DO TÉCNICO DE CAMPO --}}
-            @if(auth()->check() && (auth()->user()->role === 'tecnico' || (auth()->user()->profile->name ?? null) === 'tecnico' || auth()->user()->is_technician || (method_exists(auth()->user(), 'isTechnician') && auth()->user()->isTechnician())))
+            @if(isset($user) && $user && $user->isTechnician())
             <div id="techInterventionSection" class="space-y-6">
 
                 {{-- ESTADO: BLOQUEADO (Pendente Orçamento > Threshold) --}}
@@ -57,30 +57,72 @@ window.requireAuthOnLoad = true;
                             <p class="text-xs text-[var(--text-soft)] mt-0.5" id="techRejectedReason">
                                 {{ __('O orçamento para este ticket foi recusado pela Administração. A intervenção foi encerrada.') }}
                             </p>
+                            <div id="techRejectedFeedback" class="hidden mt-2 p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-xs"></div>
                         </div>
                     </div>
                 </div>
 
-                {{-- FORMULÁRIO 1: SUBMETER CUSTO ESTIMADO ($estimatedBudget) --}}
+                {{-- ESTADO: ORÇAMENTO APROVADO — Pode prosseguir --}}
+                <div id="techApprovedCard" class="hidden rounded-2xl border border-emerald-500/30 bg-emerald-500/5 p-6 shadow-sm space-y-3">
+                    <div class="flex items-center gap-3 text-emerald-600 dark:text-emerald-400">
+                        <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <div>
+                            <h3 class="text-xs font-bold uppercase tracking-wider">{{ __('Orçamento Aprovado!') }}</h3>
+                            <p class="text-xs text-[var(--text-soft)] mt-0.5">
+                                {{ __('A Administração aprovou o orçamento. Pode prosseguir com a reparação e registar os custos finais.') }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- FORMULÁRIO 1: SUBMETER CUSTO ESTIMADO COM ORÇAMENTO DETALHADO --}}
                 <div id="techBudgetSubmitCard" class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm space-y-3">
                     <div class="flex items-center justify-between border-b border-[var(--border)] pb-2.5">
-                        <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)]">{{ __('1. Avaliação Orçamental Inicial') }}</h3>
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)]">{{ __('1. Avaliação Orçamental Detalhada') }}</h3>
                         <span class="text-[9px] font-mono bg-[var(--surface-2)] text-[var(--text-soft)] px-2 py-0.5 rounded-md font-bold">{{ __('Regra ACCEPT') }}</span>
                     </div>
                     <p class="text-xs text-[var(--text-soft)]">
-                        {{ __('Introduza o custo estimado da reparação. Se o valor for superior ao limiar (threshold), o ticket aguardará autorização.') }}
+                        {{ __('Introduza o orçamento detalhado da reparação com os itens, quantidades e preços. Se o total exceder o limiar, o ticket aguardará autorização do Administrador.') }}
                     </p>
 
                     <form id="techBudgetForm" class="space-y-3 pt-1">
+                        {{-- Tabela de Itens do Orçamento Detalhado --}}
+                        <div class="space-y-2">
+                            <label class="mb-1 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">
+                                {{ __('Itens do Orçamento Detalhado') }}
+                            </label>
+                            <div id="budgetItemsContainer" class="space-y-2">
+                                {{-- Linha de item modelo (será clonada) --}}
+                                <div class="budget-item grid grid-cols-[1fr_80px_80px_60px] gap-2 items-center" data-index="0">
+                                    <input type="text" class="item-desc rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-2.5 py-1.5 text-[11px] text-[var(--text)] outline-none focus:border-[var(--text)] transition-all" placeholder="{{ __('Descrição (ex: Peça X)') }}">
+                                    <input type="number" class="item-qty rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-2 py-1.5 text-[11px] font-mono text-[var(--text)] outline-none focus:border-[var(--text)] transition-all" placeholder="{{ __('Qtd') }}" min="1" value="1">
+                                    <input type="number" step="0.01" class="item-price rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-2 py-1.5 text-[11px] font-mono text-[var(--text)] outline-none focus:border-[var(--text)] transition-all" placeholder="{{ __('P. Unit') }}" min="0" value="0">
+                                    <span class="item-subtotal text-[11px] font-mono font-bold text-[var(--text)] pt-2 text-right">0.00€</span>
+                                </div>
+                            </div>
+                            <button type="button" id="btnAddBudgetItem" class="inline-flex items-center gap-1 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wider text-primary border border-dashed border-[var(--border)] rounded-xl hover:bg-[var(--surface-2)] transition-all cursor-pointer">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path></svg>
+                                {{ __('Adicionar Item') }}
+                            </button>
+                        </div>
+
+                        {{-- Total Estimado --}}
+                        <div class="flex items-center justify-between rounded-xl bg-[var(--surface-2)] px-4 py-3 border border-[var(--border)]">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Total Estimado') }}</span>
+                            <span id="techTotalEstimatedDisplay" class="text-lg font-black font-mono text-[var(--text)]">0.00 €</span>
+                        </div>
+
                         <div>
                             <label for="techEstimatedCostInput" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">
-                                {{ __('Custo Estimado ($estimatedBudget €)') }}
+                                {{ __('Custo Estimado Global (€)') }}
                             </label>
                             <input id="techEstimatedCostInput" type="number" step="0.01" placeholder="{{ __('Ex: 75.00') }}" class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2 text-xs font-mono text-[var(--text)] outline-none focus:border-[var(--text)] transition-all">
                         </div>
 
                         <button type="button" id="btnSubmitEstimatedBudget" class="w-full inline-flex items-center justify-center px-4 py-2.5 bg-primary text-white text-xs font-bold rounded-xl shadow-sm hover:opacity-90 transition-all cursor-pointer">
-                            {{ __('Submeter Validação Orçamental') }}
+                            {{ __('Submeter Orçamento Detalhado') }}
                         </button>
                     </form>
                 </div>
@@ -130,7 +172,7 @@ window.requireAuthOnLoad = true;
             @endif
 
             {{-- 💰 PAINEL DE DECISÃO DO ADMINISTRADOR --}}
-            @if(auth()->check() && (auth()->user()->role === 'admin' || (auth()->user()->profile->name ?? null) === 'admin' || auth()->user()->is_admin || (method_exists(auth()->user(), 'isAdmin') && auth()->user()->isAdmin())))
+            @if(isset($user) && $user && $user->isAdmin())
             <div id="budgetApprovalCard" class="relative rounded-2xl border border-amber-500/30 bg-[var(--surface)] p-6 shadow-sm space-y-4 overflow-hidden hidden">
                 <div class="absolute top-0 left-0">
                     <span class="inline-block bg-amber-500 text-black text-[9px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-br-xl shadow-sm">
@@ -149,11 +191,26 @@ window.requireAuthOnLoad = true;
 
                 <div class="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-4 flex items-center justify-between">
                     <div>
-                        <span class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)] block">{{ __('Custo Solicitado ($estimatedBudget)') }}</span>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)] block">{{ __('Custo Solicitado') }}</span>
                         <p class="text-xs text-[var(--text-soft)] mt-0.5">{{ __('Técnico:') }} <span id="budgetTechnicianName" class="font-semibold text-[var(--text)]">—</span></p>
                     </div>
                     <div class="text-right">
                         <span id="budgetEstimatedCost" class="text-2xl font-black font-mono text-amber-500 dark:text-amber-400">0.00 €</span>
+                    </div>
+                </div>
+
+                {{-- Orçamento Detalhado (visível para o Admin) --}}
+                <div id="budgetDetailsContainer" class="hidden rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-4 space-y-2">
+                    <h4 class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)] flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        {{ __('Detalhe do Orçamento') }}
+                    </h4>
+                    <div id="budgetDetailsList" class="space-y-1.5">
+                        {{-- Itens preenchidos dinamicamente --}}
+                    </div>
+                    <div class="flex justify-between items-center border-t border-[var(--border)] pt-2 mt-1">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Total') }}</span>
+                        <span id="budgetDetailsTotal" class="text-sm font-black font-mono text-[var(--text)]">0.00 €</span>
                     </div>
                 </div>
 
@@ -220,7 +277,7 @@ window.requireAuthOnLoad = true;
             </div>
 
             {{-- Painel Atribuição Admin --}}
-            @if(auth()->check() && (auth()->user()->role === 'admin' || (auth()->user()->profile->name ?? null) === 'admin' || auth()->user()->is_admin || (method_exists(auth()->user(), 'isAdmin') && auth()->user()->isAdmin())))
+            @if(isset($user) && $user && $user->isAdmin())
             <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
                 <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)] mb-3">{{ __('Gestão de Atribuição') }}</h3>
                 <div class="space-y-3">
@@ -306,7 +363,12 @@ function checkCurrentUserIsAdmin() {
         const payload = JSON.parse(window.atob(base64));
         return payload.role === 'admin' || payload.isAdmin === true;
     } catch (e) {
-        return {{ (auth()->check() && (auth()->user()->is_admin || (method_exists(auth()->user(), 'isAdmin') && auth()->user()->isAdmin()))) ? 'true' : 'false' }};
+        // Fallback para o $user passado pela view
+        const userFromView = @json($user ?? null);
+        if (userFromView && userFromView.profile) {
+            return userFromView.profile.name === 'admin';
+        }
+        return false;
     }
 }
 
@@ -323,10 +385,15 @@ async function fetchTicket() {
     const data = await res.json();
     const ticket = data.ticket || data;
 
-    const priColor = priorityColors[ticket.priority] ?? 'border border-[var(--border)] bg-[var(--surface-2)] text-[var(--text-soft)]';
-    const statusClean = (ticket.status ?? ticket.status_id ?? 'N/A').toString().toLowerCase();
+    // Corrige o status: pode vir como objeto {name: "..."} ou string
+    const statusName = typeof ticket.status === 'object' && ticket.status !== null
+        ? ticket.status.name
+        : (typeof ticket.status === 'string' ? ticket.status : null);
+    const statusClean = (statusName || '').toLowerCase();
 
-    let statusBadge = `<span class="inline-block px-2 py-0.5 rounded-lg text-[11px] font-bold bg-blue-500/10 text-blue-600 dark:text-blue-400 uppercase tracking-tight">${statusLabels[statusClean] ?? ticket.status}</span>`;
+    const priColor = priorityColors[ticket.priority] ?? 'border border-[var(--border)] bg-[var(--surface-2)] text-[var(--text-soft)]';
+
+    let statusBadge = `<span class="inline-block px-2 py-0.5 rounded-lg text-[11px] font-bold bg-blue-500/10 text-blue-600 dark:text-blue-400 uppercase tracking-tight">${statusLabels[statusClean] ?? statusName ?? 'N/A'}</span>`;
 
     if (statusClean === 'em curso') {
         statusBadge = `<span class="inline-block px-2 py-0.5 rounded-lg text-[11px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 uppercase tracking-tight">⚙️ {{ __('Em Curso') }}</span>`;
@@ -376,63 +443,78 @@ async function fetchTicket() {
 
     const isPendenteOrcamento = statusClean === 'pendente orçamento' || statusClean === 'pendente_orçamento';
     const isRecusada = statusClean === 'recusada' || statusClean === 'recusado';
+    const isClosed = statusClean === 'fechada' || statusClean === 'fechado';
+    const isEmCurso = statusClean === 'em curso' || statusClean === 'em curso';
     const estimatedAmount = parseFloat(ticket.budget_amount || ticket.estimated_cost || ticket.estimatedBudget || 0);
     const threshold = parseFloat(ticket.threshold || 50.00);
+
+    // 🐛 FIX: Determinar o estado correto do orçamento
+    const budgetWasSubmitted  = ticket.budget_requested === true || ticket.budget_requested === 1 || ticket.budget_requested === '1';
+    const budgetIsPending     = ticket.budget_status === 'pending';
+    const budgetIsApproved    = ticket.budget_status === 'approved';
+    const budgetWasAutoApproved = budgetWasSubmitted && !ticket.budget_status && !isPendenteOrcamento;
 
     const techCompletionCard = document.getElementById('techCompletionCard');
     const techBlockedCard = document.getElementById('techBlockedCard');
     const techRejectedCard = document.getElementById('techRejectedCard');
+    const techApprovedCard = document.getElementById('techApprovedCard');
+    const techBudgetSubmitCard = document.getElementById('techBudgetSubmitCard');
 
-    if (techCompletionCard && techBlockedCard && techRejectedCard) {
+    if (techCompletionCard && techBlockedCard && techRejectedCard && techApprovedCard && techBudgetSubmitCard) {
+        // Esconder todos primeiro
         techCompletionCard.classList.add('hidden');
         techBlockedCard.classList.add('hidden');
         techRejectedCard.classList.add('hidden');
+        techApprovedCard.classList.add('hidden');
+        techBudgetSubmitCard.classList.add('hidden');
 
-        if (isRecusada) {
+if (isRecusada) {
+            // Ticket recusado (orçamento rejeitado)
             techRejectedCard.classList.remove('hidden');
-            if (ticket.technical_report) {
-                document.getElementById('techRejectedReason').innerText = ticket.technical_report;
+            if (ticket.budget_feedback) {
+                const fbEl = document.getElementById('techRejectedFeedback');
+                if (fbEl) {
+                    fbEl.textContent = '📋 ' + ticket.budget_feedback;
+                    fbEl.classList.remove('hidden');
+                }
             }
-        } else if (isPendenteOrcamento) {
+        } else if (isClosed) {
+            // Ticket fechado com sucesso (reparação concluída)
+            techApprovedCard.classList.remove('hidden');
+            techCompletionCard.classList.add('hidden');
+            const approvedTitleEl = techApprovedCard?.querySelector('h3');
+            if (approvedTitleEl) approvedTitleEl.textContent = '{{ __('Reparação Concluída') }}';
+            const approvedTextEl = techApprovedCard?.querySelector('p');
+            if (approvedTextEl) approvedTextEl.textContent = '{{ __('O ticket foi fechado com sucesso.') }}';
+        } else if (isPendenteOrcamento || (budgetWasSubmitted && budgetIsPending)) {
+            // Pendente de aprovação orçamental
             techBlockedCard.classList.remove('hidden');
-        } else {
+        } else if (budgetIsApproved || budgetWasAutoApproved) {
+            // Orçamento já aprovado (pelo admin ou auto-aprovado) → mostrar conclusão
+            techApprovedCard.classList.remove('hidden');
             techCompletionCard.classList.remove('hidden');
+        } else if (isEmCurso && !budgetWasSubmitted) {
+            // Em curso, sem orçamento ainda → mostrar formulário de submissão
+            techBudgetSubmitCard.classList.remove('hidden');
+        } else {
+            // Fallback: ticket em curso com algum estado não mapeado
+            techBudgetSubmitCard.classList.remove('hidden');
         }
     }
 
     const budgetCard = document.getElementById('budgetApprovalCard');
     if (budgetCard && checkCurrentUserIsAdmin()) {
-        if (isPendenteOrcamento || ticket.budget_requested) {
+        if (isPendenteOrcamento || (budgetWasSubmitted && budgetIsPending)) {
             document.getElementById('budgetEstimatedCost').innerText = estimatedAmount.toFixed(2) + ' €';
             document.getElementById('budgetThresholdDisplay').innerText = threshold.toFixed(2) + ' €';
             document.getElementById('budgetTechnicianName').innerText = ticket.technician ? ticket.technician.name : "{{ __('Técnico de Campo') }}";
             budgetCard.classList.remove('hidden');
+
+            // Renderiza orçamento detalhado para o admin
+            renderBudgetDetailsForAdmin(ticket.budget_details);
         } else {
             budgetCard.classList.add('hidden');
         }
-    }
-}
-
-async function submitEstimatedBudget() {
-    const estimatedBudget = parseFloat(document.getElementById('techEstimatedCostInput')?.value) || 0;
-
-    if (estimatedBudget <= 0) {
-        showMessage("{{ __('Por favor, introduza um custo estimado válido.') }}", true);
-        return;
-    }
-
-    const res = await fetch(`/tickets/${ticketId}/budget`, {
-        method: 'POST',
-        headers: { ...authHeader(), 'Content-Type': 'application/json' },
-        body: JSON.stringify({ estimatedBudget: estimatedBudget })
-    });
-
-    const data = await res.json();
-    if (res.ok) {
-        showMessage(data.message || "{{ __('Custo estimado processado no sistema!') }}");
-        await fetchTicket();
-    } else {
-        showMessage(data.message || "{{ __('Erro ao submeter estimativa orçamental.') }}", true);
     }
 }
 
@@ -542,16 +624,150 @@ async function deletePhoto(photoId) {
     showMessage("{{ __('Fotografia removida com sucesso.') }}");
 }
 
+// ─── Orçamento Detalhado: Gestão de Itens ───
+let budgetItemCounter = 1;
+
+function recalcBudgetTotal() {
+    let total = 0;
+    document.querySelectorAll('.budget-item').forEach(item => {
+        const qty = parseFloat(item.querySelector('.item-qty')?.value) || 0;
+        const price = parseFloat(item.querySelector('.item-price')?.value) || 0;
+        const subtotal = qty * price;
+        const subEl = item.querySelector('.item-subtotal');
+        if (subEl) subEl.textContent = subtotal.toFixed(2) + '€';
+        total += subtotal;
+    });
+    const display = document.getElementById('techTotalEstimatedDisplay');
+    if (display) display.textContent = total.toFixed(2) + ' €';
+    const input = document.getElementById('techEstimatedCostInput');
+    if (input && !input.dataset.manuallySet) {
+        input.value = total.toFixed(2);
+    }
+    return total;
+}
+
+function addBudgetItem(description = '', qty = 1, price = 0) {
+    const container = document.getElementById('budgetItemsContainer');
+    if (!container) return;
+    const index = budgetItemCounter++;
+    const div = document.createElement('div');
+    div.className = 'budget-item grid grid-cols-[1fr_80px_80px_60px_30px] gap-2 items-center';
+    div.dataset.index = index;
+    div.innerHTML = `
+        <input type="text" class="item-desc rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-2.5 py-1.5 text-[11px] text-[var(--text)] outline-none focus:border-[var(--text)] transition-all" placeholder="{{ __('Descrição') }}" value="${description}">
+        <input type="number" class="item-qty rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-2 py-1.5 text-[11px] font-mono text-[var(--text)] outline-none focus:border-[var(--text)] transition-all" placeholder="{{ __('Qtd') }}" min="1" value="${qty}">
+        <input type="number" step="0.01" class="item-price rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-2 py-1.5 text-[11px] font-mono text-[var(--text)] outline-none focus:border-[var(--text)] transition-all" placeholder="{{ __('P. Unit') }}" min="0" value="${price}">
+        <span class="item-subtotal text-[11px] font-mono font-bold text-[var(--text)] pt-2 text-right">${(qty * price).toFixed(2)}€</span>
+        <button type="button" class="btn-remove-item text-rose-400 hover:text-rose-500 transition-all cursor-pointer p-1" title="{{ __('Remover item') }}">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+    `;
+    // Event listeners para recalcular
+    div.querySelector('.item-qty')?.addEventListener('input', recalcBudgetTotal);
+    div.querySelector('.item-price')?.addEventListener('input', recalcBudgetTotal);
+    div.querySelector('.btn-remove-item')?.addEventListener('click', () => {
+        div.remove();
+        recalcBudgetTotal();
+    });
+    // Listeners para detetar alteração manual no input global
+    div.querySelector('.item-qty')?.addEventListener('input', () => {
+        document.getElementById('techEstimatedCostInput').dataset.manuallySet = '';
+    });
+    div.querySelector('.item-price')?.addEventListener('input', () => {
+        document.getElementById('techEstimatedCostInput').dataset.manuallySet = '';
+    });
+    container.appendChild(div);
+    recalcBudgetTotal();
+}
+
+function getBudgetDetails() {
+    const items = [];
+    document.querySelectorAll('.budget-item').forEach(item => {
+        const description = item.querySelector('.item-desc')?.value.trim();
+        const quantity = parseFloat(item.querySelector('.item-qty')?.value) || 0;
+        const unitPrice = parseFloat(item.querySelector('.item-price')?.value) || 0;
+        if (description && quantity > 0) {
+            items.push({ description, quantity, unit_price: unitPrice });
+        }
+    });
+    return items;
+}
+
+function renderBudgetDetailsForAdmin(details) {
+    const container = document.getElementById('budgetDetailsContainer');
+    const list = document.getElementById('budgetDetailsList');
+    const totalSpan = document.getElementById('budgetDetailsTotal');
+    if (!container || !list) return;
+
+    if (!details || !Array.isArray(details) || details.length === 0) {
+        container.classList.add('hidden');
+        return;
+    }
+
+    container.classList.remove('hidden');
+    let total = 0;
+    list.innerHTML = details.map((item, i) => {
+        const subtotal = (item.quantity || 0) * (item.unit_price || 0);
+        total += subtotal;
+        return `<div class="flex justify-between items-center text-[11px] py-1 ${i > 0 ? 'border-t border-[var(--border)]/50' : ''}">
+            <span class="text-[var(--text)] flex-1">${item.description || 'Item'}</span>
+            <span class="text-[var(--text-soft)] mx-2">${item.quantity || 0} × ${(item.unit_price || 0).toFixed(2)}€</span>
+            <span class="font-bold font-mono text-[var(--text)]">${subtotal.toFixed(2)}€</span>
+        </div>`;
+    }).join('');
+    if (totalSpan) totalSpan.textContent = total.toFixed(2) + ' €';
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     fetchTicket();
     fetchComments();
     fetchPhotos();
 
-    document.getElementById('btnSubmitEstimatedBudget')?.addEventListener('click', submitEstimatedBudget);
+    // ─── Orçamento Detalhado ───
+    document.getElementById('btnAddBudgetItem')?.addEventListener('click', () => addBudgetItem());
+
+    // Recalcular total ao alterar o input global manualmente
+    document.getElementById('techEstimatedCostInput')?.addEventListener('input', function() {
+        this.dataset.manuallySet = 'true';
+    });
+
+    document.getElementById('btnSubmitEstimatedBudget')?.addEventListener('click', async () => {
+        const estimatedBudget = parseFloat(document.getElementById('techEstimatedCostInput')?.value) || 0;
+        const budgetDetails = getBudgetDetails();
+
+        if (estimatedBudget <= 0) {
+            showMessage("{{ __('Por favor, introduza um custo estimado válido.') }}", true);
+            return;
+        }
+
+        const payload = { estimatedBudget: estimatedBudget };
+        if (budgetDetails.length > 0) {
+            payload.budget_details = budgetDetails;
+        }
+
+        const res = await fetch(`/tickets/${ticketId}/budget`, {
+            method: 'POST',
+            headers: { ...authHeader(), 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+            showMessage(data.message || "{{ __('Orçamento detalhado processado no sistema!') }}");
+            await fetchTicket();
+        } else {
+            showMessage(data.message || "{{ __('Erro ao submeter orçamento detalhado.') }}", true);
+        }
+    });
 
     document.getElementById('btnFinishTicket')?.addEventListener('click', async () => {
         const cost = parseFloat(document.getElementById('techTotalCost')?.value) || 0;
         const report = document.getElementById('techFinalReport')?.value.trim();
+
+        if (cost <= 0) {
+            showMessage("{{ __('Por favor, introduza o custo final da intervenção.') }}", true);
+            return;
+        }
 
         const res = await fetch(`/tickets/${ticketId}/close`, {
             method: 'POST',

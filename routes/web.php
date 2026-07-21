@@ -94,9 +94,14 @@ Route::middleware(['custom.auth'])->group(function () {
         Route::delete('/tickets/{id}/photos/{photoId}', [TicketController::class, 'deletePhoto']);
 
         // Rotas de Fluxo Misto/Avançado
-        Route::post('/tickets/{id}/reopen',   [TicketController::class, 'reopenTicket']);
-        Route::post('/tickets/{id}/cancel',   [TicketController::class, 'cancelTicket']);
-        Route::post('/tickets/{id}/schedule', [TicketController::class, 'scheduleTicket']);
+        Route::post('/tickets/{id}/reopen',     [TicketController::class, 'reopenTicket']);
+        Route::post('/tickets/{id}/cancel',     [TicketController::class, 'cancelTicket']);
+        Route::post('/tickets/{id}/schedule',   [TicketController::class, 'scheduleTicket']);
+        
+        // 💰 Fluxo Orçamental - Submissão do orçamento pelo técnico
+        Route::post('/tickets/{id}/budget',     [TicketController::class, 'submitEstimatedBudget']);
+        Route::post('/tickets/{id}/close',      [TicketController::class, 'closeTicketFinal']);
+        
 
         // 🛠️ MODELO IN-HOUSE ALINHADO: Qualquer utilizador autenticado pode reportar uma avaria.
         // Removido do middleware restritivo 'role:user' para que Técnicos e Admins também criem tickets em campo.
@@ -190,6 +195,7 @@ Route::middleware(['custom.auth'])->group(function () {
             // Decisão Orçamental de Engenharia
             Route::post('/admin/preventive', [AdminController::class, 'storePreventive']);
             Route::patch('/admin/tickets/{id}/approve-budget', [AdminController::class, 'approveBudget']);
+            Route::post('/admin/tickets/{id}/budget-decision', [AdminController::class, 'approveBudget']);
 
             // Gestão de Infraestrutura (Salas / Pavilhões)
             Route::get('/admin/rooms',                  [RoomController::class, 'indexRoom']);

@@ -352,6 +352,12 @@ class AdminController extends Controller
         return response()->json(['ticket' => $ticket], 201);
     }
 
+    /**
+     * Processa a decisão orçamental do Administrador (aprovar ou recusar).
+     * Suporta tanto o formato PATCH original como o POST do frontend (action + feedback).
+     * Rota: PATCH /admin/tickets/{id}/approve-budget
+     * Rota: POST /admin/tickets/{id}/budget-decision (compatibilidade frontend)
+     */
     public function approveBudget(Request $request, int $id)
     {
         // A autorização do admin é sempre verificada a partir do token da própria API.
@@ -360,10 +366,14 @@ class AdminController extends Controller
         // Redundância intencional: a rota já está protegida, mas confirmamos aqui por defesa em profundidade.
         $this->requireRole($admin, [User::ROLE_ADMIN]);
 
-        $data = $request->only(['decision', 'feedback']);
+        // Suporta ambos os formatos: {decision, feedback} e {action, feedback}
+        $decision = $request->input('decision', $request->input('action', 'approve'));
+        $feedback = $request->input('feedback', null);
+
+        $data = ['decision' => $decision, 'feedback' => $feedback];
         $validator = Validator::make($data, [
             'decision' => ['nullable', 'string', 'in:approve,reject'],
-            'feedback' => ['nullable', 'string', 'max:2000'],
+            'feedback' => ['nullable', 'string', 'max:5000'],
         ]);
 
         if ($validator->fails()) {
@@ -381,6 +391,11 @@ class AdminController extends Controller
             return response()->json(['message' => 'Não existe pedido de orçamento pendente'], 422);
         }
 
+        // Se for recusa, guarda o feedback
+        if ($decision === 'reject' && !empty($feedback)) {
+            $ticket->budget_feedback = $feedback;
+        }
+
         // A regra de negócio fica no modelo para manter a decisão consistente em toda a aplicação.
         $approved = $ticket->approveBudget($admin, $data['decision'] ?? 'approve', $data['feedback'] ?? null);
 
@@ -389,6 +404,11 @@ class AdminController extends Controller
         }
 
         // Devolve o ticket já com o novo estado para simplificar o consumo no frontend.
-        return response()->json(['ticket' => $ticket]);
+        return response()->json([
+            'message' => $decision === 'approve'
+                ? 'Orçamento aprovado. Ticket desbloqueado para intervenção.'
+                : 'Orçamento recusado. Reparação abortada.',
+            'ticket' => $ticket->load(['equipment', 'room', 'technician', 'status']),
+        ]);
     }
 }

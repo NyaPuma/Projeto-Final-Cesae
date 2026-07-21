@@ -56,6 +56,7 @@ class Ticket extends Model
         'budget_requested'    => 'boolean',
         'cost'                => 'decimal:2',
         'budget_amount'       => 'decimal:2',
+        'budget_details'      => 'json', // Orçamento detalhado (array de itens)
     ];
 
     // --- RELACIONAMENTOS ELOQUENT ---
@@ -199,7 +200,7 @@ class Ticket extends Model
             }
 
             if (!empty($feedback)) {
-                $this->technical_report = $feedback;
+                $this->budget_feedback = $feedback;
             }
 
             return $this->save();
