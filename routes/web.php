@@ -96,11 +96,10 @@ Route::middleware(['custom.auth'])->group(function () {
         // 🛠️ MODELO IN-HOUSE ALINHADO: Qualquer utilizador autenticado pode reportar uma avaria.
         // Removido do middleware restritivo 'role:user' para que Técnicos e Admins também criem tickets em campo.
         Route::post('/tickets', [TicketController::class, 'store']);
-        // Se o método no TicketController se chamar apenas "calendar":
-        Route::get('/calendar', [TicketController::class, 'calendar'])->middleware(...);
 
-        // Ou se estiveres a usar um controller dedicado:
-        Route::get('/calendar', [CalendarController::class, 'index'])->middleware(...);
+        // 📅 Calendário Operacional - acessível a todos os utilizadores autenticados
+        Route::get('/calendar/events', [TicketController::class, 'calendarEvents']);
+        Route::get('/calendar',        [TicketController::class, 'calendarView']);
 
         /*
          |-- Área Exclusiva do Técnico de Manutenção
@@ -123,10 +122,6 @@ Route::middleware(['custom.auth'])->group(function () {
             // Ações operacionais
             Route::get('/technician/tickets/open',         [TicketController::class, 'openTickets']);
             Route::post('/tickets/{id}/assign-technician', [TicketController::class, 'assignTechnician']);
-
-            // Calendário Operacional
-            Route::get('/calendar/events', [TicketController::class, 'calendarEvents']);
-            Route::get('/calendar',        [TicketController::class, 'calendarView']);
 
             // (analytics fica apenas para admin)
 
