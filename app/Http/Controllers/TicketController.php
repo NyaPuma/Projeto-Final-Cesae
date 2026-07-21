@@ -42,6 +42,107 @@ class TicketController extends Controller
     }
 
     /**
+     * Armazena um novo ticket (criação de avaria)
+     */
+    public function store(Request $request)
+    {
+        $user = $this->authenticatedUser($request);
+
+        $data = $request->only(['title', 'description', 'priority', 'equipment_id']);
+
+        $validator = Validator::make($data, [
+            'title'        => ['required', 'string', 'max:255'],
+            'description'  => ['required', 'string', 'max:5000'],
+            'priority'     => ['required', 'string', 'in:baixa,média,media,alta'],
+            'equipment_id' => ['nullable', 'integer', 'exists:equipments,id'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        // Normalizar 'media' para 'média' (aceitar ambos os valores do frontend)
+        $priority = $data['priority'];
+        if ($priority === 'media') {
+            $priority = 'média';
+        }
+
+        // Obter o ID do status 'aberta'
+        $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+
+        $ticket = Ticket::create([
+            'title'        => $data['title'],
+            'description'  => $data['description'],
+            'priority'     => $priority,
+            'user_id'      => $user->id,
+            'equipment_id' => $data['equipment_id'] ?? null,
+            'status_id'    => $openStatusId,
+            'opened_at'    => now(),
+        ]);
+
+        // Carregar relacionamentos para a resposta
+        $ticket->load(['equipment', 'room', 'user', 'status']);
+
+        return response()->json(['ticket' => $ticket], 201);
+    }
+
+    /**
+     * Pesquisa tickets por palavra-chave, prioridade ou intervalo de datas.
+     */
+    public function search(Request $request)
+    {
+        $user = $this->authenticatedUser($request);
+
+        $query = Ticket::with(['equipment', 'room', 'user', 'status', 'technician']);
+
+        if ($request->filled('q')) {
+            $q = $request->q;
+            $query->where(function ($sub) use ($q) {
+                $sub->where('title', 'like', "%{$q}%")
+                    ->orWhere('description', 'like', "%{$q}%");
+            });
+        }
+
+        if ($request->filled('priority')) {
+            $priority = $request->priority;
+            if (in_array($priority, [Ticket::PRIORITY_LOW, Ticket::PRIORITY_MEDIUM, Ticket::PRIORITY_HIGH])) {
+                $query->where('priority', $priority);
+            } else {
+                return response()->json(['message' => 'Prioridade inválida. Valores válidos: baixa, média, alta.'], 422);
+            }
+        }
+
+        if ($request->filled('status')) {
+            $status = $request->status;
+            $statusId = Ticket::getStatusIdByName($status);
+            if ($statusId) {
+                $query->where('status_id', $statusId);
+            } else {
+                return response()->json(['message' => 'Estado inválido.'], 422);
+            }
+        }
+
+        if ($request->filled('date_from') && $request->filled('date_to')) {
+            $dateFrom = $request->date_from;
+            $dateTo = $request->date_to;
+
+            if ($dateFrom > $dateTo) {
+                return response()->json(['message' => 'A data de início não pode ser posterior à data de fim.'], 422);
+            }
+
+            $query->whereBetween('created_at', [$dateFrom, $dateTo . ' 23:59:59']);
+        } elseif ($request->filled('date_from')) {
+            $query->whereDate('created_at', '>=', $request->date_from);
+        } elseif ($request->filled('date_to')) {
+            $query->whereDate('created_at', '<=', $request->date_to);
+        }
+
+        return response()->json([
+            'tickets' => $query->latest()->paginate(15),
+        ]);
+    }
+
+    /**
      * Exibe o detalhe do ticket injetando a sugestão em tempo real da IA
      */
     public function show(Request $request, int $id)
@@ -323,6 +424,43 @@ class TicketController extends Controller
     }
 
     /**
+     * Inicia a reparação de um ticket (Técnico assume o ticket como "Em Curso").
+     */
+    public function startTicket(Request $request, int $id)
+    {
+        $user = $this->authenticatedUser($request);
+        $this->requireRole($user, [
+            User::ROLE_TECHNICIAN,
+        ]);
+
+        $ticket = Ticket::findOrFail($id);
+        $oldStatus = $ticket->status_id;
+
+        if (!$ticket->hasStatus(Ticket::STATUS_OPEN)) {
+            return response()->json(['message' => 'Apenas tickets em estado "Aberto" podem ser iniciados.'], 422);
+        }
+
+        $inProgressStatusId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
+
+        $ticket->update([
+            'assigned_to'    => $user->id,
+            'status_id'      => $inProgressStatusId,
+            'in_progress_at' => now(),
+        ]);
+
+        try {
+            event(new \App\Events\TicketStatusUpdatedBroadcast($ticket, $oldStatus, Ticket::STATUS_IN_PROGRESS));
+            if ($ticket->user && $ticket->user->email) {
+                $ticket->user->notify(new \App\Notifications\TicketStatusChanged($ticket, $oldStatus, Ticket::STATUS_IN_PROGRESS));
+            }
+        } catch (\Exception $e) {
+            // Silencia falhas de envio
+        }
+
+        return response()->json(['ticket' => $ticket]);
+    }
+
+    /**
      * Conclui de forma definitiva um ticket em curso, registando tempos e custos operacionais.
      */
     public function closeTicket(Request $request, int $id)
@@ -332,35 +470,138 @@ class TicketController extends Controller
             User::ROLE_TECHNICIAN,
         ]);
 
-        // CORRIGIDO: Instanciação obrigatória do ticket através do ID recebido na rota
         $ticket = Ticket::findOrFail($id);
         $oldStatus = $ticket->status_id;
 
-        $request->validate([
-            'tecnico_id' => 'required|exists:users,id',
-        ]);
-
-        $inProgressStatusId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
-
-        // Executa a atualização no MySQL com as colunas reais: assigned_to e status_id
-        $ticket->update([
-            'assigned_to'    => $request->tecnico_id,
-            'status_id'      => $inProgressStatusId,
-            'in_progress_at' => now(),
-        ]);
-
-        // Dispara os eventos lógicos de reatividade e email em blocos protegidos
-        try {
-            event(new \App\Events\TicketStatusUpdatedBroadcast($ticket, $oldStatus, Ticket::STATUS_IN_PROGRESS));
-            if ($ticket->user && $ticket->user->email) {
-                $ticket->user->notify(new \App\Notifications\TicketStatusChanged($ticket, $oldStatus, Ticket::STATUS_IN_PROGRESS));
-            }
-        } catch (\Exception $e) {
-            // Impede falhas de SMTP local de interromperem a persistência do MySQL
+        if (!$ticket->hasStatus(Ticket::STATUS_IN_PROGRESS)) {
+            return response()->json(['message' => 'Apenas tickets em "Em Curso" podem ser fechados.'], 422);
         }
 
-        return redirect()->route('admin.tickets.show', $id)
-            ->with('success', 'Técnico alocado com sucesso via Assistente IA!');
+        $request->validate([
+            'minutes_spent' => ['nullable', 'integer', 'min:0'],
+            'cost'          => ['nullable', 'numeric', 'min:0'],
+            'technical_report' => ['nullable', 'string', 'max:5000'],
+        ]);
+
+        $closedStatusId = Ticket::getStatusIdByName(Ticket::STATUS_CLOSED);
+
+        $ticket->update([
+            'status_id'        => $closedStatusId,
+            'closed_at'        => now(),
+            'minutes_spent'    => $request->minutes_spent,
+            'cost'             => $request->cost,
+            'technical_report' => $request->technical_report,
+        ]);
+
+        try {
+            event(new \App\Events\TicketStatusUpdatedBroadcast($ticket, $oldStatus, Ticket::STATUS_CLOSED));
+            if ($ticket->user && $ticket->user->email) {
+                $ticket->user->notify(new \App\Notifications\TicketStatusChanged($ticket, $oldStatus, Ticket::STATUS_CLOSED));
+            }
+        } catch (\Exception $e) {
+            // Silencia falhas de envio
+        }
+
+        return response()->json(['ticket' => $ticket]);
+    }
+
+    /**
+     * Solicita orçamento para um ticket em curso (Técnico deteta necessidade de peças externas).
+     */
+    public function requestBudget(Request $request, int $id)
+    {
+        $user = $this->authenticatedUser($request);
+        $this->requireRole($user, [
+            User::ROLE_TECHNICIAN,
+        ]);
+
+        $ticket = Ticket::findOrFail($id);
+
+        if (!$ticket->hasStatus(Ticket::STATUS_IN_PROGRESS)) {
+            return response()->json(['message' => 'Apenas tickets em "Em Curso" podem solicitar orçamento.'], 422);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'budget_amount' => ['required', 'numeric', 'min:0.01'],
+            'budget_justification' => ['required', 'string', 'max:2000'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $pendingBudgetStatusId = Ticket::getStatusIdByName(Ticket::STATUS_PENDING_BUDGET);
+
+        $ticket->update([
+            'status_id'          => $pendingBudgetStatusId,
+            'budget_requested'   => true,
+            'budget_status'      => Ticket::BUDGET_PENDING,
+            'budget_amount'      => $request->budget_amount,
+            'budget_requested_at' => now(),
+            'technical_report'   => $request->budget_justification,
+        ]);
+
+        try {
+            if ($ticket->user && $ticket->user->email) {
+                $ticket->user->notify(new \App\Notifications\TicketStatusChanged($ticket, $ticket->status_id, Ticket::STATUS_PENDING_BUDGET));
+            }
+        } catch (\Exception $e) {
+            // Silencia falhas de envio
+        }
+
+        return response()->json(['ticket' => $ticket]);
+    }
+
+    /**
+     * Agenda um ticket para uma data futura (Operador ou Admin).
+     */
+    public function scheduleTicket(Request $request, int $id)
+    {
+        $user = $this->authenticatedUser($request);
+
+        $ticket = Ticket::findOrFail($id);
+
+        if ($user->isCommon() && (int) $ticket->user_id !== (int) $user->id) {
+            return response()->json(['message' => 'Acesso negado'], 403);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'scheduled_at'  => ['required', 'date', 'after:now'],
+            'scheduled_end' => ['nullable', 'date', 'after:scheduled_at'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $ticket->update([
+            'scheduled_at'  => $request->scheduled_at,
+            'scheduled_end' => $request->scheduled_end,
+            'scheduled'     => true,
+        ]);
+
+        return response()->json(['ticket' => $ticket]);
+    }
+
+    /**
+     * Lista tickets abertos para o dashboard do técnico.
+     */
+    public function openTickets(Request $request)
+    {
+        $user = $this->authenticatedUser($request);
+        $this->requireRole($user, [
+            User::ROLE_TECHNICIAN,
+            User::ROLE_ADMIN,
+        ]);
+
+        $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+
+        $tickets = Ticket::with(['equipment', 'room', 'user', 'status'])
+            ->where('status_id', $openStatusId)
+            ->latest()
+            ->paginate(15);
+
+        return response()->json(['tickets' => $tickets]);
     }
 
     public function calendarView(Request $request)

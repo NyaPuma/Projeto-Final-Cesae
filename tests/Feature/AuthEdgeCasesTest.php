@@ -24,21 +24,30 @@ class AuthEdgeCasesTest extends TestCase
 
     public function test_register_rejects_duplicate_email(): void
     {
+        $adminProfile = UserProfile::where('name', User::ROLE_ADMIN)->firstOrFail();
+        $userProfile = UserProfile::where('name', User::ROLE_USER)->firstOrFail();
+
+        $admin = User::factory()->create([
+            'profile_id' => $adminProfile->id,
+            'api_token' => \Illuminate\Support\Str::random(60),
+        ]);
+
         $email = 'dup@example.com';
 
         User::factory()->create([
             'email' => $email,
             'password' => Hash::make('password123'),
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->firstOrFail()->id,
+            'profile_id' => $userProfile->id,
             'active' => true,
         ]);
 
-        $response = $this->postJson('/api/register', [
-            'name' => 'Dup User',
-            'email' => $email,
-            'password' => 'password123',
-            'password_confirmation' => 'password123',
-        ]);
+        $response = $this->withHeader('X-Auth-Token', $admin->api_token)
+            ->postJson('/admin/users/register', [
+                'name' => 'Dup User',
+                'email' => $email,
+                'password' => 'password123',
+                'password_confirmation' => 'password123',
+            ]);
 
         $response->assertStatus(422);
         $response->assertJsonStructure(['errors' => ['email']]);
@@ -59,7 +68,7 @@ class AuthEdgeCasesTest extends TestCase
         ]);
 
         $response->assertStatus(401);
-        $response->assertJson(['message' => 'Credenciais inválidas']);
+        $response->assertJson(['message' => 'Invalid credentials.']);
     }
 
     public function test_login_replaces_api_token_and_invalidates_old_token(): void
@@ -102,7 +111,7 @@ class AuthEdgeCasesTest extends TestCase
             ]);
 
         $response->assertStatus(403);
-        $response->assertJson(['message' => 'Password atual incorreta']);
+        $response->assertJson(['message' => 'Current password is incorrect']);
 
         $user->refresh();
         $this->assertTrue(Hash::check('password123', $user->password));

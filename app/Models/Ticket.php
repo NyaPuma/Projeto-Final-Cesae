@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes; 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\Auditable;
 
 use App\Models\TicketStatus;
@@ -21,7 +21,7 @@ class Ticket extends Model
 {
     use HasFactory;
     use Auditable;
-    use SoftDeletes; 
+    use SoftDeletes;
 
     // Nomes esperados na tabela `ticket_statuses`
     public const STATUS_OPEN = 'aberta';
@@ -249,6 +249,24 @@ class Ticket extends Model
 
         $statusId = self::getStatusIdByName($statusName);
         return $this->status_id === $statusId;
+    }
+
+    /**
+     * Obtém o técnico com menos tickets atribuídos no momento.
+     */
+    public static function getLeastBusyTechnician(): ?User
+    {
+        $inProgressStatusId = self::getStatusIdByName(self::STATUS_IN_PROGRESS);
+
+        return User::whereHas('profile', function ($query) {
+                $query->where('name', User::ROLE_TECHNICIAN);
+            })
+            ->where('active', true)
+            ->withCount(['assignedTickets' => function ($query) use ($inProgressStatusId) {
+                $query->where('status_id', $inProgressStatusId);
+            }])
+            ->orderBy('assigned_tickets_count', 'asc')
+            ->first();
     }
 
     /**

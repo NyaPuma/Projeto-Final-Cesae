@@ -175,4 +175,116 @@ class TicketOperationsTest extends TestCase
 
         $response->assertStatus(403);
     }
+
+    public function test_user_can_create_ticket_via_api(): void
+    {
+        $userProfile = UserProfile::where('name', User::ROLE_USER)->firstOrFail();
+        $user = User::factory()->create([
+            'profile_id' => $userProfile->id,
+            'api_token' => Str::random(60),
+            'active' => true,
+        ]);
+
+        $room = Room::create(['name' => 'Lab A', 'location' => 'Floor 1', 'active' => true]);
+        $equipment = Equipment::create([
+            'name' => 'CNC Machine',
+            'serial' => 'CNC-001',
+            'room_id' => $room->id,
+            'active' => true,
+        ]);
+
+        // Teste 1: Criar ticket com todos os campos válidos
+        $response = $this->withHeader('X-Auth-Token', $user->api_token)
+            ->postJson('/api/tickets', [
+                'title' => 'Máquina com ruído anómalo',
+                'description' => 'O motor principal do torno está a fazer um ruído metálico ao rodar.',
+                'priority' => 'alta',
+                'equipment_id' => $equipment->id,
+            ]);
+
+        $response->assertStatus(201)
+            ->assertJsonStructure(['ticket' => [
+                'id', 'title', 'description', 'priority', 'user_id', 'equipment_id', 'status_id', 'opened_at'
+            ]]);
+
+        $ticketData = $response->json('ticket');
+        $this->assertEquals('Máquina com ruído anómalo', $ticketData['title']);
+        $this->assertEquals('alta', $ticketData['priority']);
+        $this->assertEquals($user->id, $ticketData['user_id']);
+        $this->assertEquals($equipment->id, $ticketData['equipment_id']);
+
+        // Teste 2: Criar ticket sem equipment_id (opcional)
+        $response2 = $this->withHeader('X-Auth-Token', $user->api_token)
+            ->postJson('/api/tickets', [
+                'title' => 'Problema elétrico na sala de servidores',
+                'description' => 'Tomada sem energia no rack 3.',
+                'priority' => 'média',
+            ]);
+
+        $response2->assertStatus(201);
+        $this->assertNull($response2->json('ticket.equipment_id'));
+
+        // Teste 3: Validar que 'media' é normalizado para 'média'
+        $response3 = $this->withHeader('X-Auth-Token', $user->api_token)
+            ->postJson('/api/tickets', [
+                'title' => 'Teste prioridade media',
+                'description' => 'Descrição de teste.',
+                'priority' => 'media',
+            ]);
+
+        $response3->assertStatus(201);
+        $this->assertEquals('média', $response3->json('ticket.priority'));
+    }
+
+    public function test_ticket_creation_validation_errors(): void
+    {
+        $userProfile = UserProfile::where('name', User::ROLE_USER)->firstOrFail();
+        $user = User::factory()->create([
+            'profile_id' => $userProfile->id,
+            'api_token' => Str::random(60),
+            'active' => true,
+        ]);
+
+        // Teste 1: Campos obrigatórios em falta
+        $response = $this->withHeader('X-Auth-Token', $user->api_token)
+            ->postJson('/api/tickets', []);
+
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['title', 'description', 'priority']);
+
+        // Teste 2: Prioridade inválida
+        $response2 = $this->withHeader('X-Auth-Token', $user->api_token)
+            ->postJson('/api/tickets', [
+                'title' => 'Teste',
+                'description' => 'Descrição',
+                'priority' => 'urgentissima',
+            ]);
+
+        $response2->assertStatus(422)
+            ->assertJsonValidationErrors(['priority']);
+
+        // Teste 3: Equipment_id inexistente
+        $response3 = $this->withHeader('X-Auth-Token', $user->api_token)
+            ->postJson('/api/tickets', [
+                'title' => 'Teste',
+                'description' => 'Descrição',
+                'priority' => 'baixa',
+                'equipment_id' => 99999,
+            ]);
+
+        $response3->assertStatus(422)
+            ->assertJsonValidationErrors(['equipment_id']);
+    }
+
+    public function test_unauthenticated_user_cannot_create_ticket(): void
+    {
+        // Sem token de autenticação
+        $response = $this->postJson('/api/tickets', [
+            'title' => 'Teste',
+            'description' => 'Descrição',
+            'priority' => 'baixa',
+        ]);
+
+        $response->assertStatus(401);
+    }
 }
