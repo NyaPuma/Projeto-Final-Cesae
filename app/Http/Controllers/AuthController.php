@@ -139,7 +139,7 @@ class AuthController extends Controller
 
         // Não distinguimos email inexistente de password errada por segurança.
         if (!$user || !Hash::check($data['password'], $user->password)) {
-            return response()->json(['message' => 'Credenciais inválidas'], 401);
+            return response()->json(['message' => __('Credenciais inválidas.')], 401);
         }
 
         // Garante que, se o registo ficou sem perfil, o acesso volta a usar o perfil base.
@@ -170,7 +170,7 @@ class AuthController extends Controller
 
         $cookie = cookie('api_token', null, -1, '/', null, false, false, false, 'Lax');
 
-        return response()->json(['message' => 'Sessão terminada com sucesso.'])->withCookie($cookie);
+        return response()->json(['message' => __('Sessão terminada com sucesso.')])->withCookie($cookie);
     }
 
     public function changePassword(Request $request)
@@ -192,14 +192,14 @@ class AuthController extends Controller
 
         // Confirmamos a password antiga antes de autorizar a alteração.
         if (!Hash::check($data['current_password'], $user->password)) {
-            return response()->json(['message' => 'Password atual incorreta'], 403);
+            return response()->json(['message' => __('Password atual incorreta')], 403);
         }
 
         // Guardamos sempre a nova password com hash.
         $user->password = Hash::make($data['new_password']);
         $user->save();
 
-        return response()->json(['message' => 'Password alterada com sucesso.']);
+        return response()->json(['message' => __('Password alterada com sucesso.')]);
     }
 
     public function updateProfile(Request $request)
@@ -220,11 +220,11 @@ class AuthController extends Controller
 
         if (!empty($data['new_password'])) {
             if (empty($data['current_password'])) {
-                return response()->json(['message' => 'A palavra-passe atual é obrigatória para alterar a password.'], 422);
+                return response()->json(['message' => __('A palavra-passe atual é obrigatória para alterar a password.')], 422);
             }
 
             if (!Hash::check($data['current_password'], $user->password)) {
-                return response()->json(['message' => 'Password atual incorreta'], 403);
+                return response()->json(['message' => __('Password atual incorreta')], 403);
             }
 
             $user->password = Hash::make($data['new_password']);
@@ -237,6 +237,6 @@ class AuthController extends Controller
         $user->save();
         $user->load('profile');
 
-        return response()->json(['message' => 'Perfil atualizado com sucesso.', 'user' => $user]);
+        return response()->json(['message' => __('Perfil atualizado com sucesso.'), 'user' => $user]);
     }
 }
