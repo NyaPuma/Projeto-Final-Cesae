@@ -1,6 +1,5 @@
-# 💰 Especificação Técnica: Fluxo Orçamental (System Workflow)
-**Projeto:** ACCEPT - PROJETO ACADÉMICO  
-**Módulo:** Gestão e Aprovação Financeira de Avarias  
+# Especificação Técnica: Fluxo Orçamental (System Workflow)
+**Projeto:** Gestão e Aprovação Financeira de Avarias     
 **Arquitetura:** In-House (Corporativo Interno)
 
 ---
