@@ -326,7 +326,6 @@ async function fetchTicket() {
     const priColor = priorityColors[ticket.priority] ?? 'border border-[var(--border)] bg-[var(--surface-2)] text-[var(--text-soft)]';
     const statusClean = (ticket.status ?? ticket.status_id ?? 'N/A').toString().toLowerCase();
 
-    // Renderização do Badge de Estado conforme especificações do ACCEPT
     let statusBadge = `<span class="inline-block px-2 py-0.5 rounded-lg text-[11px] font-bold bg-blue-500/10 text-blue-600 dark:text-blue-400 uppercase tracking-tight">${statusLabels[statusClean] ?? ticket.status}</span>`;
 
     if (statusClean === 'em curso') {
@@ -339,7 +338,6 @@ async function fetchTicket() {
         statusBadge = `<span class="inline-block px-2 py-0.5 rounded-lg text-[11px] font-bold bg-[var(--text-soft)]/10 text-[var(--text-soft)] uppercase tracking-tight">{{ __('Fechada') }}</span>`;
     }
 
-    // Preenchimento dos Detalhes
     document.getElementById('ticketDetails').innerHTML = `
         <div class="border-b border-[var(--border)] pb-4 mb-5">
             <div class="flex items-center justify-between gap-4">
@@ -376,21 +374,16 @@ async function fetchTicket() {
         </div>
     `;
 
-    // -------------------------------------------------------------
-    // GESTÃO DINÂMICA DE VISIBILIDADE SEGUNDO O FLUXO DO ACCEPT
-    // -------------------------------------------------------------
     const isPendenteOrcamento = statusClean === 'pendente orçamento' || statusClean === 'pendente_orçamento';
     const isRecusada = statusClean === 'recusada' || statusClean === 'recusado';
     const estimatedAmount = parseFloat(ticket.budget_amount || ticket.estimated_cost || ticket.estimatedBudget || 0);
     const threshold = parseFloat(ticket.threshold || 50.00);
 
-    // Gestão do Painel Técnico
     const techCompletionCard = document.getElementById('techCompletionCard');
     const techBlockedCard = document.getElementById('techBlockedCard');
     const techRejectedCard = document.getElementById('techRejectedCard');
 
     if (techCompletionCard && techBlockedCard && techRejectedCard) {
-        // Reset às visibilidades
         techCompletionCard.classList.add('hidden');
         techBlockedCard.classList.add('hidden');
         techRejectedCard.classList.add('hidden');
@@ -403,12 +396,10 @@ async function fetchTicket() {
         } else if (isPendenteOrcamento) {
             techBlockedCard.classList.remove('hidden');
         } else {
-            // Se o ticket está "Em Curso" ou "Aberto" (Dentro do limiar ou Aprovado)
             techCompletionCard.classList.remove('hidden');
         }
     }
 
-    // Gestão do Painel Admin (Apenas Visível se "Pendente Orçamento" ou Solicitado)
     const budgetCard = document.getElementById('budgetApprovalCard');
     if (budgetCard && checkCurrentUserIsAdmin()) {
         if (isPendenteOrcamento || ticket.budget_requested) {
@@ -422,7 +413,6 @@ async function fetchTicket() {
     }
 }
 
-// Submeter Custo Estimado pelo Técnico ($estimatedBudget)
 async function submitEstimatedBudget() {
     const estimatedBudget = parseFloat(document.getElementById('techEstimatedCostInput')?.value) || 0;
 
@@ -446,11 +436,9 @@ async function submitEstimatedBudget() {
     }
 }
 
-// Ação de Decisão do Administrador (Aprovar / Recusar)
 async function handleBudgetAction(action) {
     const feedback = document.getElementById('budgetFeedback')?.value.trim();
 
-    // Regra: Em caso de recusa, exige justificação (technical_report)
     if (action === 'reject' && !feedback) {
         showMessage("{{ __('Ao recusar o orçamento, é obrigatório inserir uma justificação/feedback.') }}", true);
         return;
@@ -459,10 +447,7 @@ async function handleBudgetAction(action) {
     const res = await fetch(`/admin/tickets/${ticketId}/budget-decision`, {
         method: 'POST',
         headers: { ...authHeader(), 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            action: action, // 'approve' ou 'reject'
-            feedback: feedback
-        })
+        body: JSON.stringify({ action: action, feedback: feedback })
     });
 
     const data = await res.json();
@@ -499,12 +484,23 @@ async function fetchComments() {
     } catch (e) {
         sec.innerHTML = `<p class="italic py-1 text-rose-500">{{ __('Erro ao carregar histórico.') }}</p>`;
     }
-<<<<<<< HEAD
+}
 
-    section.innerHTML = '<div class="grid grid-cols-2 gap-3">' +
-        data.attachments.map((a) => {
+async function fetchPhotos() {
+    const sec = document.getElementById('photosSection');
+    if (!sec) return;
+    try {
+        const res = await fetch(`/tickets/${ticketId}/photos`, { headers: authHeader() });
+        if (!res.ok) return;
+        const data = await res.json();
+        const attachments = data.attachments || data;
+        if (!attachments || attachments.length === 0) {
+            sec.innerHTML = `<p class="italic text-[var(--text-soft)]">{{ __('Nenhuma evidência carregada.') }}</p>`;
+            return;
+        }
+        sec.innerHTML = `<div class="grid grid-cols-2 gap-3">${attachments.map(a => {
             const isImage = a.mime_type && a.mime_type.startsWith('image/');
-            const imgUrl  = '/storage/' + a.path;
+            const imgUrl = '/storage/' + a.path;
             if (isImage) {
                 return `<div class="rounded-xl overflow-hidden border border-[var(--border)] bg-[var(--surface-2)] group shadow-sm relative">
                     <a href="${imgUrl}" target="_blank" title="${a.file_name}">
@@ -527,8 +523,10 @@ async function fetchComments() {
                 </div>
                 <p class="text-[9px] font-mono text-[var(--text-soft)] uppercase tracking-wider mt-2">${a.mime_type || "{{ __('Ficheiro') }}"}</p>
             </div>`;
-        }).join('') +
-    '</div>';
+        }).join('')}</div>`;
+    } catch (e) {
+        sec.innerHTML = `<p class="italic text-rose-500">{{ __('Erro ao carregar fotografias.') }}</p>`;
+    }
 }
 
 async function deletePhoto(photoId) {
@@ -544,74 +542,11 @@ async function deletePhoto(photoId) {
     showMessage("{{ __('Fotografia removida com sucesso.') }}");
 }
 
-document.getElementById('commentForm')?.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const comment = document.getElementById('commentText').value.trim();
-    if(!comment){ showMessage("{{ __('Escreva um comentário antes de enviar.') }}", true); return; }
-
-    const res = await fetch('/tickets/' + ticketId + '/comments', {
-        method: 'POST',
-        headers: { ...authHeader(), 'Content-Type': 'application/json' },
-        body: JSON.stringify({comment}),
-    });
-    const data = await res.json();
-    if(!res.ok){ showMessage(data.message || JSON.stringify(data), true); return; }
-    document.getElementById('commentText').value = '';
-    await fetchComments();
-    showMessage("{{ __('Comentário adicionado com sucesso.') }}");
-});
-
-document.getElementById('photoForm')?.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const input = document.getElementById('photoInput');
-    if(!input.files.length){ showMessage("{{ __('Selecione uma fotografia antes de enviar.') }}", true); return; }
-    const formData = new FormData();
-    formData.append('photo', input.files[0]);
-
-    const res = await fetch('/tickets/' + ticketId + '/photos', {
-        method: 'POST',
-        headers: authHeader(),
-        body: formData,
-    });
-    const data = await res.json();
-    if(!res.ok){ showMessage(data.message || JSON.stringify(data), true); return; }
-    input.value = '';
-    await fetchPhotos();
-    showMessage("{{ __('Fotografia enviada com sucesso.') }}");
-});
-=======
-}
-
-async function fetchPhotos() {
-    const sec = document.getElementById('photosSection');
-    if (!sec) return;
-    try {
-        const res = await fetch(`/tickets/${ticketId}/photos`, { headers: authHeader() });
-        if (!res.ok) return;
-        const data = await res.json();
-        const photos = data.photos || data;
-        if (!photos || photos.length === 0) {
-            sec.innerHTML = `<p class="italic text-[var(--text-soft)]">{{ __('Nenhuma evidência carregada.') }}</p>`;
-            return;
-        }
-        sec.innerHTML = `<div class="grid grid-cols-2 gap-2 pt-1">${photos.map(p => `
-            <a href="${p.url}" target="_blank" class="block rounded-xl overflow-hidden border border-[var(--border)] hover:opacity-80 transition-all">
-                <img src="${p.url}" class="w-full h-24 object-cover" alt="{{ __('Evidência') }}">
-            </a>
-        `).join('')}</div>`;
-    } catch (e) {
-        sec.innerHTML = `<p class="italic text-rose-500">{{ __('Erro ao carregar fotografias.') }}</p>`;
-    }
-}
->>>>>>> 576218a539f606872182b9ee59c3beae93da4783
-
-// Inicialização de Listeners
 document.addEventListener('DOMContentLoaded', () => {
     fetchTicket();
     fetchComments();
     fetchPhotos();
 
-    // Eventos do Técnico
     document.getElementById('btnSubmitEstimatedBudget')?.addEventListener('click', submitEstimatedBudget);
 
     document.getElementById('btnFinishTicket')?.addEventListener('click', async () => {
@@ -633,11 +568,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Eventos do Administrador
     document.getElementById('btnApproveBudget')?.addEventListener('click', () => handleBudgetAction('approve'));
     document.getElementById('btnRejectBudget')?.addEventListener('click', () => handleBudgetAction('reject'));
 
-    // Formulário de Comentários
     document.getElementById('commentForm')?.addEventListener('submit', async (e) => {
         e.preventDefault();
         const text = document.getElementById('commentText').value.trim();
@@ -656,7 +589,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Formulário de Fotos
     document.getElementById('photoForm')?.addEventListener('submit', async (e) => {
         e.preventDefault();
         const fileInput = document.getElementById('photoInput');
@@ -683,3 +615,4 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 @endpush
+
