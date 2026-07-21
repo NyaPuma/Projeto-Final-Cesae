@@ -91,6 +91,7 @@ Route::middleware(['custom.auth'])->group(function () {
         Route::get('/tickets/{id}/comments',      [TicketController::class, 'listComments']);
         Route::post('/tickets/{id}/photos',       [TicketController::class, 'uploadPhoto']);
         Route::get('/tickets/{id}/photos',        [TicketController::class, 'listPhotos']);
+        Route::delete('/tickets/{id}/photos/{photoId}', [TicketController::class, 'deletePhoto']);
 
         // Rotas de Fluxo Misto/Avançado
         Route::post('/tickets/{id}/reopen',   [TicketController::class, 'reopenTicket']);
