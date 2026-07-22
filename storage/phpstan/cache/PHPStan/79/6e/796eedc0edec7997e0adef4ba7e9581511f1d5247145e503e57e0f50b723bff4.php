@@ -14,6 +14,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'user' => 'App\\Models\\User',
           'request' => 'Illuminate\\Http\\Request',
+          'httpexception' => 'Symfony\\Component\\HttpKernel\\Exception\\HttpException',
         ),
          'className' => 'App\\Http\\Controllers\\Controller',
          'functionName' => NULL,
@@ -38,6 +39,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'user' => 'App\\Models\\User',
           'request' => 'Illuminate\\Http\\Request',
+          'httpexception' => 'Symfony\\Component\\HttpKernel\\Exception\\HttpException',
         ),
          'className' => 'App\\Http\\Controllers\\Controller',
          'functionName' => 'authenticatedUser',
@@ -62,6 +64,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'user' => 'App\\Models\\User',
           'request' => 'Illuminate\\Http\\Request',
+          'httpexception' => 'Symfony\\Component\\HttpKernel\\Exception\\HttpException',
         ),
          'className' => 'App\\Http\\Controllers\\Controller',
          'functionName' => 'requireRole',
@@ -82,7 +85,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Controller.php' => 'f6f2245fadd19ed865c5c1107ec935122d3e16311eec3f69dfd0049a55b1f805',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Controller.php' => '70707569c1f7a945698a42517b94c3e584d0bd43d05b95ab4f39ebd51cf99b83',
     ),
   ),
 ));

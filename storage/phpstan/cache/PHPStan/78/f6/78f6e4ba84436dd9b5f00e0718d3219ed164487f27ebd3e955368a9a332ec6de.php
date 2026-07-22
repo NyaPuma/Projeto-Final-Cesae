@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Traits\Auditable.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Traits\Auditable
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-500246d47e14d659e52788cd4aa0dee6cab7098a4273804c98dbfe99b09829d4',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-abda73c6002ef2c3ab9357c0c9b34e514848a18861606cb15c632f2487674d4c',
    'data' => 
   array (
     'locatedSource' => 

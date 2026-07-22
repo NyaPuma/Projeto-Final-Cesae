@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Models\Audit.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Models\Audit
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-ad330f2e73d33aaa8ad34dfe7c620c2d4f6d2e291eefd9056b16edd2befc546c',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-149548fb8315ba9f09685073a7c23df1aaacfe496c3e509b74e440f84072e3d6',
    'data' => 
   array (
     'locatedSource' => 
@@ -59,8 +59,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'endLine' => 15,
             'startTokenPos' => 43,
             'startFilePos' => 255,
-            'endTokenPos' => 71,
-            'endFilePos' => 385,
+            'endTokenPos' => 72,
+            'endFilePos' => 386,
           ),
         ),
         'docComment' => NULL,
@@ -92,10 +92,10 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           array (
             'startLine' => 17,
             'endLine' => 20,
-            'startTokenPos' => 80,
-            'startFilePos' => 412,
-            'endTokenPos' => 96,
-            'endFilePos' => 484,
+            'startTokenPos' => 81,
+            'startFilePos' => 413,
+            'endTokenPos' => 97,
+            'endFilePos' => 485,
           ),
         ),
         'docComment' => NULL,

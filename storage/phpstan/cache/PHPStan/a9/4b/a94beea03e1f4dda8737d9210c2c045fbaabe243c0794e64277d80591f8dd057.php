@@ -12,12 +12,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Http\\Middleware',
          'uses' => 
         array (
-          'closure' => 'Closure',
-          'request' => 'Illuminate\\Http\\Request',
-          'response' => 'Symfony\\Component\\HttpFoundation\\Response',
           'user' => 'App\\Models\\User',
           'userprofile' => 'App\\Models\\UserProfile',
+          'closure' => 'Closure',
+          'request' => 'Illuminate\\Http\\Request',
           'auth' => 'Illuminate\\Support\\Facades\\Auth',
+          'response' => 'Symfony\\Component\\HttpFoundation\\Response',
         ),
          'className' => 'App\\Http\\Middleware\\RoleMiddleware',
          'functionName' => NULL,
@@ -40,12 +40,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Http\\Middleware',
          'uses' => 
         array (
-          'closure' => 'Closure',
-          'request' => 'Illuminate\\Http\\Request',
-          'response' => 'Symfony\\Component\\HttpFoundation\\Response',
           'user' => 'App\\Models\\User',
           'userprofile' => 'App\\Models\\UserProfile',
+          'closure' => 'Closure',
+          'request' => 'Illuminate\\Http\\Request',
           'auth' => 'Illuminate\\Support\\Facades\\Auth',
+          'response' => 'Symfony\\Component\\HttpFoundation\\Response',
         ),
          'className' => 'App\\Http\\Middleware\\RoleMiddleware',
          'functionName' => 'handle',
@@ -66,7 +66,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RoleMiddleware.php' => '0a62b4acc4c1c5d08cc2ae67e11107d0325f6fa362e7fca0e0f5949612ff29b6',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RoleMiddleware.php' => 'ec365848b9c62c6f72409d197523f191ff380f6712f915f5fa065fc0ceb2f8a2',
     ),
   ),
 ));

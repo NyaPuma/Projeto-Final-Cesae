@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Http\Controllers\ApiDocsController.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Controllers\ApiDocsController
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-102c1170540216189c87323100e3eb14089257c7e7fa38ec6fcddb78750b9cba',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-c824c1f228717cc7921b1b99618f1322ed404bb90817702f6b4d1b6a25586942',
    'data' => 
   array (
     'locatedSource' => 

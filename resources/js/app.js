@@ -1,28 +1,38 @@
 import './api-client';
 import './analytics';
 import './swagger/init';
-// 1. Comentados os imports do Echo e Pusher para evitar carregar bibliotecas desnecessárias
-// import Echo from 'laravel-echo';
-// import Pusher from 'pusher-js';
+import { initTheme } from './core/theme';
+import { initSidebar } from './core/sidebar';
 
 /**
  * CORE APPLICATION INITIALIZATION
  */
 const App = {
-    // Configurações e Instâncias
-    echo: null,
-
+    /**
+     * Initialize application
+     */
     init() {
         if (!this.checkAuth()) return;
 
-        this.initTheme();
-        this.initSidebar();
+        // Initialize core features
+        initTheme();
+        initSidebar();
+
+        // Initialize page-specific features
+        this.initAuth();
+        
+        // Initialize management modules based on current route
+        if (document.getElementById('equipmentTable')) {
+            this.initEquipmentManagement();
+        }
+        if (document.getElementById('roomsTable')) {
+            this.initRoomManagement();
+        }
+
+        // Initialize shared UI components
         this.initDropdowns();
         this.initTooltips();
         this.initAnimations();
-
-        // 2. Comentada a inicialização do Echo para não disparar o erro
-        // this.initEcho();
     },
 
     // --- SEGURANÇA ---
@@ -52,51 +62,33 @@ const App = {
         }, null);
     },
 
-    // --- PUSHER / ECHO (Desativado) ---
-    initEcho() {
-        // Mantemos o método vazio ou comentado para evitar que chamadas externas quebrem o JS
-        /*
-        window.Pusher = Pusher;
-        this.echo = new Echo({
-            broadcaster: 'pusher',
-            key: import.meta.env.VITE_PUSHER_APP_KEY,
-            cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
-            forceTLS: true
+    // --- AUTH MODULE ---
+    initAuth() {
+        import('./pages/auth').then(module => {
+            module.initAuth();
+        }).catch(err => {
+            console.warn('[App] Auth module not loaded:', err);
         });
+    },
 
-        const userId = localStorage.getItem('user_id');
-        if (userId) {
-            this.echo.private(`user.${userId}`)
-                .notification((notification) => this.showToast(notification.title, notification.message));
-        }
-        */
+    // --- MANAGEMENT MODULES ---
+    initEquipmentManagement() {
+        import('./pages/equipments').then(module => {
+            module.initEquipmentManagement();
+        }).catch(err => {
+            console.warn('[App] Equipment module not loaded:', err);
+        });
+    },
+
+    initRoomManagement() {
+        import('./pages/rooms').then(module => {
+            module.initRoomManagement();
+        }).catch(err => {
+            console.warn('[App] Room module not loaded:', err);
+        });
     },
 
     // --- UI COMPONENTS ---
-    initTheme() {
-        const isDark = localStorage.getItem('theme') === 'dark' ||
-                      (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
-
-        if (isDark) document.documentElement.classList.add('dark');
-    },
-
-    toggleTheme() {
-        const isDark = document.documentElement.classList.toggle('dark');
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    },
-
-    initSidebar() {
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('sidebarOverlay');
-        const toggle = () => {
-            sidebar?.classList.toggle('-translate-x-full');
-            overlay?.classList.toggle('hidden');
-        };
-
-        document.querySelectorAll('[data-sidebar-toggle]').forEach(btn => btn.addEventListener('click', toggle));
-        overlay?.addEventListener('click', toggle);
-    },
-
     initDropdowns() {
         document.addEventListener('click', (e) => {
             const isButton = e.target.closest('[data-dropdown-button]');

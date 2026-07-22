@@ -12,7 +12,7 @@ window.requireAuthOnLoad = true;
         . '<a href="/ui" class="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-slate-300 bg-slate-800/60 hover:bg-slate-700/80 border border-slate-700/80 rounded-full transition-all">'
             . '<span>←</span> ' . __('Voltar ao painel')
         . '</a>'
-        . '<button onclick="openNewRoomModal()" class="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-orange-500 hover:bg-orange-600 rounded-full shadow-sm transition-all cursor-pointer">+ ' . __('Nova sala') . '</button>'
+        . '<button id="btnAddRoom" class="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-orange-500 hover:bg-orange-600 rounded-full shadow-sm transition-all cursor-pointer">+ ' . __('Nova sala') . '</button>'
         . '</div>'
 ])
 
@@ -88,7 +88,7 @@ window.requireAuthOnLoad = true;
 <div id="roomModal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/60 backdrop-blur-sm p-4 overflow-y-auto">
     <div class="relative w-full max-w-md rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-2xl transition-all my-auto">
         <h3 class="text-base font-bold text-[var(--text)] mb-4" id="roomModalTitle">{{ __('Dados da Sala') }}</h3>
-        <form id="roomForm" onsubmit="saveRoom(event)" class="space-y-4">
+        <form id="roomForm" class="space-y-4">
             <input type="hidden" id="roomId" name="id">
 
             <div>

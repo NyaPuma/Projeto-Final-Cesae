@@ -1,0 +1,168 @@
+/**
+ * FullCalendar Custom Styles
+ * Enterprise custom styling & accessibility for FullCalendar
+ */
+
+/* FullCalendar Root Variables */
+.fc {
+    --fc-border-color: var(--border);
+    --fc-page-bg-color: transparent;
+    --fc-neutral-bg-color: transparent;
+    --fc-list-event-hover-bg-color: var(--surface-2);
+    --fc-today-bg-color: rgba(79, 70, 229, 0.05);
+
+    /* Mapeamento de Cores dos Botões para o Design System */
+    --fc-button-bg-color: var(--surface);
+    --fc-button-border-color: var(--border);
+    --fc-button-hover-bg-color: var(--surface-2);
+    --fc-button-hover-border-color: var(--border);
+    --fc-button-active-bg-color: var(--primary);
+    --fc-button-active-border-color: var(--primary);
+    --fc-button-text-color: var(--text);
+
+    color: var(--text);
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif !important;
+}
+
+/* Dark Mode Overrides */
+.dark .fc {
+    --fc-today-bg-color: rgba(129, 140, 248, 0.08);
+    --fc-button-active-bg-color: var(--surface-2);
+    --fc-button-active-border-color: var(--border);
+}
+
+/* Calendar Toolbar */
+.fc-toolbar {
+    margin-bottom: 2.5rem !important;
+    gap: 16px;
+}
+
+.fc-toolbar-title {
+    font-size: 1.5rem !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.02em;
+    color: var(--text);
+}
+
+@media (min-width: 768px) {
+    .fc-toolbar-title {
+        font-size: 1.85rem !important;
+    }
+}
+
+/* Navigation Buttons */
+.fc-button {
+    border-radius: 12px !important;
+    padding: 0.65rem 1.2rem !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    text-transform: capitalize !important;
+    transition: all 0.2s ease !important;
+    box-shadow: var(--shadow-sm) !important;
+    color: var(--text) !important;
+}
+
+/* WCAG 2.1 - Focus Visibility */
+.fc-button:focus-visible,
+a:focus-visible,
+button:focus-visible {
+    outline: 3px solid var(--primary) !important;
+    outline-offset: 2px !important;
+}
+
+.fc-button-primary:not(:disabled).fc-button-active,
+.fc-button-primary:not(:disabled):active {
+    color: #ffffff !important;
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+}
+
+.dark .fc-button-primary:not(:disabled).fc-button-active,
+.dark .fc-button-primary:not(:disabled):active {
+    color: #ffffff !important;
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+}
+
+/* Main Calendar Grid */
+.fc-scrollgrid {
+    border: 1px solid var(--border) !important;
+    border-radius: 24px !important;
+    overflow: hidden;
+    background: var(--surface);
+}
+
+.fc-theme-standard td,
+.fc-theme-standard th {
+    border-color: var(--border) !important;
+}
+
+/* Event Styles */
+.fc-col-header-cell {
+    background-color: var(--surface-2) !important;
+    padding: 0.75rem !important;
+    text-align: center !important;
+}
+
+.fc-daygrid-day-number {
+    padding: 0.5rem !important;
+    font-weight: 600 !important;
+}
+
+.fc-daygrid-event {
+    border-radius: 6px !important;
+    padding: 2px 4px !important;
+    font-size: 0.75rem !important;
+}
+
+.fc-list-event {
+    border-radius: 8px !important;
+    padding: 8px !important;
+    cursor: pointer !important;
+}
+
+.fc-list-event:hover {
+    background-color: var(--surface-2) !important;
+}
+
+/* Time Grid */
+.fc-timegrid-axis {
+    color: var(--text-soft) !important;
+}
+
+.fc-timegrid-slots {
+    border-color: var(--border) !important;
+}
+
+/* Month View */
+.fc-daygrid-day {
+    min-height: 100px !important;
+}
+
+.fc-daygrid-day-top {
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    padding: 4px !important;
+}
+
+/* Agenda View */
+.fc-agenda-view .fc-day-grid {
+    border-bottom: 1px solid var(--border) !important;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .fc-toolbar {
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+
+    .fc-toolbar-title {
+        font-size: 1.25rem !important;
+    }
+
+    .fc-button {
+        padding: 0.5rem 0.75rem !important;
+        font-size: 12px !important;
+    }
+}

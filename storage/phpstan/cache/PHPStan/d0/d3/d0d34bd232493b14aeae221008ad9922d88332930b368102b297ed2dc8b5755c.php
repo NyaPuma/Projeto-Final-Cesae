@@ -192,7 +192,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RateLimitMiddleware.php' => '40704253d7bb0c55d7368e78ff79de3e82f85de19df514d44cbb36b38a81858a',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RateLimitMiddleware.php' => '21f56fc39f19e1ab310aa3210e00ec39ddb742964e3098a89df0d770688cf731',
     ),
   ),
 ));

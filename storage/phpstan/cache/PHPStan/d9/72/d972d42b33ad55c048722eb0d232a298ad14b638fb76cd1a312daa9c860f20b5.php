@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Notifications\NewTicketNotification.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Notifications\NewTicketNotification
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-49377fe8567b31a01a3bd187b32668b37b3c95b496945a887e3ac18db1b25cd2',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-f4fc6740a95d24323e4c7250997f447af58aa87ee4c7a655121d8e3cecacd28b',
    'data' => 
   array (
     'locatedSource' => 
@@ -26,8 +26,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'attributes' => 
     array (
     ),
-    'startLine' => 10,
-    'endLine' => 57,
+    'startLine' => 9,
+    'endLine' => 56,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'Illuminate\\Notifications\\Notification',
@@ -60,8 +60,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Create a new notification instance.
  */',
-        'startLine' => 17,
-        'endLine' => 20,
+        'startLine' => 16,
+        'endLine' => 19,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -99,8 +99,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 27,
-            'endLine' => 27,
+            'startLine' => 26,
+            'endLine' => 26,
             'startColumn' => 25,
             'endColumn' => 42,
             'parameterIndex' => 0,
@@ -125,8 +125,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  *
  * @return array<int, string>
  */',
-        'startLine' => 27,
-        'endLine' => 30,
+        'startLine' => 26,
+        'endLine' => 29,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -164,8 +164,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 35,
-            'endLine' => 35,
+            'startLine' => 34,
+            'endLine' => 34,
             'startColumn' => 28,
             'endColumn' => 45,
             'parameterIndex' => 0,
@@ -188,8 +188,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Get the mail representation of the notification.
  */',
-        'startLine' => 35,
-        'endLine' => 44,
+        'startLine' => 34,
+        'endLine' => 43,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -227,8 +227,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 51,
-            'endLine' => 51,
+            'startLine' => 50,
+            'endLine' => 50,
             'startColumn' => 29,
             'endColumn' => 46,
             'parameterIndex' => 0,
@@ -253,8 +253,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  *
  * @return array<string, mixed>
  */',
-        'startLine' => 51,
-        'endLine' => 56,
+        'startLine' => 50,
+        'endLine' => 55,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

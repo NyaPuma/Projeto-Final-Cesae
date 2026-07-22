@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Http\Controllers\Controller.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Controllers\Controller
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-f6f2245fadd19ed865c5c1107ec935122d3e16311eec3f69dfd0049a55b1f805',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-70707569c1f7a945698a42517b94c3e584d0bd43d05b95ab4f39ebd51cf99b83',
    'data' => 
   array (
     'locatedSource' => 
@@ -26,8 +26,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'attributes' => 
     array (
     ),
-    'startLine' => 8,
-    'endLine' => 60,
+    'startLine' => 9,
+    'endLine' => 56,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => NULL,
@@ -69,8 +69,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 19,
-            'endLine' => 19,
+            'startLine' => 18,
+            'endLine' => 18,
             'startColumn' => 42,
             'endColumn' => 57,
             'parameterIndex' => 0,
@@ -95,12 +95,10 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * Procura o token prioritariamente no cabeçalho customizado \'X-Auth-Token\'
  * ou, em alternativa, no cabeçalho padrão \'Authorization\' (Bearer Token).
  *
- * @param  \\Illuminate\\Http\\Request  $request
- * @return \\App\\Models\\User
- * * @throws \\Symfony\\Component\\HttpKernel\\Exception\\HttpException
+ * * @throws HttpException
  */',
-        'startLine' => 19,
-        'endLine' => 42,
+        'startLine' => 18,
+        'endLine' => 41,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -138,8 +136,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 53,
-            'endLine' => 53,
+            'startLine' => 49,
+            'endLine' => 49,
             'startColumn' => 36,
             'endColumn' => 45,
             'parameterIndex' => 0,
@@ -164,8 +162,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 53,
-            'endLine' => 53,
+            'startLine' => 49,
+            'endLine' => 49,
             'startColumn' => 48,
             'endColumn' => 59,
             'parameterIndex' => 1,
@@ -189,13 +187,10 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * Garante programaticamente que o utilizador possui um dos perfis/papéis permitidos.
  * Caso o perfil não corresponda, lança uma exceção HTTP 403 (Acesso Proibido).
  *
- * @param  \\App\\Models\\User  $user
- * @param  array  $roles
- * @return void
- * @throws \\Symfony\\Component\\HttpKernel\\Exception\\HttpException
+ * @throws HttpException
  */',
-        'startLine' => 53,
-        'endLine' => 59,
+        'startLine' => 49,
+        'endLine' => 55,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

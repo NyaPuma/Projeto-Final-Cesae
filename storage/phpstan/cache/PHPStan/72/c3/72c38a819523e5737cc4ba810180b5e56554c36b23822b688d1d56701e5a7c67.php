@@ -13,7 +13,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'uses' => 
         array (
           'queueable' => 'Illuminate\\Bus\\Queueable',
-          'shouldqueue' => 'Illuminate\\Contracts\\Queue\\ShouldQueue',
           'mailmessage' => 'Illuminate\\Notifications\\Messages\\MailMessage',
           'notification' => 'Illuminate\\Notifications\\Notification',
         ),
@@ -759,7 +758,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'uses' => 
         array (
           'queueable' => 'Illuminate\\Bus\\Queueable',
-          'shouldqueue' => 'Illuminate\\Contracts\\Queue\\ShouldQueue',
           'mailmessage' => 'Illuminate\\Notifications\\Messages\\MailMessage',
           'notification' => 'Illuminate\\Notifications\\Notification',
         ),
@@ -785,7 +783,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'uses' => 
         array (
           'queueable' => 'Illuminate\\Bus\\Queueable',
-          'shouldqueue' => 'Illuminate\\Contracts\\Queue\\ShouldQueue',
           'mailmessage' => 'Illuminate\\Notifications\\Messages\\MailMessage',
           'notification' => 'Illuminate\\Notifications\\Notification',
         ),
@@ -811,7 +808,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'uses' => 
         array (
           'queueable' => 'Illuminate\\Bus\\Queueable',
-          'shouldqueue' => 'Illuminate\\Contracts\\Queue\\ShouldQueue',
           'mailmessage' => 'Illuminate\\Notifications\\Messages\\MailMessage',
           'notification' => 'Illuminate\\Notifications\\Notification',
         ),
@@ -837,7 +833,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'uses' => 
         array (
           'queueable' => 'Illuminate\\Bus\\Queueable',
-          'shouldqueue' => 'Illuminate\\Contracts\\Queue\\ShouldQueue',
           'mailmessage' => 'Illuminate\\Notifications\\Messages\\MailMessage',
           'notification' => 'Illuminate\\Notifications\\Notification',
         ),
@@ -860,7 +855,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\NewTicketNotification.php' => '49377fe8567b31a01a3bd187b32668b37b3c95b496945a887e3ac18db1b25cd2',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\NewTicketNotification.php' => 'f4fc6740a95d24323e4c7250997f447af58aa87ee4c7a655121d8e3cecacd28b',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Bus\\Queueable.php' => '7df8b51aab8bd3196229be1a8e398c2c2ec636ae1767ce499a64bfdbf5675c47',
     ),
   ),

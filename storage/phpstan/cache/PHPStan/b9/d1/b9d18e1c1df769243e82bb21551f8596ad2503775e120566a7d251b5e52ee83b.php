@@ -12,9 +12,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Services',
          'uses' => 
         array (
-          'openai' => 'OpenAI\\Laravel\\Facades\\OpenAI',
           'ticket' => 'App\\Models\\Ticket',
           'user' => 'App\\Models\\User',
+          'openai' => 'OpenAI\\Laravel\\Facades\\OpenAI',
         ),
          'className' => 'App\\Services\\AIService',
          'functionName' => NULL,
@@ -37,9 +37,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Services',
          'uses' => 
         array (
-          'openai' => 'OpenAI\\Laravel\\Facades\\OpenAI',
           'ticket' => 'App\\Models\\Ticket',
           'user' => 'App\\Models\\User',
+          'openai' => 'OpenAI\\Laravel\\Facades\\OpenAI',
         ),
          'className' => 'App\\Services\\AIService',
          'functionName' => 'recomendarTecnico',
@@ -60,7 +60,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php' => '81f45ef6d2fd65b5b2079f2e1d715d84b9bee6fbcb87d7f844f29a182bee07e8',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php' => 'd25df3a51daa77ba12d81713cca0d12b1f22ccc84a9fe69421f063be1c7c55c6',
     ),
   ),
 ));

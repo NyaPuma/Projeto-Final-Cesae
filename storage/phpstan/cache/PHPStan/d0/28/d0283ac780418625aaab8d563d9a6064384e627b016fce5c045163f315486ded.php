@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Exports\TicketsExport.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Exports\TicketsExport
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-9629631b126f272fcfaa98b476b34fdaf127ad3d0b4012ce5805995729a1c13e',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-a7201340162e82afe6dbdc41ec57d81dc54fc5da2fe78b6aa7979f42c86b9f3c',
    'data' => 
   array (
     'locatedSource' => 
@@ -38,11 +38,11 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'implementsClassNames' => 
     array (
       0 => 'Maatwebsite\\Excel\\Concerns\\FromQuery',
-      1 => 'Maatwebsite\\Excel\\Concerns\\WithHeadings',
-      2 => 'Maatwebsite\\Excel\\Concerns\\WithMapping',
-      3 => 'Maatwebsite\\Excel\\Concerns\\ShouldAutoSize',
-      4 => 'Maatwebsite\\Excel\\Concerns\\WithTitle',
-      5 => 'Maatwebsite\\Excel\\Concerns\\WithStyles',
+      1 => 'Maatwebsite\\Excel\\Concerns\\ShouldAutoSize',
+      2 => 'Maatwebsite\\Excel\\Concerns\\WithHeadings',
+      3 => 'Maatwebsite\\Excel\\Concerns\\WithMapping',
+      4 => 'Maatwebsite\\Excel\\Concerns\\WithStyles',
+      5 => 'Maatwebsite\\Excel\\Concerns\\WithTitle',
     ),
     'traitClassNames' => 
     array (

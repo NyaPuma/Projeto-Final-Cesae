@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Http\Controllers\AnalyticsController.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Controllers\AnalyticsController
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-02568f9c79fc3babd677057828861b7ea9fde897ecfc5648c0c71f3b3d6dd654',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-bb307b8974813042c7fe743bf6821809c75cfb0ba1ff40c1e5ae5649818fea3f',
    'data' => 
   array (
     'locatedSource' => 
@@ -26,7 +26,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'attributes' => 
     array (
     ),
-    'startLine' => 18,
+    'startLine' => 17,
     'endLine' => 365,
     'startColumn' => 1,
     'endColumn' => 1,
@@ -69,8 +69,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 32,
-            'endLine' => 32,
+            'startLine' => 31,
+            'endLine' => 31,
             'startColumn' => 27,
             'endColumn' => 42,
             'parameterIndex' => 0,
@@ -92,12 +92,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'/analytics/stats\'',
                 'attributes' => 
                 array (
-                  'startLine' => 24,
-                  'endLine' => 24,
-                  'startTokenPos' => 94,
-                  'startFilePos' => 599,
-                  'endTokenPos' => 94,
-                  'endFilePos' => 616,
+                  'startLine' => 23,
+                  'endLine' => 23,
+                  'startTokenPos' => 89,
+                  'startFilePos' => 564,
+                  'endTokenPos' => 89,
+                  'endFilePos' => 581,
                 ),
               ),
               'tags' => 
@@ -105,12 +105,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[\'Analytics\']',
                 'attributes' => 
                 array (
-                  'startLine' => 25,
-                  'endLine' => 25,
-                  'startTokenPos' => 100,
-                  'startFilePos' => 633,
-                  'endTokenPos' => 102,
-                  'endFilePos' => 645,
+                  'startLine' => 24,
+                  'endLine' => 24,
+                  'startTokenPos' => 95,
+                  'startFilePos' => 598,
+                  'endTokenPos' => 97,
+                  'endFilePos' => 610,
                 ),
               ),
               'summary' => 
@@ -118,12 +118,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'Métricas gerais\'',
                 'attributes' => 
                 array (
-                  'startLine' => 26,
-                  'endLine' => 26,
-                  'startTokenPos' => 108,
-                  'startFilePos' => 665,
-                  'endTokenPos' => 108,
-                  'endFilePos' => 682,
+                  'startLine' => 25,
+                  'endLine' => 25,
+                  'startTokenPos' => 103,
+                  'startFilePos' => 630,
+                  'endTokenPos' => 103,
+                  'endFilePos' => 647,
                 ),
               ),
               'security' => 
@@ -131,12 +131,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[[\'X-Auth-Token\' => []], [\'BearerAuth\' => []]]',
                 'attributes' => 
                 array (
-                  'startLine' => 27,
-                  'endLine' => 27,
-                  'startTokenPos' => 114,
-                  'startFilePos' => 703,
-                  'endTokenPos' => 133,
-                  'endFilePos' => 748,
+                  'startLine' => 26,
+                  'endLine' => 26,
+                  'startTokenPos' => 109,
+                  'startFilePos' => 668,
+                  'endTokenPos' => 128,
+                  'endFilePos' => 713,
                 ),
               ),
               'responses' => 
@@ -144,12 +144,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[new \\OpenApi\\Attributes\\Response(response: 200, description: \'KPIs agregados\')]',
                 'attributes' => 
                 array (
-                  'startLine' => 28,
-                  'endLine' => 30,
-                  'startTokenPos' => 139,
-                  'startFilePos' => 770,
-                  'endTokenPos' => 157,
-                  'endFilePos' => 854,
+                  'startLine' => 27,
+                  'endLine' => 29,
+                  'startTokenPos' => 134,
+                  'startFilePos' => 735,
+                  'endTokenPos' => 153,
+                  'endFilePos' => 820,
                 ),
               ),
             ),
@@ -158,8 +158,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Obtém o payload completo do dashboard analítico para a interface web.
  */',
-        'startLine' => 23,
-        'endLine' => 41,
+        'startLine' => 22,
+        'endLine' => 40,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -197,8 +197,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 55,
-            'endLine' => 55,
+            'startLine' => 54,
+            'endLine' => 54,
             'startColumn' => 28,
             'endColumn' => 43,
             'parameterIndex' => 0,
@@ -220,12 +220,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'/analytics/charts\'',
                 'attributes' => 
                 array (
-                  'startLine' => 47,
-                  'endLine' => 47,
-                  'startTokenPos' => 237,
-                  'startFilePos' => 1253,
-                  'endTokenPos' => 237,
-                  'endFilePos' => 1271,
+                  'startLine' => 46,
+                  'endLine' => 46,
+                  'startTokenPos' => 233,
+                  'startFilePos' => 1219,
+                  'endTokenPos' => 233,
+                  'endFilePos' => 1237,
                 ),
               ),
               'tags' => 
@@ -233,12 +233,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[\'Analytics\']',
                 'attributes' => 
                 array (
-                  'startLine' => 48,
-                  'endLine' => 48,
-                  'startTokenPos' => 243,
-                  'startFilePos' => 1288,
-                  'endTokenPos' => 245,
-                  'endFilePos' => 1300,
+                  'startLine' => 47,
+                  'endLine' => 47,
+                  'startTokenPos' => 239,
+                  'startFilePos' => 1254,
+                  'endTokenPos' => 241,
+                  'endFilePos' => 1266,
                 ),
               ),
               'summary' => 
@@ -246,12 +246,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'Dados para dashboards\'',
                 'attributes' => 
                 array (
-                  'startLine' => 49,
-                  'endLine' => 49,
-                  'startTokenPos' => 251,
-                  'startFilePos' => 1320,
-                  'endTokenPos' => 251,
-                  'endFilePos' => 1342,
+                  'startLine' => 48,
+                  'endLine' => 48,
+                  'startTokenPos' => 247,
+                  'startFilePos' => 1286,
+                  'endTokenPos' => 247,
+                  'endFilePos' => 1308,
                 ),
               ),
               'security' => 
@@ -259,12 +259,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[[\'X-Auth-Token\' => []], [\'BearerAuth\' => []]]',
                 'attributes' => 
                 array (
-                  'startLine' => 50,
-                  'endLine' => 50,
-                  'startTokenPos' => 257,
-                  'startFilePos' => 1363,
-                  'endTokenPos' => 276,
-                  'endFilePos' => 1408,
+                  'startLine' => 49,
+                  'endLine' => 49,
+                  'startTokenPos' => 253,
+                  'startFilePos' => 1329,
+                  'endTokenPos' => 272,
+                  'endFilePos' => 1374,
                 ),
               ),
               'responses' => 
@@ -272,12 +272,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[new \\OpenApi\\Attributes\\Response(response: 200, description: \'Séries para gráficos\')]',
                 'attributes' => 
                 array (
-                  'startLine' => 51,
-                  'endLine' => 53,
-                  'startTokenPos' => 282,
-                  'startFilePos' => 1430,
-                  'endTokenPos' => 300,
-                  'endFilePos' => 1522,
+                  'startLine' => 50,
+                  'endLine' => 52,
+                  'startTokenPos' => 278,
+                  'startFilePos' => 1396,
+                  'endTokenPos' => 297,
+                  'endFilePos' => 1489,
                 ),
               ),
             ),
@@ -286,8 +286,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Fornece os dados para os gráficos do dashboard analítico.
  */',
-        'startLine' => 46,
-        'endLine' => 64,
+        'startLine' => 45,
+        'endLine' => 63,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -321,7 +321,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 66,
+        'startLine' => 65,
         'endLine' => 204,
         'startColumn' => 5,
         'endColumn' => 5,
@@ -524,10 +524,10 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 array (
                   'startLine' => 265,
                   'endLine' => 265,
-                  'startTokenPos' => 2241,
-                  'startFilePos' => 10113,
-                  'endTokenPos' => 2241,
-                  'endFilePos' => 10135,
+                  'startTokenPos' => 2240,
+                  'startFilePos' => 10083,
+                  'endTokenPos' => 2240,
+                  'endFilePos' => 10105,
                 ),
               ),
               'tags' => 
@@ -537,10 +537,10 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 array (
                   'startLine' => 266,
                   'endLine' => 266,
-                  'startTokenPos' => 2247,
-                  'startFilePos' => 10152,
-                  'endTokenPos' => 2249,
-                  'endFilePos' => 10164,
+                  'startTokenPos' => 2246,
+                  'startFilePos' => 10122,
+                  'endTokenPos' => 2248,
+                  'endFilePos' => 10134,
                 ),
               ),
               'summary' => 
@@ -550,10 +550,10 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 array (
                   'startLine' => 267,
                   'endLine' => 267,
-                  'startTokenPos' => 2255,
-                  'startFilePos' => 10184,
-                  'endTokenPos' => 2255,
-                  'endFilePos' => 10197,
+                  'startTokenPos' => 2254,
+                  'startFilePos' => 10154,
+                  'endTokenPos' => 2254,
+                  'endFilePos' => 10167,
                 ),
               ),
               'security' => 
@@ -563,10 +563,10 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 array (
                   'startLine' => 268,
                   'endLine' => 268,
-                  'startTokenPos' => 2261,
-                  'startFilePos' => 10218,
-                  'endTokenPos' => 2280,
-                  'endFilePos' => 10263,
+                  'startTokenPos' => 2260,
+                  'startFilePos' => 10188,
+                  'endTokenPos' => 2279,
+                  'endFilePos' => 10233,
                 ),
               ),
               'responses' => 
@@ -576,10 +576,10 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 array (
                   'startLine' => 269,
                   'endLine' => 271,
-                  'startTokenPos' => 2286,
-                  'startFilePos' => 10285,
+                  'startTokenPos' => 2285,
+                  'startFilePos' => 10255,
                   'endTokenPos' => 2304,
-                  'endFilePos' => 10380,
+                  'endFilePos' => 10351,
                 ),
               ),
             ),
@@ -653,9 +653,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                   'startLine' => 315,
                   'endLine' => 315,
                   'startTokenPos' => 2578,
-                  'startFilePos' => 11848,
+                  'startFilePos' => 11819,
                   'endTokenPos' => 2578,
-                  'endFilePos' => 11870,
+                  'endFilePos' => 11841,
                 ),
               ),
               'tags' => 
@@ -666,9 +666,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                   'startLine' => 316,
                   'endLine' => 316,
                   'startTokenPos' => 2584,
-                  'startFilePos' => 11887,
+                  'startFilePos' => 11858,
                   'endTokenPos' => 2586,
-                  'endFilePos' => 11899,
+                  'endFilePos' => 11870,
                 ),
               ),
               'summary' => 
@@ -679,9 +679,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                   'startLine' => 317,
                   'endLine' => 317,
                   'startTokenPos' => 2592,
-                  'startFilePos' => 11919,
+                  'startFilePos' => 11890,
                   'endTokenPos' => 2592,
-                  'endFilePos' => 11932,
+                  'endFilePos' => 11903,
                 ),
               ),
               'security' => 
@@ -692,9 +692,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                   'startLine' => 318,
                   'endLine' => 318,
                   'startTokenPos' => 2598,
-                  'startFilePos' => 11953,
+                  'startFilePos' => 11924,
                   'endTokenPos' => 2617,
-                  'endFilePos' => 11998,
+                  'endFilePos' => 11969,
                 ),
               ),
               'responses' => 
@@ -705,9 +705,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                   'startLine' => 319,
                   'endLine' => 321,
                   'startTokenPos' => 2623,
-                  'startFilePos' => 12020,
-                  'endTokenPos' => 2641,
-                  'endFilePos' => 12115,
+                  'startFilePos' => 11991,
+                  'endTokenPos' => 2642,
+                  'endFilePos' => 12087,
                 ),
               ),
             ),
@@ -780,10 +780,10 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 array (
                   'startLine' => 345,
                   'endLine' => 345,
-                  'startTokenPos' => 2783,
-                  'startFilePos' => 12798,
-                  'endTokenPos' => 2783,
-                  'endFilePos' => 12822,
+                  'startTokenPos' => 2785,
+                  'startFilePos' => 12771,
+                  'endTokenPos' => 2785,
+                  'endFilePos' => 12795,
                 ),
               ),
               'tags' => 
@@ -793,10 +793,10 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 array (
                   'startLine' => 346,
                   'endLine' => 346,
-                  'startTokenPos' => 2789,
-                  'startFilePos' => 12839,
-                  'endTokenPos' => 2791,
-                  'endFilePos' => 12851,
+                  'startTokenPos' => 2791,
+                  'startFilePos' => 12812,
+                  'endTokenPos' => 2793,
+                  'endFilePos' => 12824,
                 ),
               ),
               'summary' => 
@@ -806,10 +806,10 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 array (
                   'startLine' => 347,
                   'endLine' => 347,
-                  'startTokenPos' => 2797,
-                  'startFilePos' => 12871,
-                  'endTokenPos' => 2797,
-                  'endFilePos' => 12886,
+                  'startTokenPos' => 2799,
+                  'startFilePos' => 12844,
+                  'endTokenPos' => 2799,
+                  'endFilePos' => 12859,
                 ),
               ),
               'security' => 
@@ -819,10 +819,10 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 array (
                   'startLine' => 348,
                   'endLine' => 348,
-                  'startTokenPos' => 2803,
-                  'startFilePos' => 12907,
-                  'endTokenPos' => 2822,
-                  'endFilePos' => 12952,
+                  'startTokenPos' => 2805,
+                  'startFilePos' => 12880,
+                  'endTokenPos' => 2824,
+                  'endFilePos' => 12925,
                 ),
               ),
               'responses' => 
@@ -832,10 +832,10 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 array (
                   'startLine' => 349,
                   'endLine' => 351,
-                  'startTokenPos' => 2828,
-                  'startFilePos' => 12974,
-                  'endTokenPos' => 2846,
-                  'endFilePos' => 13070,
+                  'startTokenPos' => 2830,
+                  'startFilePos' => 12947,
+                  'endTokenPos' => 2849,
+                  'endFilePos' => 13044,
                 ),
               ),
             ),

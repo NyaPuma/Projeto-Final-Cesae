@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Models\TicketWorkflowHistory.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Models\TicketWorkflowHistory
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-8fd6009876c7f3d1bc87bb5a7bd6486d120e446e4238cbfe012cb1fd38586c24',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-b76cc60436a11500ca3c1a2e009857009e472d0ea33773e3c0cdfbcf5a8a6772',
    'data' => 
   array (
     'locatedSource' => 
@@ -94,8 +94,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'endLine' => 22,
             'startTokenPos' => 54,
             'startFilePos' => 396,
-            'endTokenPos' => 70,
-            'endFilePos' => 527,
+            'endTokenPos' => 71,
+            'endFilePos' => 528,
           ),
         ),
         'docComment' => NULL,

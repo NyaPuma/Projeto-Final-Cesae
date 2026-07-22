@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 return [
-	'lastFullAnalysisTime' => 1784718922,
+	'lastFullAnalysisTime' => 1784719355,
 	'meta' => array (
   'cacheVersion' => 'v13-packageDependencies',
   'phpstanVersion' => '2.2.5',
@@ -2459,17 +2459,17 @@ return [
       0 => 
       array (
         0 => 'abort',
-        1 => 29,
+        1 => 28,
       ),
       1 => 
       array (
         0 => 'abort',
-        1 => 38,
+        1 => 37,
       ),
       2 => 
       array (
         0 => 'abort',
-        1 => 57,
+        1 => 53,
       ),
     ),
   ),
@@ -2591,32 +2591,32 @@ return [
       0 => 
       array (
         0 => 'Custo estimado excede o limiar. Ticket pendente de aprovação orçamental.',
-        1 => 787,
+        1 => 790,
       ),
       1 => 
       array (
         0 => 'Custo estimado dentro da autonomia. Pode prosseguir com a intervenção.',
-        1 => 806,
+        1 => 809,
       ),
       2 => 
       array (
         0 => 'Pedido de orçamento submetido com detalhes. Aguarde aprovação.',
-        1 => 852,
+        1 => 855,
       ),
       3 => 
       array (
         0 => 'Custo dentro do limiar. Intervenção autorizada automaticamente.',
-        1 => 864,
+        1 => 867,
       ),
       4 => 
       array (
         0 => 'Estado "fechada" não encontrado.',
-        1 => 887,
+        1 => 890,
       ),
       5 => 
       array (
         0 => 'Intervenção concluída e ticket fechado com sucesso.',
-        1 => 902,
+        1 => 905,
       ),
     ),
     'Larastan\\Larastan\\Collectors\\UsedViewFunctionCollector' => 
@@ -2630,63 +2630,63 @@ return [
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\ControllerHelpers',
-        2 => '$request->user():21',
+        2 => '$request->user():18',
         3 => NULL,
       ),
       1 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
         1 => 'App\\Traits\\ControllerHelpers',
-        2 => '!$user->profile || !in_array($user->profile->name, $roles, true):32',
+        2 => '!$user->profile || !in_array($user->profile->name, $roles, true):26',
         3 => NULL,
       ),
       2 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\BooleanNotConstantConditionRule',
         1 => 'App\\Traits\\ControllerHelpers',
-        2 => '$user->profile:32',
+        2 => '$user->profile:26',
         3 => NULL,
       ),
       3 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\BooleanNotConstantConditionRule',
         1 => 'App\\Traits\\ControllerHelpers',
-        2 => 'in_array($user->profile->name, $roles, true):32',
+        2 => 'in_array($user->profile->name, $roles, true):26',
         3 => NULL,
       ),
       4 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
         1 => 'App\\Traits\\ControllerHelpers',
-        2 => 'in_array($user->profile->name, $roles, true):32',
+        2 => 'in_array($user->profile->name, $roles, true):26',
         3 => NULL,
       ),
       5 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\BooleanOrConstantConditionRule',
         1 => 'App\\Traits\\ControllerHelpers',
-        2 => '!$user->profile:32',
+        2 => '!$user->profile:26',
         3 => NULL,
       ),
       6 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\BooleanOrConstantConditionRule',
         1 => 'App\\Traits\\ControllerHelpers',
-        2 => '!in_array($user->profile->name, $roles, true):32',
+        2 => '!in_array($user->profile->name, $roles, true):26',
         3 => NULL,
       ),
       7 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\BooleanOrConstantConditionRule',
         1 => 'App\\Traits\\ControllerHelpers',
-        2 => '!$user->profile || !in_array($user->profile->name, $roles, true):32',
+        2 => '!$user->profile || !in_array($user->profile->name, $roles, true):26',
         3 => NULL,
       ),
       8 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
         1 => 'App\\Traits\\ControllerHelpers',
-        2 => 'abort(403, \'Acesso proibido para o seu perfil.\'):33',
+        2 => 'abort(403, \'Acesso proibido para o seu perfil.\'):27',
         3 => NULL,
       ),
     ),
@@ -2705,22 +2705,22 @@ return [
       0 => 
       array (
         0 => 'abort',
-        1 => 33,
+        1 => 27,
       ),
       1 => 
       array (
         0 => 'event',
-        1 => 194,
+        1 => 193,
       ),
       2 => 
       array (
         0 => 'event',
-        1 => 507,
+        1 => 508,
       ),
       3 => 
       array (
         0 => 'event',
-        1 => 555,
+        1 => 556,
       ),
     ),
     'PHPStan\\Rules\\DeadCode\\PossiblyPureStaticCallCollector' => 
@@ -2729,49 +2729,49 @@ return [
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 493,
+        2 => 494,
       ),
       1 => 
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 650,
+        2 => 653,
       ),
       2 => 
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 660,
+        2 => 663,
       ),
       3 => 
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 671,
+        2 => 674,
       ),
       4 => 
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 681,
+        2 => 684,
       ),
       5 => 
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 693,
+        2 => 696,
       ),
       6 => 
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 703,
+        2 => 706,
       ),
       7 => 
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 714,
+        2 => 717,
       ),
     ),
     'PHPStan\\Rules\\Traits\\TraitUseCollector' => 
@@ -3425,11 +3425,11 @@ return [
     array (
       0 => 
       array (
-        0 => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+        0 => 'App\\Traits\\Auditable',
       ),
       1 => 
       array (
-        0 => 'App\\Traits\\Auditable',
+        0 => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
       ),
     ),
   ),
@@ -3857,11 +3857,11 @@ return [
     array (
       0 => 
       array (
-        0 => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+        0 => 'App\\Traits\\Auditable',
       ),
       1 => 
       array (
-        0 => 'App\\Traits\\Auditable',
+        0 => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
       ),
     ),
   ),
@@ -4320,11 +4320,11 @@ return [
     array (
       0 => 
       array (
-        0 => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+        0 => 'App\\Traits\\Auditable',
       ),
       1 => 
       array (
-        0 => 'App\\Traits\\Auditable',
+        0 => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
       ),
       2 => 
       array (
@@ -4609,7 +4609,7 @@ return [
       0 => 
       array (
         0 => 'App\\Traits\\ControllerHelpers',
-        1 => 12,
+        1 => 11,
       ),
     ),
   ),
@@ -4617,21 +4617,21 @@ return [
 	'dependencies' => array (
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Console\\Commands\\SimulateTelemetry.php' => 
   array (
-    'fileHash' => '006e8a53e80f9f612cb1f8939289d6cdb6f7707815a48e0e8632f547ea5f38e4',
+    'fileHash' => '814071fd3569dc29aa6c2be2887fc6d0817f1dc18ba6542b1e748a2773e2ccd8',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Events\\TicketCreatedBroadcast.php' => 
   array (
-    'fileHash' => 'a80b7b35fda20a19d85705300de241ba66135e948022be2f903e15132cc3fc68',
+    'fileHash' => '2567e4d663a65c4252b5b85e662aa70985afa9ed4ed5a9041e00f12a84ceb07b',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Events\\TicketStatusUpdatedBroadcast.php' => 
   array (
-    'fileHash' => 'c8685eeb70ca0a0699c6101731fc70e66826e30da77064bd9970a3bf6fa58d2b',
+    'fileHash' => '2a8ef04baa84ca4266a8316c394992544a8fa036aa4fd624f463a081d884f8a2',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
@@ -4639,7 +4639,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Exports\\TicketsExport.php' => 
   array (
-    'fileHash' => '9629631b126f272fcfaa98b476b34fdaf127ad3d0b4012ce5805995729a1c13e',
+    'fileHash' => 'a7201340162e82afe6dbdc41ec57d81dc54fc5da2fe78b6aa7979f42c86b9f3c',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php',
@@ -4647,49 +4647,49 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminController.php' => 
   array (
-    'fileHash' => '2d27adf315424e2697c0991592a1bde520e4249ce5d3c90c9343140cc4079d15',
+    'fileHash' => '7506d48e481bc9b8b583ed19170be8eba0f6d037f4b9105a0f5dadfbeae3c379',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php' => 
   array (
-    'fileHash' => '02568f9c79fc3babd677057828861b7ea9fde897ecfc5648c0c71f3b3d6dd654',
+    'fileHash' => 'bb307b8974813042c7fe743bf6821809c75cfb0ba1ff40c1e5ae5649818fea3f',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\ApiDocsController.php' => 
   array (
-    'fileHash' => '102c1170540216189c87323100e3eb14089257c7e7fa38ec6fcddb78750b9cba',
+    'fileHash' => 'c824c1f228717cc7921b1b99618f1322ed404bb90817702f6b4d1b6a25586942',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuditController.php' => 
   array (
-    'fileHash' => '529b58deb294e5a3f3b5bd36bdee3941b710c9ff25f2436fc010f1d4778e4f9a',
+    'fileHash' => 'adb9c191fbf3d4e3a6a60cbc4aa62f4000cc5bd9d6871f9b9d129a331163f03c',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuthController.php' => 
   array (
-    'fileHash' => 'ef1e332fe67df33340d30c01b4e7bfc564fc144d81e88b3f350d6dceafcd7b4b',
+    'fileHash' => 'f16bb89ec617ca70e4a3fd105d5810ba2332895058ca621bac9427b062b1a737',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\CalendarController.php' => 
   array (
-    'fileHash' => '52146b85304fe340ca9f1e3c5093c0b30f6d43e9a6cb1513a9b6cdf9bf865c80',
+    'fileHash' => 'ac3998ea0cdd3b76da48f8afc52f3156bd64b844a4d2fc8ee41d7c453407ec38',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Controller.php' => 
   array (
-    'fileHash' => 'f6f2245fadd19ed865c5c1107ec935122d3e16311eec3f69dfd0049a55b1f805',
+    'fileHash' => '70707569c1f7a945698a42517b94c3e584d0bd43d05b95ab4f39ebd51cf99b83',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminController.php',
@@ -4715,28 +4715,28 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\NotificationController.php' => 
   array (
-    'fileHash' => '1acbc873bcfd6d29d8926d7d5a624edb17cb3e7f51197046ef25ce81238af45c',
+    'fileHash' => 'ee76d58b58f98084ee4e51e61950fe39f3c2d189874f3323b86cf5fade837358',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php' => 
   array (
-    'fileHash' => 'd19b9f1eacbaf93b5dd98e58b4442ca6ccf3b51bcf3dfde7bf7f28aa1ee08bc7',
+    'fileHash' => 'bad90e0a6f72a25aaf047fbfd2e093b87ca59d7d3bdcb5ca9ebce802bd9f8486',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php' => 
   array (
-    'fileHash' => '9401260e2ee53030bd1a51af7bdd5d4a2affab5ec1c4e51c9b0dc77671709a8e',
+    'fileHash' => '274c06a5d77e3559d11693dac794b7de7f732cb2a19f8ff32ca8ed2eccf03459',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php' => 
   array (
-    'fileHash' => 'a86ae12d56a38b14c1da4d9434a6e5770eb2f58649214b970cc613a99475b1be',
+    'fileHash' => '78ff1acb53c0354a9af2dc8174c2c0d116aa322dbd002f63df491acf657ff8ad',
     'dependentFiles' => 
     array (
     ),
@@ -4750,42 +4750,42 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CsrfMiddleware.php' => 
   array (
-    'fileHash' => 'cbd38c1ec76b2a37e61915768d4b60e61fda3860b903eed0f7455bffa16ba736',
+    'fileHash' => '2e157df21792b8bf0fee551c87045dd2a2d8ae1b48c45e019342b01f5a4cffaa',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php' => 
   array (
-    'fileHash' => '050b105e12a7be4a8d39c6e0a215799041c448fb5a947edd29d4aa3871f90a93',
+    'fileHash' => '022e81f619821fae46108d5b0eced0bcd897a8e8a3b4ccc7714f0ca9a4578981',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RateLimitMiddleware.php' => 
   array (
-    'fileHash' => '40704253d7bb0c55d7368e78ff79de3e82f85de19df514d44cbb36b38a81858a',
+    'fileHash' => '21f56fc39f19e1ab310aa3210e00ec39ddb742964e3098a89df0d770688cf731',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RoleMiddleware.php' => 
   array (
-    'fileHash' => '0a62b4acc4c1c5d08cc2ae67e11107d0325f6fa362e7fca0e0f5949612ff29b6',
+    'fileHash' => 'ec365848b9c62c6f72409d197523f191ff380f6712f915f5fa065fc0ceb2f8a2',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\SetLocaleMiddleware.php' => 
   array (
-    'fileHash' => 'ea66ee4c043f23e758f42756a5260f900bfd26cc8e89384618b5e9d9d4400775',
+    'fileHash' => 'ec51a5845efc8c4800887c898d0cf0100e8335cba89ff164f7572db50f9015a1',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Mail\\TestMail.php' => 
   array (
-    'fileHash' => 'f817b41d91f251e8291fcb9816ed447a20d6203571b38e786c2e4d945fc8c674',
+    'fileHash' => 'ec05867309ba53eadcb5d911c41353fa444e42bced096f5f9850212a4b3c2447',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\NotificationController.php',
@@ -4793,14 +4793,14 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Mail\\TicketCreated.php' => 
   array (
-    'fileHash' => '51f15465e6b2f5c880e5a954f3e616bf1d7f7b4d3638800ff7c34f55f283f7de',
+    'fileHash' => 'd73ba06f95340060056db324ea1438665e4c7989fae339c93ada8d2ad9025caf',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Audit.php' => 
   array (
-    'fileHash' => 'ad330f2e73d33aaa8ad34dfe7c620c2d4f6d2e291eefd9056b16edd2befc546c',
+    'fileHash' => '149548fb8315ba9f09685073a7c23df1aaacfe496c3e509b74e440f84072e3d6',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php',
@@ -4819,7 +4819,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php' => 
   array (
-    'fileHash' => '3f053fcb3b91c1596ad7ec55a47a18f6021121c3e5de646952f2842094fdba33',
+    'fileHash' => '2f18050bf6fe79682e89379f0e96264b350f3dbc997d14d9f30925dcfb66de45',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Console\\Commands\\SimulateTelemetry.php',
@@ -4854,7 +4854,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php' => 
   array (
-    'fileHash' => 'b3316457109b74bf3bbde778f748c9f9002d7af1b28b475d10410db315f2c884',
+    'fileHash' => 'a38b9c655bf304912c1c150c5f93cafecd7f240414b61e7beea7ec273d690891',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php',
@@ -4866,7 +4866,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php' => 
   array (
-    'fileHash' => '1e74e9e7dc72b339f63306a1b9187e25e2dfe82bf4fe4749dc5ba75c390d8a7b',
+    'fileHash' => 'f6e2e8510e1139b76955648efeb11ec531399b14e2fc3fb7a7459b994b6c9d04',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Console\\Commands\\SimulateTelemetry.php',
@@ -4928,7 +4928,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php' => 
   array (
-    'fileHash' => '8fd6009876c7f3d1bc87bb5a7bd6486d120e446e4238cbfe012cb1fd38586c24',
+    'fileHash' => 'b76cc60436a11500ca3c1a2e009857009e472d0ea33773e3c0cdfbcf5a8a6772',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
@@ -4936,7 +4936,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php' => 
   array (
-    'fileHash' => 'bfcbfd460602ba62668233502c69bfa72e556494e465aec1d3494ba45be7d33f',
+    'fileHash' => '6aa4485320c7a8f5a92ccc32acceff34403adaf0ffce2da2288c47c6e0fc75bf',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Console\\Commands\\SimulateTelemetry.php',
@@ -4996,21 +4996,21 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\NewTicketNotification.php' => 
   array (
-    'fileHash' => '49377fe8567b31a01a3bd187b32668b37b3c95b496945a887e3ac18db1b25cd2',
+    'fileHash' => 'f4fc6740a95d24323e4c7250997f447af58aa87ee4c7a655121d8e3cecacd28b',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\TicketNotification.php' => 
   array (
-    'fileHash' => '8332eb9e0f722df5fef002c00f87b0e9b4c9e431d1d192936abad482f062bcfa',
+    'fileHash' => '1abba402701d54443b70617b0f641a9bd6ce5b54e924c1e0fc20321512c6daef',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\TicketStatusChanged.php' => 
   array (
-    'fileHash' => '542944d33c146e05950b82f7f50cc7cb955545f01d18775486cee933ed9eb623',
+    'fileHash' => 'e4bda4b6c0e366c6b9eca4402cf2da74b36e48f043d9c64005b2d381f7eb4434',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
@@ -5018,7 +5018,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\OpenApi\\OpenApiSpec.php' => 
   array (
-    'fileHash' => 'ec44841cea6ac5139c773ef6d92c9a23278006984fc466a2dcf0488d3303415f',
+    'fileHash' => '269d04168a9e1806336f81720aa6f5136bb2358120d61ecdfa61dd485f372f3c',
     'dependentFiles' => 
     array (
     ),
@@ -5032,7 +5032,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php' => 
   array (
-    'fileHash' => '81f45ef6d2fd65b5b2079f2e1d715d84b9bee6fbcb87d7f844f29a182bee07e8',
+    'fileHash' => 'd25df3a51daa77ba12d81713cca0d12b1f22ccc84a9fe69421f063be1c7c55c6',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
@@ -5040,7 +5040,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Traits\\Auditable.php' => 
   array (
-    'fileHash' => '500246d47e14d659e52788cd4aa0dee6cab7098a4273804c98dbfe99b09829d4',
+    'fileHash' => 'abda73c6002ef2c3ab9357c0c9b34e514848a18861606cb15c632f2487674d4c',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Console\\Commands\\SimulateTelemetry.php',
@@ -5076,7 +5076,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Traits\\ControllerHelpers.php' => 
   array (
-    'fileHash' => '1e7c6325a52c4a2c94c612fbe66243860367dea2397e0db2ae6428e838cc82d7',
+    'fileHash' => '46af0947464dcf1fb44113381c6f6f8daa1efd2e4bfb0dcf5d512924ec634436',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
@@ -5109,16 +5109,17 @@ return [
     0 => 'laravel/framework',
     1 => 'symfony/http-foundation',
   ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuditController.php' => 
+  array (
+    0 => 'zircote/swagger-php',
+    1 => 'laravel/framework',
+    2 => 'symfony/http-foundation',
+  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Controller.php' => 
   array (
     0 => 'laravel/framework',
     1 => 'symfony/http-foundation',
     2 => 'symfony/http-kernel',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\EquipmentController.php' => 
-  array (
-    0 => 'laravel/framework',
-    1 => 'symfony/http-foundation',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php' => 
   array (
@@ -5129,10 +5130,9 @@ return [
     4 => 'league/flysystem',
     5 => 'psr/http-message',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UserController.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Mail\\TestMail.php' => 
   array (
     0 => 'laravel/framework',
-    1 => 'symfony/http-foundation',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Audit.php' => 
   array (
@@ -5142,9 +5142,10 @@ return [
   array (
     0 => 'laravel/framework',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\EquipmentCategory.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php' => 
   array (
     0 => 'laravel/framework',
+    1 => 'symfony/http-foundation',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php' => 
   array (
@@ -5156,7 +5157,7 @@ return [
   array (
     0 => 'laravel/framework',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketStatus.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php' => 
   array (
     0 => 'laravel/framework',
   ),
@@ -5168,18 +5169,16 @@ return [
   array (
     0 => 'laravel/framework',
   ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Events\\TicketStatusUpdatedBroadcast.php' => 
+  array (
+    0 => 'laravel/framework',
+  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminController.php' => 
   array (
     0 => 'zircote/swagger-php',
     1 => 'laravel/framework',
     2 => 'symfony/http-foundation',
     3 => 'nesbot/carbon',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuditController.php' => 
-  array (
-    0 => 'zircote/swagger-php',
-    1 => 'laravel/framework',
-    2 => 'symfony/http-foundation',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuthController.php' => 
   array (
@@ -5198,17 +5197,16 @@ return [
     0 => 'laravel/framework',
     1 => 'symfony/http-foundation',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\SetLocaleMiddleware.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Mail\\TicketCreated.php' => 
+  array (
+    0 => 'laravel/framework',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php' => 
   array (
     0 => 'laravel/framework',
     1 => 'symfony/http-foundation',
-    2 => 'symfony/console',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Mail\\TestMail.php' => 
-  array (
-    0 => 'laravel/framework',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Mail\\TicketCreated.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\EquipmentCategory.php' => 
   array (
     0 => 'laravel/framework',
   ),
@@ -5240,10 +5238,6 @@ return [
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Traits\\Auditable.php' => 
   array (
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Events\\TicketStatusUpdatedBroadcast.php' => 
-  array (
-    0 => 'laravel/framework',
-  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php' => 
   array (
     0 => 'zircote/swagger-php',
@@ -5260,6 +5254,11 @@ return [
     1 => 'symfony/http-foundation',
     2 => 'nesbot/carbon',
   ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\EquipmentController.php' => 
+  array (
+    0 => 'laravel/framework',
+    1 => 'symfony/http-foundation',
+  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\NotificationController.php' => 
   array (
     0 => 'zircote/swagger-php',
@@ -5270,6 +5269,11 @@ return [
     5 => 'monolog/monolog',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php' => 
+  array (
+    0 => 'laravel/framework',
+    1 => 'symfony/http-foundation',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UserController.php' => 
   array (
     0 => 'laravel/framework',
     1 => 'symfony/http-foundation',
@@ -5293,25 +5297,21 @@ return [
     0 => 'laravel/framework',
     1 => 'symfony/http-foundation',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\SetLocaleMiddleware.php' => 
   array (
     0 => 'laravel/framework',
     1 => 'symfony/http-foundation',
+    2 => 'symfony/console',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Notification.php' => 
   array (
     0 => 'laravel/framework',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php' => 
-  array (
-    0 => 'laravel/framework',
-    1 => 'symfony/http-foundation',
-  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketAttachment.php' => 
   array (
     0 => 'laravel/framework',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketStatus.php' => 
   array (
     0 => 'laravel/framework',
   ),
@@ -5743,14 +5743,14 @@ return [
          'uses' => 
         array (
           'ticket' => 'App\\Models\\Ticket',
+          'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
           'fromquery' => 'Maatwebsite\\Excel\\Concerns\\FromQuery',
+          'shouldautosize' => 'Maatwebsite\\Excel\\Concerns\\ShouldAutoSize',
           'withheadings' => 'Maatwebsite\\Excel\\Concerns\\WithHeadings',
           'withmapping' => 'Maatwebsite\\Excel\\Concerns\\WithMapping',
-          'shouldautosize' => 'Maatwebsite\\Excel\\Concerns\\ShouldAutoSize',
-          'withtitle' => 'Maatwebsite\\Excel\\Concerns\\WithTitle',
           'withstyles' => 'Maatwebsite\\Excel\\Concerns\\WithStyles',
+          'withtitle' => 'Maatwebsite\\Excel\\Concerns\\WithTitle',
           'worksheet' => 'PhpOffice\\PhpSpreadsheet\\Worksheet\\Worksheet',
-          'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
         ),
          'constUses' => 
         array (
@@ -5762,11 +5762,11 @@ return [
        'implements' => 
       array (
         0 => 'Maatwebsite\\Excel\\Concerns\\FromQuery',
-        1 => 'Maatwebsite\\Excel\\Concerns\\WithHeadings',
-        2 => 'Maatwebsite\\Excel\\Concerns\\WithMapping',
-        3 => 'Maatwebsite\\Excel\\Concerns\\ShouldAutoSize',
-        4 => 'Maatwebsite\\Excel\\Concerns\\WithTitle',
-        5 => 'Maatwebsite\\Excel\\Concerns\\WithStyles',
+        1 => 'Maatwebsite\\Excel\\Concerns\\ShouldAutoSize',
+        2 => 'Maatwebsite\\Excel\\Concerns\\WithHeadings',
+        3 => 'Maatwebsite\\Excel\\Concerns\\WithMapping',
+        4 => 'Maatwebsite\\Excel\\Concerns\\WithStyles',
+        5 => 'Maatwebsite\\Excel\\Concerns\\WithTitle',
       ),
        'usedTraits' => 
       array (
@@ -5788,14 +5788,14 @@ return [
              'uses' => 
             array (
               'ticket' => 'App\\Models\\Ticket',
+              'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
               'fromquery' => 'Maatwebsite\\Excel\\Concerns\\FromQuery',
+              'shouldautosize' => 'Maatwebsite\\Excel\\Concerns\\ShouldAutoSize',
               'withheadings' => 'Maatwebsite\\Excel\\Concerns\\WithHeadings',
               'withmapping' => 'Maatwebsite\\Excel\\Concerns\\WithMapping',
-              'shouldautosize' => 'Maatwebsite\\Excel\\Concerns\\ShouldAutoSize',
-              'withtitle' => 'Maatwebsite\\Excel\\Concerns\\WithTitle',
               'withstyles' => 'Maatwebsite\\Excel\\Concerns\\WithStyles',
+              'withtitle' => 'Maatwebsite\\Excel\\Concerns\\WithTitle',
               'worksheet' => 'PhpOffice\\PhpSpreadsheet\\Worksheet\\Worksheet',
-              'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
             ),
              'constUses' => 
             array (
@@ -5827,14 +5827,14 @@ return [
              'uses' => 
             array (
               'ticket' => 'App\\Models\\Ticket',
+              'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
               'fromquery' => 'Maatwebsite\\Excel\\Concerns\\FromQuery',
+              'shouldautosize' => 'Maatwebsite\\Excel\\Concerns\\ShouldAutoSize',
               'withheadings' => 'Maatwebsite\\Excel\\Concerns\\WithHeadings',
               'withmapping' => 'Maatwebsite\\Excel\\Concerns\\WithMapping',
-              'shouldautosize' => 'Maatwebsite\\Excel\\Concerns\\ShouldAutoSize',
-              'withtitle' => 'Maatwebsite\\Excel\\Concerns\\WithTitle',
               'withstyles' => 'Maatwebsite\\Excel\\Concerns\\WithStyles',
+              'withtitle' => 'Maatwebsite\\Excel\\Concerns\\WithTitle',
               'worksheet' => 'PhpOffice\\PhpSpreadsheet\\Worksheet\\Worksheet',
-              'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
             ),
              'constUses' => 
             array (
@@ -5866,14 +5866,14 @@ return [
              'uses' => 
             array (
               'ticket' => 'App\\Models\\Ticket',
+              'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
               'fromquery' => 'Maatwebsite\\Excel\\Concerns\\FromQuery',
+              'shouldautosize' => 'Maatwebsite\\Excel\\Concerns\\ShouldAutoSize',
               'withheadings' => 'Maatwebsite\\Excel\\Concerns\\WithHeadings',
               'withmapping' => 'Maatwebsite\\Excel\\Concerns\\WithMapping',
-              'shouldautosize' => 'Maatwebsite\\Excel\\Concerns\\ShouldAutoSize',
-              'withtitle' => 'Maatwebsite\\Excel\\Concerns\\WithTitle',
               'withstyles' => 'Maatwebsite\\Excel\\Concerns\\WithStyles',
+              'withtitle' => 'Maatwebsite\\Excel\\Concerns\\WithTitle',
               'worksheet' => 'PhpOffice\\PhpSpreadsheet\\Worksheet\\Worksheet',
-              'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
             ),
              'constUses' => 
             array (
@@ -5918,14 +5918,14 @@ return [
              'uses' => 
             array (
               'ticket' => 'App\\Models\\Ticket',
+              'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
               'fromquery' => 'Maatwebsite\\Excel\\Concerns\\FromQuery',
+              'shouldautosize' => 'Maatwebsite\\Excel\\Concerns\\ShouldAutoSize',
               'withheadings' => 'Maatwebsite\\Excel\\Concerns\\WithHeadings',
               'withmapping' => 'Maatwebsite\\Excel\\Concerns\\WithMapping',
-              'shouldautosize' => 'Maatwebsite\\Excel\\Concerns\\ShouldAutoSize',
-              'withtitle' => 'Maatwebsite\\Excel\\Concerns\\WithTitle',
               'withstyles' => 'Maatwebsite\\Excel\\Concerns\\WithStyles',
+              'withtitle' => 'Maatwebsite\\Excel\\Concerns\\WithTitle',
               'worksheet' => 'PhpOffice\\PhpSpreadsheet\\Worksheet\\Worksheet',
-              'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
             ),
              'constUses' => 
             array (
@@ -5957,14 +5957,14 @@ return [
              'uses' => 
             array (
               'ticket' => 'App\\Models\\Ticket',
+              'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
               'fromquery' => 'Maatwebsite\\Excel\\Concerns\\FromQuery',
+              'shouldautosize' => 'Maatwebsite\\Excel\\Concerns\\ShouldAutoSize',
               'withheadings' => 'Maatwebsite\\Excel\\Concerns\\WithHeadings',
               'withmapping' => 'Maatwebsite\\Excel\\Concerns\\WithMapping',
-              'shouldautosize' => 'Maatwebsite\\Excel\\Concerns\\ShouldAutoSize',
-              'withtitle' => 'Maatwebsite\\Excel\\Concerns\\WithTitle',
               'withstyles' => 'Maatwebsite\\Excel\\Concerns\\WithStyles',
+              'withtitle' => 'Maatwebsite\\Excel\\Concerns\\WithTitle',
               'worksheet' => 'PhpOffice\\PhpSpreadsheet\\Worksheet\\Worksheet',
-              'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
             ),
              'constUses' => 
             array (
@@ -6036,11 +6036,13 @@ return [
             array (
               'equipment' => 'App\\Models\\Equipment',
               'notification' => 'App\\Models\\Notification',
-              'room' => 'App\\Models\\Room',
               'ticket' => 'App\\Models\\Ticket',
               'user' => 'App\\Models\\User',
+              'userprofile' => 'App\\Models\\UserProfile',
               'request' => 'Illuminate\\Http\\Request',
+              'hash' => 'Illuminate\\Support\\Facades\\Hash',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
               'oa' => 'OpenApi\\Attributes',
             ),
              'constUses' => 
@@ -6099,11 +6101,13 @@ return [
             array (
               'equipment' => 'App\\Models\\Equipment',
               'notification' => 'App\\Models\\Notification',
-              'room' => 'App\\Models\\Room',
               'ticket' => 'App\\Models\\Ticket',
               'user' => 'App\\Models\\User',
+              'userprofile' => 'App\\Models\\UserProfile',
               'request' => 'Illuminate\\Http\\Request',
+              'hash' => 'Illuminate\\Support\\Facades\\Hash',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
               'oa' => 'OpenApi\\Attributes',
             ),
              'constUses' => 
@@ -6176,11 +6180,13 @@ return [
             array (
               'equipment' => 'App\\Models\\Equipment',
               'notification' => 'App\\Models\\Notification',
-              'room' => 'App\\Models\\Room',
               'ticket' => 'App\\Models\\Ticket',
               'user' => 'App\\Models\\User',
+              'userprofile' => 'App\\Models\\UserProfile',
               'request' => 'Illuminate\\Http\\Request',
+              'hash' => 'Illuminate\\Support\\Facades\\Hash',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
               'oa' => 'OpenApi\\Attributes',
             ),
              'constUses' => 
@@ -6227,11 +6233,13 @@ return [
             array (
               'equipment' => 'App\\Models\\Equipment',
               'notification' => 'App\\Models\\Notification',
-              'room' => 'App\\Models\\Room',
               'ticket' => 'App\\Models\\Ticket',
               'user' => 'App\\Models\\User',
+              'userprofile' => 'App\\Models\\UserProfile',
               'request' => 'Illuminate\\Http\\Request',
+              'hash' => 'Illuminate\\Support\\Facades\\Hash',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
               'oa' => 'OpenApi\\Attributes',
             ),
              'constUses' => 
@@ -6291,11 +6299,13 @@ return [
             array (
               'equipment' => 'App\\Models\\Equipment',
               'notification' => 'App\\Models\\Notification',
-              'room' => 'App\\Models\\Room',
               'ticket' => 'App\\Models\\Ticket',
               'user' => 'App\\Models\\User',
+              'userprofile' => 'App\\Models\\UserProfile',
               'request' => 'Illuminate\\Http\\Request',
+              'hash' => 'Illuminate\\Support\\Facades\\Hash',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
               'oa' => 'OpenApi\\Attributes',
             ),
              'constUses' => 
@@ -6329,11 +6339,13 @@ return [
             array (
               'equipment' => 'App\\Models\\Equipment',
               'notification' => 'App\\Models\\Notification',
-              'room' => 'App\\Models\\Room',
               'ticket' => 'App\\Models\\Ticket',
               'user' => 'App\\Models\\User',
+              'userprofile' => 'App\\Models\\UserProfile',
               'request' => 'Illuminate\\Http\\Request',
+              'hash' => 'Illuminate\\Support\\Facades\\Hash',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
               'oa' => 'OpenApi\\Attributes',
             ),
              'constUses' => 
@@ -6392,11 +6404,13 @@ return [
             array (
               'equipment' => 'App\\Models\\Equipment',
               'notification' => 'App\\Models\\Notification',
-              'room' => 'App\\Models\\Room',
               'ticket' => 'App\\Models\\Ticket',
               'user' => 'App\\Models\\User',
+              'userprofile' => 'App\\Models\\UserProfile',
               'request' => 'Illuminate\\Http\\Request',
+              'hash' => 'Illuminate\\Support\\Facades\\Hash',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
               'oa' => 'OpenApi\\Attributes',
             ),
              'constUses' => 
@@ -6455,11 +6469,13 @@ return [
             array (
               'equipment' => 'App\\Models\\Equipment',
               'notification' => 'App\\Models\\Notification',
-              'room' => 'App\\Models\\Room',
               'ticket' => 'App\\Models\\Ticket',
               'user' => 'App\\Models\\User',
+              'userprofile' => 'App\\Models\\UserProfile',
               'request' => 'Illuminate\\Http\\Request',
+              'hash' => 'Illuminate\\Support\\Facades\\Hash',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
               'oa' => 'OpenApi\\Attributes',
             ),
              'constUses' => 
@@ -6532,11 +6548,13 @@ return [
             array (
               'equipment' => 'App\\Models\\Equipment',
               'notification' => 'App\\Models\\Notification',
-              'room' => 'App\\Models\\Room',
               'ticket' => 'App\\Models\\Ticket',
               'user' => 'App\\Models\\User',
+              'userprofile' => 'App\\Models\\UserProfile',
               'request' => 'Illuminate\\Http\\Request',
+              'hash' => 'Illuminate\\Support\\Facades\\Hash',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
               'oa' => 'OpenApi\\Attributes',
             ),
              'constUses' => 
@@ -6609,11 +6627,13 @@ return [
             array (
               'equipment' => 'App\\Models\\Equipment',
               'notification' => 'App\\Models\\Notification',
-              'room' => 'App\\Models\\Room',
               'ticket' => 'App\\Models\\Ticket',
               'user' => 'App\\Models\\User',
+              'userprofile' => 'App\\Models\\UserProfile',
               'request' => 'Illuminate\\Http\\Request',
+              'hash' => 'Illuminate\\Support\\Facades\\Hash',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
               'oa' => 'OpenApi\\Attributes',
             ),
              'constUses' => 
@@ -6688,11 +6708,13 @@ return [
             array (
               'equipment' => 'App\\Models\\Equipment',
               'notification' => 'App\\Models\\Notification',
-              'room' => 'App\\Models\\Room',
               'ticket' => 'App\\Models\\Ticket',
               'user' => 'App\\Models\\User',
+              'userprofile' => 'App\\Models\\UserProfile',
               'request' => 'Illuminate\\Http\\Request',
+              'hash' => 'Illuminate\\Support\\Facades\\Hash',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
               'oa' => 'OpenApi\\Attributes',
             ),
              'constUses' => 
@@ -6784,7 +6806,6 @@ return [
               'request' => 'Illuminate\\Http\\Request',
               'carbon' => 'Illuminate\\Support\\Carbon',
               'collection' => 'Illuminate\\Support\\Collection',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
               'excel' => 'Maatwebsite\\Excel\\Facades\\Excel',
               'oa' => 'OpenApi\\Attributes',
               'streamedresponse' => 'Symfony\\Component\\HttpFoundation\\StreamedResponse',
@@ -6851,7 +6872,6 @@ return [
               'request' => 'Illuminate\\Http\\Request',
               'carbon' => 'Illuminate\\Support\\Carbon',
               'collection' => 'Illuminate\\Support\\Collection',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
               'excel' => 'Maatwebsite\\Excel\\Facades\\Excel',
               'oa' => 'OpenApi\\Attributes',
               'streamedresponse' => 'Symfony\\Component\\HttpFoundation\\StreamedResponse',
@@ -6918,7 +6938,6 @@ return [
               'request' => 'Illuminate\\Http\\Request',
               'carbon' => 'Illuminate\\Support\\Carbon',
               'collection' => 'Illuminate\\Support\\Collection',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
               'excel' => 'Maatwebsite\\Excel\\Facades\\Excel',
               'oa' => 'OpenApi\\Attributes',
               'streamedresponse' => 'Symfony\\Component\\HttpFoundation\\StreamedResponse',
@@ -6985,7 +7004,6 @@ return [
               'request' => 'Illuminate\\Http\\Request',
               'carbon' => 'Illuminate\\Support\\Carbon',
               'collection' => 'Illuminate\\Support\\Collection',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
               'excel' => 'Maatwebsite\\Excel\\Facades\\Excel',
               'oa' => 'OpenApi\\Attributes',
               'streamedresponse' => 'Symfony\\Component\\HttpFoundation\\StreamedResponse',
@@ -7052,7 +7070,6 @@ return [
               'request' => 'Illuminate\\Http\\Request',
               'carbon' => 'Illuminate\\Support\\Carbon',
               'collection' => 'Illuminate\\Support\\Collection',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
               'excel' => 'Maatwebsite\\Excel\\Facades\\Excel',
               'oa' => 'OpenApi\\Attributes',
               'streamedresponse' => 'Symfony\\Component\\HttpFoundation\\StreamedResponse',
@@ -7553,15 +7570,14 @@ return [
      * Procura o token prioritariamente no cabeçalho customizado \'X-Auth-Token\'
      * ou, em alternativa, no cabeçalho padrão \'Authorization\' (Bearer Token).
      *
-     * @param  \\Illuminate\\Http\\Request  $request
-     * @return \\App\\Models\\User
-     * * @throws \\Symfony\\Component\\HttpKernel\\Exception\\HttpException
+     * * @throws HttpException
      */',
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
             array (
               'user' => 'App\\Models\\User',
               'request' => 'Illuminate\\Http\\Request',
+              'httpexception' => 'Symfony\\Component\\HttpKernel\\Exception\\HttpException',
             ),
              'constUses' => 
             array (
@@ -7603,16 +7619,14 @@ return [
      * Garante programaticamente que o utilizador possui um dos perfis/papéis permitidos.
      * Caso o perfil não corresponda, lança uma exceção HTTP 403 (Acesso Proibido).
      *
-     * @param  \\App\\Models\\User  $user
-     * @param  array  $roles
-     * @return void
-     * @throws \\Symfony\\Component\\HttpKernel\\Exception\\HttpException
+     * @throws HttpException
      */',
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
             array (
               'user' => 'App\\Models\\User',
               'request' => 'Illuminate\\Http\\Request',
+              'httpexception' => 'Symfony\\Component\\HttpKernel\\Exception\\HttpException',
             ),
              'constUses' => 
             array (
@@ -8642,18 +8656,18 @@ return [
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'user' => 'App\\Models\\User',
+              'ticketstatusupdatedbroadcast' => 'App\\Events\\TicketStatusUpdatedBroadcast',
               'notification' => 'App\\Models\\Notification',
-              'ticketcomment' => 'App\\Models\\TicketComment',
+              'ticket' => 'App\\Models\\Ticket',
               'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
+              'ticketcomment' => 'App\\Models\\TicketComment',
+              'user' => 'App\\Models\\User',
+              'ticketstatuschanged' => 'App\\Notifications\\TicketStatusChanged',
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
-              'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'validator' => 'Illuminate\\Support\\Facades\\Validator',
             ),
              'constUses' => 
             array (
@@ -8697,18 +8711,18 @@ return [
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'user' => 'App\\Models\\User',
+              'ticketstatusupdatedbroadcast' => 'App\\Events\\TicketStatusUpdatedBroadcast',
               'notification' => 'App\\Models\\Notification',
-              'ticketcomment' => 'App\\Models\\TicketComment',
+              'ticket' => 'App\\Models\\Ticket',
               'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
+              'ticketcomment' => 'App\\Models\\TicketComment',
+              'user' => 'App\\Models\\User',
+              'ticketstatuschanged' => 'App\\Notifications\\TicketStatusChanged',
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
-              'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'validator' => 'Illuminate\\Support\\Facades\\Validator',
             ),
              'constUses' => 
             array (
@@ -8752,18 +8766,18 @@ return [
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'user' => 'App\\Models\\User',
+              'ticketstatusupdatedbroadcast' => 'App\\Events\\TicketStatusUpdatedBroadcast',
               'notification' => 'App\\Models\\Notification',
-              'ticketcomment' => 'App\\Models\\TicketComment',
+              'ticket' => 'App\\Models\\Ticket',
               'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
+              'ticketcomment' => 'App\\Models\\TicketComment',
+              'user' => 'App\\Models\\User',
+              'ticketstatuschanged' => 'App\\Notifications\\TicketStatusChanged',
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
-              'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'validator' => 'Illuminate\\Support\\Facades\\Validator',
             ),
              'constUses' => 
             array (
@@ -8807,18 +8821,18 @@ return [
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'user' => 'App\\Models\\User',
+              'ticketstatusupdatedbroadcast' => 'App\\Events\\TicketStatusUpdatedBroadcast',
               'notification' => 'App\\Models\\Notification',
-              'ticketcomment' => 'App\\Models\\TicketComment',
+              'ticket' => 'App\\Models\\Ticket',
               'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
+              'ticketcomment' => 'App\\Models\\TicketComment',
+              'user' => 'App\\Models\\User',
+              'ticketstatuschanged' => 'App\\Notifications\\TicketStatusChanged',
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
-              'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'validator' => 'Illuminate\\Support\\Facades\\Validator',
             ),
              'constUses' => 
             array (
@@ -8875,18 +8889,18 @@ return [
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'user' => 'App\\Models\\User',
+              'ticketstatusupdatedbroadcast' => 'App\\Events\\TicketStatusUpdatedBroadcast',
               'notification' => 'App\\Models\\Notification',
-              'ticketcomment' => 'App\\Models\\TicketComment',
+              'ticket' => 'App\\Models\\Ticket',
               'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
+              'ticketcomment' => 'App\\Models\\TicketComment',
+              'user' => 'App\\Models\\User',
+              'ticketstatuschanged' => 'App\\Notifications\\TicketStatusChanged',
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
-              'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'validator' => 'Illuminate\\Support\\Facades\\Validator',
             ),
              'constUses' => 
             array (
@@ -8943,18 +8957,18 @@ return [
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'user' => 'App\\Models\\User',
+              'ticketstatusupdatedbroadcast' => 'App\\Events\\TicketStatusUpdatedBroadcast',
               'notification' => 'App\\Models\\Notification',
-              'ticketcomment' => 'App\\Models\\TicketComment',
+              'ticket' => 'App\\Models\\Ticket',
               'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
+              'ticketcomment' => 'App\\Models\\TicketComment',
+              'user' => 'App\\Models\\User',
+              'ticketstatuschanged' => 'App\\Notifications\\TicketStatusChanged',
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
-              'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'validator' => 'Illuminate\\Support\\Facades\\Validator',
             ),
              'constUses' => 
             array (
@@ -9011,18 +9025,18 @@ return [
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'user' => 'App\\Models\\User',
+              'ticketstatusupdatedbroadcast' => 'App\\Events\\TicketStatusUpdatedBroadcast',
               'notification' => 'App\\Models\\Notification',
-              'ticketcomment' => 'App\\Models\\TicketComment',
+              'ticket' => 'App\\Models\\Ticket',
               'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
+              'ticketcomment' => 'App\\Models\\TicketComment',
+              'user' => 'App\\Models\\User',
+              'ticketstatuschanged' => 'App\\Notifications\\TicketStatusChanged',
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
-              'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'validator' => 'Illuminate\\Support\\Facades\\Validator',
             ),
              'constUses' => 
             array (
@@ -9079,18 +9093,18 @@ return [
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'user' => 'App\\Models\\User',
+              'ticketstatusupdatedbroadcast' => 'App\\Events\\TicketStatusUpdatedBroadcast',
               'notification' => 'App\\Models\\Notification',
-              'ticketcomment' => 'App\\Models\\TicketComment',
+              'ticket' => 'App\\Models\\Ticket',
               'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
+              'ticketcomment' => 'App\\Models\\TicketComment',
+              'user' => 'App\\Models\\User',
+              'ticketstatuschanged' => 'App\\Notifications\\TicketStatusChanged',
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
-              'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'validator' => 'Illuminate\\Support\\Facades\\Validator',
             ),
              'constUses' => 
             array (
@@ -9147,18 +9161,18 @@ return [
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'user' => 'App\\Models\\User',
+              'ticketstatusupdatedbroadcast' => 'App\\Events\\TicketStatusUpdatedBroadcast',
               'notification' => 'App\\Models\\Notification',
-              'ticketcomment' => 'App\\Models\\TicketComment',
+              'ticket' => 'App\\Models\\Ticket',
               'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
+              'ticketcomment' => 'App\\Models\\TicketComment',
+              'user' => 'App\\Models\\User',
+              'ticketstatuschanged' => 'App\\Notifications\\TicketStatusChanged',
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
-              'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'validator' => 'Illuminate\\Support\\Facades\\Validator',
             ),
              'constUses' => 
             array (
@@ -9215,18 +9229,18 @@ return [
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'user' => 'App\\Models\\User',
+              'ticketstatusupdatedbroadcast' => 'App\\Events\\TicketStatusUpdatedBroadcast',
               'notification' => 'App\\Models\\Notification',
-              'ticketcomment' => 'App\\Models\\TicketComment',
+              'ticket' => 'App\\Models\\Ticket',
               'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
+              'ticketcomment' => 'App\\Models\\TicketComment',
+              'user' => 'App\\Models\\User',
+              'ticketstatuschanged' => 'App\\Notifications\\TicketStatusChanged',
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
-              'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'validator' => 'Illuminate\\Support\\Facades\\Validator',
             ),
              'constUses' => 
             array (
@@ -9283,18 +9297,18 @@ return [
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'user' => 'App\\Models\\User',
+              'ticketstatusupdatedbroadcast' => 'App\\Events\\TicketStatusUpdatedBroadcast',
               'notification' => 'App\\Models\\Notification',
-              'ticketcomment' => 'App\\Models\\TicketComment',
+              'ticket' => 'App\\Models\\Ticket',
               'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
+              'ticketcomment' => 'App\\Models\\TicketComment',
+              'user' => 'App\\Models\\User',
+              'ticketstatuschanged' => 'App\\Notifications\\TicketStatusChanged',
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
-              'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'validator' => 'Illuminate\\Support\\Facades\\Validator',
             ),
              'constUses' => 
             array (
@@ -9351,18 +9365,18 @@ return [
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'user' => 'App\\Models\\User',
+              'ticketstatusupdatedbroadcast' => 'App\\Events\\TicketStatusUpdatedBroadcast',
               'notification' => 'App\\Models\\Notification',
-              'ticketcomment' => 'App\\Models\\TicketComment',
+              'ticket' => 'App\\Models\\Ticket',
               'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
+              'ticketcomment' => 'App\\Models\\TicketComment',
+              'user' => 'App\\Models\\User',
+              'ticketstatuschanged' => 'App\\Notifications\\TicketStatusChanged',
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
-              'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'validator' => 'Illuminate\\Support\\Facades\\Validator',
             ),
              'constUses' => 
             array (
@@ -9420,18 +9434,18 @@ return [
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'user' => 'App\\Models\\User',
+              'ticketstatusupdatedbroadcast' => 'App\\Events\\TicketStatusUpdatedBroadcast',
               'notification' => 'App\\Models\\Notification',
-              'ticketcomment' => 'App\\Models\\TicketComment',
+              'ticket' => 'App\\Models\\Ticket',
               'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
+              'ticketcomment' => 'App\\Models\\TicketComment',
+              'user' => 'App\\Models\\User',
+              'ticketstatuschanged' => 'App\\Notifications\\TicketStatusChanged',
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
-              'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'validator' => 'Illuminate\\Support\\Facades\\Validator',
             ),
              'constUses' => 
             array (
@@ -9504,18 +9518,18 @@ return [
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'user' => 'App\\Models\\User',
+              'ticketstatusupdatedbroadcast' => 'App\\Events\\TicketStatusUpdatedBroadcast',
               'notification' => 'App\\Models\\Notification',
-              'ticketcomment' => 'App\\Models\\TicketComment',
+              'ticket' => 'App\\Models\\Ticket',
               'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
+              'ticketcomment' => 'App\\Models\\TicketComment',
+              'user' => 'App\\Models\\User',
+              'ticketstatuschanged' => 'App\\Notifications\\TicketStatusChanged',
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
-              'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'validator' => 'Illuminate\\Support\\Facades\\Validator',
             ),
              'constUses' => 
             array (
@@ -9572,18 +9586,18 @@ return [
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'user' => 'App\\Models\\User',
+              'ticketstatusupdatedbroadcast' => 'App\\Events\\TicketStatusUpdatedBroadcast',
               'notification' => 'App\\Models\\Notification',
-              'ticketcomment' => 'App\\Models\\TicketComment',
+              'ticket' => 'App\\Models\\Ticket',
               'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
+              'ticketcomment' => 'App\\Models\\TicketComment',
+              'user' => 'App\\Models\\User',
+              'ticketstatuschanged' => 'App\\Notifications\\TicketStatusChanged',
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
-              'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'validator' => 'Illuminate\\Support\\Facades\\Validator',
             ),
              'constUses' => 
             array (
@@ -9640,18 +9654,18 @@ return [
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'user' => 'App\\Models\\User',
+              'ticketstatusupdatedbroadcast' => 'App\\Events\\TicketStatusUpdatedBroadcast',
               'notification' => 'App\\Models\\Notification',
-              'ticketcomment' => 'App\\Models\\TicketComment',
+              'ticket' => 'App\\Models\\Ticket',
               'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
+              'ticketcomment' => 'App\\Models\\TicketComment',
+              'user' => 'App\\Models\\User',
+              'ticketstatuschanged' => 'App\\Notifications\\TicketStatusChanged',
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
-              'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'validator' => 'Illuminate\\Support\\Facades\\Validator',
             ),
              'constUses' => 
             array (
@@ -9708,18 +9722,18 @@ return [
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'user' => 'App\\Models\\User',
+              'ticketstatusupdatedbroadcast' => 'App\\Events\\TicketStatusUpdatedBroadcast',
               'notification' => 'App\\Models\\Notification',
-              'ticketcomment' => 'App\\Models\\TicketComment',
+              'ticket' => 'App\\Models\\Ticket',
               'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
+              'ticketcomment' => 'App\\Models\\TicketComment',
+              'user' => 'App\\Models\\User',
+              'ticketstatuschanged' => 'App\\Notifications\\TicketStatusChanged',
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
-              'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'validator' => 'Illuminate\\Support\\Facades\\Validator',
             ),
              'constUses' => 
             array (
@@ -9794,18 +9808,18 @@ return [
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'user' => 'App\\Models\\User',
+              'ticketstatusupdatedbroadcast' => 'App\\Events\\TicketStatusUpdatedBroadcast',
               'notification' => 'App\\Models\\Notification',
-              'ticketcomment' => 'App\\Models\\TicketComment',
+              'ticket' => 'App\\Models\\Ticket',
               'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
+              'ticketcomment' => 'App\\Models\\TicketComment',
+              'user' => 'App\\Models\\User',
+              'ticketstatuschanged' => 'App\\Notifications\\TicketStatusChanged',
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
-              'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'validator' => 'Illuminate\\Support\\Facades\\Validator',
             ),
              'constUses' => 
             array (
@@ -9851,18 +9865,18 @@ return [
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'user' => 'App\\Models\\User',
+              'ticketstatusupdatedbroadcast' => 'App\\Events\\TicketStatusUpdatedBroadcast',
               'notification' => 'App\\Models\\Notification',
-              'ticketcomment' => 'App\\Models\\TicketComment',
+              'ticket' => 'App\\Models\\Ticket',
               'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
+              'ticketcomment' => 'App\\Models\\TicketComment',
+              'user' => 'App\\Models\\User',
+              'ticketstatuschanged' => 'App\\Notifications\\TicketStatusChanged',
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
-              'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'validator' => 'Illuminate\\Support\\Facades\\Validator',
             ),
              'constUses' => 
             array (
@@ -9920,18 +9934,18 @@ return [
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'user' => 'App\\Models\\User',
+              'ticketstatusupdatedbroadcast' => 'App\\Events\\TicketStatusUpdatedBroadcast',
               'notification' => 'App\\Models\\Notification',
-              'ticketcomment' => 'App\\Models\\TicketComment',
+              'ticket' => 'App\\Models\\Ticket',
               'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
+              'ticketcomment' => 'App\\Models\\TicketComment',
+              'user' => 'App\\Models\\User',
+              'ticketstatuschanged' => 'App\\Notifications\\TicketStatusChanged',
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
-              'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'validator' => 'Illuminate\\Support\\Facades\\Validator',
             ),
              'constUses' => 
             array (
@@ -9989,18 +10003,18 @@ return [
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'user' => 'App\\Models\\User',
+              'ticketstatusupdatedbroadcast' => 'App\\Events\\TicketStatusUpdatedBroadcast',
               'notification' => 'App\\Models\\Notification',
-              'ticketcomment' => 'App\\Models\\TicketComment',
+              'ticket' => 'App\\Models\\Ticket',
               'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
+              'ticketcomment' => 'App\\Models\\TicketComment',
+              'user' => 'App\\Models\\User',
+              'ticketstatuschanged' => 'App\\Notifications\\TicketStatusChanged',
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
-              'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
-              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'validator' => 'Illuminate\\Support\\Facades\\Validator',
             ),
              'constUses' => 
             array (
@@ -10084,6 +10098,8 @@ return [
              'uses' => 
             array (
               'equipment' => 'App\\Models\\Equipment',
+              'room' => 'App\\Models\\Room',
+              'user' => 'App\\Models\\User',
               'request' => 'Illuminate\\Http\\Request',
             ),
              'constUses' => 
@@ -10129,6 +10145,8 @@ return [
              'uses' => 
             array (
               'equipment' => 'App\\Models\\Equipment',
+              'room' => 'App\\Models\\Room',
+              'user' => 'App\\Models\\User',
               'request' => 'Illuminate\\Http\\Request',
             ),
              'constUses' => 
@@ -10174,6 +10192,8 @@ return [
              'uses' => 
             array (
               'equipment' => 'App\\Models\\Equipment',
+              'room' => 'App\\Models\\Room',
+              'user' => 'App\\Models\\User',
               'request' => 'Illuminate\\Http\\Request',
             ),
              'constUses' => 
@@ -10219,6 +10239,8 @@ return [
              'uses' => 
             array (
               'equipment' => 'App\\Models\\Equipment',
+              'room' => 'App\\Models\\Room',
+              'user' => 'App\\Models\\User',
               'request' => 'Illuminate\\Http\\Request',
             ),
              'constUses' => 
@@ -10264,6 +10286,8 @@ return [
              'uses' => 
             array (
               'equipment' => 'App\\Models\\Equipment',
+              'room' => 'App\\Models\\Room',
+              'user' => 'App\\Models\\User',
               'request' => 'Illuminate\\Http\\Request',
             ),
              'constUses' => 
@@ -10309,6 +10333,8 @@ return [
              'uses' => 
             array (
               'equipment' => 'App\\Models\\Equipment',
+              'room' => 'App\\Models\\Room',
+              'user' => 'App\\Models\\User',
               'request' => 'Illuminate\\Http\\Request',
             ),
              'constUses' => 
@@ -10354,6 +10380,8 @@ return [
              'uses' => 
             array (
               'equipment' => 'App\\Models\\Equipment',
+              'room' => 'App\\Models\\Room',
+              'user' => 'App\\Models\\User',
               'request' => 'Illuminate\\Http\\Request',
             ),
              'constUses' => 
@@ -10412,6 +10440,8 @@ return [
              'uses' => 
             array (
               'equipment' => 'App\\Models\\Equipment',
+              'room' => 'App\\Models\\Room',
+              'user' => 'App\\Models\\User',
               'request' => 'Illuminate\\Http\\Request',
             ),
              'constUses' => 
@@ -10457,6 +10487,8 @@ return [
              'uses' => 
             array (
               'equipment' => 'App\\Models\\Equipment',
+              'room' => 'App\\Models\\Room',
+              'user' => 'App\\Models\\User',
               'request' => 'Illuminate\\Http\\Request',
             ),
              'constUses' => 
@@ -10502,6 +10534,8 @@ return [
              'uses' => 
             array (
               'equipment' => 'App\\Models\\Equipment',
+              'room' => 'App\\Models\\Room',
+              'user' => 'App\\Models\\User',
               'request' => 'Illuminate\\Http\\Request',
             ),
              'constUses' => 
@@ -10560,6 +10594,8 @@ return [
              'uses' => 
             array (
               'equipment' => 'App\\Models\\Equipment',
+              'room' => 'App\\Models\\Room',
+              'user' => 'App\\Models\\User',
               'request' => 'Illuminate\\Http\\Request',
             ),
              'constUses' => 
@@ -10618,6 +10654,8 @@ return [
              'uses' => 
             array (
               'equipment' => 'App\\Models\\Equipment',
+              'room' => 'App\\Models\\Room',
+              'user' => 'App\\Models\\User',
               'request' => 'Illuminate\\Http\\Request',
             ),
              'constUses' => 
@@ -10663,6 +10701,8 @@ return [
              'uses' => 
             array (
               'equipment' => 'App\\Models\\Equipment',
+              'room' => 'App\\Models\\Room',
+              'user' => 'App\\Models\\User',
               'request' => 'Illuminate\\Http\\Request',
             ),
              'constUses' => 
@@ -10721,6 +10761,8 @@ return [
              'uses' => 
             array (
               'equipment' => 'App\\Models\\Equipment',
+              'room' => 'App\\Models\\Room',
+              'user' => 'App\\Models\\User',
               'request' => 'Illuminate\\Http\\Request',
             ),
              'constUses' => 
@@ -10766,6 +10808,8 @@ return [
              'uses' => 
             array (
               'equipment' => 'App\\Models\\Equipment',
+              'room' => 'App\\Models\\Room',
+              'user' => 'App\\Models\\User',
               'request' => 'Illuminate\\Http\\Request',
             ),
              'constUses' => 
@@ -10811,6 +10855,8 @@ return [
              'uses' => 
             array (
               'equipment' => 'App\\Models\\Equipment',
+              'room' => 'App\\Models\\Room',
+              'user' => 'App\\Models\\User',
               'request' => 'Illuminate\\Http\\Request',
             ),
              'constUses' => 
@@ -11214,10 +11260,10 @@ return [
             array (
               'closure' => 'Closure',
               'sessioncontract' => 'Illuminate\\Contracts\\Session\\Session',
-              'str' => 'Illuminate\\Support\\Str',
-              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
               'request' => 'Illuminate\\Http\\Request',
               'log' => 'Illuminate\\Support\\Facades\\Log',
+              'str' => 'Illuminate\\Support\\Str',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
             ),
              'constUses' => 
             array (
@@ -11257,10 +11303,10 @@ return [
             array (
               'closure' => 'Closure',
               'sessioncontract' => 'Illuminate\\Contracts\\Session\\Session',
-              'str' => 'Illuminate\\Support\\Str',
-              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
               'request' => 'Illuminate\\Http\\Request',
               'log' => 'Illuminate\\Support\\Facades\\Log',
+              'str' => 'Illuminate\\Support\\Str',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
             ),
              'constUses' => 
             array (
@@ -11297,10 +11343,10 @@ return [
             array (
               'closure' => 'Closure',
               'sessioncontract' => 'Illuminate\\Contracts\\Session\\Session',
-              'str' => 'Illuminate\\Support\\Str',
-              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
               'request' => 'Illuminate\\Http\\Request',
               'log' => 'Illuminate\\Support\\Facades\\Log',
+              'str' => 'Illuminate\\Support\\Str',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
             ),
              'constUses' => 
             array (
@@ -11347,10 +11393,10 @@ return [
             array (
               'closure' => 'Closure',
               'sessioncontract' => 'Illuminate\\Contracts\\Session\\Session',
-              'str' => 'Illuminate\\Support\\Str',
-              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
               'request' => 'Illuminate\\Http\\Request',
               'log' => 'Illuminate\\Support\\Facades\\Log',
+              'str' => 'Illuminate\\Support\\Str',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
             ),
              'constUses' => 
             array (
@@ -11409,10 +11455,10 @@ return [
             array (
               'closure' => 'Closure',
               'sessioncontract' => 'Illuminate\\Contracts\\Session\\Session',
-              'str' => 'Illuminate\\Support\\Str',
-              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
               'request' => 'Illuminate\\Http\\Request',
               'log' => 'Illuminate\\Support\\Facades\\Log',
+              'str' => 'Illuminate\\Support\\Str',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
             ),
              'constUses' => 
             array (
@@ -11458,10 +11504,10 @@ return [
             array (
               'closure' => 'Closure',
               'sessioncontract' => 'Illuminate\\Contracts\\Session\\Session',
-              'str' => 'Illuminate\\Support\\Str',
-              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
               'request' => 'Illuminate\\Http\\Request',
               'log' => 'Illuminate\\Support\\Facades\\Log',
+              'str' => 'Illuminate\\Support\\Str',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
             ),
              'constUses' => 
             array (
@@ -11507,10 +11553,10 @@ return [
             array (
               'closure' => 'Closure',
               'sessioncontract' => 'Illuminate\\Contracts\\Session\\Session',
-              'str' => 'Illuminate\\Support\\Str',
-              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
               'request' => 'Illuminate\\Http\\Request',
               'log' => 'Illuminate\\Support\\Facades\\Log',
+              'str' => 'Illuminate\\Support\\Str',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
             ),
              'constUses' => 
             array (
@@ -11556,10 +11602,10 @@ return [
             array (
               'closure' => 'Closure',
               'sessioncontract' => 'Illuminate\\Contracts\\Session\\Session',
-              'str' => 'Illuminate\\Support\\Str',
-              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
               'request' => 'Illuminate\\Http\\Request',
               'log' => 'Illuminate\\Support\\Facades\\Log',
+              'str' => 'Illuminate\\Support\\Str',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
             ),
              'constUses' => 
             array (
@@ -11592,10 +11638,10 @@ return [
             array (
               'closure' => 'Closure',
               'sessioncontract' => 'Illuminate\\Contracts\\Session\\Session',
-              'str' => 'Illuminate\\Support\\Str',
-              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
               'request' => 'Illuminate\\Http\\Request',
               'log' => 'Illuminate\\Support\\Facades\\Log',
+              'str' => 'Illuminate\\Support\\Str',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
             ),
              'constUses' => 
             array (
@@ -11652,9 +11698,9 @@ return [
              'namespace' => 'App\\Http\\Middleware',
              'uses' => 
             array (
+              'user' => 'App\\Models\\User',
               'closure' => 'Closure',
               'request' => 'Illuminate\\Http\\Request',
-              'user' => 'App\\Models\\User',
               'auth' => 'Illuminate\\Support\\Facades\\Auth',
               'log' => 'Illuminate\\Support\\Facades\\Log',
               'response' => 'Symfony\\Component\\HttpFoundation\\Response',
@@ -11825,10 +11871,6 @@ return [
              'phpDocString' => '/**
      * Handle an incoming request.
      *
-     * @param  \\Illuminate\\Http\\Request  $request
-     * @param  \\Closure  $next
-     * @param  string  $maxAttempts
-     * @param  int  $decayMinutes
      * @return mixed
      */',
              'namespace' => 'App\\Http\\Middleware',
@@ -12196,20 +12238,17 @@ return [
              'phpDocString' => '/**
      * Handle an incoming request and delegate to the next middleware in the chain.
      *
-     * @param  \\Illuminate\\Http\\Request  $request
-     * @param  \\Closure  $next
-     * @param  string  ...$roles The roles that are allowed to access this route
-     * @return Response
+     * @param  string  ...$roles  The roles that are allowed to access this route
      */',
              'namespace' => 'App\\Http\\Middleware',
              'uses' => 
             array (
-              'closure' => 'Closure',
-              'request' => 'Illuminate\\Http\\Request',
-              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
               'user' => 'App\\Models\\User',
               'userprofile' => 'App\\Models\\UserProfile',
+              'closure' => 'Closure',
+              'request' => 'Illuminate\\Http\\Request',
               'auth' => 'Illuminate\\Support\\Facades\\Auth',
+              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
             ),
              'constUses' => 
             array (
@@ -12302,9 +12341,7 @@ return [
              'phpDocString' => '/**
      * Handle an incoming request.
      *
-     * @param  \\Illuminate\\Http\\Request  $request
-     * @param  \\Closure(\\Illuminate\\Http\\Request): (\\Symfony\\Component\\HttpFoundation\\Response)  $next
-     * @return \\Symfony\\Component\\HttpFoundation\\Response
+     * @param  Closure(Request): (Response)  $next
      */',
              'namespace' => 'App\\Http\\Middleware',
              'uses' => 
@@ -12858,8 +12895,8 @@ return [
       ),
        'usedTraits' => 
       array (
-        0 => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-        1 => 'App\\Traits\\Auditable',
+        0 => 'App\\Traits\\Auditable',
+        1 => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
       ),
        'traitUseAdaptations' => 
       array (
@@ -13230,8 +13267,8 @@ return [
       ),
        'usedTraits' => 
       array (
-        0 => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-        1 => 'App\\Traits\\Auditable',
+        0 => 'App\\Traits\\Auditable',
+        1 => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
       ),
        'traitUseAdaptations' => 
       array (
@@ -13344,8 +13381,8 @@ return [
       ),
        'usedTraits' => 
       array (
-        0 => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-        1 => 'App\\Traits\\Auditable',
+        0 => 'App\\Traits\\Auditable',
+        1 => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
         2 => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
       ),
        'traitUseAdaptations' => 
@@ -13630,19 +13667,12 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
+              'auditable' => 'App\\Traits\\Auditable',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'model' => 'Illuminate\\Database\\Eloquent\\Model',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-              'auditable' => 'App\\Traits\\Auditable',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
-              'ticketworkflowhistory' => 'App\\Models\\TicketWorkflowHistory',
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'ticketcomment' => 'App\\Models\\TicketComment',
-              'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'user' => 'App\\Models\\User',
             ),
              'constUses' => 
             array (
@@ -13673,19 +13703,12 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
+              'auditable' => 'App\\Traits\\Auditable',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'model' => 'Illuminate\\Database\\Eloquent\\Model',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-              'auditable' => 'App\\Traits\\Auditable',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
-              'ticketworkflowhistory' => 'App\\Models\\TicketWorkflowHistory',
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'ticketcomment' => 'App\\Models\\TicketComment',
-              'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'user' => 'App\\Models\\User',
             ),
              'constUses' => 
             array (
@@ -13734,19 +13757,12 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
+              'auditable' => 'App\\Traits\\Auditable',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'model' => 'Illuminate\\Database\\Eloquent\\Model',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-              'auditable' => 'App\\Traits\\Auditable',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
-              'ticketworkflowhistory' => 'App\\Models\\TicketWorkflowHistory',
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'ticketcomment' => 'App\\Models\\TicketComment',
-              'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'user' => 'App\\Models\\User',
             ),
              'constUses' => 
             array (
@@ -13777,19 +13793,12 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
+              'auditable' => 'App\\Traits\\Auditable',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'model' => 'Illuminate\\Database\\Eloquent\\Model',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-              'auditable' => 'App\\Traits\\Auditable',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
-              'ticketworkflowhistory' => 'App\\Models\\TicketWorkflowHistory',
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'ticketcomment' => 'App\\Models\\TicketComment',
-              'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'user' => 'App\\Models\\User',
             ),
              'constUses' => 
             array (
@@ -13820,19 +13829,12 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
+              'auditable' => 'App\\Traits\\Auditable',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'model' => 'Illuminate\\Database\\Eloquent\\Model',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-              'auditable' => 'App\\Traits\\Auditable',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
-              'ticketworkflowhistory' => 'App\\Models\\TicketWorkflowHistory',
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'ticketcomment' => 'App\\Models\\TicketComment',
-              'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'user' => 'App\\Models\\User',
             ),
              'constUses' => 
             array (
@@ -13863,19 +13865,12 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
+              'auditable' => 'App\\Traits\\Auditable',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'model' => 'Illuminate\\Database\\Eloquent\\Model',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-              'auditable' => 'App\\Traits\\Auditable',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
-              'ticketworkflowhistory' => 'App\\Models\\TicketWorkflowHistory',
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'ticketcomment' => 'App\\Models\\TicketComment',
-              'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'user' => 'App\\Models\\User',
             ),
              'constUses' => 
             array (
@@ -14010,19 +14005,12 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
+              'auditable' => 'App\\Traits\\Auditable',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'model' => 'Illuminate\\Database\\Eloquent\\Model',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-              'auditable' => 'App\\Traits\\Auditable',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
-              'ticketworkflowhistory' => 'App\\Models\\TicketWorkflowHistory',
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'ticketcomment' => 'App\\Models\\TicketComment',
-              'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'user' => 'App\\Models\\User',
             ),
              'constUses' => 
             array (
@@ -14079,19 +14067,12 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
+              'auditable' => 'App\\Traits\\Auditable',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'model' => 'Illuminate\\Database\\Eloquent\\Model',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-              'auditable' => 'App\\Traits\\Auditable',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
-              'ticketworkflowhistory' => 'App\\Models\\TicketWorkflowHistory',
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'ticketcomment' => 'App\\Models\\TicketComment',
-              'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'user' => 'App\\Models\\User',
             ),
              'constUses' => 
             array (
@@ -14161,19 +14142,12 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
+              'auditable' => 'App\\Traits\\Auditable',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'model' => 'Illuminate\\Database\\Eloquent\\Model',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-              'auditable' => 'App\\Traits\\Auditable',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
-              'ticketworkflowhistory' => 'App\\Models\\TicketWorkflowHistory',
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'ticketcomment' => 'App\\Models\\TicketComment',
-              'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'user' => 'App\\Models\\User',
             ),
              'constUses' => 
             array (
@@ -14205,19 +14179,12 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
+              'auditable' => 'App\\Traits\\Auditable',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'model' => 'Illuminate\\Database\\Eloquent\\Model',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-              'auditable' => 'App\\Traits\\Auditable',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
-              'ticketworkflowhistory' => 'App\\Models\\TicketWorkflowHistory',
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'ticketcomment' => 'App\\Models\\TicketComment',
-              'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'user' => 'App\\Models\\User',
             ),
              'constUses' => 
             array (
@@ -14249,19 +14216,12 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
+              'auditable' => 'App\\Traits\\Auditable',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'model' => 'Illuminate\\Database\\Eloquent\\Model',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-              'auditable' => 'App\\Traits\\Auditable',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
-              'ticketworkflowhistory' => 'App\\Models\\TicketWorkflowHistory',
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'ticketcomment' => 'App\\Models\\TicketComment',
-              'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'user' => 'App\\Models\\User',
             ),
              'constUses' => 
             array (
@@ -14292,19 +14252,12 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
+              'auditable' => 'App\\Traits\\Auditable',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'model' => 'Illuminate\\Database\\Eloquent\\Model',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-              'auditable' => 'App\\Traits\\Auditable',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
-              'ticketworkflowhistory' => 'App\\Models\\TicketWorkflowHistory',
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'ticketcomment' => 'App\\Models\\TicketComment',
-              'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'user' => 'App\\Models\\User',
             ),
              'constUses' => 
             array (
@@ -14335,19 +14288,12 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
+              'auditable' => 'App\\Traits\\Auditable',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'model' => 'Illuminate\\Database\\Eloquent\\Model',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-              'auditable' => 'App\\Traits\\Auditable',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
-              'ticketworkflowhistory' => 'App\\Models\\TicketWorkflowHistory',
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'ticketcomment' => 'App\\Models\\TicketComment',
-              'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'user' => 'App\\Models\\User',
             ),
              'constUses' => 
             array (
@@ -14378,19 +14324,12 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
+              'auditable' => 'App\\Traits\\Auditable',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'model' => 'Illuminate\\Database\\Eloquent\\Model',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-              'auditable' => 'App\\Traits\\Auditable',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
-              'ticketworkflowhistory' => 'App\\Models\\TicketWorkflowHistory',
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'ticketcomment' => 'App\\Models\\TicketComment',
-              'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'user' => 'App\\Models\\User',
             ),
              'constUses' => 
             array (
@@ -14434,19 +14373,12 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
+              'auditable' => 'App\\Traits\\Auditable',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'model' => 'Illuminate\\Database\\Eloquent\\Model',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-              'auditable' => 'App\\Traits\\Auditable',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
-              'ticketworkflowhistory' => 'App\\Models\\TicketWorkflowHistory',
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'ticketcomment' => 'App\\Models\\TicketComment',
-              'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'user' => 'App\\Models\\User',
             ),
              'constUses' => 
             array (
@@ -14490,19 +14422,12 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
+              'auditable' => 'App\\Traits\\Auditable',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'model' => 'Illuminate\\Database\\Eloquent\\Model',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-              'auditable' => 'App\\Traits\\Auditable',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
-              'ticketworkflowhistory' => 'App\\Models\\TicketWorkflowHistory',
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'ticketcomment' => 'App\\Models\\TicketComment',
-              'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'user' => 'App\\Models\\User',
             ),
              'constUses' => 
             array (
@@ -14533,19 +14458,12 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
+              'auditable' => 'App\\Traits\\Auditable',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'model' => 'Illuminate\\Database\\Eloquent\\Model',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-              'auditable' => 'App\\Traits\\Auditable',
-              'ticketstatus' => 'App\\Models\\TicketStatus',
-              'ticketworkflowhistory' => 'App\\Models\\TicketWorkflowHistory',
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'ticketcomment' => 'App\\Models\\TicketComment',
-              'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'user' => 'App\\Models\\User',
             ),
              'constUses' => 
             array (
@@ -15109,14 +15027,12 @@ return [
        'phpDoc' => 
       \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
          'phpDocString' => '/**
- * @property-read \\App\\Models\\UserProfile|null $profile
+ * @property-read UserProfile|null $profile
  * @property-read int $tickets_ativos
  */',
          'namespace' => 'App\\Models',
          'uses' => 
         array (
-          'ticket' => 'App\\Models\\Ticket',
-          'userprofile' => 'App\\Models\\UserProfile',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -15155,8 +15071,6 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'userprofile' => 'App\\Models\\UserProfile',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -15197,8 +15111,6 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'userprofile' => 'App\\Models\\UserProfile',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -15239,8 +15151,6 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'userprofile' => 'App\\Models\\UserProfile',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -15281,8 +15191,6 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'userprofile' => 'App\\Models\\UserProfile',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -15376,8 +15284,6 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'userprofile' => 'App\\Models\\UserProfile',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -15413,8 +15319,6 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'userprofile' => 'App\\Models\\UserProfile',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -15450,8 +15354,6 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'userprofile' => 'App\\Models\\UserProfile',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -15487,8 +15389,6 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'userprofile' => 'App\\Models\\UserProfile',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -15524,8 +15424,6 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'userprofile' => 'App\\Models\\UserProfile',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -15561,8 +15459,6 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'userprofile' => 'App\\Models\\UserProfile',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -15598,8 +15494,6 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'userprofile' => 'App\\Models\\UserProfile',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -15635,8 +15529,6 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'userprofile' => 'App\\Models\\UserProfile',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -15672,8 +15564,6 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'userprofile' => 'App\\Models\\UserProfile',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -15722,8 +15612,6 @@ return [
              'namespace' => 'App\\Models',
              'uses' => 
             array (
-              'ticket' => 'App\\Models\\Ticket',
-              'userprofile' => 'App\\Models\\UserProfile',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -15912,7 +15800,6 @@ return [
              'uses' => 
             array (
               'queueable' => 'Illuminate\\Bus\\Queueable',
-              'shouldqueue' => 'Illuminate\\Contracts\\Queue\\ShouldQueue',
               'mailmessage' => 'Illuminate\\Notifications\\Messages\\MailMessage',
               'notification' => 'Illuminate\\Notifications\\Notification',
             ),
@@ -15948,7 +15835,6 @@ return [
              'uses' => 
             array (
               'queueable' => 'Illuminate\\Bus\\Queueable',
-              'shouldqueue' => 'Illuminate\\Contracts\\Queue\\ShouldQueue',
               'mailmessage' => 'Illuminate\\Notifications\\Messages\\MailMessage',
               'notification' => 'Illuminate\\Notifications\\Notification',
             ),
@@ -15995,7 +15881,6 @@ return [
              'uses' => 
             array (
               'queueable' => 'Illuminate\\Bus\\Queueable',
-              'shouldqueue' => 'Illuminate\\Contracts\\Queue\\ShouldQueue',
               'mailmessage' => 'Illuminate\\Notifications\\Messages\\MailMessage',
               'notification' => 'Illuminate\\Notifications\\Notification',
             ),
@@ -16044,7 +15929,6 @@ return [
              'uses' => 
             array (
               'queueable' => 'Illuminate\\Bus\\Queueable',
-              'shouldqueue' => 'Illuminate\\Contracts\\Queue\\ShouldQueue',
               'mailmessage' => 'Illuminate\\Notifications\\Messages\\MailMessage',
               'notification' => 'Illuminate\\Notifications\\Notification',
             ),
@@ -16696,9 +16580,9 @@ return [
              'namespace' => 'App\\Services',
              'uses' => 
             array (
-              'openai' => 'OpenAI\\Laravel\\Facades\\OpenAI',
               'ticket' => 'App\\Models\\Ticket',
               'user' => 'App\\Models\\User',
+              'openai' => 'OpenAI\\Laravel\\Facades\\OpenAI',
             ),
              'constUses' => 
             array (
@@ -16784,7 +16668,6 @@ return [
       \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
          'phpDocString' => '/**
  * Trait ControllerHelpers
- * @package App\\Traits
  */',
          'namespace' => 'App\\Traits',
          'uses' => 
@@ -16811,8 +16694,6 @@ return [
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
      * Resolve e valida o utilizador atualmente autenticado.
-     * * @param Request $request
-     * @return User
      */',
              'namespace' => 'App\\Traits',
              'uses' => 
@@ -16858,9 +16739,6 @@ return [
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
      * Garante que o utilizador possui um dos perfis/papéis permitidos.
-     * * @param User $user
-     * @param array $roles
-     * @return void
      */',
              'namespace' => 'App\\Traits',
              'uses' => 

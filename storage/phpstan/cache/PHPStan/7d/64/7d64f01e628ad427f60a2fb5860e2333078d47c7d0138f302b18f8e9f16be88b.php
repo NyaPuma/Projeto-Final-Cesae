@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\OpenApi\OpenApiSpec.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\OpenApi\OpenApiSpec
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-ec44841cea6ac5139c773ef6d92c9a23278006984fc466a2dcf0488d3303415f',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-269d04168a9e1806336f81720aa6f5136bb2358120d61ecdfa61dd485f372f3c',
    'data' => 
   array (
     'locatedSource' => 
@@ -215,9 +215,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       ),
     ),
     'startLine' => 7,
-    'endLine' => 27,
+    'endLine' => 25,
     'startColumn' => 1,
-    'endColumn' => 1,
+    'endColumn' => 26,
     'parentClassName' => NULL,
     'implementsClassNames' => 
     array (

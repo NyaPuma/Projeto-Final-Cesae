@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Http\Controllers\AuthController.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Controllers\AuthController
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-ef1e332fe67df33340d30c01b4e7bfc564fc144d81e88b3f350d6dceafcd7b4b',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-f16bb89ec617ca70e4a3fd105d5810ba2332895058ca621bac9427b062b1a737',
    'data' => 
   array (
     'locatedSource' => 
@@ -148,8 +148,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                   'endLine' => 46,
                   'startTokenPos' => 279,
                   'startFilePos' => 1290,
-                  'endTokenPos' => 380,
-                  'endFilePos' => 1829,
+                  'endTokenPos' => 381,
+                  'endFilePos' => 1830,
                 ),
               ),
             ),
@@ -220,10 +220,10 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 array (
                   'startLine' => 93,
                   'endLine' => 93,
-                  'startTokenPos' => 806,
-                  'startFilePos' => 3577,
-                  'endTokenPos' => 806,
-                  'endFilePos' => 3584,
+                  'startTokenPos' => 808,
+                  'startFilePos' => 3579,
+                  'endTokenPos' => 808,
+                  'endFilePos' => 3586,
                 ),
               ),
               'tags' => 
@@ -233,10 +233,10 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 array (
                   'startLine' => 94,
                   'endLine' => 94,
-                  'startTokenPos' => 812,
-                  'startFilePos' => 3601,
-                  'endTokenPos' => 814,
-                  'endFilePos' => 3608,
+                  'startTokenPos' => 814,
+                  'startFilePos' => 3603,
+                  'endTokenPos' => 816,
+                  'endFilePos' => 3610,
                 ),
               ),
               'summary' => 
@@ -246,10 +246,10 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 array (
                   'startLine' => 95,
                   'endLine' => 95,
-                  'startTokenPos' => 820,
-                  'startFilePos' => 3628,
-                  'endTokenPos' => 820,
-                  'endFilePos' => 3650,
+                  'startTokenPos' => 822,
+                  'startFilePos' => 3630,
+                  'endTokenPos' => 822,
+                  'endFilePos' => 3652,
                 ),
               ),
               'requestBody' => 
@@ -259,10 +259,10 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 array (
                   'startLine' => 96,
                   'endLine' => 106,
-                  'startTokenPos' => 826,
-                  'startFilePos' => 3674,
-                  'endTokenPos' => 929,
-                  'endFilePos' => 4151,
+                  'startTokenPos' => 828,
+                  'startFilePos' => 3676,
+                  'endTokenPos' => 931,
+                  'endFilePos' => 4153,
                 ),
               ),
               'responses' => 
@@ -272,10 +272,10 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 array (
                   'startLine' => 107,
                   'endLine' => 120,
-                  'startTokenPos' => 935,
-                  'startFilePos' => 4173,
-                  'endTokenPos' => 1036,
-                  'endFilePos' => 4721,
+                  'startTokenPos' => 937,
+                  'startFilePos' => 4175,
+                  'endTokenPos' => 1039,
+                  'endFilePos' => 4724,
                 ),
               ),
             ),
