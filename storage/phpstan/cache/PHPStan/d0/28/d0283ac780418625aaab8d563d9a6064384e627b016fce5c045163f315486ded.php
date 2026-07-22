@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Exports\TicketsExport.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Exports\TicketsExport
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-e11de77d3b93a82f3e790cfb6c93a3aa4fdd4372382b75ce6f264675526480f8',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-9629631b126f272fcfaa98b476b34fdaf127ad3d0b4012ce5805995729a1c13e',
    'data' => 
   array (
     'locatedSource' => 
@@ -30,8 +30,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'attributes' => 
     array (
     ),
-    'startLine' => 19,
-    'endLine' => 97,
+    'startLine' => 20,
+    'endLine' => 98,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => NULL,
@@ -62,15 +62,23 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'returnsReference' => false,
-        'returnType' => NULL,
+        'returnType' => 
+        array (
+          'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+          'data' => 
+          array (
+            'name' => 'Illuminate\\Database\\Eloquent\\Builder',
+            'isIdentifier' => false,
+          ),
+        ),
         'attributes' => 
         array (
         ),
         'docComment' => '/**
  * Query base para a exportação. Utiliza cursor-friendly eager loading mínimo.
  */',
-        'startLine' => 24,
-        'endLine' => 34,
+        'startLine' => 25,
+        'endLine' => 35,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -106,8 +114,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Define o cabeçalho da folha de cálculo.
  */',
-        'startLine' => 39,
-        'endLine' => 54,
+        'startLine' => 40,
+        'endLine' => 55,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -137,8 +145,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 59,
-            'endLine' => 59,
+            'startLine' => 60,
+            'endLine' => 60,
             'startColumn' => 25,
             'endColumn' => 31,
             'parameterIndex' => 0,
@@ -161,8 +169,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Mapeia cada registo Eloquent para uma linha da folha de cálculo.
  */',
-        'startLine' => 59,
-        'endLine' => 74,
+        'startLine' => 60,
+        'endLine' => 75,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -198,8 +206,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Título da folha no ficheiro Excel.
  */',
-        'startLine' => 79,
-        'endLine' => 82,
+        'startLine' => 80,
+        'endLine' => 83,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -237,8 +245,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 87,
-            'endLine' => 87,
+            'startLine' => 88,
+            'endLine' => 88,
             'startColumn' => 28,
             'endColumn' => 43,
             'parameterIndex' => 0,
@@ -261,8 +269,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Aplica estilos à folha – cabeçalho em negrito com fundo azul escuro.
  */',
-        'startLine' => 87,
-        'endLine' => 96,
+        'startLine' => 88,
+        'endLine' => 97,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

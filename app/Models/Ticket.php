@@ -61,11 +61,17 @@ class Ticket extends Model
 
     // --- RELACIONAMENTOS ELOQUENT ---
 
+    /**
+     * @return BelongsTo<TicketStatus, $this>
+     */
     public function status(): BelongsTo
     {
         return $this->belongsTo(TicketStatus::class, 'status_id');
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function budgetApprovedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'budget_approved_by');
@@ -76,21 +82,33 @@ class Ticket extends Model
         return $this->hasMany(TicketWorkflowHistory::class, 'ticket_id');
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function technician(): BelongsTo
     {
         return $this->belongsTo(User::class, 'assigned_to');
     }
 
+    /**
+     * @return BelongsTo<Equipment, $this>
+     */
     public function equipment(): BelongsTo
     {
         return $this->belongsTo(Equipment::class);
     }
 
+    /**
+     * @return BelongsTo<Room, $this>
+     */
     public function room(): BelongsTo
     {
         return $this->belongsTo(Room::class);
@@ -223,7 +241,7 @@ class Ticket extends Model
     public function getBudgetPauseMinutesAttribute(): int
     {
         if ($this->budget_requested_at && $this->budget_decided_at) {
-            return $this->budget_requested_at->diffInMinutes($this->budget_decided_at);
+            return (int) $this->budget_requested_at->diffInMinutes($this->budget_decided_at);
         }
 
         return 0;

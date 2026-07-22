@@ -33,6 +33,7 @@ class RateLimitMiddleware
      */
     public function handle(Request $request, Closure $next, string $maxAttempts = '60', int $decayMinutes = 1)
     {
+        $maxAttempts = (int) $maxAttempts;
         $key = $this->resolveRequestSignature($request);
         
         if (! $this->limiter->tooManyAttempts($key, $maxAttempts)) {

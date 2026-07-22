@@ -60,7 +60,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php' => '6ba13b2e5e3bcc806989a7c3fad144479a4bcfdac39172ab55bbddb4f096c081',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php' => '81f45ef6d2fd65b5b2079f2e1d715d84b9bee6fbcb87d7f844f29a182bee07e8',
     ),
   ),
 ));

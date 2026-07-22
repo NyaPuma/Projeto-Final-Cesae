@@ -66,7 +66,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php' => 'd1831fb00654f54b23d631ff4da3069d4b5ac7acd404d2e91ef12ec3422c818f',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php' => '050b105e12a7be4a8d39c6e0a215799041c448fb5a947edd29d4aa3871f90a93',
     ),
   ),
 ));

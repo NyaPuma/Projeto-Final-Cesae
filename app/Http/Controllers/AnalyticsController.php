@@ -113,7 +113,7 @@ class AnalyticsController extends Controller
 
         $monthlyBuckets = $this->buildMonthlySeries($tickets, $openStatusId, $inProgressStatusId, $closedStatusId);
 
-        $topEquipments = $tickets->filter(fn ($ticket) => $ticket->equipment)
+        $topEquipments = $tickets->filter(fn ($ticket) => $ticket->equipment !== null)
             ->groupBy('equipment_id')
             ->map(fn ($group) => [
                 'name' => optional($group->first()->equipment)->name ?? 'Sem equipamento',
@@ -124,7 +124,7 @@ class AnalyticsController extends Controller
             ->take(5)
             ->values();
 
-        $topRooms = $tickets->filter(fn ($ticket) => $ticket->room)
+        $topRooms = $tickets->filter(fn ($ticket) => $ticket->room !== null)
             ->groupBy('room_id')
             ->map(fn ($group) => [
                 'name' => optional($group->first()->room)->name ?? 'Sem sala',
@@ -135,7 +135,7 @@ class AnalyticsController extends Controller
             ->take(5)
             ->values();
 
-        $topTechnicians = $tickets->filter(fn ($ticket) => $ticket->technician)
+        $topTechnicians = $tickets->filter(fn ($ticket) => $ticket->technician !== null)
             ->groupBy('assigned_to')
             ->map(fn ($group) => [
                 'name' => optional($group->first()->technician)->name ?? 'Sem técnico',

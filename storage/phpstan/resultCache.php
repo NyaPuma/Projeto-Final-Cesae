@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 return [
-	'lastFullAnalysisTime' => 1784711711,
+	'lastFullAnalysisTime' => 1784718922,
 	'meta' => array (
   'cacheVersion' => 'v13-packageDependencies',
   'phpstanVersion' => '2.2.5',
@@ -20,7 +20,7 @@ return [
   ),
   'composerLocks' => 
   array (
-    'C:/laravel/Projeto Final Cesae/Projeto-Final-Cesae/composer.lock' => 'c72885eee6c4cba55d99dd8556efbaaff9076ee3c2263e03164692099fa81ed7',
+    'C:/laravel/Projeto Final Cesae/Projeto-Final-Cesae/composer.lock' => '0c5bb40aa5c8b3eb436a2a9c488c6e18e0931ea67ed1d9145e5e05c45d7ecd00',
   ),
   'composerInstalled' => 
   array (
@@ -2230,815 +2230,6 @@ return [
 	'projectExtensionFiles' => array (
 ),
 	'errorsCallback' => static function (): array { return array (
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Exports\\TicketsExport.php' => 
-  array (
-    0 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Method App\\Exports\\TicketsExport::query() has invalid return type Laravel\\Scout\\Builder.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Exports\\TicketsExport.php',
-       'line' => 24,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Exports\\TicketsExport.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 24,
-       'nodeType' => 'PHPStan\\Node\\InClassMethodNode',
-       'identifier' => 'class.notFound',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    1 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Using nullsafe property access "?->name" on left side of ?? is unnecessary. Use -> instead.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Exports\\TicketsExport.php',
-       'line' => 64,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Exports\\TicketsExport.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 64,
-       'nodeType' => 'PhpParser\\Node\\Expr\\BinaryOp\\Coalesce',
-       'identifier' => 'nullsafe.neverNull',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php' => 
-  array (
-    0 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Parameter #1 $callback of method Illuminate\\Support\\Collection<int,App\\Models\\Ticket>::filter() expects (callable(App\\Models\\Ticket, int): bool)|null, Closure(mixed): (Illuminate\\Database\\Eloquent\\Model|null) given.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php',
-       'line' => 116,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 116,
-       'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
-       'identifier' => 'argument.type',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    1 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Parameter #1 $callback of method Illuminate\\Support\\Collection<int,App\\Models\\Ticket>::filter() expects (callable(App\\Models\\Ticket, int): bool)|null, Closure(mixed): (Illuminate\\Database\\Eloquent\\Model|null) given.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php',
-       'line' => 127,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 127,
-       'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
-       'identifier' => 'argument.type',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    2 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Parameter #1 $callback of method Illuminate\\Support\\Collection<int,App\\Models\\Ticket>::filter() expects (callable(App\\Models\\Ticket, int): bool)|null, Closure(mixed): (Illuminate\\Database\\Eloquent\\Model|null) given.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php',
-       'line' => 138,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 138,
-       'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
-       'identifier' => 'argument.type',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    3 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Relation \'user\' is not found in App\\Models\\Audit model.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php',
-       'line' => 149,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 149,
-       'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
-       'identifier' => 'larastan.relationExistence',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    4 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Access to an undefined property App\\Models\\Audit::$user.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php',
-       'line' => 155,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php',
-       'traitFilePath' => NULL,
-       'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 155,
-       'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
-       'identifier' => 'property.notFound',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuditController.php' => 
-  array (
-    0 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Relation \'user\' is not found in App\\Models\\Audit model.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuditController.php',
-       'line' => 27,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuditController.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 27,
-       'nodeType' => 'PhpParser\\Node\\Expr\\StaticCall',
-       'identifier' => 'larastan.relationExistence',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuthController.php' => 
-  array (
-    0 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Parameter #1 $value of method Illuminate\\Foundation\\Auth\\User::setRememberToken() expects string, null given.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuthController.php',
-       'line' => 168,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuthController.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 168,
-       'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
-       'identifier' => 'argument.type',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php' => 
-  array (
-    0 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Parameter #1 $view of function view expects view-string|null, string given.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php',
-       'line' => 34,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 34,
-       'nodeType' => 'PhpParser\\Node\\Expr\\FuncCall',
-       'identifier' => 'argument.type',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    1 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Parameter #1 $view of function view expects view-string|null, string given.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php',
-       'line' => 78,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 78,
-       'nodeType' => 'PhpParser\\Node\\Expr\\FuncCall',
-       'identifier' => 'argument.type',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    2 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Parameter #1 $view of function view expects view-string|null, string given.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php',
-       'line' => 87,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 87,
-       'nodeType' => 'PhpParser\\Node\\Expr\\FuncCall',
-       'identifier' => 'argument.type',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php' => 
-  array (
-    0 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Parameter #1 $view of function view expects view-string|null, string given.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-       'line' => 165,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 165,
-       'nodeType' => 'PhpParser\\Node\\Expr\\FuncCall',
-       'identifier' => 'argument.type',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    1 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Access to an undefined property Illuminate\\Database\\Eloquent\\Model::$email.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-       'line' => 191,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-       'traitFilePath' => NULL,
-       'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 191,
-       'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
-       'identifier' => 'property.notFound',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    2 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Call to an undefined method Illuminate\\Database\\Eloquent\\Model::notify().',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-       'line' => 192,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 192,
-       'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
-       'identifier' => 'method.notFound',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    3 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Parameter #2 $oldStatus of class App\\Notifications\\TicketStatusChanged constructor expects string, int<0, max>|null given.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-       'line' => 192,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 192,
-       'nodeType' => 'PhpParser\\Node\\Expr\\New_',
-       'identifier' => 'argument.type',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    4 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Parameter #2 $oldStatus of class App\\Events\\TicketStatusUpdatedBroadcast constructor expects string, int<0, max>|null given.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-       'line' => 194,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 194,
-       'nodeType' => 'PhpParser\\Node\\Expr\\New_',
-       'identifier' => 'argument.type',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    5 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Parameter #2 $oldStatus of class App\\Events\\TicketStatusUpdatedBroadcast constructor expects string, int<0, max>|null given.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-       'line' => 507,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 507,
-       'nodeType' => 'PhpParser\\Node\\Expr\\New_',
-       'identifier' => 'argument.type',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    6 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Access to an undefined property Illuminate\\Database\\Eloquent\\Model::$email.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-       'line' => 508,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-       'traitFilePath' => NULL,
-       'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 508,
-       'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
-       'identifier' => 'property.notFound',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    7 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Call to an undefined method Illuminate\\Database\\Eloquent\\Model::notify().',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-       'line' => 509,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 509,
-       'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
-       'identifier' => 'method.notFound',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    8 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Parameter #2 $oldStatus of class App\\Notifications\\TicketStatusChanged constructor expects string, int<0, max>|null given.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-       'line' => 509,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 509,
-       'nodeType' => 'PhpParser\\Node\\Expr\\New_',
-       'identifier' => 'argument.type',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    9 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Parameter #2 $oldStatus of class App\\Events\\TicketStatusUpdatedBroadcast constructor expects string, int<0, max>|null given.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-       'line' => 555,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 555,
-       'nodeType' => 'PhpParser\\Node\\Expr\\New_',
-       'identifier' => 'argument.type',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    10 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Access to an undefined property Illuminate\\Database\\Eloquent\\Model::$email.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-       'line' => 556,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-       'traitFilePath' => NULL,
-       'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 556,
-       'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
-       'identifier' => 'property.notFound',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    11 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Call to an undefined method Illuminate\\Database\\Eloquent\\Model::notify().',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-       'line' => 557,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 557,
-       'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
-       'identifier' => 'method.notFound',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    12 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Parameter #2 $oldStatus of class App\\Notifications\\TicketStatusChanged constructor expects string, int<0, max>|null given.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-       'line' => 557,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 557,
-       'nodeType' => 'PhpParser\\Node\\Expr\\New_',
-       'identifier' => 'argument.type',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php' => 
-  array (
-    0 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Parameter #1 $view of function view expects view-string|null, string given.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
-       'line' => 89,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 89,
-       'nodeType' => 'PhpParser\\Node\\Expr\\FuncCall',
-       'identifier' => 'argument.type',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    1 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Parameter #1 $view of function view expects view-string|null, string given.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
-       'line' => 99,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 99,
-       'nodeType' => 'PhpParser\\Node\\Expr\\FuncCall',
-       'identifier' => 'argument.type',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    2 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Parameter #1 $view of function view expects view-string|null, string given.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
-       'line' => 109,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 109,
-       'nodeType' => 'PhpParser\\Node\\Expr\\FuncCall',
-       'identifier' => 'argument.type',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php' => 
-  array (
-    0 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Call to function is_string() with non-empty-string will always evaluate to true.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php',
-       'line' => 58,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 58,
-       'nodeType' => 'PhpParser\\Node\\Expr\\FuncCall',
-       'identifier' => 'function.alreadyNarrowedType',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    1 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Call to function is_string() with non-empty-string will always evaluate to true.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php',
-       'line' => 87,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 87,
-       'nodeType' => 'PhpParser\\Node\\Expr\\FuncCall',
-       'identifier' => 'function.alreadyNarrowedType',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RateLimitMiddleware.php' => 
-  array (
-    0 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Parameter #2 $maxAttempts of method App\\Http\\Middleware\\RateLimitMiddleware::addHeaders() expects int, string given.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RateLimitMiddleware.php',
-       'line' => 41,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RateLimitMiddleware.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 39,
-       'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
-       'identifier' => 'argument.type',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    1 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Parameter #2 $maxAttempts of method App\\Http\\Middleware\\RateLimitMiddleware::calculateRemainingAttempts() expects int, string given.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RateLimitMiddleware.php',
-       'line' => 42,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RateLimitMiddleware.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 42,
-       'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
-       'identifier' => 'argument.type',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    2 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Parameter #2 $maxAttempts of method App\\Http\\Middleware\\RateLimitMiddleware::buildResponse() expects int, string given.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RateLimitMiddleware.php',
-       'line' => 46,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RateLimitMiddleware.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 46,
-       'nodeType' => 'PhpParser\\Node\\Expr\\MethodCall',
-       'identifier' => 'argument.type',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RoleMiddleware.php' => 
-  array (
-    0 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Class App\\Models\\UserProfile referenced with incorrect case: App\\Models\\Userprofile.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RoleMiddleware.php',
-       'line' => 9,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RoleMiddleware.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 9,
-       'nodeType' => 'PhpParser\\Node\\Stmt\\Use_',
-       'identifier' => 'class.nameCase',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php' => 
-  array (
-    0 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Method App\\Models\\Ticket::getBudgetPauseMinutesAttribute() should return int but returns float.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
-       'line' => 226,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 226,
-       'nodeType' => 'PhpParser\\Node\\Stmt\\Return_',
-       'identifier' => 'return.type',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php' => 
-  array (
-    0 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Class App\\Models\\UserProfile referenced with incorrect case: App\\Models\\Userprofile.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
-       'line' => 6,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 6,
-       'nodeType' => 'PhpParser\\Node\\Stmt\\Use_',
-       'identifier' => 'class.nameCase',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    1 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Class App\\Models\\UserProfile referenced with incorrect case: App\\Models\\Userprofile.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
-       'line' => 16,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 16,
-       'nodeType' => 'PHPStan\\Node\\InClassNode',
-       'identifier' => 'class.nameCase',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    2 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'PHPDoc type array<int, string> of property App\\Models\\User::$fillable is not covariant with PHPDoc type list<string> of overridden property Illuminate\\Database\\Eloquent\\Model::$fillable.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
-       'line' => 24,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
-       'traitFilePath' => NULL,
-       'tip' => 'You can fix 3rd party PHPDoc types with stub files:
-   <fg=cyan>https://phpstan.org/user-guide/stub-files</>',
-       'nodeLine' => 24,
-       'nodeType' => 'PHPStan\\Node\\ClassPropertyNode',
-       'identifier' => 'property.phpDocType',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    3 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'PHPDoc type array<int, string> of property App\\Models\\User::$hidden is not covariant with PHPDoc type list<string> of overridden property Illuminate\\Database\\Eloquent\\Model::$hidden.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
-       'line' => 35,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
-       'traitFilePath' => NULL,
-       'tip' => 'You can fix 3rd party PHPDoc types with stub files:
-   <fg=cyan>https://phpstan.org/user-guide/stub-files</>',
-       'nodeLine' => 35,
-       'nodeType' => 'PHPStan\\Node\\ClassPropertyNode',
-       'identifier' => 'property.phpDocType',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    4 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Access to an undefined property Illuminate\\Database\\Eloquent\\Model::$name.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
-       'line' => 148,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
-       'traitFilePath' => NULL,
-       'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 148,
-       'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
-       'identifier' => 'property.notFound',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\TicketNotification.php' => 
-  array (
-    0 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Cannot use Illuminate\\Bus\\Queueable as Queueable because the name is already in use.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\TicketNotification.php',
-       'line' => 12,
-       'canBeIgnored' => false,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\TicketNotification.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 3,
-       'nodeType' => 'PHPStan\\Node\\FileNode',
-       'identifier' => 'use.nameInUse',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    1 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Cannot use Illuminate\\Notifications\\Notification as Notification because the name is already in use.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\TicketNotification.php',
-       'line' => 13,
-       'canBeIgnored' => false,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\TicketNotification.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 3,
-       'nodeType' => 'PHPStan\\Node\\FileNode',
-       'identifier' => 'use.nameInUse',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php' => 
-  array (
-    0 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Access to an undefined property Illuminate\\Database\\Eloquent\\Model::$category.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
-       'line' => 50,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
-       'traitFilePath' => NULL,
-       'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 50,
-       'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
-       'identifier' => 'property.notFound',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    1 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Using nullsafe property access "?->name" on left side of ?? is unnecessary. Use -> instead.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
-       'line' => 50,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
-       'traitFilePath' => NULL,
-       'tip' => NULL,
-       'nodeLine' => 50,
-       'nodeType' => 'PhpParser\\Node\\Expr\\BinaryOp\\Coalesce',
-       'identifier' => 'nullsafe.neverNull',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-    2 => 
-    \PHPStan\Analyser\Error::__set_state(array(
-       'message' => 'Access to an undefined property App\\Models\\User::$tickets_ativos.',
-       'file' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
-       'line' => 55,
-       'canBeIgnored' => true,
-       'filePath' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
-       'traitFilePath' => NULL,
-       'tip' => 'Learn more: <fg=cyan>https://phpstan.org/blog/solving-phpstan-access-to-undefined-property</>',
-       'nodeLine' => 55,
-       'nodeType' => 'PhpParser\\Node\\Expr\\PropertyFetch',
-       'identifier' => 'property.notFound',
-       'metadata' => 
-      array (
-      ),
-       'fixedErrorDiff' => NULL,
-    )),
-  ),
 ); },
 	'locallyIgnoredErrorsCallback' => static function (): array { return array (
 ); },
@@ -3430,7 +2621,7 @@ return [
     ),
     'Larastan\\Larastan\\Collectors\\UsedViewFunctionCollector' => 
     array (
-      0 => 'ui.ticketDetail',
+      0 => 'ui.ticket-detail',
       1 => 'calendar',
     ),
     'PHPStan\\Rules\\Comparison\\ConstantConditionInTraitCollector' => 
@@ -5251,7 +4442,7 @@ return [
       ),
     ),
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php' => 
   array (
     'PHPStan\\Rules\\Traits\\TraitUseCollector' => 
     array (
@@ -5448,7 +4639,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Exports\\TicketsExport.php' => 
   array (
-    'fileHash' => 'e11de77d3b93a82f3e790cfb6c93a3aa4fdd4372382b75ce6f264675526480f8',
+    'fileHash' => '9629631b126f272fcfaa98b476b34fdaf127ad3d0b4012ce5805995729a1c13e',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php',
@@ -5463,7 +4654,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php' => 
   array (
-    'fileHash' => 'a6c0b73ef0eaabf670e1c2ce6229f3a367f569a62156d2d372796f780555a2f0',
+    'fileHash' => '02568f9c79fc3babd677057828861b7ea9fde897ecfc5648c0c71f3b3d6dd654',
     'dependentFiles' => 
     array (
     ),
@@ -5484,7 +4675,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuthController.php' => 
   array (
-    'fileHash' => 'f03ff9babaa120f948659b69b49876d9e3efc7878518d75e1dfe76c7bcb0d1e3',
+    'fileHash' => 'ef1e332fe67df33340d30c01b4e7bfc564fc144d81e88b3f350d6dceafcd7b4b',
     'dependentFiles' => 
     array (
     ),
@@ -5538,7 +4729,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php' => 
   array (
-    'fileHash' => 'e4f87dfd627c77344400ab6514414602f1a5300ff643c6791b0902fe6c9e0358',
+    'fileHash' => '9401260e2ee53030bd1a51af7bdd5d4a2affab5ec1c4e51c9b0dc77671709a8e',
     'dependentFiles' => 
     array (
     ),
@@ -5566,21 +4757,21 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php' => 
   array (
-    'fileHash' => 'd1831fb00654f54b23d631ff4da3069d4b5ac7acd404d2e91ef12ec3422c818f',
+    'fileHash' => '050b105e12a7be4a8d39c6e0a215799041c448fb5a947edd29d4aa3871f90a93',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RateLimitMiddleware.php' => 
   array (
-    'fileHash' => 'd58267c3179009e63c69a302219b0759458de00ff12b4348b430afd7d0323bfe',
+    'fileHash' => '40704253d7bb0c55d7368e78ff79de3e82f85de19df514d44cbb36b38a81858a',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RoleMiddleware.php' => 
   array (
-    'fileHash' => 'd9661e8cc2a959413efe519969672904fb056088809c414fe4e9eb4a4ace97c3',
+    'fileHash' => '0a62b4acc4c1c5d08cc2ae67e11107d0325f6fa362e7fca0e0f5949612ff29b6',
     'dependentFiles' => 
     array (
     ),
@@ -5609,7 +4800,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Audit.php' => 
   array (
-    'fileHash' => 'a86e441b2a4b56d9e671c3ef5ff84686dd7cf7998ca3d87933da6adc446a045f',
+    'fileHash' => 'ad330f2e73d33aaa8ad34dfe7c620c2d4f6d2e291eefd9056b16edd2befc546c',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php',
@@ -5633,11 +4824,14 @@ return [
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Console\\Commands\\SimulateTelemetry.php',
       1 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminController.php',
-      2 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\EquipmentController.php',
-      3 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
-      4 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\EquipmentCategory.php',
-      5 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php',
-      6 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
+      2 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php',
+      3 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\CalendarController.php',
+      4 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\EquipmentController.php',
+      5 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
+      6 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\EquipmentCategory.php',
+      7 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php',
+      8 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
+      9 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\EquipmentCategory.php' => 
@@ -5663,15 +4857,16 @@ return [
     'fileHash' => 'b3316457109b74bf3bbde778f748c9f9002d7af1b28b475d10410db315f2c884',
     'dependentFiles' => 
     array (
-      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php',
-      1 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
-      2 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php',
-      3 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
+      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php',
+      1 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php',
+      2 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
+      3 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php',
+      4 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php' => 
   array (
-    'fileHash' => '8848aa1f43abb5c5c1e90703373b248566af948f2afa93428eb2a4ce172c5e8e',
+    'fileHash' => '1e74e9e7dc72b339f63306a1b9187e25e2dfe82bf4fe4749dc5ba75c390d8a7b',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Console\\Commands\\SimulateTelemetry.php',
@@ -5717,9 +4912,10 @@ return [
     'fileHash' => '9302cc683890ae1302927920b700a29bcabe1ba36893687bbe4c53a544182b0d',
     'dependentFiles' => 
     array (
-      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
-      1 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketType.php',
-      2 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php',
+      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
+      1 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
+      2 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketType.php',
+      3 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketType.php' => 
@@ -5740,7 +4936,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php' => 
   array (
-    'fileHash' => '779d02ecfe28dc0fc09617917612abf83b8f34bf582ce427b6194f65f2164bd7',
+    'fileHash' => 'bfcbfd460602ba62668233502c69bfa72e556494e465aec1d3494ba45be7d33f',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Console\\Commands\\SimulateTelemetry.php',
@@ -5764,13 +4960,13 @@ return [
       18 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketAttachment.php',
       19 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketComment.php',
       20 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php',
-      21 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php',
+      21 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php',
       22 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
     ),
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php' => 
   array (
-    'fileHash' => '0cd18ca87683da401c6f4d15b45572b40adc97f1d1a631f5f70e8415157c791b',
+    'fileHash' => 'd645ee75aeda6cb2e70c6d14a1064ba6448746009db2d3d89fff88db7689bc4f',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Console\\Commands\\SimulateTelemetry.php',
@@ -5807,7 +5003,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\TicketNotification.php' => 
   array (
-    'fileHash' => '5791921c9d392370c9cea8b55a38eb6a6c4a09f22da3b60c1d6e2aa6245108c1',
+    'fileHash' => '8332eb9e0f722df5fef002c00f87b0e9b4c9e431d1d192936abad482f062bcfa',
     'dependentFiles' => 
     array (
     ),
@@ -5836,7 +5032,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php' => 
   array (
-    'fileHash' => '6ba13b2e5e3bcc806989a7c3fad144479a4bcfdac39172ab55bbddb4f096c081',
+    'fileHash' => '81f45ef6d2fd65b5b2079f2e1d715d84b9bee6fbcb87d7f844f29a182bee07e8',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
@@ -5898,7 +5094,7 @@ return [
     1 => 'laravel/framework',
     2 => 'nesbot/carbon',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Events\\TicketStatusUpdatedBroadcast.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Events\\TicketCreatedBroadcast.php' => 
   array (
     0 => 'laravel/framework',
   ),
@@ -5907,6 +5103,11 @@ return [
     0 => 'maatwebsite/excel',
     1 => 'laravel/framework',
     2 => 'phpoffice/phpspreadsheet',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\ApiDocsController.php' => 
+  array (
+    0 => 'laravel/framework',
+    1 => 'symfony/http-foundation',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Controller.php' => 
   array (
@@ -5928,12 +5129,14 @@ return [
     4 => 'league/flysystem',
     5 => 'psr/http-message',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UserController.php' => 
   array (
     0 => 'laravel/framework',
     1 => 'symfony/http-foundation',
-    2 => 'psr/log',
-    3 => 'monolog/monolog',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Audit.php' => 
+  array (
+    0 => 'laravel/framework',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Category.php' => 
   array (
@@ -5957,22 +5160,11 @@ return [
   array (
     0 => 'laravel/framework',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php' => 
-  array (
-    0 => 'laravel/framework',
-  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php' => 
   array (
     0 => 'laravel/framework',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\NewTicketNotification.php' => 
-  array (
-    0 => 'laravel/framework',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\OpenApi\\OpenApiSpec.php' => 
-  array (
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Events\\TicketCreatedBroadcast.php' => 
   array (
     0 => 'laravel/framework',
   ),
@@ -5983,10 +5175,11 @@ return [
     2 => 'symfony/http-foundation',
     3 => 'nesbot/carbon',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\ApiDocsController.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuditController.php' => 
   array (
-    0 => 'laravel/framework',
-    1 => 'symfony/http-foundation',
+    0 => 'zircote/swagger-php',
+    1 => 'laravel/framework',
+    2 => 'symfony/http-foundation',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuthController.php' => 
   array (
@@ -5999,11 +5192,6 @@ return [
     0 => 'zircote/swagger-php',
     1 => 'laravel/framework',
     2 => 'symfony/http-foundation',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UserController.php' => 
-  array (
-    0 => 'laravel/framework',
-    1 => 'symfony/http-foundation',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RateLimitMiddleware.php' => 
   array (
@@ -6024,15 +5212,15 @@ return [
   array (
     0 => 'laravel/framework',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Notification.php' => 
-  array (
-    0 => 'laravel/framework',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketAttachment.php' => 
-  array (
-    0 => 'laravel/framework',
-  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketType.php' => 
+  array (
+    0 => 'laravel/framework',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php' => 
+  array (
+    0 => 'laravel/framework',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\TicketNotification.php' => 
   array (
     0 => 'laravel/framework',
   ),
@@ -6040,8 +5228,21 @@ return [
   array (
     0 => 'laravel/framework',
   ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\OpenApi\\OpenApiSpec.php' => 
+  array (
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php' => 
+  array (
+    0 => 'laravel/framework',
+    1 => 'openai-php/client',
+    2 => 'openai-php/laravel',
+  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Traits\\Auditable.php' => 
   array (
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Events\\TicketStatusUpdatedBroadcast.php' => 
+  array (
+    0 => 'laravel/framework',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php' => 
   array (
@@ -6052,12 +5253,6 @@ return [
     4 => 'barryvdh/laravel-dompdf',
     5 => 'dompdf/dompdf',
     6 => 'maatwebsite/excel',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuditController.php' => 
-  array (
-    0 => 'zircote/swagger-php',
-    1 => 'laravel/framework',
-    2 => 'symfony/http-foundation',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\CalendarController.php' => 
   array (
@@ -6086,42 +5281,43 @@ return [
     2 => 'psr/log',
     3 => 'monolog/monolog',
   ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php' => 
+  array (
+    0 => 'laravel/framework',
+    1 => 'symfony/http-foundation',
+    2 => 'psr/log',
+    3 => 'monolog/monolog',
+  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RoleMiddleware.php' => 
   array (
     0 => 'laravel/framework',
     1 => 'symfony/http-foundation',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Audit.php' => 
-  array (
-    0 => 'laravel/framework',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php' => 
   array (
     0 => 'laravel/framework',
     1 => 'symfony/http-foundation',
   ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Notification.php' => 
+  array (
+    0 => 'laravel/framework',
+  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php' => 
   array (
     0 => 'laravel/framework',
     1 => 'symfony/http-foundation',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketAttachment.php' => 
   array (
     0 => 'laravel/framework',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\TicketNotification.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php' => 
   array (
     0 => 'laravel/framework',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\AppServiceProvider.php' => 
   array (
     0 => 'laravel/framework',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php' => 
-  array (
-    0 => 'laravel/framework',
-    1 => 'openai-php/client',
-    2 => 'openai-php/laravel',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Traits\\ControllerHelpers.php' => 
   array (
@@ -6554,6 +5750,7 @@ return [
           'withtitle' => 'Maatwebsite\\Excel\\Concerns\\WithTitle',
           'withstyles' => 'Maatwebsite\\Excel\\Concerns\\WithStyles',
           'worksheet' => 'PhpOffice\\PhpSpreadsheet\\Worksheet\\Worksheet',
+          'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
         ),
          'constUses' => 
         array (
@@ -6598,6 +5795,7 @@ return [
               'withtitle' => 'Maatwebsite\\Excel\\Concerns\\WithTitle',
               'withstyles' => 'Maatwebsite\\Excel\\Concerns\\WithStyles',
               'worksheet' => 'PhpOffice\\PhpSpreadsheet\\Worksheet\\Worksheet',
+              'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
             ),
              'constUses' => 
             array (
@@ -6609,7 +5807,7 @@ return [
            'abstract' => false,
            'final' => false,
            'static' => false,
-           'returnType' => NULL,
+           'returnType' => 'Illuminate\\Database\\Eloquent\\Builder',
            'parameters' => 
           array (
           ),
@@ -6636,6 +5834,7 @@ return [
               'withtitle' => 'Maatwebsite\\Excel\\Concerns\\WithTitle',
               'withstyles' => 'Maatwebsite\\Excel\\Concerns\\WithStyles',
               'worksheet' => 'PhpOffice\\PhpSpreadsheet\\Worksheet\\Worksheet',
+              'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
             ),
              'constUses' => 
             array (
@@ -6674,6 +5873,7 @@ return [
               'withtitle' => 'Maatwebsite\\Excel\\Concerns\\WithTitle',
               'withstyles' => 'Maatwebsite\\Excel\\Concerns\\WithStyles',
               'worksheet' => 'PhpOffice\\PhpSpreadsheet\\Worksheet\\Worksheet',
+              'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
             ),
              'constUses' => 
             array (
@@ -6725,6 +5925,7 @@ return [
               'withtitle' => 'Maatwebsite\\Excel\\Concerns\\WithTitle',
               'withstyles' => 'Maatwebsite\\Excel\\Concerns\\WithStyles',
               'worksheet' => 'PhpOffice\\PhpSpreadsheet\\Worksheet\\Worksheet',
+              'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
             ),
              'constUses' => 
             array (
@@ -6763,6 +5964,7 @@ return [
               'withtitle' => 'Maatwebsite\\Excel\\Concerns\\WithTitle',
               'withstyles' => 'Maatwebsite\\Excel\\Concerns\\WithStyles',
               'worksheet' => 'PhpOffice\\PhpSpreadsheet\\Worksheet\\Worksheet',
+              'builder' => 'Illuminate\\Database\\Eloquent\\Builder',
             ),
              'constUses' => 
             array (
@@ -13006,7 +12208,7 @@ return [
               'request' => 'Illuminate\\Http\\Request',
               'response' => 'Symfony\\Component\\HttpFoundation\\Response',
               'user' => 'App\\Models\\User',
-              'userprofile' => 'App\\Models\\Userprofile',
+              'userprofile' => 'App\\Models\\UserProfile',
               'auth' => 'Illuminate\\Support\\Facades\\Auth',
             ),
              'constUses' => 
@@ -13577,7 +12779,7 @@ return [
            'abstract' => false,
            'final' => false,
            'static' => false,
-           'returnType' => NULL,
+           'returnType' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
            'parameters' => 
           array (
           ),
@@ -14420,7 +13622,32 @@ return [
         14 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'status',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * @return BelongsTo<TicketStatus, $this>
+     */',
+             'namespace' => 'App\\Models',
+             'uses' => 
+            array (
+              'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+              'model' => 'Illuminate\\Database\\Eloquent\\Model',
+              'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
+              'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+              'auditable' => 'App\\Traits\\Auditable',
+              'ticketstatus' => 'App\\Models\\TicketStatus',
+              'ticketworkflowhistory' => 'App\\Models\\TicketWorkflowHistory',
+              'equipment' => 'App\\Models\\Equipment',
+              'room' => 'App\\Models\\Room',
+              'ticketcomment' => 'App\\Models\\TicketComment',
+              'ticketattachment' => 'App\\Models\\TicketAttachment',
+              'user' => 'App\\Models\\User',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -14438,7 +13665,32 @@ return [
         15 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'budgetApprovedBy',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * @return BelongsTo<User, $this>
+     */',
+             'namespace' => 'App\\Models',
+             'uses' => 
+            array (
+              'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+              'model' => 'Illuminate\\Database\\Eloquent\\Model',
+              'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
+              'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+              'auditable' => 'App\\Traits\\Auditable',
+              'ticketstatus' => 'App\\Models\\TicketStatus',
+              'ticketworkflowhistory' => 'App\\Models\\TicketWorkflowHistory',
+              'equipment' => 'App\\Models\\Equipment',
+              'room' => 'App\\Models\\Room',
+              'ticketcomment' => 'App\\Models\\TicketComment',
+              'ticketattachment' => 'App\\Models\\TicketAttachment',
+              'user' => 'App\\Models\\User',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -14474,7 +13726,32 @@ return [
         17 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'user',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * @return BelongsTo<User, $this>
+     */',
+             'namespace' => 'App\\Models',
+             'uses' => 
+            array (
+              'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+              'model' => 'Illuminate\\Database\\Eloquent\\Model',
+              'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
+              'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+              'auditable' => 'App\\Traits\\Auditable',
+              'ticketstatus' => 'App\\Models\\TicketStatus',
+              'ticketworkflowhistory' => 'App\\Models\\TicketWorkflowHistory',
+              'equipment' => 'App\\Models\\Equipment',
+              'room' => 'App\\Models\\Room',
+              'ticketcomment' => 'App\\Models\\TicketComment',
+              'ticketattachment' => 'App\\Models\\TicketAttachment',
+              'user' => 'App\\Models\\User',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -14492,7 +13769,32 @@ return [
         18 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'technician',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * @return BelongsTo<User, $this>
+     */',
+             'namespace' => 'App\\Models',
+             'uses' => 
+            array (
+              'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+              'model' => 'Illuminate\\Database\\Eloquent\\Model',
+              'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
+              'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+              'auditable' => 'App\\Traits\\Auditable',
+              'ticketstatus' => 'App\\Models\\TicketStatus',
+              'ticketworkflowhistory' => 'App\\Models\\TicketWorkflowHistory',
+              'equipment' => 'App\\Models\\Equipment',
+              'room' => 'App\\Models\\Room',
+              'ticketcomment' => 'App\\Models\\TicketComment',
+              'ticketattachment' => 'App\\Models\\TicketAttachment',
+              'user' => 'App\\Models\\User',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -14510,7 +13812,32 @@ return [
         19 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'equipment',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * @return BelongsTo<Equipment, $this>
+     */',
+             'namespace' => 'App\\Models',
+             'uses' => 
+            array (
+              'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+              'model' => 'Illuminate\\Database\\Eloquent\\Model',
+              'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
+              'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+              'auditable' => 'App\\Traits\\Auditable',
+              'ticketstatus' => 'App\\Models\\TicketStatus',
+              'ticketworkflowhistory' => 'App\\Models\\TicketWorkflowHistory',
+              'equipment' => 'App\\Models\\Equipment',
+              'room' => 'App\\Models\\Room',
+              'ticketcomment' => 'App\\Models\\TicketComment',
+              'ticketattachment' => 'App\\Models\\TicketAttachment',
+              'user' => 'App\\Models\\User',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -14528,7 +13855,32 @@ return [
         20 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'room',
-           'phpDoc' => NULL,
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * @return BelongsTo<Room, $this>
+     */',
+             'namespace' => 'App\\Models',
+             'uses' => 
+            array (
+              'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+              'model' => 'Illuminate\\Database\\Eloquent\\Model',
+              'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
+              'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+              'auditable' => 'App\\Traits\\Auditable',
+              'ticketstatus' => 'App\\Models\\TicketStatus',
+              'ticketworkflowhistory' => 'App\\Models\\TicketWorkflowHistory',
+              'equipment' => 'App\\Models\\Equipment',
+              'room' => 'App\\Models\\Room',
+              'ticketcomment' => 'App\\Models\\TicketComment',
+              'ticketattachment' => 'App\\Models\\TicketAttachment',
+              'user' => 'App\\Models\\User',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -15757,13 +15109,14 @@ return [
        'phpDoc' => 
       \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
          'phpDocString' => '/**
- * @property-read \\App\\Models\\Userprofile|null $profile
+ * @property-read \\App\\Models\\UserProfile|null $profile
+ * @property-read int $tickets_ativos
  */',
          'namespace' => 'App\\Models',
          'uses' => 
         array (
           'ticket' => 'App\\Models\\Ticket',
-          'userprofile' => 'App\\Models\\Userprofile',
+          'userprofile' => 'App\\Models\\UserProfile',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -15803,7 +15156,7 @@ return [
              'uses' => 
             array (
               'ticket' => 'App\\Models\\Ticket',
-              'userprofile' => 'App\\Models\\Userprofile',
+              'userprofile' => 'App\\Models\\UserProfile',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -15840,12 +15193,12 @@ return [
           ),
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/** @var array<int, string> */',
+             'phpDocString' => '/** @var list<string> */',
              'namespace' => 'App\\Models',
              'uses' => 
             array (
               'ticket' => 'App\\Models\\Ticket',
-              'userprofile' => 'App\\Models\\Userprofile',
+              'userprofile' => 'App\\Models\\UserProfile',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -15882,12 +15235,12 @@ return [
           ),
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/** @var array<int, string> */',
+             'phpDocString' => '/** @var list<string> */',
              'namespace' => 'App\\Models',
              'uses' => 
             array (
               'ticket' => 'App\\Models\\Ticket',
-              'userprofile' => 'App\\Models\\Userprofile',
+              'userprofile' => 'App\\Models\\UserProfile',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -15929,7 +15282,7 @@ return [
              'uses' => 
             array (
               'ticket' => 'App\\Models\\Ticket',
-              'userprofile' => 'App\\Models\\Userprofile',
+              'userprofile' => 'App\\Models\\UserProfile',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -16024,7 +15377,7 @@ return [
              'uses' => 
             array (
               'ticket' => 'App\\Models\\Ticket',
-              'userprofile' => 'App\\Models\\Userprofile',
+              'userprofile' => 'App\\Models\\UserProfile',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -16061,7 +15414,7 @@ return [
              'uses' => 
             array (
               'ticket' => 'App\\Models\\Ticket',
-              'userprofile' => 'App\\Models\\Userprofile',
+              'userprofile' => 'App\\Models\\UserProfile',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -16098,7 +15451,7 @@ return [
              'uses' => 
             array (
               'ticket' => 'App\\Models\\Ticket',
-              'userprofile' => 'App\\Models\\Userprofile',
+              'userprofile' => 'App\\Models\\UserProfile',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -16135,7 +15488,7 @@ return [
              'uses' => 
             array (
               'ticket' => 'App\\Models\\Ticket',
-              'userprofile' => 'App\\Models\\Userprofile',
+              'userprofile' => 'App\\Models\\UserProfile',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -16172,7 +15525,7 @@ return [
              'uses' => 
             array (
               'ticket' => 'App\\Models\\Ticket',
-              'userprofile' => 'App\\Models\\Userprofile',
+              'userprofile' => 'App\\Models\\UserProfile',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -16209,7 +15562,7 @@ return [
              'uses' => 
             array (
               'ticket' => 'App\\Models\\Ticket',
-              'userprofile' => 'App\\Models\\Userprofile',
+              'userprofile' => 'App\\Models\\UserProfile',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -16246,7 +15599,7 @@ return [
              'uses' => 
             array (
               'ticket' => 'App\\Models\\Ticket',
-              'userprofile' => 'App\\Models\\Userprofile',
+              'userprofile' => 'App\\Models\\UserProfile',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -16283,7 +15636,7 @@ return [
              'uses' => 
             array (
               'ticket' => 'App\\Models\\Ticket',
-              'userprofile' => 'App\\Models\\Userprofile',
+              'userprofile' => 'App\\Models\\UserProfile',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -16320,7 +15673,7 @@ return [
              'uses' => 
             array (
               'ticket' => 'App\\Models\\Ticket',
-              'userprofile' => 'App\\Models\\Userprofile',
+              'userprofile' => 'App\\Models\\UserProfile',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -16370,7 +15723,7 @@ return [
              'uses' => 
             array (
               'ticket' => 'App\\Models\\Ticket',
-              'userprofile' => 'App\\Models\\Userprofile',
+              'userprofile' => 'App\\Models\\UserProfile',
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -16401,12 +15754,27 @@ return [
       ),
     )),
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php' => 
   array (
     0 => 
     \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
        'name' => 'App\\Models\\UserProfile',
-       'phpDoc' => NULL,
+       'phpDoc' => 
+      \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+         'phpDocString' => '/**
+ * @property string $name
+ */',
+         'namespace' => 'App\\Models',
+         'uses' => 
+        array (
+          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+          'model' => 'Illuminate\\Database\\Eloquent\\Model',
+          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+        ),
+         'constUses' => 
+        array (
+        ),
+      )),
        'abstract' => false,
        'final' => false,
        'extends' => 'Illuminate\\Database\\Eloquent\\Model',

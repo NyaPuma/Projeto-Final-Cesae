@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-class Container_367e527bd7 extends _PHPStan_02959ca10\Nette\DI\Container
+class Container_5210acb081 extends _PHPStan_02959ca10\Nette\DI\Container
 {
 	protected $tags = [
 		'phpstan.broker.allowedSubTypesClassReflectionExtension' => ['017' => true, '018' => true],
@@ -5900,7 +5900,7 @@ class Container_367e527bd7 extends _PHPStan_02959ca10\Nette\DI\Container
 			private $container;
 
 
-			public function __construct(Container_367e527bd7 $container)
+			public function __construct(Container_5210acb081 $container)
 			{
 				$this->container = $container;
 			}
@@ -5948,7 +5948,7 @@ class Container_367e527bd7 extends _PHPStan_02959ca10\Nette\DI\Container
 			private $container;
 
 
-			public function __construct(Container_367e527bd7 $container)
+			public function __construct(Container_5210acb081 $container)
 			{
 				$this->container = $container;
 			}
@@ -6006,7 +6006,7 @@ class Container_367e527bd7 extends _PHPStan_02959ca10\Nette\DI\Container
 			private $container;
 
 
-			public function __construct(Container_367e527bd7 $container)
+			public function __construct(Container_5210acb081 $container)
 			{
 				$this->container = $container;
 			}
@@ -6073,7 +6073,7 @@ class Container_367e527bd7 extends _PHPStan_02959ca10\Nette\DI\Container
 			private $container;
 
 
-			public function __construct(Container_367e527bd7 $container)
+			public function __construct(Container_5210acb081 $container)
 			{
 				$this->container = $container;
 			}
@@ -6093,7 +6093,7 @@ class Container_367e527bd7 extends _PHPStan_02959ca10\Nette\DI\Container
 			private $container;
 
 
-			public function __construct(Container_367e527bd7 $container)
+			public function __construct(Container_5210acb081 $container)
 			{
 				$this->container = $container;
 			}
@@ -6118,7 +6118,7 @@ class Container_367e527bd7 extends _PHPStan_02959ca10\Nette\DI\Container
 			private $container;
 
 
-			public function __construct(Container_367e527bd7 $container)
+			public function __construct(Container_5210acb081 $container)
 			{
 				$this->container = $container;
 			}
@@ -6138,7 +6138,7 @@ class Container_367e527bd7 extends _PHPStan_02959ca10\Nette\DI\Container
 			private $container;
 
 
-			public function __construct(Container_367e527bd7 $container)
+			public function __construct(Container_5210acb081 $container)
 			{
 				$this->container = $container;
 			}
@@ -6158,7 +6158,7 @@ class Container_367e527bd7 extends _PHPStan_02959ca10\Nette\DI\Container
 			private $container;
 
 
-			public function __construct(Container_367e527bd7 $container)
+			public function __construct(Container_5210acb081 $container)
 			{
 				$this->container = $container;
 			}
@@ -9637,7 +9637,7 @@ class Container_367e527bd7 extends _PHPStan_02959ca10\Nette\DI\Container
 	}
 
 
-	public function createServiceContainer(): Container_367e527bd7
+	public function createServiceContainer(): Container_5210acb081
 	{
 		return $this;
 	}
@@ -10301,15 +10301,15 @@ class Container_367e527bd7 extends _PHPStan_02959ca10\Nette\DI\Container
 				'BIN_TARGET' => 'C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\vendor\bin\/phpstan',
 				'BROADCAST_CONNECTION' => 'log',
 				'CACHE_STORE' => 'database',
-				'CHROME_CRASHPAD_PIPE_NAME' => '\\\.\pipe\crashpad_12424_WSITJBDNSTAGDPTW',
-				'COLUMNS' => '144',
-				'COMPOSER_RUNTIME_BIN_DIR' => 'C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\vendor\bin\\',
-				'COMPUTERNAME' => 'BRGCPU12',
 				'ChocolateyInstall' => 'C:\ProgramData\chocolatey',
-				'ComSpec' => 'C:\WINDOWS\system32\cmd.exe',
+				'CHROME_CRASHPAD_PIPE_NAME' => '\\\.\pipe\crashpad_20720_PEIFFWXOQDECTPGK',
+				'COLUMNS' => '120',
 				'CommonProgramFiles' => 'C:\Program Files\Common Files',
 				'CommonProgramFiles(x86)' => 'C:\Program Files (x86)\Common Files',
 				'CommonProgramW6432' => 'C:\Program Files\Common Files',
+				'COMPOSER_RUNTIME_BIN_DIR' => 'C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\vendor\bin\\',
+				'COMPUTERNAME' => 'BRGCPU12',
+				'ComSpec' => 'C:\WINDOWS\system32\cmd.exe',
 				'DB_CONNECTION' => 'mysql',
 				'DB_DATABASE' => 'projetofinalcesae',
 				'DB_HOST' => '127.0.0.1',
@@ -10317,17 +10317,12 @@ class Container_367e527bd7 extends _PHPStan_02959ca10\Nette\DI\Container
 				'DB_PORT' => '3306',
 				'DB_USERNAME' => 'root',
 				'DriverData' => 'C:\Windows\System32\Drivers\DriverData',
-				'EFC_14548_1262719628' => '1',
 				'EFC_14548_1592913036' => '1',
-				'EFC_14548_2283032206' => '1',
-				'EFC_14548_3789132940' => '1',
 				'EFC_14548_4126798990' => '1',
 				'FILESYSTEM_DISK' => 'local',
-				'FPS_BROWSER_APP_PROFILE_STRING' => 'Internet Explorer',
-				'FPS_BROWSER_USER_PROFILE_STRING' => 'Default',
 				'HOMEDRIVE' => 'C:',
 				'HOMEPATH' => '\Users\Cesae',
-				'LINES' => '13',
+				'LINES' => '3000',
 				'LOCALAPPDATA' => 'C:\Users\Cesae\AppData\Local',
 				'LOGONSERVER' => '\\\BRGCPU12',
 				'LOG_CHANNEL' => 'stack',
@@ -10343,23 +10338,31 @@ class Container_367e527bd7 extends _PHPStan_02959ca10\Nette\DI\Container
 				'MAIL_SCHEME' => 'null',
 				'MAIL_USERNAME' => 'null',
 				'MEMCACHED_HOST' => '127.0.0.1',
+				'NO_PROXY' => '127.0.0.1,localhost,::1',
+				'npm_config_user_agent' => 'npm/undefined node/v24.15.0 win32 x64 workspaces/false',
 				'NUMBER_OF_PROCESSORS' => '16',
-				'OS' => 'Windows_NT',
 				'OneDrive' => 'C:\Users\Cesae\OneDrive',
+				'OPENCODE_CLIENT' => 'desktop',
+				'OPENCODE_DISABLE_EMBEDDED_WEB_UI' => 'true',
+				'OPENCODE_EXPERIMENTAL_FILEWATCHER' => 'true',
+				'OPENCODE_EXPERIMENTAL_ICON_DISCOVERY' => 'true',
+				'OPENCODE_SERVER_PASSWORD' => '9a7fe026-aebc-41b8-9d02-f568da9e58ac',
+				'OPENCODE_SERVER_USERNAME' => 'opencode',
+				'OS' => 'Windows_NT',
+				'path' => 'C:\Python314\Scripts\;C:\Python314\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\ProgramData\chocolatey\bin;C:\Program Files\dotnet\;C:\xampp\php;C:\composer;C:\ProgramData\ComposerSetup\bin;C:\Program Files\nodejs\;C:\WINDOWS\System32\OpenSSH\;C:\WINDOWS\System32;C:\Program Files\Git\cmd;C:\Users\Cesae\.local\bin;C:\Users\Cesae\AppData\Local\Microsoft\WindowsApps;C:\Users\Cesae\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Cesae\AppData\Roaming\Composer\vendor\bin;C:\Users\Cesae\AppData\Roaming\npm;C:\Users\Cesae\.dotnet\tools;C:\Users\Cesae\AppData\Local\Programs\Ollama;C:\Users\Cesae\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\Cesae\AppData\Local\Programs\Kiro\bin',
 				'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.PY;.PYW;.CPL',
 				'PROCESSOR_ARCHITECTURE' => 'AMD64',
 				'PROCESSOR_IDENTIFIER' => 'Intel64 Family 6 Model 165 Stepping 5, GenuineIntel',
 				'PROCESSOR_LEVEL' => '6',
 				'PROCESSOR_REVISION' => 'a505',
-				'PROMPT' => '$P$G',
-				'PSModulePath' => 'C:\Users\Cesae\Documents\WindowsPowerShell\Modules;C:\Program Files\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules',
-				'PT8HOME' => 'C:\Program Files\Cisco Packet Tracer 8.2.2',
-				'PUBLIC' => 'C:\Users\Public',
-				'Path' => 'c:\Users\Cesae\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\debugCommand;c:\Users\Cesae\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\copilotCli;C:\Python314\Scripts\;C:\Python314\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\ProgramData\chocolatey\bin;C:\Program Files\dotnet\;C:\xampp\php;C:\composer;C:\ProgramData\ComposerSetup\bin;C:\Program Files\nodejs\;C:\WINDOWS\System32\OpenSSH\;C:\WINDOWS\System32;C:\Program Files\Git\cmd;C:\Users\Cesae\.local\bin;C:\Users\Cesae\AppData\Local\Microsoft\WindowsApps;C:\Users\Cesae\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Cesae\AppData\Roaming\Composer\vendor\bin;C:\Users\Cesae\AppData\Roaming\npm;C:\Users\Cesae\.dotnet\tools;C:\Users\Cesae\AppData\Local\Programs\Ollama;C:\Users\Cesae\AppData\Local\Programs\cursor\resources\app\bin;c:\Users\Cesae\.vscode\extensions\ms-python.debugpy-2026.6.0-win32-x64\bundled\scripts\noConfigScripts',
 				'ProgramData' => 'C:\ProgramData',
 				'ProgramFiles' => 'C:\Program Files',
 				'ProgramFiles(x86)' => 'C:\Program Files (x86)',
 				'ProgramW6432' => 'C:\Program Files',
+				'PROMPT' => '$P$G',
+				'PSModulePath' => 'C:\Users\Cesae\Documents\WindowsPowerShell\Modules;C:\Program Files\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules',
+				'PT8HOME' => 'C:\Program Files\Cisco Packet Tracer 8.2.2',
+				'PUBLIC' => 'C:\Users\Public',
 				'QUEUE_CONNECTION' => 'database',
 				'REDIS_CLIENT' => 'phpredis',
 				'REDIS_HOST' => '127.0.0.1',
@@ -10381,25 +10384,9 @@ class Container_367e527bd7 extends _PHPStan_02959ca10\Nette\DI\Container
 				'USERNAME' => 'Cesae',
 				'USERPROFILE' => 'C:\Users\Cesae',
 				'VITE_APP_NAME' => 'Laravel',
-				'VSCODE_PYTHON_AUTOACTIVATE_GUARD' => '1',
-				'ZES_ENABLE_SYSMAN' => '1',
 				'windir' => 'C:\WINDOWS',
-				'TERM_PROGRAM' => 'vscode',
-				'TERM_PROGRAM_VERSION' => '1.129.1',
-				'LANG' => 'en_US.UTF-8',
-				'COLORTERM' => 'truecolor',
-				'COPILOT_DEBUG_NONCE' => '192ffccebd1d354c6c7cfb63617c3112',
-				'PYDEVD_DISABLE_FILE_VALIDATION' => '1',
-				'VSCODE_DEBUGPY_ADAPTER_ENDPOINTS' => 'c:\Users\Cesae\.vscode\extensions\ms-python.debugpy-2026.6.0-win32-x64\.noConfigDebugAdapterEndpoints\endpoint-1e4986e8293e43ee.txt',
-				'BUNDLED_DEBUGPY_PATH' => 'c:\Users\Cesae\.vscode\extensions\ms-python.debugpy-2026.6.0-win32-x64\bundled\libs\debugpy',
-				'PYTHONSTARTUP' => 'c:\Users\Cesae\AppData\Roaming\Code\User\workspaceStorage\e6dddfc1ab3205202b4b297649932656\ms-python.python\pythonrc.py',
-				'PYTHON_BASIC_REPL' => '1',
-				'GIT_ASKPASS' => 'c:\Users\Cesae\AppData\Roaming\Code\User\globalStorage\vscode.git\askpass\70789581cae28aa7\askpass.sh',
-				'VSCODE_GIT_ASKPASS_NODE' => 'C:\Users\Cesae\AppData\Local\Programs\Microsoft VS Code\Code.exe',
-				'VSCODE_GIT_ASKPASS_EXTRA_ARGS' => '',
-				'VSCODE_GIT_ASKPASS_MAIN' => 'c:\Users\Cesae\AppData\Roaming\Code\User\globalStorage\vscode.git\askpass\70789581cae28aa7\askpass-main.js',
-				'VSCODE_GIT_IPC_HANDLE' => '\\\.\pipe\vscode-git-05906657df-sock',
-				'VSCODE_INJECTION' => '1',
+				'XDG_STATE_HOME' => 'C:\Users\Cesae\AppData\Roaming\ai.opencode.desktop',
+				'ZES_ENABLE_SYSMAN' => '1',
 			],
 		];
 	}

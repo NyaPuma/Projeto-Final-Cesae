@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Http\Middleware\RateLimitMiddleware.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Middleware\RateLimitMiddleware
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-d58267c3179009e63c69a302219b0759458de00ff12b4348b430afd7d0323bfe',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-40704253d7bb0c55d7368e78ff79de3e82f85de19df514d44cbb36b38a81858a',
    'data' => 
   array (
     'locatedSource' => 
@@ -27,7 +27,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     array (
     ),
     'startLine' => 10,
-    'endLine' => 98,
+    'endLine' => 99,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => NULL,
@@ -274,7 +274,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * @return mixed
  */',
         'startLine' => 34,
-        'endLine' => 47,
+        'endLine' => 48,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -312,8 +312,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 52,
-            'endLine' => 52,
+            'startLine' => 53,
+            'endLine' => 53,
             'startColumn' => 48,
             'endColumn' => 63,
             'parameterIndex' => 0,
@@ -336,8 +336,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Resolve request signature.
  */',
-        'startLine' => 52,
-        'endLine' => 63,
+        'startLine' => 53,
+        'endLine' => 64,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -375,8 +375,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 68,
-            'endLine' => 68,
+            'startLine' => 69,
+            'endLine' => 69,
             'startColumn' => 35,
             'endColumn' => 52,
             'parameterIndex' => 0,
@@ -401,8 +401,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 68,
-            'endLine' => 68,
+            'startLine' => 69,
+            'endLine' => 69,
             'startColumn' => 55,
             'endColumn' => 70,
             'parameterIndex' => 1,
@@ -427,8 +427,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 68,
-            'endLine' => 68,
+            'startLine' => 69,
+            'endLine' => 69,
             'startColumn' => 73,
             'endColumn' => 94,
             'parameterIndex' => 2,
@@ -451,8 +451,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Add the limit header information to the response.
  */',
-        'startLine' => 68,
-        'endLine' => 76,
+        'startLine' => 69,
+        'endLine' => 77,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -490,8 +490,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 81,
-            'endLine' => 81,
+            'startLine' => 82,
+            'endLine' => 82,
             'startColumn' => 51,
             'endColumn' => 61,
             'parameterIndex' => 0,
@@ -516,8 +516,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 81,
-            'endLine' => 81,
+            'startLine' => 82,
+            'endLine' => 82,
             'startColumn' => 64,
             'endColumn' => 79,
             'parameterIndex' => 1,
@@ -540,8 +540,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Calculate the number of remaining attempts.
  */',
-        'startLine' => 81,
-        'endLine' => 84,
+        'startLine' => 82,
+        'endLine' => 85,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -579,8 +579,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 89,
-            'endLine' => 89,
+            'startLine' => 90,
+            'endLine' => 90,
             'startColumn' => 38,
             'endColumn' => 48,
             'parameterIndex' => 0,
@@ -605,8 +605,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 89,
-            'endLine' => 89,
+            'startLine' => 90,
+            'endLine' => 90,
             'startColumn' => 51,
             'endColumn' => 66,
             'parameterIndex' => 1,
@@ -631,8 +631,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 89,
-            'endLine' => 89,
+            'startLine' => 90,
+            'endLine' => 90,
             'startColumn' => 69,
             'endColumn' => 85,
             'parameterIndex' => 2,
@@ -655,8 +655,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Build the response when rate limit is exceeded.
  */',
-        'startLine' => 89,
-        'endLine' => 97,
+        'startLine' => 90,
+        'endLine' => 98,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

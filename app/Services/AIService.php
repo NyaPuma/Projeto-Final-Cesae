@@ -47,7 +47,7 @@ class AIService
         $prompt .= "- Equipamento: " . ($ticket->equipment->name ?? 'Não Especificado') . "\n";
 
         // Uso do operador null-safe (?->) para evitar quebras se o equipamento ou categoria não existirem
-        $prompt .= "- Categoria Técnica: " . ($ticket->equipment?->category?->name ?? 'Geral') . "\n\n";
+        $prompt .= "- Categoria Técnica: " . ($ticket->equipment->category->name ?? 'Geral') . "\n\n";
 
         $prompt .= "--- RECURSOS HUMANOS DISPONÍVEIS ---\n";
         foreach ($tecnicos as$tecnico) {

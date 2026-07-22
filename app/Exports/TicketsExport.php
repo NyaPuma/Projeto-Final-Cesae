@@ -10,6 +10,7 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Classe de exportação para ficheiro Excel utilizando o pacote Maatwebsite/Excel.
@@ -21,7 +22,7 @@ class TicketsExport implements FromQuery, WithHeadings, WithMapping, ShouldAutoS
     /**
      * Query base para a exportação. Utiliza cursor-friendly eager loading mínimo.
      */
-    public function query()
+    public function query(): Builder
     {
         return Ticket::query()
             ->select([
@@ -61,7 +62,7 @@ class TicketsExport implements FromQuery, WithHeadings, WithMapping, ShouldAutoS
         return [
             $ticket->id,
             $ticket->title,
-            $ticket->status?->name ?? 'N/A',
+            $ticket->status->name ?? 'N/A',
             $ticket->priority,
             optional($ticket->opened_at)->format('d/m/Y H:i'),
             optional($ticket->in_progress_at)->format('d/m/Y H:i'),

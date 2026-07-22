@@ -30,7 +30,7 @@ class CustomAuthMiddleware
             ?: $sessionToken;
 
         $hasCookie = $request->cookies->has('api_token');
-        $hasSessionToken = is_string($sessionToken) && $sessionToken !== '';
+        $hasSessionToken = $sessionToken !== '' && $sessionToken !== null;
 
         if (!$hasCookie && !$hasSessionToken) {
             Log::debug('Cookie api_token nao encontrado. Headers: ', $request->header());
@@ -55,7 +55,7 @@ class CustomAuthMiddleware
         if (!$user) {
             Log::debug('CustomAuthMiddleware - Invalid or inactive user token', [
                 'has_cookie' => $hasCookie,
-                'token_value' => is_string($token) ? $token : null,
+                'token_value' => $token,
             ]);
 
             // 1ª Prioridade: Se a rota espera JSON, responde SEMPRE com JSON
@@ -84,7 +84,7 @@ class CustomAuthMiddleware
         if (!$user->profile_id || !$user->profile?->name) {
             Log::debug('CustomAuthMiddleware - User has no valid profile', [
                 'has_cookie' => $hasCookie,
-                'token_value' => is_string($token) ? $token : null,
+                'token_value' => $token,
                 'profile_id' => $user->profile_id ?? null,
             ]);
 

@@ -162,7 +162,7 @@ class TicketController extends Controller
         // Caso contrário (acesso direto do Admin à página), carrega a recomendação da IA e a View
         $recomendacaoIA = $this->aiService->recomendarTecnico($ticket);
 
-        return view('ui.ticketDetail', compact('ticket', 'recomendacaoIA'));
+        return view('ui.ticket-detail', compact('ticket', 'recomendacaoIA'));
     }
 
     /**
@@ -175,7 +175,7 @@ class TicketController extends Controller
         ]);
 
         $ticket = Ticket::findOrFail($id);
-        $oldStatus = $ticket->status_id;
+        $oldStatus = $ticket->status->name ?? '';
 
         // Vai buscar dinamicamente o ID do estado "Em Curso" definido no teu Model
         $inProgressStatusId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
@@ -440,7 +440,7 @@ class TicketController extends Controller
         ]);
 
         $ticket = Ticket::findOrFail($id);
-        $oldStatus = $ticket->status_id;
+        $oldStatus = $ticket->status->name ?? '';
 
         if (!$ticket->hasStatus(Ticket::STATUS_OPEN)) {
             return response()->json(['message' => 'Apenas tickets em estado "Aberto" podem ser iniciados.'], 422);
@@ -529,7 +529,7 @@ class TicketController extends Controller
         ]);
 
         $ticket = Ticket::findOrFail($id);
-        $oldStatus = $ticket->status_id;
+        $oldStatus = $ticket->status->name ?? '';
 
         if (!$ticket->hasStatus(Ticket::STATUS_IN_PROGRESS)) {
             return response()->json(['message' => 'Apenas tickets em "Em Curso" podem ser fechados.'], 422);

@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Models\Ticket;
-use App\Models\Userprofile as UserProfile;
+use App\Models\UserProfile;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -11,7 +11,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 /**
- * @property-read \App\Models\Userprofile|null $profile
+ * @property-read \App\Models\UserProfile|null $profile
+ * @property-read int $tickets_ativos
  */
 class User extends Authenticatable
 {
@@ -20,7 +21,7 @@ class User extends Authenticatable
     /** @var string */
     protected $table = 'users';
 
-    /** @var array<int, string> */
+    /** @var list<string> */
     protected $fillable = [
         'name',
         'email',
@@ -31,7 +32,7 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    /** @var array<int, string> */
+    /** @var list<string> */
     protected $hidden = [
         'password',
         'remember_token',
@@ -142,10 +143,7 @@ class User extends Authenticatable
      */
     private static function ensureValidProfile(User $user): void
     {
-        // 🛠️ FIX DE PROPRIEDADE (Linha 147): Acedemos ao método de relacionamento de forma direta e segura
-        // para contornar a limitação de propriedades dinâmicas que confunde o Larastan.
-        $profile = $user->profile_id ? $user->profile()->first() : null;
-        $profileName = $profile ? $profile->name : '';
+        $profileName = $user->profile->name ?? '';
 
         if (!$user->profile_id || !self::isValidProfile($profileName)) {
             $defaultRole = self::ROLE_USER;

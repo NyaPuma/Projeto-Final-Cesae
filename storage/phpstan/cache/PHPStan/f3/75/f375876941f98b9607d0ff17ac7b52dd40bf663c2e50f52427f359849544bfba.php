@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Models\Audit.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Models\Audit
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-a86e441b2a4b56d9e671c3ef5ff84686dd7cf7998ca3d87933da6adc446a045f',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-ad330f2e73d33aaa8ad34dfe7c620c2d4f6d2e291eefd9056b16edd2befc546c',
    'data' => 
   array (
     'locatedSource' => 
@@ -26,8 +26,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'attributes' => 
     array (
     ),
-    'startLine' => 8,
-    'endLine' => 25,
+    'startLine' => 9,
+    'endLine' => 26,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'Illuminate\\Database\\Eloquent\\Model',
@@ -55,20 +55,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '[\'user_id\', \'auditable_type\', \'auditable_id\', \'event\', \'old_values\', \'new_values\', \'url\', \'ip_address\', \'user_agent\']',
           'attributes' => 
           array (
-            'startLine' => 12,
-            'endLine' => 14,
-            'startTokenPos' => 38,
-            'startFilePos' => 201,
-            'endTokenPos' => 66,
-            'endFilePos' => 331,
+            'startLine' => 13,
+            'endLine' => 15,
+            'startTokenPos' => 43,
+            'startFilePos' => 255,
+            'endTokenPos' => 71,
+            'endFilePos' => 385,
           ),
         ),
         'docComment' => NULL,
         'attributes' => 
         array (
         ),
-        'startLine' => 12,
-        'endLine' => 14,
+        'startLine' => 13,
+        'endLine' => 15,
         'startColumn' => 5,
         'endColumn' => 6,
         'isPromoted' => false,
@@ -90,20 +90,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '[\'old_values\' => \'array\', \'new_values\' => \'array\']',
           'attributes' => 
           array (
-            'startLine' => 16,
-            'endLine' => 19,
-            'startTokenPos' => 75,
-            'startFilePos' => 358,
-            'endTokenPos' => 91,
-            'endFilePos' => 430,
+            'startLine' => 17,
+            'endLine' => 20,
+            'startTokenPos' => 80,
+            'startFilePos' => 412,
+            'endTokenPos' => 96,
+            'endFilePos' => 484,
           ),
         ),
         'docComment' => NULL,
         'attributes' => 
         array (
         ),
-        'startLine' => 16,
-        'endLine' => 19,
+        'startLine' => 17,
+        'endLine' => 20,
         'startColumn' => 5,
         'endColumn' => 6,
         'isPromoted' => false,
@@ -123,13 +123,21 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'returnsReference' => false,
-        'returnType' => NULL,
+        'returnType' => 
+        array (
+          'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+          'data' => 
+          array (
+            'name' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
+            'isIdentifier' => false,
+          ),
+        ),
         'attributes' => 
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 21,
-        'endLine' => 24,
+        'startLine' => 22,
+        'endLine' => 25,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
