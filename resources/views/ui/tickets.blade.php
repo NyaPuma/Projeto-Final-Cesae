@@ -121,7 +121,7 @@ const priorityColors = {
     baixa:   'border border-emerald-500/20 bg-emerald-500/10 text-emerald-800 dark:text-emerald-400',
     média:   'border border-amber-500/20 bg-amber-500/10 text-amber-800 dark:text-amber-400',
     alta:    'border border-orange-500/20 bg-orange-500/10 text-orange-800 dark:text-orange-400',
-    crítica: 'border border-rose-500/25 bg-rose-500/10 text-rose-800 dark:text-rose-400',
+    crítica: 'border border-purple-500/25 bg-purple-500/10 text-purple-800 dark:text-purple-400',
 };
 
 const priorityTranslations = {

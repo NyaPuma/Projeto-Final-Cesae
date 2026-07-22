@@ -54,8 +54,8 @@ class TicketController extends Controller
         $validator = Validator::make($data, [
             'title'        => ['required', 'string', 'max:255'],
             'description'  => ['required', 'string', 'max:5000'],
-            'priority'     => ['required', 'string', 'in:baixa,média,media,alta'],
-            'equipment_id' => ['nullable', 'integer', 'exists:equipments,id'],
+            'priority'     => ['required', 'string', 'in:baixa,média,media,alta,critica,crítica'],
+            'equipment_id' => ['required', 'integer', 'exists:equipments,id'],
             'room_id'      => ['nullable', 'integer', 'exists:rooms,id'],
         ]);
 
@@ -63,10 +63,12 @@ class TicketController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        // Normalizar 'media' para 'média' (aceitar ambos os valores do frontend)
+        // Normalizar 'media' para 'média' e 'critica' para 'crítica' (aceitar ambos os valores do frontend)
         $priority = $data['priority'];
         if ($priority === 'media') {
             $priority = 'média';
+        } elseif ($priority === 'critica') {
+            $priority = 'crítica';
         }
 
         // Obter o ID do status 'aberta'
@@ -108,10 +110,10 @@ class TicketController extends Controller
 
         if ($request->filled('priority')) {
             $priority = $request->priority;
-            if (in_array($priority, [Ticket::PRIORITY_LOW, Ticket::PRIORITY_MEDIUM, Ticket::PRIORITY_HIGH])) {
+            if (in_array($priority, [Ticket::PRIORITY_LOW, Ticket::PRIORITY_MEDIUM, Ticket::PRIORITY_HIGH, Ticket::PRIORITY_CRITICAL])) {
                 $query->where('priority', $priority);
             } else {
-                return response()->json(['message' => 'Prioridade inválida. Valores válidos: baixa, média, alta.'], 422);
+                return response()->json(['message' => 'Prioridade inválida. Valores válidos: baixa, média, alta, crítica.'], 422);
             }
         }
 
@@ -447,7 +449,7 @@ class TicketController extends Controller
         }
 
         // 🔔 VERIFICAÇÃO DE URGÊNCIA: Existem tickets de prioridade mais alta pendentes?
-        $priorityOrder = ['alta' => 3, 'média' => 2, 'baixa' => 1];
+        $priorityOrder = ['crítica' => 4, 'alta' => 3, 'média' => 2, 'baixa' => 1];
         $currentPriority = $priorityOrder[$ticket->priority] ?? 0;
         $force = $request->boolean('force', false);
 

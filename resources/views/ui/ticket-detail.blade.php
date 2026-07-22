@@ -338,7 +338,7 @@ const priorityColors = {
     baixa:   'border border-emerald-500/10 bg-emerald-500/5 text-emerald-600 dark:text-emerald-400',
     média:   'border border-amber-500/15 bg-amber-500/5 text-amber-600 dark:text-amber-400',
     alta:    'border border-orange-500/15 bg-orange-500/5 text-orange-600 dark:text-orange-400',
-    crítica: 'border border-rose-500/20 bg-rose-500/5 text-rose-600 dark:text-rose-400',
+    crítica: 'border border-purple-500/20 bg-purple-500/5 text-purple-600 dark:text-purple-400',
 };
 
 const priorityLabels = {
