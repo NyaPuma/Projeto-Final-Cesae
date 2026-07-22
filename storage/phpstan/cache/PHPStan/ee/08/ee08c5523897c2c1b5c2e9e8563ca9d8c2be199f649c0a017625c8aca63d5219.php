@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Console\Commands\SimulateTelemetry.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Console\Commands\SimulateTelemetry
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-006e8a53e80f9f612cb1f8939289d6cdb6f7707815a48e0e8632f547ea5f38e4',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-814071fd3569dc29aa6c2be2887fc6d0817f1dc18ba6542b1e748a2773e2ccd8',
    'data' => 
   array (
     'locatedSource' => 
@@ -33,7 +33,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     array (
     ),
     'startLine' => 18,
-    'endLine' => 142,
+    'endLine' => 146,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'Illuminate\\Console\\Command',
@@ -147,7 +147,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startTokenPos' => 74,
             'startFilePos' => 1120,
             'endTokenPos' => 216,
-            'endFilePos' => 2712,
+            'endFilePos' => 2667,
           ),
         ),
         'docComment' => '/**
@@ -193,7 +193,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * Execução principal do comando de simulação.
  */',
         'startLine' => 63,
-        'endLine' => 141,
+        'endLine' => 145,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

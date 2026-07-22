@@ -12,9 +12,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Http\\Middleware',
          'uses' => 
         array (
+          'user' => 'App\\Models\\User',
           'closure' => 'Closure',
           'request' => 'Illuminate\\Http\\Request',
-          'user' => 'App\\Models\\User',
           'auth' => 'Illuminate\\Support\\Facades\\Auth',
           'log' => 'Illuminate\\Support\\Facades\\Log',
           'response' => 'Symfony\\Component\\HttpFoundation\\Response',
@@ -40,9 +40,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Http\\Middleware',
          'uses' => 
         array (
+          'user' => 'App\\Models\\User',
           'closure' => 'Closure',
           'request' => 'Illuminate\\Http\\Request',
-          'user' => 'App\\Models\\User',
           'auth' => 'Illuminate\\Support\\Facades\\Auth',
           'log' => 'Illuminate\\Support\\Facades\\Log',
           'response' => 'Symfony\\Component\\HttpFoundation\\Response',
@@ -66,7 +66,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php' => '050b105e12a7be4a8d39c6e0a215799041c448fb5a947edd29d4aa3871f90a93',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php' => '022e81f619821fae46108d5b0eced0bcd897a8e8a3b4ccc7714f0ca9a4578981',
     ),
   ),
 ));

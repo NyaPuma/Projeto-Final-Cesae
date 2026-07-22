@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Http\Middleware\SetLocaleMiddleware.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Middleware\SetLocaleMiddleware
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-ea66ee4c043f23e758f42756a5260f900bfd26cc8e89384618b5e9d9d4400775',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-ec51a5845efc8c4800887c898d0cf0100e8335cba89ff164f7572db50f9015a1',
    'data' => 
   array (
     'locatedSource' => 
@@ -27,7 +27,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     array (
     ),
     'startLine' => 10,
-    'endLine' => 37,
+    'endLine' => 35,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => NULL,
@@ -69,8 +69,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 19,
-            'endLine' => 19,
+            'startLine' => 17,
+            'endLine' => 17,
             'startColumn' => 28,
             'endColumn' => 43,
             'parameterIndex' => 0,
@@ -95,8 +95,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 19,
-            'endLine' => 19,
+            'startLine' => 17,
+            'endLine' => 17,
             'startColumn' => 46,
             'endColumn' => 58,
             'parameterIndex' => 1,
@@ -119,12 +119,10 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Handle an incoming request.
  *
- * @param  \\Illuminate\\Http\\Request  $request
- * @param  \\Closure(\\Illuminate\\Http\\Request): (\\Symfony\\Component\\HttpFoundation\\Response)  $next
- * @return \\Symfony\\Component\\HttpFoundation\\Response
+ * @param  Closure(Request): (Response)  $next
  */',
-        'startLine' => 19,
-        'endLine' => 36,
+        'startLine' => 17,
+        'endLine' => 34,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

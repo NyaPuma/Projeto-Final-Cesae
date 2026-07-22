@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Mail\TestMail.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Mail\TestMail
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-f817b41d91f251e8291fcb9816ed447a20d6203571b38e786c2e4d945fc8c674',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-ec05867309ba53eadcb5d911c41353fa444e42bced096f5f9850212a4b3c2447',
    'data' => 
   array (
     'locatedSource' => 
@@ -27,7 +27,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     array (
     ),
     'startLine' => 11,
-    'endLine' => 36,
+    'endLine' => 35,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'Illuminate\\Mail\\Mailable',
@@ -117,9 +117,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         ),
         'docComment' => NULL,
         'startLine' => 15,
-        'endLine' => 18,
+        'endLine' => 17,
         'startColumn' => 5,
-        'endColumn' => 5,
+        'endColumn' => 8,
         'couldThrow' => false,
         'isClosure' => false,
         'isGenerator' => false,
@@ -151,8 +151,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 20,
-        'endLine' => 25,
+        'startLine' => 19,
+        'endLine' => 24,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -186,8 +186,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 27,
-        'endLine' => 35,
+        'startLine' => 26,
+        'endLine' => 34,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

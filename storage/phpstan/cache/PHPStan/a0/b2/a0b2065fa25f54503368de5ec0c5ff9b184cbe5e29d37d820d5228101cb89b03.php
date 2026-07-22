@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Http\Middleware\CsrfMiddleware.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Middleware\CsrfMiddleware
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-cbd38c1ec76b2a37e61915768d4b60e61fda3860b903eed0f7455bffa16ba736',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-2e157df21792b8bf0fee551c87045dd2a2d8ae1b48c45e019342b01f5a4cffaa',
    'data' => 
   array (
     'locatedSource' => 

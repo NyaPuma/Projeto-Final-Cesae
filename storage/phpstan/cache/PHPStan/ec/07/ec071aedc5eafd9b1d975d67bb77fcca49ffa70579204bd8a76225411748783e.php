@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Models\User.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Models\User
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-bfcbfd460602ba62668233502c69bfa72e556494e465aec1d3494ba45be7d33f',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-6aa4485320c7a8f5a92ccc32acceff34403adaf0ffce2da2288c47c6e0fc75bf',
    'data' => 
   array (
     'locatedSource' => 
@@ -23,13 +23,13 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'isBackedEnum' => false,
     'modifiers' => 0,
     'docComment' => '/**
- * @property-read \\App\\Models\\UserProfile|null $profile
+ * @property-read UserProfile|null $profile
  * @property-read int $tickets_ativos
  */',
     'attributes' => 
     array (
     ),
-    'startLine' => 17,
+    'startLine' => 15,
     'endLine' => 157,
     'startColumn' => 1,
     'endColumn' => 1,
@@ -56,22 +56,22 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'user\'',
           'attributes' => 
           array (
-            'startLine' => 51,
-            'endLine' => 51,
-            'startTokenPos' => 176,
-            'startFilePos' => 1202,
-            'endTokenPos' => 176,
-            'endFilePos' => 1207,
+            'startLine' => 49,
+            'endLine' => 49,
+            'startTokenPos' => 166,
+            'startFilePos' => 1122,
+            'endTokenPos' => 166,
+            'endFilePos' => 1127,
           ),
         ),
         'docComment' => NULL,
         'attributes' => 
         array (
         ),
-        'startLine' => 51,
-        'endLine' => 51,
+        'startLine' => 49,
+        'endLine' => 49,
         'startColumn' => 5,
-        'endColumn' => 42,
+        'endColumn' => 36,
       ),
       'ROLE_TECHNICIAN' => 
       array (
@@ -85,20 +85,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'technician\'',
           'attributes' => 
           array (
-            'startLine' => 52,
-            'endLine' => 52,
-            'startTokenPos' => 187,
-            'startFilePos' => 1245,
-            'endTokenPos' => 187,
-            'endFilePos' => 1256,
+            'startLine' => 51,
+            'endLine' => 51,
+            'startTokenPos' => 177,
+            'startFilePos' => 1166,
+            'endTokenPos' => 177,
+            'endFilePos' => 1177,
           ),
         ),
         'docComment' => NULL,
         'attributes' => 
         array (
         ),
-        'startLine' => 52,
-        'endLine' => 52,
+        'startLine' => 51,
+        'endLine' => 51,
         'startColumn' => 5,
         'endColumn' => 48,
       ),
@@ -116,10 +116,10 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           array (
             'startLine' => 53,
             'endLine' => 53,
-            'startTokenPos' => 198,
-            'startFilePos' => 1294,
-            'endTokenPos' => 198,
-            'endFilePos' => 1300,
+            'startTokenPos' => 188,
+            'startFilePos' => 1211,
+            'endTokenPos' => 188,
+            'endFilePos' => 1217,
           ),
         ),
         'docComment' => NULL,
@@ -129,7 +129,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'startLine' => 53,
         'endLine' => 53,
         'startColumn' => 5,
-        'endColumn' => 43,
+        'endColumn' => 38,
       ),
     ),
     'immediateProperties' => 
@@ -146,20 +146,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'users\'',
           'attributes' => 
           array (
-            'startLine' => 22,
-            'endLine' => 22,
-            'startTokenPos' => 74,
-            'startFilePos' => 558,
-            'endTokenPos' => 74,
-            'endFilePos' => 564,
+            'startLine' => 20,
+            'endLine' => 20,
+            'startTokenPos' => 64,
+            'startFilePos' => 495,
+            'endTokenPos' => 64,
+            'endFilePos' => 501,
           ),
         ),
         'docComment' => '/** @var string */',
         'attributes' => 
         array (
         ),
-        'startLine' => 22,
-        'endLine' => 22,
+        'startLine' => 20,
+        'endLine' => 20,
         'startColumn' => 5,
         'endColumn' => 31,
         'isPromoted' => false,
@@ -181,20 +181,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '[\'name\', \'email\', \'password\', \'profile_id\', \'active\', \'api_token\', \'remember_token\']',
           'attributes' => 
           array (
-            'startLine' => 25,
-            'endLine' => 33,
-            'startTokenPos' => 85,
-            'startFilePos' => 623,
-            'endTokenPos' => 108,
-            'endFilePos' => 769,
+            'startLine' => 23,
+            'endLine' => 31,
+            'startTokenPos' => 75,
+            'startFilePos' => 560,
+            'endTokenPos' => 98,
+            'endFilePos' => 706,
           ),
         ),
         'docComment' => '/** @var list<string> */',
         'attributes' => 
         array (
         ),
-        'startLine' => 25,
-        'endLine' => 33,
+        'startLine' => 23,
+        'endLine' => 31,
         'startColumn' => 5,
         'endColumn' => 6,
         'isPromoted' => false,
@@ -216,20 +216,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '[\'password\', \'remember_token\', \'api_token\', \'_tokens\', \'_password_hash\']',
           'attributes' => 
           array (
-            'startLine' => 36,
-            'endLine' => 42,
-            'startTokenPos' => 119,
-            'startFilePos' => 826,
-            'endTokenPos' => 136,
-            'endFilePos' => 944,
+            'startLine' => 34,
+            'endLine' => 40,
+            'startTokenPos' => 109,
+            'startFilePos' => 763,
+            'endTokenPos' => 126,
+            'endFilePos' => 881,
           ),
         ),
         'docComment' => '/** @var list<string> */',
         'attributes' => 
         array (
         ),
-        'startLine' => 36,
-        'endLine' => 42,
+        'startLine' => 34,
+        'endLine' => 40,
         'startColumn' => 5,
         'endColumn' => 6,
         'isPromoted' => false,
@@ -251,20 +251,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '[\'email_verified_at\' => \'datetime\', \'active\' => \'boolean\']',
           'attributes' => 
           array (
-            'startLine' => 45,
-            'endLine' => 48,
-            'startTokenPos' => 147,
-            'startFilePos' => 1009,
-            'endTokenPos' => 163,
-            'endFilePos' => 1100,
+            'startLine' => 43,
+            'endLine' => 46,
+            'startTokenPos' => 137,
+            'startFilePos' => 946,
+            'endTokenPos' => 153,
+            'endFilePos' => 1026,
           ),
         ),
         'docComment' => '/** @var array<string, string> */',
         'attributes' => 
         array (
         ),
-        'startLine' => 45,
-        'endLine' => 48,
+        'startLine' => 43,
+        'endLine' => 46,
         'startColumn' => 5,
         'endColumn' => 6,
         'isPromoted' => false,

@@ -62,7 +62,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\SetLocaleMiddleware.php' => 'ea66ee4c043f23e758f42756a5260f900bfd26cc8e89384618b5e9d9d4400775',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\SetLocaleMiddleware.php' => 'ec51a5845efc8c4800887c898d0cf0100e8335cba89ff164f7572db50f9015a1',
     ),
   ),
 ));

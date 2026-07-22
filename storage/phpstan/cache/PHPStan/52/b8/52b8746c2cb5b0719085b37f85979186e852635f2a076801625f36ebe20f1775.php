@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Traits\ControllerHelpers.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Traits\ControllerHelpers
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-1e7c6325a52c4a2c94c612fbe66243860367dea2397e0db2ae6428e838cc82d7',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-46af0947464dcf1fb44113381c6f6f8daa1efd2e4bfb0dcf5d512924ec634436',
    'data' => 
   array (
     'locatedSource' => 
@@ -24,13 +24,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'modifiers' => 0,
     'docComment' => '/**
  * Trait ControllerHelpers
- * @package App\\Traits
  */',
     'attributes' => 
     array (
     ),
-    'startLine' => 12,
-    'endLine' => 36,
+    'startLine' => 11,
+    'endLine' => 30,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => NULL,
@@ -72,8 +71,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 19,
-            'endLine' => 19,
+            'startLine' => 16,
+            'endLine' => 16,
             'startColumn' => 42,
             'endColumn' => 57,
             'parameterIndex' => 0,
@@ -95,11 +94,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         ),
         'docComment' => '/**
  * Resolve e valida o utilizador atualmente autenticado.
- * * @param Request $request
- * @return User
  */',
-        'startLine' => 19,
-        'endLine' => 22,
+        'startLine' => 16,
+        'endLine' => 19,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -137,8 +134,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 30,
-            'endLine' => 30,
+            'startLine' => 24,
+            'endLine' => 24,
             'startColumn' => 36,
             'endColumn' => 45,
             'parameterIndex' => 0,
@@ -163,8 +160,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 30,
-            'endLine' => 30,
+            'startLine' => 24,
+            'endLine' => 24,
             'startColumn' => 48,
             'endColumn' => 59,
             'parameterIndex' => 1,
@@ -186,12 +183,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         ),
         'docComment' => '/**
  * Garante que o utilizador possui um dos perfis/papéis permitidos.
- * * @param User $user
- * @param array $roles
- * @return void
  */',
-        'startLine' => 30,
-        'endLine' => 35,
+        'startLine' => 24,
+        'endLine' => 29,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

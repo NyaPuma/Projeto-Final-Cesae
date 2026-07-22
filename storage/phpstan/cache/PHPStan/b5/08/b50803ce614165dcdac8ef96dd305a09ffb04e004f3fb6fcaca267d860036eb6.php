@@ -12,8 +12,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
-          'ticket' => 'App\\Models\\Ticket',
-          'userprofile' => 'App\\Models\\UserProfile',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -596,8 +594,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
-          'ticket' => 'App\\Models\\Ticket',
-          'userprofile' => 'App\\Models\\UserProfile',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -614,8 +610,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
            'namespace' => 'App\\Models',
            'uses' => 
           array (
-            'ticket' => 'App\\Models\\Ticket',
-            'userprofile' => 'App\\Models\\UserProfile',
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -653,8 +647,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
-          'ticket' => 'App\\Models\\Ticket',
-          'userprofile' => 'App\\Models\\UserProfile',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -671,8 +663,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
            'namespace' => 'App\\Models',
            'uses' => 
           array (
-            'ticket' => 'App\\Models\\Ticket',
-            'userprofile' => 'App\\Models\\UserProfile',
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -710,8 +700,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
-          'ticket' => 'App\\Models\\Ticket',
-          'userprofile' => 'App\\Models\\UserProfile',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -728,8 +716,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
            'namespace' => 'App\\Models',
            'uses' => 
           array (
-            'ticket' => 'App\\Models\\Ticket',
-            'userprofile' => 'App\\Models\\UserProfile',
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -767,8 +753,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
-          'ticket' => 'App\\Models\\Ticket',
-          'userprofile' => 'App\\Models\\UserProfile',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -785,8 +769,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
            'namespace' => 'App\\Models',
            'uses' => 
           array (
-            'ticket' => 'App\\Models\\Ticket',
-            'userprofile' => 'App\\Models\\UserProfile',
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -824,8 +806,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
-          'ticket' => 'App\\Models\\Ticket',
-          'userprofile' => 'App\\Models\\UserProfile',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -842,8 +822,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
            'namespace' => 'App\\Models',
            'uses' => 
           array (
-            'ticket' => 'App\\Models\\Ticket',
-            'userprofile' => 'App\\Models\\UserProfile',
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -881,8 +859,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
-          'ticket' => 'App\\Models\\Ticket',
-          'userprofile' => 'App\\Models\\UserProfile',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -899,8 +875,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
            'namespace' => 'App\\Models',
            'uses' => 
           array (
-            'ticket' => 'App\\Models\\Ticket',
-            'userprofile' => 'App\\Models\\UserProfile',
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -938,8 +912,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
-          'ticket' => 'App\\Models\\Ticket',
-          'userprofile' => 'App\\Models\\UserProfile',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -956,8 +928,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
            'namespace' => 'App\\Models',
            'uses' => 
           array (
-            'ticket' => 'App\\Models\\Ticket',
-            'userprofile' => 'App\\Models\\UserProfile',
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -995,8 +965,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
-          'ticket' => 'App\\Models\\Ticket',
-          'userprofile' => 'App\\Models\\UserProfile',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -1013,8 +981,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
            'namespace' => 'App\\Models',
            'uses' => 
           array (
-            'ticket' => 'App\\Models\\Ticket',
-            'userprofile' => 'App\\Models\\UserProfile',
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -1052,8 +1018,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
-          'ticket' => 'App\\Models\\Ticket',
-          'userprofile' => 'App\\Models\\UserProfile',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -1070,8 +1034,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
            'namespace' => 'App\\Models',
            'uses' => 
           array (
-            'ticket' => 'App\\Models\\Ticket',
-            'userprofile' => 'App\\Models\\UserProfile',
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -1109,8 +1071,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
-          'ticket' => 'App\\Models\\Ticket',
-          'userprofile' => 'App\\Models\\UserProfile',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -1127,8 +1087,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
            'namespace' => 'App\\Models',
            'uses' => 
           array (
-            'ticket' => 'App\\Models\\Ticket',
-            'userprofile' => 'App\\Models\\UserProfile',
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -1166,8 +1124,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
-          'ticket' => 'App\\Models\\Ticket',
-          'userprofile' => 'App\\Models\\UserProfile',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -1184,8 +1140,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
            'namespace' => 'App\\Models',
            'uses' => 
           array (
-            'ticket' => 'App\\Models\\Ticket',
-            'userprofile' => 'App\\Models\\UserProfile',
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -1221,7 +1175,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php' => 'bfcbfd460602ba62668233502c69bfa72e556494e465aec1d3494ba45be7d33f',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php' => '6aa4485320c7a8f5a92ccc32acceff34403adaf0ffce2da2288c47c6e0fc75bf',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Factories\\HasFactory.php' => 'b6cb2b164e90168e80963a5549541f5f3188a3ec8cfd368bf3611bd94fbd46a7',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Notifications\\Notifiable.php' => '573fa9bb96fa392434450c9cd9deb8d4e40a5bb93c140a648267b48dfa0433ac',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Notifications\\HasDatabaseNotifications.php' => 'a7a163aa1f98a0ae4cd2135905b6852e29a850beb4296aa72c44c37d22832135',

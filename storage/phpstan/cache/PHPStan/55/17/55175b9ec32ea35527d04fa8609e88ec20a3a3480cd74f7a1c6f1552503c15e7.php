@@ -960,7 +960,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\TicketStatusChanged.php' => '542944d33c146e05950b82f7f50cc7cb955545f01d18775486cee933ed9eb623',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\TicketStatusChanged.php' => 'e4bda4b6c0e366c6b9eca4402cf2da74b36e48f043d9c64005b2d381f7eb4434',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Bus\\Queueable.php' => '7df8b51aab8bd3196229be1a8e398c2c2ec636ae1767ce499a64bfdbf5675c47',
     ),
   ),

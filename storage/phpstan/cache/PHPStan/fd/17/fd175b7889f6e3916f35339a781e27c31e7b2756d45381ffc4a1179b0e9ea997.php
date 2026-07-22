@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Http\Controllers\TicketController.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Controllers\TicketController
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-9401260e2ee53030bd1a51af7bdd5d4a2affab5ec1c4e51c9b0dc77671709a8e',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-274c06a5d77e3559d11693dac794b7de7f732cb2a19f8ff32ca8ed2eccf03459',
    'data' => 
   array (
     'locatedSource' => 
@@ -26,8 +26,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'attributes' => 
     array (
     ),
-    'startLine' => 19,
-    'endLine' => 906,
+    'startLine' => 18,
+    'endLine' => 909,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'App\\Http\\Controllers\\Controller',
@@ -63,8 +63,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'attributes' => 
         array (
         ),
-        'startLine' => 25,
-        'endLine' => 25,
+        'startLine' => 24,
+        'endLine' => 24,
         'startColumn' => 9,
         'endColumn' => 38,
         'isPromoted' => true,
@@ -101,8 +101,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 25,
-            'endLine' => 25,
+            'startLine' => 24,
+            'endLine' => 24,
             'startColumn' => 9,
             'endColumn' => 38,
             'parameterIndex' => 0,
@@ -115,8 +115,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 24,
-        'endLine' => 26,
+        'startLine' => 23,
+        'endLine' => 25,
         'startColumn' => 5,
         'endColumn' => 8,
         'couldThrow' => false,
@@ -154,8 +154,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 31,
-            'endLine' => 31,
+            'startLine' => 30,
+            'endLine' => 30,
             'startColumn' => 27,
             'endColumn' => 42,
             'parameterIndex' => 0,
@@ -170,8 +170,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Lista os tickets na view index
  */',
-        'startLine' => 31,
-        'endLine' => 43,
+        'startLine' => 30,
+        'endLine' => 42,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -209,8 +209,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 48,
-            'endLine' => 48,
+            'startLine' => 47,
+            'endLine' => 47,
             'startColumn' => 27,
             'endColumn' => 42,
             'parameterIndex' => 0,
@@ -225,8 +225,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Armazena um novo ticket (criação de avaria)
  */',
-        'startLine' => 48,
-        'endLine' => 90,
+        'startLine' => 47,
+        'endLine' => 89,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -264,8 +264,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 95,
-            'endLine' => 95,
+            'startLine' => 94,
+            'endLine' => 94,
             'startColumn' => 28,
             'endColumn' => 43,
             'parameterIndex' => 0,
@@ -280,8 +280,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Pesquisa tickets por palavra-chave, prioridade ou intervalo de datas.
  */',
-        'startLine' => 95,
-        'endLine' => 146,
+        'startLine' => 94,
+        'endLine' => 145,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -319,8 +319,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 151,
-            'endLine' => 151,
+            'startLine' => 150,
+            'endLine' => 150,
             'startColumn' => 26,
             'endColumn' => 41,
             'parameterIndex' => 0,
@@ -345,8 +345,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 151,
-            'endLine' => 151,
+            'startLine' => 150,
+            'endLine' => 150,
             'startColumn' => 44,
             'endColumn' => 50,
             'parameterIndex' => 1,
@@ -361,8 +361,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Exibe o detalhe do ticket injetando a sugestão em tempo real da IA
  */',
-        'startLine' => 151,
-        'endLine' => 166,
+        'startLine' => 150,
+        'endLine' => 165,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -400,8 +400,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 171,
-            'endLine' => 171,
+            'startLine' => 170,
+            'endLine' => 170,
             'startColumn' => 37,
             'endColumn' => 52,
             'parameterIndex' => 0,
@@ -426,8 +426,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 171,
-            'endLine' => 171,
+            'startLine' => 170,
+            'endLine' => 170,
             'startColumn' => 55,
             'endColumn' => 61,
             'parameterIndex' => 1,
@@ -442,8 +442,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Grava a alocação do técnico sugerido pela IA ou escolhido manualmente
  */',
-        'startLine' => 171,
-        'endLine' => 200,
+        'startLine' => 170,
+        'endLine' => 199,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -481,8 +481,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 205,
-            'endLine' => 205,
+            'startLine' => 204,
+            'endLine' => 204,
             'startColumn' => 38,
             'endColumn' => 53,
             'parameterIndex' => 0,
@@ -507,8 +507,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 205,
-            'endLine' => 205,
+            'startLine' => 204,
+            'endLine' => 204,
             'startColumn' => 56,
             'endColumn' => 62,
             'parameterIndex' => 1,
@@ -523,8 +523,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Associa explicitamente um técnico a um ticket (Apenas Administradores).
  */',
-        'startLine' => 205,
-        'endLine' => 239,
+        'startLine' => 204,
+        'endLine' => 238,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -562,8 +562,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 244,
-            'endLine' => 244,
+            'startLine' => 243,
+            'endLine' => 243,
             'startColumn' => 34,
             'endColumn' => 49,
             'parameterIndex' => 0,
@@ -588,8 +588,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 244,
-            'endLine' => 244,
+            'startLine' => 243,
+            'endLine' => 243,
             'startColumn' => 52,
             'endColumn' => 58,
             'parameterIndex' => 1,
@@ -604,8 +604,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Reabre um ticket que tenha sido previamente fechado.
  */',
-        'startLine' => 244,
-        'endLine' => 259,
+        'startLine' => 243,
+        'endLine' => 258,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -643,8 +643,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 264,
-            'endLine' => 264,
+            'startLine' => 263,
+            'endLine' => 263,
             'startColumn' => 34,
             'endColumn' => 49,
             'parameterIndex' => 0,
@@ -669,8 +669,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 264,
-            'endLine' => 264,
+            'startLine' => 263,
+            'endLine' => 263,
             'startColumn' => 52,
             'endColumn' => 58,
             'parameterIndex' => 1,
@@ -685,8 +685,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Cancela um ticket que ainda esteja em estado Aberto.
  */',
-        'startLine' => 264,
-        'endLine' => 288,
+        'startLine' => 263,
+        'endLine' => 287,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -724,8 +724,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 293,
-            'endLine' => 293,
+            'startLine' => 292,
+            'endLine' => 292,
             'startColumn' => 32,
             'endColumn' => 47,
             'parameterIndex' => 0,
@@ -750,8 +750,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 293,
-            'endLine' => 293,
+            'startLine' => 292,
+            'endLine' => 292,
             'startColumn' => 50,
             'endColumn' => 56,
             'parameterIndex' => 1,
@@ -766,8 +766,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Adiciona um comentário técnico ou de progresso ao ticket.
  */',
-        'startLine' => 293,
-        'endLine' => 329,
+        'startLine' => 292,
+        'endLine' => 328,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -805,8 +805,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 334,
-            'endLine' => 334,
+            'startLine' => 333,
+            'endLine' => 333,
             'startColumn' => 34,
             'endColumn' => 49,
             'parameterIndex' => 0,
@@ -831,8 +831,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 334,
-            'endLine' => 334,
+            'startLine' => 333,
+            'endLine' => 333,
             'startColumn' => 52,
             'endColumn' => 58,
             'parameterIndex' => 1,
@@ -847,7 +847,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Lista todos os comentários associados a um determinado ticket.
  */',
-        'startLine' => 334,
+        'startLine' => 333,
         'endLine' => 344,
         'startColumn' => 5,
         'endColumn' => 5,
@@ -1010,7 +1010,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * Lista os anexos multimédia carregados no âmbito do ticket.
  */',
         'startLine' => 391,
-        'endLine' => 397,
+        'endLine' => 398,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -1048,8 +1048,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 403,
-            'endLine' => 403,
+            'startLine' => 404,
+            'endLine' => 404,
             'startColumn' => 33,
             'endColumn' => 48,
             'parameterIndex' => 0,
@@ -1074,8 +1074,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 403,
-            'endLine' => 403,
+            'startLine' => 404,
+            'endLine' => 404,
             'startColumn' => 51,
             'endColumn' => 57,
             'parameterIndex' => 1,
@@ -1100,8 +1100,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 403,
-            'endLine' => 403,
+            'startLine' => 404,
+            'endLine' => 404,
             'startColumn' => 60,
             'endColumn' => 71,
             'parameterIndex' => 2,
@@ -1117,8 +1117,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * Remove uma fotografia/anexo do ticket (Evidências Fotográficas).
  * Elimina o ficheiro físico do disco e o registo da base de dados.
  */',
-        'startLine' => 403,
-        'endLine' => 427,
+        'startLine' => 404,
+        'endLine' => 428,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -1156,8 +1156,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 435,
-            'endLine' => 435,
+            'startLine' => 436,
+            'endLine' => 436,
             'startColumn' => 33,
             'endColumn' => 48,
             'parameterIndex' => 0,
@@ -1182,8 +1182,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 435,
-            'endLine' => 435,
+            'startLine' => 436,
+            'endLine' => 436,
             'startColumn' => 51,
             'endColumn' => 57,
             'parameterIndex' => 1,
@@ -1201,8 +1201,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * Se existirem tickets de prioridade mais alta pendentes, o sistema avisa o técnico.
  * Se o técnico forçar (force=true), o admin é notificado da decisão.
  */',
-        'startLine' => 435,
-        'endLine' => 519,
+        'startLine' => 436,
+        'endLine' => 520,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -1240,8 +1240,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 524,
-            'endLine' => 524,
+            'startLine' => 525,
+            'endLine' => 525,
             'startColumn' => 33,
             'endColumn' => 48,
             'parameterIndex' => 0,
@@ -1266,8 +1266,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 524,
-            'endLine' => 524,
+            'startLine' => 525,
+            'endLine' => 525,
             'startColumn' => 51,
             'endColumn' => 57,
             'parameterIndex' => 1,
@@ -1282,8 +1282,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Conclui de forma definitiva um ticket em curso, registando tempos e custos operacionais.
  */',
-        'startLine' => 524,
-        'endLine' => 564,
+        'startLine' => 525,
+        'endLine' => 565,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -1321,8 +1321,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 569,
-            'endLine' => 569,
+            'startLine' => 570,
+            'endLine' => 570,
             'startColumn' => 36,
             'endColumn' => 51,
             'parameterIndex' => 0,
@@ -1347,8 +1347,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 569,
-            'endLine' => 569,
+            'startLine' => 570,
+            'endLine' => 570,
             'startColumn' => 54,
             'endColumn' => 60,
             'parameterIndex' => 1,
@@ -1363,8 +1363,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Agenda um ticket para uma data futura (Operador ou Admin).
  */',
-        'startLine' => 569,
-        'endLine' => 595,
+        'startLine' => 570,
+        'endLine' => 596,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -1402,8 +1402,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 600,
-            'endLine' => 600,
+            'startLine' => 601,
+            'endLine' => 601,
             'startColumn' => 33,
             'endColumn' => 48,
             'parameterIndex' => 0,
@@ -1418,8 +1418,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Lista tickets abertos para o dashboard do técnico.
  */',
-        'startLine' => 600,
-        'endLine' => 616,
+        'startLine' => 601,
+        'endLine' => 617,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -1457,8 +1457,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 618,
-            'endLine' => 618,
+            'startLine' => 619,
+            'endLine' => 619,
             'startColumn' => 34,
             'endColumn' => 49,
             'parameterIndex' => 0,
@@ -1471,8 +1471,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 618,
-        'endLine' => 622,
+        'startLine' => 619,
+        'endLine' => 624,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -1510,8 +1510,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 627,
-            'endLine' => 627,
+            'startLine' => 629,
+            'endLine' => 629,
             'startColumn' => 36,
             'endColumn' => 51,
             'parameterIndex' => 0,
@@ -1526,8 +1526,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Retorna os eventos do calendário (tickets programados com scheduled_at) em formato JSON.
  */',
-        'startLine' => 627,
-        'endLine' => 632,
+        'startLine' => 629,
+        'endLine' => 635,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -1565,8 +1565,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 641,
-            'endLine' => 641,
+            'startLine' => 644,
+            'endLine' => 644,
             'startColumn' => 40,
             'endColumn' => 53,
             'parameterIndex' => 0,
@@ -1591,8 +1591,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 641,
-            'endLine' => 641,
+            'startLine' => 644,
+            'endLine' => 644,
             'startColumn' => 56,
             'endColumn' => 72,
             'parameterIndex' => 1,
@@ -1617,8 +1617,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 641,
-            'endLine' => 641,
+            'startLine' => 644,
+            'endLine' => 644,
             'startColumn' => 75,
             'endColumn' => 89,
             'parameterIndex' => 2,
@@ -1645,8 +1645,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * - auto_approved: notifica técnico + criador
  * - closed: notifica criador
  */',
-        'startLine' => 641,
-        'endLine' => 726,
+        'startLine' => 644,
+        'endLine' => 729,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -1684,8 +1684,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 733,
-            'endLine' => 733,
+            'startLine' => 736,
+            'endLine' => 736,
             'startColumn' => 43,
             'endColumn' => 58,
             'parameterIndex' => 0,
@@ -1710,8 +1710,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 733,
-            'endLine' => 733,
+            'startLine' => 736,
+            'endLine' => 736,
             'startColumn' => 61,
             'endColumn' => 67,
             'parameterIndex' => 1,
@@ -1728,8 +1728,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * Se o custo exceder o threshold, o ticket fica "Pendente Orçamento".
  * Rota: POST /tickets/{id}/budget
  */',
-        'startLine' => 733,
-        'endLine' => 809,
+        'startLine' => 736,
+        'endLine' => 812,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -1767,8 +1767,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 815,
-            'endLine' => 815,
+            'startLine' => 818,
+            'endLine' => 818,
             'startColumn' => 35,
             'endColumn' => 50,
             'parameterIndex' => 0,
@@ -1793,8 +1793,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 815,
-            'endLine' => 815,
+            'startLine' => 818,
+            'endLine' => 818,
             'startColumn' => 53,
             'endColumn' => 59,
             'parameterIndex' => 1,
@@ -1810,8 +1810,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * Técnico solicita autorização orçamental com orçamento detalhado.
  * Rota: PUT /technician/tickets/{id}/request-budget
  */',
-        'startLine' => 815,
-        'endLine' => 867,
+        'startLine' => 818,
+        'endLine' => 870,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -1849,8 +1849,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 873,
-            'endLine' => 873,
+            'startLine' => 876,
+            'endLine' => 876,
             'startColumn' => 38,
             'endColumn' => 53,
             'parameterIndex' => 0,
@@ -1875,8 +1875,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 873,
-            'endLine' => 873,
+            'startLine' => 876,
+            'endLine' => 876,
             'startColumn' => 56,
             'endColumn' => 62,
             'parameterIndex' => 1,
@@ -1892,8 +1892,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * Finaliza o ticket com custo final e relatório técnico.
  * Rota: POST /tickets/{id}/close
  */',
-        'startLine' => 873,
-        'endLine' => 905,
+        'startLine' => 876,
+        'endLine' => 908,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

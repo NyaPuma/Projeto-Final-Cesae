@@ -12,7 +12,7 @@ window.requireAuthOnLoad = true;
         . '<a href="/ui" class="inline-flex items-center justify-center px-3.5 py-2 bg-[var(--surface)] text-xs font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all">'
             . '<svg class="w-3.5 h-3.5 mr-1.5 text-[var(--text-soft)]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path></svg> ' . __('Voltar ao painel')
         . '</a>'
-        . '<button id="btnAddEquipment" onclick="openNewEquipmentModal()" class="hidden items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-orange-500 hover:bg-orange-600 rounded-xl shadow-sm transition-all cursor-pointer">'
+        . '<button id="btnAddEquipment" class="hidden items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-orange-500 hover:bg-orange-600 rounded-xl shadow-sm transition-all cursor-pointer">'
             . '+ ' . __('Novo equipamento')
         . '</button>'
         . '</div>'
@@ -90,7 +90,7 @@ window.requireAuthOnLoad = true;
     <div class="relative w-full max-w-lg rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-2xl transition-all my-auto">
         <h3 class="text-base font-bold text-[var(--text)] mb-4" id="equipmentModalTitle">{{ __('Adicionar Equipamento') }}</h3>
 
-        <form id="equipmentForm" onsubmit="saveEquipment(event)" class="space-y-4">
+        <form id="equipmentForm" class="space-y-4">
             <input type="hidden" id="equipmentId" name="id">
 
             <div>

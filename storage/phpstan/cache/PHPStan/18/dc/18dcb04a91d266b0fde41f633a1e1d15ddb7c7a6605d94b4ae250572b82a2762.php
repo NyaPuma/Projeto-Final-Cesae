@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Http\Controllers\UiController.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Controllers\UiController
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-a86ae12d56a38b14c1da4d9434a6e5770eb2f58649214b970cc613a99475b1be',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-78ff1acb53c0354a9af2dc8174c2c0d116aa322dbd002f63df491acf657ff8ad',
    'data' => 
   array (
     'locatedSource' => 
@@ -26,8 +26,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'attributes' => 
     array (
     ),
-    'startLine' => 8,
-    'endLine' => 173,
+    'startLine' => 10,
+    'endLine' => 190,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'App\\Http\\Controllers\\Controller',
@@ -69,8 +69,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 13,
-            'endLine' => 13,
+            'startLine' => 15,
+            'endLine' => 15,
             'startColumn' => 27,
             'endColumn' => 42,
             'parameterIndex' => 0,
@@ -85,8 +85,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Mostra o painel principal da interface web.
  */',
-        'startLine' => 13,
-        'endLine' => 17,
+        'startLine' => 15,
+        'endLine' => 20,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -124,8 +124,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 22,
-            'endLine' => 22,
+            'startLine' => 25,
+            'endLine' => 25,
             'startColumn' => 29,
             'endColumn' => 44,
             'parameterIndex' => 0,
@@ -140,8 +140,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Mostra a página com a lista de tickets.
  */',
-        'startLine' => 22,
-        'endLine' => 26,
+        'startLine' => 25,
+        'endLine' => 30,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -179,8 +179,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 31,
-            'endLine' => 31,
+            'startLine' => 35,
+            'endLine' => 35,
             'startColumn' => 34,
             'endColumn' => 49,
             'parameterIndex' => 0,
@@ -195,8 +195,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Mostra a página de criação de um novo ticket.
  */',
-        'startLine' => 31,
-        'endLine' => 35,
+        'startLine' => 35,
+        'endLine' => 40,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -234,8 +234,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 40,
-            'endLine' => 40,
+            'startLine' => 45,
+            'endLine' => 45,
             'startColumn' => 32,
             'endColumn' => 47,
             'parameterIndex' => 0,
@@ -250,8 +250,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Mostra a página com os equipamentos registados.
  */',
-        'startLine' => 40,
-        'endLine' => 44,
+        'startLine' => 45,
+        'endLine' => 50,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -289,8 +289,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 49,
-            'endLine' => 49,
+            'startLine' => 55,
+            'endLine' => 55,
             'startColumn' => 27,
             'endColumn' => 42,
             'parameterIndex' => 0,
@@ -305,8 +305,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Mostra a página com os utilizadores do sistema.
  */',
-        'startLine' => 49,
-        'endLine' => 53,
+        'startLine' => 55,
+        'endLine' => 60,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -344,8 +344,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 58,
-            'endLine' => 58,
+            'startLine' => 65,
+            'endLine' => 65,
             'startColumn' => 32,
             'endColumn' => 47,
             'parameterIndex' => 0,
@@ -360,8 +360,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Mostra o formulário de criação de utilizador.
  */',
-        'startLine' => 58,
-        'endLine' => 62,
+        'startLine' => 65,
+        'endLine' => 70,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -399,8 +399,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 67,
-            'endLine' => 67,
+            'startLine' => 75,
+            'endLine' => 75,
             'startColumn' => 30,
             'endColumn' => 45,
             'parameterIndex' => 0,
@@ -425,8 +425,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 67,
-            'endLine' => 67,
+            'startLine' => 75,
+            'endLine' => 75,
             'startColumn' => 48,
             'endColumn' => 54,
             'parameterIndex' => 1,
@@ -441,8 +441,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Mostra o formulário de edição de utilizador.
  */',
-        'startLine' => 67,
-        'endLine' => 72,
+        'startLine' => 75,
+        'endLine' => 81,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -480,8 +480,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 77,
-            'endLine' => 77,
+            'startLine' => 86,
+            'endLine' => 86,
             'startColumn' => 27,
             'endColumn' => 42,
             'parameterIndex' => 0,
@@ -496,8 +496,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Mostra a página com a lista de salas.
  */',
-        'startLine' => 77,
-        'endLine' => 81,
+        'startLine' => 86,
+        'endLine' => 91,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -535,8 +535,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 86,
-            'endLine' => 86,
+            'startLine' => 96,
+            'endLine' => 96,
             'startColumn' => 32,
             'endColumn' => 47,
             'parameterIndex' => 0,
@@ -551,8 +551,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Mostra a página de criação de uma nova sala.
  */',
-        'startLine' => 86,
-        'endLine' => 90,
+        'startLine' => 96,
+        'endLine' => 101,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -590,8 +590,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 95,
-            'endLine' => 95,
+            'startLine' => 106,
+            'endLine' => 106,
             'startColumn' => 32,
             'endColumn' => 47,
             'parameterIndex' => 0,
@@ -616,8 +616,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 95,
-            'endLine' => 95,
+            'startLine' => 106,
+            'endLine' => 106,
             'startColumn' => 50,
             'endColumn' => 56,
             'parameterIndex' => 1,
@@ -632,8 +632,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Mostra os detalhes de uma sala específica.
  */',
-        'startLine' => 95,
-        'endLine' => 100,
+        'startLine' => 106,
+        'endLine' => 112,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -671,8 +671,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 105,
-            'endLine' => 105,
+            'startLine' => 117,
+            'endLine' => 117,
             'startColumn' => 30,
             'endColumn' => 45,
             'parameterIndex' => 0,
@@ -697,8 +697,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 105,
-            'endLine' => 105,
+            'startLine' => 117,
+            'endLine' => 117,
             'startColumn' => 48,
             'endColumn' => 54,
             'parameterIndex' => 1,
@@ -713,8 +713,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Mostra o formulário de edição de uma sala.
  */',
-        'startLine' => 105,
-        'endLine' => 110,
+        'startLine' => 117,
+        'endLine' => 123,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -752,8 +752,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 115,
-            'endLine' => 115,
+            'startLine' => 128,
+            'endLine' => 128,
             'startColumn' => 28,
             'endColumn' => 43,
             'parameterIndex' => 0,
@@ -768,8 +768,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Mostra a página de auditoria.
  */',
-        'startLine' => 115,
-        'endLine' => 119,
+        'startLine' => 128,
+        'endLine' => 133,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -807,8 +807,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 124,
-            'endLine' => 124,
+            'startLine' => 138,
+            'endLine' => 138,
             'startColumn' => 34,
             'endColumn' => 49,
             'parameterIndex' => 0,
@@ -833,8 +833,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 124,
-            'endLine' => 124,
+            'startLine' => 138,
+            'endLine' => 138,
             'startColumn' => 52,
             'endColumn' => 58,
             'parameterIndex' => 1,
@@ -849,8 +849,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Mostra os detalhes de um ticket específico.
  */',
-        'startLine' => 124,
-        'endLine' => 128,
+        'startLine' => 138,
+        'endLine' => 143,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -888,8 +888,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 133,
-            'endLine' => 133,
+            'startLine' => 148,
+            'endLine' => 148,
             'startColumn' => 35,
             'endColumn' => 50,
             'parameterIndex' => 0,
@@ -904,8 +904,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Retorna a lista de equipamentos para a interface (acessível a todos os utilizadores).
  */',
-        'startLine' => 133,
-        'endLine' => 154,
+        'startLine' => 148,
+        'endLine' => 169,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -943,8 +943,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 159,
-            'endLine' => 159,
+            'startLine' => 174,
+            'endLine' => 174,
             'startColumn' => 31,
             'endColumn' => 46,
             'parameterIndex' => 0,
@@ -959,8 +959,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Mostra a página de analytics com gráficos e relatórios.
  */',
-        'startLine' => 159,
-        'endLine' => 163,
+        'startLine' => 174,
+        'endLine' => 179,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -998,8 +998,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 168,
-            'endLine' => 168,
+            'startLine' => 184,
+            'endLine' => 184,
             'startColumn' => 29,
             'endColumn' => 44,
             'parameterIndex' => 0,
@@ -1014,8 +1014,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Mostra a página de perfil do utilizador autenticado.
  */',
-        'startLine' => 168,
-        'endLine' => 172,
+        'startLine' => 184,
+        'endLine' => 189,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

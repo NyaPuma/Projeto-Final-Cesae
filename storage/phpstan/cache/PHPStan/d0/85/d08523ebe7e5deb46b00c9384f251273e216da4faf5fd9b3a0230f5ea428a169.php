@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Http\Middleware\RoleMiddleware.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Middleware\RoleMiddleware
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-0a62b4acc4c1c5d08cc2ae67e11107d0325f6fa362e7fca0e0f5949612ff29b6',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-ec365848b9c62c6f72409d197523f191ff380f6712f915f5fa065fc0ceb2f8a2',
    'data' => 
   array (
     'locatedSource' => 
@@ -27,7 +27,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     array (
     ),
     'startLine' => 12,
-    'endLine' => 75,
+    'endLine' => 73,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => NULL,
@@ -69,8 +69,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 22,
-            'endLine' => 22,
+            'startLine' => 19,
+            'endLine' => 19,
             'startColumn' => 28,
             'endColumn' => 43,
             'parameterIndex' => 0,
@@ -95,8 +95,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 22,
-            'endLine' => 22,
+            'startLine' => 19,
+            'endLine' => 19,
             'startColumn' => 46,
             'endColumn' => 58,
             'parameterIndex' => 1,
@@ -121,8 +121,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 22,
-            'endLine' => 22,
+            'startLine' => 19,
+            'endLine' => 19,
             'startColumn' => 61,
             'endColumn' => 76,
             'parameterIndex' => 2,
@@ -145,13 +145,10 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Handle an incoming request and delegate to the next middleware in the chain.
  *
- * @param  \\Illuminate\\Http\\Request  $request
- * @param  \\Closure  $next
- * @param  string  ...$roles The roles that are allowed to access this route
- * @return Response
+ * @param  string  ...$roles  The roles that are allowed to access this route
  */',
-        'startLine' => 22,
-        'endLine' => 74,
+        'startLine' => 19,
+        'endLine' => 72,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

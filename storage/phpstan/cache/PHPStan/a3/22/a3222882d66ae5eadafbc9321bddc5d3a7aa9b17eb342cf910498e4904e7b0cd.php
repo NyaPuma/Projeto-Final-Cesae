@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Events\TicketStatusUpdatedBroadcast.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Events\TicketStatusUpdatedBroadcast
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-c8685eeb70ca0a0699c6101731fc70e66826e30da77064bd9970a3bf6fa58d2b',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-2a8ef04baa84ca4266a8316c394992544a8fa036aa4fd624f463a081d884f8a2',
    'data' => 
   array (
     'locatedSource' => 
@@ -27,7 +27,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     array (
     ),
     'startLine' => 11,
-    'endLine' => 41,
+    'endLine' => 40,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => NULL,
@@ -232,9 +232,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         ),
         'docComment' => NULL,
         'startLine' => 15,
-        'endLine' => 20,
+        'endLine' => 19,
         'startColumn' => 5,
-        'endColumn' => 5,
+        'endColumn' => 8,
         'couldThrow' => false,
         'isClosure' => false,
         'isGenerator' => false,
@@ -266,8 +266,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 22,
-        'endLine' => 25,
+        'startLine' => 21,
+        'endLine' => 24,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -301,8 +301,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 27,
-        'endLine' => 30,
+        'startLine' => 26,
+        'endLine' => 29,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -336,8 +336,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 32,
-        'endLine' => 40,
+        'startLine' => 31,
+        'endLine' => 39,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

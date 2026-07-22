@@ -13,6 +13,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'uses' => 
         array (
           'equipment' => 'App\\Models\\Equipment',
+          'room' => 'App\\Models\\Room',
+          'user' => 'App\\Models\\User',
           'request' => 'Illuminate\\Http\\Request',
         ),
          'className' => 'App\\Http\\Controllers\\UiController',
@@ -37,6 +39,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'uses' => 
         array (
           'equipment' => 'App\\Models\\Equipment',
+          'room' => 'App\\Models\\Room',
+          'user' => 'App\\Models\\User',
           'request' => 'Illuminate\\Http\\Request',
         ),
          'className' => 'App\\Http\\Controllers\\UiController',
@@ -61,6 +65,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'uses' => 
         array (
           'equipment' => 'App\\Models\\Equipment',
+          'room' => 'App\\Models\\Room',
+          'user' => 'App\\Models\\User',
           'request' => 'Illuminate\\Http\\Request',
         ),
          'className' => 'App\\Http\\Controllers\\UiController',
@@ -85,6 +91,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'uses' => 
         array (
           'equipment' => 'App\\Models\\Equipment',
+          'room' => 'App\\Models\\Room',
+          'user' => 'App\\Models\\User',
           'request' => 'Illuminate\\Http\\Request',
         ),
          'className' => 'App\\Http\\Controllers\\UiController',
@@ -109,6 +117,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'uses' => 
         array (
           'equipment' => 'App\\Models\\Equipment',
+          'room' => 'App\\Models\\Room',
+          'user' => 'App\\Models\\User',
           'request' => 'Illuminate\\Http\\Request',
         ),
          'className' => 'App\\Http\\Controllers\\UiController',
@@ -133,6 +143,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'uses' => 
         array (
           'equipment' => 'App\\Models\\Equipment',
+          'room' => 'App\\Models\\Room',
+          'user' => 'App\\Models\\User',
           'request' => 'Illuminate\\Http\\Request',
         ),
          'className' => 'App\\Http\\Controllers\\UiController',
@@ -157,6 +169,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'uses' => 
         array (
           'equipment' => 'App\\Models\\Equipment',
+          'room' => 'App\\Models\\Room',
+          'user' => 'App\\Models\\User',
           'request' => 'Illuminate\\Http\\Request',
         ),
          'className' => 'App\\Http\\Controllers\\UiController',
@@ -181,6 +195,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'uses' => 
         array (
           'equipment' => 'App\\Models\\Equipment',
+          'room' => 'App\\Models\\Room',
+          'user' => 'App\\Models\\User',
           'request' => 'Illuminate\\Http\\Request',
         ),
          'className' => 'App\\Http\\Controllers\\UiController',
@@ -205,6 +221,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'uses' => 
         array (
           'equipment' => 'App\\Models\\Equipment',
+          'room' => 'App\\Models\\Room',
+          'user' => 'App\\Models\\User',
           'request' => 'Illuminate\\Http\\Request',
         ),
          'className' => 'App\\Http\\Controllers\\UiController',
@@ -229,6 +247,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'uses' => 
         array (
           'equipment' => 'App\\Models\\Equipment',
+          'room' => 'App\\Models\\Room',
+          'user' => 'App\\Models\\User',
           'request' => 'Illuminate\\Http\\Request',
         ),
          'className' => 'App\\Http\\Controllers\\UiController',
@@ -253,6 +273,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'uses' => 
         array (
           'equipment' => 'App\\Models\\Equipment',
+          'room' => 'App\\Models\\Room',
+          'user' => 'App\\Models\\User',
           'request' => 'Illuminate\\Http\\Request',
         ),
          'className' => 'App\\Http\\Controllers\\UiController',
@@ -277,6 +299,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'uses' => 
         array (
           'equipment' => 'App\\Models\\Equipment',
+          'room' => 'App\\Models\\Room',
+          'user' => 'App\\Models\\User',
           'request' => 'Illuminate\\Http\\Request',
         ),
          'className' => 'App\\Http\\Controllers\\UiController',
@@ -301,6 +325,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'uses' => 
         array (
           'equipment' => 'App\\Models\\Equipment',
+          'room' => 'App\\Models\\Room',
+          'user' => 'App\\Models\\User',
           'request' => 'Illuminate\\Http\\Request',
         ),
          'className' => 'App\\Http\\Controllers\\UiController',
@@ -325,6 +351,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'uses' => 
         array (
           'equipment' => 'App\\Models\\Equipment',
+          'room' => 'App\\Models\\Room',
+          'user' => 'App\\Models\\User',
           'request' => 'Illuminate\\Http\\Request',
         ),
          'className' => 'App\\Http\\Controllers\\UiController',
@@ -349,6 +377,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'uses' => 
         array (
           'equipment' => 'App\\Models\\Equipment',
+          'room' => 'App\\Models\\Room',
+          'user' => 'App\\Models\\User',
           'request' => 'Illuminate\\Http\\Request',
         ),
          'className' => 'App\\Http\\Controllers\\UiController',
@@ -373,6 +403,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'uses' => 
         array (
           'equipment' => 'App\\Models\\Equipment',
+          'room' => 'App\\Models\\Room',
+          'user' => 'App\\Models\\User',
           'request' => 'Illuminate\\Http\\Request',
         ),
          'className' => 'App\\Http\\Controllers\\UiController',
@@ -397,6 +429,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'uses' => 
         array (
           'equipment' => 'App\\Models\\Equipment',
+          'room' => 'App\\Models\\Room',
+          'user' => 'App\\Models\\User',
           'request' => 'Illuminate\\Http\\Request',
         ),
          'className' => 'App\\Http\\Controllers\\UiController',
@@ -418,7 +452,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php' => 'a86ae12d56a38b14c1da4d9434a6e5770eb2f58649214b970cc613a99475b1be',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php' => '78ff1acb53c0354a9af2dc8174c2c0d116aa322dbd002f63df491acf657ff8ad',
     ),
   ),
 ));
