@@ -40,7 +40,7 @@ window.requireAuthOnLoad = true;
 
                 <input type="hidden" id="ticketPriority" name="priority" value="media" required>
 
-                <div class="grid gap-4 md:grid-cols-3">
+                <div class="grid gap-4 md:grid-cols-4">
                     {{-- Card Baixa --}}
                     <div type="button" data-priority="baixa" onclick="selectPriority('baixa')"
                         class="priority-card cursor-pointer rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4 transition-all hover:border-emerald-500/50">
@@ -82,14 +82,28 @@ window.requireAuthOnLoad = true;
                         <h4 class="text-xs font-semibold text-[var(--text)] mb-1">{{ __('Paragem Crítica / Risco') }}</h4>
                         <p class="text-[11px] leading-relaxed text-[var(--text-soft)]">{{ __('Linha/Máquina inoperacional ou risco de segurança.') }}</p>
                     </div>
+
+                    {{-- Card Crítica --}}
+                    <div type="button" data-priority="critica" onclick="selectPriority('critica')"
+                        class="priority-card cursor-pointer rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4 transition-all hover:border-purple-600/50">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center gap-2">
+                                <span class="h-2.5 w-2.5 rounded-full bg-purple-600"></span>
+                                <span class="text-xs font-bold text-[var(--text)]">{{ __('Crítica') }}</span>
+                            </div>
+                            <span class="h-2 w-2 rounded-full bg-purple-600/40"></span>
+                        </div>
+                        <h4 class="text-xs font-semibold text-[var(--text)] mb-1">{{ __('Emergência Imediata') }}</h4>
+                        <p class="text-[11px] leading-relaxed text-[var(--text-soft)]">{{ __('Risco iminente de acidente ou paragem total da operação. Exige ação urgente.') }}</p>
+                    </div>
                 </div>
             </div>
 
             {{-- Equipamento & Imagem --}}
             <div class="grid gap-6 lg:grid-cols-2">
                 <div>
-                    <label class="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">{{ __('ID do Equipamento (Opcional)') }}</label>
-                    <input type="text" id="equipmentId" name="equipment_id" class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm text-[var(--text)] outline-none focus:border-primary focus:ring-4 focus:ring-primary/15" placeholder="Ex.: EQ-073">
+                    <label class="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">{{ __('ID do Equipamento *') }}</label>
+                    <input type="text" id="equipmentId" name="equipment_id" required class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm text-[var(--text)] outline-none focus:border-primary focus:ring-4 focus:ring-primary/15" placeholder="Ex.: EQ-073">
                 </div>
                 <div>
                     <label class="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">{{ __('Inserir Imagem (Opcional)') }}</label>
@@ -133,7 +147,7 @@ function selectPriority(priority) {
     cards.forEach(card => {
         const cardPriority = card.getAttribute('data-priority');
 
-        card.classList.remove('border-2', 'border-emerald-500', 'border-amber-500', 'border-red-500', 'shadow-sm');
+        card.classList.remove('border-2', 'border-emerald-500', 'border-amber-500', 'border-red-500', 'border-purple-600', 'shadow-sm');
         card.classList.add('border', 'border-[var(--border)]');
 
         if (cardPriority === priority) {
@@ -142,6 +156,7 @@ function selectPriority(priority) {
             if (priority === 'baixa') card.classList.add('border-emerald-500');
             if (priority === 'media') card.classList.add('border-amber-500');
             if (priority === 'alta') card.classList.add('border-red-500');
+            if (priority === 'critica') card.classList.add('border-purple-600');
         }
     });
 }
