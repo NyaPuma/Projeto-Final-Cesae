@@ -3,7 +3,7 @@
  * Gestão de equipamentos (listagem, filtros, CRUD)
  */
 
-import { post, del } from '../services/api-client';
+import { formToObject } from './api-client';
 
 let equipmentData = [];
 const ROWS_PER_PAGE = 10;

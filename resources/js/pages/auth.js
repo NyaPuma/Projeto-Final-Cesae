@@ -3,8 +3,6 @@
  * Gestão da autenticação (login, register, etc.)
  */
 
-import { post } from './services/auth-service';
-
 /**
  * Initialize login form
  */
