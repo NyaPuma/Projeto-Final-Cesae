@@ -1,0 +1,16 @@
+services:
+
+  app:
+
+    build: .
+
+    container_name: projeto-final-cesae
+
+    ports:
+      - "8000:80"
+
+    env_file:
+      - .env
+
+    volumes:
+      - .:/app
