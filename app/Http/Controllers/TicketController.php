@@ -53,7 +53,7 @@ class TicketController extends Controller
         $validator = Validator::make($data, [
             'title'        => ['required', 'string', 'max:255'],
             'description'  => ['required', 'string', 'max:5000'],
-            'priority'     => ['required', 'string', 'in:baixa,média,media,alta'],
+            'priority'     => ['required', 'string', 'in:baixa,média,media,alta,critica,crítica'],
             'equipment_id' => ['nullable', 'integer', 'exists:equipments,id'],
             'room_id'      => ['nullable', 'integer', 'exists:rooms,id'],
         ]);
@@ -873,6 +873,8 @@ class TicketController extends Controller
 
     /**
      * Finaliza o ticket com custo final e relatório técnico.
+     * Se existirem tickets de prioridade mais alta pendentes, o sistema avisa o técnico.
+     * Se o técnico forçar (force=true), o admin é notificado da decisão.
      * Rota: POST /tickets/{id}/close
      */
     public function closeTicketFinal(Request $request, int $id)
@@ -883,9 +885,41 @@ class TicketController extends Controller
         $request->validate([
             'actual_cost' => 'required|numeric|min:0',
             'report' => 'nullable|string|max:5000',
+            'force' => 'nullable|boolean',
         ]);
 
         $ticket = Ticket::findOrFail($id);
+
+        // 🔔 VERIFICAÇÃO DE URGÊNCIA: Existem tickets de prioridade mais alta pendentes?
+        // (Apenas se o técnico não estiver a forçar o fecho)
+        $force = $request->boolean('force', false);
+
+        if (! $force) {
+            $priorityOrder = ['crítica' => 4, 'alta' => 3, 'média' => 2, 'baixa' => 1];
+            $currentPriority = $priorityOrder[$ticket->priority] ?? 0;
+
+            $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+            $higherPriorityTickets = Ticket::where('status_id', $openStatusId)
+                ->where('id', '!=', $ticket->id)
+                ->where(function ($q) use ($currentPriority, $priorityOrder) {
+                    foreach ($priorityOrder as $pName => $pVal) {
+                        if ($pVal > $currentPriority) {
+                            $q->orWhere('priority', $pName);
+                        }
+                    }
+                })
+                ->count();
+
+            if ($higherPriorityTickets > 0) {
+                return response()->json([
+                    'warning' => true,
+                    'message' => "⚠️ Existem {$higherPriorityTickets} ticket(s) de prioridade mais alta por atender. Recomenda-se resolver os mais urgentes primeiro antes de fechar este ticket.",
+                    'urgent_tickets_count' => $higherPriorityTickets,
+                    'current_priority' => $ticket->priority,
+                    'can_force' => true,
+                ], 409);
+            }
+        }
 
         $closedStatusId = Ticket::getStatusIdByName(Ticket::STATUS_CLOSED);
         if (! $closedStatusId) {
@@ -898,6 +932,44 @@ class TicketController extends Controller
         $ticket->closed_at = now();
         $ticket->save();
 
+        // 🔔 Se o técnico forçou o fecho mesmo havendo tickets mais urgentes, notificar o admin
+        if ($force) {
+            $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+            $priorityOrder = ['crítica' => 4, 'alta' => 3, 'média' => 2, 'baixa' => 1];
+            $currentPriority = $priorityOrder[$ticket->priority] ?? 0;
+
+            $higherPriorityTickets = Ticket::where('status_id', $openStatusId)
+                ->where('id', '!=', $ticket->id)
+                ->where(function ($q) use ($currentPriority, $priorityOrder) {
+                    foreach ($priorityOrder as $pName => $pVal) {
+                        if ($pVal > $currentPriority) {
+                            $q->orWhere('priority', $pName);
+                        }
+                    }
+                })
+                ->count();
+
+            if ($higherPriorityTickets > 0) {
+                try {
+                    $admins = User::whereHas('profile', function ($q) {
+                        $q->where('name', User::ROLE_ADMIN);
+                    })->get();
+
+                    foreach ($admins as $admin) {
+                        Notification::create([
+                            'user_id' => $admin->id,
+                            'title' => "⚠️ Ticket Não Prioritário Fechado - #{$ticket->id}",
+                            'message' => "O técnico {$user->name} fechou o ticket #{$ticket->id} ({$ticket->title}) com prioridade '{$ticket->priority}', ignorando {$higherPriorityTickets} ticket(s) mais urgente(s) pendentes.",
+                            'type' => 'priority_override',
+                            'link' => "/ui/tickets/{$ticket->id}",
+                        ]);
+                    }
+                } catch (\Exception $e) {
+                    // Silencia falhas de notificação
+                }
+            }
+        }
+
         // 🔔 Notificar criador que o ticket foi fechado
         $this->notifyBudgetEvent($ticket, 'closed',
             "O ticket #{$ticket->id} - {$ticket->title} foi concluído e fechado com custo final de {$request->actual_cost}€."
@@ -909,3 +981,4 @@ class TicketController extends Controller
         ]);
     }
 }
+

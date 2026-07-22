@@ -302,26 +302,24 @@ window.requireAuthOnLoad = true;
                     <span class="text-xl">⚠️</span>
                 </div>
                 <div class="flex-1">
-                    <h3 class="text-sm font-bold text-[var(--text)]">{{ __('Atenção: Tickets Urgentes Pendentes') }}</h3>
+                    <h3 class="text-sm font-bold text-[var(--text)]">{{ __('Atenção: Ticket Prioritário Pendente') }}</h3>
                     <p id="priorityWarningText" class="text-xs text-[var(--text-soft)] mt-1">
-                        {{ __('Existem tickets de prioridade mais alta por atender. Recomenda-se resolvê-los primeiro.') }}
+                        {{ __('Existe um ticket de prioridade mais alta por atender.') }}
                     </p>
-                    <div id="priorityWarningDetails" class="mt-2 p-3 rounded-xl bg-amber-500/5 border border-amber-500/20 text-xs space-y-1 hidden">
+                    <div id="priorityWarningDetails" class="mt-2 p-3 rounded-xl bg-amber-500/5 border border-amber-500/20 text-xs space-y-1">
                         <p class="font-semibold text-amber-600 dark:text-amber-400">{{ __('Detalhes:') }}</p>
                         <p id="priorityWarningCount" class="text-[var(--text-soft)]"></p>
                         <p id="priorityWarningCurrent" class="text-[var(--text-soft)]"></p>
+                        <p id="priorityWarningAction" class="text-[var(--text-soft)] mt-1 text-[10px]"></p>
                     </div>
                 </div>
             </div>
-            <div class="flex gap-2 pt-2">
-                <button id="btnViewUrgentTickets" type="button" class="flex-1 inline-flex items-center justify-center px-4 py-2.5 bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold rounded-xl shadow-sm transition-all cursor-pointer">
-                    🔥 {{ __('Ver Tickets Urgentes') }}
+            <div class="flex gap-3 pt-2">
+                <button id="btnForceStartTicket" type="button" class="flex-1 inline-flex items-center justify-center px-4 py-3 bg-[var(--border)] hover:bg-rose-500/10 hover:text-rose-500 text-[var(--text)] text-xs font-bold rounded-xl transition-all cursor-pointer border border-transparent hover:border-rose-500/30">
+                    {{ __('Sim, continuar') }}
                 </button>
-                <button id="btnForceStartTicket" type="button" class="flex-1 inline-flex items-center justify-center px-4 py-2.5 bg-[var(--border)] hover:bg-rose-500/10 hover:text-rose-500 text-[var(--text)] text-xs font-bold rounded-xl transition-all cursor-pointer border border-transparent hover:border-rose-500/20">
-                    {{ __('Iniciar Mesmo Assim') }}
-                </button>
-                <button id="btnCancelPriority" type="button" class="inline-flex items-center justify-center px-3 py-2.5 bg-[var(--surface-2)] text-[var(--text-soft)] text-xs font-semibold rounded-xl hover:bg-[var(--border)] transition-all cursor-pointer">
-                    ✕
+                <button id="btnViewUrgentTickets" type="button" class="flex-1 inline-flex items-center justify-center px-4 py-3 bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold rounded-xl shadow-sm transition-all cursor-pointer">
+                    🔥 {{ __('Ir para ticket prioritário') }}
                 </button>
             </div>
         </div>
@@ -352,9 +350,6 @@ const statusLabels = {
     'aberto':             "{{ __('Aberto') }}",
     'aberta':             "{{ __('Aberta') }}",
     'em curso':           "{{ __('Em Curso') }}",
-    'pendente orçamento': "{{ __('Pendente Orçamento') }}",
-    'recusada':           "{{ __('Recusada') }}",
-    'recusado':           "{{ __('Recusado') }}",
     'fechado':            "{{ __('Fechado') }}",
     'fechada':            "{{ __('Fechada') }}"
 };
@@ -424,10 +419,6 @@ async function fetchTicket() {
 
     if (statusClean === 'em curso') {
         statusBadge = `<span class="inline-block px-2 py-0.5 rounded-lg text-[11px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 uppercase tracking-tight">⚙️ {{ __('Em Curso') }}</span>`;
-    } else if (statusClean === 'pendente orçamento' || statusClean === 'pendente_orçamento') {
-        statusBadge = `<span class="inline-block px-2 py-0.5 rounded-lg text-[11px] font-bold bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30 uppercase tracking-tight">⏳ {{ __('Pendente Orçamento') }}</span>`;
-    } else if (statusClean === 'recusada' || statusClean === 'recusado') {
-        statusBadge = `<span class="inline-block px-2 py-0.5 rounded-lg text-[11px] font-bold bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30 uppercase tracking-tight">❌ {{ __('Recusada') }}</span>`;
     } else if (statusClean === 'fechada' || statusClean === 'fechado') {
         statusBadge = `<span class="inline-block px-2 py-0.5 rounded-lg text-[11px] font-bold bg-[var(--text-soft)]/10 text-[var(--text-soft)] uppercase tracking-tight">{{ __('Fechada') }}</span>`;
     }
@@ -468,18 +459,16 @@ async function fetchTicket() {
         </div>
     `;
 
-    const isPendenteOrcamento = statusClean === 'pendente orçamento' || statusClean === 'pendente_orçamento';
-    const isRecusada = statusClean === 'recusada' || statusClean === 'recusado';
     const isClosed = statusClean === 'fechada' || statusClean === 'fechado';
     const isEmCurso = statusClean === 'em curso' || statusClean === 'em curso';
     const estimatedAmount = parseFloat(ticket.budget_amount || ticket.estimated_cost || ticket.estimatedBudget || 0);
     const threshold = parseFloat(ticket.threshold || 50.00);
 
-    // 🐛 FIX: Determinar o estado correto do orçamento
+    // Determinar o estado do orçamento pelos campos do ticket
     const budgetWasSubmitted  = ticket.budget_requested === true || ticket.budget_requested === 1 || ticket.budget_requested === '1';
     const budgetIsPending     = ticket.budget_status === 'pending';
     const budgetIsApproved    = ticket.budget_status === 'approved';
-    const budgetWasAutoApproved = budgetWasSubmitted && !ticket.budget_status && !isPendenteOrcamento;
+    const budgetWasAutoApproved = budgetWasSubmitted && !ticket.budget_status;
 
     const techCompletionCard = document.getElementById('techCompletionCard');
     const techBlockedCard = document.getElementById('techBlockedCard');
@@ -495,16 +484,9 @@ async function fetchTicket() {
         techApprovedCard.classList.add('hidden');
         techBudgetSubmitCard.classList.add('hidden');
 
-if (isRecusada) {
-            // Ticket recusado (orçamento rejeitado)
-            techRejectedCard.classList.remove('hidden');
-            if (ticket.budget_feedback) {
-                const fbEl = document.getElementById('techRejectedFeedback');
-                if (fbEl) {
-                    fbEl.textContent = '📋 ' + ticket.budget_feedback;
-                    fbEl.classList.remove('hidden');
-                }
-            }
+        if (budgetIsPending) {
+            // Ticket com orçamento pendente (status=aberta, mas budget_status=pending)
+            techBlockedCard.classList.remove('hidden');
         } else if (isClosed) {
             // Ticket fechado com sucesso (reparação concluída)
             techApprovedCard.classList.remove('hidden');
@@ -513,9 +495,6 @@ if (isRecusada) {
             if (approvedTitleEl) approvedTitleEl.textContent = '{{ __('Reparação Concluída') }}';
             const approvedTextEl = techApprovedCard?.querySelector('p');
             if (approvedTextEl) approvedTextEl.textContent = '{{ __('O ticket foi fechado com sucesso.') }}';
-        } else if (isPendenteOrcamento || (budgetWasSubmitted && budgetIsPending)) {
-            // Pendente de aprovação orçamental
-            techBlockedCard.classList.remove('hidden');
         } else if (budgetIsApproved || budgetWasAutoApproved) {
             // Orçamento já aprovado (pelo admin ou auto-aprovado) → mostrar conclusão
             techApprovedCard.classList.remove('hidden');
@@ -531,7 +510,7 @@ if (isRecusada) {
 
     const budgetCard = document.getElementById('budgetApprovalCard');
     if (budgetCard && checkCurrentUserIsAdmin()) {
-        if (isPendenteOrcamento || (budgetWasSubmitted && budgetIsPending)) {
+        if (budgetIsPending) {
             document.getElementById('budgetEstimatedCost').innerText = estimatedAmount.toFixed(2) + ' €';
             document.getElementById('budgetThresholdDisplay').innerText = threshold.toFixed(2) + ' €';
             document.getElementById('budgetTechnicianName').innerText = ticket.technician ? ticket.technician.name : "{{ __('Técnico de Campo') }}";
@@ -956,23 +935,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // ⚠️ Verificação de urgência ao iniciar reparação (se existir botão "Iniciar" no tech panel)
-    // A lógica é disparada quando um técnico tenta iniciar um ticket
-    // e o backend responde com 409 + warning
+    // ⚠️ Verificação de urgência ao iniciar reparação OU fechar ticket
+    // A lógica é disparada quando o backend responde com 409 + warning
     
     // Estado global para controlar o fluxo de urgência
     window._pendingForceStart = false;
+    window._pendingActionType = 'start'; // 'start' ou 'close'
     
     const modal = document.getElementById('priorityWarningModal');
     const btnViewUrgent = document.getElementById('btnViewUrgentTickets');
     const btnForceStart = document.getElementById('btnForceStartTicket');
-    const btnCancelPri = document.getElementById('btnCancelPriority');
     
-    function showPriorityWarning(urgentCount, currentPriority, ticketId) {
+    function showPriorityWarning(urgentCount, currentPriority, ticketId, actionType = 'start') {
         const modal = document.getElementById('priorityWarningModal');
         const countEl = document.getElementById('priorityWarningCount');
         const currentEl = document.getElementById('priorityWarningCurrent');
-        const detailsEl = document.getElementById('priorityWarningDetails');
+        const actionEl = document.getElementById('priorityWarningAction');
         
         if (!modal) return;
         
@@ -980,14 +958,19 @@ document.addEventListener('DOMContentLoaded', () => {
             countEl.textContent = `🔥 ${urgentCount} {{ __('ticket(s) de prioridade mais alta à espera') }}`;
         }
         if (currentEl) {
-            currentEl.textContent = `📌 {{ __('Tentou iniciar:') }} ${currentPriority}`;
+            currentEl.textContent = `📌 {{ __('Ticket atual:') }} ${currentPriority}`;
         }
-        if (detailsEl) {
-            detailsEl.classList.remove('hidden');
+        if (actionEl) {
+            if (actionType === 'close') {
+                actionEl.textContent = '{{ __('Está prestes a fechar este ticket ignorando os mais urgentes.') }}';
+            } else {
+                actionEl.textContent = '{{ __('Está prestes a iniciar este ticket ignorando os mais urgentes.') }}';
+            }
         }
         
         // Guardar referência para usar nos handlers
         window._pendingTicketId = ticketId;
+        window._pendingActionType = actionType;
         
         modal.classList.remove('hidden');
         modal.classList.add('flex');
@@ -1001,59 +984,80 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         window._pendingTicketId = null;
         window._pendingForceStart = false;
+        window._pendingActionType = 'start';
     }
     
-    // Botão "Ver Tickets Urgentes" → redireciona para lista com filtro por prioridade
+    // Botão "Ir para ticket prioritário" → redireciona para listagem com filtro
     btnViewUrgent?.addEventListener('click', function() {
         hidePriorityWarning();
-        window.location.href = '/ui/tickets?priority=alta';
+        window.location.href = '/ui/tickets?priority=crítica';
     });
     
-    // Botão "Iniciar Mesmo Assim" → força o start com force=true
+    // Botão "Sim, continuar" → força a ação (start ou close) com force=true
     btnForceStart?.addEventListener('click', async function() {
         hidePriorityWarning();
         const pendingId = window._pendingTicketId || ticketId;
         if (!pendingId) return;
         
+        const actionType = window._pendingActionType || 'start';
+        
         try {
-            const res = await fetch(`/technician/tickets/${pendingId}/start`, {
-                method: 'PUT',
-                headers: { ...authHeader(), 'Content-Type': 'application/json' },
-                body: JSON.stringify({ force: true })
-            });
+            let res;
+            let successMsgKey, errorMsgKey;
+            
+            if (actionType === 'close') {
+                // Forçar fecho do ticket
+                const cost = parseFloat(document.getElementById('techTotalCost')?.value) || 0;
+                const report = document.getElementById('techFinalReport')?.value.trim();
+                res = await fetch(`/tickets/${pendingId}/close`, {
+                    method: 'POST',
+                    headers: { ...authHeader(), 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ actual_cost: cost, report: report, force: true })
+                });
+                successMsgKey = "{{ __('Intervenção concluída e ticket fechado!') }}";
+                errorMsgKey = "{{ __('Erro ao fechar ticket.') }}";
+            } else {
+                // Forçar início do ticket
+                res = await fetch(`/technician/tickets/${pendingId}/start`, {
+                    method: 'PUT',
+                    headers: { ...authHeader(), 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ force: true })
+                });
+                successMsgKey = "{{ __('Reparação iniciada com sucesso!') }}";
+                errorMsgKey = "{{ __('Erro ao iniciar reparação.') }}";
+            }
             
             const data = await res.json();
             if (res.ok) {
-                showMessage("{{ __('Reparação iniciada com sucesso!') }}");
+                showMessage(successMsgKey);
                 await fetchTicket();
             } else {
-                showMessage(data.message || "{{ __('Erro ao iniciar reparação.') }}", true);
+                showMessage(data.message || errorMsgKey, true);
             }
         } catch (e) {
-            showMessage("{{ __('Erro de conexão ao iniciar reparação.') }}", true);
+            showMessage("{{ __('Erro de conexão.') }}", true);
         }
     });
     
-    // Botão "✕" → fechar modal
-    btnCancelPri?.addEventListener('click', hidePriorityWarning);
-    
-    // Intercetar o fetch original para começar o startTicket e tratar warning 409
-    // Vamos modificar como os pedidos PUT /start funcionam interceptando globalmente
+    // Intercetar o fetch original para tratar warning 409 (tanto start como close)
     const originalFetch = window.fetch;
     window.fetch = async function(url, options = {}) {
         const response = await originalFetch(url, options);
         
-        // Intercetar respostas 409 (Conflict) de startTicket
+        // Intercetar respostas 409 (Conflict) com warning de prioridade
         if (response.status === 409) {
             try {
                 const data = await response.clone().json();
                 if (data.warning && data.urgent_tickets_count > 0) {
+                    // Determinar se é start ou close pela URL
+                    const actionType = url.toString().includes('/close') ? 'close' : 'start';
                     showPriorityWarning(
                         data.urgent_tickets_count, 
                         data.current_priority || '{{ __("média") }}', 
-                        data.ticket_id || ticketId
+                        data.ticket_id || ticketId,
+                        actionType
                     );
-                    // Devolve um response modificado para não quebrar o fluxo
+                    // Devolve um response modificado para não quebrar o fluxo do JS
                     return new Response(JSON.stringify({ overridden: false, warning: true }), {
                         status: 200,
                         headers: { 'Content-Type': 'application/json' }
