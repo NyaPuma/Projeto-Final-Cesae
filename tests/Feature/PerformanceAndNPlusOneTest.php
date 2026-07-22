@@ -2,14 +2,14 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use App\Models\User;
-use App\Models\UserProfile;
-use App\Models\Ticket;
 use App\Models\Equipment;
 use App\Models\Room;
-use Illuminate\Support\Facades\DB;
+use App\Models\Ticket;
+use App\Models\User;
+use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
+use Tests\TestCase;
 
 class PerformanceAndNPlusOneTest extends TestCase
 {

@@ -282,7 +282,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php' => 'a6c0b73ef0eaabf670e1c2ce6229f3a367f569a62156d2d372796f780555a2f0',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php' => '02568f9c79fc3babd677057828861b7ea9fde897ecfc5648c0c71f3b3d6dd654',
     ),
   ),
 ));

@@ -31,4 +31,3 @@ class TicketStatusFactory extends Factory
         ];
     }
 }
-

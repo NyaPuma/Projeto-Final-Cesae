@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Http\Middleware\CustomAuthMiddleware.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Middleware\CustomAuthMiddleware
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-d1831fb00654f54b23d631ff4da3069d4b5ac7acd404d2e91ef12ec3422c818f',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-050b105e12a7be4a8d39c6e0a215799041c448fb5a947edd29d4aa3871f90a93',
    'data' => 
   array (
     'locatedSource' => 

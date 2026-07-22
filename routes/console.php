@@ -22,4 +22,3 @@ Schedule::command('telemetry:simulate --equipments=5 --probability=25')
     ->withoutOverlapping()
     ->runInBackground()
     ->appendOutputTo(storage_path('logs/telemetry.log'));
-

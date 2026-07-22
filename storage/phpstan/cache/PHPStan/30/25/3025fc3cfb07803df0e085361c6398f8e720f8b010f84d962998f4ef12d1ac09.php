@@ -1,13 +1,13 @@
 <?php declare(strict_types = 1);
 
-// ftm-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Models\Userprofile.php
+// ftm-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Models\UserProfile.php
 return \PHPStan\Cache\CacheItem::__set_state(array(
    'variableKey' => 'v5-2.3.2',
    'data' => 
   array (
     0 => 
     array (
-      '0d9db89ec58174a2102091efe454c186' => 
+      '508f4ec7edf4d08fdf4bdced9690ba78' => 
       \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
@@ -32,7 +32,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'typeAliasClassName' => NULL,
          'traitData' => NULL,
       )),
-      'e4979b9e11f72ef9e340574aab81678e' => 
+      '9f7a0e3b12d0079aaf734c5d255c0461' => 
       \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
          'namespace' => 'Illuminate\\Database\\Eloquent\\Factories',
          'uses' => 
@@ -80,14 +80,14 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
          'traitData' => 
         array (
-          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php',
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php',
           1 => 'App\\Models\\UserProfile',
           2 => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           3 => NULL,
           4 => NULL,
         ),
       )),
-      '10ba375b9bcca4ee97899a54be668e66' => 
+      'bbc00ddddb0ec7cb8273c1b5eb65800a' => 
       \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
          'namespace' => 'Illuminate\\Database\\Eloquent\\Factories',
          'uses' => 
@@ -157,14 +157,14 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
          'traitData' => 
         array (
-          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php',
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php',
           1 => 'App\\Models\\UserProfile',
           2 => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           3 => NULL,
           4 => NULL,
         ),
       )),
-      'bbe4d38579f801761a3271504d3017dd' => 
+      '91e3cd7715a40fbe4a2a7b277c0f3b34' => 
       \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
          'namespace' => 'Illuminate\\Database\\Eloquent\\Factories',
          'uses' => 
@@ -234,14 +234,14 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
          'traitData' => 
         array (
-          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php',
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php',
           1 => 'App\\Models\\UserProfile',
           2 => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           3 => NULL,
           4 => NULL,
         ),
       )),
-      'a9cde64de670de345edec2a47236835e' => 
+      '4636e0254a6ae2192af9e972c0987093' => 
       \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
          'namespace' => 'Illuminate\\Database\\Eloquent\\Factories',
          'uses' => 
@@ -311,14 +311,14 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
          'traitData' => 
         array (
-          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php',
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php',
           1 => 'App\\Models\\UserProfile',
           2 => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           3 => NULL,
           4 => NULL,
         ),
       )),
-      '6a1a3d07eb343011988372a7df188e90' => 
+      '331cda4f31bfea8795d3d7c3c0476544' => 
       \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
@@ -332,7 +332,31 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'templatePhpDocNodes' => 
         array (
         ),
-         'parent' => NULL,
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'App\\Models',
+           'uses' => 
+          array (
+            'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+            'model' => 'Illuminate\\Database\\Eloquent\\Model',
+            'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          ),
+           'className' => 'App\\Models\\UserProfile',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => NULL,
+           'traitData' => NULL,
+        )),
          'typeAliasesMap' => 
         array (
         ),
@@ -346,7 +370,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php' => '0cd18ca87683da401c6f4d15b45572b40adc97f1d1a631f5f70e8415157c791b',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php' => 'd645ee75aeda6cb2e70c6d14a1064ba6448746009db2d3d89fff88db7689bc4f',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Factories\\HasFactory.php' => 'b6cb2b164e90168e80963a5549541f5f3188a3ec8cfd368bf3611bd94fbd46a7',
     ),
   ),

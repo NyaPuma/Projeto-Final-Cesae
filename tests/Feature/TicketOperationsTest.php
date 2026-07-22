@@ -71,24 +71,24 @@ class TicketOperationsTest extends TestCase
 
         // Listar/detalhar (TicketController::show devolve JSON quando quer JSON)
         $this->withHeader('X-Auth-Token', $creator->api_token)
-            ->getJson('/tickets/' . $ticketId)
+            ->getJson('/tickets/'.$ticketId)
             ->assertOk()
             ->assertJsonStructure(['ticket']);
 
         // Comentário
         $this->withHeader('X-Auth-Token', $technician->api_token)
-            ->postJson('/tickets/' . $ticketId . '/comments', ['comment' => 'I am checking the paper feed.'])
+            ->postJson('/tickets/'.$ticketId.'/comments', ['comment' => 'I am checking the paper feed.'])
             ->assertCreated()
             ->assertJsonStructure(['comment']);
 
         $this->withHeader('X-Auth-Token', $technician->api_token)
-            ->getJson('/tickets/' . $ticketId . '/comments')
+            ->getJson('/tickets/'.$ticketId.'/comments')
             ->assertOk()
             ->assertJsonStructure(['comments']);
 
         // Upload foto
         $this->withHeader('X-Auth-Token', $technician->api_token)
-            ->post('/tickets/' . $ticketId . '/photos', [
+            ->post('/tickets/'.$ticketId.'/photos', [
                 'photo' => UploadedFile::fake()->create('paper-jam.jpg', 10, 'image/jpeg'),
             ], [
                 'Accept' => 'application/json',
@@ -97,7 +97,7 @@ class TicketOperationsTest extends TestCase
             ->assertJsonStructure(['attachment', 'url']);
 
         $photosResponse = $this->withHeader('X-Auth-Token', $technician->api_token)
-            ->getJson('/tickets/' . $ticketId . '/photos');
+            ->getJson('/tickets/'.$ticketId.'/photos');
 
         $this->assertContains($photosResponse->getStatusCode(), [200, 403]);
 
@@ -131,14 +131,14 @@ class TicketOperationsTest extends TestCase
         ]);
 
         $commentResponse = $this->withHeader('X-Auth-Token', $owner->api_token)
-            ->postJson('/tickets/' . $ticket->id . '/comments', [
+            ->postJson('/tickets/'.$ticket->id.'/comments', [
                 'comment' => 'I have attached the latest evidence.',
             ]);
 
         $commentResponse->assertCreated();
 
         $photoResponse = $this->withHeader('X-Auth-Token', $owner->api_token)
-            ->post('/tickets/' . $ticket->id . '/photos', [
+            ->post('/tickets/'.$ticket->id.'/photos', [
                 'photo' => UploadedFile::fake()->image('evidence.jpg', 320, 240),
             ], [
                 'Accept' => 'application/json',
@@ -169,7 +169,7 @@ class TicketOperationsTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $otherUser->api_token)
-            ->postJson('/tickets/' . $ticket->id . '/comments', [
+            ->postJson('/tickets/'.$ticket->id.'/comments', [
                 'comment' => 'This should be rejected.',
             ]);
 
@@ -204,7 +204,7 @@ class TicketOperationsTest extends TestCase
 
         $response->assertStatus(201)
             ->assertJsonStructure(['ticket' => [
-                'id', 'title', 'description', 'priority', 'user_id', 'equipment_id', 'status_id', 'opened_at'
+                'id', 'title', 'description', 'priority', 'user_id', 'equipment_id', 'status_id', 'opened_at',
             ]]);
 
         $ticketData = $response->json('ticket');

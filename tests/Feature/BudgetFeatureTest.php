@@ -26,6 +26,7 @@ class BudgetFeatureTest extends TestCase
     private function createUserWithToken(string $profileName): User
     {
         $profile = UserProfile::where('name', $profileName)->firstOrFail();
+
         return User::factory()->create([
             'profile_id' => $profile->id,
             'api_token' => Str::random(60),
@@ -58,7 +59,7 @@ class BudgetFeatureTest extends TestCase
 
         $response->assertOk()
             ->assertJsonStructure(['ticket' => [
-                'id', 'status_id', 'budget_requested', 'budget_status', 'budget_amount', 'budget_requested_at'
+                'id', 'status_id', 'budget_requested', 'budget_status', 'budget_amount', 'budget_requested_at',
             ]]);
 
         $ticket->refresh();

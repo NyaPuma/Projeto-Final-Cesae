@@ -18,7 +18,7 @@ class AuditController extends Controller
         summary: 'Listar auditoria',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         responses: [
-            new OA\Response(response: 200, description: 'Lista de auditoria')
+            new OA\Response(response: 200, description: 'Lista de auditoria'),
         ]
     )]
     public function index(Request $request)

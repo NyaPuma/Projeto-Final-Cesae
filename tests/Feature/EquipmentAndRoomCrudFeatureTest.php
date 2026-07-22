@@ -2,13 +2,13 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
+use App\Models\Equipment;
+use App\Models\Room;
 use App\Models\User;
 use App\Models\UserProfile;
-use App\Models\Room;
-use App\Models\Equipment;
-use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
+use Tests\TestCase;
 
 class EquipmentAndRoomCrudFeatureTest extends TestCase
 {

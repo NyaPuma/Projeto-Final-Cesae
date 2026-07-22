@@ -2,14 +2,14 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
+use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserProfile;
-use App\Models\Ticket;
 use App\Services\AIService;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use OpenAI\Laravel\Facades\OpenAI;
 use OpenAI\Responses\Chat\CreateResponse;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class AiTriagingFeatureTest extends TestCase
 {
@@ -37,7 +37,7 @@ class AiTriagingFeatureTest extends TestCase
         ]);
 
         $startTime = microtime(true);
-        $service = new AIService();
+        $service = new AIService;
         $recommendation = $service->recomendarTecnico($ticket);
         $elapsed = microtime(true) - $startTime;
 
@@ -54,10 +54,10 @@ class AiTriagingFeatureTest extends TestCase
         $ticket = Ticket::factory()->create();
 
         OpenAI::fake([
-            new \Exception("API Error"),
+            new \Exception('API Error'),
         ]);
 
-        $service = new AIService();
+        $service = new AIService;
         $recommendation = $service->recomendarTecnico($ticket);
 
         $this->assertNull($recommendation['tecnico_id']);

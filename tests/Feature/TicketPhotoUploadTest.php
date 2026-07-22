@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Ticket;
 use App\Models\User;
+use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -19,9 +20,9 @@ class TicketPhotoUploadTest extends TestCase
         parent::setUp();
 
         // Criar perfis necessários para os testes
-        \App\Models\UserProfile::create(['name' => User::ROLE_USER]);
-        \App\Models\UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
-        \App\Models\UserProfile::create(['name' => User::ROLE_ADMIN]);
+        UserProfile::create(['name' => User::ROLE_USER]);
+        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
+        UserProfile::create(['name' => User::ROLE_ADMIN]);
 
         // Criar estados de ticket
         $this->artisan('db:seed', ['--class' => 'TicketLookupSeeder', '--force' => true]);
@@ -29,7 +30,7 @@ class TicketPhotoUploadTest extends TestCase
 
     private function createUserWithToken(string $profileName): User
     {
-        $profile = \App\Models\UserProfile::where('name', $profileName)->firstOrFail();
+        $profile = UserProfile::where('name', $profileName)->firstOrFail();
 
         return User::factory()->create([
             'profile_id' => $profile->id,
@@ -54,7 +55,7 @@ class TicketPhotoUploadTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->postJson('/tickets/' . $ticket->id . '/photos', [
+            ->postJson('/tickets/'.$ticket->id.'/photos', [
                 'photo' => UploadedFile::fake()->create('damage.jpg', 100, 'image/jpeg'),
             ]);
 
@@ -83,7 +84,7 @@ class TicketPhotoUploadTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->postJson('/tickets/' . $ticket->id . '/photos', [
+            ->postJson('/tickets/'.$ticket->id.'/photos', [
                 // sem photo
             ]);
 
@@ -107,7 +108,7 @@ class TicketPhotoUploadTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->postJson('/tickets/' . $ticket->id . '/photos', [
+            ->postJson('/tickets/'.$ticket->id.'/photos', [
                 'photo' => UploadedFile::fake()->create('damage.txt', 10, 'text/plain'),
             ]);
 
@@ -130,4 +131,3 @@ class TicketPhotoUploadTest extends TestCase
         $response->assertJsonIsObject();
     }
 }
-

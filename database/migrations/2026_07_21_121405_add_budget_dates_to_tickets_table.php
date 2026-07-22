@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('tickets', function (Blueprint $table) {
-            if (!Schema::hasColumn('tickets', 'budget_requested_at')) {
+            if (! Schema::hasColumn('tickets', 'budget_requested_at')) {
                 $table->timestamp('budget_requested_at')->nullable()->after('budget_status');
             }
-            if (!Schema::hasColumn('tickets', 'budget_decided_at')) {
+            if (! Schema::hasColumn('tickets', 'budget_decided_at')) {
                 $table->timestamp('budget_decided_at')->nullable()->after('budget_requested_at');
             }
         });
@@ -29,9 +29,9 @@ return new class extends Migration
         Schema::table('tickets', function (Blueprint $table) {
             $columnsToDrop = array_filter(
                 ['budget_requested_at', 'budget_decided_at'],
-                fn($col) => Schema::hasColumn('tickets', $col)
+                fn ($col) => Schema::hasColumn('tickets', $col)
             );
-            if (!empty($columnsToDrop)) {
+            if (! empty($columnsToDrop)) {
                 $table->dropColumn($columnsToDrop);
             }
         });

@@ -2,10 +2,10 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use App\Models\Userprofile;
 use App\Models\User;
+use App\Models\Userprofile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class UserProfileTest extends TestCase
 {

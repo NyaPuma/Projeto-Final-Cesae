@@ -42,7 +42,7 @@ class AuthController extends Controller
                     ]
                 )
             ),
-            new OA\Response(response: 422, description: 'Erro de validação')
+            new OA\Response(response: 422, description: 'Erro de validação'),
         ]
     )]
     public function register(Request $request)
@@ -66,7 +66,7 @@ class AuthController extends Controller
             ? UserProfile::find($data['profile_id'])
             : UserProfile::where('name', User::ROLE_USER)->first();
 
-        if (!$profile) {
+        if (! $profile) {
             $profile = UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
         }
 
@@ -116,7 +116,7 @@ class AuthController extends Controller
                     ]
                 )
             ),
-            new OA\Response(response: 401, description: 'Credenciais inválidas')
+            new OA\Response(response: 401, description: 'Credenciais inválidas'),
         ]
     )]
     public function login(Request $request)
@@ -138,12 +138,12 @@ class AuthController extends Controller
         $user = User::where('email', $data['email'])->where('active', true)->first();
 
         // Não distinguimos email inexistente de password errada por segurança.
-        if (!$user || !Hash::check($data['password'], $user->password)) {
+        if (! $user || ! Hash::check($data['password'], $user->password)) {
             return response()->json(['message' => __('Credenciais inválidas.')], 401);
         }
 
         // Garante que, se o registo ficou sem perfil, o acesso volta a usar o perfil base.
-        if (!$user->profile_id) {
+        if (! $user->profile_id) {
             $defaultProfile = UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
             $user->profile_id = $defaultProfile->id;
         }
@@ -165,7 +165,7 @@ class AuthController extends Controller
         // O logout limpa token persistido e cookie para fechar a sessão em todos os canais.
         $user = $this->authenticatedUser($request);
         $user->api_token = null;
-        $user->setRememberToken(null);
+        $user->setRememberToken('');
         $user->save();
 
         $cookie = cookie('api_token', null, -1, '/', null, false, false, false, 'Lax');
@@ -191,7 +191,7 @@ class AuthController extends Controller
         }
 
         // Confirmamos a password antiga antes de autorizar a alteração.
-        if (!Hash::check($data['current_password'], $user->password)) {
+        if (! Hash::check($data['current_password'], $user->password)) {
             return response()->json(['message' => __('Password atual incorreta')], 403);
         }
 
@@ -218,19 +218,19 @@ class AuthController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        if (!empty($data['new_password'])) {
+        if (! empty($data['new_password'])) {
             if (empty($data['current_password'])) {
                 return response()->json(['message' => __('A palavra-passe atual é obrigatória para alterar a password.')], 422);
             }
 
-            if (!Hash::check($data['current_password'], $user->password)) {
+            if (! Hash::check($data['current_password'], $user->password)) {
                 return response()->json(['message' => __('Password atual incorreta')], 403);
             }
 
             $user->password = Hash::make($data['new_password']);
         }
 
-        if (!empty($data['name'])) {
+        if (! empty($data['name'])) {
             $user->name = $data['name'];
         }
 

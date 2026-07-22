@@ -16,8 +16,7 @@ class TicketStatusUpdatedBroadcast implements ShouldBroadcastNow
         public Ticket $ticket,
         public string $oldStatus,
         public string $newStatus
-    ) {
-    }
+    ) {}
 
     public function broadcastOn(): array
     {

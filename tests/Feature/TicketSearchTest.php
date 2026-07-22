@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Ticket;
 use App\Models\User;
+use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\TestCase;
@@ -16,15 +17,15 @@ class TicketSearchTest extends TestCase
     {
         parent::setUp();
 
-        \App\Models\UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
-        \App\Models\UserProfile::create(['name' => User::ROLE_USER]);
+        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
+        UserProfile::create(['name' => User::ROLE_USER]);
 
         $this->artisan('db:seed', ['--class' => 'TicketLookupSeeder', '--force' => true]);
     }
 
     public function test_ticket_search_filters_by_keyword_priority_and_date_range(): void
     {
-        $technicianProfile = \App\Models\UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
+        $technicianProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
 
         $technician = User::factory()->create([
             'profile_id' => $technicianProfile->id,
@@ -41,7 +42,7 @@ class TicketSearchTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
-            ->getJson('/tickets/search?q=compressor&priority=' . Ticket::PRIORITY_HIGH . '&date_from=' . now()->subDays(7)->toDateString());
+            ->getJson('/tickets/search?q=compressor&priority='.Ticket::PRIORITY_HIGH.'&date_from='.now()->subDays(7)->toDateString());
 
         // CORRIGIDO: O método search() foi implementado - retorna 200 com resultados
         $response->assertOk();
@@ -50,7 +51,7 @@ class TicketSearchTest extends TestCase
 
     public function test_ticket_search_returns_empty_results_when_no_match(): void
     {
-        $technicianProfile = \App\Models\UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
+        $technicianProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
 
         $technician = User::factory()->create([
             'profile_id' => $technicianProfile->id,
@@ -68,7 +69,7 @@ class TicketSearchTest extends TestCase
 
     public function test_ticket_search_rejects_invalid_date_range(): void
     {
-        $technicianProfile = \App\Models\UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
+        $technicianProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
 
         $technician = User::factory()->create([
             'profile_id' => $technicianProfile->id,
@@ -76,7 +77,7 @@ class TicketSearchTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
-            ->getJson('/tickets/search?date_from=' . now()->toDateString() . '&date_to=' . now()->subDays(1)->toDateString());
+            ->getJson('/tickets/search?date_from='.now()->toDateString().'&date_to='.now()->subDays(1)->toDateString());
 
         // CORRIGIDO: O método search() agora valida o intervalo de datas e retorna 422
         $response->assertStatus(422);
@@ -85,7 +86,7 @@ class TicketSearchTest extends TestCase
 
     public function test_ticket_search_validates_priority_enum(): void
     {
-        $technicianProfile = \App\Models\UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
+        $technicianProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
 
         $technician = User::factory()->create([
             'profile_id' => $technicianProfile->id,
@@ -99,5 +100,4 @@ class TicketSearchTest extends TestCase
         $response->assertStatus(422);
         $response->assertJson(['message' => 'Prioridade inválida. Valores válidos: baixa, média, alta.']);
     }
-
 }

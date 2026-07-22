@@ -2236,7 +2236,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php' => '8848aa1f43abb5c5c1e90703373b248566af948f2afa93428eb2a4ce172c5e8e',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php' => '1e74e9e7dc72b339f63306a1b9187e25e2dfe82bf4fe4749dc5ba75c390d8a7b',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Factories\\HasFactory.php' => 'b6cb2b164e90168e80963a5549541f5f3188a3ec8cfd368bf3611bd94fbd46a7',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Traits\\Auditable.php' => '500246d47e14d659e52788cd4aa0dee6cab7098a4273804c98dbfe99b09829d4',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\SoftDeletes.php' => 'da1b0c13d78ba2f62e97e5627c3149f4e81b9cf9b6092d4ca7f02ca5e5bbcfec',

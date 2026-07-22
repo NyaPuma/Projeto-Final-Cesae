@@ -11,8 +11,8 @@ use App\Models\TicketType;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
+use Tests\TestCase;
 
 class EquipmentTest extends TestCase
 {
@@ -36,11 +36,11 @@ class EquipmentTest extends TestCase
         $room = Room::factory()->create();
 
         $equipment = Equipment::create([
-            'name'        => 'Test Machine',
-            'serial'      => 'SN-12345',
-            'room_id'     => $room->id,
+            'name' => 'Test Machine',
+            'serial' => 'SN-12345',
+            'room_id' => $room->id,
             'category_id' => $category->id,
-            'active'      => true,
+            'active' => true,
         ]);
 
         $this->assertNotNull($equipment->id);
@@ -57,7 +57,7 @@ class EquipmentTest extends TestCase
 
         $equipment = Equipment::factory()->create([
             'category_id' => $category->id,
-            'room_id'     => $room->id,
+            'room_id' => $room->id,
         ]);
 
         $this->assertInstanceOf(EquipmentCategory::class, $equipment->category);
@@ -72,7 +72,7 @@ class EquipmentTest extends TestCase
 
         $equipment = Equipment::factory()->create([
             'category_id' => $category->id,
-            'room_id'     => $room->id,
+            'room_id' => $room->id,
         ]);
 
         $this->assertInstanceOf(Room::class, $equipment->room);
@@ -89,27 +89,27 @@ class EquipmentTest extends TestCase
 
         $equipment = Equipment::factory()->create([
             'category_id' => $category->id,
-            'room_id'     => $room->id,
+            'room_id' => $room->id,
         ]);
 
         Ticket::create([
-            'title'       => 'Ticket 1',
+            'title' => 'Ticket 1',
             'description' => 'First ticket',
-            'priority'    => Ticket::PRIORITY_MEDIUM,
-            'user_id'     => $user->id,
-            'equipment_id'=> $equipment->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_MEDIUM,
+            'user_id' => $user->id,
+            'equipment_id' => $equipment->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
         ]);
 
         Ticket::create([
-            'title'       => 'Ticket 2',
+            'title' => 'Ticket 2',
             'description' => 'Second ticket',
-            'priority'    => Ticket::PRIORITY_HIGH,
-            'user_id'     => $user->id,
-            'equipment_id'=> $equipment->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_HIGH,
+            'user_id' => $user->id,
+            'equipment_id' => $equipment->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
         ]);
 
         $this->assertCount(2, $equipment->tickets);
@@ -124,7 +124,7 @@ class EquipmentTest extends TestCase
 
         $equipment = Equipment::factory()->create([
             'category_id' => $category->id,
-            'room_id'     => $room->id,
+            'room_id' => $room->id,
         ]);
 
         $this->assertIsBool($equipment->active);
@@ -133,7 +133,7 @@ class EquipmentTest extends TestCase
     #[Test]
     public function it_has_fillable_attributes(): void
     {
-        $equipment = new Equipment();
+        $equipment = new Equipment;
         $fillable = $equipment->getFillable();
 
         $this->assertContains('name', $fillable);
@@ -146,7 +146,7 @@ class EquipmentTest extends TestCase
     #[Test]
     public function it_has_correct_table_name(): void
     {
-        $equipment = new Equipment();
+        $equipment = new Equipment;
         $this->assertEquals('equipments', $equipment->getTable());
     }
 
@@ -158,8 +158,8 @@ class EquipmentTest extends TestCase
 
         $equipment = Equipment::factory()->create([
             'category_id' => $category->id,
-            'room_id'     => $room->id,
-            'active'      => 1,
+            'room_id' => $room->id,
+            'active' => 1,
         ]);
 
         $this->assertTrue($equipment->active);

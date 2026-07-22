@@ -2,8 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Equipment;
-use App\Models\Room;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserProfile;
@@ -28,6 +26,7 @@ class TicketWorkflowFeatureTest extends TestCase
     private function createUserWithToken(string $profileName, bool $active = true): User
     {
         $profile = UserProfile::where('name', $profileName)->firstOrFail();
+
         return User::factory()->create([
             'profile_id' => $profile->id,
             'api_token' => Str::random(60),
@@ -60,7 +59,7 @@ class TicketWorkflowFeatureTest extends TestCase
 
         $response->assertOk()
             ->assertJsonStructure(['ticket' => [
-                'id', 'status_id', 'assigned_to', 'in_progress_at'
+                'id', 'status_id', 'assigned_to', 'in_progress_at',
             ]]);
 
         $ticket->refresh();
@@ -113,7 +112,7 @@ class TicketWorkflowFeatureTest extends TestCase
 
         $response->assertOk()
             ->assertJsonStructure(['ticket' => [
-                'id', 'status_id', 'closed_at', 'minutes_spent', 'cost', 'technical_report'
+                'id', 'status_id', 'closed_at', 'minutes_spent', 'cost', 'technical_report',
             ]]);
 
         $ticket->refresh();

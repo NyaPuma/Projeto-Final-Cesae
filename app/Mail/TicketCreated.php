@@ -22,13 +22,13 @@ class TicketCreated extends Mailable implements ShouldQueue
      */
     public function __construct(Ticket $ticket)
     {
-        $this->ticket=$ticket;
+        $this->ticket = $ticket;
     }
 
     public function build()
     {
         return $this->subject('Nova avaria registada')
-        ->view('emails.ticketCreated');
+            ->view('emails.ticketCreated');
     }
 
     /**

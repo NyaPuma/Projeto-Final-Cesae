@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Equipment;
+use App\Models\Room;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UiController extends Controller
@@ -13,6 +15,7 @@ class UiController extends Controller
     public function index(Request $request)
     {
         $user = $this->authenticatedUser($request);
+
         return view('ui.index', ['user' => $user]);
     }
 
@@ -22,6 +25,7 @@ class UiController extends Controller
     public function tickets(Request $request)
     {
         $user = $this->authenticatedUser($request);
+
         return view('ui.tickets', ['user' => $user]);
     }
 
@@ -31,6 +35,7 @@ class UiController extends Controller
     public function ticketCreate(Request $request)
     {
         $user = $this->authenticatedUser($request);
+
         return view('ui.ticket-create', ['user' => $user]);
     }
 
@@ -40,6 +45,7 @@ class UiController extends Controller
     public function equipments(Request $request)
     {
         $user = $this->authenticatedUser($request);
+
         return view('ui.equipments', ['user' => $user]);
     }
 
@@ -49,6 +55,7 @@ class UiController extends Controller
     public function users(Request $request)
     {
         $user = $this->authenticatedUser($request);
+
         return view('ui.users', ['user' => $user]);
     }
 
@@ -58,6 +65,7 @@ class UiController extends Controller
     public function userCreate(Request $request)
     {
         $user = $this->authenticatedUser($request);
+
         return view('ui.users-create', ['user' => $user]);
     }
 
@@ -67,7 +75,8 @@ class UiController extends Controller
     public function userEdit(Request $request, int $id)
     {
         $user = $this->authenticatedUser($request);
-        $targetUser = \App\Models\User::with('profile')->findOrFail($id);
+        $targetUser = User::with('profile')->findOrFail($id);
+
         return view('ui.users-edit', ['user' => $user, 'targetUser' => $targetUser]);
     }
 
@@ -77,6 +86,7 @@ class UiController extends Controller
     public function rooms(Request $request)
     {
         $user = $this->authenticatedUser($request);
+
         return view('ui.rooms', ['user' => $user]);
     }
 
@@ -86,6 +96,7 @@ class UiController extends Controller
     public function roomCreate(Request $request)
     {
         $user = $this->authenticatedUser($request);
+
         return view('ui.rooms.create', ['user' => $user]);
     }
 
@@ -95,7 +106,8 @@ class UiController extends Controller
     public function roomDetail(Request $request, int $id)
     {
         $user = $this->authenticatedUser($request);
-        $room = \App\Models\Room::findOrFail($id);
+        $room = Room::findOrFail($id);
+
         return view('ui.rooms.show', ['room' => $room, 'user' => $user]);
     }
 
@@ -105,7 +117,8 @@ class UiController extends Controller
     public function roomEdit(Request $request, int $id)
     {
         $user = $this->authenticatedUser($request);
-        $room = \App\Models\Room::findOrFail($id);
+        $room = Room::findOrFail($id);
+
         return view('ui.rooms.edit', ['room' => $room, 'user' => $user]);
     }
 
@@ -115,6 +128,7 @@ class UiController extends Controller
     public function audits(Request $request)
     {
         $user = $this->authenticatedUser($request);
+
         return view('ui.audits', ['user' => $user]);
     }
 
@@ -124,6 +138,7 @@ class UiController extends Controller
     public function ticketDetail(Request $request, int $id)
     {
         $user = $this->authenticatedUser($request);
+
         return view('ui.ticket-detail', ['ticketId' => $id, 'user' => $user]);
     }
 
@@ -140,7 +155,7 @@ class UiController extends Controller
         $query = Equipment::with('room');
 
         if ($q) {
-            $query->where(function($sub) use ($q) {
+            $query->where(function ($sub) use ($q) {
                 $sub->where('name', 'like', "%{$q}%")
                     ->orWhere('serial', 'like', "%{$q}%");
             });
@@ -159,6 +174,7 @@ class UiController extends Controller
     public function analytics(Request $request)
     {
         $user = $this->authenticatedUser($request);
+
         return view('ui.analytics', ['user' => $user]);
     }
 
@@ -168,6 +184,7 @@ class UiController extends Controller
     public function profile(Request $request)
     {
         $user = $this->authenticatedUser($request);
+
         return view('ui.profile', ['user' => $user]);
     }
 }

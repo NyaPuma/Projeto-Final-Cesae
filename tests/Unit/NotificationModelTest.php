@@ -2,10 +2,10 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
 use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class NotificationModelTest extends TestCase
 {

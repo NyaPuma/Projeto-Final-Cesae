@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\TicketComment;
 use App\Models\Ticket;
+use App\Models\TicketComment;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -23,4 +23,3 @@ class TicketCommentFactory extends Factory
         ];
     }
 }
-

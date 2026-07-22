@@ -58,5 +58,3 @@ class DashboardRedirectTest extends TestCase
         $dashboard->assertSee('href="/calendar"', false);
     }
 }
-
-

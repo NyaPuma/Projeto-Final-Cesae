@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Audit extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'auditable_type', 'auditable_id', 'event', 'old_values', 'new_values', 'url', 'ip_address', 'user_agent'
+        'user_id', 'auditable_type', 'auditable_id', 'event', 'old_values', 'new_values', 'url', 'ip_address', 'user_agent',
     ];
 
     protected $casts = [
@@ -18,8 +19,8 @@ class Audit extends Model
         'new_values' => 'array',
     ];
 
-    public function user()
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(\App\Models\User::class);
+        return $this->belongsTo(User::class);
     }
 }

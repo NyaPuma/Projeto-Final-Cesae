@@ -6,7 +6,6 @@ use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class SecurityRateLimitTest extends TestCase

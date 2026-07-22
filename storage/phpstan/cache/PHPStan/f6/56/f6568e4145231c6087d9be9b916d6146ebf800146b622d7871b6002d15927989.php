@@ -1,8 +1,8 @@
 <?php declare(strict_types = 1);
 
-// odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Models\Userprofile.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Models\Userprofile
+// odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Models\UserProfile.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Models\UserProfile
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-0cd18ca87683da401c6f4d15b45572b40adc97f1d1a631f5f70e8415157c791b',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-d645ee75aeda6cb2e70c6d14a1064ba6448746009db2d3d89fff88db7689bc4f',
    'data' => 
   array (
     'locatedSource' => 
@@ -11,7 +11,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       'data' => 
       array (
         'name' => 'App\\Models\\UserProfile',
-        'filename' => 'C:/laravel/Projeto Final Cesae/Projeto-Final-Cesae/app/Models/Userprofile.php',
+        'filename' => 'C:/laravel/Projeto Final Cesae/Projeto-Final-Cesae/app/Models/UserProfile.php',
       ),
     ),
     'namespace' => 'App\\Models',
@@ -22,12 +22,14 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'isEnum' => false,
     'isBackedEnum' => false,
     'modifiers' => 0,
-    'docComment' => NULL,
+    'docComment' => '/**
+ * @property string $name
+ */',
     'attributes' => 
     array (
     ),
-    'startLine' => 9,
-    'endLine' => 27,
+    'startLine' => 12,
+    'endLine' => 30,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'Illuminate\\Database\\Eloquent\\Model',
@@ -55,20 +57,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'user_profiles\'',
           'attributes' => 
           array (
-            'startLine' => 14,
-            'endLine' => 14,
-            'startTokenPos' => 45,
-            'startFilePos' => 333,
-            'endTokenPos' => 45,
-            'endFilePos' => 347,
+            'startLine' => 17,
+            'endLine' => 17,
+            'startTokenPos' => 47,
+            'startFilePos' => 367,
+            'endTokenPos' => 47,
+            'endFilePos' => 381,
           ),
         ),
         'docComment' => NULL,
         'attributes' => 
         array (
         ),
-        'startLine' => 14,
-        'endLine' => 14,
+        'startLine' => 17,
+        'endLine' => 17,
         'startColumn' => 5,
         'endColumn' => 39,
         'isPromoted' => false,
@@ -90,20 +92,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '[\'name\']',
           'attributes' => 
           array (
-            'startLine' => 16,
-            'endLine' => 18,
-            'startTokenPos' => 54,
-            'startFilePos' => 377,
-            'endTokenPos' => 59,
-            'endFilePos' => 399,
+            'startLine' => 19,
+            'endLine' => 21,
+            'startTokenPos' => 56,
+            'startFilePos' => 411,
+            'endTokenPos' => 61,
+            'endFilePos' => 433,
           ),
         ),
         'docComment' => NULL,
         'attributes' => 
         array (
         ),
-        'startLine' => 16,
-        'endLine' => 18,
+        'startLine' => 19,
+        'endLine' => 21,
         'startColumn' => 5,
         'endColumn' => 6,
         'isPromoted' => false,
@@ -138,8 +140,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Relação: Um perfil pertence a muitos utilizadores.
  */',
-        'startLine' => 23,
-        'endLine' => 26,
+        'startLine' => 26,
+        'endLine' => 29,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

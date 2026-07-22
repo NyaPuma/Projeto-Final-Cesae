@@ -2,8 +2,8 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -61,9 +61,9 @@ return new class extends Migration
             $table->foreignId('budget_approved_by')->nullable()->constrained('users')->nullOnDelete();
 
             $table->timestamps();
-            
+
             // --- ADICIONADO: Suporte para Soft Deletes no banco ---
-            $table->softDeletes(); 
+            $table->softDeletes();
         });
 
         // 4. Tabela HistoricoWorkflowAvaria do teu DER

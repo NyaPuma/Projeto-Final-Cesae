@@ -2,13 +2,13 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use App\Models\User;
-use App\Models\Ticket;
 use App\Events\TicketCreatedBroadcast;
 use App\Events\TicketStatusUpdatedBroadcast;
-use Illuminate\Support\Facades\Event;
+use App\Models\Ticket;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Event;
+use Tests\TestCase;
 
 class BroadcastAndQueueTest extends TestCase
 {

@@ -17,7 +17,7 @@ class EquipmentFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->company() . ' ' . $this->faker->word(),
+            'name' => $this->faker->company().' '.$this->faker->word(),
             'serial' => strtoupper($this->faker->unique()->bothify('EQ-###-????')),
             'room_id' => Room::factory(),
             'category_id' => EquipmentCategory::factory(),
@@ -25,4 +25,3 @@ class EquipmentFactory extends Factory
         ];
     }
 }
-

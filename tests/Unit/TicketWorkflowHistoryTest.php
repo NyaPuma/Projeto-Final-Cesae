@@ -2,13 +2,13 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use App\Models\TicketWorkflowHistory;
 use App\Models\Ticket;
 use App\Models\TicketStatus;
+use App\Models\TicketWorkflowHistory;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class TicketWorkflowHistoryTest extends TestCase
 {

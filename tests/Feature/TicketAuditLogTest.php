@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Ticket;
 use App\Models\User;
+use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\TestCase;
@@ -16,15 +17,15 @@ class TicketAuditLogTest extends TestCase
     {
         parent::setUp();
 
-        \App\Models\UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
-        \App\Models\UserProfile::firstOrCreate(['name' => User::ROLE_ADMIN]);
-        \App\Models\UserProfile::firstOrCreate(['name' => User::ROLE_TECHNICIAN]);
+        UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
+        UserProfile::firstOrCreate(['name' => User::ROLE_ADMIN]);
+        UserProfile::firstOrCreate(['name' => User::ROLE_TECHNICIAN]);
         $this->artisan('db:seed', ['--class' => 'TicketLookupSeeder', '--force' => true]);
     }
 
     public function test_ticket_updates_create_an_audit_entry(): void
     {
-        $userProfile = \App\Models\UserProfile::where('name', User::ROLE_USER)->first();
+        $userProfile = UserProfile::where('name', User::ROLE_USER)->first();
 
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,
@@ -53,8 +54,8 @@ class TicketAuditLogTest extends TestCase
 
     public function test_admin_can_list_ticket_audit_entries(): void
     {
-        $userProfile = \App\Models\UserProfile::where('name', User::ROLE_USER)->firstOrFail();
-        $adminProfile = \App\Models\UserProfile::where('name', User::ROLE_ADMIN)->firstOrFail();
+        $userProfile = UserProfile::where('name', User::ROLE_USER)->firstOrFail();
+        $adminProfile = UserProfile::where('name', User::ROLE_ADMIN)->firstOrFail();
 
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,

@@ -12,16 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('tickets', function (Blueprint $table) {
-            if (!Schema::hasColumn('tickets', 'budget_details')) {
+            if (! Schema::hasColumn('tickets', 'budget_details')) {
                 $table->json('budget_details')->nullable()->after('budget_amount');
             }
-            if (!Schema::hasColumn('tickets', 'budget_requested_at')) {
+            if (! Schema::hasColumn('tickets', 'budget_requested_at')) {
                 $table->timestamp('budget_requested_at')->nullable()->after('budget_details');
             }
-            if (!Schema::hasColumn('tickets', 'budget_decided_at')) {
+            if (! Schema::hasColumn('tickets', 'budget_decided_at')) {
                 $table->timestamp('budget_decided_at')->nullable()->after('budget_requested_at');
             }
-            if (!Schema::hasColumn('tickets', 'budget_feedback')) {
+            if (! Schema::hasColumn('tickets', 'budget_feedback')) {
                 $table->text('budget_feedback')->nullable()->after('budget_decided_at');
             }
         });
@@ -35,12 +35,11 @@ return new class extends Migration
         Schema::table('tickets', function (Blueprint $table) {
             $columnsToDrop = array_filter(
                 ['budget_details', 'budget_requested_at', 'budget_decided_at', 'budget_feedback'],
-                fn($col) => Schema::hasColumn('tickets', $col)
+                fn ($col) => Schema::hasColumn('tickets', $col)
             );
-            if (!empty($columnsToDrop)) {
+            if (! empty($columnsToDrop)) {
                 $table->dropColumn($columnsToDrop);
             }
         });
     }
 };
-

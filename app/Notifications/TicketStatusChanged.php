@@ -35,9 +35,9 @@ class TicketStatusChanged extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         $statusLabels = [
-            'aberta'   => 'Aberta',
+            'aberta' => 'Aberta',
             'em curso' => 'Em Curso',
-            'fechada'  => 'Fechada',
+            'fechada' => 'Fechada',
         ];
 
         $oldLabel = $statusLabels[$this->oldStatus] ?? $this->oldStatus;
@@ -48,7 +48,7 @@ class TicketStatusChanged extends Notification
         return (new MailMessage)
             ->subject($subject)
             ->greeting("Olá, {$notifiable->name}!")
-            ->line("O estado do seu ticket foi atualizado.")
+            ->line('O estado do seu ticket foi atualizado.')
             ->line("**Ticket:** #{$this->ticket->id} — {$this->ticket->title}")
             ->line("**Estado anterior:** {$oldLabel}")
             ->line("**Novo estado:** {$newLabel}")
@@ -62,8 +62,8 @@ class TicketStatusChanged extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'ticket_id'  => $this->ticket->id,
-            'title'      => $this->ticket->title,
+            'ticket_id' => $this->ticket->id,
+            'title' => $this->ticket->title,
             'old_status' => $this->oldStatus,
             'new_status' => $this->newStatus,
         ];

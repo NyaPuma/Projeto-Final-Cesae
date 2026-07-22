@@ -2,14 +2,15 @@
 
 namespace Tests\Unit;
 
+use App\Models\Ticket;
 use App\Models\TicketStatus;
 use App\Models\TicketType;
-use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserProfile;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
+use Tests\TestCase;
 
 class TicketStatusTest extends TestCase
 {
@@ -26,14 +27,14 @@ class TicketStatusTest extends TestCase
     public function it_creates_status_with_valid_data(): void
     {
         $type = TicketType::create([
-            'name'        => 'avaria',
+            'name' => 'avaria',
             'description' => 'Avaria',
         ]);
 
         $status = TicketStatus::create([
-            'name'        => Ticket::STATUS_OPEN,
+            'name' => Ticket::STATUS_OPEN,
             'description' => 'Ticket aberto aguardando atribuição',
-            'type_id'     => $type->id,
+            'type_id' => $type->id,
         ]);
 
         $this->assertNotNull($status->id);
@@ -45,14 +46,14 @@ class TicketStatusTest extends TestCase
     public function it_belongs_to_a_type(): void
     {
         $type = TicketType::create([
-            'name'        => 'preventiva',
+            'name' => 'preventiva',
             'description' => 'Manutenção Preventiva',
         ]);
 
         $status = TicketStatus::create([
-            'name'        => Ticket::STATUS_IN_PROGRESS,
+            'name' => Ticket::STATUS_IN_PROGRESS,
             'description' => 'Em execução',
-            'type_id'     => $type->id,
+            'type_id' => $type->id,
         ]);
 
         $this->assertInstanceOf(TicketType::class, $status->type);
@@ -64,28 +65,28 @@ class TicketStatusTest extends TestCase
     {
         $type = TicketType::create(['name' => 'avaria', 'description' => 'Avaria']);
         $status = TicketStatus::create([
-            'name'        => Ticket::STATUS_OPEN,
+            'name' => Ticket::STATUS_OPEN,
             'description' => 'Aberto',
-            'type_id'     => $type->id,
+            'type_id' => $type->id,
         ]);
         $user = User::factory()->create();
 
         Ticket::create([
-            'title'       => 'Ticket 1',
+            'title' => 'Ticket 1',
             'description' => 'First ticket',
-            'priority'    => Ticket::PRIORITY_MEDIUM,
-            'user_id'     => $user->id,
-            'status_id'   => $status->id,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_MEDIUM,
+            'user_id' => $user->id,
+            'status_id' => $status->id,
+            'opened_at' => now(),
         ]);
 
         Ticket::create([
-            'title'       => 'Ticket 2',
+            'title' => 'Ticket 2',
             'description' => 'Second ticket',
-            'priority'    => Ticket::PRIORITY_HIGH,
-            'user_id'     => $user->id,
-            'status_id'   => $status->id,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_HIGH,
+            'user_id' => $user->id,
+            'status_id' => $status->id,
+            'opened_at' => now(),
         ]);
 
         $this->assertCount(2, $status->tickets);
@@ -95,7 +96,7 @@ class TicketStatusTest extends TestCase
     #[Test]
     public function it_has_fillable_attributes(): void
     {
-        $status = new TicketStatus();
+        $status = new TicketStatus;
         $fillable = $status->getFillable();
 
         $this->assertContains('name', $fillable);
@@ -109,16 +110,16 @@ class TicketStatusTest extends TestCase
         $type = TicketType::create(['name' => 'avaria', 'description' => 'Avaria']);
 
         TicketStatus::create([
-            'name'        => Ticket::STATUS_OPEN,
+            'name' => Ticket::STATUS_OPEN,
             'description' => 'First open status',
-            'type_id'     => $type->id,
+            'type_id' => $type->id,
         ]);
 
-        $this->expectException(\Illuminate\Database\QueryException::class);
+        $this->expectException(QueryException::class);
         TicketStatus::create([
-            'name'        => Ticket::STATUS_OPEN,
+            'name' => Ticket::STATUS_OPEN,
             'description' => 'Duplicate open status',
-            'type_id'     => $type->id,
+            'type_id' => $type->id,
         ]);
     }
 }

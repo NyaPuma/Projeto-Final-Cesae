@@ -9,7 +9,7 @@ use OpenApi\Attributes as OA;
 
 class RoomController extends Controller
 {
-     /**
+    /**
      * Lista todas as salas registadas.
      */
     #[OA\Get(
@@ -44,7 +44,7 @@ class RoomController extends Controller
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         responses: [
             new OA\Response(response: 201, description: 'Sala criada'),
-            new OA\Response(response: 422, description: 'Erro de validação')
+            new OA\Response(response: 422, description: 'Erro de validação'),
         ]
     )]
     public function storeRoom(Request $request)
@@ -87,7 +87,7 @@ class RoomController extends Controller
         return view('rooms.edit', compact('room'));
     }
 
-   /**
+    /**
      * Atualiza os detalhes de uma sala.
      */
     #[OA\Patch(
@@ -96,18 +96,18 @@ class RoomController extends Controller
         summary: 'Atualizar sala',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
-            new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))
+            new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'integer')),
         ],
         responses: [
             new OA\Response(response: 200, description: 'Sala atualizada'),
             new OA\Response(response: 404, description: 'Sala não encontrada'),
-            new OA\Response(response: 422, description: 'Erro de validação')
+            new OA\Response(response: 422, description: 'Erro de validação'),
         ]
     )]
     public function updateRoom(Request $request, int $id)
     {
         $room = Room::find($id);
-        if (!$room) {
+        if (! $room) {
             return response()->json(['message' => 'Sala não encontrada'], 404);
         }
 
@@ -127,7 +127,7 @@ class RoomController extends Controller
         return response()->json(['room' => $room]);
     }
 
-   /**
+    /**
      * Inativa uma sala (Gestão lógica / Soft management).
      */
     #[OA\Patch(
@@ -136,17 +136,17 @@ class RoomController extends Controller
         summary: 'Inativar sala',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
-            new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))
+            new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'integer')),
         ],
         responses: [
             new OA\Response(response: 200, description: 'Sala inativada'),
-            new OA\Response(response: 404, description: 'Sala não encontrada')
+            new OA\Response(response: 404, description: 'Sala não encontrada'),
         ]
     )]
     public function inactivateRoom(Request $request, int $id)
     {
         $room = Room::find($id);
-        if (!$room) {
+        if (! $room) {
             return response()->json(['message' => 'Sala não encontrada'], 404);
         }
 
@@ -156,12 +156,4 @@ class RoomController extends Controller
 
         return response()->json(['message' => 'Sala inativada com sucesso']);
     }
-
-
-
-
-
-
-
-
 }

@@ -48,7 +48,7 @@ class NotificationFlowTest extends TestCase
             ->assertJsonStructure(['notifications']);
 
         $this->withHeader('X-Auth-Token', $user->api_token)
-            ->patchJson('/notifications/' . $notification->id)
+            ->patchJson('/notifications/'.$notification->id)
             ->assertOk();
 
         $this->assertTrue($notification->fresh()->is_read);
@@ -100,7 +100,7 @@ class NotificationFlowTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $otherUser->api_token)
-            ->patchJson('/notifications/' . $notification->id);
+            ->patchJson('/notifications/'.$notification->id);
 
         $response->assertStatus(404);
         $this->assertFalse($notification->fresh()->is_read);

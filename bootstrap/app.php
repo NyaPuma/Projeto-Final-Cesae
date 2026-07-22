@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Middleware\CustomAuthMiddleware;
+use App\Http\Middleware\RateLimitMiddleware;
+use App\Http\Middleware\RoleMiddleware;
+use App\Http\Middleware\SetLocaleMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -13,16 +17,16 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->web(append: [
-            \App\Http\Middleware\SetLocaleMiddleware::class,
+            SetLocaleMiddleware::class,
         ]);
 
         // Registar os aliases para usar de forma limpa no ficheiro de rotas
         $middleware->alias([
-            'custom.auth' => \App\Http\Middleware\CustomAuthMiddleware::class,
-            'role'        => \App\Http\Middleware\RoleMiddleware::class,
-            'rate.limit'  => \App\Http\Middleware\RateLimitMiddleware::class,
+            'custom.auth' => CustomAuthMiddleware::class,
+            'role' => RoleMiddleware::class,
+            'rate.limit' => RateLimitMiddleware::class,
         ]);
-        
+
         // Adicionar middleware global para proteger contra CSRF em formulários web
         $middleware->validateCsrfTokens(except: [
             'login',

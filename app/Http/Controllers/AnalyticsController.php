@@ -10,7 +10,6 @@ use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -26,7 +25,7 @@ class AnalyticsController extends Controller
         summary: 'Métricas gerais',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         responses: [
-            new OA\Response(response: 200, description: 'KPIs agregados')
+            new OA\Response(response: 200, description: 'KPIs agregados'),
         ]
     )]
     public function stats(Request $request)
@@ -49,7 +48,7 @@ class AnalyticsController extends Controller
         summary: 'Dados para dashboards',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         responses: [
-            new OA\Response(response: 200, description: 'Séries para gráficos')
+            new OA\Response(response: 200, description: 'Séries para gráficos'),
         ]
     )]
     public function charts(Request $request)
@@ -92,6 +91,7 @@ class AnalyticsController extends Controller
             ? round(
                 ($closedTickets->filter(function ($ticket) {
                     $duration = Carbon::parse($ticket->opened_at)->diffInMinutes(Carbon::parse($ticket->closed_at));
+
                     return $duration <= 480;
                 })->count() / $closedTickets->count()) * 100,
                 1
@@ -113,7 +113,7 @@ class AnalyticsController extends Controller
 
         $monthlyBuckets = $this->buildMonthlySeries($tickets, $openStatusId, $inProgressStatusId, $closedStatusId);
 
-        $topEquipments = $tickets->filter(fn ($ticket) => $ticket->equipment)
+        $topEquipments = $tickets->filter(fn ($ticket) => $ticket->equipment !== null)
             ->groupBy('equipment_id')
             ->map(fn ($group) => [
                 'name' => optional($group->first()->equipment)->name ?? 'Sem equipamento',
@@ -124,7 +124,7 @@ class AnalyticsController extends Controller
             ->take(5)
             ->values();
 
-        $topRooms = $tickets->filter(fn ($ticket) => $ticket->room)
+        $topRooms = $tickets->filter(fn ($ticket) => $ticket->room !== null)
             ->groupBy('room_id')
             ->map(fn ($group) => [
                 'name' => optional($group->first()->room)->name ?? 'Sem sala',
@@ -135,7 +135,7 @@ class AnalyticsController extends Controller
             ->take(5)
             ->values();
 
-        $topTechnicians = $tickets->filter(fn ($ticket) => $ticket->technician)
+        $topTechnicians = $tickets->filter(fn ($ticket) => $ticket->technician !== null)
             ->groupBy('assigned_to')
             ->map(fn ($group) => [
                 'name' => optional($group->first()->technician)->name ?? 'Sem técnico',
@@ -222,12 +222,12 @@ class AnalyticsController extends Controller
         }
 
         foreach ($tickets as $ticket) {
-            if (!$ticket->opened_at) {
+            if (! $ticket->opened_at) {
                 continue;
             }
 
             $monthKey = Carbon::parse($ticket->opened_at)->format('Y-m');
-            if (!array_key_exists($monthKey, $open)) {
+            if (! array_key_exists($monthKey, $open)) {
                 continue;
             }
 
@@ -267,7 +267,7 @@ class AnalyticsController extends Controller
         summary: 'Exportar CSV',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         responses: [
-            new OA\Response(response: 200, description: 'Ficheiro CSV descarregado')
+            new OA\Response(response: 200, description: 'Ficheiro CSV descarregado'),
         ]
     )]
     public function exportCsv(Request $request)
@@ -317,7 +317,7 @@ class AnalyticsController extends Controller
         summary: 'Exportar PDF',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         responses: [
-            new OA\Response(response: 200, description: 'Ficheiro PDF descarregado')
+            new OA\Response(response: 200, description: 'Ficheiro PDF descarregado'),
         ]
     )]
     public function exportPdf(Request $request)
@@ -330,7 +330,7 @@ class AnalyticsController extends Controller
 
         $tickets = Ticket::select([
             'id', 'title', 'status_id', 'opened_at', 'in_progress_at',
-            'closed_at', 'minutes_spent', 'cost', 'budget_status', 'budget_amount'
+            'closed_at', 'minutes_spent', 'cost', 'budget_status', 'budget_amount',
         ])->get();
 
         $pdf = PDF::loadView('reports.tickets', ['tickets' => $tickets]);
@@ -347,7 +347,7 @@ class AnalyticsController extends Controller
         summary: 'Exportar Excel',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         responses: [
-            new OA\Response(response: 200, description: 'Ficheiro XLSX descarregado')
+            new OA\Response(response: 200, description: 'Ficheiro XLSX descarregado'),
         ]
     )]
     public function exportExcel(Request $request)
@@ -358,8 +358,8 @@ class AnalyticsController extends Controller
             User::ROLE_ADMIN,
         ]);
 
-        $filename = 'tickets_report_' . now()->format('Ymd_His') . '.xlsx';
+        $filename = 'tickets_report_'.now()->format('Ymd_His').'.xlsx';
 
-        return Excel::download(new TicketsExport(), $filename);
+        return Excel::download(new TicketsExport, $filename);
     }
 }

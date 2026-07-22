@@ -29,6 +29,7 @@ class AttachmentOperationFeatureTest extends TestCase
     private function createUserWithToken(string $profileName): User
     {
         $profile = UserProfile::where('name', $profileName)->firstOrFail();
+
         return User::factory()->create([
             'profile_id' => $profile->id,
             'api_token' => Str::random(60),
@@ -205,7 +206,7 @@ class AttachmentOperationFeatureTest extends TestCase
 
         $response->assertOk()
             ->assertJsonStructure(['attachments' => [
-                '*' => ['id', 'file_name', 'path', 'mime_type', 'size', 'ticket_id', 'user_id']
+                '*' => ['id', 'file_name', 'path', 'mime_type', 'size', 'ticket_id', 'user_id'],
             ]]);
         $this->assertCount(2, $response->json('attachments'));
     }

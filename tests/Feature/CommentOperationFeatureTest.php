@@ -27,6 +27,7 @@ class CommentOperationFeatureTest extends TestCase
     private function createUserWithToken(string $profileName): User
     {
         $profile = UserProfile::where('name', $profileName)->firstOrFail();
+
         return User::factory()->create([
             'profile_id' => $profile->id,
             'api_token' => Str::random(60),
@@ -118,7 +119,7 @@ class CommentOperationFeatureTest extends TestCase
 
         $response->assertOk()
             ->assertJsonStructure(['comments' => [
-                '*' => ['id', 'ticket_id', 'user_id', 'comment']
+                '*' => ['id', 'ticket_id', 'user_id', 'comment'],
             ]]);
         $this->assertCount(2, $response->json('comments'));
     }

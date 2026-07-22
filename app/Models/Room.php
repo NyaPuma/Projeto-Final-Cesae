@@ -2,18 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-use App\Models\Equipment;
-use App\Traits\Auditable;
-use App\Models\Ticket;
-
 class Room extends Model
 {
-    use HasFactory;
     use Auditable;
+    use HasFactory;
 
     protected $fillable = [
         'name',

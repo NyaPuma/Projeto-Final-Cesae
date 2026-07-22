@@ -2,13 +2,13 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use App\Models\User;
-use App\Models\UserProfile;
 use App\Models\Ticket;
 use App\Models\TicketStatus;
-use Illuminate\Support\Str;
+use App\Models\User;
+use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
+use Tests\TestCase;
 
 class AnalyticsFeatureTest extends TestCase
 {

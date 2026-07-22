@@ -9,8 +9,8 @@ use App\Models\TicketType;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
+use Tests\TestCase;
 
 class AuditableTraitTest extends TestCase
 {
@@ -37,12 +37,12 @@ class AuditableTraitTest extends TestCase
         $user = User::factory()->create();
 
         $ticket = Ticket::create([
-            'title'       => 'Audit Create Test',
+            'title' => 'Audit Create Test',
             'description' => 'Testing audit creation',
-            'priority'    => Ticket::PRIORITY_MEDIUM,
-            'user_id'     => $user->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_MEDIUM,
+            'user_id' => $user->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
         ]);
 
         $audit = Audit::where('auditable_id', $ticket->id)
@@ -62,12 +62,12 @@ class AuditableTraitTest extends TestCase
         $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
         $user = User::factory()->create();
         $ticket = Ticket::create([
-            'title'       => 'Audit Update Test',
+            'title' => 'Audit Update Test',
             'description' => 'Original description',
-            'priority'    => Ticket::PRIORITY_LOW,
-            'user_id'     => $user->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_LOW,
+            'user_id' => $user->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
         ]);
 
         $ticket->update(['priority' => Ticket::PRIORITY_HIGH]);
@@ -91,12 +91,12 @@ class AuditableTraitTest extends TestCase
         $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
         $user = User::factory()->create();
         $ticket = Ticket::create([
-            'title'       => 'Audit Delete Test',
+            'title' => 'Audit Delete Test',
             'description' => 'Testing audit deletion',
-            'priority'    => Ticket::PRIORITY_MEDIUM,
-            'user_id'     => $user->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_MEDIUM,
+            'user_id' => $user->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
         ]);
 
         $ticketId = $ticket->id;
@@ -120,12 +120,12 @@ class AuditableTraitTest extends TestCase
         $user = User::factory()->create();
 
         $ticket = Ticket::create([
-            'title'       => 'Audit Metadata Test',
+            'title' => 'Audit Metadata Test',
             'description' => 'Testing audit metadata',
-            'priority'    => Ticket::PRIORITY_HIGH,
-            'user_id'     => $user->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_HIGH,
+            'user_id' => $user->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
         ]);
 
         $audit = Audit::where('auditable_id', $ticket->id)
@@ -143,12 +143,12 @@ class AuditableTraitTest extends TestCase
         $user = User::factory()->create();
 
         $ticket = Ticket::create([
-            'title'       => 'No Auth Audit',
+            'title' => 'No Auth Audit',
             'description' => 'Testing audit without auth',
-            'priority'    => Ticket::PRIORITY_LOW,
-            'user_id'     => $user->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_LOW,
+            'user_id' => $user->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
         ]);
 
         $audit = Audit::where('auditable_id', $ticket->id)
@@ -167,12 +167,12 @@ class AuditableTraitTest extends TestCase
         $user = User::factory()->create();
 
         $ticket = Ticket::create([
-            'title'       => 'Audit Failure Test',
+            'title' => 'Audit Failure Test',
             'description' => 'Should not break on audit failure',
-            'priority'    => Ticket::PRIORITY_MEDIUM,
-            'user_id'     => $user->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_MEDIUM,
+            'user_id' => $user->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
         ]);
 
         $this->assertNotNull($ticket);
@@ -186,12 +186,12 @@ class AuditableTraitTest extends TestCase
         $user = User::factory()->create();
 
         $ticket = Ticket::create([
-            'title'       => 'Audit Structure Test',
+            'title' => 'Audit Structure Test',
             'description' => 'Testing audit structure',
-            'priority'    => Ticket::PRIORITY_MEDIUM,
-            'user_id'     => $user->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_MEDIUM,
+            'user_id' => $user->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
         ]);
 
         $audit = Audit::where('auditable_id', $ticket->id)

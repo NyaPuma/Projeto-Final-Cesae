@@ -2,18 +2,17 @@
 
 namespace Tests\Unit;
 
+use App\Models\EquipmentCategory;
+use App\Models\Room;
 use App\Models\Ticket;
 use App\Models\TicketStatus;
 use App\Models\TicketType;
 use App\Models\User;
 use App\Models\UserProfile;
-use App\Models\Equipment;
-use App\Models\Room;
-use App\Models\EquipmentCategory;
 use App\Services\AIService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
+use Tests\TestCase;
 
 class AIServiceTest extends TestCase
 {
@@ -25,7 +24,7 @@ class AIServiceTest extends TestCase
     {
         parent::setUp();
 
-        $this->aiService = new AIService();
+        $this->aiService = new AIService;
 
         TicketType::firstOrCreate(['name' => 'avaria', 'description' => 'Avaria']);
         $typeId = TicketType::where('name', 'avaria')->first()->id;
@@ -47,12 +46,12 @@ class AIServiceTest extends TestCase
         $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
 
         $ticket = Ticket::create([
-            'title'       => 'AI Test Ticket',
+            'title' => 'AI Test Ticket',
             'description' => 'Testing AI with no technicians',
-            'priority'    => Ticket::PRIORITY_MEDIUM,
-            'user_id'     => $user->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_MEDIUM,
+            'user_id' => $user->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
         ]);
 
         $result = $this->aiService->recomendarTecnico($ticket);
@@ -67,7 +66,7 @@ class AIServiceTest extends TestCase
         $technicianProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
         $technician = User::factory()->create([
             'profile_id' => $technicianProfile->id,
-            'active'     => true,
+            'active' => true,
         ]);
 
         $category = EquipmentCategory::factory()->create();
@@ -76,12 +75,12 @@ class AIServiceTest extends TestCase
         $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
 
         $ticket = Ticket::create([
-            'title'       => 'AI Fallback Test',
+            'title' => 'AI Fallback Test',
             'description' => 'Testing AI fallback response',
-            'priority'    => Ticket::PRIORITY_HIGH,
-            'user_id'     => $user->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_HIGH,
+            'user_id' => $user->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
         ]);
 
         $result = $this->aiService->recomendarTecnico($ticket);
@@ -97,7 +96,7 @@ class AIServiceTest extends TestCase
 
         User::factory()->create([
             'profile_id' => $technicianProfile->id,
-            'active'     => false,
+            'active' => false,
         ]);
 
         $category = EquipmentCategory::factory()->create();
@@ -106,12 +105,12 @@ class AIServiceTest extends TestCase
         $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
 
         $ticket = Ticket::create([
-            'title'       => 'Inactive Tech Test',
+            'title' => 'Inactive Tech Test',
             'description' => 'Should not recommend inactive tech',
-            'priority'    => Ticket::PRIORITY_MEDIUM,
-            'user_id'     => $user->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_MEDIUM,
+            'user_id' => $user->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
         ]);
 
         $result = $this->aiService->recomendarTecnico($ticket);
@@ -126,21 +125,21 @@ class AIServiceTest extends TestCase
         $technicianProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
         User::factory()->create([
             'profile_id' => $technicianProfile->id,
-            'active'     => true,
+            'active' => true,
         ]);
 
         $user = User::factory()->create();
         $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
 
         $ticket = Ticket::create([
-            'title'       => 'No Equipment Ticket',
+            'title' => 'No Equipment Ticket',
             'description' => 'Ticket without equipment association',
-            'priority'    => Ticket::PRIORITY_LOW,
-            'user_id'     => $user->id,
+            'priority' => Ticket::PRIORITY_LOW,
+            'user_id' => $user->id,
             'equipment_id' => null,
-            'room_id'     => null,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
+            'room_id' => null,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
         ]);
 
         $result = $this->aiService->recomendarTecnico($ticket);
@@ -152,7 +151,7 @@ class AIServiceTest extends TestCase
     #[Test]
     public function it_returns_correct_result_structure(): void
     {
-        $result = $this->aiService->recomendarTecnico(new Ticket());
+        $result = $this->aiService->recomendarTecnico(new Ticket);
 
         $this->assertArrayHasKey('tecnico_id', $result);
         $this->assertArrayHasKey('justificacao', $result);

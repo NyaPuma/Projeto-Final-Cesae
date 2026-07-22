@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
-use OpenAI\Laravel\Facades\OpenAI;
 use App\Models\Ticket;
 use App\Models\User;
+use OpenAI\Laravel\Facades\OpenAI;
 
 class AIService
 {
@@ -14,20 +14,21 @@ class AIService
     public function recomendarTecnico(Ticket $ticket)
     {
         // 1. Procurar técnicos ativos no sistema e calcular dinamicamente a sua carga de trabalho
-        $tecnicos = User::whereHas('profile', function($query) {$query->where('name', User::ROLE_TECHNICIAN);
+        $tecnicos = User::whereHas('profile', function ($query) {
+            $query->where('name', User::ROLE_TECHNICIAN);
         })
-        ->where('active', true)
-        ->withCount(['assignedTickets as tickets_ativos' => function($query) {
-            // Conta apenas os tickets em aberto ou progresso (IDs de estados não concluídos)
-            $query->whereNotIn('status_id', [3, 4]); // Ex: 3 = Fechado, 4 = Cancelado
-        }])
-        ->get(['id', 'name']);
+            ->where('active', true)
+            ->withCount(['assignedTickets as tickets_ativos' => function ($query) {
+                // Conta apenas os tickets em aberto ou progresso (IDs de estados não concluídos)
+                $query->whereNotIn('status_id', [3, 4]); // Ex: 3 = Fechado, 4 = Cancelado
+            }])
+            ->get(['id', 'name']);
 
         // Fallback imediato caso não haja equipa operacional disponível
         if ($tecnicos->isEmpty()) {
             return [
                 'tecnico_id' => null,
-                'justificacao' => 'De momento, não existem técnicos operacionais ativos para alocação automática.'
+                'justificacao' => 'De momento, não existem técnicos operacionais ativos para alocação automática.',
             ];
         }
 
@@ -43,16 +44,16 @@ class AIService
         $prompt .= "O teu papel único é analisar o ticket de avaria e sugerir o técnico mais qualificado.\n\n";
 
         $prompt .= "--- TICKET SOB ANÁLISE ---\n";
-        $prompt .= "- Descrição do Problema: " . $ticket->description . "\n";
-        $prompt .= "- Equipamento: " . ($ticket->equipment->name ?? 'Não Especificado') . "\n";
+        $prompt .= '- Descrição do Problema: '.$ticket->description."\n";
+        $prompt .= '- Equipamento: '.($ticket->equipment->name ?? 'Não Especificado')."\n";
 
         // Uso do operador null-safe (?->) para evitar quebras se o equipamento ou categoria não existirem
-        $prompt .= "- Categoria Técnica: " . ($ticket->equipment?->category?->name ?? 'Geral') . "\n\n";
+        $prompt .= '- Categoria Técnica: '.($ticket->equipment->category->name ?? 'Geral')."\n\n";
 
         $prompt .= "--- RECURSOS HUMANOS DISPONÍVEIS ---\n";
-        foreach ($tecnicos as$tecnico) {
-        $esp = $especialidades[($tecnico->id % 3) + 1];
-        $prompt .= "- ID: {$tecnico->id} | Nome: {$tecnico->name} | Especialidade: {$esp} | Carga de Trabalho Atual: {$tecnico->tickets_ativos} tickets\n";
+        foreach ($tecnicos as $tecnico) {
+            $esp = $especialidades[($tecnico->id % 3) + 1];
+            $prompt .= "- ID: {$tecnico->id} | Nome: {$tecnico->name} | Especialidade: {$esp} | Carga de Trabalho Atual: {$tecnico->tickets_ativos} tickets\n";
         }
 
         $prompt .= "\n--- CRITÉRIOS DE SELEÇÃO ---\n";
@@ -64,7 +65,7 @@ class AIService
         $prompt .= "{\n";
         $prompt .= "  \"tecnico_id\": <inserir_apenas_o_id_numerico>,\n";
         $prompt .= "  \"justificacao\": \"<uma frase curta e profissional em português validando a escolha para o Diretor de Operações>\"\n";
-        $prompt .= "}";
+        $prompt .= '}';
 
         try {
             $response = OpenAI::chat()->create([
@@ -81,12 +82,11 @@ class AIService
                 return $resultado;
             }
 
-            throw new \Exception("JSON Malformado");
-
+            throw new \Exception('JSON Malformado');
         } catch (\Exception $e) {
             return [
                 'tecnico_id' => null,
-                'justificacao' => 'Assistente de IA indisponível. Por favor, selecione um técnico manualmente através do Painel de Atribuição.'
+                'justificacao' => 'Assistente de IA indisponível. Por favor, selecione um técnico manualmente através do Painel de Atribuição.',
             ];
         }
     }

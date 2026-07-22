@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Equipment;
 use App\Models\Notification;
-use App\Models\Room;
 use App\Models\Ticket;
 use App\Models\User;
+use App\Models\UserProfile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use OpenApi\Attributes as OA;
 
 class AdminController extends Controller
@@ -32,14 +34,14 @@ class AdminController extends Controller
         $query = User::with('profile');
 
         if ($q) {
-            $query->where(function($sub) use ($q) {
+            $query->where(function ($sub) use ($q) {
                 $sub->where('name', 'like', "%{$q}%")
                     ->orWhere('email', 'like', "%{$q}%");
             });
         }
 
         if ($role) {
-            $query->whereHas('profile', function($sub) use ($role) {
+            $query->whereHas('profile', function ($sub) use ($role) {
                 $sub->where('name', $role);
             });
         }
@@ -60,18 +62,18 @@ class AdminController extends Controller
         summary: 'Inativar utilizador',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
-            new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))
+            new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'integer')),
         ],
         responses: [
             new OA\Response(response: 200, description: 'Utilizador inativado'),
             new OA\Response(response: 404, description: 'Utilizador não encontrado'),
-            new OA\Response(response: 422, description: 'Operação inválida')
+            new OA\Response(response: 422, description: 'Operação inválida'),
         ]
     )]
     public function inactivateUser(Request $request, int $id)
     {
         $user = User::find($id);
-        if (!$user) {
+        if (! $user) {
             return response()->json(['message' => 'Utilizador não encontrado'], 404);
         }
 
@@ -108,10 +110,10 @@ class AdminController extends Controller
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => \Illuminate\Support\Facades\Hash::make($data['password']),
+            'password' => Hash::make($data['password']),
             'profile_id' => $data['profile_id'],
             'active' => $data['active'] ?? true,
-            'api_token' => \Illuminate\Support\Str::random(60),
+            'api_token' => Str::random(60),
         ]);
 
         return response()->json(['user' => $user->load('profile')], 201);
@@ -123,7 +125,7 @@ class AdminController extends Controller
     public function updateUser(Request $request, int $id)
     {
         $user = User::find($id);
-        if (!$user) {
+        if (! $user) {
             return response()->json(['message' => 'Utilizador não encontrado'], 404);
         }
 
@@ -141,8 +143,8 @@ class AdminController extends Controller
         }
 
         $validated = $validator->validated();
-        if (!empty($validated['password'])) {
-            $validated['password'] = \Illuminate\Support\Facades\Hash::make($validated['password']);
+        if (! empty($validated['password'])) {
+            $validated['password'] = Hash::make($validated['password']);
         } else {
             unset($validated['password']);
         }
@@ -157,7 +159,7 @@ class AdminController extends Controller
      */
     public function profiles()
     {
-        return response()->json(['profiles' => \App\Models\UserProfile::all()]);
+        return response()->json(['profiles' => UserProfile::all()]);
     }
 
     /**
@@ -186,7 +188,7 @@ class AdminController extends Controller
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         responses: [
             new OA\Response(response: 201, description: 'Equipamento criado'),
-            new OA\Response(response: 422, description: 'Erro de validação')
+            new OA\Response(response: 422, description: 'Erro de validação'),
         ]
     )]
     public function storeEquipment(Request $request)
@@ -222,18 +224,18 @@ class AdminController extends Controller
         summary: 'Atualizar equipamento',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
-            new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))
+            new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'integer')),
         ],
         responses: [
             new OA\Response(response: 200, description: 'Equipamento atualizado'),
             new OA\Response(response: 404, description: 'Equipamento não encontrado'),
-            new OA\Response(response: 422, description: 'Erro de validação')
+            new OA\Response(response: 422, description: 'Erro de validação'),
         ]
     )]
     public function updateEquipment(Request $request, int $id)
     {
         $equipment = Equipment::find($id);
-        if (!$equipment) {
+        if (! $equipment) {
             return response()->json(['message' => 'Equipamento não encontrado'], 404);
         }
 
@@ -264,17 +266,17 @@ class AdminController extends Controller
         summary: 'Eliminar equipamento',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
-            new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))
+            new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'integer')),
         ],
         responses: [
             new OA\Response(response: 200, description: 'Equipamento eliminado'),
-            new OA\Response(response: 404, description: 'Equipamento não encontrado')
+            new OA\Response(response: 404, description: 'Equipamento não encontrado'),
         ]
     )]
     public function destroyEquipment(Request $request, int $id)
     {
         $equipment = Equipment::find($id);
-        if (!$equipment) {
+        if (! $equipment) {
             return response()->json(['message' => 'Equipamento não encontrado'], 404);
         }
 
@@ -283,8 +285,6 @@ class AdminController extends Controller
 
         return response()->json(['message' => 'Equipamento eliminado']);
     }
-
-
 
     /**
      * Aprova um pedido de orçamento associado a um ticket de avaria.
@@ -295,11 +295,11 @@ class AdminController extends Controller
         summary: 'Aprovar orçamento',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
-            new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))
+            new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'integer')),
         ],
         responses: [
             new OA\Response(response: 200, description: 'Orçamento aprovado'),
-            new OA\Response(response: 422, description: 'Pedido inválido')
+            new OA\Response(response: 422, description: 'Pedido inválido'),
         ]
     )]
     #[OA\Post(
@@ -309,7 +309,7 @@ class AdminController extends Controller
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         responses: [
             new OA\Response(response: 201, description: 'Manutenção preventiva criada'),
-            new OA\Response(response: 422, description: 'Erro de validação')
+            new OA\Response(response: 422, description: 'Erro de validação'),
         ]
     )]
     public function storePreventive(Request $request)
@@ -330,9 +330,9 @@ class AdminController extends Controller
         }
 
         $technician = null;
-        if (!empty($data['technician_id'])) {
+        if (! empty($data['technician_id'])) {
             $technician = User::find($data['technician_id']);
-            if (!$technician || !$technician->isTechnician()) {
+            if (! $technician || ! $technician->isTechnician()) {
                 return response()->json(['message' => 'Técnico inválido'], 422);
             }
         }
@@ -383,24 +383,24 @@ class AdminController extends Controller
 
         // Só tickets com pedido pendente podem ser aprovados.
         $ticket = Ticket::find($id);
-        if (!$ticket) {
+        if (! $ticket) {
             return response()->json(['message' => 'Ticket não encontrado'], 404);
         }
 
         // Não avançamos se o ticket não estiver no estado correto para aprovação.
-        if (!$ticket->budget_requested || $ticket->budget_status !== Ticket::BUDGET_PENDING) {
+        if (! $ticket->budget_requested || $ticket->budget_status !== Ticket::BUDGET_PENDING) {
             return response()->json(['message' => 'Não existe pedido de orçamento pendente'], 422);
         }
 
         // Se for recusa, guarda o feedback
-        if ($decision === 'reject' && !empty($feedback)) {
+        if ($decision === 'reject' && ! empty($feedback)) {
             $ticket->budget_feedback = $feedback;
         }
 
         // A regra de negócio fica no modelo para manter a decisão consistente em toda a aplicação.
         $approved = $ticket->approveBudget($admin, $data['decision'] ?? 'approve', $data['feedback'] ?? null);
 
-        if (!$approved) {
+        if (! $approved) {
             return response()->json(['message' => 'Aprovação falhou'], 422);
         }
 
@@ -409,7 +409,7 @@ class AdminController extends Controller
             $notifyType = $decision === 'approve' ? 'approved' : 'rejected';
             $notifyMessage = $decision === 'approve'
                 ? "O orçamento de {$ticket->budget_amount}€ para o ticket #{$ticket->id} foi APROVADO pelo administrador. Pode prosseguir com a intervenção."
-                : "O orçamento de {$ticket->budget_amount}€ para o ticket #{$ticket->id} foi RECUSADO." . ($feedback ? " Motivo: {$feedback}" : '');
+                : "O orçamento de {$ticket->budget_amount}€ para o ticket #{$ticket->id} foi RECUSADO.".($feedback ? " Motivo: {$feedback}" : '');
 
             // Notificar o técnico atribuído
             if ($ticket->assigned_to) {

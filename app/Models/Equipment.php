@@ -2,20 +2,17 @@
 
 namespace App\Models;
 
+use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+// 1. Importa o novo model
 use Illuminate\Database\Eloquent\Relations\HasMany;
-
-use App\Models\Room;
-use App\Models\Ticket;
-use App\Models\EquipmentCategory; // 1. Importa o novo model
-use App\Traits\Auditable;
 
 class Equipment extends Model
 {
-    use HasFactory;
     use Auditable;
+    use HasFactory;
 
     protected $table = 'equipments';
 

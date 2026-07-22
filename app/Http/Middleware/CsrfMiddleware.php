@@ -4,10 +4,10 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Session\Session as SessionContract;
-use Illuminate\Support\Str;
-use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Response;
 
 class CsrfMiddleware
 {
@@ -50,13 +50,13 @@ class CsrfMiddleware
         $token = $this->getCsrfTokenFromRequest($request);
 
         // If no valid token is found, reject the request
-        if (!$token || !$this->validateCsrfToken($token)) {
+        if (! $token || ! $this->validateCsrfToken($token)) {
             return response()->json([
                 'message' => 'CSRF Token inválido ou expirado.',
                 'error_code' => 419,
                 'errors' => [
-                    '_token' => ['The CSRF token is invalid or has expired.']
-                ]
+                    '_token' => ['The CSRF token is invalid or has expired.'],
+                ],
             ], 419);
         }
 
@@ -98,7 +98,7 @@ class CsrfMiddleware
             // Check if user is authenticated via API token (not session)
             $token = $request->header('X-Auth-Token') ?: $request->bearerToken();
 
-            if ($token && !empty($this->session->get('_token'))) {
+            if ($token && ! empty($this->session->get('_token'))) {
                 return true;
             }
         }
@@ -107,7 +107,7 @@ class CsrfMiddleware
         if ($request->expectsJson() || $request->wantsJson()) {
             $hasCustomAuth = $request->header('X-Auth-Token') ?: $request->bearerToken();
 
-            if (!empty($hasCustomAuth)) {
+            if (! empty($hasCustomAuth)) {
                 return true;
             }
         }
@@ -116,7 +116,7 @@ class CsrfMiddleware
         if ($routeName !== '' && Str::startsWith(strtolower($routeName), ['api.admin', 'api.analytics'])) {
             $token = $request->header('X-Admin-Token') ?: $request->bearerToken();
 
-            if (!empty($token)) {
+            if (! empty($token)) {
                 return true;
             }
         }
@@ -137,7 +137,7 @@ class CsrfMiddleware
         // Try to get token from custom header first (X-CSRF-Token)
         $token = $request->header('X-CSRF-Token');
 
-        if ($token && !empty($this->session->get('_token'))) {
+        if ($token && ! empty($this->session->get('_token'))) {
             return $token;
         }
 
@@ -160,7 +160,7 @@ class CsrfMiddleware
 
         if ($storedToken !== trim($token)) {
             Log::debug('CsrfMiddleware - Token mismatch detected', [
-                'provided_token' => substr(trim($token), 0, 8) . '...',
+                'provided_token' => substr(trim($token), 0, 8).'...',
                 'stored_token' => $storedToken ?: null,
             ]);
 
@@ -182,7 +182,7 @@ class CsrfMiddleware
         // Only regenerate if the token is valid and we have a session
         $token = $this->session->get('_token');
 
-        if ($token && !empty($this->session->getId())) {
+        if ($token && ! empty($this->session->getId())) {
             try {
                 $oldId = $this->session->getId();
 
@@ -193,8 +193,8 @@ class CsrfMiddleware
                 $newId = $this->session->getId();
 
                 Log::debug('CsrfMiddleware - Session ID regenerated', [
-                    'old_session_id' => substr(str_replace('_', '', $oldId), 0, 8) . '...',
-                    'new_session_id' => substr(str_replace('_', '', $newId), 0, 8) . '...',
+                    'old_session_id' => substr(str_replace('_', '', $oldId), 0, 8).'...',
+                    'new_session_id' => substr(str_replace('_', '', $newId), 0, 8).'...',
                 ]);
             } catch (\Exception $e) {
                 Log::error('CsrfMiddleware - Failed to regenerate session ID', [

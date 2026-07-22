@@ -4,11 +4,12 @@ namespace Tests\Unit;
 
 use App\Models\User;
 use App\Models\UserProfile;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use Illuminate\Support\Facades\Hash;
 use PHPUnit\Framework\Attributes\Test;
 use ReflectionMethod;
+use Tests\TestCase;
 
 class UserTest extends TestCase
 {
@@ -38,7 +39,7 @@ class UserTest extends TestCase
 
         // Verify that a default profile was created if not exists
         $defaultProfile = UserProfile::where('name', User::ROLE_USER)->first();
-        
+
         // The user should have been assigned the default profile ID during creation
         $this->assertEquals($defaultProfile?->id, $user->profile_id);
     }
@@ -64,7 +65,7 @@ class UserTest extends TestCase
     public function it_updates_user_profile_to_default_when_invalid()
     {
         UserProfile::firstOrCreate(['name' => User::ROLE_TECHNICIAN]);
-        
+
         // Create user with invalid profile (non-existent or wrong role)
         $user = User::factory()->create([
             'profile_id' => 999, // Non-existent profile ID
@@ -72,7 +73,7 @@ class UserTest extends TestCase
 
         // Verify the default USER profile was created and assigned
         $defaultProfile = UserProfile::where('name', User::ROLE_USER)->first();
-        
+
         $this->assertEquals($defaultProfile->id, $user->profile_id);
     }
 
@@ -82,7 +83,7 @@ class UserTest extends TestCase
         // Verify role constants exist and have correct values
         $this->assertNotNull(User::ROLE_USER);
         $this->assertEquals('user', User::ROLE_USER);
-        
+
         $this->assertNotNull(User::ROLE_TECHNICIAN);
         $this->assertEquals('technician', User::ROLE_TECHNICIAN);
 
@@ -94,7 +95,7 @@ class UserTest extends TestCase
     public function it_gets_available_roles()
     {
         $roles = User::getAvailableRoles();
-        
+
         // Verify all roles are returned
         $this->assertCount(3, $roles);
         $this->assertContains(User::ROLE_USER, $roles);
@@ -107,7 +108,7 @@ class UserTest extends TestCase
     {
         // Test valid profile names
         $validProfiles = [User::ROLE_USER, User::ROLE_TECHNICIAN, User::ROLE_ADMIN];
-        
+
         foreach ($validProfiles as $profileName) {
             $this->assertTrue((new ReflectionMethod(User::class, 'isValidProfile'))->invoke(null, $profileName));
         }
@@ -122,7 +123,7 @@ class UserTest extends TestCase
     {
         // Create admin profile and user
         $profile = UserProfile::firstOrCreate(['name' => User::ROLE_ADMIN]);
-        
+
         $adminUser = User::factory()->create([
             'profile_id' => $profile->id,
         ]);
@@ -135,7 +136,7 @@ class UserTest extends TestCase
     {
         // Create technician profile and user
         $profile = UserProfile::firstOrCreate(['name' => User::ROLE_TECHNICIAN]);
-        
+
         $technicianUser = User::factory()->create([
             'profile_id' => $profile->id,
         ]);
@@ -148,7 +149,7 @@ class UserTest extends TestCase
     {
         // Create user profile and user
         $profile = UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
-        
+
         $commonUser = User::factory()->create([
             'profile_id' => $profile->id,
         ]);
@@ -161,7 +162,7 @@ class UserTest extends TestCase
     {
         // Create admin profile and user
         $adminProfile = UserProfile::firstOrCreate(['name' => User::ROLE_ADMIN]);
-        
+
         $adminUser = User::factory()->create([
             'profile_id' => $adminProfile->id,
         ]);
@@ -172,7 +173,7 @@ class UserTest extends TestCase
 
         // Create technician profile and user
         $techProfile = UserProfile::firstOrCreate(['name' => User::ROLE_TECHNICIAN]);
-        
+
         $technicianUser = User::factory()->create([
             'profile_id' => $techProfile->id,
         ]);
@@ -183,7 +184,7 @@ class UserTest extends TestCase
 
         // Create user profile and user
         $userProfile = UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
-        
+
         $commonUser = User::factory()->create([
             'profile_id' => $userProfile->id,
         ]);
@@ -197,17 +198,17 @@ class UserTest extends TestCase
     public function it_has_correct_hidden_attributes()
     {
         User::factory()->create();
-        
+
         // Get the last created user
         $user = User::latest()->first();
-        
-        if (!$user) {
+
+        if (! $user) {
             return;
         }
 
         // Verify hidden attributes are not serialized in JSON response
         $jsonResponse = json_encode($user);
-        
+
         $this->assertStringNotContainsString('password', $jsonResponse, 'Password should be hidden');
         $this->assertStringNotContainsString('_tokens', $jsonResponse, '_tokens should be hidden');
     }
@@ -216,11 +217,11 @@ class UserTest extends TestCase
     public function it_has_correct_casts()
     {
         User::factory()->create();
-        
+
         // Get the last created user
         $user = User::latest()->first();
-        
-        if (!$user) {
+
+        if (! $user) {
             return;
         }
 
@@ -232,11 +233,11 @@ class UserTest extends TestCase
     public function it_has_correct_fillable_attributes()
     {
         User::factory()->create();
-        
+
         // Get the last created user
         $user = User::latest()->first();
-        
-        if (!$user) {
+
+        if (! $user) {
             return;
         }
 
@@ -260,7 +261,7 @@ class UserTest extends TestCase
     public function it_creates_user_with_api_token_on_login()
     {
         $profile = UserProfile::firstOrCreate(['name' => User::ROLE_TECHNICIAN]);
-        
+
         // Create user with initial API token
         $user = User::factory()->create([
             'profile_id' => $profile->id,
@@ -275,7 +276,7 @@ class UserTest extends TestCase
     public function it_has_correct_relationships()
     {
         $profile = UserProfile::firstOrCreate(['name' => User::ROLE_TECHNICIAN]);
-        
+
         $technicianUser = User::factory()->create([
             'profile_id' => $profile->id,
         ]);
@@ -283,14 +284,14 @@ class UserTest extends TestCase
         // Verify profile relationship exists and works correctly
         $this->assertNotNull($technicianUser->profile);
         $this->assertEquals(UserProfile::class, get_class($technicianUser->profile));
-        
+
         // Verify tickets relationship (hasMany)
         $tickets = $technicianUser->tickets();
-        $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class, $tickets);
+        $this->assertInstanceOf(HasMany::class, $tickets);
 
         // Verify assigned_tickets relationship (belongsTo via foreign key assignment_to in Ticket model)
         $assignedTickets = $technicianUser->assignedTickets();
-        $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class, $assignedTickets);
+        $this->assertInstanceOf(HasMany::class, $assignedTickets);
     }
 
     #[Test]
@@ -298,7 +299,7 @@ class UserTest extends TestCase
     {
         // Verify factory creates users with correct default values
         $user = User::factory()->create();
-        
+
         $this->assertNotNull($user->name);
         $this->assertStringContainsString('@', $user->email);
         $this->assertNotNull($user->email_verified_at);
@@ -308,11 +309,11 @@ class UserTest extends TestCase
     public function it_has_correct_password_hashing()
     {
         User::factory()->create();
-        
+
         // Get the last created user
         $user = User::latest()->first();
-        
-        if (!$user) {
+
+        if (! $user) {
             return;
         }
 
@@ -324,11 +325,11 @@ class UserTest extends TestCase
     public function it_has_correct_notifiable_trait()
     {
         User::factory()->create();
-        
+
         // Get the last created user
         $user = User::latest()->first();
-        
-        if (!$user) {
+
+        if (! $user) {
             return;
         }
 
@@ -340,11 +341,11 @@ class UserTest extends TestCase
     public function it_has_correct_factory_trait()
     {
         User::factory()->create();
-        
+
         // Get the last created user
         $user = User::latest()->first();
-        
-        if (!$user) {
+
+        if (! $user) {
             return;
         }
 
@@ -356,7 +357,7 @@ class UserTest extends TestCase
     public function it_handles_multiple_roles_in_get_available()
     {
         $profile1 = UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
-        
+
         // Create users with different roles
         $user1 = User::factory()->create([
             'profile_id' => $profile1->id,
@@ -383,7 +384,7 @@ class UserTest extends TestCase
     public function it_handles_missing_profile_name_correctly()
     {
         $profile = UserProfile::firstOrCreate(['name' => User::ROLE_TECHNICIAN]);
-        
+
         // Create user with profile
         $user = User::factory()->create([
             'profile_id' => $profile->id,

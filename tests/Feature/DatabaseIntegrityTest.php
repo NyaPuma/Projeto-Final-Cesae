@@ -2,19 +2,18 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use App\Models\User;
-use App\Models\Room;
 use App\Models\Equipment;
-use App\Models\Ticket;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\Room;
+use App\Models\User;
 use Illuminate\Database\QueryException;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class DatabaseIntegrityTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_deleting_room_with_associated_equipments_handles_nullOnDelete_or_foreign_key_protection()
+    public function test_deleting_room_with_associated_equipments_handles_null_on_delete_or_foreign_key_protection()
     {
         $room = Room::factory()->create();
         $equipment = Equipment::factory()->create(['room_id' => $room->id]);
@@ -25,7 +24,7 @@ class DatabaseIntegrityTest extends TestCase
 
         // Check if room_id is set to null or if database protects reference integrity
         $equipment = $equipment->fresh();
-        $this->assertTrue(is_null($equipment->room_id) || !$equipment->exists());
+        $this->assertTrue(is_null($equipment->room_id) || ! $equipment->exists());
     }
 
     public function test_unique_constraints_are_enforced()

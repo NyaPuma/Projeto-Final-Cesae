@@ -2,17 +2,17 @@
 
 namespace Tests\Unit;
 
-use App\Models\Room;
 use App\Models\Equipment;
 use App\Models\EquipmentCategory;
+use App\Models\Room;
 use App\Models\Ticket;
 use App\Models\TicketStatus;
 use App\Models\TicketType;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
+use Tests\TestCase;
 
 class RoomTest extends TestCase
 {
@@ -33,9 +33,9 @@ class RoomTest extends TestCase
     public function it_creates_room_with_valid_data(): void
     {
         $room = Room::create([
-            'name'     => 'Sala Principal',
+            'name' => 'Sala Principal',
             'location' => 'Piso 2, Edifício A',
-            'active'   => true,
+            'active' => true,
         ]);
 
         $this->assertNotNull($room->id);
@@ -52,14 +52,14 @@ class RoomTest extends TestCase
 
         Equipment::factory()->create([
             'category_id' => $category->id,
-            'room_id'     => $room->id,
-            'name'        => 'Equipment 1',
+            'room_id' => $room->id,
+            'name' => 'Equipment 1',
         ]);
 
         Equipment::factory()->create([
             'category_id' => $category->id,
-            'room_id'     => $room->id,
-            'name'        => 'Equipment 2',
+            'room_id' => $room->id,
+            'name' => 'Equipment 2',
         ]);
 
         $this->assertCount(2, $room->equipments);
@@ -73,31 +73,31 @@ class RoomTest extends TestCase
         $room = Room::factory()->create();
         $equipment = Equipment::factory()->create([
             'category_id' => $category->id,
-            'room_id'     => $room->id,
+            'room_id' => $room->id,
         ]);
         $user = User::factory()->create();
         $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
 
         Ticket::create([
-            'title'       => 'Ticket Room 1',
+            'title' => 'Ticket Room 1',
             'description' => 'First room ticket',
-            'priority'    => Ticket::PRIORITY_MEDIUM,
-            'user_id'     => $user->id,
-            'room_id'     => $room->id,
-            'equipment_id'=> $equipment->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_MEDIUM,
+            'user_id' => $user->id,
+            'room_id' => $room->id,
+            'equipment_id' => $equipment->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
         ]);
 
         Ticket::create([
-            'title'       => 'Ticket Room 2',
+            'title' => 'Ticket Room 2',
             'description' => 'Second room ticket',
-            'priority'    => Ticket::PRIORITY_HIGH,
-            'user_id'     => $user->id,
-            'room_id'     => $room->id,
-            'equipment_id'=> $equipment->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_HIGH,
+            'user_id' => $user->id,
+            'room_id' => $room->id,
+            'equipment_id' => $equipment->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
         ]);
 
         $this->assertCount(2, $room->tickets);
@@ -107,7 +107,7 @@ class RoomTest extends TestCase
     #[Test]
     public function it_has_fillable_attributes(): void
     {
-        $room = new Room();
+        $room = new Room;
         $fillable = $room->getFillable();
 
         $this->assertContains('name', $fillable);
@@ -133,7 +133,7 @@ class RoomTest extends TestCase
 
         $equipment = Equipment::factory()->create([
             'category_id' => $category->id,
-            'room_id'     => $room->id,
+            'room_id' => $room->id,
         ]);
 
         $this->assertNotNull($equipment->room);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 abstract class Controller
 {
@@ -12,9 +13,7 @@ abstract class Controller
      * Procura o token prioritariamente no cabeçalho customizado 'X-Auth-Token'
      * ou, em alternativa, no cabeçalho padrão 'Authorization' (Bearer Token).
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \App\Models\User
-     * * @throws \Symfony\Component\HttpKernel\Exception\HttpException
+     * * @throws HttpException
      */
     protected function authenticatedUser(Request $request): User
     {
@@ -25,7 +24,7 @@ abstract class Controller
                 ?: ($request->session()->has('api_token') ? $request->session()->get('api_token') : null);
 
         // Valida se o token foi enviado e se é uma string válida
-        if (!is_string($token) || $token === '') {
+        if (! is_string($token) || $token === '') {
             abort(401, 'Autenticação necessária. Envie X-Auth-Token no cabeçalho.');
         }
 
@@ -34,7 +33,7 @@ abstract class Controller
         $user = User::with('profile')->where('api_token', $token)->where('active', true)->first();
 
         // Se o utilizador não for encontrado ou estiver inativo, interrompe o pedido
-        if (!$user) {
+        if (! $user) {
             abort(401, 'Token inválido ou utilizador inativo.');
         }
 
@@ -45,15 +44,12 @@ abstract class Controller
      * Garante programaticamente que o utilizador possui um dos perfis/papéis permitidos.
      * Caso o perfil não corresponda, lança uma exceção HTTP 403 (Acesso Proibido).
      *
-     * @param  \App\Models\User  $user
-     * @param  array  $roles
-     * @return void
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
+     * @throws HttpException
      */
     protected function requireRole(User $user, array $roles): void
     {
         // Verifica de forma estrita se o perfil do utilizador consta no grupo de permissões aceites
-        if (!$user->profile || !in_array($user->profile->name, $roles, true)) {
+        if (! $user->profile || ! in_array($user->profile->name, $roles, true)) {
             abort(403, 'Acesso proibido para o seu perfil.');
         }
     }
