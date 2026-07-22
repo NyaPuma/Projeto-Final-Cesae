@@ -1,5 +1,9 @@
+/**
+ * API Client Service
+ * Serviço centralizado para comunicação com a API
+ */
+
 import axios from 'axios';
-import Pusher from 'pusher-js';
 
 /**
  * CONFIGURAÇÃO AXIOS
@@ -11,7 +15,7 @@ const apiClient = axios.create({
     }
 });
 
-// CSRF Token - Apenas em ambiente web tradicional
+// CSRF Token
 const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
 if (csrfToken) {
     apiClient.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken;
@@ -36,41 +40,8 @@ apiClient.interceptors.response.use(
     }
 );
 
-// Expõe globalmente conforme a tua necessidade original
+// Expõe globalmente
 window.axios = apiClient;
-
-/**
- * SERVIÇO DE EVENTOS (PUSHER)
- */
-const initPusher = () => {
-    const PUSHER_KEY = import.meta.env.VITE_PUSHER_APP_KEY;
-    if (!PUSHER_KEY) return;
-
-    const pusher = new Pusher(PUSHER_KEY, {
-        cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER || 'mt1',
-        forceTLS: true
-    });
-
-    const channel = pusher.subscribe('tickets');
-
-    // Mapeamento de eventos para manter o código DRY (Don't Repeat Yourself)
-    const events = [
-        { name: 'ticket.created', event: 'ticket-created', msg: 'Novo ticket criado', type: 'warning' },
-        { name: 'ticket.status.updated', event: 'ticket-status-updated', msg: 'Status do ticket atualizado', type: 'success' }
-    ];
-
-    events.forEach(({ name, event, msg, type }) => {
-        channel.bind(name, (data) => {
-            if (window.showToast) {
-                const message = `${msg}: ${data.equipment_name || data.ticket_id}`;
-                window.showToast(message, type);
-            }
-            window.dispatchEvent(new CustomEvent(event, { detail: data }));
-        });
-    });
-};
-
-initPusher();
 
 /**
  * HELPERS
@@ -78,8 +49,11 @@ initPusher();
 function handleSessionExpiration() {
     localStorage.removeItem('api_token');
     localStorage.removeItem('user_role');
+    localStorage.removeItem('user_name');
 
-    window.showToast?.('Sessão expirada. Redirecionando...', 'error');
+    if (window.showToast) {
+        window.showToast('Sessão expirada. Redirecionando...', 'error');
+    }
 
     setTimeout(() => {
         window.location.href = '/ui/login';
