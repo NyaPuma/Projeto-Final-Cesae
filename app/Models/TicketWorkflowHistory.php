@@ -18,7 +18,7 @@ class TicketWorkflowHistory extends Model
         'origin_status_id',
         'destination_status_id',
         'technician_id',
-        'comment'
+        'comment',
     ];
 
     public function ticket(): BelongsTo

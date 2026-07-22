@@ -33,7 +33,7 @@ class SecurityBruteForceTest extends TestCase
         for ($i = 0; $i < 10; $i++) {
             $response = $this->withSession([])->postJson('/login', [
                 'email' => 'bruteforce@example.com',
-                'password' => 'wrong-password-' . $i,
+                'password' => 'wrong-password-'.$i,
             ]);
             $this->assertContains($response->status(), [401, 429]);
         }

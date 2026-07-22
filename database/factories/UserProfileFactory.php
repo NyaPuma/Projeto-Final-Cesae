@@ -19,4 +19,3 @@ class UserProfileFactory extends Factory
         ];
     }
 }
-

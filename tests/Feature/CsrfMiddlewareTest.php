@@ -55,7 +55,6 @@ class CsrfMiddlewareTest extends TestCase
         })->name('api.auth.logout');
     }
 
-
     public function test_get_skips_csrf_validation(): void
     {
         $response = $this->get('/test-csrf-require');
@@ -100,8 +99,6 @@ class CsrfMiddlewareTest extends TestCase
 
     }
 
-
-
     public function test_post_with_empty_csrf_token_is_rejected_with_419(): void
     {
         $user = User::factory()->create([
@@ -129,9 +126,6 @@ class CsrfMiddlewareTest extends TestCase
         }
     }
 
-
-
-
     public function test_post_with_accept_json_and_x_auth_token_skips_csrf_validation(): void
     {
         $user = User::factory()->create([
@@ -158,7 +152,6 @@ class CsrfMiddlewareTest extends TestCase
         $response = $this->post('/api/auth/logout', []);
         $response->assertStatus(200)->assertJson(['ok' => true]);
     }
-
 
     public function test_post_with_header_csrf_token_matches_session_is_allowed(): void
     {
@@ -198,4 +191,3 @@ class CsrfMiddlewareTest extends TestCase
         $response->assertJson(['ok' => true]);
     }
 }
-

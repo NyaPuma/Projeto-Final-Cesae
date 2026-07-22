@@ -18,21 +18,21 @@ class UsersSeeder extends Seeder
                 'email' => 'admin@example.com',
                 'profile_name' => 'admin',
                 'password' => bcrypt('admin123'),
-                'api_token' => 'admin-token-' . Str::random(40),
+                'api_token' => 'admin-token-'.Str::random(40),
             ],
             [
                 'name' => 'Técnico',
                 'email' => 'tech@example.com',
                 'profile_name' => 'technician',
                 'password' => bcrypt('tech123'),
-                'api_token' => 'tech-token-' . Str::random(40),
+                'api_token' => 'tech-token-'.Str::random(40),
             ],
             [
                 'name' => 'Utilizador',
                 'email' => 'user@example.com',
                 'profile_name' => 'user',
                 'password' => bcrypt('user123'),
-                'api_token' => 'user-token-' . Str::random(40),
+                'api_token' => 'user-token-'.Str::random(40),
             ],
         ];
 
@@ -65,13 +65,13 @@ class UsersSeeder extends Seeder
             DB::table('users')->updateOrInsert(
                 ['email' => $email],
                 [
-                    'name' => 'Utilizador Sintético ' . str_pad((string) $index, 3, '0', STR_PAD_LEFT),
+                    'name' => 'Utilizador Sintético '.str_pad((string) $index, 3, '0', STR_PAD_LEFT),
                     'email' => $email,
                     'email_verified_at' => now(),
                     'password' => bcrypt('Password123!'),
                     'profile_id' => $profileIds[$profileName] ?? $profileIds['user'],
                     'active' => true,
-                    'api_token' => 'synthetic-' . Str::random(40),
+                    'api_token' => 'synthetic-'.Str::random(40),
                     'remember_token' => Str::random(10),
                     'created_at' => now(),
                     'updated_at' => now(),

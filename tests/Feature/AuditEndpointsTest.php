@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Audit;
 use App\Models\Equipment;
 use App\Models\Room;
 use App\Models\Ticket;

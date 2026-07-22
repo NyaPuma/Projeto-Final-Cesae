@@ -2,61 +2,62 @@
 
 namespace App\Models;
 
+use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Traits\Auditable;
-
-use App\Models\TicketStatus;
-use App\Models\TicketWorkflowHistory;
-use App\Models\Equipment;
-use App\Models\Room;
-use App\Models\TicketComment;
-use App\Models\TicketAttachment;
-use App\Models\User;
 
 class Ticket extends Model
 {
-    use HasFactory;
     use Auditable;
+    use HasFactory;
     use SoftDeletes;
 
     // Nomes esperados na tabela `ticket_statuses`
     public const STATUS_OPEN = 'aberta';
+
     public const STATUS_IN_PROGRESS = 'em curso';
+
     public const STATUS_CLOSED = 'fechada';
+
     public const STATUS_CANCELLED = 'cancelada';
+
     public const STATUS_PENDING_BUDGET = 'pendente orçamento';
+
     public const STATUS_REJECTED = 'recusada';
 
     // Prioridades de avaria
     public const PRIORITY_LOW = 'baixa';
+
     public const PRIORITY_MEDIUM = 'média';
+
     public const PRIORITY_HIGH = 'alta';
 
     // Estados do Orçamento
     public const BUDGET_PENDING = 'pending';
+
     public const BUDGET_APPROVED = 'approved';
+
     public const BUDGET_REJECTED = 'rejected';
 
     protected $guarded = [];
 
     protected $casts = [
-        'opened_at'           => 'datetime',
-        'in_progress_at'      => 'datetime',
-        'closed_at'           => 'datetime',
-        'reopened_at'         => 'datetime',
-        'scheduled_at'        => 'datetime',
-        'scheduled_end'       => 'datetime',
+        'opened_at' => 'datetime',
+        'in_progress_at' => 'datetime',
+        'closed_at' => 'datetime',
+        'reopened_at' => 'datetime',
+        'scheduled_at' => 'datetime',
+        'scheduled_end' => 'datetime',
         'budget_requested_at' => 'datetime', // 🟢 CORRIGIDO: Garante uso de objetos Carbon/DateTime para o SLA
-        'budget_decided_at'   => 'datetime', // 🟢 CORRIGIDO: Garante uso de objetos Carbon/DateTime para o SLA
-        'scheduled'           => 'boolean',
-        'budget_requested'    => 'boolean',
-        'cost'                => 'decimal:2',
-        'budget_amount'       => 'decimal:2',
-        'budget_details'      => 'json', // Orçamento detalhado (array de itens)
+        'budget_decided_at' => 'datetime', // 🟢 CORRIGIDO: Garante uso de objetos Carbon/DateTime para o SLA
+        'scheduled' => 'boolean',
+        'budget_requested' => 'boolean',
+        'cost' => 'decimal:2',
+        'budget_amount' => 'decimal:2',
+        'budget_details' => 'json', // Orçamento detalhado (array de itens)
     ];
 
     // --- RELACIONAMENTOS ELOQUENT ---
@@ -130,12 +131,13 @@ class Ticket extends Model
     {
         $statusInProgress = TicketStatus::where('name', self::STATUS_IN_PROGRESS)->first();
 
-        if (!$statusInProgress) {
+        if (! $statusInProgress) {
             return false;
         }
 
         $this->status_id = $statusInProgress->id;
         $this->in_progress_at = now();
+
         return $this->save();
     }
 
@@ -151,6 +153,7 @@ class Ticket extends Model
                 $this->status_id = $statusClosed->id;
             }
             $this->closed_at = now();
+
             return $this->save();
         }
 
@@ -159,7 +162,7 @@ class Ticket extends Model
 
     public function reopen(): bool
     {
-        if (!$this->hasStatus(self::STATUS_CLOSED)) {
+        if (! $this->hasStatus(self::STATUS_CLOSED)) {
             return false;
         }
 
@@ -181,9 +184,9 @@ class Ticket extends Model
     public function requestBudgetAuthorization(float $estimatedBudget, float $threshold): bool
     {
         if ($estimatedBudget > $threshold) {
-            $this->budget_requested    = true;
-            $this->budget_status       = self::BUDGET_PENDING;
-            $this->budget_amount       = $estimatedBudget;
+            $this->budget_requested = true;
+            $this->budget_status = self::BUDGET_PENDING;
+            $this->budget_amount = $estimatedBudget;
             $this->budget_requested_at = now(); // Regista início do congelamento do SLA
 
             $pendingStatusId = self::getStatusIdByName(self::STATUS_PENDING_BUDGET);
@@ -202,12 +205,12 @@ class Ticket extends Model
      */
     public function approveBudget(User $admin, string $decision = 'approve', ?string $feedback = null): bool
     {
-        if (!$admin->isAdmin()) {
+        if (! $admin->isAdmin()) {
             return false;
         }
 
         $this->budget_approved_by = $admin->id;
-        $this->budget_decided_at  = now(); // Regista fim da pausa do SLA
+        $this->budget_decided_at = now(); // Regista fim da pausa do SLA
 
         if ($decision === 'reject') {
             $this->budget_status = self::BUDGET_REJECTED;
@@ -217,7 +220,7 @@ class Ticket extends Model
                 $this->status_id = $rejectedStatusId;
             }
 
-            if (!empty($feedback)) {
+            if (! empty($feedback)) {
                 $this->budget_feedback = $feedback;
             }
 
@@ -341,11 +344,12 @@ class Ticket extends Model
      */
     public function hasStatus(string $statusName): bool
     {
-        if (!$this->status_id) {
+        if (! $this->status_id) {
             return false;
         }
 
         $statusId = self::getStatusIdByName($statusName);
+
         return $this->status_id === $statusId;
     }
 
@@ -357,8 +361,8 @@ class Ticket extends Model
         $inProgressStatusId = self::getStatusIdByName(self::STATUS_IN_PROGRESS);
 
         return User::whereHas('profile', function ($query) {
-                $query->where('name', User::ROLE_TECHNICIAN);
-            })
+            $query->where('name', User::ROLE_TECHNICIAN);
+        })
             ->where('active', true)
             ->withCount(['assignedTickets' => function ($query) use ($inProgressStatusId) {
                 $query->where('status_id', $inProgressStatusId);
@@ -374,10 +378,10 @@ class Ticket extends Model
     {
         return self::whereNotNull('scheduled_at')->get()->map(function ($ticket) {
             return [
-                'id'    => $ticket->id,
-                'title' => '🔧 #' . $ticket->id . ' - ' . $ticket->title,
+                'id' => $ticket->id,
+                'title' => '🔧 #'.$ticket->id.' - '.$ticket->title,
                 'start' => $ticket->scheduled_at ? $ticket->scheduled_at->toIso8601String() : null,
-                'end'   => $ticket->scheduled_end ? $ticket->scheduled_end->toIso8601String() : null,
+                'end' => $ticket->scheduled_end ? $ticket->scheduled_end->toIso8601String() : null,
             ];
         });
     }

@@ -14,7 +14,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->text('comment');
             $table->timestamps();
-            
+
             // Índices para performance
             $table->index('ticket_id');
             $table->index('user_id');

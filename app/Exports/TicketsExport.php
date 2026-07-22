@@ -3,21 +3,21 @@
 namespace App\Exports;
 
 use App\Models\Ticket;
+use Illuminate\Database\Eloquent\Builder;
 use Maatwebsite\Excel\Concerns\FromQuery;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
-use Maatwebsite\Excel\Concerns\ShouldAutoSize;
-use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Concerns\WithStyles;
+use Maatwebsite\Excel\Concerns\WithTitle;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
-use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Classe de exportação para ficheiro Excel utilizando o pacote Maatwebsite/Excel.
  * Implementa FromQuery para processar os dados em modo streaming,
  * evitando problemas de memória com grandes volumes de registos.
  */
-class TicketsExport implements FromQuery, WithHeadings, WithMapping, ShouldAutoSize, WithTitle, WithStyles
+class TicketsExport implements FromQuery, ShouldAutoSize, WithHeadings, WithMapping, WithStyles, WithTitle
 {
     /**
      * Query base para a exportação. Utiliza cursor-friendly eager loading mínimo.
@@ -28,7 +28,7 @@ class TicketsExport implements FromQuery, WithHeadings, WithMapping, ShouldAutoS
             ->select([
                 'id', 'title', 'status_id', 'priority',
                 'opened_at', 'in_progress_at', 'closed_at',
-                'minutes_spent', 'cost', 'budget_status', 'budget_amount'
+                'minutes_spent', 'cost', 'budget_status', 'budget_amount',
             ])
             ->with(['status:id,name'])
             ->orderBy('created_at', 'desc');
@@ -68,9 +68,9 @@ class TicketsExport implements FromQuery, WithHeadings, WithMapping, ShouldAutoS
             optional($ticket->in_progress_at)->format('d/m/Y H:i'),
             optional($ticket->closed_at)->format('d/m/Y H:i'),
             $ticket->minutes_spent,
-            number_format((float)($ticket->cost ?? 0), 2, ',', '.'),
+            number_format((float) ($ticket->cost ?? 0), 2, ',', '.'),
             $ticket->budget_status ?? 'N/A',
-            number_format((float)($ticket->budget_amount ?? 0), 2, ',', '.'),
+            number_format((float) ($ticket->budget_amount ?? 0), 2, ',', '.'),
         ];
     }
 
@@ -89,8 +89,8 @@ class TicketsExport implements FromQuery, WithHeadings, WithMapping, ShouldAutoS
     {
         return [
             1 => [
-                'font'      => ['bold' => true, 'color' => ['argb' => 'FFFFFFFF']],
-                'fill'      => ['fillType' => 'solid', 'startColor' => ['argb' => 'FF1E3A5F']],
+                'font' => ['bold' => true, 'color' => ['argb' => 'FFFFFFFF']],
+                'fill' => ['fillType' => 'solid', 'startColor' => ['argb' => 'FF1E3A5F']],
                 'alignment' => ['horizontal' => 'center'],
             ],
         ];

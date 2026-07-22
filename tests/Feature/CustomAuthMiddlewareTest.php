@@ -6,10 +6,10 @@ use App\Models\User;
 use App\Models\Userprofile as UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Prompts\Exceptions\CookieException;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Route;
 
 class CustomAuthMiddlewareTest extends TestCase
 {
@@ -133,8 +133,8 @@ class CustomAuthMiddlewareTest extends TestCase
             'message' => 'Token inválido ou utilizador inativo.',
             'error_code' => 401,
             'errors' => [
-                'api_token' => ['Invalid or user is inactive.']
-            ]
+                'api_token' => ['Invalid or user is inactive.'],
+            ],
         ]);
     }
 
@@ -147,7 +147,7 @@ class CustomAuthMiddlewareTest extends TestCase
         $user = User::factory()->create([
             'api_token' => bin2hex(random_bytes(32)), // Generate random token
         ]);
-        \Illuminate\Support\Facades\DB::table('users')->where('id', $user->id)->update(['profile_id' => null]);
+        DB::table('users')->where('id', $user->id)->update(['profile_id' => null]);
 
         // Create a protected route that requires authentication only (no role restriction)
         Route::middleware(['custom.auth'])->get('/protected-auth', function () {
@@ -165,8 +165,8 @@ class CustomAuthMiddlewareTest extends TestCase
             'message' => 'Perfil inválido.',
             'error_code' => 403,
             'errors' => [
-                'profile_id' => ['User must have a valid profile assigned.']
-            ]
+                'profile_id' => ['User must have a valid profile assigned.'],
+            ],
         ]);
     }
 
@@ -179,7 +179,7 @@ class CustomAuthMiddlewareTest extends TestCase
         $user = User::factory()->create([
             'api_token' => bin2hex(random_bytes(32)), // Generate random token
         ]);
-        \Illuminate\Support\Facades\DB::table('users')->where('id', $user->id)->update(['profile_id' => null]);
+        DB::table('users')->where('id', $user->id)->update(['profile_id' => null]);
 
         // Create a protected route that requires authentication only (no role restriction)
         Route::middleware(['custom.auth'])->get('/protected-auth', function () {
@@ -197,8 +197,8 @@ class CustomAuthMiddlewareTest extends TestCase
             'message' => 'Perfil inválido.',
             'error_code' => 403,
             'errors' => [
-                'profile_id' => ['User must have a valid profile assigned.']
-            ]
+                'profile_id' => ['User must have a valid profile assigned.'],
+            ],
         ]);
     }
 
@@ -328,7 +328,7 @@ class CustomAuthMiddlewareTest extends TestCase
         })->name('test.protected.auth');
 
         // Make request with Bearer token (alternative to X-Auth-Token)
-        $response = $this->withHeader('Authorization', 'Bearer ' . bin2hex(random_bytes(32)))
+        $response = $this->withHeader('Authorization', 'Bearer '.bin2hex(random_bytes(32)))
             ->getJson('/protected-auth');
 
         $response->assertStatus(401);
@@ -361,6 +361,7 @@ class CustomAuthMiddlewareTest extends TestCase
         // neste cenário queremos apenas validar que o token inválido é recusado.
         if ($response->getStatusCode() === 500) {
             $this->markTestIncomplete('Falha por ausência de session store no request de teste.');
+
             return;
         }
 

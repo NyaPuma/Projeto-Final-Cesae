@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Equipment;
 use App\Models\Room;
 use App\Models\Ticket;
 use App\Models\User;
@@ -28,6 +27,7 @@ class ValidationEdgeCaseTest extends TestCase
     private function createUserWithToken(string $profileName): User
     {
         $profile = UserProfile::where('name', $profileName)->firstOrFail();
+
         return User::factory()->create([
             'profile_id' => $profile->id,
             'api_token' => Str::random(60),
@@ -175,17 +175,17 @@ class ValidationEdgeCaseTest extends TestCase
         $openId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
 
         $payloads = [
-            "1; DROP TABLE tickets; --",
+            '1; DROP TABLE tickets; --',
             "' OR '1'='1",
             "'; SELECT * FROM users; --",
-            "\" OR 1=1 --",
-            "1 UNION SELECT * FROM users",
+            '" OR 1=1 --',
+            '1 UNION SELECT * FROM users',
         ];
 
         foreach ($payloads as $payload) {
             $response = $this->withHeader('X-Auth-Token', $user->api_token)
                 ->postJson('/tickets', [
-                    'title' => 'SQLi test: ' . substr($payload, 0, 50),
+                    'title' => 'SQLi test: '.substr($payload, 0, 50),
                     'description' => $payload,
                     'priority' => Ticket::PRIORITY_MEDIUM,
                 ]);

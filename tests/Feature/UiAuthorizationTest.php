@@ -139,5 +139,4 @@ class UiAuthorizationTest extends TestCase
             ->getJson('/ui/analytics')
             ->assertStatus(403);
     }
-
 }

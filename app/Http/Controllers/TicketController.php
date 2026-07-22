@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Ticket;
-use App\Models\User;
+use App\Events\TicketStatusUpdatedBroadcast;
 use App\Models\Notification;
-use App\Models\TicketComment;
+use App\Models\Ticket;
 use App\Models\TicketAttachment;
-use App\Models\TicketStatus;
+use App\Models\TicketComment;
+use App\Models\User;
+use App\Notifications\TicketStatusChanged;
 use App\Services\AIService;
 use App\Traits\ControllerHelpers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Validator;
 
 class TicketController extends Controller
 {
@@ -33,12 +32,12 @@ class TicketController extends Controller
         $query = Ticket::with(['equipment', 'room', 'technician', 'status']);
 
         // Filtro de busca simples por termo
-        if ($request->has('q') && !empty($request->q)) {
-            $query->where('title', 'like', '%' . $request->q . '%');
+        if ($request->has('q') && ! empty($request->q)) {
+            $query->where('title', 'like', '%'.$request->q.'%');
         }
 
         return response()->json([
-            'tickets' => Ticket::with(['equipment', 'room', 'user'])->latest()->paginate(15)
+            'tickets' => Ticket::with(['equipment', 'room', 'user'])->latest()->paginate(15),
         ]);
     }
 
@@ -52,11 +51,11 @@ class TicketController extends Controller
         $data = $request->only(['title', 'description', 'priority', 'equipment_id', 'room_id']);
 
         $validator = Validator::make($data, [
-            'title'        => ['required', 'string', 'max:255'],
-            'description'  => ['required', 'string', 'max:5000'],
-            'priority'     => ['required', 'string', 'in:baixa,média,media,alta'],
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:5000'],
+            'priority' => ['required', 'string', 'in:baixa,média,media,alta'],
             'equipment_id' => ['nullable', 'integer', 'exists:equipments,id'],
-            'room_id'      => ['nullable', 'integer', 'exists:rooms,id'],
+            'room_id' => ['nullable', 'integer', 'exists:rooms,id'],
         ]);
 
         if ($validator->fails()) {
@@ -73,14 +72,14 @@ class TicketController extends Controller
         $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
 
         $ticket = Ticket::create([
-            'title'        => $data['title'],
-            'description'  => $data['description'],
-            'priority'     => $priority,
-            'user_id'      => $user->id,
+            'title' => $data['title'],
+            'description' => $data['description'],
+            'priority' => $priority,
+            'user_id' => $user->id,
             'equipment_id' => $data['equipment_id'] ?? null,
-            'room_id'      => $data['room_id'] ?? null,
-            'status_id'    => $openStatusId,
-            'opened_at'    => now(),
+            'room_id' => $data['room_id'] ?? null,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
         ]);
 
         // Carregar relacionamentos para a resposta
@@ -133,7 +132,7 @@ class TicketController extends Controller
                 return response()->json(['message' => 'A data de início não pode ser posterior à data de fim.'], 422);
             }
 
-            $query->whereBetween('created_at', [$dateFrom, $dateTo . ' 23:59:59']);
+            $query->whereBetween('created_at', [$dateFrom, $dateTo.' 23:59:59']);
         } elseif ($request->filled('date_from')) {
             $query->whereDate('created_at', '>=', $request->date_from);
         } elseif ($request->filled('date_to')) {
@@ -181,17 +180,17 @@ class TicketController extends Controller
         $inProgressStatusId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
 
         // CORRIGIDO: Atribuição usando o técnico validado da requisição
-        $ticket->status_id     = $inProgressStatusId;
-        $ticket->assigned_to   = $request->tecnico_id;
+        $ticket->status_id = $inProgressStatusId;
+        $ticket->assigned_to = $request->tecnico_id;
         $ticket->in_progress_at = now();
         $ticket->save();
 
         // Notificamos o criador para manter o fluxo visível em tempo real e por email.
         try {
             if ($ticket->user && $ticket->user->email) {
-                $ticket->user->notify(new \App\Notifications\TicketStatusChanged($ticket, $oldStatus, Ticket::STATUS_IN_PROGRESS));
+                $ticket->user->notify(new TicketStatusChanged($ticket, $oldStatus, Ticket::STATUS_IN_PROGRESS));
             }
-            event(new \App\Events\TicketStatusUpdatedBroadcast($ticket, $oldStatus, Ticket::STATUS_IN_PROGRESS));
+            event(new TicketStatusUpdatedBroadcast($ticket, $oldStatus, Ticket::STATUS_IN_PROGRESS));
         } catch (\Exception $e) {
             // Silencia falhas de envio de mail em ambiente de teste local
         }
@@ -220,14 +219,14 @@ class TicketController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        if (!empty($data['technician_id'])) {
+        if (! empty($data['technician_id'])) {
             $technician = User::findOrFail($data['technician_id']);
-            if (!$technician->isTechnician()) {
+            if (! $technician->isTechnician()) {
                 return response()->json(['message' => 'Técnico inválido'], 422);
             }
         } else {
             $technician = Ticket::getLeastBusyTechnician();
-            if (!$technician) {
+            if (! $technician) {
                 return response()->json(['message' => 'Não existem técnicos disponíveis'], 422);
             }
         }
@@ -251,7 +250,7 @@ class TicketController extends Controller
 
         $ticket = Ticket::findOrFail($id);
 
-        if (!$ticket->reopen()) {
+        if (! $ticket->reopen()) {
             return response()->json(['message' => 'Só é possível reabrir tickets fechados'], 422);
         }
 
@@ -265,7 +264,7 @@ class TicketController extends Controller
     {
         $user = $this->authenticatedUser($request);
 
-        if (!$user->isCommon()) {
+        if (! $user->isCommon()) {
             return response()->json(['message' => 'Acesso negado'], 403);
         }
 
@@ -275,7 +274,7 @@ class TicketController extends Controller
             return response()->json(['message' => 'Acesso negado'], 403);
         }
 
-        if (!$ticket->hasStatus(Ticket::STATUS_OPEN)) {
+        if (! $ticket->hasStatus(Ticket::STATUS_OPEN)) {
             return response()->json(['message' => 'Só é possível cancelar tickets abertos'], 403);
         }
 
@@ -298,12 +297,12 @@ class TicketController extends Controller
         // Regra de autorização:
         // - ROLE_TECHNICIAN / ROLE_ADMIN: podem comentar qualquer ticket.
         // - ROLE_USER (common): só podem comentar o próprio ticket.
-        if ($user->isCommon() && (int)$ticket->user_id !== (int)$user->id) {
+        if ($user->isCommon() && (int) $ticket->user_id !== (int) $user->id) {
             return response()->json(['message' => 'Acesso negado'], 403);
         }
 
         // Valida role adicional apenas para utilizadores que não são common.
-        if (!$user->isCommon()) {
+        if (! $user->isCommon()) {
             $this->requireRole($user, [
                 User::ROLE_TECHNICIAN,
                 User::ROLE_ADMIN,
@@ -321,8 +320,8 @@ class TicketController extends Controller
 
         $comment = TicketComment::create([
             'ticket_id' => $ticket->id,
-            'user_id'   => $user->id,
-            'comment'   => $data['comment'],
+            'user_id' => $user->id,
+            'comment' => $data['comment'],
         ]);
 
         return response()->json(['comment' => $comment], 201);
@@ -340,6 +339,7 @@ class TicketController extends Controller
         ]);
 
         $ticket = Ticket::with(['comments.user'])->findOrFail($id);
+
         return response()->json(['comments' => $ticket->comments]);
     }
 
@@ -372,11 +372,11 @@ class TicketController extends Controller
 
         $attachment = TicketAttachment::create([
             'ticket_id' => $ticket->id,
-            'user_id'   => $user->id,
+            'user_id' => $user->id,
             'file_name' => $file->getClientOriginalName(),
-            'path'      => $path,
+            'path' => $path,
             'mime_type' => $file->getClientMimeType(),
-            'size'      => $file->getSize(),
+            'size' => $file->getSize(),
         ]);
 
         return response()->json([
@@ -393,6 +393,7 @@ class TicketController extends Controller
         $this->authenticatedUser($request);
 
         $ticket = Ticket::with('attachments')->findOrFail($id);
+
         return response()->json(['attachments' => $ticket->attachments]);
     }
 
@@ -442,7 +443,7 @@ class TicketController extends Controller
         $ticket = Ticket::findOrFail($id);
         $oldStatus = $ticket->status->name ?? '';
 
-        if (!$ticket->hasStatus(Ticket::STATUS_OPEN)) {
+        if (! $ticket->hasStatus(Ticket::STATUS_OPEN)) {
             return response()->json(['message' => 'Apenas tickets em estado "Aberto" podem ser iniciados.'], 422);
         }
 
@@ -462,9 +463,9 @@ class TicketController extends Controller
                     }
                 }
             })
-->count();
+            ->count();
 
-        if ($higherPriorityTickets > 0 && !$force) {
+        if ($higherPriorityTickets > 0 && ! $force) {
             return response()->json([
                 'warning' => true,
                 'message' => "⚠️ Existem {$higherPriorityTickets} ticket(s) de prioridade mais alta por atender. Recomenda-se resolver os mais urgentes primeiro.",
@@ -477,8 +478,8 @@ class TicketController extends Controller
         $inProgressStatusId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
 
         $ticket->update([
-            'assigned_to'    => $user->id,
-            'status_id'      => $inProgressStatusId,
+            'assigned_to' => $user->id,
+            'status_id' => $inProgressStatusId,
             'in_progress_at' => now(),
         ]);
 
@@ -504,9 +505,9 @@ class TicketController extends Controller
         }
 
         try {
-            event(new \App\Events\TicketStatusUpdatedBroadcast($ticket, $oldStatus, Ticket::STATUS_IN_PROGRESS));
+            event(new TicketStatusUpdatedBroadcast($ticket, $oldStatus, Ticket::STATUS_IN_PROGRESS));
             if ($ticket->user && $ticket->user->email) {
-                $ticket->user->notify(new \App\Notifications\TicketStatusChanged($ticket, $oldStatus, Ticket::STATUS_IN_PROGRESS));
+                $ticket->user->notify(new TicketStatusChanged($ticket, $oldStatus, Ticket::STATUS_IN_PROGRESS));
             }
         } catch (\Exception $e) {
             // Silencia falhas de envio
@@ -531,30 +532,30 @@ class TicketController extends Controller
         $ticket = Ticket::findOrFail($id);
         $oldStatus = $ticket->status->name ?? '';
 
-        if (!$ticket->hasStatus(Ticket::STATUS_IN_PROGRESS)) {
+        if (! $ticket->hasStatus(Ticket::STATUS_IN_PROGRESS)) {
             return response()->json(['message' => 'Apenas tickets em "Em Curso" podem ser fechados.'], 422);
         }
 
         $request->validate([
             'minutes_spent' => ['nullable', 'integer', 'min:0'],
-            'cost'          => ['nullable', 'numeric', 'min:0'],
+            'cost' => ['nullable', 'numeric', 'min:0'],
             'technical_report' => ['nullable', 'string', 'max:5000'],
         ]);
 
         $closedStatusId = Ticket::getStatusIdByName(Ticket::STATUS_CLOSED);
 
         $ticket->update([
-            'status_id'        => $closedStatusId,
-            'closed_at'        => now(),
-            'minutes_spent'    => $request->minutes_spent,
-            'cost'             => $request->cost,
+            'status_id' => $closedStatusId,
+            'closed_at' => now(),
+            'minutes_spent' => $request->minutes_spent,
+            'cost' => $request->cost,
             'technical_report' => $request->technical_report,
         ]);
 
         try {
-            event(new \App\Events\TicketStatusUpdatedBroadcast($ticket, $oldStatus, Ticket::STATUS_CLOSED));
+            event(new TicketStatusUpdatedBroadcast($ticket, $oldStatus, Ticket::STATUS_CLOSED));
             if ($ticket->user && $ticket->user->email) {
-                $ticket->user->notify(new \App\Notifications\TicketStatusChanged($ticket, $oldStatus, Ticket::STATUS_CLOSED));
+                $ticket->user->notify(new TicketStatusChanged($ticket, $oldStatus, Ticket::STATUS_CLOSED));
             }
         } catch (\Exception $e) {
             // Silencia falhas de envio
@@ -577,7 +578,7 @@ class TicketController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'scheduled_at'  => ['required', 'date', 'after:now'],
+            'scheduled_at' => ['required', 'date', 'after:now'],
             'scheduled_end' => ['nullable', 'date', 'after:scheduled_at'],
         ]);
 
@@ -586,9 +587,9 @@ class TicketController extends Controller
         }
 
         $ticket->update([
-            'scheduled_at'  => $request->scheduled_at,
+            'scheduled_at' => $request->scheduled_at,
             'scheduled_end' => $request->scheduled_end,
-            'scheduled'     => true,
+            'scheduled' => true,
         ]);
 
         return response()->json(['ticket' => $ticket]);
@@ -618,6 +619,7 @@ class TicketController extends Controller
     public function calendarView(Request $request)
     {
         $user = $this->authenticatedUser($request);
+
         return view('calendar', ['user' => $user]);
     }
 
@@ -628,6 +630,7 @@ class TicketController extends Controller
     {
         $user = $this->authenticatedUser($request);
         $events = Ticket::getScheduledEvents();
+
         return response()->json($events);
     }
 
@@ -692,7 +695,7 @@ class TicketController extends Controller
                     $icon = $eventType === 'approved' ? '✅' : '❌';
                     Notification::create([
                         'user_id' => $ticket->assigned_to,
-                        'title' => "{$icon} Orçamento " . ($eventType === 'approved' ? 'Aprovado' : 'Recusado') . " - Ticket #{$ticket->id}",
+                        'title' => "{$icon} Orçamento ".($eventType === 'approved' ? 'Aprovado' : 'Recusado')." - Ticket #{$ticket->id}",
                         'message' => $message,
                         'type' => "budget_{$eventType}",
                         'link' => "/ui/tickets/{$ticket->id}",
@@ -737,12 +740,12 @@ class TicketController extends Controller
 
         $request->validate([
             'estimatedBudget' => 'required|numeric|min:0.01',
-            'budget_details'  => 'nullable|array',
+            'budget_details' => 'nullable|array',
             'budget_details.*.description' => 'required_with:budget_details|string|max:255',
-            'budget_details.*.type'        => 'nullable|string|in:material,labor',
-            'budget_details.*.quantity'    => 'nullable|numeric|min:0',
-            'budget_details.*.unit_price'  => 'nullable|numeric|min:0',
-            'budget_details.*.hours'       => 'nullable|numeric|min:0',
+            'budget_details.*.type' => 'nullable|string|in:material,labor',
+            'budget_details.*.quantity' => 'nullable|numeric|min:0',
+            'budget_details.*.unit_price' => 'nullable|numeric|min:0',
+            'budget_details.*.hours' => 'nullable|numeric|min:0',
             'budget_details.*.hourly_rate' => 'nullable|numeric|min:0',
         ]);
 
@@ -757,7 +760,7 @@ class TicketController extends Controller
 
         // 🐛 FIX: Garantir que o técnico fica atribuído ao ticket
         // para receber notificações quando o admin aprovar/recusar o orçamento
-        if (!$ticket->assigned_to) {
+        if (! $ticket->assigned_to) {
             $ticket->assigned_to = $user->id;
         }
 
@@ -818,11 +821,11 @@ class TicketController extends Controller
         $this->requireRole($user, [User::ROLE_TECHNICIAN, User::ROLE_ADMIN]);
 
         $request->validate([
-            'budget_amount'          => 'required|numeric|min:0.01',
-            'budget_details'         => 'nullable|array',
+            'budget_amount' => 'required|numeric|min:0.01',
+            'budget_details' => 'nullable|array',
             'budget_details.*.description' => 'required_with:budget_details|string|max:255',
-            'budget_details.*.quantity'    => 'required_with:budget_details|numeric|min:1',
-            'budget_details.*.unit_price'  => 'required_with:budget_details|numeric|min:0',
+            'budget_details.*.quantity' => 'required_with:budget_details|numeric|min:1',
+            'budget_details.*.unit_price' => 'required_with:budget_details|numeric|min:0',
         ]);
 
         $ticket = Ticket::findOrFail($id);
@@ -877,13 +880,13 @@ class TicketController extends Controller
 
         $request->validate([
             'actual_cost' => 'required|numeric|min:0',
-            'report'      => 'nullable|string|max:5000',
+            'report' => 'nullable|string|max:5000',
         ]);
 
         $ticket = Ticket::findOrFail($id);
 
         $closedStatusId = Ticket::getStatusIdByName(Ticket::STATUS_CLOSED);
-        if (!$closedStatusId) {
+        if (! $closedStatusId) {
             return response()->json(['message' => __('Estado "fechada" não encontrado.')], 500);
         }
 

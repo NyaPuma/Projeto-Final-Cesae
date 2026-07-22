@@ -28,7 +28,7 @@ class AuthFlowTest extends TestCase
 
         $admin = User::factory()->create([
             'profile_id' => $adminProfile->id,
-            'api_token' => \Illuminate\Support\Str::random(60),
+            'api_token' => Str::random(60),
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)

@@ -2,10 +2,10 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use App\Models\TicketType;
 use App\Models\TicketStatus;
+use App\Models\TicketType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class TicketTypeTest extends TestCase
 {

@@ -45,7 +45,7 @@ class AdminManagementTest extends TestCase
         $users->assertJsonStructure(['users']);
 
         $inactive = $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->patchJson('/admin/users/' . $target->id . '/inactive');
+            ->patchJson('/admin/users/'.$target->id.'/inactive');
         $inactive->assertOk();
         $this->assertFalse($target->fresh()->active);
 
@@ -55,7 +55,7 @@ class AdminManagementTest extends TestCase
         $roomId = $room->json('room.id');
 
         $roomUpdate = $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->patchJson('/admin/rooms/' . $roomId, ['location' => 'Floor 2']);
+            ->patchJson('/admin/rooms/'.$roomId, ['location' => 'Floor 2']);
         $roomUpdate->assertOk();
         $this->assertSame('Floor 2', Room::findOrFail($roomId)->location);
 
@@ -69,16 +69,16 @@ class AdminManagementTest extends TestCase
         $equipmentId = $equipment->json('equipment.id');
 
         $equipmentUpdate = $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->patchJson('/admin/equipment/' . $equipmentId, ['active' => false]);
+            ->patchJson('/admin/equipment/'.$equipmentId, ['active' => false]);
         $equipmentUpdate->assertOk();
         $this->assertFalse(Equipment::findOrFail($equipmentId)->active);
 
         $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->patchJson('/admin/rooms/' . $roomId . '/inactive')
+            ->patchJson('/admin/rooms/'.$roomId.'/inactive')
             ->assertOk();
 
         $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->deleteJson('/admin/equipment/' . $equipmentId)
+            ->deleteJson('/admin/equipment/'.$equipmentId)
             ->assertOk();
 
         $this->assertDatabaseMissing('equipments', ['id' => $equipmentId]);
@@ -111,7 +111,7 @@ class AdminManagementTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->patchJson('/admin/tickets/' . $ticket->id . '/approve-budget');
+            ->patchJson('/admin/tickets/'.$ticket->id.'/approve-budget');
 
         $response->assertOk();
         $this->assertSame(Ticket::BUDGET_APPROVED, $ticket->fresh()->budget_status);

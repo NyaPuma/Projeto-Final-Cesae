@@ -12,9 +12,7 @@ class TicketCreatedBroadcast implements ShouldBroadcastNow
 {
     use Dispatchable, SerializesModels;
 
-    public function __construct(public Ticket $ticket)
-    {
-    }
+    public function __construct(public Ticket $ticket) {}
 
     public function broadcastOn(): array
     {

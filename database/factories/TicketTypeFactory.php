@@ -24,4 +24,3 @@ class TicketTypeFactory extends Factory
         ];
     }
 }
-

@@ -50,7 +50,7 @@ return new class extends Migration
             $table->index('scheduled_at');
             $table->index('budget_requested');
             $table->index('budget_status');
-            
+
             // Índices compostos para queries freqüentes
             $table->index(['status_id', 'priority']);
             $table->index(['user_id', 'status_id']);

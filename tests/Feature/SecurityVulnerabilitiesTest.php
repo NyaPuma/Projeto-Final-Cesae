@@ -2,12 +2,12 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
+use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserProfile;
-use App\Models\Ticket;
-use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
+use Tests\TestCase;
 
 class SecurityVulnerabilitiesTest extends TestCase
 {
@@ -32,7 +32,7 @@ class SecurityVulnerabilitiesTest extends TestCase
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->actingAs($user)
-            ->getJson("/api/admin/users?q=" . urlencode($maliciousQuery));
+            ->getJson('/api/admin/users?q='.urlencode($maliciousQuery));
 
         $response->assertStatus(200);
         // Ensure query didn't dump all users or crash database

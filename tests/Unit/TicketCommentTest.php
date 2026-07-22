@@ -2,15 +2,15 @@
 
 namespace Tests\Unit;
 
-use App\Models\TicketComment;
 use App\Models\Ticket;
+use App\Models\TicketComment;
 use App\Models\TicketStatus;
 use App\Models\TicketType;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
+use Tests\TestCase;
 
 class TicketCommentTest extends TestCase
 {
@@ -32,18 +32,18 @@ class TicketCommentTest extends TestCase
         $user = User::factory()->create();
         $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
         $ticket = Ticket::create([
-            'title'       => 'Comment Test Ticket',
+            'title' => 'Comment Test Ticket',
             'description' => 'Ticket for comments',
-            'priority'    => Ticket::PRIORITY_MEDIUM,
-            'user_id'     => $user->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_MEDIUM,
+            'user_id' => $user->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
         ]);
 
         $comment = TicketComment::create([
             'ticket_id' => $ticket->id,
-            'user_id'   => $user->id,
-            'comment'   => 'This is a test comment',
+            'user_id' => $user->id,
+            'comment' => 'This is a test comment',
         ]);
 
         $this->assertNotNull($comment->id);
@@ -58,18 +58,18 @@ class TicketCommentTest extends TestCase
         $user = User::factory()->create();
         $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
         $ticket = Ticket::create([
-            'title'       => 'Relation Ticket',
+            'title' => 'Relation Ticket',
             'description' => 'Testing relations',
-            'priority'    => Ticket::PRIORITY_LOW,
-            'user_id'     => $user->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_LOW,
+            'user_id' => $user->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
         ]);
 
         $comment = TicketComment::create([
             'ticket_id' => $ticket->id,
-            'user_id'   => $user->id,
-            'comment'   => 'Relation check',
+            'user_id' => $user->id,
+            'comment' => 'Relation check',
         ]);
 
         $this->assertInstanceOf(Ticket::class, $comment->ticket);
@@ -82,18 +82,18 @@ class TicketCommentTest extends TestCase
         $user = User::factory()->create();
         $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
         $ticket = Ticket::create([
-            'title'       => 'User Relation',
+            'title' => 'User Relation',
             'description' => 'Testing user relation',
-            'priority'    => Ticket::PRIORITY_HIGH,
-            'user_id'     => $user->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_HIGH,
+            'user_id' => $user->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
         ]);
 
         $comment = TicketComment::create([
             'ticket_id' => $ticket->id,
-            'user_id'   => $user->id,
-            'comment'   => 'User relation check',
+            'user_id' => $user->id,
+            'comment' => 'User relation check',
         ]);
 
         $this->assertInstanceOf(User::class, $comment->user);
@@ -103,7 +103,7 @@ class TicketCommentTest extends TestCase
     #[Test]
     public function it_has_fillable_attributes(): void
     {
-        $comment = new TicketComment();
+        $comment = new TicketComment;
         $fillable = $comment->getFillable();
 
         $this->assertContains('ticket_id', $fillable);
@@ -117,24 +117,24 @@ class TicketCommentTest extends TestCase
         $user = User::factory()->create();
         $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
         $ticket = Ticket::create([
-            'title'       => 'Multiple Comments',
+            'title' => 'Multiple Comments',
             'description' => 'Testing multiple comments',
-            'priority'    => Ticket::PRIORITY_MEDIUM,
-            'user_id'     => $user->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_MEDIUM,
+            'user_id' => $user->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
         ]);
 
         TicketComment::create([
             'ticket_id' => $ticket->id,
-            'user_id'   => $user->id,
-            'comment'   => 'First comment',
+            'user_id' => $user->id,
+            'comment' => 'First comment',
         ]);
 
         TicketComment::create([
             'ticket_id' => $ticket->id,
-            'user_id'   => $user->id,
-            'comment'   => 'Second comment',
+            'user_id' => $user->id,
+            'comment' => 'Second comment',
         ]);
 
         $this->assertCount(2, $ticket->comments);

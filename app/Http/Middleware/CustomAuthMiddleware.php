@@ -2,9 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,17 +32,17 @@ class CustomAuthMiddleware
         $hasCookie = $request->cookies->has('api_token');
         $hasSessionToken = $sessionToken !== '' && $sessionToken !== null;
 
-        if (!$hasCookie && !$hasSessionToken) {
+        if (! $hasCookie && ! $hasSessionToken) {
             Log::debug('Cookie api_token nao encontrado. Headers: ', $request->header());
         } else {
-            Log::debug('Cookie api_token encontrado: ' . ($request->cookie('api_token') ?? 'session-token'));
+            Log::debug('Cookie api_token encontrado: '.($request->cookie('api_token') ?? 'session-token'));
         }
 
-        if (!is_string($token) || $token === '') {
+        if (! is_string($token) || $token === '') {
             if ($request->expectsJson() || $request->wantsJson()) {
                 return response()->json([
                     'message' => 'Autenticação necessária. Envie X-Auth-Token no cabeçalho.',
-                    'error_code' => 401
+                    'error_code' => 401,
                 ], 401);
             }
 
@@ -52,7 +52,7 @@ class CustomAuthMiddleware
         // Valida o token e se o utilizador está ativo
         $user = User::with('profile')->where('api_token', $token)->where('active', true)->first();
 
-        if (!$user) {
+        if (! $user) {
             Log::debug('CustomAuthMiddleware - Invalid or inactive user token', [
                 'has_cookie' => $hasCookie,
                 'token_value' => $token,
@@ -64,8 +64,8 @@ class CustomAuthMiddleware
                     'message' => 'Token inválido ou utilizador inativo.',
                     'error_code' => 401,
                     'errors' => [
-                        'api_token' => ['Invalid or user is inactive.']
-                    ]
+                        'api_token' => ['Invalid or user is inactive.'],
+                    ],
                 ], 401);
 
                 // Se mesmo na API veio um cookie inválido, limpamo-lo na resposta
@@ -81,7 +81,7 @@ class CustomAuthMiddleware
         }
 
         // Verifica se o utilizador tem um perfil válido
-        if (!$user->profile_id || !$user->profile?->name) {
+        if (! $user->profile_id || ! $user->profile?->name) {
             Log::debug('CustomAuthMiddleware - User has no valid profile', [
                 'has_cookie' => $hasCookie,
                 'token_value' => $token,
@@ -93,8 +93,8 @@ class CustomAuthMiddleware
                     'message' => 'Perfil inválido.',
                     'error_code' => 403,
                     'errors' => [
-                        'profile_id' => ['User must have a valid profile assigned.']
-                    ]
+                        'profile_id' => ['User must have a valid profile assigned.'],
+                    ],
                 ], 403);
             }
 

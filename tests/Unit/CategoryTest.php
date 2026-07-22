@@ -2,10 +2,9 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
 use App\Models\Category;
-use App\Models\Equipment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class CategoryTest extends TestCase
 {

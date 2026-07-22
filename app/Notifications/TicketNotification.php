@@ -12,6 +12,7 @@ class TicketNotification extends Notification implements ShouldBroadcast
     use Queueable;
 
     public $title;
+
     public $message;
 
     public function __construct($title, $message)

@@ -2,8 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Equipment;
-use App\Models\Room;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserProfile;
@@ -28,6 +26,7 @@ class ErrorScenarioFeatureTest extends TestCase
     private function createUserWithToken(string $profileName): User
     {
         $profile = UserProfile::where('name', $profileName)->firstOrFail();
+
         return User::factory()->create([
             'profile_id' => $profile->id,
             'api_token' => Str::random(60),

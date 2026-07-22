@@ -7,8 +7,9 @@ use App\Models\UserProfile;
 use App\Traits\ControllerHelpers;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
-use Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Tests\TestCase;
 
 class ControllerHelpersTest extends TestCase
 {
@@ -25,7 +26,8 @@ class ControllerHelpersTest extends TestCase
         UserProfile::firstOrCreate(['name' => User::ROLE_ADMIN]);
 
         // Create a concrete implementation with public wrappers for testing
-        $this->controller = new class {
+        $this->controller = new class
+        {
             use ControllerHelpers {
                 authenticatedUser as public;
                 requireRole as public;
@@ -86,7 +88,7 @@ class ControllerHelpersTest extends TestCase
     #[Test]
     public function it_denies_user_without_valid_role(): void
     {
-        $this->expectException(\Symfony\Component\HttpKernel\Exception\HttpException::class);
+        $this->expectException(HttpException::class);
         $this->expectExceptionMessage('Acesso proibido');
 
         $userProfile = UserProfile::where('name', User::ROLE_USER)->first();
@@ -98,7 +100,7 @@ class ControllerHelpersTest extends TestCase
     #[Test]
     public function it_denies_user_with_no_profile(): void
     {
-        $this->expectException(\Symfony\Component\HttpKernel\Exception\HttpException::class);
+        $this->expectException(HttpException::class);
         $this->expectExceptionMessage('Acesso proibido');
 
         $user = User::factory()->create(['profile_id' => null]);
@@ -109,7 +111,7 @@ class ControllerHelpersTest extends TestCase
     #[Test]
     public function it_denies_user_with_empty_roles_array(): void
     {
-        $this->expectException(\Symfony\Component\HttpKernel\Exception\HttpException::class);
+        $this->expectException(HttpException::class);
         $this->expectExceptionMessage('Acesso proibido');
 
         $adminProfile = UserProfile::where('name', User::ROLE_ADMIN)->first();

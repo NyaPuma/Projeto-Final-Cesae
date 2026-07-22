@@ -8,9 +8,11 @@ use App\Models\TicketStatus;
 use App\Models\TicketType;
 use App\Models\User;
 use App\Models\UserProfile;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PHPUnit\Framework\Attributes\Test;
+use Tests\TestCase;
 
 class TicketsExportTest extends TestCase
 {
@@ -31,7 +33,7 @@ class TicketsExportTest extends TestCase
     #[Test]
     public function it_returns_correct_headings(): void
     {
-        $export = new TicketsExport();
+        $export = new TicketsExport;
         $headings = $export->headings();
 
         $expectedHeadings = [
@@ -54,7 +56,7 @@ class TicketsExportTest extends TestCase
     #[Test]
     public function it_returns_correct_title(): void
     {
-        $export = new TicketsExport();
+        $export = new TicketsExport;
         $this->assertEquals('Relatório de Tickets', $export->title());
     }
 
@@ -66,19 +68,19 @@ class TicketsExportTest extends TestCase
         $status = TicketStatus::find($openStatusId);
 
         $ticket = Ticket::create([
-            'title'       => 'Export Test Ticket',
+            'title' => 'Export Test Ticket',
             'description' => 'Testing export mapping',
-            'priority'    => Ticket::PRIORITY_HIGH,
-            'user_id'     => $user->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_HIGH,
+            'user_id' => $user->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
             'minutes_spent' => 120,
-            'cost'        => 350.50,
+            'cost' => 350.50,
             'budget_status' => Ticket::BUDGET_APPROVED,
             'budget_amount' => 500.00,
         ]);
 
-        $export = new TicketsExport();
+        $export = new TicketsExport;
         $mapped = $export->map($ticket);
 
         $this->assertCount(11, $mapped);
@@ -99,15 +101,15 @@ class TicketsExportTest extends TestCase
         $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
 
         $ticket = Ticket::create([
-            'title'       => 'Null Dates Ticket',
+            'title' => 'Null Dates Ticket',
             'description' => 'Testing null dates',
-            'priority'    => Ticket::PRIORITY_LOW,
-            'user_id'     => $user->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_LOW,
+            'user_id' => $user->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
         ]);
 
-        $export = new TicketsExport();
+        $export = new TicketsExport;
         $mapped = $export->map($ticket);
 
         $this->assertCount(11, $mapped);
@@ -119,17 +121,17 @@ class TicketsExportTest extends TestCase
     #[Test]
     public function it_returns_query_with_eager_loading(): void
     {
-        $export = new TicketsExport();
+        $export = new TicketsExport;
         $query = $export->query();
 
-        $this->assertInstanceOf(\Illuminate\Database\Eloquent\Builder::class, $query);
+        $this->assertInstanceOf(Builder::class, $query);
     }
 
     #[Test]
     public function it_returns_styles_array(): void
     {
-        $export = new TicketsExport();
-        $styles = $export->styles($this->createMock(\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet::class));
+        $export = new TicketsExport;
+        $styles = $export->styles($this->createMock(Worksheet::class));
 
         $this->assertArrayHasKey(1, $styles);
         $this->assertArrayHasKey('font', $styles[1]);
@@ -144,26 +146,26 @@ class TicketsExportTest extends TestCase
         $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
 
         $ticket1 = Ticket::create([
-            'title'       => 'First Ticket',
+            'title' => 'First Ticket',
             'description' => 'Older ticket',
-            'priority'    => Ticket::PRIORITY_MEDIUM,
-            'user_id'     => $user->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now()->subDay(),
-            'created_at'  => now()->subDay(),
+            'priority' => Ticket::PRIORITY_MEDIUM,
+            'user_id' => $user->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now()->subDay(),
+            'created_at' => now()->subDay(),
         ]);
 
         $ticket2 = Ticket::create([
-            'title'       => 'Second Ticket',
+            'title' => 'Second Ticket',
             'description' => 'Newer ticket',
-            'priority'    => Ticket::PRIORITY_HIGH,
-            'user_id'     => $user->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
-            'created_at'  => now(),
+            'priority' => Ticket::PRIORITY_HIGH,
+            'user_id' => $user->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
+            'created_at' => now(),
         ]);
 
-        $export = new TicketsExport();
+        $export = new TicketsExport;
         $results = $export->query()->get();
 
         $this->assertCount(2, $results);

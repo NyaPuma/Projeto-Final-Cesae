@@ -3,7 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -34,13 +33,13 @@ class NewTicketNotification extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-       return (new MailMessage)
-        ->subject('Novo Ticket Registado')
-        ->greeting('Olá!')
-        ->line('Um novo ticket de manutenção foi registado no sistema.')
-        ->action('Ver Ticket', url('/ui/tickets'))
-        ->line('Por favor, aceda ao painel para mais detalhes.')
-        ->salutation('Cumprimentos, Departamento de Manutenção');
+        return (new MailMessage)
+            ->subject('Novo Ticket Registado')
+            ->greeting('Olá!')
+            ->line('Um novo ticket de manutenção foi registado no sistema.')
+            ->action('Ver Ticket', url('/ui/tickets'))
+            ->line('Por favor, aceda ao painel para mais detalhes.')
+            ->salutation('Cumprimentos, Departamento de Manutenção');
     }
 
     /**

@@ -31,29 +31,29 @@ class SimulateTelemetry extends Command
      */
     private array $anomalyTypes = [
         [
-            'title'       => 'Temperatura acima do limite operacional',
+            'title' => 'Temperatura acima do limite operacional',
             'description' => 'O sensor de temperatura do equipamento registou valores acima dos 85°C durante um período prolongado. Recomenda-se inspeção do sistema de arrefecimento.',
-            'priority'    => Ticket::PRIORITY_HIGH,
+            'priority' => Ticket::PRIORITY_HIGH,
         ],
         [
-            'title'       => 'Vibração anormal detetada',
+            'title' => 'Vibração anormal detetada',
             'description' => 'O acelerómetro registou padrões de vibração fora dos parâmetros normais. Poderá indicar desgaste em rolamentos ou desalinhamento mecânico.',
-            'priority'    => Ticket::PRIORITY_MEDIUM,
+            'priority' => Ticket::PRIORITY_MEDIUM,
         ],
         [
-            'title'       => 'Consumo energético elevado',
+            'title' => 'Consumo energético elevado',
             'description' => 'O sistema de monitorização registou consumo elétrico 40% acima do esperado nas últimas 6 horas. Possível avaria no motor ou sobreaquecimento.',
-            'priority'    => Ticket::PRIORITY_MEDIUM,
+            'priority' => Ticket::PRIORITY_MEDIUM,
         ],
         [
-            'title'       => 'Pressão fora dos limites de segurança',
+            'title' => 'Pressão fora dos limites de segurança',
             'description' => 'O sensor de pressão reportou valores anómalos. É necessária verificação imediata para evitar riscos operacionais.',
-            'priority'    => Ticket::PRIORITY_HIGH,
+            'priority' => Ticket::PRIORITY_HIGH,
         ],
         [
-            'title'       => 'Alerta de manutenção preventiva programada',
+            'title' => 'Alerta de manutenção preventiva programada',
             'description' => 'O equipamento atingiu o intervalo de manutenção preventiva recomendado pelo fabricante (500 horas de operação). Realizar inspeção de rotina.',
-            'priority'    => Ticket::PRIORITY_LOW,
+            'priority' => Ticket::PRIORITY_LOW,
         ],
     ];
 
@@ -63,7 +63,7 @@ class SimulateTelemetry extends Command
     public function handle(): int
     {
         $maxEquipments = (int) $this->option('equipments');
-        $probability   = (int) $this->option('probability');
+        $probability = (int) $this->option('probability');
 
         $this->info('🔬 A iniciar simulação de telemetria...');
 
@@ -72,13 +72,14 @@ class SimulateTelemetry extends Command
             $q->from('user_profiles')->where('name', User::ROLE_ADMIN)->select('id');
         })->first();
 
-        if (!$systemUser) {
+        if (! $systemUser) {
             // Fallback: utilizar o primeiro administrador disponível
-            $systemUser = User::whereHas('profile', fn($q) => $q->where('name', User::ROLE_ADMIN))->first();
+            $systemUser = User::whereHas('profile', fn ($q) => $q->where('name', User::ROLE_ADMIN))->first();
         }
 
-        if (!$systemUser) {
+        if (! $systemUser) {
             $this->error('❌ Nenhum utilizador administrador encontrado para criar tickets automaticamente.');
+
             return Command::FAILURE;
         }
 
@@ -90,6 +91,7 @@ class SimulateTelemetry extends Command
 
         if ($equipments->isEmpty()) {
             $this->warn('⚠️  Nenhum equipamento ativo encontrado na base de dados.');
+
             return Command::SUCCESS;
         }
 
@@ -104,12 +106,14 @@ class SimulateTelemetry extends Command
 
             if ($existingOpen) {
                 $this->line("  ⏭  Equipamento #{$equipment->id} ({$equipment->name}) já tem ticket aberto. A ignorar.");
+
                 continue;
             }
 
             // Simular probabilidade de anomalia
             if (rand(1, 100) > $probability) {
                 $this->line("  ✅ Equipamento #{$equipment->id} ({$equipment->name}) sem anomalias detetadas.");
+
                 continue;
             }
 
@@ -117,18 +121,18 @@ class SimulateTelemetry extends Command
             $anomaly = Arr::random($this->anomalyTypes);
 
             $ticket = Ticket::create([
-                'user_id'      => $systemUser->id,
+                'user_id' => $systemUser->id,
                 'equipment_id' => $equipment->id,
-                'room_id'      => $equipment->room_id ?? null,
-                'title'        => "[TELEMETRIA] {$anomaly['title']} — {$equipment->name}",
-                'description'  => $anomaly['description'] . "\n\n" .
-                                  "Equipamento: {$equipment->name}\n" .
-                                  "ID do Equipamento: #{$equipment->id}\n" .
-                                  "Data da anomalia: " . now()->format('d/m/Y H:i:s') . "\n" .
-                                  "Gerado automaticamente pelo sistema de telemetria.",
-                'priority'     => $anomaly['priority'],
-                'status_id'    => $openStatusId,
-                'opened_at'    => now(),
+                'room_id' => $equipment->room_id ?? null,
+                'title' => "[TELEMETRIA] {$anomaly['title']} — {$equipment->name}",
+                'description' => $anomaly['description']."\n\n".
+                                  "Equipamento: {$equipment->name}\n".
+                                  "ID do Equipamento: #{$equipment->id}\n".
+                                  'Data da anomalia: '.now()->format('d/m/Y H:i:s')."\n".
+                                  'Gerado automaticamente pelo sistema de telemetria.',
+                'priority' => $anomaly['priority'],
+                'status_id' => $openStatusId,
+                'opened_at' => now(),
             ]);
 
             $ticketsCreated++;

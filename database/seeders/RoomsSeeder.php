@@ -32,7 +32,7 @@ class RoomsSeeder extends Seeder
 
             DB::table('rooms')->updateOrInsert(
                 ['name' => $name],
-                ['name' => $name, 'location' => $zone . ' - Setor ' . $index, 'active' => true, 'created_at' => now(), 'updated_at' => now()]
+                ['name' => $name, 'location' => $zone.' - Setor '.$index, 'active' => true, 'created_at' => now(), 'updated_at' => now()]
             );
         }
     }

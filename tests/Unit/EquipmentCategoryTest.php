@@ -2,10 +2,10 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use App\Models\EquipmentCategory;
 use App\Models\Equipment;
+use App\Models\EquipmentCategory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class EquipmentCategoryTest extends TestCase
 {

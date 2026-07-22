@@ -5,11 +5,10 @@ namespace Tests\Feature;
 use App\Models\User;
 use App\Models\Userprofile as UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Auth;
-use Laravel\Prompts\Exceptions\CookieException;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Route;
 
 class RoleMiddlewareTest extends TestCase
 {
@@ -33,7 +32,7 @@ class RoleMiddlewareTest extends TestCase
     {
         // Create user with technician profile and API token
         $userProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
-        
+
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,
             'api_token' => bin2hex(random_bytes(32)), // Generate random token
@@ -59,7 +58,7 @@ class RoleMiddlewareTest extends TestCase
     {
         // Create user with admin profile but route requires only technician role
         $userProfile = UserProfile::where('name', User::ROLE_ADMIN)->first();
-        
+
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,
             'api_token' => bin2hex(random_bytes(32)), // Generate random token
@@ -107,7 +106,7 @@ class RoleMiddlewareTest extends TestCase
     {
         // Create user with technician profile but inactive status
         $userProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
-        
+
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,
             'api_token' => bin2hex(random_bytes(32)), // Generate random token
@@ -138,8 +137,8 @@ class RoleMiddlewareTest extends TestCase
         $user = User::factory()->create([
             'api_token' => bin2hex(random_bytes(32)), // Generate random token
         ]);
-        \Illuminate\Support\Facades\DB::table('users')->where('id', $user->id)->update(['profile_id' => null]);
-        
+        DB::table('users')->where('id', $user->id)->update(['profile_id' => null]);
+
         // Create a protected route that requires technician role only
         Route::middleware(['custom.auth', 'role:technician'])->get('/protected-technician', function () {
             return response()->json([
@@ -162,7 +161,7 @@ class RoleMiddlewareTest extends TestCase
     {
         // Create user with technician profile and API token
         $userProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
-        
+
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,
             'api_token' => bin2hex(random_bytes(32)), // Generate random token
@@ -187,7 +186,7 @@ class RoleMiddlewareTest extends TestCase
     {
         // Create user with admin profile and API token
         $userProfile = UserProfile::where('name', User::ROLE_ADMIN)->first();
-        
+
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,
             'api_token' => bin2hex(random_bytes(32)), // Generate random token
@@ -212,7 +211,7 @@ class RoleMiddlewareTest extends TestCase
     {
         // Create user with technician profile and API token
         $userProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
-        
+
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,
             'api_token' => bin2hex(random_bytes(32)), // Generate random token

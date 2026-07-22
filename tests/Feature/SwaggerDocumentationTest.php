@@ -74,7 +74,6 @@ class SwaggerDocumentationTest extends TestCase
         $this->assertArrayHasKey('/admin/rooms/{id}/inactive', $spec['paths']);
     }
 
-
     public function test_swagger_ui_route_is_available(): void
     {
         $this->get('/docs/openapi')->assertOk();

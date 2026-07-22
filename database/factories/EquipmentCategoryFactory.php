@@ -20,4 +20,3 @@ class EquipmentCategoryFactory extends Factory
         ];
     }
 }
-

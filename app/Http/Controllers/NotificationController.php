@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Mail\TestMail;
 use App\Models\Notification;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use OpenApi\Attributes as OA;
 
 class NotificationController extends Controller
@@ -17,7 +17,7 @@ class NotificationController extends Controller
         summary: 'Listar notificações do utilizador',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         responses: [
-            new OA\Response(response: 200, description: 'Lista paginada de notificações')
+            new OA\Response(response: 200, description: 'Lista paginada de notificações'),
         ]
     )]
     public function index(Request $request)
@@ -40,11 +40,11 @@ class NotificationController extends Controller
         summary: 'Marcar notificação como lida',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
-            new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'integer'))
+            new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'integer')),
         ],
         responses: [
             new OA\Response(response: 200, description: 'Notificação atualizada'),
-            new OA\Response(response: 404, description: 'Notificação não encontrada')
+            new OA\Response(response: 404, description: 'Notificação não encontrada'),
         ]
     )]
     public function markAsRead(Request $request, int $id)
@@ -53,7 +53,7 @@ class NotificationController extends Controller
         $user = $this->authenticatedUser($request);
 
         $notification = Notification::where('user_id', $user->id)->find($id);
-        if (!$notification) {
+        if (! $notification) {
             return response()->json(['message' => 'Notificação não encontrada'], 404);
         }
 
@@ -69,7 +69,7 @@ class NotificationController extends Controller
         summary: 'Enviar email de teste via Mailgun',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         responses: [
-            new OA\Response(response: 200, description: 'Email de teste enviado')
+            new OA\Response(response: 200, description: 'Email de teste enviado'),
         ]
     )]
     public function sendTestEmail(Request $request)

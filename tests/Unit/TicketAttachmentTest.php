@@ -2,15 +2,15 @@
 
 namespace Tests\Unit;
 
-use App\Models\TicketAttachment;
 use App\Models\Ticket;
+use App\Models\TicketAttachment;
 use App\Models\TicketStatus;
 use App\Models\TicketType;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
+use Tests\TestCase;
 
 class TicketAttachmentTest extends TestCase
 {
@@ -32,21 +32,21 @@ class TicketAttachmentTest extends TestCase
         $user = User::factory()->create();
         $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
         $ticket = Ticket::create([
-            'title'       => 'Attachment Test',
+            'title' => 'Attachment Test',
             'description' => 'Testing attachments',
-            'priority'    => Ticket::PRIORITY_MEDIUM,
-            'user_id'     => $user->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_MEDIUM,
+            'user_id' => $user->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
         ]);
 
         $attachment = TicketAttachment::create([
             'ticket_id' => $ticket->id,
-            'user_id'   => $user->id,
+            'user_id' => $user->id,
             'file_name' => 'photo.jpg',
-            'path'      => 'uploads/tickets/photo.jpg',
+            'path' => 'uploads/tickets/photo.jpg',
             'mime_type' => 'image/jpeg',
-            'size'      => 1024000,
+            'size' => 1024000,
         ]);
 
         $this->assertNotNull($attachment->id);
@@ -62,21 +62,21 @@ class TicketAttachmentTest extends TestCase
         $user = User::factory()->create();
         $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
         $ticket = Ticket::create([
-            'title'       => 'Attachment Relation',
+            'title' => 'Attachment Relation',
             'description' => 'Testing attachment relation',
-            'priority'    => Ticket::PRIORITY_LOW,
-            'user_id'     => $user->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_LOW,
+            'user_id' => $user->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
         ]);
 
         $attachment = TicketAttachment::create([
             'ticket_id' => $ticket->id,
-            'user_id'   => $user->id,
+            'user_id' => $user->id,
             'file_name' => 'doc.pdf',
-            'path'      => 'uploads/tickets/doc.pdf',
+            'path' => 'uploads/tickets/doc.pdf',
             'mime_type' => 'application/pdf',
-            'size'      => 500000,
+            'size' => 500000,
         ]);
 
         $this->assertInstanceOf(Ticket::class, $attachment->ticket);
@@ -89,21 +89,21 @@ class TicketAttachmentTest extends TestCase
         $user = User::factory()->create();
         $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
         $ticket = Ticket::create([
-            'title'       => 'User Attachment Relation',
+            'title' => 'User Attachment Relation',
             'description' => 'Testing user relation on attachment',
-            'priority'    => Ticket::PRIORITY_HIGH,
-            'user_id'     => $user->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_HIGH,
+            'user_id' => $user->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
         ]);
 
         $attachment = TicketAttachment::create([
             'ticket_id' => $ticket->id,
-            'user_id'   => $user->id,
+            'user_id' => $user->id,
             'file_name' => 'report.xlsx',
-            'path'      => 'uploads/tickets/report.xlsx',
+            'path' => 'uploads/tickets/report.xlsx',
             'mime_type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-            'size'      => 250000,
+            'size' => 250000,
         ]);
 
         $this->assertInstanceOf(User::class, $attachment->user);
@@ -113,7 +113,7 @@ class TicketAttachmentTest extends TestCase
     #[Test]
     public function it_has_fillable_attributes(): void
     {
-        $attachment = new TicketAttachment();
+        $attachment = new TicketAttachment;
         $fillable = $attachment->getFillable();
 
         $this->assertContains('ticket_id', $fillable);
@@ -130,30 +130,30 @@ class TicketAttachmentTest extends TestCase
         $user = User::factory()->create();
         $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
         $ticket = Ticket::create([
-            'title'       => 'Multiple Attachments',
+            'title' => 'Multiple Attachments',
             'description' => 'Testing multiple attachments',
-            'priority'    => Ticket::PRIORITY_MEDIUM,
-            'user_id'     => $user->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_MEDIUM,
+            'user_id' => $user->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
         ]);
 
         TicketAttachment::create([
             'ticket_id' => $ticket->id,
-            'user_id'   => $user->id,
+            'user_id' => $user->id,
             'file_name' => 'img1.png',
-            'path'      => 'uploads/tickets/img1.png',
+            'path' => 'uploads/tickets/img1.png',
             'mime_type' => 'image/png',
-            'size'      => 800000,
+            'size' => 800000,
         ]);
 
         TicketAttachment::create([
             'ticket_id' => $ticket->id,
-            'user_id'   => $user->id,
+            'user_id' => $user->id,
             'file_name' => 'img2.png',
-            'path'      => 'uploads/tickets/img2.png',
+            'path' => 'uploads/tickets/img2.png',
             'mime_type' => 'image/png',
-            'size'      => 1200000,
+            'size' => 1200000,
         ]);
 
         $this->assertCount(2, $ticket->attachments);

@@ -25,17 +25,13 @@ class RateLimitMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @param  string  $maxAttempts
-     * @param  int  $decayMinutes
      * @return mixed
      */
     public function handle(Request $request, Closure $next, string $maxAttempts = '60', int $decayMinutes = 1)
     {
         $maxAttempts = (int) $maxAttempts;
         $key = $this->resolveRequestSignature($request);
-        
+
         if (! $this->limiter->tooManyAttempts($key, $maxAttempts)) {
             return $this->addHeaders(
                 $next($request),
@@ -55,12 +51,14 @@ class RateLimitMiddleware
         // Para endpoints de autenticação, usar IP + email (se fornecido)
         if ($request->is('login') || $request->is('register')) {
             $email = $request->input('email', '');
-            return sha1($request->ip() . '|' . $email);
+
+            return sha1($request->ip().'|'.$email);
         }
-        
+
         // Para outros endpoints, usar IP + user_id (se autenticado) ou apenas IP
         $userId = $request->user() ? $request->user()->id : 'guest';
-        return sha1($request->ip() . '|' . $userId . '|' . $request->path());
+
+        return sha1($request->ip().'|'.$userId.'|'.$request->path());
     }
 
     /**
@@ -90,7 +88,7 @@ class RateLimitMiddleware
     protected function buildResponse(string $key, int $maxAttempts, int $decayMinutes): Response
     {
         $retryAfter = $this->limiter->availableIn($key);
-        
+
         return response()->json([
             'message' => 'Too Many Attempts.',
             'retry_after' => $retryAfter,

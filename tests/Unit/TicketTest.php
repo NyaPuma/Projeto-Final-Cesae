@@ -7,12 +7,10 @@ use App\Models\TicketStatus;
 use App\Models\TicketType;
 use App\Models\User;
 use App\Models\UserProfile;
-use App\Models\Equipment;
-use App\Models\Room;
-use App\Models\EquipmentCategory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
+use Tests\TestCase;
 
 class TicketTest extends TestCase
 {
@@ -79,12 +77,12 @@ class TicketTest extends TestCase
         $statusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
 
         $ticket = Ticket::create([
-            'title'       => 'Test Ticket',
+            'title' => 'Test Ticket',
             'description' => 'Test Description',
-            'priority'    => Ticket::PRIORITY_MEDIUM,
-            'user_id'     => $user->id,
-            'status_id'   => $statusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_MEDIUM,
+            'user_id' => $user->id,
+            'status_id' => $statusId,
+            'opened_at' => now(),
         ]);
 
         $this->assertNotNull($ticket->id);
@@ -114,12 +112,12 @@ class TicketTest extends TestCase
         $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
 
         $ticket = Ticket::create([
-            'title'       => 'Status Check Ticket',
+            'title' => 'Status Check Ticket',
             'description' => 'Testing status check',
-            'priority'    => Ticket::PRIORITY_LOW,
-            'user_id'     => $user->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_LOW,
+            'user_id' => $user->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
         ]);
 
         $this->assertTrue($ticket->hasStatus(Ticket::STATUS_OPEN));
@@ -134,12 +132,12 @@ class TicketTest extends TestCase
         $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
 
         $ticket = Ticket::create([
-            'title'       => 'Repair Ticket',
+            'title' => 'Repair Ticket',
             'description' => 'Testing repair start',
-            'priority'    => Ticket::PRIORITY_HIGH,
-            'user_id'     => $user->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_HIGH,
+            'user_id' => $user->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
         ]);
 
         $result = $ticket->startRepair();
@@ -157,13 +155,13 @@ class TicketTest extends TestCase
         $closedStatusId = Ticket::getStatusIdByName(Ticket::STATUS_CLOSED);
 
         $ticket = Ticket::create([
-            'title'       => 'Reopen Test',
+            'title' => 'Reopen Test',
             'description' => 'Testing reopen',
-            'priority'    => Ticket::PRIORITY_MEDIUM,
-            'user_id'     => $user->id,
-            'status_id'   => $closedStatusId,
-            'closed_at'   => now(),
-            'opened_at'   => now()->subDays(1),
+            'priority' => Ticket::PRIORITY_MEDIUM,
+            'user_id' => $user->id,
+            'status_id' => $closedStatusId,
+            'closed_at' => now(),
+            'opened_at' => now()->subDays(1),
         ]);
 
         $result = $ticket->reopen();
@@ -182,12 +180,12 @@ class TicketTest extends TestCase
         $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
 
         $ticket = Ticket::create([
-            'title'       => 'Non Closed Reopen',
+            'title' => 'Non Closed Reopen',
             'description' => 'Should not reopen',
-            'priority'    => Ticket::PRIORITY_LOW,
-            'user_id'     => $user->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_LOW,
+            'user_id' => $user->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
         ]);
 
         $result = $ticket->reopen();
@@ -201,13 +199,13 @@ class TicketTest extends TestCase
         $inProgressStatusId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
 
         $ticket = Ticket::create([
-            'title'       => 'Auto Close Test',
+            'title' => 'Auto Close Test',
             'description' => 'Testing auto close',
-            'priority'    => Ticket::PRIORITY_MEDIUM,
-            'user_id'     => $user->id,
-            'status_id'   => $inProgressStatusId,
-            'cost'        => 50.00,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_MEDIUM,
+            'user_id' => $user->id,
+            'status_id' => $inProgressStatusId,
+            'cost' => 50.00,
+            'opened_at' => now(),
             'in_progress_at' => now(),
         ]);
 
@@ -226,13 +224,13 @@ class TicketTest extends TestCase
         $inProgressStatusId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
 
         $ticket = Ticket::create([
-            'title'       => 'Skip Auto Close',
+            'title' => 'Skip Auto Close',
             'description' => 'Cost exceeds threshold',
-            'priority'    => Ticket::PRIORITY_HIGH,
-            'user_id'     => $user->id,
-            'status_id'   => $inProgressStatusId,
-            'cost'        => 200.00,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_HIGH,
+            'user_id' => $user->id,
+            'status_id' => $inProgressStatusId,
+            'cost' => 200.00,
+            'opened_at' => now(),
             'in_progress_at' => now(),
         ]);
 
@@ -250,12 +248,12 @@ class TicketTest extends TestCase
         $inProgressStatusId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
 
         $ticket = Ticket::create([
-            'title'       => 'Budget Request Test',
+            'title' => 'Budget Request Test',
             'description' => 'Testing budget request',
-            'priority'    => Ticket::PRIORITY_MEDIUM,
-            'user_id'     => $user->id,
-            'status_id'   => $inProgressStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_MEDIUM,
+            'user_id' => $user->id,
+            'status_id' => $inProgressStatusId,
+            'opened_at' => now(),
             'in_progress_at' => now(),
         ]);
 
@@ -277,12 +275,12 @@ class TicketTest extends TestCase
         $inProgressStatusId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
 
         $ticket = Ticket::create([
-            'title'       => 'Skip Budget',
+            'title' => 'Skip Budget',
             'description' => 'Below threshold',
-            'priority'    => Ticket::PRIORITY_LOW,
-            'user_id'     => $user->id,
-            'status_id'   => $inProgressStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_LOW,
+            'user_id' => $user->id,
+            'status_id' => $inProgressStatusId,
+            'opened_at' => now(),
             'in_progress_at' => now(),
         ]);
 
@@ -303,12 +301,12 @@ class TicketTest extends TestCase
         $user = User::factory()->create();
 
         $ticket = Ticket::create([
-            'title'       => 'Approve Budget',
+            'title' => 'Approve Budget',
             'description' => 'Testing budget approval',
-            'priority'    => Ticket::PRIORITY_HIGH,
-            'user_id'     => $user->id,
-            'status_id'   => $inProgressStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_HIGH,
+            'user_id' => $user->id,
+            'status_id' => $inProgressStatusId,
+            'opened_at' => now(),
             'in_progress_at' => now(),
         ]);
 
@@ -332,12 +330,12 @@ class TicketTest extends TestCase
         $user = User::factory()->create();
 
         $ticket = Ticket::create([
-            'title'       => 'Reject Budget',
+            'title' => 'Reject Budget',
             'description' => 'Testing budget rejection',
-            'priority'    => Ticket::PRIORITY_MEDIUM,
-            'user_id'     => $user->id,
-            'status_id'   => $pendingBudgetStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_MEDIUM,
+            'user_id' => $user->id,
+            'status_id' => $pendingBudgetStatusId,
+            'opened_at' => now(),
         ]);
 
         $result = $ticket->approveBudget($admin, 'reject', 'Orçamento demasiado alto');
@@ -360,12 +358,12 @@ class TicketTest extends TestCase
         $user = User::factory()->create();
 
         $ticket = Ticket::create([
-            'title'       => 'Non Admin Budget',
+            'title' => 'Non Admin Budget',
             'description' => 'Should reject',
-            'priority'    => Ticket::PRIORITY_LOW,
-            'user_id'     => $user->id,
-            'status_id'   => $pendingBudgetStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_LOW,
+            'user_id' => $user->id,
+            'status_id' => $pendingBudgetStatusId,
+            'opened_at' => now(),
         ]);
 
         $result = $ticket->approveBudget($operator, 'approve');
@@ -379,13 +377,13 @@ class TicketTest extends TestCase
         $user = User::factory()->create();
 
         $ticket = Ticket::create([
-            'title'              => 'Pause Time Test',
-            'description'        => 'Testing pause calculation',
-            'priority'           => Ticket::PRIORITY_MEDIUM,
-            'user_id'            => $user->id,
-            'opened_at'          => now()->subDays(2),
+            'title' => 'Pause Time Test',
+            'description' => 'Testing pause calculation',
+            'priority' => Ticket::PRIORITY_MEDIUM,
+            'user_id' => $user->id,
+            'opened_at' => now()->subDays(2),
             'budget_requested_at' => now()->subDay(),
-            'budget_decided_at'   => now(),
+            'budget_decided_at' => now(),
         ]);
 
         $pauseMinutes = $ticket->getBudgetPauseMinutesAttribute();
@@ -399,11 +397,11 @@ class TicketTest extends TestCase
         $user = User::factory()->create();
 
         $ticket = Ticket::create([
-            'title'       => 'No Pause',
+            'title' => 'No Pause',
             'description' => 'No budget dates',
-            'priority'    => Ticket::PRIORITY_LOW,
-            'user_id'     => $user->id,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_LOW,
+            'user_id' => $user->id,
+            'opened_at' => now(),
         ]);
 
         $pauseMinutes = $ticket->getBudgetPauseMinutesAttribute();
@@ -417,26 +415,26 @@ class TicketTest extends TestCase
         $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
 
         Ticket::create([
-            'title'        => 'Scheduled Event 1',
-            'description'  => 'First scheduled',
-            'priority'     => Ticket::PRIORITY_HIGH,
-            'user_id'      => $user->id,
-            'status_id'    => $openStatusId,
+            'title' => 'Scheduled Event 1',
+            'description' => 'First scheduled',
+            'priority' => Ticket::PRIORITY_HIGH,
+            'user_id' => $user->id,
+            'status_id' => $openStatusId,
             'scheduled_at' => now()->addDays(2),
             'scheduled_end' => now()->addDays(2)->addHours(4),
-            'scheduled'    => true,
-            'opened_at'    => now(),
+            'scheduled' => true,
+            'opened_at' => now(),
         ]);
 
         Ticket::create([
-            'title'        => 'Scheduled Event 2',
-            'description'  => 'Second scheduled',
-            'priority'     => Ticket::PRIORITY_MEDIUM,
-            'user_id'      => $user->id,
-            'status_id'    => $openStatusId,
+            'title' => 'Scheduled Event 2',
+            'description' => 'Second scheduled',
+            'priority' => Ticket::PRIORITY_MEDIUM,
+            'user_id' => $user->id,
+            'status_id' => $openStatusId,
             'scheduled_at' => now()->addDays(5),
-            'scheduled'    => true,
-            'opened_at'    => now(),
+            'scheduled' => true,
+            'opened_at' => now(),
         ]);
 
         $events = Ticket::getScheduledEvents();
@@ -453,14 +451,14 @@ class TicketTest extends TestCase
     #[Test]
     public function it_uses_guarded_property(): void
     {
-        $ticket = new Ticket();
+        $ticket = new Ticket;
         $this->assertEquals([], $ticket->getGuarded());
     }
 
     #[Test]
     public function it_has_correct_casts(): void
     {
-        $ticket = new Ticket();
+        $ticket = new Ticket;
         $casts = $ticket->getCasts();
 
         $this->assertArrayHasKey('opened_at', $casts);
@@ -478,19 +476,19 @@ class TicketTest extends TestCase
         $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
 
         $ticket = Ticket::create([
-            'title'       => 'Relation Test',
+            'title' => 'Relation Test',
             'description' => 'Testing relationships',
-            'priority'    => Ticket::PRIORITY_MEDIUM,
-            'user_id'     => $user->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_MEDIUM,
+            'user_id' => $user->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
         ]);
 
         $this->assertInstanceOf(User::class, $ticket->user);
         $this->assertInstanceOf(TicketStatus::class, $ticket->status);
-        $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class, $ticket->comments());
-        $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class, $ticket->attachments());
-        $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class, $ticket->workflowHistory());
+        $this->assertInstanceOf(HasMany::class, $ticket->comments());
+        $this->assertInstanceOf(HasMany::class, $ticket->attachments());
+        $this->assertInstanceOf(HasMany::class, $ticket->workflowHistory());
     }
 
     #[Test]
@@ -500,12 +498,12 @@ class TicketTest extends TestCase
         $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
 
         $ticket = Ticket::create([
-            'title'       => 'Soft Delete Test',
+            'title' => 'Soft Delete Test',
             'description' => 'Testing soft delete',
-            'priority'    => Ticket::PRIORITY_LOW,
-            'user_id'     => $user->id,
-            'status_id'   => $openStatusId,
-            'opened_at'   => now(),
+            'priority' => Ticket::PRIORITY_LOW,
+            'user_id' => $user->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
         ]);
 
         $ticketId = $ticket->id;
