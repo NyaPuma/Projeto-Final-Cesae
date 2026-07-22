@@ -229,6 +229,85 @@ class Ticket extends Model
         return 0;
     }
 
+    // --- CAMPOS DE MÃO DE OBRA ---
+
+    /**
+     * Calcula o custo total de materiais a partir do budget_details (JSON).
+     * Material: quantity × unit_price
+     */
+    public function getTotalMaterialCostAttribute(): float
+    {
+        return $this->calculateBudgetTotalByType('material');
+    }
+
+    /**
+     * Calcula o custo total de mão de obra a partir do budget_details (JSON).
+     * Labor: hours × hourly_rate
+     */
+    public function getTotalLaborCostAttribute(): float
+    {
+        return $this->calculateBudgetTotalByType('labor');
+    }
+
+    /**
+     * Calcula o custo total do orçamento (materiais + mão de obra).
+     */
+    public function getBudgetTotalAttribute(): float
+    {
+        return $this->total_material_cost + $this->total_labor_cost;
+    }
+
+    /**
+     * Retorna um array com breakdown material vs labor.
+     */
+    public function getBudgetBreakdownAttribute(): array
+    {
+        $materialItems = [];
+        $laborItems = [];
+        $details = $this->budget_details ?? [];
+
+        foreach ($details as $item) {
+            $type = $item['type'] ?? 'material';
+            if ($type === 'labor') {
+                $subtotal = ($item['hours'] ?? 0) * ($item['hourly_rate'] ?? 0);
+                $laborItems[] = array_merge($item, ['subtotal' => $subtotal]);
+            } else {
+                $subtotal = ($item['quantity'] ?? 0) * ($item['unit_price'] ?? 0);
+                $materialItems[] = array_merge($item, ['subtotal' => $subtotal]);
+            }
+        }
+
+        return [
+            'materials' => $materialItems,
+            'labor' => $laborItems,
+            'material_total' => collect($materialItems)->sum('subtotal'),
+            'labor_total' => collect($laborItems)->sum('subtotal'),
+            'grand_total' => collect($materialItems)->sum('subtotal') + collect($laborItems)->sum('subtotal'),
+        ];
+    }
+
+    /**
+     * Método privado auxiliar para calcular total por tipo.
+     */
+    private function calculateBudgetTotalByType(string $type): float
+    {
+        $details = $this->budget_details ?? [];
+        $total = 0;
+
+        foreach ($details as $item) {
+            $itemType = $item['type'] ?? 'material';
+            if ($itemType === $type) {
+                if ($type === 'labor') {
+                    $total += ($item['hours'] ?? 0) * ($item['hourly_rate'] ?? 0);
+                } else {
+                    $total += ($item['quantity'] ?? 0) * ($item['unit_price'] ?? 0);
+                }
+            }
+        }
+
+        return $total;
+    }
+
     // --- MÉTODOS UTILITÁRIOS E AUXILIARES  ---
 
     /**

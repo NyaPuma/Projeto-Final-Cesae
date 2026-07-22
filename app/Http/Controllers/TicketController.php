@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ticket;
 use App\Models\User;
+use App\Models\Notification;
 use App\Models\TicketComment;
 use App\Models\TicketAttachment;
 use App\Models\TicketStatus;
@@ -427,6 +428,9 @@ class TicketController extends Controller
 
     /**
      * Inicia a reparação de um ticket (Técnico assume o ticket como "Em Curso").
+     *
+     * Se existirem tickets de prioridade mais alta pendentes, o sistema avisa o técnico.
+     * Se o técnico forçar (force=true), o admin é notificado da decisão.
      */
     public function startTicket(Request $request, int $id)
     {
@@ -442,6 +446,34 @@ class TicketController extends Controller
             return response()->json(['message' => 'Apenas tickets em estado "Aberto" podem ser iniciados.'], 422);
         }
 
+        // 🔔 VERIFICAÇÃO DE URGÊNCIA: Existem tickets de prioridade mais alta pendentes?
+        $priorityOrder = ['alta' => 3, 'média' => 2, 'baixa' => 1];
+        $currentPriority = $priorityOrder[$ticket->priority] ?? 0;
+        $force = $request->boolean('force', false);
+
+        // Procurar tickets abertos com prioridade superior à atual
+        $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $higherPriorityTickets = Ticket::where('status_id', $openStatusId)
+            ->where('id', '!=', $ticket->id)
+            ->where(function ($q) use ($currentPriority, $priorityOrder) {
+                foreach ($priorityOrder as $pName => $pVal) {
+                    if ($pVal > $currentPriority) {
+                        $q->orWhere('priority', $pName);
+                    }
+                }
+            })
+->count();
+
+        if ($higherPriorityTickets > 0 && !$force) {
+            return response()->json([
+                'warning' => true,
+                'message' => "⚠️ Existem {$higherPriorityTickets} ticket(s) de prioridade mais alta por atender. Recomenda-se resolver os mais urgentes primeiro.",
+                'urgent_tickets_count' => $higherPriorityTickets,
+                'current_priority' => $ticket->priority,
+                'can_force' => true,
+            ], 409); // 409 Conflict - indica que há conflito de prioridades
+        }
+
         $inProgressStatusId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
 
         $ticket->update([
@@ -449,6 +481,27 @@ class TicketController extends Controller
             'status_id'      => $inProgressStatusId,
             'in_progress_at' => now(),
         ]);
+
+        // 🔔 Se o técnico forçou o início mesmo havendo tickets mais urgentes, notificar o admin
+        if ($force && $higherPriorityTickets > 0) {
+            try {
+                $admins = User::whereHas('profile', function ($q) {
+                    $q->where('name', User::ROLE_ADMIN);
+                })->get();
+
+                foreach ($admins as $admin) {
+                    Notification::create([
+                        'user_id' => $admin->id,
+                        'title' => "⚠️ Ticket Não Prioritário Iniciado - #{$ticket->id}",
+                        'message' => "O técnico {$user->name} iniciou o ticket #{$ticket->id} ({$ticket->title}) com prioridade '{$ticket->priority}', ignorando {$higherPriorityTickets} ticket(s) mais urgente(s) pendentes.",
+                        'type' => 'priority_override',
+                        'link' => "/ui/tickets/{$ticket->id}",
+                    ]);
+                }
+            } catch (\Exception $e) {
+                // Silencia falhas de notificação
+            }
+        }
 
         try {
             event(new \App\Events\TicketStatusUpdatedBroadcast($ticket, $oldStatus, Ticket::STATUS_IN_PROGRESS));
@@ -459,7 +512,10 @@ class TicketController extends Controller
             // Silencia falhas de envio
         }
 
-        return response()->json(['ticket' => $ticket]);
+        return response()->json([
+            'ticket' => $ticket,
+            'overridden' => $force && $currentPriority < 3,
+        ]);
     }
 
     /**
@@ -499,53 +555,6 @@ class TicketController extends Controller
             event(new \App\Events\TicketStatusUpdatedBroadcast($ticket, $oldStatus, Ticket::STATUS_CLOSED));
             if ($ticket->user && $ticket->user->email) {
                 $ticket->user->notify(new \App\Notifications\TicketStatusChanged($ticket, $oldStatus, Ticket::STATUS_CLOSED));
-            }
-        } catch (\Exception $e) {
-            // Silencia falhas de envio
-        }
-
-        return response()->json(['ticket' => $ticket]);
-    }
-
-    /**
-     * Solicita orçamento para um ticket em curso (Técnico deteta necessidade de peças externas).
-     */
-    public function requestBudget(Request $request, int $id)
-    {
-        $user = $this->authenticatedUser($request);
-        $this->requireRole($user, [
-            User::ROLE_TECHNICIAN,
-        ]);
-
-        $ticket = Ticket::findOrFail($id);
-
-        if (!$ticket->hasStatus(Ticket::STATUS_IN_PROGRESS)) {
-            return response()->json(['message' => 'Apenas tickets em "Em Curso" podem solicitar orçamento.'], 422);
-        }
-
-        $validator = Validator::make($request->all(), [
-            'budget_amount' => ['required', 'numeric', 'min:0.01'],
-            'budget_justification' => ['required', 'string', 'max:2000'],
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        $pendingBudgetStatusId = Ticket::getStatusIdByName(Ticket::STATUS_PENDING_BUDGET);
-
-        $ticket->update([
-            'status_id'          => $pendingBudgetStatusId,
-            'budget_requested'   => true,
-            'budget_status'      => Ticket::BUDGET_PENDING,
-            'budget_amount'      => $request->budget_amount,
-            'budget_requested_at' => now(),
-            'technical_report'   => $request->budget_justification,
-        ]);
-
-        try {
-            if ($ticket->user && $ticket->user->email) {
-                $ticket->user->notify(new \App\Notifications\TicketStatusChanged($ticket, $ticket->status_id, Ticket::STATUS_PENDING_BUDGET));
             }
         } catch (\Exception $e) {
             // Silencia falhas de envio
@@ -623,6 +632,100 @@ class TicketController extends Controller
     }
 
     /**
+     * Cria notificações de orçamento para os utilizadores relevantes.
+     * - submitted: notifica TODOS os admins + criador do ticket
+     * - approved/rejected: notifica técnico atribuído + criador
+     * - auto_approved: notifica técnico + criador
+     * - closed: notifica criador
+     */
+    private function notifyBudgetEvent(Ticket $ticket, string $eventType, string $message): void
+    {
+        try {
+            if ($eventType === 'submitted') {
+                // Notificar todos os admins
+                $admins = User::whereHas('profile', function ($q) {
+                    $q->where('name', User::ROLE_ADMIN);
+                })->get();
+                foreach ($admins as $admin) {
+                    Notification::create([
+                        'user_id' => $admin->id,
+                        'title' => "💰 Orçamento Pendente - Ticket #{$ticket->id}",
+                        'message' => $message,
+                        'type' => 'budget_request',
+                        'link' => "/ui/tickets/{$ticket->id}",
+                    ]);
+                }
+                // Também notificar criador
+                if ($ticket->user_id) {
+                    Notification::create([
+                        'user_id' => $ticket->user_id,
+                        'title' => "📋 Orçamento Submetido - Ticket #{$ticket->id}",
+                        'message' => $message,
+                        'type' => 'budget_submitted',
+                        'link' => "/ui/tickets/{$ticket->id}",
+                    ]);
+                }
+            } elseif ($eventType === 'auto_approved') {
+                // Notificar técnico
+                if ($ticket->assigned_to) {
+                    Notification::create([
+                        'user_id' => $ticket->assigned_to,
+                        'title' => "✅ Auto-Aprovado - Ticket #{$ticket->id}",
+                        'message' => $message,
+                        'type' => 'budget_auto_approved',
+                        'link' => "/ui/tickets/{$ticket->id}",
+                    ]);
+                }
+                // Notificar criador
+                if ($ticket->user_id) {
+                    Notification::create([
+                        'user_id' => $ticket->user_id,
+                        'title' => "✅ Orçamento Auto-Aprovado - Ticket #{$ticket->id}",
+                        'message' => $message,
+                        'type' => 'budget_auto_approved',
+                        'link' => "/ui/tickets/{$ticket->id}",
+                    ]);
+                }
+            } elseif (in_array($eventType, ['approved', 'rejected'])) {
+                // Notificar o técnico
+                if ($ticket->assigned_to) {
+                    $icon = $eventType === 'approved' ? '✅' : '❌';
+                    Notification::create([
+                        'user_id' => $ticket->assigned_to,
+                        'title' => "{$icon} Orçamento " . ($eventType === 'approved' ? 'Aprovado' : 'Recusado') . " - Ticket #{$ticket->id}",
+                        'message' => $message,
+                        'type' => "budget_{$eventType}",
+                        'link' => "/ui/tickets/{$ticket->id}",
+                    ]);
+                }
+                // Notificar criador
+                if ($ticket->user_id) {
+                    Notification::create([
+                        'user_id' => $ticket->user_id,
+                        'title' => "📋 Decisão Orçamental - Ticket #{$ticket->id}",
+                        'message' => $message,
+                        'type' => "budget_{$eventType}",
+                        'link' => "/ui/tickets/{$ticket->id}",
+                    ]);
+                }
+            } elseif ($eventType === 'closed') {
+                // Notificar criador que o ticket foi fechado
+                if ($ticket->user_id) {
+                    Notification::create([
+                        'user_id' => $ticket->user_id,
+                        'title' => "🔧 Ticket Fechado - #{$ticket->id}",
+                        'message' => $message,
+                        'type' => 'ticket_closed',
+                        'link' => "/ui/tickets/{$ticket->id}",
+                    ]);
+                }
+            }
+        } catch (\Exception $e) {
+            // Silencia falhas de notificação
+        }
+    }
+
+    /**
      * Submete o custo estimado pelo técnico e aciona o fluxo orçamental.
      * Se o custo exceder o threshold, o ticket fica "Pendente Orçamento".
      * Rota: POST /tickets/{id}/budget
@@ -636,8 +739,11 @@ class TicketController extends Controller
             'estimatedBudget' => 'required|numeric|min:0.01',
             'budget_details'  => 'nullable|array',
             'budget_details.*.description' => 'required_with:budget_details|string|max:255',
-            'budget_details.*.quantity'    => 'required_with:budget_details|numeric|min:1',
-            'budget_details.*.unit_price'  => 'required_with:budget_details|numeric|min:0',
+            'budget_details.*.type'        => 'nullable|string|in:material,labor',
+            'budget_details.*.quantity'    => 'nullable|numeric|min:0',
+            'budget_details.*.unit_price'  => 'nullable|numeric|min:0',
+            'budget_details.*.hours'       => 'nullable|numeric|min:0',
+            'budget_details.*.hourly_rate' => 'nullable|numeric|min:0',
         ]);
 
         $ticket = Ticket::findOrFail($id);
@@ -647,6 +753,12 @@ class TicketController extends Controller
         // Guarda os detalhes do orçamento se fornecidos
         if ($request->has('budget_details')) {
             $ticket->budget_details = $request->budget_details;
+        }
+
+        // 🐛 FIX: Garantir que o técnico fica atribuído ao ticket
+        // para receber notificações quando o admin aprovar/recusar o orçamento
+        if (!$ticket->assigned_to) {
+            $ticket->assigned_to = $user->id;
         }
 
         // 🐛 FIX: Marcar budget_requested=true em AMBOS os casos para
@@ -666,6 +778,11 @@ class TicketController extends Controller
 
             $ticket->save();
 
+            // 🔔 Notificar admins
+            $this->notifyBudgetEvent($ticket, 'submitted',
+                "O técnico submeteu um orçamento de {$estimatedBudget}€ para o ticket #{$ticket->id} - {$ticket->title}. Aguarda aprovação."
+            );
+
             return response()->json([
                 'message' => __('Custo estimado excede o limiar. Ticket pendente de aprovação orçamental.'),
                 'ticket' => $ticket->load(['equipment', 'room', 'technician', 'status']),
@@ -680,8 +797,71 @@ class TicketController extends Controller
         }
         $ticket->save();
 
+        // 🔔 Notificar técnico e criador sobre auto-aprovação
+        $this->notifyBudgetEvent($ticket, 'auto_approved',
+            "Orçamento de {$estimatedBudget}€ para o ticket #{$ticket->id} foi auto-aprovado (dentro do limiar de {$threshold}€). Pode prosseguir."
+        );
+
         return response()->json([
             'message' => __('Custo estimado dentro da autonomia. Pode prosseguir com a intervenção.'),
+            'ticket' => $ticket->load(['equipment', 'room', 'technician', 'status']),
+        ]);
+    }
+
+    /**
+     * Técnico solicita autorização orçamental com orçamento detalhado.
+     * Rota: PUT /technician/tickets/{id}/request-budget
+     */
+    public function requestBudget(Request $request, int $id)
+    {
+        $user = $this->authenticatedUser($request);
+        $this->requireRole($user, [User::ROLE_TECHNICIAN, User::ROLE_ADMIN]);
+
+        $request->validate([
+            'budget_amount'          => 'required|numeric|min:0.01',
+            'budget_details'         => 'nullable|array',
+            'budget_details.*.description' => 'required_with:budget_details|string|max:255',
+            'budget_details.*.quantity'    => 'required_with:budget_details|numeric|min:1',
+            'budget_details.*.unit_price'  => 'required_with:budget_details|numeric|min:0',
+        ]);
+
+        $ticket = Ticket::findOrFail($id);
+        $threshold = 50.00;
+
+        $estimatedBudget = $request->budget_amount;
+
+        // Guarda detalhes do orçamento
+        if ($request->has('budget_details')) {
+            $ticket->budget_details = $request->budget_details;
+        }
+
+        if ($estimatedBudget > $threshold) {
+            $ticket->budget_requested = true;
+            $ticket->budget_status = Ticket::BUDGET_PENDING;
+            $ticket->budget_amount = $estimatedBudget;
+            $ticket->budget_requested_at = now();
+
+            $pendingStatusId = Ticket::getStatusIdByName(Ticket::STATUS_PENDING_BUDGET);
+            if ($pendingStatusId) {
+                $ticket->status_id = $pendingStatusId;
+            }
+
+            $ticket->save();
+
+            return response()->json([
+                'message' => __('Pedido de orçamento submetido com detalhes. Aguarde aprovação.'),
+                'ticket' => $ticket->load(['equipment', 'room', 'technician', 'status']),
+            ]);
+        }
+
+        $inProgressId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
+        if ($inProgressId) {
+            $ticket->status_id = $inProgressId;
+        }
+        $ticket->save();
+
+        return response()->json([
+            'message' => __('Custo dentro do limiar. Intervenção autorizada automaticamente.'),
             'ticket' => $ticket->load(['equipment', 'room', 'technician', 'status']),
         ]);
     }
@@ -712,6 +892,11 @@ class TicketController extends Controller
         $ticket->technical_report = $request->report ?? $ticket->technical_report;
         $ticket->closed_at = now();
         $ticket->save();
+
+        // 🔔 Notificar criador que o ticket foi fechado
+        $this->notifyBudgetEvent($ticket, 'closed',
+            "O ticket #{$ticket->id} - {$ticket->title} foi concluído e fechado com custo final de {$request->actual_cost}€."
+        );
 
         return response()->json([
             'message' => __('Intervenção concluída e ticket fechado com sucesso.'),

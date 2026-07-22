@@ -25,9 +25,11 @@ class NotificationController extends Controller
         // Cada utilizador só vê as notificações que lhe pertencem.
         $user = $this->authenticatedUser($request);
 
+        // Busca as últimas 50 notificações não paginadas para o frontend consumir diretamente como array
         $notifications = Notification::where('user_id', $user->id)
             ->orderByDesc('created_at')
-            ->paginate(15);
+            ->limit(50)
+            ->get();
 
         return response()->json(['notifications' => $notifications]);
     }

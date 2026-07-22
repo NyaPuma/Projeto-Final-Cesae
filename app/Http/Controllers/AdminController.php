@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Equipment;
+use App\Models\Notification;
 use App\Models\Room;
 use App\Models\Ticket;
 use App\Models\User;
@@ -401,6 +402,40 @@ class AdminController extends Controller
 
         if (!$approved) {
             return response()->json(['message' => 'Aprovação falhou'], 422);
+        }
+
+        // 🔔 Notificar o técnico e o criador do ticket sobre a decisão
+        try {
+            $notifyType = $decision === 'approve' ? 'approved' : 'rejected';
+            $notifyMessage = $decision === 'approve'
+                ? "O orçamento de {$ticket->budget_amount}€ para o ticket #{$ticket->id} foi APROVADO pelo administrador. Pode prosseguir com a intervenção."
+                : "O orçamento de {$ticket->budget_amount}€ para o ticket #{$ticket->id} foi RECUSADO." . ($feedback ? " Motivo: {$feedback}" : '');
+
+            // Notificar o técnico atribuído
+            if ($ticket->assigned_to) {
+                Notification::create([
+                    'user_id' => $ticket->assigned_to,
+                    'title' => $decision === 'approve'
+                        ? "✅ Orçamento Aprovado - Ticket #{$ticket->id}"
+                        : "❌ Orçamento Recusado - Ticket #{$ticket->id}",
+                    'message' => $notifyMessage,
+                    'type' => "budget_{$notifyType}",
+                    'link' => "/ui/tickets/{$ticket->id}",
+                ]);
+            }
+
+            // Notificar o criador do ticket
+            if ($ticket->user_id) {
+                Notification::create([
+                    'user_id' => $ticket->user_id,
+                    'title' => "📋 Decisão Orçamental - Ticket #{$ticket->id}",
+                    'message' => $notifyMessage,
+                    'type' => "budget_{$notifyType}",
+                    'link' => "/ui/tickets/{$ticket->id}",
+                ]);
+            }
+        } catch (\Exception $e) {
+            // Silencia falhas de notificação
         }
 
         // Devolve o ticket já com o novo estado para simplificar o consumo no frontend.
