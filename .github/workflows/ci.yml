@@ -13,11 +13,11 @@ on:
 
 jobs:
   build:
+    name: Build Laravel Application
 
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -42,6 +42,9 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --no-interaction --prefer-dist --no-progress
 
+      - name: Check code style with Laravel Pint
+        run: vendor/bin/pint --test
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -59,6 +62,9 @@ jobs:
 
       - name: Generate application key
         run: php artisan key:generate
+
+      - name: Cache Laravel configuration
+        run: php artisan config:cache
 
       - name: Verify Laravel installation
         run: php artisan --version
