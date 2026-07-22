@@ -48,13 +48,14 @@ class TicketController extends Controller
     {
         $user = $this->authenticatedUser($request);
 
-        $data = $request->only(['title', 'description', 'priority', 'equipment_id']);
+        $data = $request->only(['title', 'description', 'priority', 'equipment_id', 'room_id']);
 
         $validator = Validator::make($data, [
             'title'        => ['required', 'string', 'max:255'],
             'description'  => ['required', 'string', 'max:5000'],
             'priority'     => ['required', 'string', 'in:baixa,média,media,alta'],
             'equipment_id' => ['nullable', 'integer', 'exists:equipments,id'],
+            'room_id'      => ['nullable', 'integer', 'exists:rooms,id'],
         ]);
 
         if ($validator->fails()) {
@@ -76,6 +77,7 @@ class TicketController extends Controller
             'priority'     => $priority,
             'user_id'      => $user->id,
             'equipment_id' => $data['equipment_id'] ?? null,
+            'room_id'      => $data['room_id'] ?? null,
             'status_id'    => $openStatusId,
             'opened_at'    => now(),
         ]);
@@ -680,64 +682,6 @@ class TicketController extends Controller
 
         return response()->json([
             'message' => __('Custo estimado dentro da autonomia. Pode prosseguir com a intervenção.'),
-            'ticket' => $ticket->load(['equipment', 'room', 'technician', 'status']),
-        ]);
-    }
-
-    /**
-     * Técnico solicita autorização orçamental com orçamento detalhado.
-     * Rota: PUT /technician/tickets/{id}/request-budget
-     */
-    public function requestBudget(Request $request, int $id)
-    {
-        $user = $this->authenticatedUser($request);
-        $this->requireRole($user, [User::ROLE_TECHNICIAN, User::ROLE_ADMIN]);
-
-        $request->validate([
-            'budget_amount'          => 'required|numeric|min:0.01',
-            'budget_details'         => 'nullable|array',
-            'budget_details.*.description' => 'required_with:budget_details|string|max:255',
-            'budget_details.*.quantity'    => 'required_with:budget_details|numeric|min:1',
-            'budget_details.*.unit_price'  => 'required_with:budget_details|numeric|min:0',
-        ]);
-
-        $ticket = Ticket::findOrFail($id);
-        $threshold = 50.00;
-
-        $estimatedBudget = $request->budget_amount;
-
-        // Guarda detalhes do orçamento
-        if ($request->has('budget_details')) {
-            $ticket->budget_details = $request->budget_details;
-        }
-
-        if ($estimatedBudget > $threshold) {
-            $ticket->budget_requested = true;
-            $ticket->budget_status = Ticket::BUDGET_PENDING;
-            $ticket->budget_amount = $estimatedBudget;
-            $ticket->budget_requested_at = now();
-
-            $pendingStatusId = Ticket::getStatusIdByName(Ticket::STATUS_PENDING_BUDGET);
-            if ($pendingStatusId) {
-                $ticket->status_id = $pendingStatusId;
-            }
-
-            $ticket->save();
-
-            return response()->json([
-                'message' => __('Pedido de orçamento submetido com detalhes. Aguarde aprovação.'),
-                'ticket' => $ticket->load(['equipment', 'room', 'technician', 'status']),
-            ]);
-        }
-
-        $inProgressId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
-        if ($inProgressId) {
-            $ticket->status_id = $inProgressId;
-        }
-        $ticket->save();
-
-        return response()->json([
-            'message' => __('Custo dentro do limiar. Intervenção autorizada automaticamente.'),
             'ticket' => $ticket->load(['equipment', 'room', 'technician', 'status']),
         ]);
     }

@@ -347,7 +347,7 @@ class TicketTest extends TestCase
         $this->assertEquals(Ticket::BUDGET_REJECTED, $ticket->budget_status);
         $this->assertEquals($admin->id, $ticket->budget_approved_by);
         $this->assertTrue($ticket->hasStatus(Ticket::STATUS_REJECTED));
-        $this->assertEquals('Orçamento demasiado alto', $ticket->technical_report);
+        $this->assertEquals('Orçamento demasiado alto', $ticket->budget_feedback);
     }
 
     #[Test]

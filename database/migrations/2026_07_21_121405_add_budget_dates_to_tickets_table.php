@@ -12,8 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('tickets', function (Blueprint $table) {
-            $table->timestamp('budget_requested_at')->nullable()->after('budget_status');
-            $table->timestamp('budget_decided_at')->nullable()->after('budget_requested_at');
+            if (!Schema::hasColumn('tickets', 'budget_requested_at')) {
+                $table->timestamp('budget_requested_at')->nullable()->after('budget_status');
+            }
+            if (!Schema::hasColumn('tickets', 'budget_decided_at')) {
+                $table->timestamp('budget_decided_at')->nullable()->after('budget_requested_at');
+            }
         });
     }
 
@@ -23,7 +27,13 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('tickets', function (Blueprint $table) {
-            $table->dropColumn(['budget_requested_at', 'budget_decided_at']);
+            $columnsToDrop = array_filter(
+                ['budget_requested_at', 'budget_decided_at'],
+                fn($col) => Schema::hasColumn('tickets', $col)
+            );
+            if (!empty($columnsToDrop)) {
+                $table->dropColumn($columnsToDrop);
+            }
         });
     }
 };
