@@ -17,6 +17,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'ticket' => 'App\\Models\\Ticket',
           'user' => 'App\\Models\\User',
           'userprofile' => 'App\\Models\\UserProfile',
+          'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
           'request' => 'Illuminate\\Http\\Request',
           'hash' => 'Illuminate\\Support\\Facades\\Hash',
           'validator' => 'Illuminate\\Support\\Facades\\Validator',
@@ -39,6 +40,150 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'typeAliasClassName' => NULL,
          'traitData' => NULL,
       )),
+      'f874cf1779d54c95e8ae0c6fc2831dd0' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'App\\Traits',
+         'uses' => 
+        array (
+          'user' => 'App\\Models\\User',
+          'request' => 'Illuminate\\Http\\Request',
+          'auth' => 'Illuminate\\Support\\Facades\\Auth',
+        ),
+         'className' => 'App\\Http\\Controllers\\AdminController',
+         'functionName' => NULL,
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => NULL,
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => 'App\\Traits\\ControllerHelpers',
+         'traitData' => 
+        array (
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminController.php',
+          1 => 'App\\Http\\Controllers\\AdminController',
+          2 => 'App\\Traits\\ControllerHelpers',
+          3 => NULL,
+          4 => NULL,
+        ),
+      )),
+      '4d5f87073ecdb0b7f0299c289ad17b9b' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'App\\Traits',
+         'uses' => 
+        array (
+          'user' => 'App\\Models\\User',
+          'request' => 'Illuminate\\Http\\Request',
+          'auth' => 'Illuminate\\Support\\Facades\\Auth',
+        ),
+         'className' => 'App\\Http\\Controllers\\AdminController',
+         'functionName' => 'authenticatedUser',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'App\\Traits',
+           'uses' => 
+          array (
+            'user' => 'App\\Models\\User',
+            'request' => 'Illuminate\\Http\\Request',
+            'auth' => 'Illuminate\\Support\\Facades\\Auth',
+          ),
+           'className' => 'App\\Http\\Controllers\\AdminController',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => 'App\\Traits\\ControllerHelpers',
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => 'App\\Traits\\ControllerHelpers',
+         'traitData' => 
+        array (
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminController.php',
+          1 => 'App\\Http\\Controllers\\AdminController',
+          2 => 'App\\Traits\\ControllerHelpers',
+          3 => NULL,
+          4 => NULL,
+        ),
+      )),
+      '023f2e388439b66c9dc0021d1e6c9f99' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'App\\Traits',
+         'uses' => 
+        array (
+          'user' => 'App\\Models\\User',
+          'request' => 'Illuminate\\Http\\Request',
+          'auth' => 'Illuminate\\Support\\Facades\\Auth',
+        ),
+         'className' => 'App\\Http\\Controllers\\AdminController',
+         'functionName' => 'requireRole',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'App\\Traits',
+           'uses' => 
+          array (
+            'user' => 'App\\Models\\User',
+            'request' => 'Illuminate\\Http\\Request',
+            'auth' => 'Illuminate\\Support\\Facades\\Auth',
+          ),
+           'className' => 'App\\Http\\Controllers\\AdminController',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => 'App\\Traits\\ControllerHelpers',
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => 'App\\Traits\\ControllerHelpers',
+         'traitData' => 
+        array (
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminController.php',
+          1 => 'App\\Http\\Controllers\\AdminController',
+          2 => 'App\\Traits\\ControllerHelpers',
+          3 => NULL,
+          4 => NULL,
+        ),
+      )),
       '00bf83ec6d2587ad537432e86aed82f8' => 
       \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
          'namespace' => 'App\\Http\\Controllers',
@@ -49,6 +194,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'ticket' => 'App\\Models\\Ticket',
           'user' => 'App\\Models\\User',
           'userprofile' => 'App\\Models\\UserProfile',
+          'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
           'request' => 'Illuminate\\Http\\Request',
           'hash' => 'Illuminate\\Support\\Facades\\Hash',
           'validator' => 'Illuminate\\Support\\Facades\\Validator',
@@ -81,6 +227,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'ticket' => 'App\\Models\\Ticket',
           'user' => 'App\\Models\\User',
           'userprofile' => 'App\\Models\\UserProfile',
+          'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
           'request' => 'Illuminate\\Http\\Request',
           'hash' => 'Illuminate\\Support\\Facades\\Hash',
           'validator' => 'Illuminate\\Support\\Facades\\Validator',
@@ -113,6 +260,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'ticket' => 'App\\Models\\Ticket',
           'user' => 'App\\Models\\User',
           'userprofile' => 'App\\Models\\UserProfile',
+          'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
           'request' => 'Illuminate\\Http\\Request',
           'hash' => 'Illuminate\\Support\\Facades\\Hash',
           'validator' => 'Illuminate\\Support\\Facades\\Validator',
@@ -145,6 +293,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'ticket' => 'App\\Models\\Ticket',
           'user' => 'App\\Models\\User',
           'userprofile' => 'App\\Models\\UserProfile',
+          'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
           'request' => 'Illuminate\\Http\\Request',
           'hash' => 'Illuminate\\Support\\Facades\\Hash',
           'validator' => 'Illuminate\\Support\\Facades\\Validator',
@@ -177,6 +326,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'ticket' => 'App\\Models\\Ticket',
           'user' => 'App\\Models\\User',
           'userprofile' => 'App\\Models\\UserProfile',
+          'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
           'request' => 'Illuminate\\Http\\Request',
           'hash' => 'Illuminate\\Support\\Facades\\Hash',
           'validator' => 'Illuminate\\Support\\Facades\\Validator',
@@ -209,6 +359,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'ticket' => 'App\\Models\\Ticket',
           'user' => 'App\\Models\\User',
           'userprofile' => 'App\\Models\\UserProfile',
+          'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
           'request' => 'Illuminate\\Http\\Request',
           'hash' => 'Illuminate\\Support\\Facades\\Hash',
           'validator' => 'Illuminate\\Support\\Facades\\Validator',
@@ -241,6 +392,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'ticket' => 'App\\Models\\Ticket',
           'user' => 'App\\Models\\User',
           'userprofile' => 'App\\Models\\UserProfile',
+          'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
           'request' => 'Illuminate\\Http\\Request',
           'hash' => 'Illuminate\\Support\\Facades\\Hash',
           'validator' => 'Illuminate\\Support\\Facades\\Validator',
@@ -273,6 +425,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'ticket' => 'App\\Models\\Ticket',
           'user' => 'App\\Models\\User',
           'userprofile' => 'App\\Models\\UserProfile',
+          'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
           'request' => 'Illuminate\\Http\\Request',
           'hash' => 'Illuminate\\Support\\Facades\\Hash',
           'validator' => 'Illuminate\\Support\\Facades\\Validator',
@@ -305,6 +458,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'ticket' => 'App\\Models\\Ticket',
           'user' => 'App\\Models\\User',
           'userprofile' => 'App\\Models\\UserProfile',
+          'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
           'request' => 'Illuminate\\Http\\Request',
           'hash' => 'Illuminate\\Support\\Facades\\Hash',
           'validator' => 'Illuminate\\Support\\Facades\\Validator',
@@ -337,6 +491,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'ticket' => 'App\\Models\\Ticket',
           'user' => 'App\\Models\\User',
           'userprofile' => 'App\\Models\\UserProfile',
+          'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
           'request' => 'Illuminate\\Http\\Request',
           'hash' => 'Illuminate\\Support\\Facades\\Hash',
           'validator' => 'Illuminate\\Support\\Facades\\Validator',
@@ -369,6 +524,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'ticket' => 'App\\Models\\Ticket',
           'user' => 'App\\Models\\User',
           'userprofile' => 'App\\Models\\UserProfile',
+          'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
           'request' => 'Illuminate\\Http\\Request',
           'hash' => 'Illuminate\\Support\\Facades\\Hash',
           'validator' => 'Illuminate\\Support\\Facades\\Validator',
@@ -394,7 +550,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminController.php' => '7506d48e481bc9b8b583ed19170be8eba0f6d037f4b9105a0f5dadfbeae3c379',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminController.php' => 'cee4f3d8f3d194af6d384b4c1b4650e6d108e8fec1cece55438eab78723397ba',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Traits\\ControllerHelpers.php' => '898e94e4ee95b21386960374c6ccd53dc38aa6f83c057bf2a5c3a01396641e62',
     ),
   ),
 ));

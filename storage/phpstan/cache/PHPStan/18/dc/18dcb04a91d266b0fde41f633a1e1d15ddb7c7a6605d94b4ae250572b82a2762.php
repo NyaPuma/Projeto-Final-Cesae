@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Http\Controllers\UiController.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Controllers\UiController
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-78ff1acb53c0354a9af2dc8174c2c0d116aa322dbd002f63df491acf657ff8ad',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-e9e3bc3eb6e07d5a1adcb44658fbeb29d42360ca544d6f26a339ba617121023b',
    'data' => 
   array (
     'locatedSource' => 
@@ -27,7 +27,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     array (
     ),
     'startLine' => 10,
-    'endLine' => 190,
+    'endLine' => 191,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'App\\Http\\Controllers\\Controller',
@@ -905,7 +905,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * Retorna a lista de equipamentos para a interface (acessível a todos os utilizadores).
  */',
         'startLine' => 148,
-        'endLine' => 169,
+        'endLine' => 170,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -943,8 +943,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 174,
-            'endLine' => 174,
+            'startLine' => 175,
+            'endLine' => 175,
             'startColumn' => 31,
             'endColumn' => 46,
             'parameterIndex' => 0,
@@ -959,8 +959,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Mostra a página de analytics com gráficos e relatórios.
  */',
-        'startLine' => 174,
-        'endLine' => 179,
+        'startLine' => 175,
+        'endLine' => 180,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -998,8 +998,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 184,
-            'endLine' => 184,
+            'startLine' => 185,
+            'endLine' => 185,
             'startColumn' => 29,
             'endColumn' => 44,
             'parameterIndex' => 0,
@@ -1014,8 +1014,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Mostra a página de perfil do utilizador autenticado.
  */',
-        'startLine' => 184,
-        'endLine' => 189,
+        'startLine' => 185,
+        'endLine' => 190,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

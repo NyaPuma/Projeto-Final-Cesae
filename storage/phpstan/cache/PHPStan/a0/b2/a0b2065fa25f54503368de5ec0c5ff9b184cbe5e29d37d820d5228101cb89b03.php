@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Http\Middleware\CsrfMiddleware.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Middleware\CsrfMiddleware
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-2e157df21792b8bf0fee551c87045dd2a2d8ae1b48c45e019342b01f5a4cffaa',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-e9bc385011f2d31b77ef8cbecdae483e86ff19bc8743b3e743e3b3572bd0fa39',
    'data' => 
   array (
     'locatedSource' => 
@@ -27,7 +27,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     array (
     ),
     'startLine' => 12,
-    'endLine' => 214,
+    'endLine' => 209,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => NULL,
@@ -324,7 +324,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * Determine if CSRF validation should be skipped.
  */',
         'startLine' => 72,
-        'endLine' => 130,
+        'endLine' => 125,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -362,8 +362,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 135,
-            'endLine' => 135,
+            'startLine' => 130,
+            'endLine' => 130,
             'startColumn' => 48,
             'endColumn' => 63,
             'parameterIndex' => 0,
@@ -405,8 +405,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Get CSRF token from request (header, cookie, or session).
  */',
-        'startLine' => 135,
-        'endLine' => 146,
+        'startLine' => 130,
+        'endLine' => 141,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -444,8 +444,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 151,
-            'endLine' => 151,
+            'startLine' => 146,
+            'endLine' => 146,
             'startColumn' => 42,
             'endColumn' => 54,
             'parameterIndex' => 0,
@@ -468,8 +468,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Validate the CSRF token.
  */',
-        'startLine' => 151,
-        'endLine' => 175,
+        'startLine' => 146,
+        'endLine' => 170,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -505,8 +505,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Regenerate session ID to prevent CSRF fixation attacks.
  */',
-        'startLine' => 180,
-        'endLine' => 205,
+        'startLine' => 175,
+        'endLine' => 200,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -542,8 +542,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Get CSRF configuration from config/csrf.php.
  */',
-        'startLine' => 210,
-        'endLine' => 213,
+        'startLine' => 205,
+        'endLine' => 208,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

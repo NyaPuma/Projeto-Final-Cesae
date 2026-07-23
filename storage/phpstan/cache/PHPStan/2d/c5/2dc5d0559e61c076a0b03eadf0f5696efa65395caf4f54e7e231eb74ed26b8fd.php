@@ -13,6 +13,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'uses' => 
         array (
           'room' => 'App\\Models\\Room',
+          'user' => 'App\\Models\\User',
+          'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
           'request' => 'Illuminate\\Http\\Request',
           'validator' => 'Illuminate\\Support\\Facades\\Validator',
           'oa' => 'OpenApi\\Attributes',
@@ -33,12 +35,158 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'typeAliasClassName' => NULL,
          'traitData' => NULL,
       )),
+      '3ba66cd75aa3bf3d5244f7bf27e3ddf8' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'App\\Traits',
+         'uses' => 
+        array (
+          'user' => 'App\\Models\\User',
+          'request' => 'Illuminate\\Http\\Request',
+          'auth' => 'Illuminate\\Support\\Facades\\Auth',
+        ),
+         'className' => 'App\\Http\\Controllers\\RoomController',
+         'functionName' => NULL,
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => NULL,
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => 'App\\Traits\\ControllerHelpers',
+         'traitData' => 
+        array (
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php',
+          1 => 'App\\Http\\Controllers\\RoomController',
+          2 => 'App\\Traits\\ControllerHelpers',
+          3 => NULL,
+          4 => NULL,
+        ),
+      )),
+      'dd4ebc4ca8eced20814aa6f104e2fd74' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'App\\Traits',
+         'uses' => 
+        array (
+          'user' => 'App\\Models\\User',
+          'request' => 'Illuminate\\Http\\Request',
+          'auth' => 'Illuminate\\Support\\Facades\\Auth',
+        ),
+         'className' => 'App\\Http\\Controllers\\RoomController',
+         'functionName' => 'authenticatedUser',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'App\\Traits',
+           'uses' => 
+          array (
+            'user' => 'App\\Models\\User',
+            'request' => 'Illuminate\\Http\\Request',
+            'auth' => 'Illuminate\\Support\\Facades\\Auth',
+          ),
+           'className' => 'App\\Http\\Controllers\\RoomController',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => 'App\\Traits\\ControllerHelpers',
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => 'App\\Traits\\ControllerHelpers',
+         'traitData' => 
+        array (
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php',
+          1 => 'App\\Http\\Controllers\\RoomController',
+          2 => 'App\\Traits\\ControllerHelpers',
+          3 => NULL,
+          4 => NULL,
+        ),
+      )),
+      '729756a3ca69d4061dcb08a1b1818d39' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'App\\Traits',
+         'uses' => 
+        array (
+          'user' => 'App\\Models\\User',
+          'request' => 'Illuminate\\Http\\Request',
+          'auth' => 'Illuminate\\Support\\Facades\\Auth',
+        ),
+         'className' => 'App\\Http\\Controllers\\RoomController',
+         'functionName' => 'requireRole',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'App\\Traits',
+           'uses' => 
+          array (
+            'user' => 'App\\Models\\User',
+            'request' => 'Illuminate\\Http\\Request',
+            'auth' => 'Illuminate\\Support\\Facades\\Auth',
+          ),
+           'className' => 'App\\Http\\Controllers\\RoomController',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => 'App\\Traits\\ControllerHelpers',
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => 'App\\Traits\\ControllerHelpers',
+         'traitData' => 
+        array (
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php',
+          1 => 'App\\Http\\Controllers\\RoomController',
+          2 => 'App\\Traits\\ControllerHelpers',
+          3 => NULL,
+          4 => NULL,
+        ),
+      )),
       '8338e0291b887b01656f71e5f4544c5d' => 
       \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
          'namespace' => 'App\\Http\\Controllers',
          'uses' => 
         array (
           'room' => 'App\\Models\\Room',
+          'user' => 'App\\Models\\User',
+          'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
           'request' => 'Illuminate\\Http\\Request',
           'validator' => 'Illuminate\\Support\\Facades\\Validator',
           'oa' => 'OpenApi\\Attributes',
@@ -65,6 +213,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'uses' => 
         array (
           'room' => 'App\\Models\\Room',
+          'user' => 'App\\Models\\User',
+          'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
           'request' => 'Illuminate\\Http\\Request',
           'validator' => 'Illuminate\\Support\\Facades\\Validator',
           'oa' => 'OpenApi\\Attributes',
@@ -91,6 +241,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'uses' => 
         array (
           'room' => 'App\\Models\\Room',
+          'user' => 'App\\Models\\User',
+          'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
           'request' => 'Illuminate\\Http\\Request',
           'validator' => 'Illuminate\\Support\\Facades\\Validator',
           'oa' => 'OpenApi\\Attributes',
@@ -117,6 +269,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'uses' => 
         array (
           'room' => 'App\\Models\\Room',
+          'user' => 'App\\Models\\User',
+          'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
           'request' => 'Illuminate\\Http\\Request',
           'validator' => 'Illuminate\\Support\\Facades\\Validator',
           'oa' => 'OpenApi\\Attributes',
@@ -143,6 +297,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'uses' => 
         array (
           'room' => 'App\\Models\\Room',
+          'user' => 'App\\Models\\User',
+          'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
           'request' => 'Illuminate\\Http\\Request',
           'validator' => 'Illuminate\\Support\\Facades\\Validator',
           'oa' => 'OpenApi\\Attributes',
@@ -169,6 +325,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'uses' => 
         array (
           'room' => 'App\\Models\\Room',
+          'user' => 'App\\Models\\User',
+          'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
           'request' => 'Illuminate\\Http\\Request',
           'validator' => 'Illuminate\\Support\\Facades\\Validator',
           'oa' => 'OpenApi\\Attributes',
@@ -195,6 +353,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'uses' => 
         array (
           'room' => 'App\\Models\\Room',
+          'user' => 'App\\Models\\User',
+          'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
           'request' => 'Illuminate\\Http\\Request',
           'validator' => 'Illuminate\\Support\\Facades\\Validator',
           'oa' => 'OpenApi\\Attributes',
@@ -218,7 +378,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php' => 'bad90e0a6f72a25aaf047fbfd2e093b87ca59d7d3bdcb5ca9ebce802bd9f8486',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php' => 'd1f09af3e5a5703b15460196e7c3b02e565fda072b5a3db461274729e0e49012',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Traits\\ControllerHelpers.php' => '898e94e4ee95b21386960374c6ccd53dc38aa6f83c057bf2a5c3a01396641e62',
     ),
   ),
 ));

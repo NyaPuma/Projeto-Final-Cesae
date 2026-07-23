@@ -159,7 +159,7 @@ class TicketController extends Controller
         $ticket = Ticket::with(['equipment.category', 'room', 'user', 'technician', 'status'])->findOrFail($id);
 
         // IDOR: utilizadores comuns só podem ver os próprios tickets
-        if ($user && $user->isCommon() && (int) $ticket->user_id !== (int) $user->id) {
+        if ($user->isCommon() && (int) $ticket->user_id !== (int) $user->id) {
             if ($request->wantsJson() || $request->ajax()) {
                 return response()->json(['message' => 'Acesso negado'], 403);
             }

@@ -14,6 +14,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'user' => 'App\\Models\\User',
           'request' => 'Illuminate\\Http\\Request',
+          'auth' => 'Illuminate\\Support\\Facades\\Auth',
         ),
          'className' => 'App\\Traits\\ControllerHelpers',
          'functionName' => NULL,
@@ -38,6 +39,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'user' => 'App\\Models\\User',
           'request' => 'Illuminate\\Http\\Request',
+          'auth' => 'Illuminate\\Support\\Facades\\Auth',
         ),
          'className' => 'App\\Traits\\ControllerHelpers',
          'functionName' => 'authenticatedUser',
@@ -51,6 +53,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           array (
             'user' => 'App\\Models\\User',
             'request' => 'Illuminate\\Http\\Request',
+            'auth' => 'Illuminate\\Support\\Facades\\Auth',
           ),
            'className' => 'App\\Traits\\ControllerHelpers',
            'functionName' => NULL,
@@ -85,6 +88,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'user' => 'App\\Models\\User',
           'request' => 'Illuminate\\Http\\Request',
+          'auth' => 'Illuminate\\Support\\Facades\\Auth',
         ),
          'className' => 'App\\Traits\\ControllerHelpers',
          'functionName' => 'requireRole',
@@ -98,6 +102,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           array (
             'user' => 'App\\Models\\User',
             'request' => 'Illuminate\\Http\\Request',
+            'auth' => 'Illuminate\\Support\\Facades\\Auth',
           ),
            'className' => 'App\\Traits\\ControllerHelpers',
            'functionName' => NULL,
@@ -128,7 +133,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Traits\\ControllerHelpers.php' => '46af0947464dcf1fb44113381c6f6f8daa1efd2e4bfb0dcf5d512924ec634436',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Traits\\ControllerHelpers.php' => '898e94e4ee95b21386960374c6ccd53dc38aa6f83c057bf2a5c3a01396641e62',
     ),
   ),
 ));
