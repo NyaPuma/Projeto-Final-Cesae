@@ -83,7 +83,7 @@
                                     </svg>
                                 </button>
 
-                                <a href="/ui/login" class="block text-center text-sm font-semibold text-primary transition hover:opacity-70">
+                                <a href="{{ route('ui.login') }}" class="block text-center text-sm font-semibold text-primary transition hover:opacity-70">
                                     {{ __('Voltar ao login') }}
                                 </a>
                             </form>
@@ -164,7 +164,7 @@
 
                 setMsg("{{ __('Password reposta com sucesso! A redirecionar para o login...') }}", 'success');
                 setLoading(false);
-                setTimeout(() => { window.location.href = '/ui/login'; }, 2000);
+                setTimeout(() => { window.location.href = '{{ route('ui.login') }}'; }, 2000);
             } catch (err) {
                 setMsg("{{ __('Falha na comunicação com o servidor.') }}", 'error');
                 setLoading(false);

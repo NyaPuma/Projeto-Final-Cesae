@@ -8,7 +8,7 @@ window.requireAuthOnLoad = true;
 @component('ui.partials.page-card', [
     'title' => __('Editar Utilizador'),
     'subtitle' => __('Atualize as credenciais e permissões de acesso do perfil de utilizador.'),
-    'actions' => '<a href="/ui/users" class="inline-flex items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">← Voltar</a>'
+    'actions' => '<a href="' . route('ui.users') . '" class="inline-flex items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">← Voltar</a>'
 ])
     <div class="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm">
         <form id="editUserForm" class="space-y-6">
@@ -44,7 +44,7 @@ window.requireAuthOnLoad = true;
 
             <div class="mt-6 flex flex-wrap gap-3">
                 <button type="submit" id="submitBtn" class="ui-button ui-button--primary inline-flex items-center justify-center rounded-2xl px-5 py-3 text-sm font-semibold transition hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed">Guardar Alterações</button>
-                <a href="/ui/users" class="ui-button ui-button--outline inline-flex items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-5 py-3 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">Cancelar</a>
+                <a href="{{ route('ui.users') }}" class="ui-button ui-button--outline inline-flex items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-5 py-3 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">Cancelar</a>
             </div>
         </form>
     </div>
@@ -148,7 +148,7 @@ document.getElementById('editUserForm').addEventListener('submit', async (e) => 
 
         message.textContent = 'Utilizador atualizado com sucesso! A redirecionar...';
         message.className = 'min-h-6 text-sm font-medium text-emerald-600 dark:text-emerald-400';
-        setTimeout(() => { window.location.href = '/ui/users'; }, 1500);
+        setTimeout(() => { window.location.href = '{{ route('ui.users') }}'; }, 1500);
     } catch (err) {
         message.textContent = err.message;
         message.className = 'min-h-6 text-sm font-medium text-red-600 dark:text-red-400';

@@ -167,7 +167,7 @@
 
                 setMsg("{{ __('Autenticação bem-sucedida! A redirecionar...') }}", 'success');
                 setLoading(false);
-                setTimeout(() => { window.location.href = '/ui'; }, 500);
+                setTimeout(() => { window.location.href = '{{ route('ui.index') }}'; }, 500);
             } catch (err) {
                 setMsg("{{ __('Falha crítica na comunicação com o servidor.') }}", 'error');
                 setLoading(false);

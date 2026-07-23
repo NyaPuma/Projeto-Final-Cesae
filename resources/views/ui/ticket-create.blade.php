@@ -8,7 +8,7 @@ window.requireAuthOnLoad = true;
 @component('ui.partials.page-card', [
     'title' => __('Criar Ticket'),
     'subtitle' => __('Registe uma nova ocorrência de manutenção com contexto técnico e prioridade.'),
-    'actions' => '<a href="/ui/tickets" class="inline-flex items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">← ' . __('Voltar aos tickets') . '</a>'
+    'actions' => '<a href="' . route('ui.tickets') . '" class="inline-flex items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">← ' . __('Voltar aos tickets') . '</a>'
 ])
     <div class="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm">
 
@@ -210,7 +210,7 @@ document.getElementById('createTicketForm').addEventListener('submit', async (e)
 
         message.textContent = "{{ __('Ticket criado com sucesso!') }}";
         message.className = 'min-h-6 text-sm font-medium text-emerald-600 dark:text-emerald-400';
-        setTimeout(() => { window.location.href = '/ui/tickets'; }, 1500);
+        setTimeout(() => { window.location.href = '{{ route('ui.tickets') }}'; }, 1500);
     } catch (err) {
         message.textContent = err.message;
         message.className = 'min-h-6 text-sm font-medium text-red-600 dark:text-red-400';

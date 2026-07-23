@@ -105,7 +105,7 @@
 
             {{-- Botão Voltar ao Painel Alinhado com o Design --}}
             <div>
-                <a href="/ui"
+                <a href="{{ route('ui.index') }}"
                     class="inline-flex h-10 px-4 items-center justify-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface)] text-xs font-semibold text-[var(--text)] shadow-sm transition-all hover:bg-[var(--surface-2)] cursor-pointer">
                     <svg class="w-4 h-4 text-[var(--text-soft)]" fill="none" stroke="currentColor" stroke-width="2.5"
                         viewBox="0 0 24 24">

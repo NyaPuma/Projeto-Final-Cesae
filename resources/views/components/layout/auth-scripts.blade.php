@@ -15,7 +15,7 @@
 
     function requireAuth() {
         if (!isAuthenticated()) {
-            window.location = '/ui/login';
+            window.location = '{{ route('ui.login') }}';
             return false;
         }
         return true;
@@ -34,14 +34,14 @@
             if (box) {
                 box.innerHTML = `
                     <div class="space-y-2">
-                        <a href="/ui/profile" class="w-full inline-flex items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-2.5 text-xs font-semibold text-[var(--text)] hover:bg-[var(--surface-2)] transition-all duration-200 text-center">Ver Perfil</a>
+                        <a href="{{ route('ui.profile') }}" class="w-full inline-flex items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-2.5 text-xs font-semibold text-[var(--text)] hover:bg-[var(--surface-2)] transition-all duration-200 text-center">Ver Perfil</a>
                         <button onclick="logout()" class="w-full inline-flex items-center justify-center rounded-xl bg-[var(--border)] hover:bg-red-500/10 hover:text-red-600 px-4 py-2.5 text-xs font-semibold text-[var(--text)] cursor-pointer">Terminar Sessão</button>
                     </div>
                 `;
             }
             if (topbarUser) {
                 topbarUser.innerHTML = `
-                    <a href="/ui/profile" class="flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 transition hover:bg-[var(--surface-2)]">
+                    <a href="{{ route('ui.profile') }}" class="flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 transition hover:bg-[var(--surface-2)]">
                         <div class="flex h-9 w-9 items-center justify-center rounded-full bg-primary font-bold text-xs text-black shadow-sm">${userName.charAt(0).toUpperCase()}</div>
                         <div class="hidden md:block">
                             <div class="text-sm font-semibold text-[var(--text)] leading-none">${userName}</div>
@@ -51,8 +51,8 @@
                 `;
             }
         } else {
-            if (box) box.innerHTML = `<a href="/ui/login" class="w-full inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-black shadow-sm hover:opacity-90 text-center">Iniciar Sessão</a>`;
-            if (topbarUser) topbarUser.innerHTML = `<a href="/ui/login" class="inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-black shadow-sm hover:opacity-90">Login / Registo</a>`;
+            if (box) box.innerHTML = `<a href="{{ route('ui.login') }}" class="w-full inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-black shadow-sm hover:opacity-90 text-center">Iniciar Sessão</a>`;
+            if (topbarUser) topbarUser.innerHTML = `<a href="{{ route('ui.login') }}" class="inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-black shadow-sm hover:opacity-90">Login / Registo</a>`;
         }
     }
 
@@ -62,7 +62,7 @@
             localStorage.removeItem('auth_token');
             localStorage.removeItem('user_name');
             localStorage.removeItem('user_role');
-            window.location = '/ui/login';
+            window.location = '{{ route('ui.login') }}';
         });
     }
 

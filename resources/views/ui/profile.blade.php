@@ -17,7 +17,7 @@ window.requireAuthOnLoad = true;
 @component('ui.partials.page-card', [
     'title' => __('Perfil'),
     'subtitle' => __('Consulte e atualize os seus dados pessoais e preferências de acesso.'),
-    'actions' => '<a href="/ui" class="inline-flex items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">← ' . __('Voltar ao painel') . '</a>'
+    'actions' => '<a href="' . route('ui.index') . '" class="inline-flex items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">← ' . __('Voltar ao painel') . '</a>'
 ])
     <div class="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
         <section class="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm">

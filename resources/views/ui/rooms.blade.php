@@ -9,7 +9,7 @@ window.requireAuthOnLoad = true;
     'title' => __('Salas'),
     'subtitle' => __('Consulte e organize as salas e a sua relação com os equipamentos do inventário.'),
     'actions' => '<div class="flex items-center gap-2">'
-        . '<a href="/ui" class="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-slate-300 bg-slate-800/60 hover:bg-slate-700/80 border border-slate-700/80 rounded-full transition-all">'
+        . '<a href="' . route('ui.index') . '" class="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-slate-300 bg-slate-800/60 hover:bg-slate-700/80 border border-slate-700/80 rounded-full transition-all">'
             . '<span>←</span> ' . __('Voltar ao painel')
         . '</a>'
         . '<button id="btnAddRoom" class="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-orange-500 hover:bg-orange-600 rounded-full shadow-sm transition-all cursor-pointer">+ ' . __('Nova sala') . '</button>'
@@ -148,7 +148,7 @@ async function loadRooms(page = 1) {
         const res = await fetch(`/api/rooms?${params.toString()}`, { headers: authHeader() });
 
         if (res.status === 401) {
-            window.location = '/ui/login';
+            window.location = '{{ route('ui.login') }}';
             return;
         }
         if (!res.ok) {

@@ -3,8 +3,6 @@
  * Gestão de salas (listagem, filtros, CRUD)
  */
 
-import { formToObject } from './api-client';
-
 let roomData = [];
 const ROWS_PER_PAGE = 10;
 

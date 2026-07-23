@@ -217,7 +217,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         msgEl.innerText = 'Autenticação bem-sucedida! A redirecionar...';
 
         setTimeout(() => {
-            window.location = '/ui';
+            window.location = '{{ route('ui.index') }}';
         }, 500);
 
     } catch (err) {
