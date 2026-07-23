@@ -105,7 +105,7 @@ class ApiAuthTest extends TestCase
             'active' => true,
         ]);
 
-        $response = $this->withHeader('Authorization', 'Bearer ' . $user->api_token)
+        $response = $this->withHeader('Authorization', 'Bearer '.$user->api_token)
             ->getJson('/api/test-auth');
 
         $response->assertOk();

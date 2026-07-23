@@ -339,6 +339,7 @@ class AuthController extends Controller
         // Token expira em 60 minutos
         if ($record->created_at && $record->created_at->diffInMinutes(now()) > 60) {
             DB::table('password_reset_tokens')->where('email', $data['email'])->delete();
+
             return response()->json(['message' => __('Token expirado. Solicite um novo.')], 422);
         }
 

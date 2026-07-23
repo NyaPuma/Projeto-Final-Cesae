@@ -14,6 +14,7 @@ use App\Traits\ControllerHelpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class TicketController extends Controller
 {
@@ -52,11 +53,11 @@ class TicketController extends Controller
         $data = $request->only(['title', 'description', 'priority', 'equipment_id', 'room_id']);
 
         $validator = Validator::make($data, [
-            'title'        => ['required', 'string', 'max:255'],
-            'description'  => ['required', 'string', 'max:5000'],
-            'priority'     => ['required', 'string', 'in:baixa,média,media,alta,critica,crítica'],
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:5000'],
+            'priority' => ['required', 'string', 'in:baixa,média,media,alta,critica,crítica'],
             'equipment_id' => ['nullable', 'integer', 'exists:equipments,id'],
-            'room_id'      => ['nullable', 'integer', 'exists:rooms,id'],
+            'room_id' => ['nullable', 'integer', 'exists:rooms,id'],
         ]);
 
         if ($validator->fails()) {
@@ -397,7 +398,7 @@ class TicketController extends Controller
 
         // Nome seguro: UUID + extensão real (não usargetClientOriginalName())
         $extension = $file->getClientOriginalExtension();
-        $safeFilename = \Illuminate\Support\Str::uuid() . '.' . $extension;
+        $safeFilename = Str::uuid().'.'.$extension;
 
         $attachment = TicketAttachment::create([
             'ticket_id' => $ticket->id,
@@ -513,7 +514,7 @@ class TicketController extends Controller
             if ($myHigherPriorityTickets > 0) {
                 $msg .= " Destes, {$myHigherPriorityTickets} estão atribuídos a si.";
             }
-            $msg .= " Recomenda-se resolver os mais urgentes primeiro.";
+            $msg .= ' Recomenda-se resolver os mais urgentes primeiro.';
 
             return response()->json([
                 'warning' => true,
@@ -596,6 +597,7 @@ class TicketController extends Controller
                 if ($aPriority !== $bPriority) {
                     return $aPriority <=> $bPriority;
                 }
+
                 // 2º critério: Mais antigo primeiro (created_at ASC)
                 return $a->created_at <=> $b->created_at;
             })
@@ -1072,4 +1074,3 @@ class TicketController extends Controller
         ]);
     }
 }
-

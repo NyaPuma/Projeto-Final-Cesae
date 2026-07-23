@@ -14,6 +14,7 @@ class UsersSeeder extends Seeder
     {
         if (app()->environment('production')) {
             $this->command->error('ABORTADO: Este seeder não deve ser executado em produção!');
+
             return;
         }
 

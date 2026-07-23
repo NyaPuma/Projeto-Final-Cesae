@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Room;
 use App\Models\User;
+use App\Traits\ControllerHelpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use OpenApi\Attributes as OA;
 
 class RoomController extends Controller
 {
-    use \App\Traits\ControllerHelpers;
+    use ControllerHelpers;
+
     /**
      * Lista todas as salas registadas.
      */

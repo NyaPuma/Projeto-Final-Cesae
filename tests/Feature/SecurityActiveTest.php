@@ -2,10 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserProfile;
-use App\Models\Ticket;
-use App\Models\Equipment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\TestCase;
@@ -34,7 +33,7 @@ class SecurityActiveTest extends TestCase
     // ──────────────────────────────────────────────
     // T2 — HTTP Security Headers Check
     // ──────────────────────────────────────────────
-    public function test_T2_security_headers_on_login_page(): void
+    public function test_t2_security_headers_on_login_page(): void
     {
         $response = $this->get('/ui/login');
         $response->assertStatus(200);
@@ -53,24 +52,32 @@ class SecurityActiveTest extends TestCase
         $referrer = $headers->get('Referrer-Policy');
 
         $missing = [];
-        if (!$xFrame) $missing[] = 'X-Frame-Options';
-        if (!$csp) $missing[] = 'Content-Security-Policy';
-        if (!$xContentType) $missing[] = 'X-Content-Type-Options';
-        if (!$referrer) $missing[] = 'Referrer-Policy';
+        if (! $xFrame) {
+            $missing[] = 'X-Frame-Options';
+        }
+        if (! $csp) {
+            $missing[] = 'Content-Security-Policy';
+        }
+        if (! $xContentType) {
+            $missing[] = 'X-Content-Type-Options';
+        }
+        if (! $referrer) {
+            $missing[] = 'Referrer-Policy';
+        }
 
         // Log findings for the report
-        if (!empty($missing)) {
+        if (! empty($missing)) {
             \Log::warning('T2 — Missing security headers on /ui/login', ['missing' => $missing]);
         }
 
         // We record but don't fail — this is an audit test
-        $this->assertEmpty($missing, 'Missing security headers: ' . implode(', ', $missing));
+        $this->assertEmpty($missing, 'Missing security headers: '.implode(', ', $missing));
     }
 
     // ──────────────────────────────────────────────
     // T3 — IDOR Test: User A accesses User B's ticket
     // ──────────────────────────────────────────────
-    public function test_T3_idor_user_cannot_view_other_users_ticket(): void
+    public function test_t3_idor_user_cannot_view_other_users_ticket(): void
     {
         $userA = $this->createUserWithToken(User::ROLE_USER);
         $userB = $this->createUserWithToken(User::ROLE_USER);
@@ -106,7 +113,7 @@ class SecurityActiveTest extends TestCase
         }
     }
 
-    public function test_T3_idor_user_cannot_list_other_users_ticket_photos(): void
+    public function test_t3_idor_user_cannot_list_other_users_ticket_photos(): void
     {
         $userA = $this->createUserWithToken(User::ROLE_USER);
         $userB = $this->createUserWithToken(User::ROLE_USER);
@@ -141,13 +148,13 @@ class SecurityActiveTest extends TestCase
             ]);
         }
 
-        $this->assertTrue(true, 'T3 photos IDOR test completed with status: ' . $status);
+        $this->assertTrue(true, 'T3 photos IDOR test completed with status: '.$status);
     }
 
     // ──────────────────────────────────────────────
     // T4 — Mass Assignment Test
     // ──────────────────────────────────────────────
-    public function test_T4_mass_assignment_cannot_set_user_id_on_ticket(): void
+    public function test_t4_mass_assignment_cannot_set_user_id_on_ticket(): void
     {
         $userA = $this->createUserWithToken(User::ROLE_USER);
         $userB = $this->createUserWithToken(User::ROLE_USER);
@@ -183,7 +190,7 @@ class SecurityActiveTest extends TestCase
         }
     }
 
-    public function test_T4_mass_assignment_cannot_escalate_role_via_profile_id(): void
+    public function test_t4_mass_assignment_cannot_escalate_role_via_profile_id(): void
     {
         $user = $this->createUserWithToken(User::ROLE_USER);
         $originalProfileId = $user->profile_id;
@@ -211,6 +218,7 @@ class SecurityActiveTest extends TestCase
             $this->assertEquals($originalProfileId, $user->profile_id,
                 'User profile_id should not have changed when endpoint is 404'
             );
+
             return;
         }
 
@@ -231,7 +239,7 @@ class SecurityActiveTest extends TestCase
     // ──────────────────────────────────────────────
     // T6 — Webroot Exposure Check
     // ──────────────────────────────────────────────
-    public function test_T6_dot_git_not_exposed_via_webroot(): void
+    public function test_t6_dot_git_not_exposed_via_webroot(): void
     {
         $paths = ['/.git/config', '/.git/HEAD', '/.gitignore'];
 
@@ -253,7 +261,7 @@ class SecurityActiveTest extends TestCase
         $this->assertTrue(true, 'T6 .git exposure check completed');
     }
 
-    public function test_T6_composer_json_not_exposed_via_api_path(): void
+    public function test_t6_composer_json_not_exposed_via_api_path(): void
     {
         $paths = ['/api/composer.json', '/api/.env', '/composer.json'];
 

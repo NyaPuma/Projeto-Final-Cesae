@@ -7,6 +7,7 @@ use App\Models\Notification;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserProfile;
+use App\Traits\ControllerHelpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -15,7 +16,7 @@ use OpenApi\Attributes as OA;
 
 class AdminController extends Controller
 {
-    use \App\Traits\ControllerHelpers;
+    use ControllerHelpers;
 
     /**
      * Retorna todos os utilizadores (Apenas para Administradores).

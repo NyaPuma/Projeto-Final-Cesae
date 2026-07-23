@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
@@ -53,20 +54,20 @@ class AuthFlowDebugTest extends TestCase
         $this->assertNotNull($foundByHash, 'User should be findable by hashed token');
 
         $foundByPlain = User::where('api_token', $token)->where('active', true)->first();
-        dump('Found by plain token: ' . ($foundByPlain ? 'yes' : 'no'));
-        dump('Token length: ' . strlen($token));
-        dump('Hash: ' . $hashToken);
-        dump('Hash length: ' . strlen($hashToken));
-        dump('DB api_token: ' . $dbUser->api_token);
-        dump('DB api_token length: ' . strlen($dbUser->api_token));
+        dump('Found by plain token: '.($foundByPlain ? 'yes' : 'no'));
+        dump('Token length: '.strlen($token));
+        dump('Hash: '.$hashToken);
+        dump('Hash length: '.strlen($hashToken));
+        dump('DB api_token: '.$dbUser->api_token);
+        dump('DB api_token length: '.strlen($dbUser->api_token));
 
         $uiResponse = $this
             ->withHeader('X-Auth-Token', $token)
             ->get('/ui');
 
-        dump('Response status: ' . $uiResponse->status());
-        $logs = \Illuminate\Support\Facades\Log::getLogger()->getHandlers();
-        dump('Response header location: ' . ($uiResponse->headers->get('Location') ?? 'none'));
+        dump('Response status: '.$uiResponse->status());
+        $logs = Log::getLogger()->getHandlers();
+        dump('Response header location: '.($uiResponse->headers->get('Location') ?? 'none'));
 
         $this->assertTrue(true, 'Just dump debug info');
     }

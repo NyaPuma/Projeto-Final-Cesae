@@ -34,6 +34,7 @@ class Ticket extends Model
     public const PRIORITY_MEDIUM = 'média';
 
     public const PRIORITY_HIGH = 'alta';
+
     public const PRIORITY_CRITICAL = 'crítica';
 
     // Estados do Orçamento

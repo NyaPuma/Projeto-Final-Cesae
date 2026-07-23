@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Exports\TicketsExport;
 use App\Models\Ticket;
 use App\Models\TicketStatus;
 use App\Models\TicketType;
@@ -44,22 +45,22 @@ class TicketCountDebugTest extends TestCase
             'created_at' => now(),
         ]);
 
-        dump('DB count: ' . Ticket::count());
+        dump('DB count: '.Ticket::count());
 
-        $export = new \App\Exports\TicketsExport;
+        $export = new TicketsExport;
         $results = $export->query()->get();
 
-        dump('Export query count: ' . $results->count());
-        dump('Export query ids: ' . implode(', ', $results->pluck('id')->toArray()));
+        dump('Export query count: '.$results->count());
+        dump('Export query ids: '.implode(', ', $results->pluck('id')->toArray()));
 
         $rawQuery = Ticket::query()
             ->select(['id', 'title', 'status_id', 'priority', 'opened_at', 'in_progress_at', 'closed_at', 'minutes_spent', 'cost', 'budget_status', 'budget_amount'])
             ->orderBy('created_at', 'desc')
             ->get();
-        dump('Raw select count: ' . $rawQuery->count());
+        dump('Raw select count: '.$rawQuery->count());
 
         $simpleQuery = Ticket::query()->get();
-        dump('Simple query count: ' . $simpleQuery->count());
+        dump('Simple query count: '.$simpleQuery->count());
 
         $this->assertCount(2, $results);
     }

@@ -199,7 +199,7 @@ class SecurityAuthTest extends TestCase
         $this->createProtectedRoute();
 
         for ($i = 0; $i < 10; $i++) {
-            $response = $this->withHeader('X-Auth-Token', 'invalid-token-' . $i)
+            $response = $this->withHeader('X-Auth-Token', 'invalid-token-'.$i)
                 ->getJson('/api/test-security');
 
             $response->assertStatus(401);
