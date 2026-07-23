@@ -398,7 +398,7 @@ function showMessage(msg, isError = false) {
 }
 
 function authHeader() {
-    const token = localStorage.getItem('sanctum_token');
+    const token = localStorage.getItem('auth_token');
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
     const headers = { 'Accept': 'application/json' };
 
@@ -413,7 +413,7 @@ function authHeader() {
 
 function checkCurrentUserIsAdmin() {
     try {
-        const token = localStorage.getItem('sanctum_token');
+        const token = localStorage.getItem('auth_token');
         if (!token) return false;
         const base64Url = token.split('.')[1];
         const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');

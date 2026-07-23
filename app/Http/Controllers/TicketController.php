@@ -33,7 +33,8 @@ class TicketController extends Controller
 
         // Filtro de busca simples por termo
         if ($request->has('q') && ! empty($request->q)) {
-            $query->where('title', 'like', '%'.$request->q.'%');
+            $q = str_replace(['%', '_'], ['\%', '\_'], $request->q);
+            $query->where('title', 'like', '%'.$q.'%');
         }
 
         return response()->json([
@@ -100,7 +101,7 @@ class TicketController extends Controller
         $query = Ticket::with(['equipment', 'room', 'user', 'status', 'technician']);
 
         if ($request->filled('q')) {
-            $q = $request->q;
+            $q = str_replace(['%', '_'], ['\%', '\_'], $request->q);
             $query->where(function ($sub) use ($q) {
                 $sub->where('title', 'like', "%{$q}%")
                     ->orWhere('description', 'like', "%{$q}%");
@@ -151,8 +152,19 @@ class TicketController extends Controller
      */
     public function show(Request $request, int $id)
     {
+        $user = $this->authenticatedUser($request);
+
         // Procura o ticket trazendo os relacionamentos exatos do teu projeto
         $ticket = Ticket::with(['equipment.category', 'room', 'user', 'technician', 'status'])->findOrFail($id);
+
+        // IDOR: utilizadores comuns só podem ver os próprios tickets
+        if ($user && $user->isCommon() && (int) $ticket->user_id !== (int) $user->id) {
+            if ($request->wantsJson() || $request->ajax()) {
+                return response()->json(['message' => 'Acesso negado'], 403);
+            }
+
+            abort(403);
+        }
 
         // Se o pedido vier do teu frontend em JS (Accept: application/json ou AJAX)
         if ($request->wantsJson() || $request->ajax()) {
@@ -171,8 +183,11 @@ class TicketController extends Controller
      */
     public function atribuirTecnico(Request $request, int $id)
     {
+        $user = $this->authenticatedUser($request);
+        $this->requireRole($user, [User::ROLE_TECHNICIAN, User::ROLE_ADMIN]);
+
         $request->validate([
-            'tecnico_id' => 'required|exists:users,id', // Valida se o ID existe na tabela users
+            'tecnico_id' => 'required|exists:users,id',
         ]);
 
         $ticket = Ticket::findOrFail($id);
@@ -369,15 +384,27 @@ class TicketController extends Controller
         }
 
         $file = $request->file('photo');
+
+        // Validação server-side do MIME type ANTES de gravar no disco (não confiar no header do cliente)
+        $realMime = $file->getMimeType();
+        $allowedMimes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+        if (! in_array($realMime, $allowedMimes)) {
+            return response()->json(['message' => 'Tipo de ficheiro não permitido'], 422);
+        }
+
         $path = $file->store('ticket_photos', 'public');
         $url = asset("storage/{$path}");
+
+        // Nome seguro: UUID + extensão real (não usargetClientOriginalName())
+        $extension = $file->getClientOriginalExtension();
+        $safeFilename = \Illuminate\Support\Str::uuid() . '.' . $extension;
 
         $attachment = TicketAttachment::create([
             'ticket_id' => $ticket->id,
             'user_id' => $user->id,
-            'file_name' => $file->getClientOriginalName(),
+            'file_name' => $safeFilename,
             'path' => $path,
-            'mime_type' => $file->getClientMimeType(),
+            'mime_type' => $realMime,
             'size' => $file->getSize(),
         ]);
 
@@ -392,9 +419,16 @@ class TicketController extends Controller
      */
     public function listPhotos(Request $request, int $id)
     {
-        $this->authenticatedUser($request);
+        $user = $this->authenticatedUser($request);
 
         $ticket = Ticket::with('attachments')->findOrFail($id);
+
+        // Regra de autorização:
+        // - ROLE_TECHNICIAN / ROLE_ADMIN: podem listar fotos de qualquer ticket.
+        // - ROLE_USER (common): só podem listar fotos do próprio ticket.
+        if ($user->isCommon() && (int) $ticket->user_id !== (int) $user->id) {
+            return response()->json(['message' => 'Acesso negado'], 403);
+        }
 
         return response()->json(['attachments' => $ticket->attachments]);
     }
@@ -636,7 +670,7 @@ class TicketController extends Controller
             return response()->json(['message' => 'Acesso negado'], 403);
         }
 
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->only(['scheduled_at', 'scheduled_end']), [
             'scheduled_at' => ['required', 'date', 'after:now'],
             'scheduled_end' => ['nullable', 'date', 'after:scheduled_at'],
         ]);

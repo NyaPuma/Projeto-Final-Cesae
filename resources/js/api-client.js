@@ -23,7 +23,7 @@ if (csrfToken) {
 
 // Intercetores
 apiClient.interceptors.request.use((config) => {
-    const token = localStorage.getItem('sanctum_token') || getCookie('sanctum_token');
+    const token = localStorage.getItem('auth_token') || getCookie('auth_token');
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
@@ -47,7 +47,7 @@ window.axios = apiClient;
  * HELPERS
  */
 function handleSessionExpiration() {
-    localStorage.removeItem('sanctum_token');
+    localStorage.removeItem('auth_token');
     localStorage.removeItem('user_role');
     localStorage.removeItem('user_name');
 

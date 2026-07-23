@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Trait ControllerHelpers
@@ -15,7 +16,7 @@ trait ControllerHelpers
      */
     protected function authenticatedUser(Request $request): User
     {
-        return $request->user();
+        return Auth::guard('api')->user() ?? $request->user();
     }
 
     /**

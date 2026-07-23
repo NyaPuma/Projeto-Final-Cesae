@@ -55,7 +55,7 @@ window.requireAuthOnLoad = true;
 <script>
 // Obtém os cabeçalhos padrão com os tokens necessários para a API
 function authHeader() {
-    const token = localStorage.getItem('sanctum_token');
+    const token = localStorage.getItem('auth_token');
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
     const headers = { 'Accept': 'application/json', 'Content-Type': 'application/json' };
     if (token) headers['Authorization'] = 'Bearer ' + token;

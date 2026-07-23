@@ -20,21 +20,22 @@ class NotificationFlowTest extends TestCase
         parent::setUp();
 
         UserProfile::create(['name' => User::ROLE_USER]);
+        UserProfile::create(['name' => User::ROLE_ADMIN]);
     }
 
     public function test_user_can_list_notifications_mark_as_read_and_send_test_email(): void
     {
         Mail::fake();
 
-        $profile = UserProfile::where('name', User::ROLE_USER)->firstOrFail();
-        $user = User::factory()->create([
-            'profile_id' => $profile->id,
+        $adminProfile = UserProfile::where('name', User::ROLE_ADMIN)->firstOrFail();
+        $admin = User::factory()->create([
+            'profile_id' => $adminProfile->id,
             'api_token' => Str::random(60),
-            'email' => 'teacher@example.com',
+            'email' => 'admin@example.com',
         ]);
 
         $notification = Notification::create([
-            'user_id' => $user->id,
+            'user_id' => $admin->id,
             'title' => 'Avaria atualizada',
             'message' => 'O ticket foi atualizado.',
             'type' => 'ticket',
@@ -42,18 +43,18 @@ class NotificationFlowTest extends TestCase
             'link' => '/ui/tickets/1',
         ]);
 
-        $this->withHeader('X-Auth-Token', $user->api_token)
+        $this->withHeader('X-Auth-Token', $admin->api_token)
             ->getJson('/notifications')
             ->assertOk()
             ->assertJsonStructure(['notifications']);
 
-        $this->withHeader('X-Auth-Token', $user->api_token)
+        $this->withHeader('X-Auth-Token', $admin->api_token)
             ->patchJson('/notifications/'.$notification->id)
             ->assertOk();
 
         $this->assertTrue($notification->fresh()->is_read);
 
-        $this->withHeader('X-Auth-Token', $user->api_token)
+        $this->withHeader('X-Auth-Token', $admin->api_token)
             ->postJson('/notifications/test-email')
             ->assertOk();
 

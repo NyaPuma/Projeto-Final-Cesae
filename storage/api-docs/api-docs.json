@@ -336,7 +336,7 @@
                     "Admin"
                 ],
                 "summary": "Listar auditoria",
-                "description": "Lista os registos de auditoria do sistema.\nProtegido globalmente via web.php com os middlewares auth:sanctum e role:admin.",
+                "description": "Lista os registos de auditoria do sistema.\nProtegido globalmente via web.php com os middlewares custom.auth e role:admin.",
                 "operationId": "395c570d8f9419ab32f3da4f449e7613",
                 "responses": {
                     "200": {
@@ -667,6 +667,11 @@
     },
     "components": {
         "securitySchemes": {
+            "X-Auth-Token": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "X-Auth-Token"
+            },
             "BearerAuth": {
                 "type": "http",
                 "bearerFormat": "JWT",

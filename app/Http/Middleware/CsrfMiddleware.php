@@ -103,14 +103,9 @@ class CsrfMiddleware
             }
         }
 
-        // Skip for AJAX requests with custom auth token (application/json)
-        if ($request->expectsJson() || $request->wantsJson()) {
-            $hasCustomAuth = $request->header('X-Auth-Token') ?: $request->bearerToken();
-
-            if (! empty($hasCustomAuth)) {
-                return true;
-            }
-        }
+        // Skip for AJAX requests with custom auth token — REMOVED (M5 fix)
+        // API routes use custom.auth middleware; web routes must always validate CSRF.
+        // Previously any POST with Accept: application/json + X-Auth-Token bypassed CSRF entirely.
 
         // Skip for internal system routes (admin, analytics)
         if ($routeName !== '' && Str::startsWith(strtolower($routeName), ['api.admin', 'api.analytics'])) {

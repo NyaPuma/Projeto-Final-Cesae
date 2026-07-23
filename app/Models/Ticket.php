@@ -22,11 +22,11 @@ class Ticket extends Model
 
     public const STATUS_CLOSED = 'fechada';
 
-    public const STATUS_CANCELLED = 'fechada';
+    public const STATUS_CANCELLED = 'cancelada';
 
-    public const STATUS_PENDING_BUDGET = 'aberta';
+    public const STATUS_PENDING_BUDGET = 'pendente orçamento';
 
-    public const STATUS_REJECTED = 'fechada';
+    public const STATUS_REJECTED = 'recusada';
 
     // Prioridades de avaria
     public const PRIORITY_LOW = 'baixa';
@@ -43,7 +43,34 @@ class Ticket extends Model
 
     public const BUDGET_REJECTED = 'rejected';
 
-    protected $guarded = [];
+    protected $fillable = [
+        'title',
+        'description',
+        'priority',
+        'user_id',
+        'assigned_to',
+        'equipment_id',
+        'room_id',
+        'status_id',
+        'opened_at',
+        'in_progress_at',
+        'closed_at',
+        'reopened_at',
+        'cost',
+        'minutes_spent',
+        'technical_report',
+        'budget_requested',
+        'budget_status',
+        'budget_amount',
+        'budget_requested_at',
+        'budget_approved_by',
+        'budget_decided_at',
+        'budget_feedback',
+        'budget_details',
+        'scheduled_at',
+        'scheduled_end',
+        'scheduled',
+    ];
 
     protected $casts = [
         'opened_at' => 'datetime',

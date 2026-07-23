@@ -100,7 +100,7 @@ function getUserRole(user) {
 }
 
 function authHeader(){
-    const token = localStorage.getItem('sanctum_token');
+    const token = localStorage.getItem('auth_token');
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
     const headers = { 'Accept': 'application/json' };
 

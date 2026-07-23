@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
@@ -26,7 +27,7 @@ class SecurityCsrfTest extends TestCase
         $profileId = UserProfile::where('name', User::ROLE_USER)->value('id');
         User::factory()->create([
             'email' => 'nocsrf@example.com',
-            'password' => bcrypt('password123'),
+            'password' => Hash::make('password123'),
             'profile_id' => $profileId,
             'active' => true,
             'api_token' => Str::random(60),

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
-})->middleware('auth:sanctum');
+})->middleware('custom.auth');
 
 // Documentação da API
 Route::redirect('/docs/openapi', '/api/documentation');
@@ -24,17 +24,22 @@ Route::post('/login', [AuthController::class, 'login'])
     ->withoutMiddleware([VerifyCsrfToken::class]);
 
 // Password reset - público (fluxo de email)
+Route::post('/password/email', [AuthController::class, 'sendResetLink'])
+    ->middleware(['rate.limit:3,1'])
+    ->withoutMiddleware([VerifyCsrfToken::class]);
+
 Route::get('/password/reset/{token}', function ($token) {
     return view('ui.auth-reset', ['token' => $token]);
 })->name('password.reset');
 
 Route::post('/password/reset', [AuthController::class, 'resetPassword'])
     ->name('password.update')
+    ->middleware(['rate.limit:5,1'])
     ->withoutMiddleware([VerifyCsrfToken::class]);
 
 /*
 |--------------------------------------------------------------------------
-| Rotas Protegidas da API (Autenticadas via Sanctum / X-Auth-Token)
+| Rotas Protegidas da API (Autenticadas via X-Auth-Token)
 |--------------------------------------------------------------------------
 */
 Route::middleware(['custom.auth'])->group(function () {
@@ -54,32 +59,41 @@ Route::middleware(['custom.auth'])->group(function () {
     Route::post('/tickets/{id}/cancel', [TicketController::class, 'cancelTicket']);
     Route::post('/tickets/{id}/schedule', [TicketController::class, 'scheduleTicket']);
 
-    // Rotas de técnico
-    Route::put('/technician/tickets/{id}/start', [TicketController::class, 'startTicket']);
-    Route::put('/technician/tickets/{id}/close', [TicketController::class, 'closeTicket']);
-    Route::put('/technician/tickets/{id}/request-budget', [TicketController::class, 'requestBudget']);
+    // Rotas de técnico — requerem perfil técnico
+    Route::middleware(['role:technician'])->group(function () {
+        Route::put('/technician/tickets/{id}/start', [TicketController::class, 'startTicket']);
+        Route::put('/technician/tickets/{id}/close', [TicketController::class, 'closeTicket']);
+        Route::put('/technician/tickets/{id}/request-budget', [TicketController::class, 'requestBudget']);
+    });
 
-    // Rotas de administração
-    Route::get('/admin/users', [AdminController::class, 'users']);
-    Route::post('/admin/users', [AdminController::class, 'storeUser']);
-    Route::patch('/admin/users/{id}', [AdminController::class, 'updateUser']);
-    Route::patch('/admin/users/{id}/inactive', [AdminController::class, 'inactivateUser']);
-    Route::get('/admin/profiles', [AdminController::class, 'profiles']);
-    Route::get('/admin/audits', [AuditController::class, 'index']);
+    // Rotas de administração — requerem perfil administrador
+    Route::middleware(['role:admin'])->group(function () {
+        Route::get('/admin/users', [AdminController::class, 'users']);
+        Route::post('/admin/users', [AdminController::class, 'storeUser']);
+        Route::patch('/admin/users/{id}', [AdminController::class, 'updateUser']);
+        Route::patch('/admin/users/{id}/inactive', [AdminController::class, 'inactivateUser']);
+        Route::get('/admin/profiles', [AdminController::class, 'profiles']);
+        Route::get('/admin/audits', [AuditController::class, 'index']);
 
-    // Gestão de Equipamentos via API
-    Route::get('/admin/equipment', [AdminController::class, 'equipments']);
-    Route::post('/admin/equipment', [AdminController::class, 'storeEquipment']);
-    Route::patch('/admin/equipment/{id}', [AdminController::class, 'updateEquipment']);
-    Route::delete('/admin/equipment/{id}', [AdminController::class, 'destroyEquipment']);
+        // Gestão de Equipamentos via API
+        Route::get('/admin/equipment', [AdminController::class, 'equipments']);
+        Route::post('/admin/equipment', [AdminController::class, 'storeEquipment']);
+        Route::patch('/admin/equipment/{id}', [AdminController::class, 'updateEquipment']);
+        Route::delete('/admin/equipment/{id}', [AdminController::class, 'destroyEquipment']);
 
-    // Gestão de Salas via API
-    Route::get('/admin/rooms', [RoomController::class, 'indexRoom']);
-    Route::post('/admin/rooms', [RoomController::class, 'storeRoom']);
-    Route::patch('/admin/rooms/{id}', [RoomController::class, 'updateRoom']);
-    Route::patch('/admin/rooms/{id}/inactive', [RoomController::class, 'inactivateRoom']);
+        // Gestão de Salas via API
+        Route::get('/admin/rooms', [RoomController::class, 'indexRoom']);
+        Route::post('/admin/rooms', [RoomController::class, 'storeRoom']);
+        Route::patch('/admin/rooms/{id}', [RoomController::class, 'updateRoom']);
+        Route::patch('/admin/rooms/{id}/inactive', [RoomController::class, 'inactivateRoom']);
 
-    // Analíticos
+        // Gestão de Orçamento
+        Route::post('/admin/preventive', [AdminController::class, 'storePreventive']);
+        Route::patch('/admin/tickets/{id}/approve-budget', [AdminController::class, 'approveBudget']);
+        Route::patch('/admin/tickets/{id}/atribuir', [TicketController::class, 'atribuirTecnico']);
+    });
+
+    // Analíticos — requer perfil técnico ou administrador
     Route::get('/analytics/stats', [AnalyticsController::class, 'stats']);
     Route::get('/analytics/charts', [AnalyticsController::class, 'charts']);
     Route::get('/analytics/export/csv', [AnalyticsController::class, 'exportCsv']);
@@ -90,9 +104,4 @@ Route::middleware(['custom.auth'])->group(function () {
     Route::get('/notifications', [NotificationController::class, 'index']);
     Route::patch('/notifications/{id}', [NotificationController::class, 'markAsRead']);
     Route::post('/notifications/test-email', [NotificationController::class, 'sendTestEmail']);
-
-    // Gestão de Orçamento
-    Route::post('/admin/preventive', [AdminController::class, 'storePreventive']);
-    Route::patch('/admin/tickets/{id}/approve-budget', [AdminController::class, 'approveBudget']);
-    Route::patch('/admin/tickets/{id}/atribuir', [TicketController::class, 'atribuirTecnico']);
 });

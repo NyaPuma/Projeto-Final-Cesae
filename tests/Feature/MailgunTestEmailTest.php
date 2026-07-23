@@ -19,13 +19,14 @@ class MailgunTestEmailTest extends TestCase
         parent::setUp();
 
         UserProfile::create(['name' => User::ROLE_USER]);
+        UserProfile::create(['name' => User::ROLE_ADMIN]);
     }
 
     public function test_authenticated_user_can_send_mailgun_test_email(): void
     {
         Mail::fake();
 
-        $profile = UserProfile::where('name', User::ROLE_USER)->first();
+        $profile = UserProfile::where('name', User::ROLE_ADMIN)->first();
 
         $user = User::factory()->create([
             'profile_id' => $profile->id,

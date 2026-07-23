@@ -26,10 +26,10 @@ Route::get('/lang/{locale}', function ($locale) {
     if (in_array($locale, ['en', 'pt'])) {
         session(['locale' => $locale]);
 
-        return redirect()->back()->withCookie(cookie()->forever('locale', $locale));
+        return redirect()->route('ui.login')->withCookie(cookie()->forever('locale', $locale));
     }
 
-    return redirect()->back();
+    return redirect()->route('ui.login');
 })->name('lang.switch');
 
 Route::get('/ui/login', function () {
@@ -37,6 +37,10 @@ Route::get('/ui/login', function () {
 })->name('ui.login');
 
 Route::get('/test-email', function () {
+    if (app()->environment('production')) {
+        abort(404);
+    }
+
     Mail::raw('Teste de comunicação com Mailtrap!', function ($message) {
         $message->to('teste@exemplo.com')
             ->subject('Teste do Sistema de Avarias');
@@ -58,155 +62,173 @@ Route::post('/login', [AuthController::class, 'login'])
 */
 Route::middleware(['custom.auth'])->group(function () {
 
-    Route::withoutMiddleware([VerifyCsrfToken::class])->group(function () {
+    // Ações de conta comuns a qualquer utilizador logado
+    // ----------------------------------------------------------------------
+    Route::post('/logout', [AuthController::class, 'logout'])
+        ->withoutMiddleware([VerifyCsrfToken::class]);
+    Route::post('/password/change', [AuthController::class, 'changePassword']);
+    Route::post('/profile/update', [AuthController::class, 'updateProfile']);
+    Route::get('/notifications', [NotificationController::class, 'index']);
+    Route::patch('/notifications/{id}', [NotificationController::class, 'markAsRead'])
+        ->withoutMiddleware([VerifyCsrfToken::class]);
+    Route::post('/notifications/test-email', [NotificationController::class, 'sendTestEmail'])
+        ->middleware(['role:admin'])
+        ->withoutMiddleware([VerifyCsrfToken::class]);
 
-        // Ações de conta comuns a qualquer utilizador logado
-        // ----------------------------------------------------------------------
-        Route::post('/logout', [AuthController::class, 'logout']);
-        Route::post('/password/change', [AuthController::class, 'changePassword']);
-        Route::post('/profile/update', [AuthController::class, 'updateProfile']);
-        Route::get('/notifications', [NotificationController::class, 'index']);
-        Route::patch('/notifications/{id}', [NotificationController::class, 'markAsRead']);
-        Route::post('/notifications/test-email', [NotificationController::class, 'sendTestEmail']);
+    // ========================================
+    // Rotas Gerais (Acesso para todos os autenticados)
+    // ========================================
+    Route::get('/ui', [UiController::class, 'index']);
+    Route::get('/ui/profile', [UiController::class, 'profile']);
+    Route::get('/ui/tickets', [UiController::class, 'tickets']);
+    Route::get('/ui/tickets/create', [UiController::class, 'ticketCreate'])->middleware('role:admin,user');
+    Route::get('/ui/tickets/{id}', [UiController::class, 'ticketDetail']); // Interface Web do Ticket
+    Route::get('/ui/equipments', [UiController::class, 'equipments']);
+    Route::get('/equipments', [UiController::class, 'getEquipments']);
+
+    // 🚪 Salas - Vistas da Interface (UI)
+    Route::get('/ui/rooms', [UiController::class, 'rooms']);
+    Route::get('/ui/rooms/{id}', [UiController::class, 'roomDetail']);
+
+    // 📡 API de Salas - Endpoints chamados pelo JavaScript (fetch)
+    Route::get('/api/rooms', [RoomController::class, 'indexRoom']);
+    Route::post('/api/rooms', [RoomController::class, 'storeRoom'])
+        ->withoutMiddleware([VerifyCsrfToken::class]);
+    Route::put('/api/rooms/{id}', [RoomController::class, 'updateRoom'])
+        ->withoutMiddleware([VerifyCsrfToken::class]);
+    Route::patch('/api/rooms/{id}', [RoomController::class, 'updateRoom'])
+        ->withoutMiddleware([VerifyCsrfToken::class]);
+
+    // Consultas gerais e interações nos tickets (Endpoints de dados / JSON)
+    Route::get('/tickets/search', [TicketController::class, 'search']);
+    Route::get('/tickets/most-urgent', [TicketController::class, 'getMostUrgentOpenTicket']); // ⚠️ ANTES de /tickets/{id} (para não ser interpretado como ID)
+    Route::get('/tickets', [TicketController::class, 'index']);
+    Route::get('/tickets/{id}', [TicketController::class, 'show']); // Retorno de Dados Puro
+    Route::post('/tickets/{id}/comments', [TicketController::class, 'addComment'])
+        ->withoutMiddleware([VerifyCsrfToken::class]);
+    Route::get('/tickets/{id}/comments', [TicketController::class, 'listComments']);
+    Route::post('/tickets/{id}/photos', [TicketController::class, 'uploadPhoto'])
+        ->withoutMiddleware([VerifyCsrfToken::class]);
+    Route::get('/tickets/{id}/photos', [TicketController::class, 'listPhotos']);
+    Route::delete('/tickets/{id}/photos/{photoId}', [TicketController::class, 'deletePhoto'])
+        ->withoutMiddleware([VerifyCsrfToken::class]);
+
+    // Rotas de Fluxo Misto/Avançado
+    Route::post('/tickets/{id}/reopen', [TicketController::class, 'reopenTicket'])
+        ->withoutMiddleware([VerifyCsrfToken::class]);
+    Route::post('/tickets/{id}/cancel', [TicketController::class, 'cancelTicket'])
+        ->withoutMiddleware([VerifyCsrfToken::class]);
+    Route::post('/tickets/{id}/schedule', [TicketController::class, 'scheduleTicket'])
+        ->withoutMiddleware([VerifyCsrfToken::class]);
+
+    // 💰 Fluxo Orçamental - Submissão do orçamento pelo técnico
+    Route::post('/tickets/{id}/budget', [TicketController::class, 'submitEstimatedBudget'])
+        ->withoutMiddleware([VerifyCsrfToken::class]);
+    Route::post('/tickets/{id}/close', [TicketController::class, 'closeTicketFinal'])
+        ->withoutMiddleware([VerifyCsrfToken::class]);
+
+    // 🛠️ MODELO IN-HOUSE ALINHADO: Qualquer utilizador autenticado pode reportar uma avaria.
+    Route::post('/tickets', [TicketController::class, 'store'])
+        ->withoutMiddleware([VerifyCsrfToken::class]);
+
+    // 📅 Calendário Operacional - acessível a todos os utilizadores autenticados
+    Route::get('/calendar/events', [TicketController::class, 'calendarEvents']);
+    Route::get('/calendar', [TicketController::class, 'calendarView']);
+
+    /*
+     |-- Área Exclusiva do Técnico de Manutenção
+     |----------------------------------------------------------------------*/
+    Route::middleware(['role:technician'])->group(function () {
+        Route::put('/technician/tickets/{id}/start', [TicketController::class, 'startTicket'])
+            ->withoutMiddleware([VerifyCsrfToken::class]);
+        Route::put('/technician/tickets/{id}/close', [TicketController::class, 'closeTicket'])
+            ->withoutMiddleware([VerifyCsrfToken::class]);
+        Route::put('/technician/tickets/{id}/request-budget', [TicketController::class, 'requestBudget'])
+            ->withoutMiddleware([VerifyCsrfToken::class]);
+    });
+
+    /*
+     |-- Área Partilhada (Técnicos e Administradores)
+     |----------------------------------------------------------------------*/
+    Route::middleware(['role:admin'])->group(function () {
+        // UI de acessos restritos ao admin
+        Route::get('/ui/users', [UiController::class, 'users']);
+        Route::get('/ui/audits', [UiController::class, 'audits']);
+
+        // Ações operacionais
+        Route::get('/technician/tickets/open', [TicketController::class, 'openTickets']);
+        Route::post('/tickets/{id}/assign-technician', [TicketController::class, 'assignTechnician'])
+            ->withoutMiddleware([VerifyCsrfToken::class]);
+
+        // (analytics fica apenas para admin)
+    });
+
+    /*
+     |-- Área de Administração e Backoffice (Direção de Operações)
+     |----------------------------------------------------------------------*/
+    Route::middleware(['role:admin'])->group(function () {
 
         // ========================================
-        // Rotas Gerais (Acesso para todos os autenticados)
+        // Módulo Analítico e Relatórios (apenas admin)
         // ========================================
-        Route::get('/ui', [UiController::class, 'index']);
-        Route::get('/ui/profile', [UiController::class, 'profile']);
-        Route::get('/ui/tickets', [UiController::class, 'tickets']);
-        Route::get('/ui/tickets/create', [UiController::class, 'ticketCreate'])->middleware('role:admin,user');
-        Route::get('/ui/tickets/{id}', [UiController::class, 'ticketDetail']); // Interface Web do Ticket
-        Route::get('/ui/equipments', [UiController::class, 'equipments']);
-        Route::get('/equipments', [UiController::class, 'getEquipments']);
+        Route::get('/analytics', [AnalyticsController::class, 'stats']);
+        Route::get('/analytics/charts', [AnalyticsController::class, 'charts']);
+        Route::get('/analytics/export/csv', [AnalyticsController::class, 'exportCsv']);
+        Route::get('/analytics/export/pdf', [AnalyticsController::class, 'exportPdf']);
+        Route::get('/analytics/export/excel', [AnalyticsController::class, 'exportExcel']);
+        Route::get('/ui/analytics', [UiController::class, 'analytics']);
 
-        // 🚪 Salas - Vistas da Interface (UI)
-        Route::get('/ui/rooms', [UiController::class, 'rooms']);
-        Route::get('/ui/rooms/{id}', [UiController::class, 'roomDetail']);
+        // 🔐 SEGURANÇA BLINDADA: Endpoint de registo movido para a área protegida do Administrador.
 
-        // 📡 API de Salas - Endpoints chamados pelo JavaScript (fetch)
-        Route::get('/api/rooms', [RoomController::class, 'indexRoom']);
-        Route::post('/api/rooms', [RoomController::class, 'storeRoom']);
-        Route::put('/api/rooms/{id}', [RoomController::class, 'updateRoom']);
-        Route::patch('/api/rooms/{id}', [RoomController::class, 'updateRoom']);
+        // Protegido com o prefixo /admin e controlado pelo middleware de acessos baseado em roles.
+        Route::post('/admin/users/register', [AuthController::class, 'register'])
+            ->name('admin.users.register')
+            ->middleware(['rate.limit:5,1']);
 
-        // Consultas gerais e interações nos tickets (Endpoints de dados / JSON)
-        Route::get('/tickets/search', [TicketController::class, 'search']);
-        Route::get('/tickets/most-urgent', [TicketController::class, 'getMostUrgentOpenTicket']); // ⚠️ ANTES de /tickets/{id} (para não ser interpretado como ID)
-        Route::get('/tickets', [TicketController::class, 'index']);
-        Route::get('/tickets/{id}', [TicketController::class, 'show']); // Retorno de Dados Puro
-        Route::post('/tickets/{id}/comments', [TicketController::class, 'addComment']);
-        Route::get('/tickets/{id}/comments', [TicketController::class, 'listComments']);
-        Route::post('/tickets/{id}/photos', [TicketController::class, 'uploadPhoto']);
-        Route::get('/tickets/{id}/photos', [TicketController::class, 'listPhotos']);
-        Route::delete('/tickets/{id}/photos/{photoId}', [TicketController::class, 'deletePhoto']);
+        // ========================================
+        // 🤖 MOTOR DE INTELIGÊNCIA ARTIFICIAL (Módulo Assistido)
+        // ========================================
+        // Interface de decisão onde o administrador visualiza a avaria com a sugestão da IA
+        Route::get('/admin/tickets/{id}', [TicketController::class, 'show'])->name('admin.tickets.show');
 
-        // Rotas de Fluxo Misto/Avançado
-        Route::post('/tickets/{id}/reopen', [TicketController::class, 'reopenTicket']);
-        Route::post('/tickets/{id}/cancel', [TicketController::class, 'cancelTicket']);
-        Route::post('/tickets/{id}/schedule', [TicketController::class, 'scheduleTicket']);
+        // Submissão imediata para gravar a recomendação escolhida pela IA no MySQL
+        Route::patch('/admin/tickets/{id}/atribuir', [TicketController::class, 'atribuirTecnico'])->name('admin.tickets.atribuir')
+            ->withoutMiddleware([VerifyCsrfToken::class]);
 
-        // 💰 Fluxo Orçamental - Submissão do orçamento pelo técnico
-        Route::post('/tickets/{id}/budget', [TicketController::class, 'submitEstimatedBudget']);
-        Route::post('/tickets/{id}/close', [TicketController::class, 'closeTicketFinal']);
+        // Logs de Auditoria do Sistema
+        Route::get('/admin/audits', [AuditController::class, 'index']);
 
-        // 🛠️ MODELO IN-HOUSE ALINHADO: Qualquer utilizador autenticado pode reportar uma avaria.
-        // Removido do middleware restritivo 'role:user' para que Técnicos e Admins também criem tickets em campo.
-        Route::post('/tickets', [TicketController::class, 'store']);
+        // Gestão de Utilizadores (CRUD / Estado)
+        Route::get('/admin/users', [AdminController::class, 'users']);
+        Route::post('/admin/users', [AdminController::class, 'storeUser']);
+        Route::patch('/admin/users/{id}', [AdminController::class, 'updateUser']);
+        Route::patch('/admin/users/{id}/inactive', [AdminController::class, 'inactivateUser']);
+        Route::get('/admin/profiles', [AdminController::class, 'profiles']);
 
-        // 📅 Calendário Operacional - acessível a todos os utilizadores autenticados
-        Route::get('/calendar/events', [TicketController::class, 'calendarEvents']);
-        Route::get('/calendar', [TicketController::class, 'calendarView']);
+        // UI de Utilizadores adicionais (Criação e Edição)
+        Route::get('/ui/users/create', [UiController::class, 'userCreate']);
+        Route::get('/ui/users/{id}/edit', [UiController::class, 'userEdit']);
 
-        /*
-         |-- Área Exclusiva do Técnico de Manutenção
-         |----------------------------------------------------------------------*/
-        Route::middleware(['role:technician'])->group(function () {
-            Route::put('/technician/tickets/{id}/start', [TicketController::class, 'startTicket']);
-            Route::put('/technician/tickets/{id}/close', [TicketController::class, 'closeTicket']);
-            Route::put('/technician/tickets/{id}/request-budget', [TicketController::class, 'requestBudget']);
-        });
+        // Gestão do Inventário de Equipamentos
+        Route::get('/admin/equipment', [AdminController::class, 'equipments']);
+        Route::post('/admin/equipment', [AdminController::class, 'storeEquipment']);
+        Route::patch('/admin/equipment/{id}', [AdminController::class, 'updateEquipment']);
+        Route::delete('/admin/equipment/{id}', [AdminController::class, 'destroyEquipment']);
 
-        /*
-         |-- Área Partilhada (Técnicos e Administradores)
-         |----------------------------------------------------------------------*/
-        Route::middleware(['role:admin'])->group(function () {
-            // UI de acessos restritos ao admin
-            Route::get('/ui/users', [UiController::class, 'users']);
-            Route::get('/ui/audits', [UiController::class, 'audits']);
+        // Consulta e criação de salas (UI Admin)
+        Route::get('/ui/rooms/create', [UiController::class, 'roomCreate']);
+        Route::get('/ui/rooms/{id}/edit', [UiController::class, 'roomEdit']);
 
-            // Ações operacionais
-            Route::get('/technician/tickets/open', [TicketController::class, 'openTickets']);
-            Route::post('/tickets/{id}/assign-technician', [TicketController::class, 'assignTechnician']);
+        // Decisão Orçamental de Engenharia
+        Route::post('/admin/preventive', [AdminController::class, 'storePreventive']);
+        Route::patch('/admin/tickets/{id}/approve-budget', [AdminController::class, 'approveBudget']);
+        Route::post('/admin/tickets/{id}/budget-decision', [AdminController::class, 'approveBudget'])
+            ->withoutMiddleware([VerifyCsrfToken::class]);
 
-            // (analytics fica apenas para admin)
-        });
-
-        /*
-         |-- Área de Administração e Backoffice (Direção de Operações)
-         |----------------------------------------------------------------------*/
-        Route::middleware(['role:admin'])->group(function () {
-
-            // ========================================
-            // Módulo Analítico e Relatórios (apenas admin)
-            // ========================================
-            Route::get('/analytics', [AnalyticsController::class, 'stats']);
-            Route::get('/analytics/charts', [AnalyticsController::class, 'charts']);
-            Route::get('/analytics/export/csv', [AnalyticsController::class, 'exportCsv']);
-            Route::get('/analytics/export/pdf', [AnalyticsController::class, 'exportPdf']);
-            Route::get('/analytics/export/excel', [AnalyticsController::class, 'exportExcel']);
-            Route::get('/ui/analytics', [UiController::class, 'analytics']);
-
-            // 🔐 SEGURANÇA BLINDADA: Endpoint de registo movido para a área protegida do Administrador.
-
-            // Protegido com o prefixo /admin e controlado pelo middleware de acessos baseado em roles.
-            Route::post('/admin/users/register', [AuthController::class, 'register'])
-                ->name('admin.users.register')
-                ->middleware(['rate.limit:5,1']);
-
-            // ========================================
-            // 🤖 MOTOR DE INTELIGÊNCIA ARTIFICIAL (Módulo Assistido)
-            // ========================================
-            // Interface de decisão onde o administrador visualiza a avaria com a sugestão da IA
-            Route::get('/admin/tickets/{id}', [TicketController::class, 'show'])->name('admin.tickets.show');
-
-            // Submissão imediata para gravar a recomendação escolhida pela IA no MySQL
-            Route::patch('/admin/tickets/{id}/atribuir', [TicketController::class, 'atribuirTecnico'])->name('admin.tickets.atribuir');
-
-            // Logs de Auditoria do Sistema
-            Route::get('/admin/audits', [AuditController::class, 'index']);
-
-            // Gestão de Utilizadores (CRUD / Estado)
-            Route::get('/admin/users', [AdminController::class, 'users']);
-            Route::post('/admin/users', [AdminController::class, 'storeUser']);
-            Route::patch('/admin/users/{id}', [AdminController::class, 'updateUser']);
-            Route::patch('/admin/users/{id}/inactive', [AdminController::class, 'inactivateUser']);
-            Route::get('/admin/profiles', [AdminController::class, 'profiles']);
-
-            // UI de Utilizadores adicionais (Criação e Edição)
-            Route::get('/ui/users/create', [UiController::class, 'userCreate']);
-            Route::get('/ui/users/{id}/edit', [UiController::class, 'userEdit']);
-
-            // Gestão do Inventário de Equipamentos
-            Route::get('/admin/equipment', [AdminController::class, 'equipments']);
-            Route::post('/admin/equipment', [AdminController::class, 'storeEquipment']);
-            Route::patch('/admin/equipment/{id}', [AdminController::class, 'updateEquipment']);
-            Route::delete('/admin/equipment/{id}', [AdminController::class, 'destroyEquipment']);
-
-            // Consulta e criação de salas (UI Admin)
-            Route::get('/ui/rooms/create', [UiController::class, 'roomCreate']);
-            Route::get('/ui/rooms/{id}/edit', [UiController::class, 'roomEdit']);
-
-            // Decisão Orçamental de Engenharia
-            Route::post('/admin/preventive', [AdminController::class, 'storePreventive']);
-            Route::patch('/admin/tickets/{id}/approve-budget', [AdminController::class, 'approveBudget']);
-            Route::post('/admin/tickets/{id}/budget-decision', [AdminController::class, 'approveBudget']);
-
-            // Gestão de Infraestrutura (Salas / Pavilhões) - Endpoints Admin legados
-            Route::get('/admin/rooms', [RoomController::class, 'indexRoom']);
-            Route::post('/admin/rooms', [RoomController::class, 'storeRoom']);
-            Route::patch('/admin/rooms/{id}', [RoomController::class, 'updateRoom']);
-            Route::patch('/admin/rooms/{id}/inactive', [RoomController::class, 'inactivateRoom']);
-        });
+        // Gestão de Infraestrutura (Salas / Pavilhões) - Endpoints Admin legados
+        Route::get('/admin/rooms', [RoomController::class, 'indexRoom']);
+        Route::post('/admin/rooms', [RoomController::class, 'storeRoom']);
+        Route::patch('/admin/rooms/{id}', [RoomController::class, 'updateRoom']);
+        Route::patch('/admin/rooms/{id}/inactive', [RoomController::class, 'inactivateRoom']);
     });
 });

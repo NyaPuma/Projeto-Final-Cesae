@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Room;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use OpenApi\Attributes as OA;
 
 class RoomController extends Controller
 {
+    use \App\Traits\ControllerHelpers;
     /**
      * Lista todas as salas registadas.
      */
@@ -49,6 +51,9 @@ class RoomController extends Controller
     )]
     public function storeRoom(Request $request)
     {
+        $admin = $this->authenticatedUser($request);
+        $this->requireRole($admin, [User::ROLE_ADMIN]);
+
         $data = $request->only(['name', 'location']);
         $validator = Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
@@ -106,6 +111,9 @@ class RoomController extends Controller
     )]
     public function updateRoom(Request $request, int $id)
     {
+        $admin = $this->authenticatedUser($request);
+        $this->requireRole($admin, [User::ROLE_ADMIN]);
+
         $room = Room::find($id);
         if (! $room) {
             return response()->json(['message' => 'Sala não encontrada'], 404);
@@ -145,6 +153,9 @@ class RoomController extends Controller
     )]
     public function inactivateRoom(Request $request, int $id)
     {
+        $admin = $this->authenticatedUser($request);
+        $this->requireRole($admin, [User::ROLE_ADMIN]);
+
         $room = Room::find($id);
         if (! $room) {
             return response()->json(['message' => 'Sala não encontrada'], 404);

@@ -155,9 +155,10 @@ class UiController extends Controller
         $query = Equipment::with('room');
 
         if ($q) {
-            $query->where(function ($sub) use ($q) {
-                $sub->where('name', 'like', "%{$q}%")
-                    ->orWhere('serial', 'like', "%{$q}%");
+            $safeQ = str_replace(['%', '_'], ['\%', '\_'], $q);
+            $query->where(function ($sub) use ($safeQ) {
+                $sub->where('name', 'like', "%{$safeQ}%")
+                    ->orWhere('serial', 'like', "%{$safeQ}%");
             });
         }
 

@@ -52,9 +52,9 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         // Deteta o token utilizando exatamente a mesma estratégia do teu app.js
-        const hasToken = localStorage.getItem('sanctum_token') || document.cookie.split('; ').reduce((acc, cookie) => {
+        const hasToken = localStorage.getItem('auth_token') || document.cookie.split('; ').reduce((acc, cookie) => {
             const [key, value] = cookie.split('=');
-            return key === 'sanctum_token' ? value : acc;
+            return key === 'auth_token' ? value : acc;
         }, null);
 
         // Se o utilizador possuir o token guardado, reconfigura o botão para o Dashboard

@@ -88,9 +88,9 @@ export const get = (url) => request(url, { method: 'GET' });
 |--------------------------------------------------------------------------
 */
 
-export const saveToken = (token) => token && localStorage.setItem(`${STORAGE_PREFIX}sanctum_token`, token);
-export const getToken = () => localStorage.getItem(`${STORAGE_PREFIX}sanctum_token`);
-export const removeToken = () => localStorage.removeItem(`${STORAGE_PREFIX}sanctum_token`);
+export const saveToken = (token) => token && localStorage.setItem(`${STORAGE_PREFIX}auth_token`, token);
+export const getToken = () => localStorage.getItem(`${STORAGE_PREFIX}auth_token`);
+export const removeToken = () => localStorage.removeItem(`${STORAGE_PREFIX}auth_token`);
 
 /*
 |--------------------------------------------------------------------------
