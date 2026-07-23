@@ -1,4 +1,4 @@
-@extends('ui.layout')
+﻿@extends('ui.layout')
 
 @section('content')
 <script>
@@ -133,11 +133,11 @@ window.requireAuthOnLoad = true;
 let currentPage = 1;
 
 function authHeader(){
-    const token = localStorage.getItem('api_token');
+    const token = localStorage.getItem('sanctum_token');
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
     const headers = { 'Accept': 'application/json' };
 
-    if (token) headers['X-Auth-Token'] = token;
+    if (token) headers['Authorization'] = 'Bearer ' + token;
     if (csrfToken) headers['X-CSRF-TOKEN'] = csrfToken;
 
     return headers;

@@ -26,9 +26,6 @@
                 },
                 "security": [
                     {
-                        "X-Auth-Token": []
-                    },
-                    {
                         "BearerAuth": []
                     }
                 ]
@@ -65,9 +62,6 @@
                 },
                 "security": [
                     {
-                        "X-Auth-Token": []
-                    },
-                    {
                         "BearerAuth": []
                     }
                 ]
@@ -87,9 +81,6 @@
                     }
                 },
                 "security": [
-                    {
-                        "X-Auth-Token": []
-                    },
                     {
                         "BearerAuth": []
                     }
@@ -111,9 +102,6 @@
                     }
                 },
                 "security": [
-                    {
-                        "X-Auth-Token": []
-                    },
                     {
                         "BearerAuth": []
                     }
@@ -147,9 +135,6 @@
                     }
                 },
                 "security": [
-                    {
-                        "X-Auth-Token": []
-                    },
                     {
                         "BearerAuth": []
                     }
@@ -185,9 +170,6 @@
                 },
                 "security": [
                     {
-                        "X-Auth-Token": []
-                    },
-                    {
                         "BearerAuth": []
                     }
                 ]
@@ -221,9 +203,6 @@
                 },
                 "security": [
                     {
-                        "X-Auth-Token": []
-                    },
-                    {
                         "BearerAuth": []
                     }
                 ]
@@ -246,9 +225,6 @@
                 },
                 "security": [
                     {
-                        "X-Auth-Token": []
-                    },
-                    {
                         "BearerAuth": []
                     }
                 ]
@@ -268,9 +244,6 @@
                     }
                 },
                 "security": [
-                    {
-                        "X-Auth-Token": []
-                    },
                     {
                         "BearerAuth": []
                     }
@@ -292,9 +265,6 @@
                 },
                 "security": [
                     {
-                        "X-Auth-Token": []
-                    },
-                    {
                         "BearerAuth": []
                     }
                 ]
@@ -314,9 +284,6 @@
                     }
                 },
                 "security": [
-                    {
-                        "X-Auth-Token": []
-                    },
                     {
                         "BearerAuth": []
                     }
@@ -338,9 +305,6 @@
                 },
                 "security": [
                     {
-                        "X-Auth-Token": []
-                    },
-                    {
                         "BearerAuth": []
                     }
                 ]
@@ -361,9 +325,6 @@
                 },
                 "security": [
                     {
-                        "X-Auth-Token": []
-                    },
-                    {
                         "BearerAuth": []
                     }
                 ]
@@ -375,7 +336,7 @@
                     "Admin"
                 ],
                 "summary": "Listar auditoria",
-                "description": "Lista os registos de auditoria do sistema.\nProtegido globalmente via web.php com os middlewares custom.auth e role:admin.",
+                "description": "Lista os registos de auditoria do sistema.\nProtegido globalmente via web.php com os middlewares auth:sanctum e role:admin.",
                 "operationId": "395c570d8f9419ab32f3da4f449e7613",
                 "responses": {
                     "200": {
@@ -383,9 +344,6 @@
                     }
                 },
                 "security": [
-                    {
-                        "X-Auth-Token": []
-                    },
                     {
                         "BearerAuth": []
                     }
@@ -540,9 +498,6 @@
                 },
                 "security": [
                     {
-                        "X-Auth-Token": []
-                    },
-                    {
                         "BearerAuth": []
                     }
                 ]
@@ -575,9 +530,6 @@
                 },
                 "security": [
                     {
-                        "X-Auth-Token": []
-                    },
-                    {
                         "BearerAuth": []
                     }
                 ]
@@ -596,9 +548,6 @@
                     }
                 },
                 "security": [
-                    {
-                        "X-Auth-Token": []
-                    },
                     {
                         "BearerAuth": []
                     }
@@ -620,9 +569,6 @@
                 },
                 "security": [
                     {
-                        "X-Auth-Token": []
-                    },
-                    {
                         "BearerAuth": []
                     }
                 ]
@@ -643,9 +589,6 @@
                     }
                 },
                 "security": [
-                    {
-                        "X-Auth-Token": []
-                    },
                     {
                         "BearerAuth": []
                     }
@@ -683,9 +626,6 @@
                 },
                 "security": [
                     {
-                        "X-Auth-Token": []
-                    },
-                    {
                         "BearerAuth": []
                     }
                 ]
@@ -719,9 +659,6 @@
                 },
                 "security": [
                     {
-                        "X-Auth-Token": []
-                    },
-                    {
                         "BearerAuth": []
                     }
                 ]
@@ -730,11 +667,6 @@
     },
     "components": {
         "securitySchemes": {
-            "X-Auth-Token": {
-                "type": "apiKey",
-                "name": "X-Auth-Token",
-                "in": "header"
-            },
             "BearerAuth": {
                 "type": "http",
                 "bearerFormat": "JWT",

@@ -1,17 +1,17 @@
-<!-- resources/views/components/layout/auth-scripts.blade.php -->
+﻿<!-- resources/views/components/layout/auth-scripts.blade.php -->
 <script>
     function authHeader() {
-        const token = localStorage.getItem('api_token');
+        const token = localStorage.getItem('sanctum_token');
         const headers = {
             'Accept': 'application/json',
             'X-Requested-With': 'XMLHttpRequest',
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         };
-        if (token) headers['X-Auth-Token'] = token;
+        if (token) headers['Authorization'] = 'Bearer ' + token;
         return headers;
     }
 
-    function isAuthenticated() { return !!localStorage.getItem('api_token'); }
+    function isAuthenticated() { return !!localStorage.getItem('sanctum_token'); }
 
     function requireAuth() {
         if (!isAuthenticated()) {
@@ -26,7 +26,7 @@
         const topbarUser = document.getElementById('topbarUser');
         if (!box && !topbarUser) return;
 
-        const token = localStorage.getItem('api_token');
+        const token = localStorage.getItem('sanctum_token');
         const userName = localStorage.getItem('user_name') || 'Utilizador';
         const userRole = localStorage.getItem('user_role') || 'Utilizador';
 
@@ -59,7 +59,7 @@
     function logout() {
         fetch('/logout', { method: 'POST', headers: Object.assign({ 'Content-Type': 'application/json' }, authHeader()) })
         .finally(() => {
-            localStorage.removeItem('api_token');
+            localStorage.removeItem('sanctum_token');
             localStorage.removeItem('user_name');
             localStorage.removeItem('user_role');
             window.location = '/ui/login';

@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="utf-8">
@@ -157,9 +157,9 @@
                 }
 
                 if (j.token) {
-                    document.cookie = `api_token=${j.token}; path=/; max-age=2592000; SameSite=Lax`;
+                    document.cookie = `sanctum_token=${j.token}; path=/; max-age=2592000; SameSite=Lax`;
                     try {
-                        localStorage.setItem('api_token', j.token);
+                        localStorage.setItem('sanctum_token', j.token);
                         localStorage.setItem('user_name', j.user?.name || 'Utilizador');
                         localStorage.setItem('user_role', j.user?.profile?.name || 'user');
                     } catch (e) {}

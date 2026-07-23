@@ -1,4 +1,4 @@
-@extends('ui.layout')
+﻿@extends('ui.layout')
 
 @section('content')
 <script>
@@ -368,13 +368,13 @@ function showMessage(msg, isError = false) {
 }
 
 function authHeader() {
-    const token = localStorage.getItem('api_token');
+    const token = localStorage.getItem('sanctum_token');
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
     const headers = { 'Accept': 'application/json' };
 
     if (token) {
         headers['Authorization'] = 'Bearer ' + token;
-        headers['X-Auth-Token'] = token;
+        headers['Authorization'] = 'Bearer ' + token;
     }
     if (csrfToken) headers['X-CSRF-TOKEN'] = csrfToken;
 
@@ -383,7 +383,7 @@ function authHeader() {
 
 function checkCurrentUserIsAdmin() {
     try {
-        const token = localStorage.getItem('api_token');
+        const token = localStorage.getItem('sanctum_token');
         if (!token) return false;
         const base64Url = token.split('.')[1];
         const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * API Client Service
  * Serviço centralizado para comunicação com a API
  */
@@ -23,7 +23,7 @@ if (csrfToken) {
 
 // Intercetores
 apiClient.interceptors.request.use((config) => {
-    const token = localStorage.getItem('api_token') || getCookie('api_token');
+    const token = localStorage.getItem('sanctum_token') || getCookie('sanctum_token');
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
@@ -47,7 +47,7 @@ window.axios = apiClient;
  * HELPERS
  */
 function handleSessionExpiration() {
-    localStorage.removeItem('api_token');
+    localStorage.removeItem('sanctum_token');
     localStorage.removeItem('user_role');
     localStorage.removeItem('user_name');
 

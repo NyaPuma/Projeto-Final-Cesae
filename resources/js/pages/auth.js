@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Authentication Pages Module
  * Gestão da autenticação (login, register, etc.)
  */
@@ -98,9 +98,9 @@ export function initLogin() {
 
             // Save token
             if (j.token) {
-                document.cookie = `api_token=${j.token}; path=/; max-age=2592000; SameSite=Lax`;
+                document.cookie = `sanctum_token=${j.token}; path=/; max-age=2592000; SameSite=Lax`;
                 try {
-                    localStorage.setItem('api_token', j.token);
+                    localStorage.setItem('sanctum_token', j.token);
                     localStorage.setItem('user_name', j.user?.name || 'Utilizador');
                     localStorage.setItem('user_role', j.user?.profile?.name || 'user');
                 } catch (e) {}

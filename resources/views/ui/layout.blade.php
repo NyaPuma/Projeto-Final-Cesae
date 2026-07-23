@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="{{ app()->getLocale() }}">
 
 <head>
@@ -269,7 +269,7 @@
     {{-- Core Auth & Engine Scripts --}}
     <script>
         function authHeader() {
-            const token = localStorage.getItem('api_token');
+            const token = localStorage.getItem('sanctum_token');
             const headers = {
                 'Accept': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',
@@ -277,13 +277,13 @@
             };
 
             if (token) {
-                headers['X-Auth-Token'] = token;
+                headers['Authorization'] = 'Bearer ' + token;
             }
             return headers;
         }
 
         function isAuthenticated() {
-            return !!localStorage.getItem('api_token');
+            return !!localStorage.getItem('sanctum_token');
         }
 
         function requireAuth() {
@@ -386,7 +386,7 @@
 
             if (!box && !boxMobile && !topbarUser) return;
 
-            const token = localStorage.getItem('api_token');
+            const token = localStorage.getItem('sanctum_token');
             if (token) {
                 const userName = localStorage.getItem('user_name') || 'Utilizador';
                 const userRole = localStorage.getItem('user_role') || 'Utilizador';
@@ -470,7 +470,7 @@
         }
 
         function logout() {
-            const token = localStorage.getItem('api_token');
+            const token = localStorage.getItem('sanctum_token');
             if (!token) return;
 
             fetch('/logout', {
@@ -480,10 +480,10 @@
                     }, authHeader())
                 })
                 .finally(() => {
-                    localStorage.removeItem('api_token');
+                    localStorage.removeItem('sanctum_token');
                     localStorage.removeItem('user_name');
                     localStorage.removeItem('user_role');
-                    document.cookie = 'api_token=; path=/; max-age=0; SameSite=Lax';
+                    document.cookie = 'sanctum_token=; path=/; max-age=0; SameSite=Lax';
                     window.location = '/ui/login';
                 });
         }

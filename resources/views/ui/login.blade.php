@@ -1,4 +1,4 @@
-@extends('ui.layout')
+﻿@extends('ui.layout')
 
 @section('content')
 <div class="relative min-h-[calc(100vh-80px)] overflow-hidden">
@@ -208,10 +208,10 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         }
 
         const j = await res.json();
-        localStorage.setItem('api_token', j.token);
+        localStorage.setItem('sanctum_token', j.token);
 
         // Atualizar cookie de sessão de forma segura se aplicável
-        document.cookie = `api_token=${j.token}; path=/; max-age=86400; SameSite=Lax`;
+        document.cookie = `sanctum_token=${j.token}; path=/; max-age=86400; SameSite=Lax`;
 
         msgEl.className = 'mt-4 text-center text-xs font-bold text-emerald-600 dark:text-emerald-400 p-3 bg-emerald-500/5 rounded-xl border border-emerald-500/10 animate-[fadeIn_0.2s_ease-out]';
         msgEl.innerText = 'Autenticação bem-sucedida! A redirecionar...';

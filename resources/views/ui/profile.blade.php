@@ -1,4 +1,4 @@
-@extends('ui.layout')
+﻿@extends('ui.layout')
 
 @php
     $profileName = $user->profile->name ?? 'user';
@@ -86,10 +86,10 @@ window.requireAuthOnLoad = true;
 @push('scripts')
 <script>
 function authHeader() {
-    const token = localStorage.getItem('api_token');
+    const token = localStorage.getItem('sanctum_token');
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
     const headers = { 'Accept': 'application/json', 'Content-Type': 'application/json' };
-    if (token) headers['X-Auth-Token'] = token;
+    if (token) headers['Authorization'] = 'Bearer ' + token;
     if (csrfToken) headers['X-CSRF-TOKEN'] = csrfToken;
     return headers;
 }
