@@ -31,6 +31,41 @@ window.requireAuthOnLoad = true;
             @if(isset($user) && $user && $user->isTechnician())
             <div id="techInterventionSection" class="space-y-6">
 
+                {{-- 🟢 ESTADO: ABERTO — Iniciar Reparação (com verificação de prioridade) --}}
+                <div id="techStartCard" class="hidden rounded-2xl border border-blue-500/30 bg-blue-500/5 p-6 shadow-sm space-y-4">
+                    <div class="flex items-start gap-3">
+                        <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"></path>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-sm font-bold text-[var(--text)]">{{ __('Iniciar Reparação') }}</h3>
+                            <p class="text-xs text-[var(--text-soft)] mt-1">
+                                {{ __('Assuma a responsabilidade por este ticket e inicie a intervenção técnica. O sistema verificará se existem tickets mais prioritários pendentes.') }}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-500/5 border border-blue-500/20 rounded-xl p-3 text-xs text-[var(--text-soft)]">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                            <span>{{ __('O ticket está no estado') }} <strong class="text-[var(--text)]">"{{ __('Aberta') }}"</strong>. {{ __('Clique no botão abaixo para começar.') }}</span>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3 pt-1">
+                        <button id="btnStartRepair" type="button" class="flex-1 inline-flex items-center justify-center px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl shadow-sm transition-all cursor-pointer gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"></path></svg>
+                            {{ __('Iniciar Intervenção') }}
+                        </button>
+                        <button id="btnStartRepairForce" type="button" class="hidden flex-1 inline-flex items-center justify-center px-4 py-2.5 bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold rounded-xl shadow-sm transition-all cursor-pointer gap-2">
+                            <span>⚠️</span>
+                            {{ __('Forçar Início (ignorar prioritários)') }}
+                        </button>
+                    </div>
+                </div>
+
                 {{-- ESTADO: BLOQUEADO (Pendente Orçamento > Threshold) --}}
                 <div id="techBlockedCard" class="hidden rounded-2xl border border-amber-500/30 bg-amber-500/5 p-6 shadow-sm space-y-3">
                     <div class="flex items-center gap-3 text-amber-600 dark:text-amber-400">
@@ -460,6 +495,7 @@ async function fetchTicket() {
     `;
 
     const isClosed = statusClean === 'fechada' || statusClean === 'fechado';
+    const isAberta = statusClean === 'aberta' || statusClean === 'aberto';
     const isEmCurso = statusClean === 'em curso' || statusClean === 'em curso';
     const estimatedAmount = parseFloat(ticket.budget_amount || ticket.estimated_cost || ticket.estimatedBudget || 0);
     const threshold = parseFloat(ticket.threshold || 50.00);
@@ -470,14 +506,16 @@ async function fetchTicket() {
     const budgetIsApproved    = ticket.budget_status === 'approved';
     const budgetWasAutoApproved = budgetWasSubmitted && !ticket.budget_status;
 
+    const techStartCard = document.getElementById('techStartCard');
     const techCompletionCard = document.getElementById('techCompletionCard');
     const techBlockedCard = document.getElementById('techBlockedCard');
     const techRejectedCard = document.getElementById('techRejectedCard');
     const techApprovedCard = document.getElementById('techApprovedCard');
     const techBudgetSubmitCard = document.getElementById('techBudgetSubmitCard');
 
-    if (techCompletionCard && techBlockedCard && techRejectedCard && techApprovedCard && techBudgetSubmitCard) {
+    if (techStartCard && techCompletionCard && techBlockedCard && techRejectedCard && techApprovedCard && techBudgetSubmitCard) {
         // Esconder todos primeiro
+        techStartCard.classList.add('hidden');
         techCompletionCard.classList.add('hidden');
         techBlockedCard.classList.add('hidden');
         techRejectedCard.classList.add('hidden');
@@ -502,6 +540,9 @@ async function fetchTicket() {
         } else if (isEmCurso && !budgetWasSubmitted) {
             // Em curso, sem orçamento ainda → mostrar formulário de submissão
             techBudgetSubmitCard.classList.remove('hidden');
+        } else if (isAberta && !budgetIsPending) {
+            // 🟢 Ticket Aberto — mostrar cartão "Iniciar Reparação"
+            techStartCard.classList.remove('hidden');
         } else {
             // Fallback: ticket em curso com algum estado não mapeado
             techBudgetSubmitCard.classList.remove('hidden');
@@ -893,6 +934,111 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btnApproveBudget')?.addEventListener('click', () => handleBudgetAction('approve'));
     document.getElementById('btnRejectBudget')?.addEventListener('click', () => handleBudgetAction('reject'));
 
+    // 🟢 Iniciar Reparação — botão principal
+    document.getElementById('btnStartRepair')?.addEventListener('click', async () => {
+        const startBtn = document.getElementById('btnStartRepair');
+        const forceBtn = document.getElementById('btnStartRepairForce');
+        
+        // Desabilitar temporariamente para evitar duplo clique
+        if (startBtn) {
+            startBtn.disabled = true;
+            startBtn.innerHTML = '<span class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span> {{ __('A verificar...') }}';
+        }
+        
+        try {
+            const res = await fetch(`/technician/tickets/${ticketId}/start`, {
+                method: 'PUT',
+                headers: { ...authHeader(), 'Content-Type': 'application/json' },
+                body: JSON.stringify({ force: false })
+            });
+            
+            const data = await res.json();
+            
+            if (res.ok) {
+                showMessage("{{ __('Reparação iniciada com sucesso!') }}");
+                await fetchTicket();
+                return;
+            }
+            
+            // Se 409 com warning de prioridade — mostrar modal e botão de força
+            if (res.status === 409 && data.warning) {
+                // Mostrar o modal de aviso com informação detalhada
+                showPriorityWarning(
+                    data.urgent_tickets_count || 0,
+                    data.current_priority || ticket.priority,
+                    ticketId,
+                    'start',
+                    data.my_urgent_tickets_count || 0
+                );
+                
+                // Mostrar também o botão de força na card
+                if (forceBtn) {
+                    forceBtn.classList.remove('hidden');
+                    startBtn?.classList.add('hidden');
+                    
+                    // Guardar dados para o force handler
+                    window._forceStartData = {
+                        urgentCount: data.urgent_tickets_count || 0,
+                        currentPriority: data.current_priority || ticket.priority,
+                        myUrgentCount: data.my_urgent_tickets_count || 0
+                    };
+                }
+                
+                showMessage(data.message || "⚠️ {{ __('Existem tickets mais prioritários por atender.') }}", true);
+            } else {
+                showMessage(data.message || "{{ __('Erro ao iniciar reparação.') }}", true);
+            }
+        } catch (e) {
+            showMessage("{{ __('Erro de conexão ao iniciar reparação.') }}", true);
+        } finally {
+            // Só reabilitar o botão normal se o force NÃO estiver visível
+            if (startBtn && forceBtn?.classList.contains('hidden')) {
+                startBtn.disabled = false;
+                startBtn.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"></path></svg>
+                            {{ __('Iniciar Intervenção') }}`;
+            }
+        }
+    });
+    
+    // ⚠️ Forçar início (ignorar prioritários) — visível apenas quando há warning
+    document.getElementById('btnStartRepairForce')?.addEventListener('click', async () => {
+        const forceBtn = document.getElementById('btnStartRepairForce');
+        const startBtn = document.getElementById('btnStartRepair');
+        
+        if (forceBtn) {
+            forceBtn.disabled = true;
+            forceBtn.innerHTML = '<span class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span> {{ __('A iniciar...') }}';
+        }
+        
+        try {
+            const res = await fetch(`/technician/tickets/${ticketId}/start`, {
+                method: 'PUT',
+                headers: { ...authHeader(), 'Content-Type': 'application/json' },
+                body: JSON.stringify({ force: true })
+            });
+            
+            const data = await res.json();
+            
+            if (res.ok) {
+                showMessage("{{ __('Reparação iniciada com sucesso (prioridades ignoradas)! O administrador foi notificado.') }}");
+                // Esconder o modal se estiver aberto
+                hidePriorityWarning();
+                await fetchTicket();
+            } else {
+                showMessage(data.message || "{{ __('Erro ao forçar início da reparação.') }}", true);
+            }
+        } catch (e) {
+            showMessage("{{ __('Erro de conexão.') }}", true);
+        } finally {
+            if (forceBtn) {
+                forceBtn.disabled = false;
+                forceBtn.innerHTML = '<span>⚠️</span> {{ __('Forçar Início (ignorar prioritários)') }}';
+                forceBtn.classList.add('hidden');
+                if (startBtn) startBtn.classList.remove('hidden');
+            }
+        }
+    });
+
     document.getElementById('commentForm')?.addEventListener('submit', async (e) => {
         e.preventDefault();
         const text = document.getElementById('commentText').value.trim();
@@ -946,7 +1092,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnViewUrgent = document.getElementById('btnViewUrgentTickets');
     const btnForceStart = document.getElementById('btnForceStartTicket');
     
-    function showPriorityWarning(urgentCount, currentPriority, ticketId, actionType = 'start') {
+    function showPriorityWarning(urgentCount, currentPriority, ticketId, actionType = 'start', myUrgentCount = 0) {
         const modal = document.getElementById('priorityWarningModal');
         const countEl = document.getElementById('priorityWarningCount');
         const currentEl = document.getElementById('priorityWarningCurrent');
@@ -955,7 +1101,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!modal) return;
         
         if (countEl) {
-            countEl.textContent = `🔥 ${urgentCount} {{ __('ticket(s) de prioridade mais alta à espera') }}`;
+            let countText = `🔥 ${urgentCount} {{ __('ticket(s) de prioridade mais alta à espera') }}`;
+            if (myUrgentCount > 0) {
+                countText += `<br><span class="text-amber-600 dark:text-amber-400 font-bold">👤 ${myUrgentCount} {{ __('desse(s) estão atribuídos a si') }}</span>`;
+            }
+            countEl.innerHTML = countText;
         }
         if (currentEl) {
             currentEl.textContent = `📌 {{ __('Ticket atual:') }} ${currentPriority}`;
@@ -987,10 +1137,30 @@ document.addEventListener('DOMContentLoaded', () => {
         window._pendingActionType = 'start';
     }
     
-    // Botão "Ir para ticket prioritário" → redireciona para listagem com filtro
-    btnViewUrgent?.addEventListener('click', function() {
+    // Botão "Ir para ticket prioritário" → encontra o ticket mais urgente e redireciona diretamente
+    btnViewUrgent?.addEventListener('click', async function() {
         hidePriorityWarning();
-        window.location.href = '/ui/tickets?priority=crítica';
+        const pendingId = window._pendingTicketId || ticketId;
+        
+        try {
+            // Mostrar feedback
+            btnViewUrgent.disabled = true;
+            btnViewUrgent.innerHTML = '<span class="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin"></span> {{ __('A localizar...') }}';
+            
+            const res = await fetch(`/tickets/most-urgent?exclude=${pendingId}`, { headers: authHeader() });
+            if (res.ok) {
+                const data = await res.json();
+                if (data.ticket_id) {
+                    window.location.href = `/ui/tickets/${data.ticket_id}`;
+                    return;
+                }
+            }
+            // Fallback: se não encontrar, vai para a listagem com filtro
+            window.location.href = '/ui/tickets?priority=crítica';
+        } catch (e) {
+            // Fallback em caso de erro
+            window.location.href = '/ui/tickets?priority=crítica';
+        }
     });
     
     // Botão "Sim, continuar" → força a ação (start ou close) com force=true

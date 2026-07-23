@@ -1,20 +1,28 @@
-# ✅ Prioridade "Crítica" Adicionada
+# TODO: Sistema de Aviso de Prioridade ao Técnico
 
-## Concluído
-- [x] `app/Models/Ticket.php` — Constante `PRIORITY_CRITICAL`
-- [x] `app/Http/Controllers/TicketController.php` — Validação, filtro search, ordem prioridades (crítica=4)
-- [x] `resources/views/ui/ticket-create.blade.php` — Card "Crítica" e cor roxa no JS
-- [x] `resources/views/ui/tickets.blade.php` — Filtro "critica" e cores já presentes; mapeamento de estados internos pendente_orçamento → aberta, recusada → fechada
-- [x] `resources/views/ui/ticket-detail.blade.php` — Cores "crítica" e labels já presentes; modal de aviso funcional
-- [x] Traduções completas — 526 chaves no `en.json`
-- [x] Apenas 3 status no filtro: **Aberta**, **Em Curso**, **Fechada**
+## Plano Aprovado
 
-## Status do filtro
-O dropdown de estado já contém apenas:
-- Todos
-- Aberta
-- Em Curso
-- Fechada
+## Passos a Implementar:
 
-Os estados internos (pendente orçamento, recusada, cancelada) são mapeados visualmente para as 3 opções principais nas badges e nos filtros.
+- [x] **Passo 0**: Análise do código existente ✓
+- [x] **Passo 1**: Planeamento ✓
+
+- [x] **Passo 2**: Adicionar cartão "Iniciar Reparação" no HTML (`ticket-detail.blade.php`)
+   - ✅ Adicionar div `#techStartCard` no painel do técnico (visível quando status = "Aberta")
+  - ✅ Botão "Iniciar Intervenção" + "Forçar Início (ignorar prioritários)"
+
+- [x] **Passo 3**: Adicionar lógica JavaScript no `fetchTicket()`
+  - ✅ Mostrar/esconder `techStartCard` baseado no status do ticket
+  - ✅ Handler para "Iniciar Intervenção" que chama `PUT /technician/tickets/{id}/start`
+  - ✅ Tratamento de 409 com o modal de aviso de prioridade
+  - ✅ Botão "Forçar Início" com `force: true` e notificação ao admin
+  - ✅ Atualização do `showPriorityWarning` para mostrar `my_urgent_tickets_count`
+
+- [x] **Passo 4**: Melhoria no backend (`TicketController@startTicket`)
+  - ✅ Verificação de tickets mais prioritários atribuídos ao próprio técnico (`myHigherPriorityTickets`)
+  - ✅ Mensagem mais detalhada no warning informando quantos estão atribuídos ao técnico
+  - ✅ Notificação ao admin com contagem de tickets do técnico
+
+- [x] **Passo 5**: Adicionar traduções (pt.json e en.json)
+  - ✅ 12 novas entradas de tradução
 

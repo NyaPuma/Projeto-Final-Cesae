@@ -92,6 +92,7 @@ Route::middleware(['custom.auth'])->group(function () {
 
         // Consultas gerais e interações nos tickets (Endpoints de dados / JSON)
         Route::get('/tickets/search', [TicketController::class, 'search']);
+        Route::get('/tickets/most-urgent', [TicketController::class, 'getMostUrgentOpenTicket']); // ⚠️ ANTES de /tickets/{id} (para não ser interpretado como ID)
         Route::get('/tickets', [TicketController::class, 'index']);
         Route::get('/tickets/{id}', [TicketController::class, 'show']); // Retorno de Dados Puro
         Route::post('/tickets/{id}/comments', [TicketController::class, 'addComment']);

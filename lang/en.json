@@ -524,5 +524,17 @@
     "Última atualização": "Last update",
     "Últimas 24 horas": "Last 24 hours",
     "Últimas ações registadas na plataforma para acompanhar rapidamente a atividade operacional.": "Latest actions registered on the platform to quickly track operational activity.",
-    "Últimos 200 registos": "Last 200 records"
+    "Últimos 200 registos": "Last 200 records",
+    "A verificar...": "Checking...",
+    "A iniciar...": "Starting...",
+    "Assuma a responsabilidade por este ticket e inicie a intervenção técnica. O sistema verificará se existem tickets mais prioritários pendentes.": "Take responsibility for this ticket and start the technical intervention. The system will check if there are higher priority tickets pending.",
+    "O ticket está no estado": "The ticket is in",
+    "Clique no botão abaixo para começar.": "Click the button below to start.",
+    "Iniciar Intervenção": "Start Intervention",
+    "Forçar Início (ignorar prioritários)": "Force Start (ignore higher priority)",
+    "Reparação iniciada com sucesso (prioridades ignoradas)! O administrador foi notificado.": "Repair started successfully (priorities ignored)! The administrator has been notified.",
+    "Existem tickets mais prioritários por atender.": "There are higher priority tickets to attend.",
+    "desse(s) estão atribuídos a si": "of these are assigned to you",
+    "Iniciar Reparação": "Start Repair",
+    "A localizar...": "Locating..."
 }
