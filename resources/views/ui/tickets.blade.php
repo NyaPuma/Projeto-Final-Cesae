@@ -208,12 +208,12 @@ async function loadTickets(page = 1) {
             const statusName = t.status?.name ?? t.status ?? 'N/A';
             const statusKey = statusName.toLowerCase();
 
-            let statusBadge = `<span class="inline-flex items-center gap-1.5 font-bold text-[var(--text)] text-[11px] uppercase tracking-tight">${statusTranslations[statusKey] || statusName}</span>`;
+            let statusBadge = `<span class="inline-flex items-center gap-1.5 font-bold text-[var(--text)] text-[11px] uppercase tracking-tight">${statusTranslations[statusKey] || 'Fechada'}</span>`;
             if(statusKey === 'aberta' || statusKey === 'aberto') {
                 statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-blue-500/10 text-blue-700 dark:text-blue-400 uppercase tracking-tight">${statusTranslations.aberta}</span>`;
             } else if (statusKey === 'em curso') {
                 statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-amber-500/10 text-amber-800 dark:text-amber-400 uppercase tracking-tight">${statusTranslations['em curso']}</span>`;
-            } else if (statusKey === 'fechada' || statusKey === 'fechado') {
+            } else {
                 statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-[var(--text-soft)]/10 text-[var(--text-soft)] uppercase tracking-tight">${statusTranslations.fechada}</span>`;
             }
 

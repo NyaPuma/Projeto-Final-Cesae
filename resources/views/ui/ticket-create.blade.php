@@ -185,10 +185,17 @@ document.getElementById('createTicketForm').addEventListener('submit', async (e)
     submitBtn.disabled = true;
 
     try {
+        // Só enviar equipment_id se for um número válido
+        const payload = { title, description, priority };
+        const eqId = parseInt(equipment_id, 10);
+        if (equipment_id && !isNaN(eqId) && eqId > 0) {
+            payload.equipment_id = eqId;
+        }
+
         const res = await fetch('/api/tickets', {
             method: 'POST',
             headers: authHeader(),
-            body: JSON.stringify({ title, description, priority, equipment_id })
+            body: JSON.stringify(payload)
         });
 
         const data = await res.json().catch(() => ({}));

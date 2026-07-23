@@ -22,11 +22,11 @@ class Ticket extends Model
 
     public const STATUS_CLOSED = 'fechada';
 
-    public const STATUS_CANCELLED = 'cancelada';
+    public const STATUS_CANCELLED = 'fechada';
 
-    public const STATUS_PENDING_BUDGET = 'pendente orçamento';
+    public const STATUS_PENDING_BUDGET = 'aberta';
 
-    public const STATUS_REJECTED = 'recusada';
+    public const STATUS_REJECTED = 'fechada';
 
     // Prioridades de avaria
     public const PRIORITY_LOW = 'baixa';
