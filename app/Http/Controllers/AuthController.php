@@ -137,12 +137,27 @@ class AuthController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        // Só utilizadores ativos podem autenticar-se.
+        // Não distinguimos email inexistente de password errada por segurança.
         $user = User::where('email', $data['email'])->where('active', true)->first();
 
-        // Não distinguimos email inexistente de password errada por segurança.
-        if (! $user || ! Hash::check($data['password'], $user->password)) {
+        $valid = false;
+        if ($user) {
+            try {
+                $valid = Hash::check($data['password'], $user->password);
+            } catch (\RuntimeException) {
+                // Hash legacy (ex: bcrypt) — valida com PHP nativo e rehash a seguir.
+                $valid = password_verify($data['password'], $user->password);
+            }
+        }
+
+        if (! $valid) {
             return response()->json(['message' => __('Credenciais inválidas.')], 401);
+        }
+
+        // Rehash transparente: se a hash não corresponde ao algoritmo atual, regenera automaticamente.
+        if ($user && Hash::needsRehash($user->password)) {
+            $user->password = Hash::make($data['password']);
+            $user->save();
         }
 
         // Garante que, se o registo ficou sem perfil, o acesso volta a usar o perfil base.
@@ -196,7 +211,13 @@ class AuthController extends Controller
         }
 
         // Confirmamos a password antiga antes de autorizar a alteração.
-        if (! Hash::check($data['current_password'], $user->password)) {
+        try {
+            $validCurrent = Hash::check($data['current_password'], $user->password);
+        } catch (\RuntimeException) {
+            $validCurrent = password_verify($data['current_password'], $user->password);
+        }
+
+        if (! $validCurrent) {
             return response()->json(['message' => __('Password atual incorreta')], 403);
         }
 
@@ -228,7 +249,13 @@ class AuthController extends Controller
                 return response()->json(['message' => __('A palavra-passe atual é obrigatória para alterar a password.')], 422);
             }
 
-            if (! Hash::check($data['current_password'], $user->password)) {
+            try {
+                $validCurrent = Hash::check($data['current_password'], $user->password);
+            } catch (\RuntimeException) {
+                $validCurrent = password_verify($data['current_password'], $user->password);
+            }
+
+            if (! $validCurrent) {
                 return response()->json(['message' => __('Password atual incorreta')], 403);
             }
 

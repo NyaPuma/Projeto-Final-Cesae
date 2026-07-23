@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class UsersSeeder extends Seeder
@@ -23,21 +24,21 @@ class UsersSeeder extends Seeder
                 'name' => 'Administrador',
                 'email' => 'admin@example.com',
                 'profile_name' => 'admin',
-                'password' => bcrypt(Str::random(16)),
+                'password' => Hash::make('admin123'),
                 'api_token' => User::hashToken(Str::random(60)),
             ],
             [
                 'name' => 'Técnico',
                 'email' => 'tech@example.com',
                 'profile_name' => 'technician',
-                'password' => bcrypt(Str::random(16)),
+                'password' => Hash::make('tech123'),
                 'api_token' => User::hashToken(Str::random(60)),
             ],
             [
                 'name' => 'Utilizador',
                 'email' => 'user@example.com',
                 'profile_name' => 'user',
-                'password' => bcrypt(Str::random(16)),
+                'password' => Hash::make('user123'),
                 'api_token' => User::hashToken(Str::random(60)),
             ],
         ];
@@ -74,7 +75,7 @@ class UsersSeeder extends Seeder
                     'name' => 'Utilizador Sintético '.str_pad((string) $index, 3, '0', STR_PAD_LEFT),
                     'email' => $email,
                     'email_verified_at' => now(),
-                    'password' => bcrypt(Str::random(16)),
+                    'password' => Hash::make('password'),
                     'profile_id' => $profileIds[$profileName] ?? $profileIds['user'],
                     'active' => true,
                     'api_token' => User::hashToken(Str::random(60)),

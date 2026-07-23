@@ -7,6 +7,7 @@ use App\Models\Room;
 use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class DatabaseIntegrityTest extends TestCase
@@ -36,7 +37,7 @@ class DatabaseIntegrityTest extends TestCase
         User::create([
             'name' => 'Duplicado User',
             'email' => 'duplicado@empresa.pt',
-            'password' => bcrypt('password123'),
+            'password' => Hash::make('password123'),
         ]);
     }
 }
