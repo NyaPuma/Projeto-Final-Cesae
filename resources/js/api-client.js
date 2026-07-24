@@ -78,3 +78,13 @@ window.api = {
  */
 window.addEventListener('offline', () => window.showToast?.('Modo offline ativo.', 'error'));
 window.addEventListener('online', () => window.showToast?.('Ligação restabelecida.', 'success'));
+
+/**
+ * Converte um HTMLFormElement ou FormData num objeto JavaScript simples
+ * @param {HTMLFormElement|FormData} form 
+ * @returns {Object}
+ */
+export function formToObject(form) {
+    const formData = form instanceof FormData ? form : new FormData(form);
+    return Object.fromEntries(formData.entries());
+}

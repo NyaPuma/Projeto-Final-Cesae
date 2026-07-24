@@ -4,7 +4,8 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
-@endpush
+    <style>
+        .fc-theme-standard td, .fc-theme-standard th {
             border-color: var(--border) !important;
         }
 
@@ -39,9 +40,7 @@
         .fc-event {
             border: none !important;
             background: var(--primary) !important;
-            /* Cores sólidas oferecem rácios de contraste mais previsíveis */
             color: #ffffff !important;
-            /* Elevado contraste contra fundo primário */
             border-radius: 8px !important;
             padding: 6px 10px !important;
             font-size: 11px !important;
@@ -220,7 +219,6 @@
         let lastFocusedElement = null;
 
         function openModal(title, start, end) {
-            // Guarda o elemento focado para devolver o foco após fechar (WCAG 2.4.3)
             lastFocusedElement = document.activeElement;
 
             document.getElementById('modalTitle').innerText = `🔧 ${title}`;
@@ -230,12 +228,10 @@
             const modal = document.getElementById('eventModal');
             modal.classList.remove('hidden');
 
-            // Coloca o foco no botão de fechar para rápida interação por teclado
             setTimeout(() => {
                 document.getElementById('closeModalBtn').focus();
             }, 50);
 
-            // Fechar modal ao pressionar ESC
             document.addEventListener('keydown', handleEscapeKey);
         }
 
@@ -244,7 +240,6 @@
             modal.classList.add('hidden');
             document.removeEventListener('keydown', handleEscapeKey);
 
-            // Devolve o foco ao elemento original (WCAG)
             if (lastFocusedElement) {
                 lastFocusedElement.focus();
             }
@@ -269,7 +264,7 @@
                     locale: "{{ app()->getLocale() === 'en' ? 'en' : 'pt' }}",
                     initialView: "dayGridMonth",
                     height: "auto",
-                    firstDay: 1, // Começa na Segunda-feira
+                    firstDay: 1,
                     nowIndicator: true,
                     navLinks: true,
                     editable: false,
@@ -293,7 +288,7 @@
 
                     datesSet: function(dateInfo) {
                         if (calendar && typeof calendar.refetchEvents === 'function') {
-                            // Atualiza os totais e recarrega os dados da rota /calendar/events
+                            // Eventos atualizados dinamicamente
                         }
                     },
 
@@ -314,16 +309,13 @@
                             .then(events => {
                                 if (!events) return;
 
-                                // Atualiza o total absoluto no painel lateral
                                 const totalEl = document.getElementById("eventsTotal");
                                 if (totalEl) totalEl.innerText = events.length;
 
-                                // Determinar dinamicamente o mês em visualização ativa
                                 const currentPeriod = calendar ? calendar.getDate() : fetchInfo.start;
                                 const activeMonth = currentPeriod.getMonth();
                                 const activeYear = currentPeriod.getFullYear();
 
-                                // Filtrar eventos do mês ativo na vista do utilizador
                                 const totalMonth = events.filter(e => {
                                     const eventDate = new Date(e.start);
                                     return eventDate.getMonth() === activeMonth && eventDate
@@ -344,12 +336,10 @@
                     eventDidMount(info) {
                         info.el.style.cursor = "pointer";
                         info.el.title = info.event.title;
-                        // WCAG: Define atributos de acessibilidade nos eventos para leitores de ecrã
                         info.el.setAttribute('tabindex', '0');
                         info.el.setAttribute('role', 'button');
                         info.el.setAttribute('aria-label', `${info.event.title}, clique para ver detalhes`);
 
-                        // Permitir acionar o evento via teclado (Enter)
                         info.el.addEventListener('keydown', (e) => {
                             if (e.key === 'Enter' || e.key === ' ') {
                                 e.preventDefault();
