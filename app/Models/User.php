@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -14,7 +15,7 @@ use Illuminate\Notifications\Notifiable;
  */
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     /** @var string */
     protected $table = 'users';
@@ -154,15 +155,15 @@ class User extends Authenticatable
      */
     private static function ensureValidProfile(User $user): void
     {
-        $profileName = $user->profile->name ?? '';
-
-        if (! $user->profile_id || ! self::isValidProfile($profileName)) {
-            $defaultRole = self::ROLE_USER;
-
-            // Procura pelo perfil padrão ou cria-o atomicamente caso não exista
-            $existingProfile = UserProfile::firstOrCreate(['name' => $defaultRole]);
-
-            $user->profile_id = $existingProfile->id;
+        if ($user->profile_id) {
+            $profileName = UserProfile::where('id', $user->profile_id)->value('name');
+            if ($profileName && self::isValidProfile($profileName)) {
+                return;
+            }
         }
+
+        $defaultRole = self::ROLE_USER;
+        $existingProfile = UserProfile::firstOrCreate(['name' => $defaultRole]);
+        $user->profile_id = $existingProfile->id;
     }
 }

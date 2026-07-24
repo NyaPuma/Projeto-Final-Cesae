@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Ticket;
+use App\Models\TicketStatus;
 use App\Models\User;
 use OpenAI\Laravel\Facades\OpenAI;
 
@@ -19,8 +20,12 @@ class AIService
         })
             ->where('active', true)
             ->withCount(['assignedTickets as tickets_ativos' => function ($query) {
-                // Conta apenas os tickets em aberto ou progresso (IDs de estados não concluídos)
-                $query->whereNotIn('status_id', [3, 4]); // Ex: 3 = Fechado, 4 = Cancelado
+                $closedStatusId = Ticket::getStatusIdByName(Ticket::STATUS_CLOSED);
+                $cancelledStatusId = Ticket::getStatusIdByName(Ticket::STATUS_CANCELLED);
+                $statusIds = array_filter([$closedStatusId, $cancelledStatusId]);
+                if (! empty($statusIds)) {
+                    $query->whereNotIn('status_id', $statusIds);
+                }
             }])
             ->get(['id', 'name']);
 

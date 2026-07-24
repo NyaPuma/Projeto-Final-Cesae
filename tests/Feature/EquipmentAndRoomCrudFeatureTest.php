@@ -86,7 +86,7 @@ class EquipmentAndRoomCrudFeatureTest extends TestCase
             ->deleteJson("/api/admin/equipment/{$equipId}")
             ->assertStatus(200);
 
-        $this->assertDatabaseMissing('equipments', [
+        $this->assertSoftDeleted('equipments', [
             'id' => $equipId,
         ]);
     }

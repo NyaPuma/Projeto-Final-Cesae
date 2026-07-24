@@ -67,7 +67,9 @@ class UsersSeeder extends Seeder
 
         for ($i = 1; $i <= $targetCount - $currentCount; $i++) {
             $index = $i + $currentCount;
-            $profileName = $index % 3 === 0 ? 'technician' : ($index % 2 === 0 ? 'user' : 'admin');
+            // Distribuição realista: ~10% admin, ~15% técnico, ~75% utilizador comum
+            $roll = $index % 10;
+            $profileName = $roll === 0 ? 'admin' : ($roll <= 2 ? 'technician' : 'user');
             $email = sprintf('synthetic-%03d@example.invalid', $index);
 
             DB::table('users')->updateOrInsert(

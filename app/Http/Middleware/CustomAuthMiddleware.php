@@ -23,15 +23,16 @@ class CustomAuthMiddleware
             // ignorar
         }
 
-        $token = $request->header('X-Auth-Token')
-            ?: $request->bearerToken()
-            ?: $request->cookie('api_token')
-            ?: $sessionToken;
+        // Recolhe todos os candidatos a token (por ordem de prioridade)
+        $candidates = array_filter([
+            $request->header('X-Auth-Token'),
+            $request->bearerToken(),
+            $request->cookie('api_token'),
+            $request->cookie('auth_token'),
+            $sessionToken,
+        ], fn ($v) => is_string($v) && $v !== '');
 
-        $hasCookie = $request->cookies->has('api_token');
-        $hasSessionToken = $sessionToken !== '' && $sessionToken !== null;
-
-        if (! is_string($token) || $token === '') {
+        if (empty($candidates)) {
             if ($request->expectsJson() || $request->wantsJson()) {
                 return response()->json([
                     'message' => 'Autenticação necessária. Envie X-Auth-Token no cabeçalho.',
@@ -42,14 +43,31 @@ class CustomAuthMiddleware
             return redirect('/ui/login');
         }
 
-        // Valida o token via hash HMAC-SHA256 e se o utilizador está ativo
-        $tokenHash = User::hashToken($token);
-        $user = User::with('profile')->where('api_token', $tokenHash)->where('active', true)->first();
+        // O primeiro candidato é a fonte explícita (header ou cookie). Se existir,
+        // valida APENAS esse. Caso contrário, tenta todos (cookie → session).
+        $explicitToken = reset($candidates);
+        $tokensToTry = $request->header('X-Auth-Token') || $request->bearerToken()
+            ? [$explicitToken]
+            : $candidates;
 
-        // Fallback: aceitar tokens em plaintext APENAS em ambiente de teste
-        // (a factory de testes armazena tokens em plaintext; em produção o login armazena hash)
-        if (! $user && app()->environment('testing')) {
-            $user = User::with('profile')->where('api_token', $token)->where('active', true)->first();
+        $user = null;
+        $token = null;
+        $hasCookie = $request->cookies->has('api_token') || $request->cookies->has('auth_token');
+
+        foreach ($tokensToTry as $candidate) {
+            $tokenHash = User::hashToken($candidate);
+            $found = User::with('profile')->where('api_token', $tokenHash)->where('active', true)->whereNull('deleted_at')->first();
+
+            // Fallback: aceitar tokens em plaintext APENAS em ambiente de teste
+            if (! $found && app()->environment('testing')) {
+                $found = User::with('profile')->where('api_token', $candidate)->where('active', true)->whereNull('deleted_at')->first();
+            }
+
+            if ($found) {
+                $user = $found;
+                $token = $candidate;
+                break;
+            }
         }
 
         if (! $user) {

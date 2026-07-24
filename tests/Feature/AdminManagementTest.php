@@ -81,7 +81,7 @@ class AdminManagementTest extends TestCase
             ->deleteJson('/admin/equipment/'.$equipmentId)
             ->assertOk();
 
-        $this->assertDatabaseMissing('equipments', ['id' => $equipmentId]);
+        $this->assertSoftDeleted('equipments', ['id' => $equipmentId]);
     }
 
     public function test_admin_can_approve_budget(): void

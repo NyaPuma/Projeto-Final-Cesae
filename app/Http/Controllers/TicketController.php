@@ -30,16 +30,15 @@ class TicketController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Ticket::with(['equipment', 'room', 'technician', 'status']);
+        $query = Ticket::with(['equipment', 'room', 'user', 'technician', 'status']);
 
-        // Filtro de busca simples por termo
         if ($request->has('q') && ! empty($request->q)) {
             $q = str_replace(['%', '_'], ['\%', '\_'], $request->q);
             $query->where('title', 'like', '%'.$q.'%');
         }
 
         return response()->json([
-            'tickets' => Ticket::with(['equipment', 'room', 'user'])->latest()->paginate(15),
+            'tickets' => $query->latest()->paginate(15),
         ]);
     }
 
@@ -584,23 +583,10 @@ class TicketController extends Controller
         $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
         $excludeId = (int) $request->input('exclude', 0);
 
-        // Ordem de prioridade numérica para compatibilidade com SQLite
-        $priorityMap = ['crítica' => 0, 'alta' => 1, 'média' => 2, 'baixa' => 3];
-
         $ticket = Ticket::where('status_id', $openStatusId)
             ->where('id', '!=', $excludeId)
-            ->get()
-            ->sort(function ($a, $b) use ($priorityMap) {
-                // 1º critério: Prioridade (crítica=0, alta=1, média=2, baixa=3)
-                $aPriority = $priorityMap[$a->priority] ?? 99;
-                $bPriority = $priorityMap[$b->priority] ?? 99;
-                if ($aPriority !== $bPriority) {
-                    return $aPriority <=> $bPriority;
-                }
-
-                // 2º critério: Mais antigo primeiro (created_at ASC)
-                return $a->created_at <=> $b->created_at;
-            })
+            ->orderByRaw("CASE priority WHEN 'crítica' THEN 0 WHEN 'alta' THEN 1 WHEN 'média' THEN 2 WHEN 'baixa' THEN 3 ELSE 99 END")
+            ->orderBy('created_at', 'asc')
             ->first();
 
         if (! $ticket) {

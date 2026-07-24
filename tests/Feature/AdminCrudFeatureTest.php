@@ -166,7 +166,7 @@ class AdminCrudFeatureTest extends TestCase
             ->deleteJson("/admin/equipment/{$equipment->id}");
 
         $response->assertOk();
-        $this->assertDatabaseMissing('equipments', ['id' => $equipment->id]);
+        $this->assertSoftDeleted('equipments', ['id' => $equipment->id]);
     }
 
     // ─── Room CRUD ───────────────────────────────────────────────────────

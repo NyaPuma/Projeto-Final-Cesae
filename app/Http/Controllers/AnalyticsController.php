@@ -10,12 +10,14 @@ use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Maatwebsite\Excel\Facades\Excel;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class AnalyticsController extends Controller
 {
+
     /**
      * Obtém o payload completo do dashboard analítico para a interface web.
      */
@@ -64,13 +66,18 @@ class AnalyticsController extends Controller
 
     private function buildPayload(): array
     {
-        $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
-        $inProgressStatusId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
-        $closedStatusId = Ticket::getStatusIdByName(Ticket::STATUS_CLOSED);
+        $cacheKey = 'analytics_dashboard_payload';
 
-        $tickets = Ticket::query()
-            ->with(['equipment', 'room', 'technician'])
-            ->get();
+        return Cache::remember($cacheKey, 60, function () {
+            $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+            $inProgressStatusId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
+            $closedStatusId = Ticket::getStatusIdByName(Ticket::STATUS_CLOSED);
+
+            $tickets = Ticket::query()
+                ->select('id', 'title', 'status_id', 'priority', 'equipment_id', 'room_id', 'assigned_to', 'opened_at', 'closed_at', 'in_progress_at', 'cost', 'budget_status', 'minutes_spent')
+                ->with(['equipment:name', 'room:name', 'technician:name'])
+                ->whereNull('deleted_at')
+                ->get();
 
         $openTickets = $tickets->filter(fn ($ticket) => $ticket->status_id === $openStatusId);
         $inProgressTickets = $tickets->filter(fn ($ticket) => $ticket->status_id === $inProgressStatusId);
@@ -168,7 +175,7 @@ class AnalyticsController extends Controller
             })
             ->values();
 
-        return [
+        $payload = [
             'average_resolution_minutes' => round($averageResolutionMinutes, 1),
             'average_waiting_minutes' => round($averageWaitingMinutes, 1),
             'open_tickets' => $openTickets->count(),
@@ -201,6 +208,9 @@ class AnalyticsController extends Controller
             'top_technicians' => $topTechnicians,
             'recent_activity' => $recentActivity,
         ];
+
+        return $payload;
+        });
     }
 
     private function buildMonthlySeries(Collection $tickets, int $openStatusId, int $inProgressStatusId, int $closedStatusId): array

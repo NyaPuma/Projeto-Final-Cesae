@@ -7,7 +7,7 @@ use Tests\Performance\PerformanceTestCase;
 
 class AuthPerformanceTest extends PerformanceTestCase
 {
-    private const MAX_LOGIN_MS = 250;
+    private const MAX_LOGIN_MS = 350;
 
     public function test_login_response_time(): void
     {

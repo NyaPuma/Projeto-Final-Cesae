@@ -53,6 +53,8 @@ class Ticket extends Model
         'equipment_id',
         'room_id',
         'status_id',
+        'custo_estimado',
+        'orcamento_aprovado',
         'opened_at',
         'in_progress_at',
         'closed_at',
@@ -80,13 +82,15 @@ class Ticket extends Model
         'reopened_at' => 'datetime',
         'scheduled_at' => 'datetime',
         'scheduled_end' => 'datetime',
-        'budget_requested_at' => 'datetime', // 🟢 CORRIGIDO: Garante uso de objetos Carbon/DateTime para o SLA
-        'budget_decided_at' => 'datetime', // 🟢 CORRIGIDO: Garante uso de objetos Carbon/DateTime para o SLA
+        'budget_requested_at' => 'datetime',
+        'budget_decided_at' => 'datetime',
         'scheduled' => 'boolean',
         'budget_requested' => 'boolean',
+        'orcamento_aprovado' => 'boolean',
         'cost' => 'decimal:2',
         'budget_amount' => 'decimal:2',
-        'budget_details' => 'json', // Orçamento detalhado (array de itens)
+        'custo_estimado' => 'decimal:2',
+        'budget_details' => 'json',
     ];
 
     // --- RELACIONAMENTOS ELOQUENT ---

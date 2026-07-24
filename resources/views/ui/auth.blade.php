@@ -90,90 +90,15 @@
     </div>
 
     <script>
-    (function () {
-        const loginForm = document.getElementById('loginForm');
-        const loginEmail = document.getElementById('loginEmail');
-        const loginPassword = document.getElementById('loginPassword');
+    document.addEventListener('DOMContentLoaded', () => {
         const togglePasswordBtn = document.getElementById('togglePassword');
-        const msg = document.getElementById('msg');
-
-        function setMsg(message, type) {
-            msg.classList.remove('hidden');
-            msg.className = 'mb-6 min-h-[48px] items-center justify-center rounded-2xl border px-4 text-sm font-medium flex ' +
-                (type === 'error'
-                    ? 'border-red-300 bg-red-50 text-red-700 dark:border-red-800 dark:bg-red-950/30 dark:text-red-400'
-                    : 'border-emerald-300 bg-emerald-50 text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950/30 dark:text-emerald-400');
-            msg.textContent = message;
-        }
-
-        function setLoading(loading) {
-            const btn = loginForm?.querySelector('button[type="submit"]');
-            if (!btn) return;
-            btn.disabled = loading;
-            btn.classList.toggle('opacity-80', loading);
-            btn.classList.toggle('cursor-not-allowed', loading);
-            btn.innerHTML = loading
-                ? `<span class="inline-flex items-center gap-2"><svg class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" class="opacity-20"></circle><path fill="currentColor" class="opacity-90" d="M4 12a8 8 0 018-8V0A12 12 0 000 12h4z"></path></svg>${"{{ __('A autenticar...') }}"}</span>`
-                : `${"{{ __('Entrar no sistema') }}"} <svg class="h-4 w-4 transition group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>`;
-        }
-
+        const loginPassword = document.getElementById('loginPassword');
         togglePasswordBtn?.addEventListener('click', () => {
             const isPassword = loginPassword.type === 'password';
             loginPassword.type = isPassword ? 'text' : 'password';
             togglePasswordBtn.textContent = isPassword ? "{{ __('Ocultar') }}" : "{{ __('Mostrar') }}";
         });
-
-        loginForm?.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            if (!loginEmail || !loginPassword) return;
-
-            setLoading(true);
-            setMsg("{{ __('A verificar as suas credenciais...') }}", 'success');
-
-            const csrf = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-
-            try {
-                const res = await fetch('/login', {
-                    method: 'POST',
-                    credentials: 'include',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-Requested-With': 'XMLHttpRequest',
-                        ...(csrf ? { 'X-CSRF-TOKEN': csrf } : {})
-                    },
-                    body: JSON.stringify({
-                        email: loginEmail.value,
-                        password: loginPassword.value
-                    })
-                });
-
-                const j = await res.json().catch(() => ({}));
-
-                if (res.status !== 200) {
-                    setMsg(j.message || "{{ __('Credenciais inválidas.') }}", 'error');
-                    setLoading(false);
-                    return;
-                }
-
-                if (j.token) {
-                    document.cookie = `auth_token=${j.token}; path=/; max-age=2592000; SameSite=Lax`;
-                    try {
-                        localStorage.setItem('auth_token', j.token);
-                        localStorage.setItem('user_name', j.user?.name || 'Utilizador');
-                        localStorage.setItem('user_role', j.user?.profile?.name || 'user');
-                    } catch (e) {}
-                }
-
-                setMsg("{{ __('Autenticação bem-sucedida! A redirecionar...') }}", 'success');
-                setLoading(false);
-                setTimeout(() => { window.location.href = '{{ route('ui.index') }}'; }, 500);
-            } catch (err) {
-                setMsg("{{ __('Falha crítica na comunicação com o servidor.') }}", 'error');
-                setLoading(false);
-            }
-        });
-    })();
+    });
     </script>
 </body>
 </html>

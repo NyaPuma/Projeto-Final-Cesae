@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -55,7 +56,6 @@ class AuthController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'profile_id' => ['nullable', 'integer', 'exists:user_profiles,id'],
         ]);
 
         // Qualquer falha de validação devolve a lista completa de erros para o frontend.
@@ -63,10 +63,8 @@ class AuthController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $profile = isset($data['profile_id'])
-            ? UserProfile::find($data['profile_id'])
-            : UserProfile::where('name', User::ROLE_USER)->first();
-
+        // Registo público sempre atribui perfil 'user' - perfis elevados são criados apenas por admins.
+        $profile = UserProfile::where('name', User::ROLE_USER)->first();
         if (! $profile) {
             $profile = UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
         }
@@ -90,7 +88,8 @@ class AuthController extends Controller
         $user->load('profile');
 
         return response()->json(['user' => $user, 'token' => $plainToken], 201)
-            ->cookie('api_token', $plainToken, 60 * 24 * 30, '/', null, true, true, false, 'Lax');
+            ->cookie('api_token', $plainToken, 60 * 24 * 30, '/', null, $request->secure(), true, false, 'Lax')
+            ->cookie('auth_token', $plainToken, 60 * 24 * 30, '/', null, $request->secure(), false, false, 'Lax');
     }
 
     #[OA\Post(
@@ -125,7 +124,6 @@ class AuthController extends Controller
     )]
     public function login(Request $request)
     {
-        // O login só aceita os campos essenciais.
         $data = $request->only(['email', 'password']);
 
         $validator = Validator::make($data, [
@@ -133,12 +131,22 @@ class AuthController extends Controller
             'password' => ['required', 'string'],
         ]);
 
-        // Rejeita logo pedidos incompletos ou mal estruturados.
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        // Não distinguimos email inexistente de password errada por segurança.
+        // Persistent rate limiting: track failed attempts per email (15 min window)
+        $rateLimitKey = 'login_attempts:'.strtolower($data['email']);
+        $maxAttempts = 5;
+        $lockoutMinutes = 15;
+
+        $attempts = Cache::get($rateLimitKey, 0);
+        if ($attempts >= $maxAttempts) {
+            return response()->json([
+                'message' => __('Conta temporariamente bloqueada. Tente novamente mais tarde.'),
+            ], 429)->header('Retry-After', $lockoutMinutes * 60);
+        }
+
         $user = User::where('email', $data['email'])->where('active', true)->first();
 
         $valid = false;
@@ -146,14 +154,18 @@ class AuthController extends Controller
             try {
                 $valid = Hash::check($data['password'], $user->password);
             } catch (\RuntimeException) {
-                // Hash legacy (ex: bcrypt) — valida com PHP nativo e rehash a seguir.
                 $valid = password_verify($data['password'], $user->password);
             }
         }
 
         if (! $valid) {
+            Cache::put($rateLimitKey, $attempts + 1, now()->addMinutes($lockoutMinutes));
+
             return response()->json(['message' => __('Credenciais inválidas.')], 401);
         }
+
+        // Successful login: clear rate limit
+        Cache::forget($rateLimitKey);
 
         // Rehash transparente: se a hash não corresponde ao algoritmo atual, regenera automaticamente.
         if ($user && Hash::needsRehash($user->password)) {
@@ -178,7 +190,8 @@ class AuthController extends Controller
         $user->load('profile');
 
         return response()->json(['user' => $user, 'token' => $plainToken])
-            ->cookie('api_token', $plainToken, 60 * 24 * 30, '/', null, true, true, false, 'Lax');
+            ->cookie('api_token', $plainToken, 60 * 24 * 30, '/', null, $request->secure(), true, false, 'Lax')
+            ->cookie('auth_token', $plainToken, 60 * 24 * 30, '/', null, $request->secure(), false, false, 'Lax');
     }
 
     public function logout(Request $request)
@@ -189,9 +202,10 @@ class AuthController extends Controller
         $user->setRememberToken('');
         $user->save();
 
-        $cookie = cookie('api_token', null, -1, '/', null, true, true, false, 'Lax');
+        $cookie = cookie('api_token', null, -1, '/', null, $request->secure(), true, false, 'Lax');
+        $authCookie = cookie('auth_token', null, -1, '/', null, $request->secure(), false, false, 'Lax');
 
-        return response()->json(['message' => __('Sessão terminada com sucesso.')])->withCookie($cookie);
+        return response()->json(['message' => __('Sessão terminada com sucesso.')])->withCookie($cookie)->withCookie($authCookie);
     }
 
     public function changePassword(Request $request)

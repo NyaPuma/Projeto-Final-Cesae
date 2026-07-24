@@ -92,10 +92,9 @@ export function initLogin() {
                 return;
             }
 
-            // Guardar token em ambos os formatos para compatibilidade total
+            // Guardar token no localStorage para uso pelo api-client (Bearer header)
+            // Os cookies api_token e auth_token são definidos pelo servidor na resposta.
             if (j.token) {
-                document.cookie = `api_token=${j.token}; path=/; max-age=2592000; SameSite=Lax`;
-                document.cookie = `auth_token=${j.token}; path=/; max-age=2592000; SameSite=Lax`;
                 try {
                     localStorage.setItem('api_token', j.token);
                     localStorage.setItem('auth_token', j.token);

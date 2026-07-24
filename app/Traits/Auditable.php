@@ -4,14 +4,13 @@ namespace App\Traits;
 
 use App\Models\Audit;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 trait Auditable
 {
     public static function bootAuditable(): void
     {
         foreach (['created', 'updated', 'deleted'] as $event) {
-            // Regista eventos do modelo dinamicamente (created/updated/deleted).
-            // Usar call_user_func para invocar o método estático de registo de evento (ex. static::created(...)).
             call_user_func([static::class, $event], function ($model) use ($event) {
                 try {
                     $request = null;
@@ -20,7 +19,6 @@ trait Auditable
                     }
 
                     $userId = null;
-                    // Tenta obter o utilizador autenticado (o guard pode ser nulo em alguns contextos)
                     $authGuard = null;
                     if (function_exists('auth')) {
                         $authGuard = auth();
@@ -29,14 +27,14 @@ trait Auditable
                     if ($authGuard && method_exists($authGuard, 'user')) {
                         $authUser = $authGuard->user();
                         if ($authUser) {
-                            // Suporte para objectos de utilizador Eloquent
                             $userId = $authUser->id ?? ($authUser->getKey() ?? null);
                         }
                     } elseif ($request) {
                         $token = $request->header('X-Auth-Token') ?: $request->bearerToken();
                         if (is_string($token) && $token !== '') {
-                            $u = User::where('api_token', $token)->first();
-                            $userId = $u ? $u->id : null;
+                            $hashedToken = User::hashToken($token);
+                            $u = User::where('api_token', $hashedToken)->first();
+                            $userId = $u?->id;
                         }
                     }
 
@@ -47,7 +45,7 @@ trait Auditable
                         $new = $model->getAttributes();
                     } elseif ($event === 'deleted') {
                         $old = $model->getOriginal();
-                    } else { // updated
+                    } else {
                         $changes = $model->getChanges();
                         if (! empty($changes)) {
                             $oldVals = [];
@@ -73,7 +71,11 @@ trait Auditable
                         'user_agent' => $request ? $request->userAgent() : null,
                     ]);
                 } catch (\Throwable $e) {
-                    // Falha silenciosamente para não quebrar o fluxo principal se a auditoria falhar
+                    Log::warning('Audit trail failed', [
+                        'model' => get_class($model),
+                        'event' => $event,
+                        'error' => $e->getMessage(),
+                    ]);
                 }
             });
         }

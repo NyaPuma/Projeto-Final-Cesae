@@ -213,22 +213,23 @@ class AdminController extends Controller
     )]
     public function storeEquipment(Request $request)
     {
-        $data = $request->only(['name', 'serial', 'room_id']);
+        $data = $request->only(['name', 'serial', 'room_id', 'category_id']);
         $validator = Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'serial' => ['required', 'string', 'max:255', 'unique:equipments,serial'],
             'room_id' => ['nullable', 'integer', 'exists:rooms,id'],
+            'category_id' => ['nullable', 'integer', 'exists:equipment_categories,id'],
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        // O equipamento nasce ativo para poder ser usado imediatamente após o registo.
         $equipment = Equipment::create([
             'name' => $data['name'],
             'serial' => $data['serial'],
             'room_id' => $data['room_id'] ?? null,
+            'category_id' => $data['category_id'] ?? null,
             'active' => true,
         ]);
 
@@ -262,11 +263,12 @@ class AdminController extends Controller
             return response()->json(['message' => 'Equipamento não encontrado'], 404);
         }
 
-        $data = $request->only(['name', 'serial', 'room_id', 'active']);
+        $data = $request->only(['name', 'serial', 'room_id', 'category_id', 'active']);
         $validator = Validator::make($data, [
             'name' => ['sometimes', 'string', 'max:255'],
             'serial' => ['sometimes', 'string', 'max:255', 'unique:equipments,serial,'.$id],
             'room_id' => ['nullable', 'integer', 'exists:rooms,id'],
+            'category_id' => ['nullable', 'integer', 'exists:equipment_categories,id'],
             'active' => ['sometimes', 'boolean'],
         ]);
 
@@ -306,7 +308,6 @@ class AdminController extends Controller
             return response()->json(['message' => 'Equipamento não encontrado'], 404);
         }
 
-        // Remoção física apenas porque o módulo assume inventário sem histórico neste registo.
         $equipment->delete();
 
         return response()->json(['message' => 'Equipamento eliminado']);
