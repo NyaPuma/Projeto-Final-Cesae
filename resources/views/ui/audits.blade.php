@@ -97,10 +97,30 @@ function authHeader(){
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
     const headers = { 'Accept': 'application/json' };
 
-    if (token) headers['X-Auth-Token'] = token;
+    if (token) {
+        headers['Authorization'] = 'Bearer ' + token;
+        headers['X-Auth-Token'] = token;
+    }
     if (csrfToken) headers['X-CSRF-TOKEN'] = csrfToken;
 
     return headers;
+}
+
+async function fetchWithFallback(urlPath, options = {}) {
+    const endpoints = [`/api${urlPath}`, urlPath, `/admin${urlPath}`];
+    for (const ep of endpoints) {
+        try {
+            const res = await fetch(ep, options);
+            if (res.status === 401) {
+                window.location = '/ui/login';
+                return null;
+            }
+            if (res.ok) {
+                return res;
+            }
+        } catch (e) {}
+    }
+    return null;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -111,20 +131,20 @@ document.addEventListener('DOMContentLoaded', () => {
 async function fetchAudits() {
     const tbody = document.getElementById('auditsTableBody');
     try {
-        const response = await window.api.get('/api/audits', {
-            headers: authHeader()
-        });
+        const res = await fetchWithFallback('/audits', { headers: authHeader() });
 
-        allAudits = response.data || [];
+        if (!res || !res.ok) {
+            renderErrorState();
+            return;
+        }
+
+        const data = await res.json().catch(() => ({}));
+        allAudits = data.audits?.data || data.audits || data.data || (Array.isArray(data) ? data : []);
         filteredAudits = [...allAudits];
 
         populateEventFilter(allAudits);
         applyFiltersAndRender(1);
     } catch (error) {
-        console.error('Erro ao ir buscar a auditoria:', error);
-        if (typeof window.showToast === 'function') {
-            window.showToast("{{ __('Não foi possível carregar os registos de auditoria.') }}", 'error');
-        }
         renderErrorState();
     }
 }
@@ -133,13 +153,13 @@ function getEventBadge(event) {
     const value = String(event || "").toLowerCase().trim();
 
     if (value.includes('create') || value.includes('criar') || value.includes('insert')) {
-        return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 uppercase tracking-tight">${"{{ __('Criar') }}"}</span>`;
+        return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 uppercase tracking-tight">Criar</span>`;
     }
     if (value.includes('update') || value.includes('editar') || value.includes('atualizar')) {
-        return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-amber-500/10 text-amber-800 dark:text-amber-400 border border-amber-500/20 uppercase tracking-tight">${"{{ __('Editar') }}"}</span>`;
+        return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-amber-500/10 text-amber-800 dark:text-amber-400 border border-amber-500/20 uppercase tracking-tight">Editar</span>`;
     }
     if (value.includes('delete') || value.includes('eliminar') || value.includes('remover')) {
-        return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-red-500/10 text-red-700 dark:text-red-400 border border-red-500/20 uppercase tracking-tight">${"{{ __('Eliminar') }}"}</span>`;
+        return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-red-500/10 text-red-700 dark:text-red-400 border border-red-500/20 uppercase tracking-tight">Eliminar</span>`;
     }
 
     return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-[var(--surface-2)] text-[var(--text-soft)] border border-[var(--border)] uppercase tracking-tight">${event}</span>`;
@@ -166,7 +186,7 @@ function populateEventFilter(audits) {
 
     const uniqueEvents = [...new Set(audits.map(item => String(item.event || '').trim()))].filter(Boolean);
 
-    eventSelect.innerHTML = `<option value="">${"{{ __('Todos os eventos') }}"}</option>`;
+    eventSelect.innerHTML = `<option value="">Todos os eventos</option>`;
 
     uniqueEvents.forEach(ev => {
         const option = document.createElement('option');
@@ -201,7 +221,7 @@ function setupFilters() {
 
     searchInput?.addEventListener('input', triggerFilter);
     eventSelect?.addEventListener('change', triggerFilter);
-    document.getElementById('btnSearch').addEventListener('click', triggerFilter);
+    document.getElementById('btnSearch')?.addEventListener('click', triggerFilter);
 }
 
 function applyFiltersAndRender(page = 1) {
@@ -210,22 +230,21 @@ function applyFiltersAndRender(page = 1) {
     if (!tbody) return;
 
     const total = filteredAudits.length;
-    document.getElementById('resultsCount').textContent = total > 0 ? `${total} ${"{{ __('resultado(s) encontrado(s)') }}"}` : "{{ __('Sem resultados') }}";
+    document.getElementById('resultsCount').textContent = total > 0 ? `${total} resultado(s) encontrado(s)` : "Sem resultados";
 
     if (total === 0) {
-        tbody.innerHTML = `<tr><td colspan="8" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]"><div class="mx-auto max-w-sm rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface-2)] p-5">${"{{ __('Nenhum registo de auditoria encontrado com os filtros aplicados.') }}"}</div></td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="8" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]"><div class="mx-auto max-w-sm rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface-2)] p-5">Nenhum registo de auditoria encontrado com os filtros aplicados.</div></td></tr>`;
         document.getElementById('pagination').innerHTML = '';
         return;
     }
 
-    // Lógica interna de Paginação para alinhar visualmente com o equipments
     const startIndex = (page - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const paginatedAudits = filteredAudits.slice(startIndex, endIndex);
 
     tbody.innerHTML = paginatedAudits.map(audit => {
         const logId = audit.id ? `#${audit.id}` : '-';
-        const user = audit.user || audit.username || audit.operator || 'Sistema / Automático';
+        const user = audit.user?.name || audit.user || audit.username || audit.operator || 'Sistema / Automático';
         const entity = audit.auditable_type || audit.entity || 'Geral';
         const reference = audit.auditable_id || audit.reference ? `ID: ${audit.auditable_id || audit.reference}` : '-';
         const badge = getEventBadge(audit.event);
@@ -262,10 +281,10 @@ function renderPagination(totalItems, currPage) {
 
     pagEl.innerHTML = `
         <button onclick="applyFiltersAndRender(${currPage - 1})" ${currPage <= 1 ? 'disabled' : ''}
-            class="ui-button ui-button--primary inline-flex items-center justify-center px-3.5 py-2 text-xs font-bold text-[var(--on-primary)] rounded-xl shadow-sm hover:opacity-90 transition-all disabled:opacity-40 disabled:cursor-not-allowed min-h-[36px]">← ${"{{ __('Anterior') }}"}</button>
-        <span class="font-bold text-[var(--text-soft)]">${"{{ __('Página') }}"} ${currPage} ${"{{ __('de') }}"} ${lastPage}</span>
+            class="ui-button ui-button--primary inline-flex items-center justify-center px-3.5 py-2 text-xs font-bold text-[var(--on-primary)] rounded-xl shadow-sm hover:opacity-90 transition-all disabled:opacity-40 disabled:cursor-not-allowed min-h-[36px]">← Anterior</button>
+        <span class="font-bold text-[var(--text-soft)]">Página ${currPage} de ${lastPage}</span>
         <button onclick="applyFiltersAndRender(${currPage + 1})" ${currPage >= lastPage ? 'disabled' : ''}
-            class="ui-button ui-button--primary inline-flex items-center justify-center px-3.5 py-2 text-xs font-bold text-[var(--on-primary)] rounded-xl shadow-sm hover:opacity-90 transition-all disabled:opacity-40 disabled:cursor-not-allowed min-h-[36px]">${"{{ __('Próxima') }}"} →</button>
+            class="ui-button ui-button--primary inline-flex items-center justify-center px-3.5 py-2 text-xs font-bold text-[var(--on-primary)] rounded-xl shadow-sm hover:opacity-90 transition-all disabled:opacity-40 disabled:cursor-not-allowed min-h-[36px]">Próxima →</button>
     `;
 }
 
@@ -276,13 +295,13 @@ function renderErrorState() {
     tbody.innerHTML = `
         <tr>
             <td colspan="8" class="px-5 py-12 text-center text-xs text-[var(--color-danger)] font-medium">
-                ⚠️ ${"{{ __('Não foi possível carregar os registos de auditoria de momento.') }}"}
+                ⚠️ Não foi possível carregar os registos de auditoria de momento.
             </td>
         </tr>
     `;
 }
 
-document.getElementById('btnClear').addEventListener('click', () => {
+document.getElementById('btnClear')?.addEventListener('click', () => {
     const searchInput = document.getElementById('filter_q');
     const eventSelect = document.getElementById('filter_event');
 
@@ -293,7 +312,7 @@ document.getElementById('btnClear').addEventListener('click', () => {
     applyFiltersAndRender(1);
 });
 
-document.getElementById('filter_q').addEventListener('keydown', e => {
+document.getElementById('filter_q')?.addEventListener('keydown', e => {
     if (e.key === 'Enter') {
         const eventSelect = document.getElementById('filter_event');
         const query = e.target.value.toLowerCase().trim();

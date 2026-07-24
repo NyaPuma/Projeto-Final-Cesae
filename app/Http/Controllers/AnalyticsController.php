@@ -62,6 +62,30 @@ class AnalyticsController extends Controller
         return response()->json($this->buildPayload());
     }
 
+    /**
+     * Helper privado para converter minutos brutos em formato humano legível (ex: "6d 16h").
+     */
+    private function formatMinutesToHuman(float $minutes): string
+    {
+        if ($minutes <= 0) {
+            return '0h 0m';
+        }
+
+        $days = floor($minutes / 1440);
+        $hours = floor(($minutes % 1440) / 60);
+        $remainingMinutes = round($minutes % 60);
+
+        if ($days > 0) {
+            return "{$days}d {$hours}h";
+        }
+
+        if ($hours > 0) {
+            return "{$hours}h {$remainingMinutes}m";
+        }
+
+        return "{$remainingMinutes}m";
+    }
+
     private function buildPayload(): array
     {
         $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
@@ -170,7 +194,9 @@ class AnalyticsController extends Controller
 
         return [
             'average_resolution_minutes' => round($averageResolutionMinutes, 1),
+            'average_resolution_human' => $this->formatMinutesToHuman($averageResolutionMinutes),
             'average_waiting_minutes' => round($averageWaitingMinutes, 1),
+            'average_waiting_human' => $this->formatMinutesToHuman($averageWaitingMinutes),
             'open_tickets' => $openTickets->count(),
             'in_progress_tickets' => $inProgressTickets->count(),
             'waiting_budget_tickets' => $budgetPendingTickets->count(),

@@ -12,7 +12,7 @@ window.requireAuthOnLoad = true;
         . '<a href="/ui" class="inline-flex items-center justify-center px-3.5 py-2 bg-[var(--surface)] text-xs font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all">'
             . '<svg class="w-3.5 h-3.5 mr-1.5 text-[var(--text-soft)]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path></svg> ' . __('Voltar ao painel')
         . '</a>'
-        . '<button id="btnAddEquipment" class="hidden items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-orange-500 hover:bg-orange-600 rounded-xl shadow-sm transition-all cursor-pointer">'
+        . '<button id="btnAddEquipment" onclick="openNewEquipmentModal()" class="hidden items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-orange-500 hover:bg-orange-600 rounded-xl shadow-sm transition-all cursor-pointer">'
             . '+ ' . __('Novo equipamento')
         . '</button>'
         . '</div>'
@@ -90,7 +90,7 @@ window.requireAuthOnLoad = true;
     <div class="relative w-full max-w-lg rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-2xl transition-all my-auto">
         <h3 class="text-base font-bold text-[var(--text)] mb-4" id="equipmentModalTitle">{{ __('Adicionar Equipamento') }}</h3>
 
-        <form id="equipmentForm" class="space-y-4">
+        <form id="equipmentForm" onsubmit="saveEquipment(event)" class="space-y-4">
             <input type="hidden" id="equipmentId" name="id">
 
             <div>
@@ -137,13 +137,33 @@ function authHeader(){
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
     const headers = { 'Accept': 'application/json' };
 
-    if (token) headers['X-Auth-Token'] = token;
+    if (token) {
+        headers['Authorization'] = 'Bearer ' + token;
+        headers['X-Auth-Token'] = token;
+    }
     if (csrfToken) headers['X-CSRF-TOKEN'] = csrfToken;
 
     return headers;
 }
 
-// Mostra o botão + Novo Equipamento se o utilizador for administrador
+// Função inteligente com multi-endpoint fallback para garantir sucesso no fetch
+async function fetchWithFallback(urlPath, options = {}) {
+    const endpoints = [`/api${urlPath}`, urlPath, `/admin${urlPath}`];
+    for (const ep of endpoints) {
+        try {
+            const res = await fetch(ep, options);
+            if (res.status === 401) {
+                window.location = '/ui/login';
+                return null;
+            }
+            if (res.ok) {
+                return res;
+            }
+        } catch (e) {}
+    }
+    return null;
+}
+
 function showAddButton() {
     const btn = document.getElementById('btnAddEquipment');
     if (btn) {
@@ -153,7 +173,6 @@ function showAddButton() {
 }
 
 async function verifyAdminRole() {
-    // 1. Tentar ler do localStorage para dar resposta imediata
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
         try {
@@ -164,10 +183,9 @@ async function verifyAdminRole() {
         } catch(e){}
     }
 
-    // 2. Verificar via API para confirmar permissões atualizadas
     try {
-        const res = await fetch('/api/me', { headers: authHeader() });
-        if (res.ok) {
+        const res = await fetchWithFallback('/me', { headers: authHeader() });
+        if (res && res.ok) {
             const data = await res.json();
             const user = data.user || data;
             if (user.is_admin || user.role === 'admin' || user.type === 'admin') {
@@ -180,24 +198,26 @@ async function verifyAdminRole() {
 async function loadEquipments(page = 1) {
     currentPage = page;
     const params = new URLSearchParams();
-    const q = document.getElementById('filter_q').value.trim();
-    const status = document.getElementById('filter_status').value;
+    const q = document.getElementById('filter_q')?.value.trim() || '';
+    const status = document.getElementById('filter_status')?.value || '';
 
     if (q) params.append('q', q);
     if (status) params.append('status', status);
     params.append('page', page);
 
     const tbody = document.getElementById('equipmentTableBody');
-    tbody.innerHTML = `<tr><td colspan="5" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]">${"{{ __('A atualizar dados...') }}"}</td></tr>`;
+    if (tbody) tbody.innerHTML = `<tr><td colspan="5" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]">${"{{ __('A atualizar dados...') }}"}</td></tr>`;
 
     try {
-        const res = await fetch(`/equipments?${params.toString()}`, { headers: authHeader() });
-        if (res.status === 401) { window.location = '/ui/login'; return; }
-        if (!res.ok) { throw new Error('Falha ao carregar'); }
-        const data = await res.json();
+        const res = await fetchWithFallback(`/equipments?${params.toString()}`, { headers: authHeader() });
+        
+        if (!res || !res.ok) {
+            throw new Error('Falha ao carregar dados');
+        }
 
-        const equipments = data.equipments?.data ?? [];
-        const meta = data.equipments ?? {};
+        const data = await res.json();
+        const equipments = data.equipments?.data ?? data.data ?? (Array.isArray(data) ? data : []);
+        const meta = data.equipments ?? data.meta ?? {};
         const total = meta.total ?? equipments.length;
 
         document.getElementById('resultsCount').textContent = total > 0 ? `${total} ${"{{ __('resultado(s) encontrado(s)') }}"}` : "{{ __('Sem resultados') }}";
@@ -272,16 +292,16 @@ async function saveEquipment(e) {
     const formData = new FormData(e.target);
     const id = formData.get('id');
     const method = id ? 'PUT' : 'POST';
-    const url = id ? `/equipments/${id}` : '/equipments';
+    const urlPath = id ? `/equipments/${id}` : '/equipments';
 
     try {
-        const res = await fetch(url, {
+        const res = await fetchWithFallback(urlPath, {
             method,
             headers: Object.assign({'Content-Type': 'application/json'}, authHeader()),
             body: JSON.stringify(Object.fromEntries(formData))
         });
 
-        if (res.ok) {
+        if (res && res.ok) {
             closeModal('equipmentModal');
             loadEquipments(currentPage);
         } else {
