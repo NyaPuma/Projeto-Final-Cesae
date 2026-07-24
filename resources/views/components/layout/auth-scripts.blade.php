@@ -1,4 +1,4 @@
-﻿<!-- resources/views/components/layout/auth-scripts.blade.php -->
+<!-- resources/views/components/layout/auth-scripts.blade.php -->
 <script>
     function authHeader() {
         const token = localStorage.getItem('auth_token');

@@ -1,4 +1,4 @@
-﻿import './api-client';
+import './api-client';
 import './analytics';
 import { initTheme } from './core/theme';
 import { initSidebar } from './core/sidebar';
@@ -62,29 +62,19 @@ const App = {
     },
 
     // --- AUTH MODULE ---
+    // Auth handled by inline scripts in blade views
     initAuth() {
-        import('./pages/auth').then(module => {
-            module.initAuth();
-        }).catch(err => {
-            console.warn('[App] Auth module not loaded:', err);
-        });
+        // No-op: auth is handled by layout.blade.php inline scripts
     },
 
     // --- MANAGEMENT MODULES ---
+    // Management modules handled by inline scripts in respective blade views
     initEquipmentManagement() {
-        import('./pages/equipments').then(module => {
-            module.initEquipmentManagement();
-        }).catch(err => {
-            console.warn('[App] Equipment module not loaded:', err);
-        });
+        // No-op: equipments.blade.php has its own inline script
     },
 
     initRoomManagement() {
-        import('./pages/rooms').then(module => {
-            module.initRoomManagement();
-        }).catch(err => {
-            console.warn('[App] Room module not loaded:', err);
-        });
+        // No-op: rooms.blade.php has its own inline script
     },
 
     // --- UI COMPONENTS ---

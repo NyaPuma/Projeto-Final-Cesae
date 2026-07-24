@@ -1,28 +1,32 @@
-# TODO: Sistema de Aviso de Prioridade ao Técnico
+# Correção Pós-Merge - Projeto Desfigurado ✅
 
-## Plano Aprovado
+## Problemas Identificados e Corrigidos:
 
-## Passos a Implementar:
+### 🔴 Problema 1: Duplicação de implementações JS
+- Módulos Vite (rooms.js, equipments.js, auth.js) tinham lógica duplicada com os inline scripts das Blade views
+- **Solução**: Neutralizados para no-ops, mantendo apenas os inline scripts funcionais
 
-- [x] **Passo 0**: Análise do código existente ✓
-- [x] **Passo 1**: Planeamento ✓
+### 🔴 Problema 2: `rooms.js` com sintaxe Blade não processada
+- Ficheiro JS tinha `{{ __("...") }}` que aparecia literalmente no browser
+- **Solução**: Ficheiro simplificado para no-op (gestão via blade inline script)
 
-- [x] **Passo 2**: Adicionar cartão "Iniciar Reparação" no HTML (`ticket-detail.blade.php`)
-   - ✅ Adicionar div `#techStartCard` no painel do técnico (visível quando status = "Aberta")
-  - ✅ Botão "Iniciar Intervenção" + "Forçar Início (ignorar prioritários)"
+### 🔴 Problema 3: `sidebar.js` com referências a elementos que não existem
+- Referenciava `mobileSidebar` e `sidebarOverlay` que não existem no layout
+- **Solução**: Removidas funções com referências inválidas, mantido apenas `initSidebar()`
 
-- [x] **Passo 3**: Adicionar lógica JavaScript no `fetchTicket()`
-  - ✅ Mostrar/esconder `techStartCard` baseado no status do ticket
-  - ✅ Handler para "Iniciar Intervenção" que chama `PUT /technician/tickets/{id}/start`
-  - ✅ Tratamento de 409 com o modal de aviso de prioridade
-  - ✅ Botão "Forçar Início" com `force: true` e notificação ao admin
-  - ✅ Atualização do `showPriorityWarning` para mostrar `my_urgent_tickets_count`
+### 🔴 Problema 4: `app.js` a importar módulos problemáticos
+- `App.init()` quebrava a cadeia de inicialização
+- **Solução**: Dynamic imports substituídos por no-ops
 
-- [x] **Passo 4**: Melhoria no backend (`TicketController@startTicket`)
-  - ✅ Verificação de tickets mais prioritários atribuídos ao próprio técnico (`myHigherPriorityTickets`)
-  - ✅ Mensagem mais detalhada no warning informando quantos estão atribuídos ao técnico
-  - ✅ Notificação ao admin com contagem de tickets do técnico
+### 🔴 Problema 5: `equipments.js` importava `formToObject` do `api-client`
+- Import não utilizado, ficheiro simplificado
 
-- [x] **Passo 5**: Adicionar traduções (pt.json e en.json)
-  - ✅ 12 novas entradas de tradução
+## Passos:
+
+- [x] **Passo 1**: Corrigir `app.js` - Remover imports problemáticos
+- [x] **Passo 2**: Corrigir `sidebar.js` - Alinhar IDs com layout real
+- [x] **Passo 3**: Limpar `rooms.js` - Substituir sintaxe Blade por strings JS
+- [x] **Passo 3b**: Limpar `equipments.js` - Remover import não utilizado
+- [x] **Passo 3c**: Limpar `auth.js` - Neutralizar módulo
+- [x] **Passo 4**: Recompilar assets com Vite (✅ Sucesso - 63 módulos, 2.46s)
 

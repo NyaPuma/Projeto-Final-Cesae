@@ -1,4 +1,4 @@
-﻿@extends('ui.layout')
+@extends('ui.layout')
 
 @php
     $profileName = $user->profile->name ?? 'user';

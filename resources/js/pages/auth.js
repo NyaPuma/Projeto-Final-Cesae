@@ -1,6 +1,6 @@
 /**
- * Authentication Pages Module
- * Gestão da autenticação (login, register, etc.)
+ * Authentication Pages Module (Não usado ativamente - gestão via inline script em login.blade.php)
+ * Mantido para referência. Auth feita via scripts inline nas Blade views.
  */
 
 /**
@@ -24,7 +24,7 @@ export function initLogin() {
      */
     function setMsg(message, type) {
         if (!msg) return;
-        
+
         msg.classList.remove('hidden');
         msg.className = 'mt-4 text-center text-xs font-bold p-3 rounded-xl border animate-[fadeIn_0.2s_ease-out] flex items-center justify-center ' +
             (type === 'error'
@@ -38,7 +38,7 @@ export function initLogin() {
      */
     function togglePassword() {
         if (!loginPassword || !togglePasswordBtn) return;
-        
+
         const isPassword = loginPassword.type === 'password';
         loginPassword.type = isPassword ? 'text' : 'password';
         togglePasswordBtn.textContent = isPassword ? 'Ocultar' : 'Mostrar';
@@ -83,7 +83,7 @@ export function initLogin() {
 
             if (res.status !== 200) {
                 setMsg(j.message || 'Credenciais inválidas.', 'error');
-                
+
                 if (submitBtn) {
                     submitBtn.disabled = false;
                     submitBtn.classList.remove('opacity-80', 'cursor-not-allowed');
@@ -92,9 +92,10 @@ export function initLogin() {
                 return;
             }
 
-            // Guardar token no localStorage para uso pelo api-client (Bearer header)
-            // Os cookies api_token e auth_token são definidos pelo servidor na resposta.
+            // Guardar token em ambos os formatos para compatibilidade total
             if (j.token) {
+                document.cookie = `api_token=${j.token}; path=/; max-age=2592000; SameSite=Lax`;
+                document.cookie = `auth_token=${j.token}; path=/; max-age=2592000; SameSite=Lax`;
                 try {
                     localStorage.setItem('api_token', j.token);
                     localStorage.setItem('auth_token', j.token);
@@ -104,11 +105,11 @@ export function initLogin() {
             }
 
             setMsg('Autenticação bem-sucedida! A redirecionar...', 'success');
-            
+
             setTimeout(() => { window.location.href = '/ui'; }, 500);
         } catch (err) {
             setMsg('Falha crítica na comunicação com o servidor.', 'error');
-            
+
             if (submitBtn) {
                 submitBtn.disabled = false;
                 submitBtn.classList.remove('opacity-80', 'cursor-not-allowed');
@@ -126,12 +127,6 @@ export function initLogin() {
  * Initialize all auth pages
  */
 export function initAuth() {
-    initLogin();
+    // Auth handled by login.blade.php inline script
 }
 
-// Auto-initialize when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initAuth);
-} else {
-    initAuth();
-}

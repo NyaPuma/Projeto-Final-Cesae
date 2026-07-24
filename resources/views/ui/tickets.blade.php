@@ -1,4 +1,4 @@
-﻿@extends('ui.layout')
+@extends('ui.layout')
 
 @section('content')
 <script>
