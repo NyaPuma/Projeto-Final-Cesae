@@ -1,4 +1,4 @@
-﻿@extends('ui.layout')
+@extends('ui.layout')
 
 @section('content')
 <div class="min-h-screen bg-[var(--bg)] text-[var(--text)] antialiased flex flex-col justify-center">

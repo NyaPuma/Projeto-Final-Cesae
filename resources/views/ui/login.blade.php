@@ -1,4 +1,4 @@
-﻿@extends('ui.layout')
+@extends('ui.layout')
 
 @section('content')
 <div class="relative min-h-[calc(100vh-80px)] overflow-hidden">

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * API Client Service
  * Serviço centralizado para comunicação com a API
  */
