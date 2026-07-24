@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Http\Middleware\CustomAuthMiddleware.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Middleware\CustomAuthMiddleware
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-022e81f619821fae46108d5b0eced0bcd897a8e8a3b4ccc7714f0ca9a4578981',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-daeb2f8c7b7cc75debedb833d7dfd404ba3d743476ff28fd4d27fcf519180376',
    'data' => 
   array (
     'locatedSource' => 
@@ -26,8 +26,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'attributes' => 
     array (
     ),
-    'startLine' => 12,
-    'endLine' => 112,
+    'startLine' => 11,
+    'endLine' => 116,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => NULL,
@@ -69,8 +69,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 17,
-            'endLine' => 17,
+            'startLine' => 16,
+            'endLine' => 16,
             'startColumn' => 28,
             'endColumn' => 43,
             'parameterIndex' => 0,
@@ -95,8 +95,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 17,
-            'endLine' => 17,
+            'startLine' => 16,
+            'endLine' => 16,
             'startColumn' => 46,
             'endColumn' => 58,
             'parameterIndex' => 1,
@@ -119,8 +119,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Trata uma rota protegida validando o token customizado da aplicação.
  */',
-        'startLine' => 17,
-        'endLine' => 111,
+        'startLine' => 16,
+        'endLine' => 115,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

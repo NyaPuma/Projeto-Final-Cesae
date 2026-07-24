@@ -7,6 +7,7 @@ use App\Models\Notification;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserProfile;
+use App\Traits\ControllerHelpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -15,6 +16,8 @@ use OpenApi\Attributes as OA;
 
 class AdminController extends Controller
 {
+    use ControllerHelpers;
+
     /**
      * Retorna todos os utilizadores (Apenas para Administradores).
      */
@@ -34,9 +37,10 @@ class AdminController extends Controller
         $query = User::with('profile');
 
         if ($q) {
-            $query->where(function ($sub) use ($q) {
-                $sub->where('name', 'like', "%{$q}%")
-                    ->orWhere('email', 'like', "%{$q}%");
+            $safeQ = str_replace(['%', '_'], ['\%', '\_'], $q);
+            $query->where(function ($sub) use ($safeQ) {
+                $sub->where('name', 'like', "%{$safeQ}%")
+                    ->orWhere('email', 'like', "%{$safeQ}%");
             });
         }
 
@@ -72,6 +76,9 @@ class AdminController extends Controller
     )]
     public function inactivateUser(Request $request, int $id)
     {
+        $admin = $this->authenticatedUser($request);
+        $this->requireRole($admin, [User::ROLE_ADMIN]);
+
         $user = User::find($id);
         if (! $user) {
             return response()->json(['message' => 'Utilizador não encontrado'], 404);
@@ -94,6 +101,9 @@ class AdminController extends Controller
      */
     public function storeUser(Request $request)
     {
+        $user = $this->authenticatedUser($request);
+        $this->requireRole($user, [User::ROLE_ADMIN]);
+
         $data = $request->only(['name', 'email', 'password', 'profile_id', 'active']);
         $validator = Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
@@ -107,16 +117,18 @@ class AdminController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $user = User::create([
+        $plainToken = Str::random(60);
+
+        $newUser = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'profile_id' => $data['profile_id'],
             'active' => $data['active'] ?? true,
-            'api_token' => Str::random(60),
+            'api_token' => User::hashToken($plainToken),
         ]);
 
-        return response()->json(['user' => $user->load('profile')], 201);
+        return response()->json(['user' => $newUser->load('profile')], 201);
     }
 
     /**
@@ -124,6 +136,9 @@ class AdminController extends Controller
      */
     public function updateUser(Request $request, int $id)
     {
+        $admin = $this->authenticatedUser($request);
+        $this->requireRole($admin, [User::ROLE_ADMIN]);
+
         $user = User::find($id);
         if (! $user) {
             return response()->json(['message' => 'Utilizador não encontrado'], 404);
@@ -147,6 +162,11 @@ class AdminController extends Controller
             $validated['password'] = Hash::make($validated['password']);
         } else {
             unset($validated['password']);
+        }
+
+        // Proteção: não permitir inativar outro admin via update
+        if (isset($validated['active']) && ! $validated['active'] && $user->isAdmin()) {
+            return response()->json(['message' => 'Não é possível inativar um administrador via atualização'], 422);
         }
 
         $user->update($validated);
@@ -234,6 +254,9 @@ class AdminController extends Controller
     )]
     public function updateEquipment(Request $request, int $id)
     {
+        $admin = $this->authenticatedUser($request);
+        $this->requireRole($admin, [User::ROLE_ADMIN]);
+
         $equipment = Equipment::find($id);
         if (! $equipment) {
             return response()->json(['message' => 'Equipamento não encontrado'], 404);
@@ -275,6 +298,9 @@ class AdminController extends Controller
     )]
     public function destroyEquipment(Request $request, int $id)
     {
+        $admin = $this->authenticatedUser($request);
+        $this->requireRole($admin, [User::ROLE_ADMIN]);
+
         $equipment = Equipment::find($id);
         if (! $equipment) {
             return response()->json(['message' => 'Equipamento não encontrado'], 404);

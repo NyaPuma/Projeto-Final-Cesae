@@ -1,6 +1,5 @@
-import './api-client';
+﻿import './api-client';
 import './analytics';
-import './swagger/init';
 import { initTheme } from './core/theme';
 import { initSidebar } from './core/sidebar';
 
@@ -37,7 +36,7 @@ const App = {
 
     // --- SEGURANÇA ---
     checkAuth() {
-        const token = localStorage.getItem('api_token') || this.getCookie('api_token');
+        const token = localStorage.getItem('auth_token') || this.getCookie('auth_token');
         if (window.requireAuthOnLoad && !token) {
             window.location.href = '/ui/login';
             return false;
@@ -46,7 +45,7 @@ const App = {
     },
 
     getAuthHeaders() {
-        const token = localStorage.getItem('api_token') || this.getCookie('api_token');
+        const token = localStorage.getItem('auth_token') || this.getCookie('auth_token');
         return {
             'Authorization': `Bearer ${token}`,
             'Accept': 'application/json',

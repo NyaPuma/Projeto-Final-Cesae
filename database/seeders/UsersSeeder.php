@@ -2,14 +2,22 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class UsersSeeder extends Seeder
 {
     public function run(): void
     {
+        if (app()->environment('production')) {
+            $this->command->error('ABORTADO: Este seeder não deve ser executado em produção!');
+
+            return;
+        }
+
         $profileIds = DB::table('user_profiles')->pluck('id', 'name');
 
         $defaultUsers = [
@@ -17,22 +25,22 @@ class UsersSeeder extends Seeder
                 'name' => 'Administrador',
                 'email' => 'admin@example.com',
                 'profile_name' => 'admin',
-                'password' => bcrypt('admin123'),
-                'api_token' => 'admin-token-'.Str::random(40),
+                'password' => Hash::make('admin123'),
+                'api_token' => User::hashToken(Str::random(60)),
             ],
             [
                 'name' => 'Técnico',
                 'email' => 'tech@example.com',
                 'profile_name' => 'technician',
-                'password' => bcrypt('tech123'),
-                'api_token' => 'tech-token-'.Str::random(40),
+                'password' => Hash::make('tech123'),
+                'api_token' => User::hashToken(Str::random(60)),
             ],
             [
                 'name' => 'Utilizador',
                 'email' => 'user@example.com',
                 'profile_name' => 'user',
-                'password' => bcrypt('user123'),
-                'api_token' => 'user-token-'.Str::random(40),
+                'password' => Hash::make('user123'),
+                'api_token' => User::hashToken(Str::random(60)),
             ],
         ];
 
@@ -68,10 +76,10 @@ class UsersSeeder extends Seeder
                     'name' => 'Utilizador Sintético '.str_pad((string) $index, 3, '0', STR_PAD_LEFT),
                     'email' => $email,
                     'email_verified_at' => now(),
-                    'password' => bcrypt('Password123!'),
+                    'password' => Hash::make('password'),
                     'profile_id' => $profileIds[$profileName] ?? $profileIds['user'],
                     'active' => true,
-                    'api_token' => 'synthetic-'.Str::random(40),
+                    'api_token' => User::hashToken(Str::random(60)),
                     'remember_token' => Str::random(10),
                     'created_at' => now(),
                     'updated_at' => now(),

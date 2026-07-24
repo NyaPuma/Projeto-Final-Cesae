@@ -34,6 +34,7 @@ class Ticket extends Model
     public const PRIORITY_MEDIUM = 'média';
 
     public const PRIORITY_HIGH = 'alta';
+
     public const PRIORITY_CRITICAL = 'crítica';
 
     // Estados do Orçamento
@@ -43,7 +44,34 @@ class Ticket extends Model
 
     public const BUDGET_REJECTED = 'rejected';
 
-    protected $guarded = [];
+    protected $fillable = [
+        'title',
+        'description',
+        'priority',
+        'user_id',
+        'assigned_to',
+        'equipment_id',
+        'room_id',
+        'status_id',
+        'opened_at',
+        'in_progress_at',
+        'closed_at',
+        'reopened_at',
+        'cost',
+        'minutes_spent',
+        'technical_report',
+        'budget_requested',
+        'budget_status',
+        'budget_amount',
+        'budget_requested_at',
+        'budget_approved_by',
+        'budget_decided_at',
+        'budget_feedback',
+        'budget_details',
+        'scheduled_at',
+        'scheduled_end',
+        'scheduled',
+    ];
 
     protected $casts = [
         'opened_at' => 'datetime',

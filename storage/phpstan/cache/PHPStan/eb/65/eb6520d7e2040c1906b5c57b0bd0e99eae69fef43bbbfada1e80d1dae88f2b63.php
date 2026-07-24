@@ -35278,7 +35278,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\nesbot\\carbon\\src\\Carbon\\Traits\\Cast.php' => '6538462dc306eacf20262009bafc6fe11e015ad684ab96e5d0068a4b759a1bcd',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\nesbot\\carbon\\src\\Carbon\\Traits\\Options.php' => '05619d097672b095c39c163e2fa514326056301675005445534c8d2d89fd5603',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\nesbot\\carbon\\src\\Carbon\\Traits\\StaticOptions.php' => '0ef3d75f6f5a57a48e333a12b1e9ab47d204e78e97c7b80f156a2e6c93564501',
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\nesbot\\carbon\\src\\Carbon\\Traits\\Localization.php' => '8de01281c0c4c48c451021197ea2238d5386d3c69a6e33b44f9ab183bd56ee0f',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\nesbot\\carbon\\src\\Carbon\\Traits\\Localization.php' => '67c215df0132776f6e9d02328a72d3049298bdfaeaf4206cb5519755345ab0f6',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\nesbot\\carbon\\src\\Carbon\\Traits\\StaticLocalization.php' => '4f9f8e7535980a8d4c9d23d2d470fd35f76ae56468388e2db7698e582b721864',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\nesbot\\carbon\\src\\Carbon\\Traits\\Rounding.php' => '474a533e3a57c186a311e718357172b69c14f248b61ea9445334e1e78429d1bd',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\nesbot\\carbon\\src\\Carbon\\Traits\\IntervalRounding.php' => 'f8aa8b67c35ba4c9a2dd49784f246a1cecd2c8fb179c69934ddc5dd3a64f17b0',

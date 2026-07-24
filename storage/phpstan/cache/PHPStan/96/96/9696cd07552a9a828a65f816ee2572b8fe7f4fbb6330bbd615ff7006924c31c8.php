@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Http\Controllers\Controller.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Controllers\Controller
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-70707569c1f7a945698a42517b94c3e584d0bd43d05b95ab4f39ebd51cf99b83',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-7a22d210e5e61642b9e45b86ea79ba0721a928f2b0c9168bde247a7095004a5a',
    'data' => 
   array (
     'locatedSource' => 
@@ -26,8 +26,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'attributes' => 
     array (
     ),
-    'startLine' => 9,
-    'endLine' => 56,
+    'startLine' => 10,
+    'endLine' => 42,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => NULL,
@@ -69,8 +69,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 18,
-            'endLine' => 18,
+            'startLine' => 19,
+            'endLine' => 19,
             'startColumn' => 42,
             'endColumn' => 57,
             'parameterIndex' => 0,
@@ -91,14 +91,14 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => '/**
- * Resolve e valida o utilizador atualmente autenticado com base no token fornecido.
- * Procura o token prioritariamente no cabeçalho customizado \'X-Auth-Token\'
- * ou, em alternativa, no cabeçalho padrão \'Authorization\' (Bearer Token).
+ * Resolve o utilizador autenticado a partir do guard definido pelo CustomAuthMiddleware.
+ * O middleware já validou o token (com hash HMAC-SHA256) e configurou o guard antes de
+ * o pedido chegar ao controller. Este método apenas recolhe o utilizador do guard.
  *
- * * @throws HttpException
+ * @throws HttpException
  */',
-        'startLine' => 18,
-        'endLine' => 41,
+        'startLine' => 19,
+        'endLine' => 28,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -136,8 +136,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 49,
-            'endLine' => 49,
+            'startLine' => 36,
+            'endLine' => 36,
             'startColumn' => 36,
             'endColumn' => 45,
             'parameterIndex' => 0,
@@ -162,8 +162,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 49,
-            'endLine' => 49,
+            'startLine' => 36,
+            'endLine' => 36,
             'startColumn' => 48,
             'endColumn' => 59,
             'parameterIndex' => 1,
@@ -189,8 +189,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  *
  * @throws HttpException
  */',
-        'startLine' => 49,
-        'endLine' => 55,
+        'startLine' => 36,
+        'endLine' => 41,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

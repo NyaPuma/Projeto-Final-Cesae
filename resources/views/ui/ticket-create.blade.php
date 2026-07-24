@@ -1,4 +1,4 @@
-@extends('ui.layout')
+﻿@extends('ui.layout')
 
 @section('content')
 <script>
@@ -8,7 +8,7 @@ window.requireAuthOnLoad = true;
 @component('ui.partials.page-card', [
     'title' => __('Criar Ticket'),
     'subtitle' => __('Registe uma nova ocorrência de manutenção com contexto técnico e prioridade.'),
-    'actions' => '<a href="/ui/tickets" class="inline-flex items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">← ' . __('Voltar aos tickets') . '</a>'
+    'actions' => '<a href="' . route('ui.tickets') . '" class="inline-flex items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">← ' . __('Voltar aos tickets') . '</a>'
 ])
     <div class="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm">
 
@@ -132,10 +132,10 @@ window.requireAuthOnLoad = true;
 @push('scripts')
 <script>
 function authHeader() {
-    const token = localStorage.getItem('api_token');
+    const token = localStorage.getItem('auth_token');
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
     const headers = { 'Accept': 'application/json', 'Content-Type': 'application/json' };
-    if (token) headers['X-Auth-Token'] = token;
+    if (token) headers['Authorization'] = 'Bearer ' + token;
     if (csrfToken) headers['X-CSRF-TOKEN'] = csrfToken;
     return headers;
 }
@@ -185,10 +185,17 @@ document.getElementById('createTicketForm').addEventListener('submit', async (e)
     submitBtn.disabled = true;
 
     try {
+        // Só enviar equipment_id se for um número válido
+        const payload = { title, description, priority };
+        const eqId = parseInt(equipment_id, 10);
+        if (equipment_id && !isNaN(eqId) && eqId > 0) {
+            payload.equipment_id = eqId;
+        }
+
         const res = await fetch('/api/tickets', {
             method: 'POST',
             headers: authHeader(),
-            body: JSON.stringify({ title, description, priority, equipment_id })
+            body: JSON.stringify(payload)
         });
 
         const data = await res.json().catch(() => ({}));
@@ -203,7 +210,7 @@ document.getElementById('createTicketForm').addEventListener('submit', async (e)
 
         message.textContent = "{{ __('Ticket criado com sucesso!') }}";
         message.className = 'min-h-6 text-sm font-medium text-emerald-600 dark:text-emerald-400';
-        setTimeout(() => { window.location.href = '/ui/tickets'; }, 1500);
+        setTimeout(() => { window.location.href = '{{ route('ui.tickets') }}'; }, 1500);
     } catch (err) {
         message.textContent = err.message;
         message.className = 'min-h-6 text-sm font-medium text-red-600 dark:text-red-400';

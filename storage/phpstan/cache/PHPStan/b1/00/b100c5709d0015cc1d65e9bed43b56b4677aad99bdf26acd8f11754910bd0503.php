@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Http\Controllers\AdminController.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Controllers\AdminController
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-7506d48e481bc9b8b583ed19170be8eba0f6d037f4b9105a0f5dadfbeae3c379',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-cee4f3d8f3d194af6d384b4c1b4650e6d108e8fec1cece55438eab78723397ba',
    'data' => 
   array (
     'locatedSource' => 
@@ -26,8 +26,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'attributes' => 
     array (
     ),
-    'startLine' => 16,
-    'endLine' => 449,
+    'startLine' => 17,
+    'endLine' => 475,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'App\\Http\\Controllers\\Controller',
@@ -36,6 +36,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'traitClassNames' => 
     array (
+      0 => 'App\\Traits\\ControllerHelpers',
     ),
     'immediateConstants' => 
     array (
@@ -69,8 +70,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 28,
-            'endLine' => 28,
+            'startLine' => 31,
+            'endLine' => 31,
             'startColumn' => 27,
             'endColumn' => 42,
             'parameterIndex' => 0,
@@ -92,12 +93,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'/admin/users\'',
                 'attributes' => 
                 array (
-                  'startLine' => 22,
-                  'endLine' => 22,
-                  'startTokenPos' => 80,
-                  'startFilePos' => 489,
-                  'endTokenPos' => 80,
-                  'endFilePos' => 502,
+                  'startLine' => 25,
+                  'endLine' => 25,
+                  'startTokenPos' => 90,
+                  'startFilePos' => 551,
+                  'endTokenPos' => 90,
+                  'endFilePos' => 564,
                 ),
               ),
               'tags' => 
@@ -105,12 +106,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[\'Admin\']',
                 'attributes' => 
                 array (
-                  'startLine' => 23,
-                  'endLine' => 23,
-                  'startTokenPos' => 86,
-                  'startFilePos' => 519,
-                  'endTokenPos' => 88,
-                  'endFilePos' => 527,
+                  'startLine' => 26,
+                  'endLine' => 26,
+                  'startTokenPos' => 96,
+                  'startFilePos' => 581,
+                  'endTokenPos' => 98,
+                  'endFilePos' => 589,
                 ),
               ),
               'summary' => 
@@ -118,12 +119,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'Listar utilizadores\'',
                 'attributes' => 
                 array (
-                  'startLine' => 24,
-                  'endLine' => 24,
-                  'startTokenPos' => 94,
-                  'startFilePos' => 547,
-                  'endTokenPos' => 94,
-                  'endFilePos' => 567,
+                  'startLine' => 27,
+                  'endLine' => 27,
+                  'startTokenPos' => 104,
+                  'startFilePos' => 609,
+                  'endTokenPos' => 104,
+                  'endFilePos' => 629,
                 ),
               ),
               'security' => 
@@ -131,12 +132,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[[\'X-Auth-Token\' => []], [\'BearerAuth\' => []]]',
                 'attributes' => 
                 array (
-                  'startLine' => 25,
-                  'endLine' => 25,
-                  'startTokenPos' => 100,
-                  'startFilePos' => 588,
-                  'endTokenPos' => 119,
-                  'endFilePos' => 633,
+                  'startLine' => 28,
+                  'endLine' => 28,
+                  'startTokenPos' => 110,
+                  'startFilePos' => 650,
+                  'endTokenPos' => 129,
+                  'endFilePos' => 695,
                 ),
               ),
               'responses' => 
@@ -144,12 +145,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[new \\OpenApi\\Attributes\\Response(response: 200, description: \'Lista de utilizadores\')]',
                 'attributes' => 
                 array (
-                  'startLine' => 26,
-                  'endLine' => 26,
-                  'startTokenPos' => 125,
-                  'startFilePos' => 655,
-                  'endTokenPos' => 141,
-                  'endFilePos' => 724,
+                  'startLine' => 29,
+                  'endLine' => 29,
+                  'startTokenPos' => 135,
+                  'startFilePos' => 717,
+                  'endTokenPos' => 151,
+                  'endFilePos' => 786,
                 ),
               ),
             ),
@@ -158,8 +159,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Retorna todos os utilizadores (Apenas para Administradores).
  */',
-        'startLine' => 21,
-        'endLine' => 54,
+        'startLine' => 24,
+        'endLine' => 58,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -197,8 +198,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 73,
-            'endLine' => 73,
+            'startLine' => 77,
+            'endLine' => 77,
             'startColumn' => 36,
             'endColumn' => 51,
             'parameterIndex' => 0,
@@ -223,8 +224,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 73,
-            'endLine' => 73,
+            'startLine' => 77,
+            'endLine' => 77,
             'startColumn' => 54,
             'endColumn' => 60,
             'parameterIndex' => 1,
@@ -246,12 +247,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'/admin/users/{id}/inactive\'',
                 'attributes' => 
                 array (
-                  'startLine' => 60,
-                  'endLine' => 60,
-                  'startTokenPos' => 401,
-                  'startFilePos' => 1643,
-                  'endTokenPos' => 401,
-                  'endFilePos' => 1670,
+                  'startLine' => 64,
+                  'endLine' => 64,
+                  'startTokenPos' => 437,
+                  'startFilePos' => 1781,
+                  'endTokenPos' => 437,
+                  'endFilePos' => 1808,
                 ),
               ),
               'tags' => 
@@ -259,12 +260,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[\'Admin\']',
                 'attributes' => 
                 array (
-                  'startLine' => 61,
-                  'endLine' => 61,
-                  'startTokenPos' => 407,
-                  'startFilePos' => 1687,
-                  'endTokenPos' => 409,
-                  'endFilePos' => 1695,
+                  'startLine' => 65,
+                  'endLine' => 65,
+                  'startTokenPos' => 443,
+                  'startFilePos' => 1825,
+                  'endTokenPos' => 445,
+                  'endFilePos' => 1833,
                 ),
               ),
               'summary' => 
@@ -272,12 +273,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'Inativar utilizador\'',
                 'attributes' => 
                 array (
-                  'startLine' => 62,
-                  'endLine' => 62,
-                  'startTokenPos' => 415,
-                  'startFilePos' => 1715,
-                  'endTokenPos' => 415,
-                  'endFilePos' => 1735,
+                  'startLine' => 66,
+                  'endLine' => 66,
+                  'startTokenPos' => 451,
+                  'startFilePos' => 1853,
+                  'endTokenPos' => 451,
+                  'endFilePos' => 1873,
                 ),
               ),
               'security' => 
@@ -285,12 +286,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[[\'X-Auth-Token\' => []], [\'BearerAuth\' => []]]',
                 'attributes' => 
                 array (
-                  'startLine' => 63,
-                  'endLine' => 63,
-                  'startTokenPos' => 421,
-                  'startFilePos' => 1756,
-                  'endTokenPos' => 440,
-                  'endFilePos' => 1801,
+                  'startLine' => 67,
+                  'endLine' => 67,
+                  'startTokenPos' => 457,
+                  'startFilePos' => 1894,
+                  'endTokenPos' => 476,
+                  'endFilePos' => 1939,
                 ),
               ),
               'parameters' => 
@@ -298,12 +299,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[new \\OpenApi\\Attributes\\Parameter(name: \'id\', in: \'path\', required: true, schema: new \\OpenApi\\Attributes\\Schema(type: \'integer\'))]',
                 'attributes' => 
                 array (
-                  'startLine' => 64,
-                  'endLine' => 66,
-                  'startTokenPos' => 446,
-                  'startFilePos' => 1824,
-                  'endTokenPos' => 485,
-                  'endFilePos' => 1944,
+                  'startLine' => 68,
+                  'endLine' => 70,
+                  'startTokenPos' => 482,
+                  'startFilePos' => 1962,
+                  'endTokenPos' => 521,
+                  'endFilePos' => 2082,
                 ),
               ),
               'responses' => 
@@ -311,12 +312,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[new \\OpenApi\\Attributes\\Response(response: 200, description: \'Utilizador inativado\'), new \\OpenApi\\Attributes\\Response(response: 404, description: \'Utilizador não encontrado\'), new \\OpenApi\\Attributes\\Response(response: 422, description: \'Operação inválida\')]',
                 'attributes' => 
                 array (
-                  'startLine' => 67,
-                  'endLine' => 71,
-                  'startTokenPos' => 491,
-                  'startFilePos' => 1966,
-                  'endTokenPos' => 544,
-                  'endFilePos' => 2225,
+                  'startLine' => 71,
+                  'endLine' => 75,
+                  'startTokenPos' => 527,
+                  'startFilePos' => 2104,
+                  'endTokenPos' => 580,
+                  'endFilePos' => 2363,
                 ),
               ),
             ),
@@ -325,8 +326,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Inativa um utilizador do sistema.
  */',
-        'startLine' => 59,
-        'endLine' => 90,
+        'startLine' => 63,
+        'endLine' => 97,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -364,8 +365,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 95,
-            'endLine' => 95,
+            'startLine' => 102,
+            'endLine' => 102,
             'startColumn' => 31,
             'endColumn' => 46,
             'parameterIndex' => 0,
@@ -380,8 +381,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Regista um novo utilizador no sistema.
  */',
-        'startLine' => 95,
-        'endLine' => 120,
+        'startLine' => 102,
+        'endLine' => 132,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -419,8 +420,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 125,
-            'endLine' => 125,
+            'startLine' => 137,
+            'endLine' => 137,
             'startColumn' => 32,
             'endColumn' => 47,
             'parameterIndex' => 0,
@@ -445,8 +446,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 125,
-            'endLine' => 125,
+            'startLine' => 137,
+            'endLine' => 137,
             'startColumn' => 50,
             'endColumn' => 56,
             'parameterIndex' => 1,
@@ -461,8 +462,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Atualiza um utilizador existente.
  */',
-        'startLine' => 125,
-        'endLine' => 155,
+        'startLine' => 137,
+        'endLine' => 175,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -490,8 +491,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Retorna os perfis de utilizador disponíveis.
  */',
-        'startLine' => 160,
-        'endLine' => 163,
+        'startLine' => 180,
+        'endLine' => 183,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -529,8 +530,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 175,
-            'endLine' => 175,
+            'startLine' => 195,
+            'endLine' => 195,
             'startColumn' => 32,
             'endColumn' => 47,
             'parameterIndex' => 0,
@@ -552,12 +553,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'/admin/equipment\'',
                 'attributes' => 
                 array (
-                  'startLine' => 169,
-                  'endLine' => 169,
-                  'startTokenPos' => 1336,
-                  'startFilePos' => 5584,
-                  'endTokenPos' => 1336,
-                  'endFilePos' => 5601,
+                  'startLine' => 189,
+                  'endLine' => 189,
+                  'startTokenPos' => 1521,
+                  'startFilePos' => 6400,
+                  'endTokenPos' => 1521,
+                  'endFilePos' => 6417,
                 ),
               ),
               'tags' => 
@@ -565,12 +566,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[\'Admin\']',
                 'attributes' => 
                 array (
-                  'startLine' => 170,
-                  'endLine' => 170,
-                  'startTokenPos' => 1342,
-                  'startFilePos' => 5618,
-                  'endTokenPos' => 1344,
-                  'endFilePos' => 5626,
+                  'startLine' => 190,
+                  'endLine' => 190,
+                  'startTokenPos' => 1527,
+                  'startFilePos' => 6434,
+                  'endTokenPos' => 1529,
+                  'endFilePos' => 6442,
                 ),
               ),
               'summary' => 
@@ -578,12 +579,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'Listar equipamentos\'',
                 'attributes' => 
                 array (
-                  'startLine' => 171,
-                  'endLine' => 171,
-                  'startTokenPos' => 1350,
-                  'startFilePos' => 5646,
-                  'endTokenPos' => 1350,
-                  'endFilePos' => 5666,
+                  'startLine' => 191,
+                  'endLine' => 191,
+                  'startTokenPos' => 1535,
+                  'startFilePos' => 6462,
+                  'endTokenPos' => 1535,
+                  'endFilePos' => 6482,
                 ),
               ),
               'security' => 
@@ -591,12 +592,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[[\'X-Auth-Token\' => []], [\'BearerAuth\' => []]]',
                 'attributes' => 
                 array (
-                  'startLine' => 172,
-                  'endLine' => 172,
-                  'startTokenPos' => 1356,
-                  'startFilePos' => 5687,
-                  'endTokenPos' => 1375,
-                  'endFilePos' => 5732,
+                  'startLine' => 192,
+                  'endLine' => 192,
+                  'startTokenPos' => 1541,
+                  'startFilePos' => 6503,
+                  'endTokenPos' => 1560,
+                  'endFilePos' => 6548,
                 ),
               ),
               'responses' => 
@@ -604,12 +605,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[new \\OpenApi\\Attributes\\Response(response: 200, description: \'Lista de equipamentos\')]',
                 'attributes' => 
                 array (
-                  'startLine' => 173,
-                  'endLine' => 173,
-                  'startTokenPos' => 1381,
-                  'startFilePos' => 5754,
-                  'endTokenPos' => 1397,
-                  'endFilePos' => 5823,
+                  'startLine' => 193,
+                  'endLine' => 193,
+                  'startTokenPos' => 1566,
+                  'startFilePos' => 6570,
+                  'endTokenPos' => 1582,
+                  'endFilePos' => 6639,
                 ),
               ),
             ),
@@ -618,8 +619,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Lista equipamentos com a respetiva sala associada.
  */',
-        'startLine' => 168,
-        'endLine' => 179,
+        'startLine' => 188,
+        'endLine' => 199,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -657,8 +658,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 194,
-            'endLine' => 194,
+            'startLine' => 214,
+            'endLine' => 214,
             'startColumn' => 36,
             'endColumn' => 51,
             'parameterIndex' => 0,
@@ -680,12 +681,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'/admin/equipment\'',
                 'attributes' => 
                 array (
-                  'startLine' => 185,
-                  'endLine' => 185,
-                  'startTokenPos' => 1461,
-                  'startFilePos' => 6180,
-                  'endTokenPos' => 1461,
-                  'endFilePos' => 6197,
+                  'startLine' => 205,
+                  'endLine' => 205,
+                  'startTokenPos' => 1646,
+                  'startFilePos' => 6996,
+                  'endTokenPos' => 1646,
+                  'endFilePos' => 7013,
                 ),
               ),
               'tags' => 
@@ -693,12 +694,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[\'Admin\']',
                 'attributes' => 
                 array (
-                  'startLine' => 186,
-                  'endLine' => 186,
-                  'startTokenPos' => 1467,
-                  'startFilePos' => 6214,
-                  'endTokenPos' => 1469,
-                  'endFilePos' => 6222,
+                  'startLine' => 206,
+                  'endLine' => 206,
+                  'startTokenPos' => 1652,
+                  'startFilePos' => 7030,
+                  'endTokenPos' => 1654,
+                  'endFilePos' => 7038,
                 ),
               ),
               'summary' => 
@@ -706,12 +707,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'Criar equipamento\'',
                 'attributes' => 
                 array (
-                  'startLine' => 187,
-                  'endLine' => 187,
-                  'startTokenPos' => 1475,
-                  'startFilePos' => 6242,
-                  'endTokenPos' => 1475,
-                  'endFilePos' => 6260,
+                  'startLine' => 207,
+                  'endLine' => 207,
+                  'startTokenPos' => 1660,
+                  'startFilePos' => 7058,
+                  'endTokenPos' => 1660,
+                  'endFilePos' => 7076,
                 ),
               ),
               'security' => 
@@ -719,12 +720,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[[\'X-Auth-Token\' => []], [\'BearerAuth\' => []]]',
                 'attributes' => 
                 array (
-                  'startLine' => 188,
-                  'endLine' => 188,
-                  'startTokenPos' => 1481,
-                  'startFilePos' => 6281,
-                  'endTokenPos' => 1500,
-                  'endFilePos' => 6326,
+                  'startLine' => 208,
+                  'endLine' => 208,
+                  'startTokenPos' => 1666,
+                  'startFilePos' => 7097,
+                  'endTokenPos' => 1685,
+                  'endFilePos' => 7142,
                 ),
               ),
               'responses' => 
@@ -732,12 +733,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[new \\OpenApi\\Attributes\\Response(response: 201, description: \'Equipamento criado\'), new \\OpenApi\\Attributes\\Response(response: 422, description: \'Erro de validação\')]',
                 'attributes' => 
                 array (
-                  'startLine' => 189,
-                  'endLine' => 192,
-                  'startTokenPos' => 1506,
-                  'startFilePos' => 6348,
-                  'endTokenPos' => 1542,
-                  'endFilePos' => 6517,
+                  'startLine' => 209,
+                  'endLine' => 212,
+                  'startTokenPos' => 1691,
+                  'startFilePos' => 7164,
+                  'endTokenPos' => 1727,
+                  'endFilePos' => 7333,
                 ),
               ),
             ),
@@ -746,8 +747,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Regista um novo equipamento no sistema.
  */',
-        'startLine' => 184,
-        'endLine' => 216,
+        'startLine' => 204,
+        'endLine' => 236,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -785,8 +786,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 235,
-            'endLine' => 235,
+            'startLine' => 255,
+            'endLine' => 255,
             'startColumn' => 37,
             'endColumn' => 52,
             'parameterIndex' => 0,
@@ -811,8 +812,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 235,
-            'endLine' => 235,
+            'startLine' => 255,
+            'endLine' => 255,
             'startColumn' => 55,
             'endColumn' => 61,
             'parameterIndex' => 1,
@@ -834,12 +835,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'/admin/equipment/{id}\'',
                 'attributes' => 
                 array (
-                  'startLine' => 222,
-                  'endLine' => 222,
-                  'startTokenPos' => 1773,
-                  'startFilePos' => 7520,
-                  'endTokenPos' => 1773,
-                  'endFilePos' => 7542,
+                  'startLine' => 242,
+                  'endLine' => 242,
+                  'startTokenPos' => 1958,
+                  'startFilePos' => 8336,
+                  'endTokenPos' => 1958,
+                  'endFilePos' => 8358,
                 ),
               ),
               'tags' => 
@@ -847,12 +848,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[\'Admin\']',
                 'attributes' => 
                 array (
-                  'startLine' => 223,
-                  'endLine' => 223,
-                  'startTokenPos' => 1779,
-                  'startFilePos' => 7559,
-                  'endTokenPos' => 1781,
-                  'endFilePos' => 7567,
+                  'startLine' => 243,
+                  'endLine' => 243,
+                  'startTokenPos' => 1964,
+                  'startFilePos' => 8375,
+                  'endTokenPos' => 1966,
+                  'endFilePos' => 8383,
                 ),
               ),
               'summary' => 
@@ -860,12 +861,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'Atualizar equipamento\'',
                 'attributes' => 
                 array (
-                  'startLine' => 224,
-                  'endLine' => 224,
-                  'startTokenPos' => 1787,
-                  'startFilePos' => 7587,
-                  'endTokenPos' => 1787,
-                  'endFilePos' => 7609,
+                  'startLine' => 244,
+                  'endLine' => 244,
+                  'startTokenPos' => 1972,
+                  'startFilePos' => 8403,
+                  'endTokenPos' => 1972,
+                  'endFilePos' => 8425,
                 ),
               ),
               'security' => 
@@ -873,12 +874,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[[\'X-Auth-Token\' => []], [\'BearerAuth\' => []]]',
                 'attributes' => 
                 array (
-                  'startLine' => 225,
-                  'endLine' => 225,
-                  'startTokenPos' => 1793,
-                  'startFilePos' => 7630,
-                  'endTokenPos' => 1812,
-                  'endFilePos' => 7675,
+                  'startLine' => 245,
+                  'endLine' => 245,
+                  'startTokenPos' => 1978,
+                  'startFilePos' => 8446,
+                  'endTokenPos' => 1997,
+                  'endFilePos' => 8491,
                 ),
               ),
               'parameters' => 
@@ -886,12 +887,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[new \\OpenApi\\Attributes\\Parameter(name: \'id\', in: \'path\', required: true, schema: new \\OpenApi\\Attributes\\Schema(type: \'integer\'))]',
                 'attributes' => 
                 array (
-                  'startLine' => 226,
-                  'endLine' => 228,
-                  'startTokenPos' => 1818,
-                  'startFilePos' => 7698,
-                  'endTokenPos' => 1857,
-                  'endFilePos' => 7818,
+                  'startLine' => 246,
+                  'endLine' => 248,
+                  'startTokenPos' => 2003,
+                  'startFilePos' => 8514,
+                  'endTokenPos' => 2042,
+                  'endFilePos' => 8634,
                 ),
               ),
               'responses' => 
@@ -899,12 +900,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[new \\OpenApi\\Attributes\\Response(response: 200, description: \'Equipamento atualizado\'), new \\OpenApi\\Attributes\\Response(response: 404, description: \'Equipamento não encontrado\'), new \\OpenApi\\Attributes\\Response(response: 422, description: \'Erro de validação\')]',
                 'attributes' => 
                 array (
-                  'startLine' => 229,
-                  'endLine' => 233,
-                  'startTokenPos' => 1863,
-                  'startFilePos' => 7840,
-                  'endTokenPos' => 1916,
-                  'endFilePos' => 8101,
+                  'startLine' => 249,
+                  'endLine' => 253,
+                  'startTokenPos' => 2048,
+                  'startFilePos' => 8656,
+                  'endTokenPos' => 2101,
+                  'endFilePos' => 8917,
                 ),
               ),
             ),
@@ -913,8 +914,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Atualiza os dados de um equipamento existente.
  */',
-        'startLine' => 221,
-        'endLine' => 258,
+        'startLine' => 241,
+        'endLine' => 281,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -952,8 +953,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 276,
-            'endLine' => 276,
+            'startLine' => 299,
+            'endLine' => 299,
             'startColumn' => 38,
             'endColumn' => 53,
             'parameterIndex' => 0,
@@ -978,8 +979,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 276,
-            'endLine' => 276,
+            'startLine' => 299,
+            'endLine' => 299,
             'startColumn' => 56,
             'endColumn' => 62,
             'parameterIndex' => 1,
@@ -1001,12 +1002,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'/admin/equipment/{id}\'',
                 'attributes' => 
                 array (
-                  'startLine' => 264,
-                  'endLine' => 264,
-                  'startTokenPos' => 2168,
-                  'startFilePos' => 9198,
-                  'endTokenPos' => 2168,
-                  'endFilePos' => 9220,
+                  'startLine' => 287,
+                  'endLine' => 287,
+                  'startTokenPos' => 2380,
+                  'startFilePos' => 10124,
+                  'endTokenPos' => 2380,
+                  'endFilePos' => 10146,
                 ),
               ),
               'tags' => 
@@ -1014,12 +1015,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[\'Admin\']',
                 'attributes' => 
                 array (
-                  'startLine' => 265,
-                  'endLine' => 265,
-                  'startTokenPos' => 2174,
-                  'startFilePos' => 9237,
-                  'endTokenPos' => 2176,
-                  'endFilePos' => 9245,
+                  'startLine' => 288,
+                  'endLine' => 288,
+                  'startTokenPos' => 2386,
+                  'startFilePos' => 10163,
+                  'endTokenPos' => 2388,
+                  'endFilePos' => 10171,
                 ),
               ),
               'summary' => 
@@ -1027,12 +1028,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'Eliminar equipamento\'',
                 'attributes' => 
                 array (
-                  'startLine' => 266,
-                  'endLine' => 266,
-                  'startTokenPos' => 2182,
-                  'startFilePos' => 9265,
-                  'endTokenPos' => 2182,
-                  'endFilePos' => 9286,
+                  'startLine' => 289,
+                  'endLine' => 289,
+                  'startTokenPos' => 2394,
+                  'startFilePos' => 10191,
+                  'endTokenPos' => 2394,
+                  'endFilePos' => 10212,
                 ),
               ),
               'security' => 
@@ -1040,12 +1041,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[[\'X-Auth-Token\' => []], [\'BearerAuth\' => []]]',
                 'attributes' => 
                 array (
-                  'startLine' => 267,
-                  'endLine' => 267,
-                  'startTokenPos' => 2188,
-                  'startFilePos' => 9307,
-                  'endTokenPos' => 2207,
-                  'endFilePos' => 9352,
+                  'startLine' => 290,
+                  'endLine' => 290,
+                  'startTokenPos' => 2400,
+                  'startFilePos' => 10233,
+                  'endTokenPos' => 2419,
+                  'endFilePos' => 10278,
                 ),
               ),
               'parameters' => 
@@ -1053,12 +1054,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[new \\OpenApi\\Attributes\\Parameter(name: \'id\', in: \'path\', required: true, schema: new \\OpenApi\\Attributes\\Schema(type: \'integer\'))]',
                 'attributes' => 
                 array (
-                  'startLine' => 268,
-                  'endLine' => 270,
-                  'startTokenPos' => 2213,
-                  'startFilePos' => 9375,
-                  'endTokenPos' => 2252,
-                  'endFilePos' => 9495,
+                  'startLine' => 291,
+                  'endLine' => 293,
+                  'startTokenPos' => 2425,
+                  'startFilePos' => 10301,
+                  'endTokenPos' => 2464,
+                  'endFilePos' => 10421,
                 ),
               ),
               'responses' => 
@@ -1066,12 +1067,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[new \\OpenApi\\Attributes\\Response(response: 200, description: \'Equipamento eliminado\'), new \\OpenApi\\Attributes\\Response(response: 404, description: \'Equipamento não encontrado\')]',
                 'attributes' => 
                 array (
-                  'startLine' => 271,
-                  'endLine' => 274,
-                  'startTokenPos' => 2258,
-                  'startFilePos' => 9517,
-                  'endTokenPos' => 2294,
-                  'endFilePos' => 9697,
+                  'startLine' => 294,
+                  'endLine' => 297,
+                  'startTokenPos' => 2470,
+                  'startFilePos' => 10443,
+                  'endTokenPos' => 2506,
+                  'endFilePos' => 10623,
                 ),
               ),
             ),
@@ -1080,8 +1081,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Remove fisicamente um equipamento do sistema.
  */',
-        'startLine' => 263,
-        'endLine' => 287,
+        'startLine' => 286,
+        'endLine' => 313,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -1119,8 +1120,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 315,
-            'endLine' => 315,
+            'startLine' => 341,
+            'endLine' => 341,
             'startColumn' => 37,
             'endColumn' => 52,
             'parameterIndex' => 0,
@@ -1142,12 +1143,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'/admin/tickets/{id}/approve-budget\'',
                 'attributes' => 
                 array (
-                  'startLine' => 293,
-                  'endLine' => 293,
-                  'startTokenPos' => 2400,
-                  'startFilePos' => 10276,
-                  'endTokenPos' => 2400,
-                  'endFilePos' => 10311,
+                  'startLine' => 319,
+                  'endLine' => 319,
+                  'startTokenPos' => 2639,
+                  'startFilePos' => 11312,
+                  'endTokenPos' => 2639,
+                  'endFilePos' => 11347,
                 ),
               ),
               'tags' => 
@@ -1155,12 +1156,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[\'Admin\']',
                 'attributes' => 
                 array (
-                  'startLine' => 294,
-                  'endLine' => 294,
-                  'startTokenPos' => 2406,
-                  'startFilePos' => 10328,
-                  'endTokenPos' => 2408,
-                  'endFilePos' => 10336,
+                  'startLine' => 320,
+                  'endLine' => 320,
+                  'startTokenPos' => 2645,
+                  'startFilePos' => 11364,
+                  'endTokenPos' => 2647,
+                  'endFilePos' => 11372,
                 ),
               ),
               'summary' => 
@@ -1168,12 +1169,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'Aprovar orçamento\'',
                 'attributes' => 
                 array (
-                  'startLine' => 295,
-                  'endLine' => 295,
-                  'startTokenPos' => 2414,
-                  'startFilePos' => 10356,
-                  'endTokenPos' => 2414,
-                  'endFilePos' => 10375,
+                  'startLine' => 321,
+                  'endLine' => 321,
+                  'startTokenPos' => 2653,
+                  'startFilePos' => 11392,
+                  'endTokenPos' => 2653,
+                  'endFilePos' => 11411,
                 ),
               ),
               'security' => 
@@ -1181,12 +1182,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[[\'X-Auth-Token\' => []], [\'BearerAuth\' => []]]',
                 'attributes' => 
                 array (
-                  'startLine' => 296,
-                  'endLine' => 296,
-                  'startTokenPos' => 2420,
-                  'startFilePos' => 10396,
-                  'endTokenPos' => 2439,
-                  'endFilePos' => 10441,
+                  'startLine' => 322,
+                  'endLine' => 322,
+                  'startTokenPos' => 2659,
+                  'startFilePos' => 11432,
+                  'endTokenPos' => 2678,
+                  'endFilePos' => 11477,
                 ),
               ),
               'parameters' => 
@@ -1194,12 +1195,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[new \\OpenApi\\Attributes\\Parameter(name: \'id\', in: \'path\', required: true, schema: new \\OpenApi\\Attributes\\Schema(type: \'integer\'))]',
                 'attributes' => 
                 array (
-                  'startLine' => 297,
-                  'endLine' => 299,
-                  'startTokenPos' => 2445,
-                  'startFilePos' => 10464,
-                  'endTokenPos' => 2484,
-                  'endFilePos' => 10584,
+                  'startLine' => 323,
+                  'endLine' => 325,
+                  'startTokenPos' => 2684,
+                  'startFilePos' => 11500,
+                  'endTokenPos' => 2723,
+                  'endFilePos' => 11620,
                 ),
               ),
               'responses' => 
@@ -1207,12 +1208,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[new \\OpenApi\\Attributes\\Response(response: 200, description: \'Orçamento aprovado\'), new \\OpenApi\\Attributes\\Response(response: 422, description: \'Pedido inválido\')]',
                 'attributes' => 
                 array (
-                  'startLine' => 300,
-                  'endLine' => 303,
-                  'startTokenPos' => 2490,
-                  'startFilePos' => 10606,
-                  'endTokenPos' => 2526,
-                  'endFilePos' => 10773,
+                  'startLine' => 326,
+                  'endLine' => 329,
+                  'startTokenPos' => 2729,
+                  'startFilePos' => 11642,
+                  'endTokenPos' => 2765,
+                  'endFilePos' => 11809,
                 ),
               ),
             ),
@@ -1228,12 +1229,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'/admin/preventive\'',
                 'attributes' => 
                 array (
-                  'startLine' => 306,
-                  'endLine' => 306,
-                  'startTokenPos' => 2538,
-                  'startFilePos' => 10811,
-                  'endTokenPos' => 2538,
-                  'endFilePos' => 10829,
+                  'startLine' => 332,
+                  'endLine' => 332,
+                  'startTokenPos' => 2777,
+                  'startFilePos' => 11847,
+                  'endTokenPos' => 2777,
+                  'endFilePos' => 11865,
                 ),
               ),
               'tags' => 
@@ -1241,12 +1242,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[\'Admin\']',
                 'attributes' => 
                 array (
-                  'startLine' => 307,
-                  'endLine' => 307,
-                  'startTokenPos' => 2544,
-                  'startFilePos' => 10846,
-                  'endTokenPos' => 2546,
-                  'endFilePos' => 10854,
+                  'startLine' => 333,
+                  'endLine' => 333,
+                  'startTokenPos' => 2783,
+                  'startFilePos' => 11882,
+                  'endTokenPos' => 2785,
+                  'endFilePos' => 11890,
                 ),
               ),
               'summary' => 
@@ -1254,12 +1255,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'Criar manutenção preventiva\'',
                 'attributes' => 
                 array (
-                  'startLine' => 308,
-                  'endLine' => 308,
-                  'startTokenPos' => 2552,
-                  'startFilePos' => 10874,
-                  'endTokenPos' => 2552,
-                  'endFilePos' => 10904,
+                  'startLine' => 334,
+                  'endLine' => 334,
+                  'startTokenPos' => 2791,
+                  'startFilePos' => 11910,
+                  'endTokenPos' => 2791,
+                  'endFilePos' => 11940,
                 ),
               ),
               'security' => 
@@ -1267,12 +1268,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[[\'X-Auth-Token\' => []], [\'BearerAuth\' => []]]',
                 'attributes' => 
                 array (
-                  'startLine' => 309,
-                  'endLine' => 309,
-                  'startTokenPos' => 2558,
-                  'startFilePos' => 10925,
-                  'endTokenPos' => 2577,
-                  'endFilePos' => 10970,
+                  'startLine' => 335,
+                  'endLine' => 335,
+                  'startTokenPos' => 2797,
+                  'startFilePos' => 11961,
+                  'endTokenPos' => 2816,
+                  'endFilePos' => 12006,
                 ),
               ),
               'responses' => 
@@ -1280,12 +1281,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[new \\OpenApi\\Attributes\\Response(response: 201, description: \'Manutenção preventiva criada\'), new \\OpenApi\\Attributes\\Response(response: 422, description: \'Erro de validação\')]',
                 'attributes' => 
                 array (
-                  'startLine' => 310,
-                  'endLine' => 313,
-                  'startTokenPos' => 2583,
-                  'startFilePos' => 10992,
-                  'endTokenPos' => 2619,
-                  'endFilePos' => 11173,
+                  'startLine' => 336,
+                  'endLine' => 339,
+                  'startTokenPos' => 2822,
+                  'startFilePos' => 12028,
+                  'endTokenPos' => 2858,
+                  'endFilePos' => 12209,
                 ),
               ),
             ),
@@ -1294,8 +1295,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Aprova um pedido de orçamento associado a um ticket de avaria.
  */',
-        'startLine' => 292,
-        'endLine' => 354,
+        'startLine' => 318,
+        'endLine' => 380,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -1333,8 +1334,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 362,
-            'endLine' => 362,
+            'startLine' => 388,
+            'endLine' => 388,
             'startColumn' => 35,
             'endColumn' => 50,
             'parameterIndex' => 0,
@@ -1359,8 +1360,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 362,
-            'endLine' => 362,
+            'startLine' => 388,
+            'endLine' => 388,
             'startColumn' => 53,
             'endColumn' => 59,
             'parameterIndex' => 1,
@@ -1378,8 +1379,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * Rota: PATCH /admin/tickets/{id}/approve-budget
  * Rota: POST /admin/tickets/{id}/budget-decision (compatibilidade frontend)
  */',
-        'startLine' => 362,
-        'endLine' => 448,
+        'startLine' => 388,
+        'endLine' => 474,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

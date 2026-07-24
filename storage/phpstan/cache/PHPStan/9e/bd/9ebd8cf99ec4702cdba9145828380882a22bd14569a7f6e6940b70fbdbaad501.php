@@ -234,7 +234,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CsrfMiddleware.php' => '2e157df21792b8bf0fee551c87045dd2a2d8ae1b48c45e019342b01f5a4cffaa',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CsrfMiddleware.php' => 'e9bc385011f2d31b77ef8cbecdae483e86ff19bc8743b3e743e3b3572bd0fa39',
     ),
   ),
 ));

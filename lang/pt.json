@@ -1,1 +1,14 @@
-{}
+{
+    "A verificar...": "A verificar...",
+    "A iniciar...": "A iniciar...",
+    "Assuma a responsabilidade por este ticket e inicie a intervenção técnica. O sistema verificará se existem tickets mais prioritários pendentes.": "Assuma a responsabilidade por este ticket e inicie a intervenção técnica. O sistema verificará se existem tickets mais prioritários pendentes.",
+    "O ticket está no estado": "O ticket está no estado",
+    "Clique no botão abaixo para começar.": "Clique no botão abaixo para começar.",
+    "Iniciar Intervenção": "Iniciar Intervenção",
+    "Forçar Início (ignorar prioritários)": "Forçar Início (ignorar prioritários)",
+    "Reparação iniciada com sucesso (prioridades ignoradas)! O administrador foi notificado.": "Reparação iniciada com sucesso (prioridades ignoradas)! O administrador foi notificado.",
+    "Existem tickets mais prioritários por atender.": "Existem tickets mais prioritários por atender.",
+    "desse(s) estão atribuídos a si": "desse(s) estão atribuídos a si",
+    "Iniciar Reparação": "Iniciar Reparação",
+    "A localizar...": "A localizar..."
+}

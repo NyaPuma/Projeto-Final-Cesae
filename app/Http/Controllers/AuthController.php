@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -72,21 +73,24 @@ class AuthController extends Controller
 
         $profileId = $profile->id;
 
+        $plainToken = Str::random(60);
+
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'profile_id' => $profileId,
             'active' => true,
-            'api_token' => Str::random(60),
+            'api_token' => User::hashToken($plainToken),
+            'token_created_at' => now(),
         ]);
 
-        $request->session()->put('api_token', $user->api_token);
+        $request->session()->put('api_token', $plainToken);
 
         $user->load('profile');
 
-        return response()->json(['user' => $user, 'token' => $user->api_token], 201)
-            ->cookie('api_token', $user->api_token, 60 * 24 * 30, '/', null, false, false);
+        return response()->json(['user' => $user, 'token' => $plainToken], 201)
+            ->cookie('api_token', $plainToken, 60 * 24 * 30, '/', null, true, true, false, 'Lax');
     }
 
     #[OA\Post(
@@ -134,12 +138,27 @@ class AuthController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        // Só utilizadores ativos podem autenticar-se.
+        // Não distinguimos email inexistente de password errada por segurança.
         $user = User::where('email', $data['email'])->where('active', true)->first();
 
-        // Não distinguimos email inexistente de password errada por segurança.
-        if (! $user || ! Hash::check($data['password'], $user->password)) {
+        $valid = false;
+        if ($user) {
+            try {
+                $valid = Hash::check($data['password'], $user->password);
+            } catch (\RuntimeException) {
+                // Hash legacy (ex: bcrypt) — valida com PHP nativo e rehash a seguir.
+                $valid = password_verify($data['password'], $user->password);
+            }
+        }
+
+        if (! $valid) {
             return response()->json(['message' => __('Credenciais inválidas.')], 401);
+        }
+
+        // Rehash transparente: se a hash não corresponde ao algoritmo atual, regenera automaticamente.
+        if ($user && Hash::needsRehash($user->password)) {
+            $user->password = Hash::make($data['password']);
+            $user->save();
         }
 
         // Garante que, se o registo ficou sem perfil, o acesso volta a usar o perfil base.
@@ -149,15 +168,17 @@ class AuthController extends Controller
         }
 
         // Renovar o token invalida acessos antigos e simplifica a gestão da sessão.
-        $user->api_token = Str::random(60);
+        $plainToken = Str::random(60);
+        $user->api_token = User::hashToken($plainToken);
+        $user->token_created_at = now();
         $user->save();
 
-        $request->session()->put('api_token', $user->api_token);
+        $request->session()->put('api_token', $plainToken);
 
         $user->load('profile');
 
-        return response()->json(['user' => $user, 'token' => $user->api_token])
-            ->cookie('api_token', $user->api_token, 60 * 24 * 30, '/', null, false, false);
+        return response()->json(['user' => $user, 'token' => $plainToken])
+            ->cookie('api_token', $plainToken, 60 * 24 * 30, '/', null, true, true, false, 'Lax');
     }
 
     public function logout(Request $request)
@@ -168,7 +189,7 @@ class AuthController extends Controller
         $user->setRememberToken('');
         $user->save();
 
-        $cookie = cookie('api_token', null, -1, '/', null, false, false, false, 'Lax');
+        $cookie = cookie('api_token', null, -1, '/', null, true, true, false, 'Lax');
 
         return response()->json(['message' => __('Sessão terminada com sucesso.')])->withCookie($cookie);
     }
@@ -191,7 +212,13 @@ class AuthController extends Controller
         }
 
         // Confirmamos a password antiga antes de autorizar a alteração.
-        if (! Hash::check($data['current_password'], $user->password)) {
+        try {
+            $validCurrent = Hash::check($data['current_password'], $user->password);
+        } catch (\RuntimeException) {
+            $validCurrent = password_verify($data['current_password'], $user->password);
+        }
+
+        if (! $validCurrent) {
             return response()->json(['message' => __('Password atual incorreta')], 403);
         }
 
@@ -223,7 +250,13 @@ class AuthController extends Controller
                 return response()->json(['message' => __('A palavra-passe atual é obrigatória para alterar a password.')], 422);
             }
 
-            if (! Hash::check($data['current_password'], $user->password)) {
+            try {
+                $validCurrent = Hash::check($data['current_password'], $user->password);
+            } catch (\RuntimeException) {
+                $validCurrent = password_verify($data['current_password'], $user->password);
+            }
+
+            if (! $validCurrent) {
                 return response()->json(['message' => __('Password atual incorreta')], 403);
             }
 
@@ -238,5 +271,91 @@ class AuthController extends Controller
         $user->load('profile');
 
         return response()->json(['message' => __('Perfil atualizado com sucesso.'), 'user' => $user]);
+    }
+
+    /**
+     * Envia email com link de reset de password.
+     * Rota: POST /api/password/email
+     */
+    public function sendResetLink(Request $request)
+    {
+        $data = $request->only(['email']);
+        $validator = Validator::make($data, [
+            'email' => ['required', 'email', 'exists:users,email'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $token = Str::random(64);
+
+        DB::table('password_reset_tokens')->updateOrInsert(
+            ['email' => $data['email']],
+            [
+                'token' => Hash::make($token),
+                'created_at' => now(),
+            ]
+        );
+
+        // Em produção, enviar email com o token. Em dev, devolver no response.
+        if (app()->environment('production')) {
+            // TODO: Enviar email com link para /api/password/reset/{token}
+            // Mail::raw(...);
+        }
+
+        return response()->json([
+            'message' => __('Email de recuperação enviado com sucesso.'),
+            'token' => app()->environment('production') ? null : $token,
+        ]);
+    }
+
+    /**
+     * Repõe a password do utilizador usando o token de reset.
+     * Rota: POST /api/password/reset
+     */
+    public function resetPassword(Request $request)
+    {
+        $data = $request->only(['email', 'password', 'password_confirmation', 'token']);
+
+        $validator = Validator::make($data, [
+            'email' => ['required', 'email'],
+            'token' => ['required', 'string'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $record = DB::table('password_reset_tokens')
+            ->where('email', $data['email'])
+            ->latest('created_at')
+            ->first();
+
+        if (! $record || ! Hash::check($data['token'], $record->token)) {
+            return response()->json(['message' => __('Token inválido ou expirado.')], 422);
+        }
+
+        // Token expira em 60 minutos
+        if ($record->created_at && $record->created_at->diffInMinutes(now()) > 60) {
+            DB::table('password_reset_tokens')->where('email', $data['email'])->delete();
+
+            return response()->json(['message' => __('Token expirado. Solicite um novo.')], 422);
+        }
+
+        $user = User::where('email', $data['email'])->first();
+        if (! $user) {
+            return response()->json(['message' => __('Utilizador não encontrado.')], 422);
+        }
+
+        $user->password = Hash::make($data['password']);
+        $user->api_token = null;
+        $user->save();
+
+        // Invalidar todos os tokens de reset deste email
+        DB::table('password_reset_tokens')->where('email', $data['email'])->delete();
+
+        return response()->json(['message' => __('Password reposta com sucesso. Faça login.')]);
     }
 }

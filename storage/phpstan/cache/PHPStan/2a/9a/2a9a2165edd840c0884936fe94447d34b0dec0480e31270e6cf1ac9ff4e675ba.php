@@ -2,7 +2,7 @@
 
 // osfsl-C:/laravel/Projeto Final Cesae/Projeto-Final-Cesae/vendor/composer/../laravel/sail/src/Console/Concerns/InteractsWithDockerComposeServices.php-PHPStan\BetterReflection\Reflection\ReflectionClass-Laravel\Sail\Console\Concerns\InteractsWithDockerComposeServices
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-ce8685dfd0d4184c716bcaa16059a8f1f7cd3051d4cc90e71658c0c9d9a0e3d4-8.2.12-6.70.0.3',
+   'variableKey' => 'v2-61df23880a63bb68c9d9e975a2633d1d04b30faac1ffc016c99a71d8d6db1f38-8.2.12-6.70.0.3',
    'data' => 
   array (
     'locatedSource' => 
@@ -27,7 +27,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     array (
     ),
     'startLine' => 8,
-    'endLine' => 343,
+    'endLine' => 344,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => NULL,
@@ -237,7 +237,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * @return void
  */',
         'startLine' => 76,
-        'endLine' => 128,
+        'endLine' => 132,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -275,8 +275,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 136,
-            'endLine' => 136,
+            'startLine' => 140,
+            'endLine' => 140,
             'startColumn' => 44,
             'endColumn' => 58,
             'parameterIndex' => 0,
@@ -294,8 +294,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * @param  array  $services
  * @return void
  */',
-        'startLine' => 136,
-        'endLine' => 229,
+        'startLine' => 140,
+        'endLine' => 233,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -325,8 +325,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  *
  * @return void
  */',
-        'startLine' => 236,
-        'endLine' => 259,
+        'startLine' => 240,
+        'endLine' => 260,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -356,8 +356,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  *
  * @return void
  */',
-        'startLine' => 266,
-        'endLine' => 283,
+        'startLine' => 267,
+        'endLine' => 284,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -387,8 +387,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 291,
-            'endLine' => 291,
+            'startLine' => 292,
+            'endLine' => 292,
             'startColumn' => 44,
             'endColumn' => 52,
             'parameterIndex' => 0,
@@ -406,8 +406,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * @param  array  $services
  * @return void
  */',
-        'startLine' => 291,
-        'endLine' => 307,
+        'startLine' => 292,
+        'endLine' => 308,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -437,8 +437,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 315,
-            'endLine' => 315,
+            'startLine' => 316,
+            'endLine' => 316,
             'startColumn' => 36,
             'endColumn' => 44,
             'parameterIndex' => 0,
@@ -456,8 +456,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * @param  array  $commands
  * @return int
  */',
-        'startLine' => 315,
-        'endLine' => 330,
+        'startLine' => 316,
+        'endLine' => 331,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -487,8 +487,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  *
  * @return string
  */',
-        'startLine' => 337,
-        'endLine' => 342,
+        'startLine' => 338,
+        'endLine' => 343,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

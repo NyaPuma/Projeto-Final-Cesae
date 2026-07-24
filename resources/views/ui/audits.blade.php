@@ -1,4 +1,4 @@
-@extends('ui.layout')
+﻿@extends('ui.layout')
 
 @section('content')
 <script>
@@ -9,7 +9,7 @@ window.requireAuthOnLoad = true;
 @component('ui.partials.page-card', [
     'title' => __('Auditoria'),
     'subtitle' => __('Monitorização completa das operações efetuadas pelos utilizadores e pelos processos automáticos do sistema.'),
-    'actions' => '<div class="flex flex-wrap gap-2"><a href="/ui" class="inline-flex items-center justify-center px-3.5 py-2 bg-[var(--surface)] text-xs font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all"><svg class="w-3.5 h-3.5 mr-1.5 text-[var(--text-soft)]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path></svg> ' . __('Voltar ao painel') . '</a></div>'
+    'actions' => '<div class="flex flex-wrap gap-2"><a href="' . route('ui.index') . '" class="inline-flex items-center justify-center px-3.5 py-2 bg-[var(--surface)] text-xs font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all"><svg class="w-3.5 h-3.5 mr-1.5 text-[var(--text-soft)]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path></svg> ' . __('Voltar ao painel') . '</a></div>'
 ])
 
     {{-- Painel de Pesquisa Avançada Bento-Style --}}
@@ -93,11 +93,11 @@ let currentPage = 1;
 const itemsPerPage = 10;
 
 function authHeader(){
-    const token = localStorage.getItem('api_token');
+    const token = localStorage.getItem('auth_token');
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
     const headers = { 'Accept': 'application/json' };
 
-    if (token) headers['X-Auth-Token'] = token;
+    if (token) headers['Authorization'] = 'Bearer ' + token;
     if (csrfToken) headers['X-CSRF-TOKEN'] = csrfToken;
 
     return headers;

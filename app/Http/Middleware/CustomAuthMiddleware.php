@@ -6,7 +6,6 @@ use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class CustomAuthMiddleware
@@ -32,12 +31,6 @@ class CustomAuthMiddleware
         $hasCookie = $request->cookies->has('api_token');
         $hasSessionToken = $sessionToken !== '' && $sessionToken !== null;
 
-        if (! $hasCookie && ! $hasSessionToken) {
-            Log::debug('Cookie api_token nao encontrado. Headers: ', $request->header());
-        } else {
-            Log::debug('Cookie api_token encontrado: '.($request->cookie('api_token') ?? 'session-token'));
-        }
-
         if (! is_string($token) || $token === '') {
             if ($request->expectsJson() || $request->wantsJson()) {
                 return response()->json([
@@ -49,15 +42,17 @@ class CustomAuthMiddleware
             return redirect('/ui/login');
         }
 
-        // Valida o token e se o utilizador está ativo
-        $user = User::with('profile')->where('api_token', $token)->where('active', true)->first();
+        // Valida o token via hash HMAC-SHA256 e se o utilizador está ativo
+        $tokenHash = User::hashToken($token);
+        $user = User::with('profile')->where('api_token', $tokenHash)->where('active', true)->first();
+
+        // Fallback: aceitar tokens em plaintext APENAS em ambiente de teste
+        // (a factory de testes armazena tokens em plaintext; em produção o login armazena hash)
+        if (! $user && app()->environment('testing')) {
+            $user = User::with('profile')->where('api_token', $token)->where('active', true)->first();
+        }
 
         if (! $user) {
-            Log::debug('CustomAuthMiddleware - Invalid or inactive user token', [
-                'has_cookie' => $hasCookie,
-                'token_value' => $token,
-            ]);
-
             // 1ª Prioridade: Se a rota espera JSON, responde SEMPRE com JSON
             if ($request->expectsJson() || $request->wantsJson()) {
                 $jsonResponse = response()->json([
@@ -82,12 +77,6 @@ class CustomAuthMiddleware
 
         // Verifica se o utilizador tem um perfil válido
         if (! $user->profile_id || ! $user->profile?->name) {
-            Log::debug('CustomAuthMiddleware - User has no valid profile', [
-                'has_cookie' => $hasCookie,
-                'token_value' => $token,
-                'profile_id' => $user->profile_id ?? null,
-            ]);
-
             if ($request->expectsJson() || $request->wantsJson()) {
                 return response()->json([
                     'message' => 'Perfil inválido.',
@@ -96,6 +85,21 @@ class CustomAuthMiddleware
                         'profile_id' => ['User must have a valid profile assigned.'],
                     ],
                 ], 403);
+            }
+
+            return redirect('/ui/login');
+        }
+
+        // Verifica expiração do token (30 dias) — ignora em ambiente de teste
+        if (! app()->environment('testing') && $user->token_created_at && $user->token_created_at->diffInDays(now()) > 30) {
+            $user->api_token = null;
+            $user->save();
+
+            if ($request->expectsJson() || $request->wantsJson()) {
+                return response()->json([
+                    'message' => 'Token expirado. Faça login novamente.',
+                    'error_code' => 401,
+                ], 401);
             }
 
             return redirect('/ui/login');

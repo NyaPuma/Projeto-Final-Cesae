@@ -77,7 +77,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminController.php' => 
     array (
-      0 => '7506d48e481bc9b8b583ed19170be8eba0f6d037f4b9105a0f5dadfbeae3c379',
+      0 => 'cee4f3d8f3d194af6d384b4c1b4650e6d108e8fec1cece55438eab78723397ba',
       1 => 
       array (
         0 => 'app\\http\\controllers\\admincontroller',
@@ -153,7 +153,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuthController.php' => 
     array (
-      0 => 'f16bb89ec617ca70e4a3fd105d5810ba2332895058ca621bac9427b062b1a737',
+      0 => 'ed9222bb0dc8a488d0ce4233c75004d723b60f1fd6f322d6fe7301d284c4e4a6',
       1 => 
       array (
         0 => 'app\\http\\controllers\\authcontroller',
@@ -165,6 +165,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         2 => 'app\\http\\controllers\\logout',
         3 => 'app\\http\\controllers\\changepassword',
         4 => 'app\\http\\controllers\\updateprofile',
+        5 => 'app\\http\\controllers\\sendresetlink',
+        6 => 'app\\http\\controllers\\resetpassword',
       ),
       3 => 
       array (
@@ -187,7 +189,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Controller.php' => 
     array (
-      0 => '70707569c1f7a945698a42517b94c3e584d0bd43d05b95ab4f39ebd51cf99b83',
+      0 => '7a22d210e5e61642b9e45b86ea79ba0721a928f2b0c9168bde247a7095004a5a',
       1 => 
       array (
         0 => 'app\\http\\controllers\\controller',
@@ -241,7 +243,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php' => 
     array (
-      0 => 'bad90e0a6f72a25aaf047fbfd2e093b87ca59d7d3bdcb5ca9ebce802bd9f8486',
+      0 => 'd1f09af3e5a5703b15460196e7c3b02e565fda072b5a3db461274729e0e49012',
       1 => 
       array (
         0 => 'app\\http\\controllers\\roomcontroller',
@@ -262,7 +264,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php' => 
     array (
-      0 => '274c06a5d77e3559d11693dac794b7de7f732cb2a19f8ff32ca8ed2eccf03459',
+      0 => 'bb432767649d6107134478b3448469033c8cec7c4ce2b2d42bcd5d794ff8f72b',
       1 => 
       array (
         0 => 'app\\http\\controllers\\ticketcontroller',
@@ -284,15 +286,16 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         12 => 'app\\http\\controllers\\listphotos',
         13 => 'app\\http\\controllers\\deletephoto',
         14 => 'app\\http\\controllers\\startticket',
-        15 => 'app\\http\\controllers\\closeticket',
-        16 => 'app\\http\\controllers\\scheduleticket',
-        17 => 'app\\http\\controllers\\opentickets',
-        18 => 'app\\http\\controllers\\calendarview',
-        19 => 'app\\http\\controllers\\calendarevents',
-        20 => 'app\\http\\controllers\\notifybudgetevent',
-        21 => 'app\\http\\controllers\\submitestimatedbudget',
-        22 => 'app\\http\\controllers\\requestbudget',
-        23 => 'app\\http\\controllers\\closeticketfinal',
+        15 => 'app\\http\\controllers\\getmosturgentopenticket',
+        16 => 'app\\http\\controllers\\closeticket',
+        17 => 'app\\http\\controllers\\scheduleticket',
+        18 => 'app\\http\\controllers\\opentickets',
+        19 => 'app\\http\\controllers\\calendarview',
+        20 => 'app\\http\\controllers\\calendarevents',
+        21 => 'app\\http\\controllers\\notifybudgetevent',
+        22 => 'app\\http\\controllers\\submitestimatedbudget',
+        23 => 'app\\http\\controllers\\requestbudget',
+        24 => 'app\\http\\controllers\\closeticketfinal',
       ),
       3 => 
       array (
@@ -300,7 +303,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php' => 
     array (
-      0 => '78ff1acb53c0354a9af2dc8174c2c0d116aa322dbd002f63df491acf657ff8ad',
+      0 => 'e9e3bc3eb6e07d5a1adcb44658fbeb29d42360ca544d6f26a339ba617121023b',
       1 => 
       array (
         0 => 'app\\http\\controllers\\uicontroller',
@@ -351,7 +354,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CsrfMiddleware.php' => 
     array (
-      0 => '2e157df21792b8bf0fee551c87045dd2a2d8ae1b48c45e019342b01f5a4cffaa',
+      0 => 'e9bc385011f2d31b77ef8cbecdae483e86ff19bc8743b3e743e3b3572bd0fa39',
       1 => 
       array (
         0 => 'app\\http\\middleware\\csrfmiddleware',
@@ -372,7 +375,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php' => 
     array (
-      0 => '022e81f619821fae46108d5b0eced0bcd897a8e8a3b4ccc7714f0ca9a4578981',
+      0 => 'daeb2f8c7b7cc75debedb833d7dfd404ba3d743476ff28fd4d27fcf519180376',
       1 => 
       array (
         0 => 'app\\http\\middleware\\customauthmiddleware',
@@ -565,7 +568,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php' => 
     array (
-      0 => 'f6e2e8510e1139b76955648efeb11ec531399b14e2fc3fb7a7459b994b6c9d04',
+      0 => 'c33313369e7564852a1b93c624172ca6db5b3e9101e606534dc43f48dd54aa37',
       1 => 
       array (
         0 => 'app\\models\\ticket',
@@ -684,7 +687,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php' => 
     array (
-      0 => '6aa4485320c7a8f5a92ccc32acceff34403adaf0ffce2da2288c47c6e0fc75bf',
+      0 => 'e33a9a13c62677e2e7262605a4aec926a11ff62d22b9c99d046fb55be26a618b',
       1 => 
       array (
         0 => 'app\\models\\user',
@@ -700,23 +703,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         6 => 'app\\models\\iscommon',
         7 => 'app\\models\\getavailableroles',
         8 => 'app\\models\\isvalidprofile',
-        9 => 'app\\models\\booted',
-        10 => 'app\\models\\ensurevalidprofile',
-      ),
-      3 => 
-      array (
-      ),
-    ),
-    'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php' => 
-    array (
-      0 => 'd645ee75aeda6cb2e70c6d14a1064ba6448746009db2d3d89fff88db7689bc4f',
-      1 => 
-      array (
-        0 => 'app\\models\\userprofile',
-      ),
-      2 => 
-      array (
-        0 => 'app\\models\\users',
+        9 => 'app\\models\\hashtoken',
+        10 => 'app\\models\\booted',
+        11 => 'app\\models\\ensurevalidprofile',
       ),
       3 => 
       array (
@@ -837,7 +826,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Traits\\ControllerHelpers.php' => 
     array (
-      0 => '46af0947464dcf1fb44113381c6f6f8daa1efd2e4bfb0dcf5d512924ec634436',
+      0 => '898e94e4ee95b21386960374c6ccd53dc38aa6f83c057bf2a5c3a01396641e62',
       1 => 
       array (
         0 => 'app\\traits\\controllerhelpers',
@@ -846,6 +835,55 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
         0 => 'app\\traits\\authenticateduser',
         1 => 'app\\traits\\requirerole',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\PageController.php' => 
+    array (
+      0 => 'c8316bfbe63817d5f6df4ea9f3802a26a4a2a046ac9f52cf94ce0af87bce3d36',
+      1 => 
+      array (
+        0 => 'app\\http\\controllers\\pagecontroller',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\controllers\\home',
+        1 => 'app\\http\\controllers\\switchlang',
+        2 => 'app\\http\\controllers\\login',
+        3 => 'app\\http\\controllers\\testemail',
+        4 => 'app\\http\\controllers\\passwordresetform',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\SecurityHeaders.php' => 
+    array (
+      0 => 'd90a4154ba95483663385adcf6aa93ab826d63053300a807c5df595ce54658ce',
+      1 => 
+      array (
+        0 => 'app\\http\\middleware\\securityheaders',
+      ),
+      2 => 
+      array (
+        0 => 'app\\http\\middleware\\handle',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php' => 
+    array (
+      0 => 'c78095089c35d79d044a292d4ac26a0b9280813a74ac8cd1a6ffe3922a11559d',
+      1 => 
+      array (
+        0 => 'app\\models\\userprofile',
+      ),
+      2 => 
+      array (
+        0 => 'app\\models\\users',
       ),
       3 => 
       array (

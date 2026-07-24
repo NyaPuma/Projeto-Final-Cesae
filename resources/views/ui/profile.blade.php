@@ -1,4 +1,4 @@
-@extends('ui.layout')
+﻿@extends('ui.layout')
 
 @php
     $profileName = $user->profile->name ?? 'user';
@@ -17,7 +17,7 @@ window.requireAuthOnLoad = true;
 @component('ui.partials.page-card', [
     'title' => __('Perfil'),
     'subtitle' => __('Consulte e atualize os seus dados pessoais e preferências de acesso.'),
-    'actions' => '<a href="/ui" class="inline-flex items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">← ' . __('Voltar ao painel') . '</a>'
+    'actions' => '<a href="' . route('ui.index') . '" class="inline-flex items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">← ' . __('Voltar ao painel') . '</a>'
 ])
     <div class="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
         <section class="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm">
@@ -86,10 +86,10 @@ window.requireAuthOnLoad = true;
 @push('scripts')
 <script>
 function authHeader() {
-    const token = localStorage.getItem('api_token');
+    const token = localStorage.getItem('auth_token');
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
     const headers = { 'Accept': 'application/json', 'Content-Type': 'application/json' };
-    if (token) headers['X-Auth-Token'] = token;
+    if (token) headers['Authorization'] = 'Bearer ' + token;
     if (csrfToken) headers['X-CSRF-TOKEN'] = csrfToken;
     return headers;
 }

@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Models\Ticket.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Models\Ticket
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-f6e2e8510e1139b76955648efeb11ec531399b14e2fc3fb7a7459b994b6c9d04',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-c33313369e7564852a1b93c624172ca6db5b3e9101e606534dc43f48dd54aa37',
    'data' => 
   array (
     'locatedSource' => 
@@ -27,7 +27,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     array (
     ),
     'startLine' => 12,
-    'endLine' => 388,
+    'endLine' => 417,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'Illuminate\\Database\\Eloquent\\Model',
@@ -303,6 +303,35 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'startColumn' => 5,
         'endColumn' => 40,
       ),
+      'PRIORITY_CRITICAL' => 
+      array (
+        'declaringClassName' => 'App\\Models\\Ticket',
+        'implementingClassName' => 'App\\Models\\Ticket',
+        'name' => 'PRIORITY_CRITICAL',
+        'modifiers' => 1,
+        'type' => NULL,
+        'value' => 
+        array (
+          'code' => '\'crítica\'',
+          'attributes' => 
+          array (
+            'startLine' => 38,
+            'endLine' => 38,
+            'startTokenPos' => 173,
+            'startFilePos' => 942,
+            'endTokenPos' => 173,
+            'endFilePos' => 951,
+          ),
+        ),
+        'docComment' => NULL,
+        'attributes' => 
+        array (
+        ),
+        'startLine' => 38,
+        'endLine' => 38,
+        'startColumn' => 5,
+        'endColumn' => 48,
+      ),
       'BUDGET_PENDING' => 
       array (
         'declaringClassName' => 'App\\Models\\Ticket',
@@ -315,20 +344,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'pending\'',
           'attributes' => 
           array (
-            'startLine' => 39,
-            'endLine' => 39,
-            'startTokenPos' => 175,
-            'startFilePos' => 968,
-            'endTokenPos' => 175,
-            'endFilePos' => 976,
+            'startLine' => 41,
+            'endLine' => 41,
+            'startTokenPos' => 186,
+            'startFilePos' => 1018,
+            'endTokenPos' => 186,
+            'endFilePos' => 1026,
           ),
         ),
         'docComment' => NULL,
         'attributes' => 
         array (
         ),
-        'startLine' => 39,
-        'endLine' => 39,
+        'startLine' => 41,
+        'endLine' => 41,
         'startColumn' => 5,
         'endColumn' => 44,
       ),
@@ -344,20 +373,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'approved\'',
           'attributes' => 
           array (
-            'startLine' => 41,
-            'endLine' => 41,
-            'startTokenPos' => 186,
-            'startFilePos' => 1015,
-            'endTokenPos' => 186,
-            'endFilePos' => 1024,
+            'startLine' => 43,
+            'endLine' => 43,
+            'startTokenPos' => 197,
+            'startFilePos' => 1065,
+            'endTokenPos' => 197,
+            'endFilePos' => 1074,
           ),
         ),
         'docComment' => NULL,
         'attributes' => 
         array (
         ),
-        'startLine' => 41,
-        'endLine' => 41,
+        'startLine' => 43,
+        'endLine' => 43,
         'startColumn' => 5,
         'endColumn' => 46,
       ),
@@ -373,44 +402,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'rejected\'',
           'attributes' => 
           array (
-            'startLine' => 43,
-            'endLine' => 43,
-            'startTokenPos' => 197,
-            'startFilePos' => 1063,
-            'endTokenPos' => 197,
-            'endFilePos' => 1072,
-          ),
-        ),
-        'docComment' => NULL,
-        'attributes' => 
-        array (
-        ),
-        'startLine' => 43,
-        'endLine' => 43,
-        'startColumn' => 5,
-        'endColumn' => 46,
-      ),
-    ),
-    'immediateProperties' => 
-    array (
-      'guarded' => 
-      array (
-        'declaringClassName' => 'App\\Models\\Ticket',
-        'implementingClassName' => 'App\\Models\\Ticket',
-        'name' => 'guarded',
-        'modifiers' => 2,
-        'type' => NULL,
-        'default' => 
-        array (
-          'code' => '[]',
-          'attributes' => 
-          array (
             'startLine' => 45,
             'endLine' => 45,
-            'startTokenPos' => 206,
-            'startFilePos' => 1101,
-            'endTokenPos' => 207,
-            'endFilePos' => 1102,
+            'startTokenPos' => 208,
+            'startFilePos' => 1113,
+            'endTokenPos' => 208,
+            'endFilePos' => 1122,
           ),
         ),
         'docComment' => NULL,
@@ -420,7 +417,39 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'startLine' => 45,
         'endLine' => 45,
         'startColumn' => 5,
-        'endColumn' => 28,
+        'endColumn' => 46,
+      ),
+    ),
+    'immediateProperties' => 
+    array (
+      'fillable' => 
+      array (
+        'declaringClassName' => 'App\\Models\\Ticket',
+        'implementingClassName' => 'App\\Models\\Ticket',
+        'name' => 'fillable',
+        'modifiers' => 2,
+        'type' => NULL,
+        'default' => 
+        array (
+          'code' => '[\'title\', \'description\', \'priority\', \'user_id\', \'assigned_to\', \'equipment_id\', \'room_id\', \'status_id\', \'opened_at\', \'in_progress_at\', \'closed_at\', \'reopened_at\', \'cost\', \'minutes_spent\', \'technical_report\', \'budget_requested\', \'budget_status\', \'budget_amount\', \'budget_requested_at\', \'budget_approved_by\', \'budget_decided_at\', \'budget_feedback\', \'budget_details\', \'scheduled_at\', \'scheduled_end\', \'scheduled\']',
+          'attributes' => 
+          array (
+            'startLine' => 47,
+            'endLine' => 74,
+            'startTokenPos' => 217,
+            'startFilePos' => 1152,
+            'endTokenPos' => 297,
+            'endFilePos' => 1775,
+          ),
+        ),
+        'docComment' => NULL,
+        'attributes' => 
+        array (
+        ),
+        'startLine' => 47,
+        'endLine' => 74,
+        'startColumn' => 5,
+        'endColumn' => 6,
         'isPromoted' => false,
         'declaredAtCompileTime' => true,
         'immediateVirtual' => false,
@@ -456,20 +485,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
 ]',
           'attributes' => 
           array (
-            'startLine' => 47,
-            'endLine' => 61,
-            'startTokenPos' => 216,
-            'startFilePos' => 1129,
-            'endTokenPos' => 315,
-            'endFilePos' => 1808,
+            'startLine' => 76,
+            'endLine' => 90,
+            'startTokenPos' => 306,
+            'startFilePos' => 1802,
+            'endTokenPos' => 405,
+            'endFilePos' => 2481,
           ),
         ),
         'docComment' => NULL,
         'attributes' => 
         array (
         ),
-        'startLine' => 47,
-        'endLine' => 61,
+        'startLine' => 76,
+        'endLine' => 90,
         'startColumn' => 5,
         'endColumn' => 6,
         'isPromoted' => false,
@@ -504,8 +533,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * @return BelongsTo<TicketStatus, $this>
  */',
-        'startLine' => 68,
-        'endLine' => 71,
+        'startLine' => 97,
+        'endLine' => 100,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -541,8 +570,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * @return BelongsTo<User, $this>
  */',
-        'startLine' => 76,
-        'endLine' => 79,
+        'startLine' => 105,
+        'endLine' => 108,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -576,8 +605,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 81,
-        'endLine' => 84,
+        'startLine' => 110,
+        'endLine' => 113,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -613,8 +642,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * @return BelongsTo<User, $this>
  */',
-        'startLine' => 89,
-        'endLine' => 92,
+        'startLine' => 118,
+        'endLine' => 121,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -650,8 +679,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * @return BelongsTo<User, $this>
  */',
-        'startLine' => 97,
-        'endLine' => 100,
+        'startLine' => 126,
+        'endLine' => 129,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -687,8 +716,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * @return BelongsTo<Equipment, $this>
  */',
-        'startLine' => 105,
-        'endLine' => 108,
+        'startLine' => 134,
+        'endLine' => 137,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -724,8 +753,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * @return BelongsTo<Room, $this>
  */',
-        'startLine' => 113,
-        'endLine' => 116,
+        'startLine' => 142,
+        'endLine' => 145,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -759,8 +788,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 118,
-        'endLine' => 121,
+        'startLine' => 147,
+        'endLine' => 150,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -794,8 +823,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 123,
-        'endLine' => 126,
+        'startLine' => 152,
+        'endLine' => 155,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -829,8 +858,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 130,
-        'endLine' => 142,
+        'startLine' => 159,
+        'endLine' => 171,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -868,8 +897,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 144,
-            'endLine' => 144,
+            'startLine' => 173,
+            'endLine' => 173,
             'startColumn' => 36,
             'endColumn' => 51,
             'parameterIndex' => 0,
@@ -890,8 +919,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 144,
-        'endLine' => 161,
+        'startLine' => 173,
+        'endLine' => 190,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -925,8 +954,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 163,
-        'endLine' => 178,
+        'startLine' => 192,
+        'endLine' => 207,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -964,8 +993,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 184,
-            'endLine' => 184,
+            'startLine' => 213,
+            'endLine' => 213,
             'startColumn' => 48,
             'endColumn' => 69,
             'parameterIndex' => 0,
@@ -990,8 +1019,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 184,
-            'endLine' => 184,
+            'startLine' => 213,
+            'endLine' => 213,
             'startColumn' => 72,
             'endColumn' => 87,
             'parameterIndex' => 1,
@@ -1015,8 +1044,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * Solicitado pelo Técnico quando avalia que o custo estimado supera o limiar da empresa.
  * Congela/Regista o timestamp para permitir a pausa do SLA nos relatórios de Analytics.
  */',
-        'startLine' => 184,
-        'endLine' => 201,
+        'startLine' => 213,
+        'endLine' => 230,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -1054,8 +1083,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 206,
-            'endLine' => 206,
+            'startLine' => 235,
+            'endLine' => 235,
             'startColumn' => 35,
             'endColumn' => 45,
             'parameterIndex' => 0,
@@ -1069,12 +1098,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
               'code' => '\'approve\'',
               'attributes' => 
               array (
-                'startLine' => 206,
-                'endLine' => 206,
-                'startTokenPos' => 1052,
-                'startFilePos' => 5513,
-                'endTokenPos' => 1052,
-                'endFilePos' => 5521,
+                'startLine' => 235,
+                'endLine' => 235,
+                'startTokenPos' => 1142,
+                'startFilePos' => 6186,
+                'endTokenPos' => 1142,
+                'endFilePos' => 6194,
               ),
             ),
             'type' => 
@@ -1092,8 +1121,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 206,
-            'endLine' => 206,
+            'startLine' => 235,
+            'endLine' => 235,
             'startColumn' => 48,
             'endColumn' => 75,
             'parameterIndex' => 1,
@@ -1107,12 +1136,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
               'code' => 'null',
               'attributes' => 
               array (
-                'startLine' => 206,
-                'endLine' => 206,
-                'startTokenPos' => 1062,
-                'startFilePos' => 5544,
-                'endTokenPos' => 1062,
-                'endFilePos' => 5547,
+                'startLine' => 235,
+                'endLine' => 235,
+                'startTokenPos' => 1152,
+                'startFilePos' => 6217,
+                'endTokenPos' => 1152,
+                'endFilePos' => 6220,
               ),
             ),
             'type' => 
@@ -1149,8 +1178,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 206,
-            'endLine' => 206,
+            'startLine' => 235,
+            'endLine' => 235,
             'startColumn' => 78,
             'endColumn' => 101,
             'parameterIndex' => 2,
@@ -1173,8 +1202,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Executado exclusivamente pelo Administrador para aprovar ou rejeitar o orçamento.
  */',
-        'startLine' => 206,
-        'endLine' => 239,
+        'startLine' => 235,
+        'endLine' => 268,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -1210,8 +1239,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Helper de Negócio: Calcula o tempo morto (em minutos) em que o ticket esteve parado a aguardar decisão orçamental.
  */',
-        'startLine' => 244,
-        'endLine' => 251,
+        'startLine' => 273,
+        'endLine' => 280,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -1248,8 +1277,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * Calcula o custo total de materiais a partir do budget_details (JSON).
  * Material: quantity × unit_price
  */',
-        'startLine' => 259,
-        'endLine' => 262,
+        'startLine' => 288,
+        'endLine' => 291,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -1286,8 +1315,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * Calcula o custo total de mão de obra a partir do budget_details (JSON).
  * Labor: hours × hourly_rate
  */',
-        'startLine' => 268,
-        'endLine' => 271,
+        'startLine' => 297,
+        'endLine' => 300,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -1323,8 +1352,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Calcula o custo total do orçamento (materiais + mão de obra).
  */',
-        'startLine' => 276,
-        'endLine' => 279,
+        'startLine' => 305,
+        'endLine' => 308,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -1360,8 +1389,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Retorna um array com breakdown material vs labor.
  */',
-        'startLine' => 284,
-        'endLine' => 308,
+        'startLine' => 313,
+        'endLine' => 337,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -1399,8 +1428,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 313,
-            'endLine' => 313,
+            'startLine' => 342,
+            'endLine' => 342,
             'startColumn' => 49,
             'endColumn' => 60,
             'parameterIndex' => 0,
@@ -1423,8 +1452,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Método privado auxiliar para calcular total por tipo.
  */',
-        'startLine' => 313,
-        'endLine' => 330,
+        'startLine' => 342,
+        'endLine' => 359,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -1462,8 +1491,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 337,
-            'endLine' => 337,
+            'startLine' => 366,
+            'endLine' => 366,
             'startColumn' => 46,
             'endColumn' => 63,
             'parameterIndex' => 0,
@@ -1505,8 +1534,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Obtém o ID do status pelo nome na tabela `ticket_statuses`.
  */',
-        'startLine' => 337,
-        'endLine' => 340,
+        'startLine' => 366,
+        'endLine' => 369,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -1544,8 +1573,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 345,
-            'endLine' => 345,
+            'startLine' => 374,
+            'endLine' => 374,
             'startColumn' => 31,
             'endColumn' => 48,
             'parameterIndex' => 0,
@@ -1568,8 +1597,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Verifica se o ticket está num determinado estado pelo nome.
  */',
-        'startLine' => 345,
-        'endLine' => 354,
+        'startLine' => 374,
+        'endLine' => 383,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -1624,8 +1653,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Obtém o técnico com menos tickets atribuídos no momento.
  */',
-        'startLine' => 359,
-        'endLine' => 372,
+        'startLine' => 388,
+        'endLine' => 401,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -1653,8 +1682,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Atalho de segurança para recolher eventos agendados para o FullCalendar.
  */',
-        'startLine' => 377,
-        'endLine' => 387,
+        'startLine' => 406,
+        'endLine' => 416,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

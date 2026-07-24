@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="utf-8">
@@ -157,9 +157,9 @@
                 }
 
                 if (j.token) {
-                    document.cookie = `api_token=${j.token}; path=/; max-age=2592000; SameSite=Lax`;
+                    document.cookie = `auth_token=${j.token}; path=/; max-age=2592000; SameSite=Lax`;
                     try {
-                        localStorage.setItem('api_token', j.token);
+                        localStorage.setItem('auth_token', j.token);
                         localStorage.setItem('user_name', j.user?.name || 'Utilizador');
                         localStorage.setItem('user_role', j.user?.profile?.name || 'user');
                     } catch (e) {}
@@ -167,7 +167,7 @@
 
                 setMsg("{{ __('Autenticação bem-sucedida! A redirecionar...') }}", 'success');
                 setLoading(false);
-                setTimeout(() => { window.location.href = '/ui'; }, 500);
+                setTimeout(() => { window.location.href = '{{ route('ui.index') }}'; }, 500);
             } catch (err) {
                 setMsg("{{ __('Falha crítica na comunicação com o servidor.') }}", 'error');
                 setLoading(false);

@@ -1066,6 +1066,59 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'typeAliasClassName' => NULL,
          'traitData' => NULL,
       )),
+      '07591f058ad0c559af2d5c202e61a7ce' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'App\\Models',
+         'uses' => 
+        array (
+          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+          'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
+          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
+          'notifiable' => 'Illuminate\\Notifications\\Notifiable',
+        ),
+         'className' => 'App\\Models\\User',
+         'functionName' => 'hashToken',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'App\\Models',
+           'uses' => 
+          array (
+            'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+            'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
+            'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+            'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
+            'notifiable' => 'Illuminate\\Notifications\\Notifiable',
+          ),
+           'className' => 'App\\Models\\User',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => NULL,
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => NULL,
+         'traitData' => NULL,
+      )),
       '634c470b4c387341bc3ff52e33eb256a' => 
       \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
          'namespace' => 'App\\Models',
@@ -1175,7 +1228,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php' => '6aa4485320c7a8f5a92ccc32acceff34403adaf0ffce2da2288c47c6e0fc75bf',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php' => 'e33a9a13c62677e2e7262605a4aec926a11ff62d22b9c99d046fb55be26a618b',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Factories\\HasFactory.php' => 'b6cb2b164e90168e80963a5549541f5f3188a3ec8cfd368bf3611bd94fbd46a7',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Notifications\\Notifiable.php' => '573fa9bb96fa392434450c9cd9deb8d4e40a5bb93c140a648267b48dfa0433ac',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Notifications\\HasDatabaseNotifications.php' => 'a7a163aa1f98a0ae4cd2135905b6852e29a850beb4296aa72c44c37d22832135',

@@ -15,7 +15,7 @@
             'title' => 'Gestão inteligente de avarias',
             'subtitle' => 'Centralize pedidos de assistência, inventário, manutenção preventiva, auditorias e indicadores operacionais numa experiência moderna e consistente.',
             'badge' => 'Sistema online',
-            'actions' => '<div class="flex flex-wrap gap-2"><a href="/ui/login" class="ui-button ui-button--outline inline-flex items-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">Entrar</a><a href="/ui" class="ui-button ui-button--primary inline-flex items-center rounded-2xl bg-primary px-3 py-2 text-sm font-semibold text-black transition hover:opacity-90">Aceder ao painel</a></div>'
+            'actions' => '<div class="flex flex-wrap gap-2"><a href="' . route('ui.login') . '" class="ui-button ui-button--outline inline-flex items-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">Entrar</a><a href="' . route('ui.index') . '" class="ui-button ui-button--primary inline-flex items-center rounded-2xl bg-primary px-3 py-2 text-sm font-semibold text-black transition hover:opacity-90">Aceder ao painel</a></div>'
         ])
             <div class="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
                 <div class="space-y-6">

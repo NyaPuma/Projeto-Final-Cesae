@@ -452,7 +452,15 @@ class TicketTest extends TestCase
     public function it_uses_guarded_property(): void
     {
         $ticket = new Ticket;
-        $this->assertEquals([], $ticket->getGuarded());
+        $fillable = $ticket->getFillable();
+
+        $this->assertContains('title', $fillable);
+        $this->assertContains('description', $fillable);
+        $this->assertContains('priority', $fillable);
+        $this->assertContains('user_id', $fillable);
+        $this->assertContains('status_id', $fillable);
+        $this->assertContains('assigned_to', $fillable);
+        $this->assertContains('budget_status', $fillable);
     }
 
     #[Test]

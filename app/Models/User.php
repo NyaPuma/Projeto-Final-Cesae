@@ -27,6 +27,7 @@ class User extends Authenticatable
         'profile_id',
         'active',
         'api_token',
+        'token_created_at',
         'remember_token',
     ];
 
@@ -42,6 +43,7 @@ class User extends Authenticatable
     /** @var array<string, string> */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'token_created_at' => 'datetime',
         'active' => 'boolean',
     ];
 
@@ -122,6 +124,15 @@ class User extends Authenticatable
     public static function isValidProfile(string $profileName): bool
     {
         return in_array($profileName, self::getAvailableRoles(), true);
+    }
+
+    /**
+     * Gera um hash HMAC-SHA256 do token para armazenamento seguro na BD.
+     * O token em texto plano é devolvido ao cliente; o hash fica na BD.
+     */
+    public static function hashToken(string $token): string
+    {
+        return hash_hmac('sha256', $token, config('app.key'));
     }
 
     /**

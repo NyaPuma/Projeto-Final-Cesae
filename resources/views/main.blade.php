@@ -17,7 +17,7 @@
         </p>
 
         <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="/ui/login" class="ui-button ui-button--primary inline-flex items-center justify-center rounded-2xl px-8 py-4 text-base font-bold shadow-lg shadow-primary/20 transition hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/30 w-full sm:w-auto min-h-[52px]">
+            <a href="{{ route('ui.login') }}" class="ui-button ui-button--primary inline-flex items-center justify-center rounded-2xl px-8 py-4 text-base font-bold shadow-lg shadow-primary/20 transition hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/30 w-full sm:w-auto min-h-[52px]">
                 {{ __('Iniciar Sessão') }}
                 <svg class="h-4 w-4 ml-2" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>

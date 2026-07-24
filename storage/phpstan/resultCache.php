@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 return [
-	'lastFullAnalysisTime' => 1784719355,
+	'lastFullAnalysisTime' => 1784820453,
 	'meta' => array (
   'cacheVersion' => 'v13-packageDependencies',
   'phpstanVersion' => '2.2.5',
@@ -20,7 +20,7 @@ return [
   ),
   'composerLocks' => 
   array (
-    'C:/laravel/Projeto Final Cesae/Projeto-Final-Cesae/composer.lock' => '0c5bb40aa5c8b3eb436a2a9c488c6e18e0931ea67ed1d9145e5e05c45d7ecd00',
+    'C:/laravel/Projeto Final Cesae/Projeto-Final-Cesae/composer.lock' => 'dc93b67cf64ba8930a06c99971d6f041079d0aa3a39e521954815ceda43e5f5e',
   ),
   'composerInstalled' => 
   array (
@@ -310,9 +310,9 @@ return [
         ),
         'guzzlehttp/uri-template' => 
         array (
-          'pretty_version' => 'v1.0.9',
-          'version' => '1.0.9.0',
-          'reference' => 'd7580af6d3f8384325d9cd3e99b21c3ed1848176',
+          'pretty_version' => 'v1.0.10',
+          'version' => '1.0.10.0',
+          'reference' => 'f6c24c21f42b990e9a58912b332d0874df6ba839',
           'type' => 'library',
           'install_path' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer/../guzzlehttp/uri-template',
           'aliases' => 
@@ -349,7 +349,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/broadcasting' => 
@@ -357,7 +357,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/bus' => 
@@ -365,7 +365,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/cache' => 
@@ -373,7 +373,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/collections' => 
@@ -381,7 +381,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/concurrency' => 
@@ -389,7 +389,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/conditionable' => 
@@ -397,7 +397,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/config' => 
@@ -405,7 +405,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/console' => 
@@ -413,7 +413,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/container' => 
@@ -421,7 +421,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/contracts' => 
@@ -429,7 +429,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/cookie' => 
@@ -437,7 +437,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/database' => 
@@ -445,7 +445,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/encryption' => 
@@ -453,7 +453,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/events' => 
@@ -461,7 +461,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/filesystem' => 
@@ -469,7 +469,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/hashing' => 
@@ -477,7 +477,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/http' => 
@@ -485,7 +485,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/json-schema' => 
@@ -493,7 +493,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/log' => 
@@ -501,7 +501,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/macroable' => 
@@ -509,7 +509,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/mail' => 
@@ -517,7 +517,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/notifications' => 
@@ -525,7 +525,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/pagination' => 
@@ -533,7 +533,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/pipeline' => 
@@ -541,7 +541,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/process' => 
@@ -549,7 +549,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/queue' => 
@@ -557,7 +557,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/redis' => 
@@ -565,7 +565,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/reflection' => 
@@ -573,7 +573,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/routing' => 
@@ -581,7 +581,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/session' => 
@@ -589,7 +589,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/support' => 
@@ -597,7 +597,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/testing' => 
@@ -605,7 +605,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/translation' => 
@@ -613,7 +613,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/validation' => 
@@ -621,7 +621,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'illuminate/view' => 
@@ -629,7 +629,7 @@ return [
           'dev_requirement' => false,
           'replaced' => 
           array (
-            0 => 'v12.63.0',
+            0 => 'v12.64.0',
           ),
         ),
         'kkomelin/laravel-translatable-string-exporter' => 
@@ -666,9 +666,9 @@ return [
         ),
         'laravel/framework' => 
         array (
-          'pretty_version' => 'v12.63.0',
-          'version' => '12.63.0.0',
-          'reference' => '7adfddbf4738f2e6cae5419b0e6bc46d4cccfbcf',
+          'pretty_version' => 'v12.64.0',
+          'version' => '12.64.0.0',
+          'reference' => '727a8ea2949c23ca8b5316b86a00984b6017b7a0',
           'type' => 'library',
           'install_path' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer/../laravel/framework',
           'aliases' => 
@@ -714,9 +714,9 @@ return [
         ),
         'laravel/sail' => 
         array (
-          'pretty_version' => 'v1.63.0',
-          'version' => '1.63.0.0',
-          'reference' => '51bbce3f803c1d386cabbb44e618c955a12ff5fc',
+          'pretty_version' => 'v1.64.0',
+          'version' => '1.64.0.0',
+          'reference' => '08cacd3e72d6798df3fa8bd4b5d55d0f7f920625',
           'type' => 'library',
           'install_path' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer/../laravel/sail',
           'aliases' => 
@@ -724,23 +724,11 @@ return [
           ),
           'dev_requirement' => true,
         ),
-        'laravel/sanctum' => 
-        array (
-          'pretty_version' => 'v4.3.2',
-          'version' => '4.3.2.0',
-          'reference' => '2a9bccc18e9907808e0018dd15fa643937886b1e',
-          'type' => 'library',
-          'install_path' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer/../laravel/sanctum',
-          'aliases' => 
-          array (
-          ),
-          'dev_requirement' => false,
-        ),
         'laravel/serializable-closure' => 
         array (
-          'pretty_version' => 'v2.0.13',
-          'version' => '2.0.13.0',
-          'reference' => 'b566ee0dd251f3c4078bed003a7ce015f5ea6dce',
+          'pretty_version' => 'v2.0.15',
+          'version' => '2.0.15.0',
+          'reference' => 'dccd8bcb851bb03fcc005df650b708b57cc52661',
           'type' => 'library',
           'install_path' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer/../laravel/serializable-closure',
           'aliases' => 
@@ -750,9 +738,9 @@ return [
         ),
         'laravel/tinker' => 
         array (
-          'pretty_version' => 'v2.11.1',
-          'version' => '2.11.1.0',
-          'reference' => 'c9f80cc835649b5c1842898fb043f8cc098dd741',
+          'pretty_version' => 'v3.0.2',
+          'version' => '3.0.2.0',
+          'reference' => '4faba77764bd33411735936acdf30446d058c78b',
           'type' => 'library',
           'install_path' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer/../laravel/tinker',
           'aliases' => 
@@ -762,9 +750,9 @@ return [
         ),
         'league/commonmark' => 
         array (
-          'pretty_version' => '2.8.2',
-          'version' => '2.8.2.0',
-          'reference' => '59fb075d2101740c337c7216e3f32b36c204218b',
+          'pretty_version' => '2.8.3',
+          'version' => '2.8.3.0',
+          'reference' => '1902f60f984235023acbe03db6ad614a37b3c3e7',
           'type' => 'library',
           'install_path' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer/../league/commonmark',
           'aliases' => 
@@ -810,9 +798,9 @@ return [
         ),
         'league/mime-type-detection' => 
         array (
-          'pretty_version' => '1.16.0',
-          'version' => '1.16.0.0',
-          'reference' => '2d6702ff215bf922936ccc1ad31007edc76451b9',
+          'pretty_version' => '1.17.0',
+          'version' => '1.17.0.0',
+          'reference' => 'f5f47eff7c48ed1003069a2ca67f316fb4021c76',
           'type' => 'library',
           'install_path' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer/../league/mime-type-detection',
           'aliases' => 
@@ -950,9 +938,9 @@ return [
         ),
         'nesbot/carbon' => 
         array (
-          'pretty_version' => '3.13.0',
-          'version' => '3.13.0.0',
-          'reference' => '40f6618f052df16b545f626fbf9a878e6497d16a',
+          'pretty_version' => '3.13.1',
+          'version' => '3.13.1.0',
+          'reference' => '2937ad3d1d2c506fd2bc97d571438a95641f44e2',
           'type' => 'library',
           'install_path' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer/../nesbot/carbon',
           'aliases' => 
@@ -974,9 +962,9 @@ return [
         ),
         'nette/utils' => 
         array (
-          'pretty_version' => 'v4.1.4',
-          'version' => '4.1.4.0',
-          'reference' => '7da6c396d7ebe142bc857c20479d5e70a5e1aac7',
+          'pretty_version' => 'v4.1.5',
+          'version' => '4.1.5.0',
+          'reference' => 'b043439dbdf954e6c28b5ea7e34b0100f83165e0',
           'type' => 'library',
           'install_path' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer/../nette/utils',
           'aliases' => 
@@ -998,9 +986,9 @@ return [
         ),
         'nunomaduro/collision' => 
         array (
-          'pretty_version' => 'v8.9.4',
-          'version' => '8.9.4.0',
-          'reference' => '716af8f95a470e9094cfca09ed897b023be191a5',
+          'pretty_version' => 'v8.9.5',
+          'version' => '8.9.5.0',
+          'reference' => 'fb53eacd509a1d303858e2d20cfebf2d630254ec',
           'type' => 'library',
           'install_path' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer/../nunomaduro/collision',
           'aliases' => 
@@ -1110,9 +1098,9 @@ return [
         ),
         'phpoffice/phpspreadsheet' => 
         array (
-          'pretty_version' => '1.30.5',
-          'version' => '1.30.5.0',
-          'reference' => '97bcabd32a64924688487dcd64aceaf158affb5c',
+          'pretty_version' => '1.30.6',
+          'version' => '1.30.6.0',
+          'reference' => 'a416375ffc8bf5b661c1bb4e6c60d8f3fddbe5ce',
           'type' => 'library',
           'install_path' => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer/../phpoffice/phpspreadsheet',
           'aliases' => 
@@ -2214,13 +2202,14 @@ return [
     30 => 'random',
     31 => 'readline',
     32 => 'session',
-    33 => 'standard',
-    34 => 'tokenizer',
-    35 => 'xml',
-    36 => 'xmlreader',
-    37 => 'xmlwriter',
-    38 => 'zip',
-    39 => 'zlib',
+    33 => 'sodium',
+    34 => 'standard',
+    35 => 'tokenizer',
+    36 => 'xml',
+    37 => 'xmlreader',
+    38 => 'xmlwriter',
+    39 => 'zip',
+    40 => 'zlib',
   ),
   'stubFiles' => 
   array (
@@ -2388,19 +2377,114 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminController.php' => 
   array (
+    'PHPStan\\Rules\\Comparison\\ConstantConditionInTraitCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        1 => 'App\\Traits\\ControllerHelpers',
+        2 => '\\Illuminate\\Support\\Facades\\Auth::guard(\'api\')->user():19',
+        3 => NULL,
+      ),
+      1 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeStaticMethodCallRule',
+        1 => 'App\\Traits\\ControllerHelpers',
+        2 => '\\Illuminate\\Support\\Facades\\Auth::guard(\'api\'):19',
+        3 => NULL,
+      ),
+      2 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        1 => 'App\\Traits\\ControllerHelpers',
+        2 => '$request->user():19',
+        3 => NULL,
+      ),
+      3 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
+        1 => 'App\\Traits\\ControllerHelpers',
+        2 => '!$user->profile || !in_array($user->profile->name, $roles, true):27',
+        3 => NULL,
+      ),
+      4 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanNotConstantConditionRule',
+        1 => 'App\\Traits\\ControllerHelpers',
+        2 => '$user->profile:27',
+        3 => NULL,
+      ),
+      5 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanNotConstantConditionRule',
+        1 => 'App\\Traits\\ControllerHelpers',
+        2 => 'in_array($user->profile->name, $roles, true):27',
+        3 => NULL,
+      ),
+      6 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
+        1 => 'App\\Traits\\ControllerHelpers',
+        2 => 'in_array($user->profile->name, $roles, true):27',
+        3 => NULL,
+      ),
+      7 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanOrConstantConditionRule',
+        1 => 'App\\Traits\\ControllerHelpers',
+        2 => '!$user->profile:27',
+        3 => NULL,
+      ),
+      8 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanOrConstantConditionRule',
+        1 => 'App\\Traits\\ControllerHelpers',
+        2 => '!in_array($user->profile->name, $roles, true):27',
+        3 => NULL,
+      ),
+      9 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanOrConstantConditionRule',
+        1 => 'App\\Traits\\ControllerHelpers',
+        2 => '!$user->profile || !in_array($user->profile->name, $roles, true):27',
+        3 => NULL,
+      ),
+      10 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
+        1 => 'App\\Traits\\ControllerHelpers',
+        2 => 'abort(403, \'Acesso proibido para o seu perfil.\'):28',
+        3 => NULL,
+      ),
+    ),
+    'PHPStan\\Rules\\DeadCode\\PossiblyPureFuncCallCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'abort',
+        1 => 28,
+      ),
+    ),
     'PHPStan\\Rules\\DeadCode\\PossiblyPureStaticCallCollector' => 
     array (
       0 => 
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 416,
+        2 => 442,
       ),
       1 => 
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 429,
+        2 => 455,
+      ),
+    ),
+    'PHPStan\\Rules\\Traits\\TraitUseCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'App\\Traits\\ControllerHelpers',
       ),
     ),
   ),
@@ -2411,37 +2495,62 @@ return [
       0 => 
       array (
         0 => 'Credenciais inválidas.',
-        1 => 142,
+        1 => 155,
       ),
       1 => 
       array (
         0 => 'Sessão terminada com sucesso.',
-        1 => 173,
+        1 => 194,
       ),
       2 => 
       array (
         0 => 'Password atual incorreta',
-        1 => 195,
+        1 => 222,
       ),
       3 => 
       array (
         0 => 'Password alterada com sucesso.',
-        1 => 202,
+        1 => 229,
       ),
       4 => 
       array (
         0 => 'A palavra-passe atual é obrigatória para alterar a password.',
-        1 => 223,
+        1 => 250,
       ),
       5 => 
       array (
         0 => 'Password atual incorreta',
-        1 => 227,
+        1 => 260,
       ),
       6 => 
       array (
         0 => 'Perfil atualizado com sucesso.',
-        1 => 240,
+        1 => 273,
+      ),
+      7 => 
+      array (
+        0 => 'Email de recuperação enviado com sucesso.',
+        1 => 308,
+      ),
+      8 => 
+      array (
+        0 => 'Token inválido ou expirado.',
+        1 => 337,
+      ),
+      9 => 
+      array (
+        0 => 'Token expirado. Solicite um novo.',
+        1 => 344,
+      ),
+      10 => 
+      array (
+        0 => 'Utilizador não encontrado.',
+        1 => 349,
+      ),
+      11 => 
+      array (
+        0 => 'Password reposta com sucesso. Faça login.',
+        1 => 359,
       ),
     ),
   ),
@@ -2459,17 +2568,12 @@ return [
       0 => 
       array (
         0 => 'abort',
-        1 => 28,
+        1 => 24,
       ),
       1 => 
       array (
         0 => 'abort',
-        1 => 37,
-      ),
-      2 => 
-      array (
-        0 => 'abort',
-        1 => 53,
+        1 => 39,
       ),
     ),
   ),
@@ -2542,6 +2646,70 @@ return [
       ),
     ),
   ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\PageController.php' => 
+  array (
+    'Larastan\\Larastan\\Collectors\\UsedViewFunctionCollector' => 
+    array (
+      0 => 'main',
+      1 => 'ui.auth',
+      2 => 'ui.auth-reset',
+    ),
+    'PHPStan\\Rules\\DeadCode\\MethodWithoutImpurePointsCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'App\\Http\\Controllers\\PageController',
+        1 => 'home',
+        2 => 'App\\Http\\Controllers\\PageController',
+        3 => 
+        array (
+          0 => 'f' . "\0" . 'view',
+        ),
+      ),
+      1 => 
+      array (
+        0 => 'App\\Http\\Controllers\\PageController',
+        1 => 'login',
+        2 => 'App\\Http\\Controllers\\PageController',
+        3 => 
+        array (
+          0 => 'f' . "\0" . 'view',
+        ),
+      ),
+      2 => 
+      array (
+        0 => 'App\\Http\\Controllers\\PageController',
+        1 => 'passwordResetForm',
+        2 => 'App\\Http\\Controllers\\PageController',
+        3 => 
+        array (
+          0 => 'f' . "\0" . 'view',
+        ),
+      ),
+    ),
+    'PHPStan\\Rules\\DeadCode\\PossiblyPureFuncCallCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'session',
+        1 => 29,
+      ),
+      1 => 
+      array (
+        0 => 'abort',
+        1 => 51,
+      ),
+    ),
+    'PHPStan\\Rules\\DeadCode\\PossiblyPureStaticCallCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'Illuminate\\Support\\Facades\\Mail',
+        1 => 'raw',
+        2 => 54,
+      ),
+    ),
+  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php' => 
   array (
     'Larastan\\Larastan\\Collectors\\UsedViewFunctionCollector' => 
@@ -2549,6 +2717,86 @@ return [
       0 => 'rooms.create',
       1 => 'rooms.show',
       2 => 'rooms.edit',
+    ),
+    'PHPStan\\Rules\\Comparison\\ConstantConditionInTraitCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        1 => 'App\\Traits\\ControllerHelpers',
+        2 => '\\Illuminate\\Support\\Facades\\Auth::guard(\'api\')->user():19',
+        3 => NULL,
+      ),
+      1 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeStaticMethodCallRule',
+        1 => 'App\\Traits\\ControllerHelpers',
+        2 => '\\Illuminate\\Support\\Facades\\Auth::guard(\'api\'):19',
+        3 => NULL,
+      ),
+      2 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        1 => 'App\\Traits\\ControllerHelpers',
+        2 => '$request->user():19',
+        3 => NULL,
+      ),
+      3 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
+        1 => 'App\\Traits\\ControllerHelpers',
+        2 => '!$user->profile || !in_array($user->profile->name, $roles, true):27',
+        3 => NULL,
+      ),
+      4 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanNotConstantConditionRule',
+        1 => 'App\\Traits\\ControllerHelpers',
+        2 => '$user->profile:27',
+        3 => NULL,
+      ),
+      5 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanNotConstantConditionRule',
+        1 => 'App\\Traits\\ControllerHelpers',
+        2 => 'in_array($user->profile->name, $roles, true):27',
+        3 => NULL,
+      ),
+      6 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
+        1 => 'App\\Traits\\ControllerHelpers',
+        2 => 'in_array($user->profile->name, $roles, true):27',
+        3 => NULL,
+      ),
+      7 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanOrConstantConditionRule',
+        1 => 'App\\Traits\\ControllerHelpers',
+        2 => '!$user->profile:27',
+        3 => NULL,
+      ),
+      8 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanOrConstantConditionRule',
+        1 => 'App\\Traits\\ControllerHelpers',
+        2 => '!in_array($user->profile->name, $roles, true):27',
+        3 => NULL,
+      ),
+      9 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanOrConstantConditionRule',
+        1 => 'App\\Traits\\ControllerHelpers',
+        2 => '!$user->profile || !in_array($user->profile->name, $roles, true):27',
+        3 => NULL,
+      ),
+      10 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
+        1 => 'App\\Traits\\ControllerHelpers',
+        2 => 'abort(403, \'Acesso proibido para o seu perfil.\'):28',
+        3 => NULL,
+      ),
     ),
     'PHPStan\\Rules\\DeadCode\\MethodWithoutImpurePointsCollector' => 
     array (
@@ -2583,6 +2831,21 @@ return [
         ),
       ),
     ),
+    'PHPStan\\Rules\\DeadCode\\PossiblyPureFuncCallCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'abort',
+        1 => 28,
+      ),
+    ),
+    'PHPStan\\Rules\\Traits\\TraitUseCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'App\\Traits\\ControllerHelpers',
+      ),
+    ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php' => 
   array (
@@ -2590,33 +2853,38 @@ return [
     array (
       0 => 
       array (
-        0 => 'Custo estimado excede o limiar. Ticket pendente de aprovação orçamental.',
-        1 => 790,
+        0 => 'Não existem tickets abertos prioritários.',
+        1 => 607,
       ),
       1 => 
       array (
-        0 => 'Custo estimado dentro da autonomia. Pode prosseguir com a intervenção.',
-        1 => 809,
+        0 => 'Custo estimado excede o limiar. Ticket pendente de aprovação orçamental.',
+        1 => 885,
       ),
       2 => 
       array (
-        0 => 'Pedido de orçamento submetido com detalhes. Aguarde aprovação.',
-        1 => 855,
+        0 => 'Custo estimado dentro da autonomia. Pode prosseguir com a intervenção.',
+        1 => 904,
       ),
       3 => 
       array (
-        0 => 'Custo dentro do limiar. Intervenção autorizada automaticamente.',
-        1 => 867,
+        0 => 'Pedido de orçamento submetido com detalhes. Aguarde aprovação.',
+        1 => 950,
       ),
       4 => 
       array (
-        0 => 'Estado "fechada" não encontrado.',
-        1 => 890,
+        0 => 'Custo dentro do limiar. Intervenção autorizada automaticamente.',
+        1 => 962,
       ),
       5 => 
       array (
+        0 => 'Estado "fechada" não encontrado.',
+        1 => 1019,
+      ),
+      6 => 
+      array (
         0 => 'Intervenção concluída e ticket fechado com sucesso.',
-        1 => 905,
+        1 => 1072,
       ),
     ),
     'Larastan\\Larastan\\Collectors\\UsedViewFunctionCollector' => 
@@ -2630,63 +2898,77 @@ return [
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\ControllerHelpers',
-        2 => '$request->user():18',
+        2 => '\\Illuminate\\Support\\Facades\\Auth::guard(\'api\')->user():19',
         3 => NULL,
       ),
       1 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeStaticMethodCallRule',
         1 => 'App\\Traits\\ControllerHelpers',
-        2 => '!$user->profile || !in_array($user->profile->name, $roles, true):26',
+        2 => '\\Illuminate\\Support\\Facades\\Auth::guard(\'api\'):19',
         3 => NULL,
       ),
       2 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\BooleanNotConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\ControllerHelpers',
-        2 => '$user->profile:26',
+        2 => '$request->user():19',
         3 => NULL,
       ),
       3 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\BooleanNotConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
         1 => 'App\\Traits\\ControllerHelpers',
-        2 => 'in_array($user->profile->name, $roles, true):26',
+        2 => '!$user->profile || !in_array($user->profile->name, $roles, true):27',
         3 => NULL,
       ),
       4 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanNotConstantConditionRule',
         1 => 'App\\Traits\\ControllerHelpers',
-        2 => 'in_array($user->profile->name, $roles, true):26',
+        2 => '$user->profile:27',
         3 => NULL,
       ),
       5 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\BooleanOrConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanNotConstantConditionRule',
         1 => 'App\\Traits\\ControllerHelpers',
-        2 => '!$user->profile:26',
+        2 => 'in_array($user->profile->name, $roles, true):27',
         3 => NULL,
       ),
       6 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\BooleanOrConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
         1 => 'App\\Traits\\ControllerHelpers',
-        2 => '!in_array($user->profile->name, $roles, true):26',
+        2 => 'in_array($user->profile->name, $roles, true):27',
         3 => NULL,
       ),
       7 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\BooleanOrConstantConditionRule',
         1 => 'App\\Traits\\ControllerHelpers',
-        2 => '!$user->profile || !in_array($user->profile->name, $roles, true):26',
+        2 => '!$user->profile:27',
         3 => NULL,
       ),
       8 => 
       array (
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanOrConstantConditionRule',
+        1 => 'App\\Traits\\ControllerHelpers',
+        2 => '!in_array($user->profile->name, $roles, true):27',
+        3 => NULL,
+      ),
+      9 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanOrConstantConditionRule',
+        1 => 'App\\Traits\\ControllerHelpers',
+        2 => '!$user->profile || !in_array($user->profile->name, $roles, true):27',
+        3 => NULL,
+      ),
+      10 => 
+      array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
         1 => 'App\\Traits\\ControllerHelpers',
-        2 => 'abort(403, \'Acesso proibido para o seu perfil.\'):27',
+        2 => 'abort(403, \'Acesso proibido para o seu perfil.\'):28',
         3 => NULL,
       ),
     ),
@@ -2705,22 +2987,27 @@ return [
       0 => 
       array (
         0 => 'abort',
-        1 => 27,
+        1 => 28,
       ),
       1 => 
       array (
-        0 => 'event',
-        1 => 193,
+        0 => 'abort',
+        1 => 167,
       ),
       2 => 
       array (
         0 => 'event',
-        1 => 508,
+        1 => 211,
       ),
       3 => 
       array (
         0 => 'event',
-        1 => 556,
+        1 => 560,
+      ),
+      4 => 
+      array (
+        0 => 'event',
+        1 => 651,
       ),
     ),
     'PHPStan\\Rules\\DeadCode\\PossiblyPureStaticCallCollector' => 
@@ -2729,49 +3016,55 @@ return [
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 494,
+        2 => 546,
       ),
       1 => 
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 653,
+        2 => 748,
       ),
       2 => 
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 663,
+        2 => 758,
       ),
       3 => 
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 674,
+        2 => 769,
       ),
       4 => 
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 684,
+        2 => 779,
       ),
       5 => 
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 696,
+        2 => 791,
       ),
       6 => 
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 706,
+        2 => 801,
       ),
       7 => 
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 717,
+        2 => 812,
+      ),
+      8 => 
+      array (
+        0 => 'Illuminate\\Database\\Eloquent\\Builder',
+        1 => 'create',
+        2 => 1052,
       ),
     ),
     'PHPStan\\Rules\\Traits\\TraitUseCollector' => 
@@ -4408,13 +4701,23 @@ return [
       2 => 
       array (
         0 => 'App\\Models\\User',
+        1 => 'hashToken',
+        2 => 'App\\Models\\User',
+        3 => 
+        array (
+          0 => 'f' . "\0" . 'config',
+        ),
+      ),
+      3 => 
+      array (
+        0 => 'App\\Models\\User',
         1 => 'isAdmin',
         2 => 'App\\Models\\User',
         3 => 
         array (
         ),
       ),
-      3 => 
+      4 => 
       array (
         0 => 'App\\Models\\User',
         1 => 'isTechnician',
@@ -4423,7 +4726,7 @@ return [
         array (
         ),
       ),
-      4 => 
+      5 => 
       array (
         0 => 'App\\Models\\User',
         1 => 'isCommonUser',
@@ -4442,7 +4745,7 @@ return [
       ),
     ),
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php' => 
   array (
     'PHPStan\\Rules\\Traits\\TraitUseCollector' => 
     array (
@@ -4609,7 +4912,7 @@ return [
       0 => 
       array (
         0 => 'App\\Traits\\ControllerHelpers',
-        1 => 11,
+        1 => 12,
       ),
     ),
   ),
@@ -4647,7 +4950,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminController.php' => 
   array (
-    'fileHash' => '7506d48e481bc9b8b583ed19170be8eba0f6d037f4b9105a0f5dadfbeae3c379',
+    'fileHash' => 'cee4f3d8f3d194af6d384b4c1b4650e6d108e8fec1cece55438eab78723397ba',
     'dependentFiles' => 
     array (
     ),
@@ -4675,7 +4978,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuthController.php' => 
   array (
-    'fileHash' => 'f16bb89ec617ca70e4a3fd105d5810ba2332895058ca621bac9427b062b1a737',
+    'fileHash' => 'ed9222bb0dc8a488d0ce4233c75004d723b60f1fd6f322d6fe7301d284c4e4a6',
     'dependentFiles' => 
     array (
     ),
@@ -4689,7 +4992,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Controller.php' => 
   array (
-    'fileHash' => '70707569c1f7a945698a42517b94c3e584d0bd43d05b95ab4f39ebd51cf99b83',
+    'fileHash' => '7a22d210e5e61642b9e45b86ea79ba0721a928f2b0c9168bde247a7095004a5a',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminController.php',
@@ -4700,10 +5003,11 @@ return [
       5 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\CalendarController.php',
       6 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\EquipmentController.php',
       7 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\NotificationController.php',
-      8 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php',
-      9 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-      10 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
-      11 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UserController.php',
+      8 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\PageController.php',
+      9 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php',
+      10 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
+      11 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
+      12 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UserController.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\EquipmentController.php' => 
@@ -4720,23 +5024,30 @@ return [
     array (
     ),
   ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\PageController.php' => 
+  array (
+    'fileHash' => 'c8316bfbe63817d5f6df4ea9f3802a26a4a2a046ac9f52cf94ce0af87bce3d36',
+    'dependentFiles' => 
+    array (
+    ),
+  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php' => 
   array (
-    'fileHash' => 'bad90e0a6f72a25aaf047fbfd2e093b87ca59d7d3bdcb5ca9ebce802bd9f8486',
+    'fileHash' => 'd1f09af3e5a5703b15460196e7c3b02e565fda072b5a3db461274729e0e49012',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php' => 
   array (
-    'fileHash' => '274c06a5d77e3559d11693dac794b7de7f732cb2a19f8ff32ca8ed2eccf03459',
+    'fileHash' => 'bb432767649d6107134478b3448469033c8cec7c4ce2b2d42bcd5d794ff8f72b',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php' => 
   array (
-    'fileHash' => '78ff1acb53c0354a9af2dc8174c2c0d116aa322dbd002f63df491acf657ff8ad',
+    'fileHash' => 'e9e3bc3eb6e07d5a1adcb44658fbeb29d42360ca544d6f26a339ba617121023b',
     'dependentFiles' => 
     array (
     ),
@@ -4750,14 +5061,14 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CsrfMiddleware.php' => 
   array (
-    'fileHash' => '2e157df21792b8bf0fee551c87045dd2a2d8ae1b48c45e019342b01f5a4cffaa',
+    'fileHash' => 'e9bc385011f2d31b77ef8cbecdae483e86ff19bc8743b3e743e3b3572bd0fa39',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php' => 
   array (
-    'fileHash' => '022e81f619821fae46108d5b0eced0bcd897a8e8a3b4ccc7714f0ca9a4578981',
+    'fileHash' => 'daeb2f8c7b7cc75debedb833d7dfd404ba3d743476ff28fd4d27fcf519180376',
     'dependentFiles' => 
     array (
     ),
@@ -4772,6 +5083,13 @@ return [
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RoleMiddleware.php' => 
   array (
     'fileHash' => 'ec365848b9c62c6f72409d197523f191ff380f6712f915f5fa065fc0ceb2f8a2',
+    'dependentFiles' => 
+    array (
+    ),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\SecurityHeaders.php' => 
+  array (
+    'fileHash' => 'd90a4154ba95483663385adcf6aa93ab826d63053300a807c5df595ce54658ce',
     'dependentFiles' => 
     array (
     ),
@@ -4866,7 +5184,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php' => 
   array (
-    'fileHash' => 'f6e2e8510e1139b76955648efeb11ec531399b14e2fc3fb7a7459b994b6c9d04',
+    'fileHash' => 'c33313369e7564852a1b93c624172ca6db5b3e9101e606534dc43f48dd54aa37',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Console\\Commands\\SimulateTelemetry.php',
@@ -4936,7 +5254,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php' => 
   array (
-    'fileHash' => '6aa4485320c7a8f5a92ccc32acceff34403adaf0ffce2da2288c47c6e0fc75bf',
+    'fileHash' => 'e33a9a13c62677e2e7262605a4aec926a11ff62d22b9c99d046fb55be26a618b',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Console\\Commands\\SimulateTelemetry.php',
@@ -4946,27 +5264,28 @@ return [
       4 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\CalendarController.php',
       5 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Controller.php',
       6 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\NotificationController.php',
-      7 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-      8 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
-      9 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UserController.php',
-      10 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php',
-      11 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RateLimitMiddleware.php',
-      12 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RoleMiddleware.php',
-      13 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Audit.php',
-      14 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php',
-      15 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Notification.php',
-      16 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php',
-      17 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
-      18 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketAttachment.php',
-      19 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketComment.php',
-      20 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php',
-      21 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php',
-      22 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
+      7 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php',
+      8 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
+      9 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
+      10 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UserController.php',
+      11 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php',
+      12 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RateLimitMiddleware.php',
+      13 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RoleMiddleware.php',
+      14 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Audit.php',
+      15 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php',
+      16 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Notification.php',
+      17 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php',
+      18 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
+      19 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketAttachment.php',
+      20 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketComment.php',
+      21 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php',
+      22 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php',
+      23 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
     ),
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php' => 
   array (
-    'fileHash' => 'd645ee75aeda6cb2e70c6d14a1064ba6448746009db2d3d89fff88db7689bc4f',
+    'fileHash' => 'c78095089c35d79d044a292d4ac26a0b9280813a74ac8cd1a6ffe3922a11559d',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Console\\Commands\\SimulateTelemetry.php',
@@ -4976,22 +5295,23 @@ return [
       4 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\CalendarController.php',
       5 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Controller.php',
       6 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\NotificationController.php',
-      7 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-      8 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
-      9 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UserController.php',
-      10 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php',
-      11 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RateLimitMiddleware.php',
-      12 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RoleMiddleware.php',
-      13 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Audit.php',
-      14 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php',
-      15 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Notification.php',
-      16 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php',
-      17 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
-      18 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketAttachment.php',
-      19 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketComment.php',
-      20 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php',
-      21 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
-      22 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
+      7 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php',
+      8 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
+      9 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
+      10 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UserController.php',
+      11 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php',
+      12 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RateLimitMiddleware.php',
+      13 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RoleMiddleware.php',
+      14 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Audit.php',
+      15 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php',
+      16 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Notification.php',
+      17 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php',
+      18 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
+      19 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketAttachment.php',
+      20 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketComment.php',
+      21 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php',
+      22 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
+      23 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\NewTicketNotification.php' => 
@@ -5076,14 +5396,18 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Traits\\ControllerHelpers.php' => 
   array (
-    'fileHash' => '46af0947464dcf1fb44113381c6f6f8daa1efd2e4bfb0dcf5d512924ec634436',
+    'fileHash' => '898e94e4ee95b21386960374c6ccd53dc38aa6f83c057bf2a5c3a01396641e62',
     'dependentFiles' => 
     array (
-      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
+      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminController.php',
+      1 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php',
+      2 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
     ),
     'usedTraitDependentFiles' => 
     array (
-      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
+      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminController.php',
+      1 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php',
+      2 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
     ),
   ),
 ),
@@ -5094,7 +5418,7 @@ return [
     1 => 'laravel/framework',
     2 => 'nesbot/carbon',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Events\\TicketCreatedBroadcast.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Events\\TicketStatusUpdatedBroadcast.php' => 
   array (
     0 => 'laravel/framework',
   ),
@@ -5104,117 +5428,54 @@ return [
     1 => 'laravel/framework',
     2 => 'phpoffice/phpspreadsheet',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\ApiDocsController.php' => 
-  array (
-    0 => 'laravel/framework',
-    1 => 'symfony/http-foundation',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuditController.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php' => 
   array (
     0 => 'zircote/swagger-php',
     1 => 'laravel/framework',
     2 => 'symfony/http-foundation',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Controller.php' => 
-  array (
-    0 => 'laravel/framework',
-    1 => 'symfony/http-foundation',
-    2 => 'symfony/http-kernel',
+    3 => 'nesbot/carbon',
+    4 => 'barryvdh/laravel-dompdf',
+    5 => 'dompdf/dompdf',
+    6 => 'maatwebsite/excel',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php' => 
   array (
+    0 => 'symfony/http-kernel',
+    1 => 'laravel/framework',
+    2 => 'symfony/http-foundation',
+    3 => 'nesbot/carbon',
+    4 => 'ramsey/uuid',
+    5 => 'league/flysystem',
+    6 => 'psr/http-message',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php' => 
+  array (
     0 => 'laravel/framework',
     1 => 'symfony/http-foundation',
     2 => 'symfony/http-kernel',
-    3 => 'nesbot/carbon',
-    4 => 'league/flysystem',
-    5 => 'psr/http-message',
+    3 => 'psr/container',
+    4 => 'nesbot/carbon',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Mail\\TestMail.php' => 
-  array (
-    0 => 'laravel/framework',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Audit.php' => 
-  array (
-    0 => 'laravel/framework',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Category.php' => 
-  array (
-    0 => 'laravel/framework',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\SecurityHeaders.php' => 
   array (
     0 => 'laravel/framework',
     1 => 'symfony/http-foundation',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php' => 
-  array (
-    0 => 'laravel/framework',
-    1 => 'symfony/http-foundation',
-    2 => 'nesbot/carbon',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketComment.php' => 
-  array (
-    0 => 'laravel/framework',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php' => 
-  array (
-    0 => 'laravel/framework',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php' => 
-  array (
-    0 => 'laravel/framework',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\NewTicketNotification.php' => 
-  array (
-    0 => 'laravel/framework',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Events\\TicketStatusUpdatedBroadcast.php' => 
-  array (
-    0 => 'laravel/framework',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminController.php' => 
-  array (
-    0 => 'zircote/swagger-php',
-    1 => 'laravel/framework',
-    2 => 'symfony/http-foundation',
-    3 => 'nesbot/carbon',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuthController.php' => 
-  array (
-    0 => 'zircote/swagger-php',
-    1 => 'laravel/framework',
-    2 => 'symfony/http-foundation',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php' => 
-  array (
-    0 => 'zircote/swagger-php',
-    1 => 'laravel/framework',
-    2 => 'symfony/http-foundation',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RateLimitMiddleware.php' => 
-  array (
-    0 => 'laravel/framework',
-    1 => 'symfony/http-foundation',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Mail\\TicketCreated.php' => 
-  array (
-    0 => 'laravel/framework',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php' => 
   array (
     0 => 'laravel/framework',
     1 => 'symfony/http-foundation',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\EquipmentCategory.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php' => 
   array (
     0 => 'laravel/framework',
+    1 => 'symfony/http-foundation',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketType.php' => 
   array (
     0 => 'laravel/framework',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\NewTicketNotification.php' => 
   array (
     0 => 'laravel/framework',
   ),
@@ -5235,29 +5496,121 @@ return [
     1 => 'openai-php/client',
     2 => 'openai-php/laravel',
   ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Traits\\ControllerHelpers.php' => 
+  array (
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminController.php' => 
+  array (
+    0 => 'symfony/http-kernel',
+    1 => 'laravel/framework',
+    2 => 'symfony/http-foundation',
+    3 => 'zircote/swagger-php',
+    4 => 'nesbot/carbon',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Controller.php' => 
+  array (
+    0 => 'symfony/http-kernel',
+    1 => 'laravel/framework',
+    2 => 'symfony/http-foundation',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\EquipmentController.php' => 
+  array (
+    0 => 'laravel/framework',
+    1 => 'symfony/http-foundation',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\PageController.php' => 
+  array (
+    0 => 'laravel/framework',
+    1 => 'symfony/http-foundation',
+    2 => 'symfony/http-kernel',
+    3 => 'psr/container',
+    4 => 'symfony/mailer',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php' => 
+  array (
+    0 => 'symfony/http-kernel',
+    1 => 'laravel/framework',
+    2 => 'symfony/http-foundation',
+    3 => 'zircote/swagger-php',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UserController.php' => 
+  array (
+    0 => 'laravel/framework',
+    1 => 'symfony/http-foundation',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RateLimitMiddleware.php' => 
+  array (
+    0 => 'laravel/framework',
+    1 => 'symfony/http-foundation',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\SetLocaleMiddleware.php' => 
+  array (
+    0 => 'laravel/framework',
+    1 => 'symfony/http-foundation',
+    2 => 'symfony/console',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\EquipmentCategory.php' => 
+  array (
+    0 => 'laravel/framework',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Notification.php' => 
+  array (
+    0 => 'laravel/framework',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php' => 
+  array (
+    0 => 'laravel/framework',
+    1 => 'symfony/http-foundation',
+    2 => 'nesbot/carbon',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketAttachment.php' => 
+  array (
+    0 => 'laravel/framework',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketStatus.php' => 
+  array (
+    0 => 'laravel/framework',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php' => 
+  array (
+    0 => 'laravel/framework',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\AppServiceProvider.php' => 
+  array (
+    0 => 'laravel/framework',
+  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Traits\\Auditable.php' => 
   array (
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Events\\TicketCreatedBroadcast.php' => 
+  array (
+    0 => 'laravel/framework',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\ApiDocsController.php' => 
+  array (
+    0 => 'laravel/framework',
+    1 => 'symfony/http-foundation',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuditController.php' => 
+  array (
+    0 => 'zircote/swagger-php',
+    1 => 'laravel/framework',
+    2 => 'symfony/http-foundation',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuthController.php' => 
   array (
     0 => 'zircote/swagger-php',
     1 => 'laravel/framework',
     2 => 'symfony/http-foundation',
     3 => 'nesbot/carbon',
-    4 => 'barryvdh/laravel-dompdf',
-    5 => 'dompdf/dompdf',
-    6 => 'maatwebsite/excel',
+    4 => 'symfony/http-kernel',
+    5 => 'psr/container',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\CalendarController.php' => 
   array (
     0 => 'laravel/framework',
     1 => 'symfony/http-foundation',
     2 => 'nesbot/carbon',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\EquipmentController.php' => 
-  array (
-    0 => 'laravel/framework',
-    1 => 'symfony/http-foundation',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\NotificationController.php' => 
   array (
@@ -5273,19 +5626,7 @@ return [
     0 => 'laravel/framework',
     1 => 'symfony/http-foundation',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UserController.php' => 
-  array (
-    0 => 'laravel/framework',
-    1 => 'symfony/http-foundation',
-  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CsrfMiddleware.php' => 
-  array (
-    0 => 'laravel/framework',
-    1 => 'symfony/http-foundation',
-    2 => 'psr/log',
-    3 => 'monolog/monolog',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php' => 
   array (
     0 => 'laravel/framework',
     1 => 'symfony/http-foundation',
@@ -5297,30 +5638,33 @@ return [
     0 => 'laravel/framework',
     1 => 'symfony/http-foundation',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\SetLocaleMiddleware.php' => 
-  array (
-    0 => 'laravel/framework',
-    1 => 'symfony/http-foundation',
-    2 => 'symfony/console',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Notification.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Mail\\TestMail.php' => 
   array (
     0 => 'laravel/framework',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketAttachment.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Mail\\TicketCreated.php' => 
   array (
     0 => 'laravel/framework',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketStatus.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Audit.php' => 
   array (
     0 => 'laravel/framework',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\AppServiceProvider.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Category.php' => 
   array (
     0 => 'laravel/framework',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Traits\\ControllerHelpers.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketComment.php' => 
   array (
+    0 => 'laravel/framework',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php' => 
+  array (
+    0 => 'laravel/framework',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php' => 
+  array (
+    0 => 'laravel/framework',
   ),
 ),
 	'exportedNodesCallback' => static function (): array { return array (
@@ -6017,6 +6361,7 @@ return [
       ),
        'usedTraits' => 
       array (
+        0 => 'App\\Traits\\ControllerHelpers',
       ),
        'traitUseAdaptations' => 
       array (
@@ -6039,6 +6384,7 @@ return [
               'ticket' => 'App\\Models\\Ticket',
               'user' => 'App\\Models\\User',
               'userprofile' => 'App\\Models\\UserProfile',
+              'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
               'hash' => 'Illuminate\\Support\\Facades\\Hash',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
@@ -6104,6 +6450,7 @@ return [
               'ticket' => 'App\\Models\\Ticket',
               'user' => 'App\\Models\\User',
               'userprofile' => 'App\\Models\\UserProfile',
+              'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
               'hash' => 'Illuminate\\Support\\Facades\\Hash',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
@@ -6183,6 +6530,7 @@ return [
               'ticket' => 'App\\Models\\Ticket',
               'user' => 'App\\Models\\User',
               'userprofile' => 'App\\Models\\UserProfile',
+              'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
               'hash' => 'Illuminate\\Support\\Facades\\Hash',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
@@ -6236,6 +6584,7 @@ return [
               'ticket' => 'App\\Models\\Ticket',
               'user' => 'App\\Models\\User',
               'userprofile' => 'App\\Models\\UserProfile',
+              'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
               'hash' => 'Illuminate\\Support\\Facades\\Hash',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
@@ -6302,6 +6651,7 @@ return [
               'ticket' => 'App\\Models\\Ticket',
               'user' => 'App\\Models\\User',
               'userprofile' => 'App\\Models\\UserProfile',
+              'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
               'hash' => 'Illuminate\\Support\\Facades\\Hash',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
@@ -6342,6 +6692,7 @@ return [
               'ticket' => 'App\\Models\\Ticket',
               'user' => 'App\\Models\\User',
               'userprofile' => 'App\\Models\\UserProfile',
+              'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
               'hash' => 'Illuminate\\Support\\Facades\\Hash',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
@@ -6407,6 +6758,7 @@ return [
               'ticket' => 'App\\Models\\Ticket',
               'user' => 'App\\Models\\User',
               'userprofile' => 'App\\Models\\UserProfile',
+              'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
               'hash' => 'Illuminate\\Support\\Facades\\Hash',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
@@ -6472,6 +6824,7 @@ return [
               'ticket' => 'App\\Models\\Ticket',
               'user' => 'App\\Models\\User',
               'userprofile' => 'App\\Models\\UserProfile',
+              'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
               'hash' => 'Illuminate\\Support\\Facades\\Hash',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
@@ -6551,6 +6904,7 @@ return [
               'ticket' => 'App\\Models\\Ticket',
               'user' => 'App\\Models\\User',
               'userprofile' => 'App\\Models\\UserProfile',
+              'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
               'hash' => 'Illuminate\\Support\\Facades\\Hash',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
@@ -6630,6 +6984,7 @@ return [
               'ticket' => 'App\\Models\\Ticket',
               'user' => 'App\\Models\\User',
               'userprofile' => 'App\\Models\\UserProfile',
+              'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
               'hash' => 'Illuminate\\Support\\Facades\\Hash',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
@@ -6711,6 +7066,7 @@ return [
               'ticket' => 'App\\Models\\Ticket',
               'user' => 'App\\Models\\User',
               'userprofile' => 'App\\Models\\UserProfile',
+              'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
               'hash' => 'Illuminate\\Support\\Facades\\Hash',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
@@ -7477,6 +7833,110 @@ return [
           array (
           ),
         )),
+        5 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'sendResetLink',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Envia email com link de reset de password.
+     * Rota: POST /api/password/email
+     */',
+             'namespace' => 'App\\Http\\Controllers',
+             'uses' => 
+            array (
+              'user' => 'App\\Models\\User',
+              'userprofile' => 'App\\Models\\UserProfile',
+              'request' => 'Illuminate\\Http\\Request',
+              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'hash' => 'Illuminate\\Support\\Facades\\Hash',
+              'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
+              'oa' => 'OpenApi\\Attributes',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => NULL,
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'request',
+               'type' => 'Illuminate\\Http\\Request',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        6 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'resetPassword',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Repõe a password do utilizador usando o token de reset.
+     * Rota: POST /api/password/reset
+     */',
+             'namespace' => 'App\\Http\\Controllers',
+             'uses' => 
+            array (
+              'user' => 'App\\Models\\User',
+              'userprofile' => 'App\\Models\\UserProfile',
+              'request' => 'Illuminate\\Http\\Request',
+              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'hash' => 'Illuminate\\Support\\Facades\\Hash',
+              'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
+              'oa' => 'OpenApi\\Attributes',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => NULL,
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'request',
+               'type' => 'Illuminate\\Http\\Request',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
       ),
        'attributes' => 
       array (
@@ -7566,17 +8026,18 @@ return [
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
-     * Resolve e valida o utilizador atualmente autenticado com base no token fornecido.
-     * Procura o token prioritariamente no cabeçalho customizado \'X-Auth-Token\'
-     * ou, em alternativa, no cabeçalho padrão \'Authorization\' (Bearer Token).
+     * Resolve o utilizador autenticado a partir do guard definido pelo CustomAuthMiddleware.
+     * O middleware já validou o token (com hash HMAC-SHA256) e configurou o guard antes de
+     * o pedido chegar ao controller. Este método apenas recolhe o utilizador do guard.
      *
-     * * @throws HttpException
+     * @throws HttpException
      */',
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
             array (
               'user' => 'App\\Models\\User',
               'request' => 'Illuminate\\Http\\Request',
+              'auth' => 'Illuminate\\Support\\Facades\\Auth',
               'httpexception' => 'Symfony\\Component\\HttpKernel\\Exception\\HttpException',
             ),
              'constUses' => 
@@ -7626,6 +8087,7 @@ return [
             array (
               'user' => 'App\\Models\\User',
               'request' => 'Illuminate\\Http\\Request',
+              'auth' => 'Illuminate\\Support\\Facades\\Auth',
               'httpexception' => 'Symfony\\Component\\HttpKernel\\Exception\\HttpException',
             ),
              'constUses' => 
@@ -8175,6 +8637,229 @@ return [
       ),
     )),
   ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\PageController.php' => 
+  array (
+    0 => 
+    \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
+       'name' => 'App\\Http\\Controllers\\PageController',
+       'phpDoc' => 
+      \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+         'phpDocString' => '/**
+ * Controller para páginas estáticas e utilitárias
+ * que anteriormente usavam closures nas rotas.
+ *
+ * Consolidar aqui permite que php artisan route:cache funcione.
+ */',
+         'namespace' => 'App\\Http\\Controllers',
+         'uses' => 
+        array (
+          'mail' => 'Illuminate\\Support\\Facades\\Mail',
+        ),
+         'constUses' => 
+        array (
+        ),
+      )),
+       'abstract' => false,
+       'final' => false,
+       'extends' => 'App\\Http\\Controllers\\Controller',
+       'implements' => 
+      array (
+      ),
+       'usedTraits' => 
+      array (
+      ),
+       'traitUseAdaptations' => 
+      array (
+      ),
+       'statements' => 
+      array (
+        0 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'home',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Página inicial (landing page).
+     */',
+             'namespace' => 'App\\Http\\Controllers',
+             'uses' => 
+            array (
+              'mail' => 'Illuminate\\Support\\Facades\\Mail',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => NULL,
+           'parameters' => 
+          array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        1 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'switchLang',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Alternar idioma da aplicação (pt / en).
+     */',
+             'namespace' => 'App\\Http\\Controllers',
+             'uses' => 
+            array (
+              'mail' => 'Illuminate\\Support\\Facades\\Mail',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => NULL,
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'locale',
+               'type' => 'string',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        2 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'login',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Vista de login (formulário de autenticação).
+     */',
+             'namespace' => 'App\\Http\\Controllers',
+             'uses' => 
+            array (
+              'mail' => 'Illuminate\\Support\\Facades\\Mail',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => NULL,
+           'parameters' => 
+          array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        3 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'testEmail',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Rota de teste de e-mail (apenas em ambientes não-produção).
+     */',
+             'namespace' => 'App\\Http\\Controllers',
+             'uses' => 
+            array (
+              'mail' => 'Illuminate\\Support\\Facades\\Mail',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => NULL,
+           'parameters' => 
+          array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        4 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'passwordResetForm',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Formulário de reset de password (API).
+     */',
+             'namespace' => 'App\\Http\\Controllers',
+             'uses' => 
+            array (
+              'mail' => 'Illuminate\\Support\\Facades\\Mail',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => NULL,
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'token',
+               'type' => 'string',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+      ),
+       'attributes' => 
+      array (
+      ),
+    )),
+  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php' => 
   array (
     0 => 
@@ -8189,6 +8874,7 @@ return [
       ),
        'usedTraits' => 
       array (
+        0 => 'App\\Traits\\ControllerHelpers',
       ),
        'traitUseAdaptations' => 
       array (
@@ -8207,6 +8893,8 @@ return [
              'uses' => 
             array (
               'room' => 'App\\Models\\Room',
+              'user' => 'App\\Models\\User',
+              'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'oa' => 'OpenApi\\Attributes',
@@ -8266,6 +8954,8 @@ return [
              'uses' => 
             array (
               'room' => 'App\\Models\\Room',
+              'user' => 'App\\Models\\User',
+              'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'oa' => 'OpenApi\\Attributes',
@@ -8300,6 +8990,8 @@ return [
              'uses' => 
             array (
               'room' => 'App\\Models\\Room',
+              'user' => 'App\\Models\\User',
+              'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'oa' => 'OpenApi\\Attributes',
@@ -8359,6 +9051,8 @@ return [
              'uses' => 
             array (
               'room' => 'App\\Models\\Room',
+              'user' => 'App\\Models\\User',
+              'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'oa' => 'OpenApi\\Attributes',
@@ -8406,6 +9100,8 @@ return [
              'uses' => 
             array (
               'room' => 'App\\Models\\Room',
+              'user' => 'App\\Models\\User',
+              'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'oa' => 'OpenApi\\Attributes',
@@ -8453,6 +9149,8 @@ return [
              'uses' => 
             array (
               'room' => 'App\\Models\\Room',
+              'user' => 'App\\Models\\User',
+              'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'oa' => 'OpenApi\\Attributes',
@@ -8526,6 +9224,8 @@ return [
              'uses' => 
             array (
               'room' => 'App\\Models\\Room',
+              'user' => 'App\\Models\\User',
+              'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'oa' => 'OpenApi\\Attributes',
@@ -8668,6 +9368,7 @@ return [
               'request' => 'Illuminate\\Http\\Request',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
             ),
              'constUses' => 
             array (
@@ -8723,6 +9424,7 @@ return [
               'request' => 'Illuminate\\Http\\Request',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
             ),
              'constUses' => 
             array (
@@ -8778,6 +9480,7 @@ return [
               'request' => 'Illuminate\\Http\\Request',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
             ),
              'constUses' => 
             array (
@@ -8833,6 +9536,7 @@ return [
               'request' => 'Illuminate\\Http\\Request',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
             ),
              'constUses' => 
             array (
@@ -8901,6 +9605,7 @@ return [
               'request' => 'Illuminate\\Http\\Request',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
             ),
              'constUses' => 
             array (
@@ -8969,6 +9674,7 @@ return [
               'request' => 'Illuminate\\Http\\Request',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
             ),
              'constUses' => 
             array (
@@ -9037,6 +9743,7 @@ return [
               'request' => 'Illuminate\\Http\\Request',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
             ),
              'constUses' => 
             array (
@@ -9105,6 +9812,7 @@ return [
               'request' => 'Illuminate\\Http\\Request',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
             ),
              'constUses' => 
             array (
@@ -9173,6 +9881,7 @@ return [
               'request' => 'Illuminate\\Http\\Request',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
             ),
              'constUses' => 
             array (
@@ -9241,6 +9950,7 @@ return [
               'request' => 'Illuminate\\Http\\Request',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
             ),
              'constUses' => 
             array (
@@ -9309,6 +10019,7 @@ return [
               'request' => 'Illuminate\\Http\\Request',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
             ),
              'constUses' => 
             array (
@@ -9377,6 +10088,7 @@ return [
               'request' => 'Illuminate\\Http\\Request',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
             ),
              'constUses' => 
             array (
@@ -9446,6 +10158,7 @@ return [
               'request' => 'Illuminate\\Http\\Request',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
             ),
              'constUses' => 
             array (
@@ -9530,6 +10243,7 @@ return [
               'request' => 'Illuminate\\Http\\Request',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
             ),
              'constUses' => 
             array (
@@ -9577,11 +10291,14 @@ return [
         )),
         15 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'closeTicket',
+           'name' => 'getMostUrgentOpenTicket',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
-     * Conclui de forma definitiva um ticket em curso, registando tempos e custos operacionais.
+     * Retorna o ID do ticket aberto mais prioritário (para redirecionamento).
+     * Prioridade: crítica > alta > média > baixa.
+     * Em caso de empate, retorna o mais antigo (aberto há mais tempo).
+     * Compatível com SQLite e MySQL.
      */',
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
@@ -9598,6 +10315,7 @@ return [
               'request' => 'Illuminate\\Http\\Request',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
             ),
              'constUses' => 
             array (
@@ -9625,19 +10343,6 @@ return [
                'phpDoc' => NULL,
                'flags' => 0,
             )),
-            1 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'id',
-               'type' => 'int',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
           ),
            'attributes' => 
           array (
@@ -9645,11 +10350,11 @@ return [
         )),
         16 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'scheduleTicket',
+           'name' => 'closeTicket',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
-     * Agenda um ticket para uma data futura (Operador ou Admin).
+     * Conclui de forma definitiva um ticket em curso, registando tempos e custos operacionais.
      */',
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
@@ -9666,6 +10371,7 @@ return [
               'request' => 'Illuminate\\Http\\Request',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
             ),
              'constUses' => 
             array (
@@ -9713,11 +10419,11 @@ return [
         )),
         17 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'openTickets',
+           'name' => 'scheduleTicket',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
-     * Lista tickets abertos para o dashboard do técnico.
+     * Agenda um ticket para uma data futura (Operador ou Admin).
      */',
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
@@ -9734,149 +10440,7 @@ return [
               'request' => 'Illuminate\\Http\\Request',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => NULL,
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'request',
-               'type' => 'Illuminate\\Http\\Request',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        18 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'calendarView',
-           'phpDoc' => NULL,
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => NULL,
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'request',
-               'type' => 'Illuminate\\Http\\Request',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        19 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'calendarEvents',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Retorna os eventos do calendário (tickets programados com scheduled_at) em formato JSON.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'ticketstatusupdatedbroadcast' => 'App\\Events\\TicketStatusUpdatedBroadcast',
-              'notification' => 'App\\Models\\Notification',
-              'ticket' => 'App\\Models\\Ticket',
-              'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'ticketcomment' => 'App\\Models\\TicketComment',
-              'user' => 'App\\Models\\User',
-              'ticketstatuschanged' => 'App\\Notifications\\TicketStatusChanged',
-              'aiservice' => 'App\\Services\\AIService',
-              'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
-              'request' => 'Illuminate\\Http\\Request',
-              'storage' => 'Illuminate\\Support\\Facades\\Storage',
-              'validator' => 'Illuminate\\Support\\Facades\\Validator',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => NULL,
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'request',
-               'type' => 'Illuminate\\Http\\Request',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        20 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'submitEstimatedBudget',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Submete o custo estimado pelo técnico e aciona o fluxo orçamental.
-     * Se o custo exceder o threshold, o ticket fica "Pendente Orçamento".
-     * Rota: POST /tickets/{id}/budget
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'ticketstatusupdatedbroadcast' => 'App\\Events\\TicketStatusUpdatedBroadcast',
-              'notification' => 'App\\Models\\Notification',
-              'ticket' => 'App\\Models\\Ticket',
-              'ticketattachment' => 'App\\Models\\TicketAttachment',
-              'ticketcomment' => 'App\\Models\\TicketComment',
-              'user' => 'App\\Models\\User',
-              'ticketstatuschanged' => 'App\\Notifications\\TicketStatusChanged',
-              'aiservice' => 'App\\Services\\AIService',
-              'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
-              'request' => 'Illuminate\\Http\\Request',
-              'storage' => 'Illuminate\\Support\\Facades\\Storage',
-              'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
             ),
              'constUses' => 
             array (
@@ -9922,14 +10486,13 @@ return [
           array (
           ),
         )),
-        21 => 
+        18 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'requestBudget',
+           'name' => 'openTickets',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
-     * Técnico solicita autorização orçamental com orçamento detalhado.
-     * Rota: PUT /technician/tickets/{id}/request-budget
+     * Lista tickets abertos para o dashboard do técnico.
      */',
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
@@ -9946,6 +10509,152 @@ return [
               'request' => 'Illuminate\\Http\\Request',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => NULL,
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'request',
+               'type' => 'Illuminate\\Http\\Request',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        19 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'calendarView',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => NULL,
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'request',
+               'type' => 'Illuminate\\Http\\Request',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        20 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'calendarEvents',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Retorna os eventos do calendário (tickets programados com scheduled_at) em formato JSON.
+     */',
+             'namespace' => 'App\\Http\\Controllers',
+             'uses' => 
+            array (
+              'ticketstatusupdatedbroadcast' => 'App\\Events\\TicketStatusUpdatedBroadcast',
+              'notification' => 'App\\Models\\Notification',
+              'ticket' => 'App\\Models\\Ticket',
+              'ticketattachment' => 'App\\Models\\TicketAttachment',
+              'ticketcomment' => 'App\\Models\\TicketComment',
+              'user' => 'App\\Models\\User',
+              'ticketstatuschanged' => 'App\\Notifications\\TicketStatusChanged',
+              'aiservice' => 'App\\Services\\AIService',
+              'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
+              'request' => 'Illuminate\\Http\\Request',
+              'storage' => 'Illuminate\\Support\\Facades\\Storage',
+              'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => NULL,
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'request',
+               'type' => 'Illuminate\\Http\\Request',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        21 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'submitEstimatedBudget',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Submete o custo estimado pelo técnico e aciona o fluxo orçamental.
+     * Se o custo exceder o threshold, o ticket fica "Pendente Orçamento".
+     * Rota: POST /tickets/{id}/budget
+     */',
+             'namespace' => 'App\\Http\\Controllers',
+             'uses' => 
+            array (
+              'ticketstatusupdatedbroadcast' => 'App\\Events\\TicketStatusUpdatedBroadcast',
+              'notification' => 'App\\Models\\Notification',
+              'ticket' => 'App\\Models\\Ticket',
+              'ticketattachment' => 'App\\Models\\TicketAttachment',
+              'ticketcomment' => 'App\\Models\\TicketComment',
+              'user' => 'App\\Models\\User',
+              'ticketstatuschanged' => 'App\\Notifications\\TicketStatusChanged',
+              'aiservice' => 'App\\Services\\AIService',
+              'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
+              'request' => 'Illuminate\\Http\\Request',
+              'storage' => 'Illuminate\\Support\\Facades\\Storage',
+              'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
             ),
              'constUses' => 
             array (
@@ -9993,11 +10702,83 @@ return [
         )),
         22 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'requestBudget',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Técnico solicita autorização orçamental com orçamento detalhado.
+     * Rota: PUT /technician/tickets/{id}/request-budget
+     */',
+             'namespace' => 'App\\Http\\Controllers',
+             'uses' => 
+            array (
+              'ticketstatusupdatedbroadcast' => 'App\\Events\\TicketStatusUpdatedBroadcast',
+              'notification' => 'App\\Models\\Notification',
+              'ticket' => 'App\\Models\\Ticket',
+              'ticketattachment' => 'App\\Models\\TicketAttachment',
+              'ticketcomment' => 'App\\Models\\TicketComment',
+              'user' => 'App\\Models\\User',
+              'ticketstatuschanged' => 'App\\Notifications\\TicketStatusChanged',
+              'aiservice' => 'App\\Services\\AIService',
+              'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
+              'request' => 'Illuminate\\Http\\Request',
+              'storage' => 'Illuminate\\Support\\Facades\\Storage',
+              'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => NULL,
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'request',
+               'type' => 'Illuminate\\Http\\Request',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+            1 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'id',
+               'type' => 'int',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        23 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'closeTicketFinal',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
      * Finaliza o ticket com custo final e relatório técnico.
+     * Se existirem tickets de prioridade mais alta pendentes, o sistema avisa o técnico.
+     * Se o técnico forçar (force=true), o admin é notificado da decisão.
      * Rota: POST /tickets/{id}/close
      */',
              'namespace' => 'App\\Http\\Controllers',
@@ -10015,6 +10796,7 @@ return [
               'request' => 'Illuminate\\Http\\Request',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
+              'str' => 'Illuminate\\Support\\Str',
             ),
              'constUses' => 
             array (
@@ -11702,7 +12484,6 @@ return [
               'closure' => 'Closure',
               'request' => 'Illuminate\\Http\\Request',
               'auth' => 'Illuminate\\Support\\Facades\\Auth',
-              'log' => 'Illuminate\\Support\\Facades\\Log',
               'response' => 'Symfony\\Component\\HttpFoundation\\Response',
             ),
              'constUses' => 
@@ -12295,6 +13076,76 @@ return [
                'type' => 'string',
                'byRef' => false,
                'variadic' => true,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+      ),
+       'attributes' => 
+      array (
+      ),
+    )),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\SecurityHeaders.php' => 
+  array (
+    0 => 
+    \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
+       'name' => 'App\\Http\\Middleware\\SecurityHeaders',
+       'phpDoc' => NULL,
+       'abstract' => false,
+       'final' => false,
+       'extends' => NULL,
+       'implements' => 
+      array (
+      ),
+       'usedTraits' => 
+      array (
+      ),
+       'traitUseAdaptations' => 
+      array (
+      ),
+       'statements' => 
+      array (
+        0 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'handle',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'Symfony\\Component\\HttpFoundation\\Response',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'request',
+               'type' => 'Illuminate\\Http\\Request',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+            1 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'next',
+               'type' => 'Closure',
+               'byRef' => false,
+               'variadic' => false,
                'hasDefault' => false,
                'attributes' => 
               array (
@@ -13558,6 +14409,24 @@ return [
           array (
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedClassConstantNode::__set_state(array(
+               'name' => 'PRIORITY_CRITICAL',
+               'value' => '\'crítica\'',
+               'attributes' => 
+              array (
+              ),
+            )),
+          ),
+           'public' => true,
+           'private' => false,
+           'final' => false,
+           'phpDoc' => NULL,
+        )),
+        10 => 
+        \PHPStan\Dependency\ExportedNode\ExportedClassConstantsNode::__set_state(array(
+           'constants' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedClassConstantNode::__set_state(array(
                'name' => 'BUDGET_PENDING',
                'value' => '\'pending\'',
                'attributes' => 
@@ -13570,7 +14439,7 @@ return [
            'final' => false,
            'phpDoc' => NULL,
         )),
-        10 => 
+        11 => 
         \PHPStan\Dependency\ExportedNode\ExportedClassConstantsNode::__set_state(array(
            'constants' => 
           array (
@@ -13588,7 +14457,7 @@ return [
            'final' => false,
            'phpDoc' => NULL,
         )),
-        11 => 
+        12 => 
         \PHPStan\Dependency\ExportedNode\ExportedClassConstantsNode::__set_state(array(
            'constants' => 
           array (
@@ -13606,11 +14475,11 @@ return [
            'final' => false,
            'phpDoc' => NULL,
         )),
-        12 => 
+        13 => 
         \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
            'names' => 
           array (
-            0 => 'guarded',
+            0 => 'fillable',
           ),
            'phpDoc' => NULL,
            'type' => NULL,
@@ -13631,7 +14500,7 @@ return [
           array (
           ),
         )),
-        13 => 
+        14 => 
         \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
            'names' => 
           array (
@@ -13656,7 +14525,7 @@ return [
           array (
           ),
         )),
-        14 => 
+        15 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'status',
            'phpDoc' => 
@@ -13692,7 +14561,7 @@ return [
           array (
           ),
         )),
-        15 => 
+        16 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'budgetApprovedBy',
            'phpDoc' => 
@@ -13728,7 +14597,7 @@ return [
           array (
           ),
         )),
-        16 => 
+        17 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'workflowHistory',
            'phpDoc' => NULL,
@@ -13746,7 +14615,7 @@ return [
           array (
           ),
         )),
-        17 => 
+        18 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'user',
            'phpDoc' => 
@@ -13782,7 +14651,7 @@ return [
           array (
           ),
         )),
-        18 => 
+        19 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'technician',
            'phpDoc' => 
@@ -13818,7 +14687,7 @@ return [
           array (
           ),
         )),
-        19 => 
+        20 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'equipment',
            'phpDoc' => 
@@ -13854,7 +14723,7 @@ return [
           array (
           ),
         )),
-        20 => 
+        21 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'room',
            'phpDoc' => 
@@ -13890,7 +14759,7 @@ return [
           array (
           ),
         )),
-        21 => 
+        22 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'comments',
            'phpDoc' => NULL,
@@ -13908,7 +14777,7 @@ return [
           array (
           ),
         )),
-        22 => 
+        23 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'attachments',
            'phpDoc' => NULL,
@@ -13926,7 +14795,7 @@ return [
           array (
           ),
         )),
-        23 => 
+        24 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'startRepair',
            'phpDoc' => NULL,
@@ -13944,7 +14813,7 @@ return [
           array (
           ),
         )),
-        24 => 
+        25 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'checkAutoClose',
            'phpDoc' => NULL,
@@ -13975,7 +14844,7 @@ return [
           array (
           ),
         )),
-        25 => 
+        26 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'reopen',
            'phpDoc' => NULL,
@@ -13993,7 +14862,7 @@ return [
           array (
           ),
         )),
-        26 => 
+        27 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'requestBudgetAuthorization',
            'phpDoc' => 
@@ -14056,7 +14925,7 @@ return [
           array (
           ),
         )),
-        27 => 
+        28 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'approveBudget',
            'phpDoc' => 
@@ -14131,7 +15000,7 @@ return [
           array (
           ),
         )),
-        28 => 
+        29 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'getBudgetPauseMinutesAttribute',
            'phpDoc' => 
@@ -14167,7 +15036,7 @@ return [
           array (
           ),
         )),
-        29 => 
+        30 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'getTotalMaterialCostAttribute',
            'phpDoc' => 
@@ -14204,7 +15073,7 @@ return [
           array (
           ),
         )),
-        30 => 
+        31 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'getTotalLaborCostAttribute',
            'phpDoc' => 
@@ -14241,7 +15110,7 @@ return [
           array (
           ),
         )),
-        31 => 
+        32 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'getBudgetTotalAttribute',
            'phpDoc' => 
@@ -14277,7 +15146,7 @@ return [
           array (
           ),
         )),
-        32 => 
+        33 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'getBudgetBreakdownAttribute',
            'phpDoc' => 
@@ -14313,7 +15182,7 @@ return [
           array (
           ),
         )),
-        33 => 
+        34 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'getStatusIdByName',
            'phpDoc' => 
@@ -14362,7 +15231,7 @@ return [
           array (
           ),
         )),
-        34 => 
+        35 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'hasStatus',
            'phpDoc' => 
@@ -14411,7 +15280,7 @@ return [
           array (
           ),
         )),
-        35 => 
+        36 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'getLeastBusyTechnician',
            'phpDoc' => 
@@ -14447,7 +15316,7 @@ return [
           array (
           ),
         )),
-        36 => 
+        37 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'getScheduledEvents',
            'phpDoc' => 
@@ -15603,6 +16472,55 @@ return [
         )),
         16 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'hashToken',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Gera um hash HMAC-SHA256 do token para armazenamento seguro na BD.
+     * O token em texto plano é devolvido ao cliente; o hash fica na BD.
+     */',
+             'namespace' => 'App\\Models',
+             'uses' => 
+            array (
+              'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+              'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
+              'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+              'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
+              'notifiable' => 'Illuminate\\Notifications\\Notifiable',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => true,
+           'returnType' => 'string',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'token',
+               'type' => 'string',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        17 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'booted',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
@@ -15642,7 +16560,7 @@ return [
       ),
     )),
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php' => 
   array (
     0 => 
     \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
@@ -15650,6 +16568,7 @@ return [
        'phpDoc' => 
       \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
          'phpDocString' => '/**
+ * @property int $id
  * @property string $name
  */',
          'namespace' => 'App\\Models',
@@ -16674,6 +17593,7 @@ return [
         array (
           'user' => 'App\\Models\\User',
           'request' => 'Illuminate\\Http\\Request',
+          'auth' => 'Illuminate\\Support\\Facades\\Auth',
         ),
          'constUses' => 
         array (
@@ -16700,6 +17620,7 @@ return [
             array (
               'user' => 'App\\Models\\User',
               'request' => 'Illuminate\\Http\\Request',
+              'auth' => 'Illuminate\\Support\\Facades\\Auth',
             ),
              'constUses' => 
             array (
@@ -16745,6 +17666,7 @@ return [
             array (
               'user' => 'App\\Models\\User',
               'request' => 'Illuminate\\Http\\Request',
+              'auth' => 'Illuminate\\Support\\Facades\\Auth',
             ),
              'constUses' => 
             array (

@@ -2,7 +2,7 @@
 
 // osfsl-C:/laravel/Projeto Final Cesae/Projeto-Final-Cesae/vendor/composer/../laravel/framework/src/Illuminate/Support/Stringable.php-presentSymbols
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-82de3a3e210e37385080f54ed5b53f6bd783eff94d8f7806ef4629564789e908-8.2.12',
+   'variableKey' => 'v2-79f330caf378e97b50615918178e3ef57d7f56330bb29d12e41ca3ad729a0f58-8.2.12',
    'data' => 
   array (
     'classes' => 

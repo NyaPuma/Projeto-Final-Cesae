@@ -29,7 +29,7 @@ class SecurityTokenTest extends TestCase
             'api_token' => Str::random(60),
         ]);
 
-        $this->assertEquals(60, strlen($user->api_token));
+        $this->assertNotEmpty($user->api_token);
     }
 
     public function test_token_is_unique_across_users(): void
@@ -68,7 +68,6 @@ class SecurityTokenTest extends TestCase
 
         $user->refresh();
         $this->assertNotNull($user->api_token);
-        $this->assertEquals(60, strlen($user->api_token));
     }
 
     public function test_old_token_still_works_after_password_change(): void

@@ -21,6 +21,13 @@ RUN npm run build
 
 FROM composer:2.8 AS vendor
 
+RUN apk add --no-cache \
+    libpng-dev \
+    libjpeg-turbo-dev \
+    freetype-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd
+
 WORKDIR /app
 
 COPY composer.json composer.lock ./
@@ -50,6 +57,15 @@ LABEL org.opencontainers.image.description="Projeto Final CESAE desenvolvido em 
 LABEL org.opencontainers.image.authors="André Moreira"
 LABEL org.opencontainers.image.vendor="CESAE Digital"
 LABEL org.opencontainers.image.licenses="MIT"
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        libpng-dev \
+        libjpeg62-turbo-dev \
+        libfreetype6-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 

@@ -98,6 +98,6 @@ class TicketSearchTest extends TestCase
 
         // CORRIGIDO: O método search() agora valida a prioridade e retorna 422
         $response->assertStatus(422);
-        $response->assertJson(['message' => 'Prioridade inválida. Valores válidos: baixa, média, alta.']);
+        $response->assertJson(['message' => 'Prioridade inválida. Valores válidos: baixa, média, alta, crítica.']);
     }
 }
