@@ -192,7 +192,7 @@ document.getElementById('createTicketForm').addEventListener('submit', async (e)
             payload.equipment_id = eqId;
         }
 
-        const res = await fetch('/api/tickets', {
+        const res = await fetch('/tickets', {
             method: 'POST',
             headers: authHeader(),
             body: JSON.stringify(payload)

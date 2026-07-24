@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
 async function fetchAudits() {
     const tbody = document.getElementById('auditsTableBody');
     try {
-        const response = await window.api.get('/api/audits', {
+        const response = await window.api.get('/admin/audits', {
             headers: authHeader()
         });
 
