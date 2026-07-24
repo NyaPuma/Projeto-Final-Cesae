@@ -166,7 +166,7 @@ async function verifyAdminRole() {
 
     // 2. Verificar via API para confirmar permissões atualizadas
     try {
-        const res = await fetch('/api/me', { headers: authHeader() });
+        const res = await fetch('/api/user', { headers: authHeader() });
         if (res.ok) {
             const data = await res.json();
             const user = data.user || data;

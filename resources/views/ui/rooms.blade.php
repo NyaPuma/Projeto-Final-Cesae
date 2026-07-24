@@ -29,14 +29,12 @@ window.requireAuthOnLoad = true;
             </div>
 
             <div>
-                <label for="filter_building" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">
-                    {{ __('Edifício') }}
+                <label for="filter_location" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">
+                    {{ __('Edifício / Localização') }}
                 </label>
-                <input id="filter_building" type="text" placeholder="{{ __('Filtrar por edifício...') }}"
+                <input id="filter_location" type="text" placeholder="{{ __('Filtrar por edifício...') }}"
                     class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-2.5 text-xs text-[var(--text)] placeholder-[var(--text-soft)] outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all">
             </div>
-
-        </div>
 
         <div class="mt-4 pt-4 border-t border-[var(--border)] flex flex-wrap items-center justify-between gap-3">
             <div class="flex items-center gap-2">
@@ -50,7 +48,6 @@ window.requireAuthOnLoad = true;
             <div>
                 <span id="resultsCount" class="text-xs font-medium text-[var(--text-soft)]"></span>
             </div>
-        </div>
     </div>
 
     {{-- Tabela de Dados --}}
@@ -60,7 +57,7 @@ window.requireAuthOnLoad = true;
                 <thead class="bg-[var(--surface-2)] text-[var(--text-soft)] uppercase tracking-wider font-bold text-[10px]">
                     <tr>
                         <th class="px-5 py-3.5 font-bold">{{ __('Nome da Sala') }}</th>
-                        <th class="px-5 py-3.5 font-bold">{{ __('Edifício') }}</th>
+                        <th class="px-5 py-3.5 font-bold">{{ __('Localização') }}</th>
                         <th class="px-5 py-3.5 font-bold">{{ __('Equipamentos') }}</th>
                         <th class="px-5 py-3.5 font-bold text-right">{{ __('Ações') }}</th>
                     </tr>
@@ -77,7 +74,6 @@ window.requireAuthOnLoad = true;
                 </tbody>
             </table>
         </div>
-    </div>
 
     {{-- Paginação --}}
     <div id="pagination" class="mt-5 flex items-center justify-between text-xs text-[var(--text-soft)] px-1"></div>
@@ -98,8 +94,8 @@ window.requireAuthOnLoad = true;
             </div>
 
             <div>
-                <label for="roomBuilding" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Edifício') }}</label>
-                <input id="roomBuilding" name="building" type="text" required
+                <label for="roomLocation" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Localização') }}</label>
+                <input id="roomLocation" name="location" type="text" required
                     class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2.5 text-xs text-[var(--text)] outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all">
             </div>
 
@@ -113,7 +109,6 @@ window.requireAuthOnLoad = true;
             </div>
         </form>
     </div>
-</div>
 @endsection
 
 @push('scripts')
@@ -135,10 +130,10 @@ async function loadRooms(page = 1) {
     currentPage = page;
     const params = new URLSearchParams();
     const q = document.getElementById('filter_q').value.trim();
-    const building = document.getElementById('filter_building').value.trim();
+    const location = document.getElementById('filter_location').value.trim();
 
     if (q) params.append('q', q);
-    if (building) params.append('building', building);
+    if (location) params.append('location', location);
     params.append('page', page);
 
     const tbody = document.getElementById('roomsTableBody');
@@ -177,14 +172,14 @@ async function loadRooms(page = 1) {
 
             return `<tr class="hover:bg-[var(--surface-2)]/50 transition-colors duration-150">
                 <td class="px-5 py-4 font-bold text-xs text-[var(--text)]">${r.name}</td>
-                <td class="px-5 py-4 text-[var(--text-soft)] font-medium">${r.building || '-'}</td>
+                <td class="px-5 py-4 text-[var(--text-soft)] font-medium">${r.location || '-'}</td>
                 <td class="px-5 py-4">
                     <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-slate-800 text-slate-300 border border-slate-700/80 uppercase tracking-wider">
                         ${equipmentCount} ${eqLabel}
                     </span>
                 </td>
                 <td class="px-5 py-4 text-right">
-                    <button onclick="editRoom(${JSON.stringify(r).replace(/"/g, '&quot;')})"
+                    <button onclick="editRoom(${JSON.stringify(r).replace(/"/g, '"')})"
                         class="inline-flex items-center justify-center px-3 py-1.5 text-xs font-semibold text-slate-200 bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/80 rounded-xl transition-all cursor-pointer">
                         ${"{{ __('Editar') }}"}
                     </button>
@@ -239,7 +234,7 @@ function closeModal(modalId) {
 function editRoom(room) {
     document.getElementById('roomId').value = room.id;
     document.getElementById('roomName').value = room.name || '';
-    document.getElementById('roomBuilding').value = room.building || '';
+    document.getElementById('roomLocation').value = room.location || '';
     document.getElementById('roomModalTitle').textContent = "{{ __('Editar Sala') }}";
 
     const modal = document.getElementById('roomModal');
@@ -278,7 +273,7 @@ async function saveRoom(e) {
 document.getElementById('btnSearch')?.addEventListener('click', () => loadRooms(1));
 
 document.getElementById('btnClear')?.addEventListener('click', () => {
-    ['filter_q', 'filter_building'].forEach(id => {
+    ['filter_q', 'filter_location'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.value = '';
     });
@@ -289,7 +284,7 @@ document.getElementById('filter_q')?.addEventListener('keydown', e => {
     if (e.key === 'Enter') loadRooms(1);
 });
 
-document.getElementById('filter_building')?.addEventListener('keydown', e => {
+document.getElementById('filter_location')?.addEventListener('keydown', e => {
     if (e.key === 'Enter') loadRooms(1);
 });
 

@@ -8,7 +8,7 @@
 */
 
 // Configurações
-const STORAGE_PREFIX = 'app_';
+const STORAGE_PREFIX = '';  // Compatível com auth_token (sem prefixo) usado no login
 const FETCH_TIMEOUT = 10000; // 10 segundos
 
 /*

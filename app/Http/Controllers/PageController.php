@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 /**
@@ -22,16 +23,30 @@ class PageController extends Controller
 
     /**
      * Alternar idioma da aplicação (pt / en).
+     *
+     * Se o utilizador já estiver autenticado (token presente no cookie),
+     * redireciona para o painel em vez da página de login.
      */
-    public function switchLang(string $locale)
+    public function switchLang(Request $request, string $locale)
     {
-        if (in_array($locale, ['en', 'pt'])) {
-            session(['locale' => $locale]);
-
-            return redirect()->route('ui.login')->withCookie(cookie()->forever('locale', $locale));
+        if (! in_array($locale, ['en', 'pt'])) {
+            $locale = 'pt';
         }
 
-        return redirect()->route('ui.login');
+        // Store the locale in session and set a permanent cookie
+        session(['locale' => $locale]);
+        $cookie = cookie()->forever('locale', $locale);
+
+        // Check if user is authenticated by looking for the auth_token cookie
+        $authToken = $request->cookie('api_token') ?: $request->cookie('auth_token');
+
+        if ($authToken) {
+            // User appears to be logged in — redirect to dashboard
+            return redirect()->route('ui.index')->withCookie($cookie);
+        }
+
+        // Not authenticated — redirect to login page
+        return redirect()->route('ui.login')->withCookie($cookie);
     }
 
     /**
