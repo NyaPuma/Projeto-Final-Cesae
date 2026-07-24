@@ -25,7 +25,15 @@ class SecurityHeaders
         }
 
         if (! $response->headers->has('Content-Security-Policy')) {
-            $response->headers->set('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none'");
+            $isDev = config('app.env', 'production') === 'local' || config('app.debug', false);
+
+            if ($isDev) {
+                $csp = "default-src 'self'; script-src 'self' http://localhost:5173 http://[::1]:5173; style-src 'self' 'unsafe-inline' http://localhost:5173 http://[::1]:5173; img-src 'self' data:; font-src 'self' data: https://fonts.bunny.net; connect-src 'self' ws://localhost:5173 ws://[::1]:5173 http://localhost:5173 http://[::1]:5173; frame-ancestors 'none'";
+            } else {
+                $csp = "default-src 'self'; script-src 'self' 'sha256-yUJBAWN3tbQhmB6geMpw+PgJT0sHuIV6UyRTt6U8Lyc='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none'";
+            }
+
+            $response->headers->set('Content-Security-Policy', $csp);
         }
 
         return $response;

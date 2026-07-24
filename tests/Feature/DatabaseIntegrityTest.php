@@ -23,9 +23,10 @@ class DatabaseIntegrityTest extends TestCase
 
         $room->delete();
 
-        // Check if room_id is set to null or if database protects reference integrity
+        $this->assertSoftDeleted('rooms', ['id' => $room->id]);
+
         $equipment = $equipment->fresh();
-        $this->assertTrue(is_null($equipment->room_id) || ! $equipment->exists());
+        $this->assertNotNull($equipment->room_id, 'Equipment room_id preserved after room soft delete');
     }
 
     public function test_unique_constraints_are_enforced()

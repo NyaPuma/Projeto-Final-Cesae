@@ -335,8 +335,10 @@ class DatabasePersistenceTest extends TestCase
         $room = Room::find($roomId);
         $room->delete();
 
+        $this->assertSoftDeleted('rooms', ['id' => $roomId]);
+
         $equipment = Equipment::where('room_id', $roomId)->first();
-        $this->assertTrue(is_null($equipment) || ! $equipment->exists() || $equipment->room_id === null);
+        $this->assertNotNull($equipment->room_id, 'Equipment room_id preserved after soft delete');
     }
 
     // ==========================================

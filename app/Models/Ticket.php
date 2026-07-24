@@ -364,12 +364,32 @@ class Ticket extends Model
 
     // --- MÉTODOS UTILITÁRIOS E AUXILIARES  ---
 
+    /** @var array<string, int|null> Cache estática para evitar queries repetidas de status */
+    private static array $statusIdCache = [];
+
     /**
      * Obtém o ID do status pelo nome na tabela `ticket_statuses`.
+     * Utiliza cache estática para eliminar queries repetidas (N+1).
      */
     public static function getStatusIdByName(string $statusName): ?int
     {
-        return TicketStatus::where('name', $statusName)->value('id');
+        $cacheKey = $statusName;
+
+        if (array_key_exists($cacheKey, self::$statusIdCache)) {
+            return self::$statusIdCache[$cacheKey];
+        }
+
+        self::$statusIdCache[$cacheKey] = TicketStatus::where('name', $statusName)->value('id');
+
+        return self::$statusIdCache[$cacheKey];
+    }
+
+    /**
+     * Limpa o cache estático de status IDs (útil em testes).
+     */
+    public static function flushStatusCache(): void
+    {
+        self::$statusIdCache = [];
     }
 
     /**
@@ -406,15 +426,27 @@ class Ticket extends Model
 
     /**
      * Atalho de segurança para recolher eventos agendados para o FullCalendar.
+     * Filtra por intervalo de datas para evitar carregar todos os tickets agendados.
      */
-    public static function getScheduledEvents()
+    public static function getScheduledEvents(?string $from = null, ?string $to = null): \Illuminate\Support\Collection
     {
-        return self::whereNotNull('scheduled_at')->get()->map(function ($ticket) {
+        $query = self::whereNotNull('scheduled_at')
+            ->select('id', 'title', 'scheduled_at', 'scheduled_end');
+
+        if ($from) {
+            $query->where('scheduled_at', '>=', $from);
+        }
+
+        if ($to) {
+            $query->where('scheduled_at', '<=', $to);
+        }
+
+        return $query->get()->map(function ($ticket) {
             return [
                 'id' => $ticket->id,
                 'title' => '🔧 #'.$ticket->id.' - '.$ticket->title,
-                'start' => $ticket->scheduled_at ? $ticket->scheduled_at->toIso8601String() : null,
-                'end' => $ticket->scheduled_end ? $ticket->scheduled_end->toIso8601String() : null,
+                'start' => $ticket->scheduled_at->toIso8601String(),
+                'end' => $ticket->scheduled_end?->toIso8601String(),
             ];
         });
     }

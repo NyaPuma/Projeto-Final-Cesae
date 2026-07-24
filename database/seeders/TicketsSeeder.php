@@ -14,6 +14,11 @@ class TicketsSeeder extends Seeder
         $roomIds = DB::table('rooms')->pluck('id')->all();
         $statusIds = DB::table('ticket_statuses')->pluck('id')->all();
 
+        $technicianProfileId = DB::table('user_profiles')->where('name', 'technician')->value('id');
+        $technicianIds = $technicianProfileId
+            ? DB::table('users')->where('profile_id', $technicianProfileId)->pluck('id')->all()
+            : $userIds;
+
         if (empty($userIds) || empty($equipmentIds) || empty($roomIds) || empty($statusIds)) {
             return;
         }
@@ -89,7 +94,7 @@ class TicketsSeeder extends Seeder
 
             DB::table('tickets')->insert([
                 'user_id' => $userIds[array_rand($userIds)],
-                'assigned_to' => $userIds[array_rand($userIds)],
+                'assigned_to' => $technicianIds[array_rand($technicianIds)],
                 'room_id' => $roomIds[array_rand($roomIds)],
                 'equipment_id' => $equipmentIds[array_rand($equipmentIds)],
                 'status_id' => $statusId,

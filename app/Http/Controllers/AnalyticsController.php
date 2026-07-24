@@ -8,9 +8,8 @@ use App\Models\Ticket;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -72,148 +71,162 @@ class AnalyticsController extends Controller
             $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
             $inProgressStatusId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
             $closedStatusId = Ticket::getStatusIdByName(Ticket::STATUS_CLOSED);
+            $slaTargetMinutes = 480;
 
-            $tickets = Ticket::query()
-                ->select('id', 'title', 'status_id', 'priority', 'equipment_id', 'room_id', 'assigned_to', 'opened_at', 'closed_at', 'in_progress_at', 'cost', 'budget_status', 'minutes_spent')
-                ->with(['equipment:name', 'room:name', 'technician:name'])
-                ->whereNull('deleted_at')
-                ->get();
+            // Agregação a nível de BD em vez de carregar todos os tickets para memória
+            $baseQuery = Ticket::query()->whereNull('tickets.deleted_at');
 
-        $openTickets = $tickets->filter(fn ($ticket) => $ticket->status_id === $openStatusId);
-        $inProgressTickets = $tickets->filter(fn ($ticket) => $ticket->status_id === $inProgressStatusId);
-        $closedTickets = $tickets->filter(fn ($ticket) => $ticket->status_id === $closedStatusId && $ticket->opened_at && $ticket->closed_at);
-        $budgetPendingTickets = $tickets->filter(fn ($ticket) => $ticket->budget_status === Ticket::BUDGET_PENDING);
+            $openTickets = (clone $baseQuery)->where('status_id', $openStatusId)->count();
+            $inProgressTickets = (clone $baseQuery)->where('status_id', $inProgressStatusId)->count();
+            $budgetPendingTickets = (clone $baseQuery)->where('budget_status', Ticket::BUDGET_PENDING)->count();
+            $closedTickets = (clone $baseQuery)
+                ->where('status_id', $closedStatusId)
+                ->whereNotNull('opened_at')
+                ->whereNotNull('closed_at')
+                ->count();
 
-        $averageResolutionMinutes = $closedTickets->map(function ($ticket) {
-            return Carbon::parse($ticket->opened_at)->diffInMinutes(Carbon::parse($ticket->closed_at));
-        })->avg() ?: 0;
+            // Média de resolução via SQL
+            $avgResolution = (clone $baseQuery)
+                ->where('status_id', $closedStatusId)
+                ->whereNotNull('opened_at')
+                ->whereNotNull('closed_at')
+                ->selectRaw('AVG(CAST((julianday(closed_at) - julianday(opened_at)) * 1440 AS INTEGER)) as avg_minutes')
+                ->value('avg_minutes') ?? 0;
 
-        $averageWaitingMinutes = $tickets->filter(fn ($ticket) => $ticket->opened_at && $ticket->status_id !== $closedStatusId)
-            ->map(function ($ticket) {
-                return Carbon::parse($ticket->opened_at)->diffInMinutes(now());
-            })->avg() ?: 0;
+            // Média de espera (tickets não fechados)
+            $avgWaiting = (clone $baseQuery)
+                ->where('status_id', '!=', $closedStatusId)
+                ->whereNotNull('opened_at')
+                ->selectRaw('AVG(CAST((julianday(datetime(\'now\')) - julianday(opened_at)) * 1440 AS INTEGER)) as avg_minutes')
+                ->value('avg_minutes') ?? 0;
 
-        $slaTargetMinutes = 480;
-        $slaSuccess = $closedTickets->count() > 0
-            ? round(
-                ($closedTickets->filter(function ($ticket) {
-                    $duration = Carbon::parse($ticket->opened_at)->diffInMinutes(Carbon::parse($ticket->closed_at));
+            // SLA success rate
+            $slaSuccess = $closedTickets > 0
+                ? round(
+                    ((clone $baseQuery)
+                        ->where('status_id', $closedStatusId)
+                        ->whereNotNull('opened_at')
+                        ->whereNotNull('closed_at')
+                        ->whereRaw('(julianday(closed_at) - julianday(opened_at)) * 1440 <= ?', [$slaTargetMinutes])
+                        ->count() / $closedTickets) * 100,
+                    1
+                )
+                : 100;
 
-                    return $duration <= 480;
-                })->count() / $closedTickets->count()) * 100,
-                1
-            )
-            : 100;
+            $statusBreakdown = collect([
+                ['label' => 'Abertos', 'value' => $openTickets],
+                ['label' => 'Em Curso', 'value' => $inProgressTickets],
+                ['label' => 'Pendente de Orçamento', 'value' => $budgetPendingTickets],
+                ['label' => 'Fechados', 'value' => $closedTickets],
+            ]);
 
-        $statusBreakdown = collect([
-            ['label' => 'Abertos', 'value' => $openTickets->count()],
-            ['label' => 'Em Curso', 'value' => $inProgressTickets->count()],
-            ['label' => 'Pendente de Orçamento', 'value' => $budgetPendingTickets->count()],
-            ['label' => 'Fechados', 'value' => $closedTickets->count()],
-        ]);
+            // Priority breakdown via BD
+            $priorityBreakdown = collect([
+                ['label' => 'Baixa', 'value' => (clone $baseQuery)->where('priority', Ticket::PRIORITY_LOW)->count()],
+                ['label' => 'Média', 'value' => (clone $baseQuery)->where('priority', Ticket::PRIORITY_MEDIUM)->count()],
+                ['label' => 'Alta', 'value' => (clone $baseQuery)->where('priority', Ticket::PRIORITY_HIGH)->count()],
+            ]);
 
-        $priorityBreakdown = collect([
-            ['label' => 'Baixa', 'value' => $tickets->filter(fn ($ticket) => $ticket->priority === Ticket::PRIORITY_LOW)->count()],
-            ['label' => 'Média', 'value' => $tickets->filter(fn ($ticket) => $ticket->priority === Ticket::PRIORITY_MEDIUM)->count()],
-            ['label' => 'Alta', 'value' => $tickets->filter(fn ($ticket) => $ticket->priority === Ticket::PRIORITY_HIGH)->count()],
-        ]);
+            // Monthly series via chunking para não memória
+            $monthlyBuckets = $this->buildMonthlySeriesFromDb($openStatusId, $inProgressStatusId, $closedStatusId);
 
-        $monthlyBuckets = $this->buildMonthlySeries($tickets, $openStatusId, $inProgressStatusId, $closedStatusId);
+            // Top equipamentos via agregação SQL
+            $topEquipments = (clone $baseQuery)
+                ->join('equipments', 'tickets.equipment_id', '=', 'equipments.id')
+                ->select('equipments.name', DB::raw('COUNT(*) as total'))
+                ->whereNotNull('tickets.equipment_id')
+                ->groupBy('equipments.name')
+                ->orderByDesc('total')
+                ->limit(5)
+                ->get()
+                ->map(fn ($row) => ['name' => $row->name, 'total' => $row->total, 'subtitle' => 'intervenções'])
+                ->values();
 
-        $topEquipments = $tickets->filter(fn ($ticket) => $ticket->equipment !== null)
-            ->groupBy('equipment_id')
-            ->map(fn ($group) => [
-                'name' => optional($group->first()->equipment)->name ?? 'Sem equipamento',
-                'total' => $group->count(),
-                'subtitle' => 'intervenções',
-            ])
-            ->sortByDesc('total')
-            ->take(5)
-            ->values();
+            // Top salas via agregação SQL
+            $topRooms = (clone $baseQuery)
+                ->join('rooms', 'tickets.room_id', '=', 'rooms.id')
+                ->select('rooms.name', DB::raw('COUNT(*) as total'))
+                ->whereNotNull('tickets.room_id')
+                ->groupBy('rooms.name')
+                ->orderByDesc('total')
+                ->limit(5)
+                ->get()
+                ->map(fn ($row) => ['name' => $row->name, 'total' => $row->total, 'subtitle' => 'tickets'])
+                ->values();
 
-        $topRooms = $tickets->filter(fn ($ticket) => $ticket->room !== null)
-            ->groupBy('room_id')
-            ->map(fn ($group) => [
-                'name' => optional($group->first()->room)->name ?? 'Sem sala',
-                'total' => $group->count(),
-                'subtitle' => 'tickets',
-            ])
-            ->sortByDesc('total')
-            ->take(5)
-            ->values();
+            // Top técnicos via agregação SQL
+            $topTechnicians = (clone $baseQuery)
+                ->join('users', 'tickets.assigned_to', '=', 'users.id')
+                ->select('users.name', DB::raw('COUNT(*) as total'))
+                ->whereNotNull('tickets.assigned_to')
+                ->groupBy('users.name')
+                ->orderByDesc('total')
+                ->limit(5)
+                ->get()
+                ->map(fn ($row) => ['name' => $row->name, 'total' => $row->total, 'subtitle' => 'ações'])
+                ->values();
 
-        $topTechnicians = $tickets->filter(fn ($ticket) => $ticket->technician !== null)
-            ->groupBy('assigned_to')
-            ->map(fn ($group) => [
-                'name' => optional($group->first()->technician)->name ?? 'Sem técnico',
-                'total' => $group->count(),
-                'subtitle' => 'ações',
-            ])
-            ->sortByDesc('total')
-            ->take(5)
-            ->values();
+            $recentActivity = Audit::query()
+                ->with('user')
+                ->latest()
+                ->take(6)
+                ->get()
+                ->map(function ($audit) {
+                    $userName = optional($audit->user)->name ?? 'Sistema';
+                    $description = match ($audit->event) {
+                        'created' => 'Registou uma nova entrada no sistema.',
+                        'updated' => 'Atualizou campos de um registo.',
+                        'deleted' => 'Removou um registo do sistema.',
+                        default => 'Ação registada na auditoria.',
+                    };
 
-        $recentActivity = Audit::query()
-            ->with('user')
-            ->latest()
-            ->take(6)
-            ->get()
-            ->map(function ($audit) {
-                $userName = optional($audit->user)->name ?? 'Sistema';
-                $description = match ($audit->event) {
-                    'created' => 'Registou uma nova entrada no sistema.',
-                    'updated' => 'Atualizou campos de um registo.',
-                    'deleted' => 'Removou um registo do sistema.',
-                    default => 'Ação registada na auditoria.',
-                };
+                    return [
+                        'title' => $userName,
+                        'description' => $description,
+                        'time' => $audit->created_at?->diffForHumans() ?? 'recentemente',
+                    ];
+                })
+                ->values();
 
-                return [
-                    'title' => $userName,
-                    'description' => $description,
-                    'time' => $audit->created_at?->diffForHumans() ?? 'recentemente',
-                ];
-            })
-            ->values();
+            $payload = [
+                'average_resolution_minutes' => round($avgResolution, 1),
+                'average_waiting_minutes' => round($avgWaiting, 1),
+                'open_tickets' => $openTickets,
+                'in_progress_tickets' => $inProgressTickets,
+                'waiting_budget_tickets' => $budgetPendingTickets,
+                'closed_tickets' => $closedTickets,
+                'system_availability' => 99.9,
+                'sla_success' => $slaSuccess,
+                'by_priority' => [
+                    'labels' => $priorityBreakdown->pluck('label')->values(),
+                    'data' => $priorityBreakdown->pluck('value')->values(),
+                ],
+                'ticket_status_breakdown' => [
+                    'labels' => $statusBreakdown->pluck('label')->values(),
+                    'data' => $statusBreakdown->pluck('value')->values(),
+                ],
+                'monthly_tickets' => [
+                    'labels' => $monthlyBuckets['labels'],
+                    'open' => $monthlyBuckets['open'],
+                    'in_progress' => $monthlyBuckets['in_progress'],
+                    'closed' => $monthlyBuckets['closed'],
+                ],
+                'monthly_cost' => [
+                    'labels' => $monthlyBuckets['cost_labels'],
+                    'data' => $monthlyBuckets['cost_data'],
+                ],
+                'top_equipments' => $topEquipments,
+                'top_equipment' => $topEquipments,
+                'top_rooms' => $topRooms,
+                'top_technicians' => $topTechnicians,
+                'recent_activity' => $recentActivity,
+            ];
 
-        $payload = [
-            'average_resolution_minutes' => round($averageResolutionMinutes, 1),
-            'average_waiting_minutes' => round($averageWaitingMinutes, 1),
-            'open_tickets' => $openTickets->count(),
-            'in_progress_tickets' => $inProgressTickets->count(),
-            'waiting_budget_tickets' => $budgetPendingTickets->count(),
-            'closed_tickets' => $closedTickets->count(),
-            'system_availability' => 99.9,
-            'sla_success' => $slaSuccess,
-            'by_priority' => [
-                'labels' => $priorityBreakdown->pluck('label')->values(),
-                'data' => $priorityBreakdown->pluck('value')->values(),
-            ],
-            'ticket_status_breakdown' => [
-                'labels' => $statusBreakdown->pluck('label')->values(),
-                'data' => $statusBreakdown->pluck('value')->values(),
-            ],
-            'monthly_tickets' => [
-                'labels' => $monthlyBuckets['labels'],
-                'open' => $monthlyBuckets['open'],
-                'in_progress' => $monthlyBuckets['in_progress'],
-                'closed' => $monthlyBuckets['closed'],
-            ],
-            'monthly_cost' => [
-                'labels' => $monthlyBuckets['cost_labels'],
-                'data' => $monthlyBuckets['cost_data'],
-            ],
-            'top_equipments' => $topEquipments,
-            'top_equipment' => $topEquipments,
-            'top_rooms' => $topRooms,
-            'top_technicians' => $topTechnicians,
-            'recent_activity' => $recentActivity,
-        ];
-
-        return $payload;
+            return $payload;
         });
     }
 
-    private function buildMonthlySeries(Collection $tickets, int $openStatusId, int $inProgressStatusId, int $closedStatusId): array
+    private function buildMonthlySeriesFromDb(int $openStatusId, int $inProgressStatusId, ?int $closedStatusId): array
     {
         $months = [];
         $open = [];
@@ -222,8 +235,10 @@ class AnalyticsController extends Controller
         $costLabels = [];
         $costData = [];
 
+        $now = now();
+
         foreach (range(5, 0) as $offset) {
-            $monthKey = now()->subMonths($offset)->format('Y-m');
+            $monthKey = $now->subMonths($offset)->format('Y-m');
             $months[] = $monthKey;
             $open[$monthKey] = 0;
             $inProgress[$monthKey] = 0;
@@ -231,32 +246,36 @@ class AnalyticsController extends Controller
             $costLabels[$monthKey] = 0;
         }
 
-        foreach ($tickets as $ticket) {
-            if (! $ticket->opened_at) {
-                continue;
-            }
+        $startMonth = $now->copy()->subMonths(5)->startOfMonth()->toDateTimeString();
+        $endMonth = $now->copy()->endOfMonth()->toDateTimeString();
 
-            $monthKey = Carbon::parse($ticket->opened_at)->format('Y-m');
-            if (! array_key_exists($monthKey, $open)) {
-                continue;
-            }
+        // Agregação via chunking para não carregar tudo em memória
+        Ticket::query()
+            ->select('status_id', 'opened_at', 'closed_at', 'cost')
+            ->whereNull('tickets.deleted_at')
+            ->whereNotNull('opened_at')
+            ->whereBetween('opened_at', [$startMonth, $endMonth])
+            ->chunk(500, function ($tickets) use (&$open, &$inProgress, &$closed, &$costData, &$costLabels, $openStatusId, $inProgressStatusId, $closedStatusId) {
+                foreach ($tickets as $ticket) {
+                    $monthKey = \Carbon\Carbon::parse($ticket->opened_at)->format('Y-m');
+                    if (! array_key_exists($monthKey, $open)) {
+                        continue;
+                    }
 
-            if ($ticket->status_id === $openStatusId) {
-                $open[$monthKey]++;
-            }
-
-            if ($ticket->status_id === $inProgressStatusId) {
-                $inProgress[$monthKey]++;
-            }
-
-            if ($ticket->status_id === $closedStatusId) {
-                $closed[$monthKey]++;
-
-                if ($ticket->closed_at && $ticket->cost !== null) {
-                    $costLabels[$monthKey] = ($costLabels[$monthKey] ?? 0) + (float) $ticket->cost;
+                    if ($ticket->status_id === $openStatusId) {
+                        $open[$monthKey]++;
+                    }
+                    if ($ticket->status_id === $inProgressStatusId) {
+                        $inProgress[$monthKey]++;
+                    }
+                    if ($ticket->status_id === $closedStatusId) {
+                        $closed[$monthKey]++;
+                        if ($ticket->closed_at && $ticket->cost !== null) {
+                            $costData[$monthKey] = ($costData[$monthKey] ?? 0) + (float) $ticket->cost;
+                        }
+                    }
                 }
-            }
-        }
+            });
 
         return [
             'labels' => array_keys($open),
@@ -264,7 +283,7 @@ class AnalyticsController extends Controller
             'in_progress' => array_values($inProgress),
             'closed' => array_values($closed),
             'cost_labels' => array_keys($costLabels),
-            'cost_data' => array_values($costLabels),
+            'cost_data' => array_values($costData),
         ];
     }
 

@@ -14,7 +14,6 @@ class BulkOperationalDataSeeder extends Seeder
             RoomsSeeder::class,
             EquipmentCategoriesSeeder::class,
             EquipmentsSeeder::class,
-            TicketLookupSeeder::class,
             TicketsSeeder::class,
         ]);
     }

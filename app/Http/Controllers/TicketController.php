@@ -12,6 +12,7 @@ use App\Notifications\TicketStatusChanged;
 use App\Services\AIService;
 use App\Traits\ControllerHelpers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -1009,7 +1010,7 @@ class TicketController extends Controller
         $ticket->cost = $request->actual_cost;
         $ticket->technical_report = $request->report ?? $ticket->technical_report;
         $ticket->closed_at = now();
-        $ticket->save();
+        DB::transaction(fn () => $ticket->save());
 
         // 🔔 Se o técnico forçou o fecho mesmo havendo tickets mais urgentes, notificar o admin
         if ($force) {
