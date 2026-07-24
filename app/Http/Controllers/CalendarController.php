@@ -26,7 +26,8 @@ class CalendarController extends Controller
             return [
                 'id' => $ticket->id,
                 'title' => $ticket->equipment->name ?? 'Avaria Geral',
-                'start' => $ticket->created_at->toIso8601String(),
+                'start' => $ticket->scheduled_at->toIso8601String(),
+                'end' => $ticket->scheduled_end?->toIso8601String(),
                 'description' => $ticket->description,
                 'url' => url("/ui/tickets/{$ticket->id}"),
             ];

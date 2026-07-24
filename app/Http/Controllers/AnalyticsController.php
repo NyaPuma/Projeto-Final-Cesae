@@ -238,7 +238,7 @@ class AnalyticsController extends Controller
         $now = now();
 
         foreach (range(5, 0) as $offset) {
-            $monthKey = $now->subMonths($offset)->format('Y-m');
+            $monthKey = $now->copy()->subMonths($offset)->format('Y-m');
             $months[] = $monthKey;
             $open[$monthKey] = 0;
             $inProgress[$monthKey] = 0;
@@ -246,8 +246,8 @@ class AnalyticsController extends Controller
             $costLabels[$monthKey] = 0;
         }
 
-        $startMonth = $now->copy()->subMonths(5)->startOfMonth()->toDateTimeString();
-        $endMonth = $now->copy()->endOfMonth()->toDateTimeString();
+        $startMonth = now()->copy()->subMonths(5)->startOfMonth()->toDateTimeString();
+        $endMonth = now()->copy()->endOfMonth()->toDateTimeString();
 
         // Agregação via chunking para não carregar tudo em memória
         Ticket::query()

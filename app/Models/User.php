@@ -37,8 +37,6 @@ class User extends Authenticatable
         'password',
         'remember_token',
         'api_token',
-        '_tokens',
-        '_password_hash',
     ];
 
     /** @var array<string, string> */
