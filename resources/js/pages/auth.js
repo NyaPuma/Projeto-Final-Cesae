@@ -8,15 +8,12 @@
  */
 export function initLogin() {
     const loginForm = document.getElementById('loginForm');
-    const loginEmail = document.getElementById('loginEmail');
-    const loginPassword = document.getElementById('loginPassword');
+    const loginEmail = document.getElementById('email') || document.getElementById('loginEmail');
+    const loginPassword = document.getElementById('password') || document.getElementById('loginPassword');
     const togglePasswordBtn = document.getElementById('togglePassword');
     const msg = document.getElementById('msg');
 
     if (!loginForm) {
-        if (process.env.NODE_ENV === 'development') {
-            console.warn('[Login] #loginForm not found');
-        }
         return;
     }
 
@@ -29,10 +26,10 @@ export function initLogin() {
         if (!msg) return;
         
         msg.classList.remove('hidden');
-        msg.className = 'mb-6 min-h-[48px] items-center justify-center rounded-2xl border px-4 text-sm font-medium flex ' +
+        msg.className = 'mt-4 text-center text-xs font-bold p-3 rounded-xl border animate-[fadeIn_0.2s_ease-out] flex items-center justify-center ' +
             (type === 'error'
-                ? 'border-red-300 bg-red-50 text-red-700 dark:border-red-800 dark:bg-red-950/30 dark:text-red-400'
-                : 'border-emerald-300 bg-emerald-50 text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950/30 dark:text-emerald-400');
+                ? 'border-red-500/20 bg-red-500/10 text-red-600 dark:text-red-400'
+                : 'border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400');
         msg.textContent = message;
     }
 
@@ -44,7 +41,7 @@ export function initLogin() {
         
         const isPassword = loginPassword.type === 'password';
         loginPassword.type = isPassword ? 'text' : 'password';
-        togglePasswordBtn.textContent = isPassword ? "{{ __('Ocultar') }}" : "{{ __('Mostrar') }}";
+        togglePasswordBtn.textContent = isPassword ? 'Ocultar' : 'Mostrar';
     }
 
     /**
@@ -55,15 +52,14 @@ export function initLogin() {
         event.preventDefault();
         if (!loginEmail || !loginPassword) return;
 
-        // Set loading state
         const submitBtn = loginForm.querySelector('button[type="submit"]');
         if (submitBtn) {
             submitBtn.disabled = true;
             submitBtn.classList.add('opacity-80', 'cursor-not-allowed');
-            submitBtn.innerHTML = `<span class="inline-flex items-center gap-2"><svg class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" class="opacity-20"></circle><path fill="currentColor" class="opacity-90" d="M4 12a8 8 0 018-8V0A12 12 0 000 12h4z"></path></svg>{{ __('A autenticar...') }}</span>`;
+            submitBtn.innerHTML = `<span class="inline-flex items-center gap-2"><svg class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" class="opacity-20"></circle><path fill="currentColor" class="opacity-90" d="M4 12a8 8 0 018-8V0A12 12 0 000 12h4z"></path></svg> A autenticar...</span>`;
         }
 
-        setMsg("{{ __('A verificar as suas credenciais...') }}", 'success');
+        setMsg('A verificar as suas credenciais...', 'success');
 
         const csrf = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
@@ -86,42 +82,38 @@ export function initLogin() {
             const j = await res.json().catch(() => ({}));
 
             if (res.status !== 200) {
-                setMsg(j.message || "{{ __('Credenciais inválidas.') }}", 'error');
+                setMsg(j.message || 'Credenciais inválidas.', 'error');
                 
                 if (submitBtn) {
                     submitBtn.disabled = false;
                     submitBtn.classList.remove('opacity-80', 'cursor-not-allowed');
-                    submitBtn.innerHTML = `{{ __('Entrar no sistema') }} <svg class="h-4 w-4 transition group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>`;
+                    submitBtn.innerHTML = `Entrar no sistema <svg class="h-4 w-4 transition group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>`;
                 }
                 return;
             }
 
-            // Save token
+            // Guardar token em ambos os formatos para compatibilidade total
             if (j.token) {
                 document.cookie = `api_token=${j.token}; path=/; max-age=2592000; SameSite=Lax`;
+                document.cookie = `auth_token=${j.token}; path=/; max-age=2592000; SameSite=Lax`;
                 try {
                     localStorage.setItem('api_token', j.token);
+                    localStorage.setItem('auth_token', j.token);
                     localStorage.setItem('user_name', j.user?.name || 'Utilizador');
                     localStorage.setItem('user_role', j.user?.profile?.name || 'user');
                 } catch (e) {}
             }
 
-            setMsg("{{ __('Autenticação bem-sucedida! A redirecionar...') }}", 'success');
-            
-            if (submitBtn) {
-                submitBtn.disabled = false;
-                submitBtn.classList.remove('opacity-80', 'cursor-not-allowed');
-                submitBtn.innerHTML = `{{ __('Entrar no sistema') }} <svg class="h-4 w-4 transition group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>`;
-            }
+            setMsg('Autenticação bem-sucedida! A redirecionar...', 'success');
             
             setTimeout(() => { window.location.href = '/ui'; }, 500);
         } catch (err) {
-            setMsg("{{ __('Falha crítica na comunicação com o servidor.') }}", 'error');
+            setMsg('Falha crítica na comunicação com o servidor.', 'error');
             
             if (submitBtn) {
                 submitBtn.disabled = false;
                 submitBtn.classList.remove('opacity-80', 'cursor-not-allowed');
-                submitBtn.innerHTML = `{{ __('Entrar no sistema') }} <svg class="h-4 w-4 transition group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>`;
+                submitBtn.innerHTML = `Entrar no sistema <svg class="h-4 w-4 transition group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>`;
             }
         }
     }

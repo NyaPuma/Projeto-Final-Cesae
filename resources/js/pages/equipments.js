@@ -3,7 +3,7 @@
  * Gestão de equipamentos (listagem, filtros, CRUD)
  */
 
-import { formToObject } from './api-client';
+import { formToObject } from '../api-client';
 
 let equipmentData = [];
 const ROWS_PER_PAGE = 10;
@@ -64,7 +64,7 @@ export function openEquipmentModal(equipment) {
 
     if (equipment) {
         // Edit mode
-        modalTitle.textContent = '{{ __("Editar Equipamento") }}';
+        modalTitle.textContent = 'Editar Equipamento';
         document.getElementById('eqName').value = equipment.name || '';
         document.getElementById('eqSerial').value = equipment.serial_number || '';
         document.getElementById('eqCategory').value = equipment.category_id || '';
@@ -73,7 +73,7 @@ export function openEquipmentModal(equipment) {
         document.getElementById('eqStatus').value = equipment.status || 'active';
     } else {
         // Create mode
-        modalTitle.textContent = '{{ __("Adicionar Equipamento") }}';
+        modalTitle.textContent = 'Adicionar Equipamento';
         document.getElementById('eqStatus').value = 'active';
     }
 
@@ -105,27 +105,38 @@ async function saveEquipment(event) {
     const id = document.getElementById('equipmentId').value;
     const formData = new FormData(form);
 
-    const url = id 
-        ? `/ui/equipments/${id}`
-        : '/ui/equipments';
+    const url = id ? `/ui/equipments/${id}` : '/ui/equipments';
 
     try {
-        const res = await post(url, Object.fromEntries(formData));
+        const res = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+            },
+            body: JSON.stringify(Object.fromEntries(formData)) // <-- Aqui
+        });
+        // ...
+
+        const data = await res.json().catch(() => ({}));
 
         if (res.ok) {
             closeModal('equipmentModal');
             loadEquipments();
             showToast({
                 type: 'success',
-                title: id ? '{{ __("Equipamento atualizado") }}' : '{{ __("Equipamento adicionado") }}',
-                message: res.data.message
+                title: id ? 'Equipamento atualizado' : 'Equipamento adicionado',
+                message: data.message || 'Operação realizada com sucesso.'
             });
+        } else {
+            throw new Error(data.message || 'Erro ao guardar equipamento.');
         }
     } catch (error) {
         console.error('[Equipment Save Error]:', error);
         showToast({
             type: 'error',
-            title: '{{ __("Erro") }}',
+            title: 'Erro',
             message: error.message
         });
     }
@@ -136,26 +147,36 @@ async function saveEquipment(event) {
  * @param {number} id - Equipment ID
  */
 export async function deleteEquipment(id) {
-    if (!confirm('{{ __("Tem certeza que pretende remover este equipamento?") }}')) {
+    if (!confirm('Tem certeza que pretende remover este equipamento?')) {
         return;
     }
 
     try {
-        const res = await del(`/ui/equipments/${id}`);
+        const res = await fetch(`/ui/equipments/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+            }
+        });
+
+        const data = await res.json().catch(() => ({}));
 
         if (res.ok) {
             loadEquipments();
             showToast({
                 type: 'success',
-                title: '{{ __("Equipamento removido") }}',
-                message: res.data.message
+                title: 'Equipamento removido',
+                message: data.message || 'Removido com sucesso.'
             });
+        } else {
+            throw new Error(data.message || 'Erro ao remover equipamento.');
         }
     } catch (error) {
         console.error('[Equipment Delete Error]:', error);
         showToast({
             type: 'error',
-            title: '{{ __("Erro") }}',
+            title: 'Erro',
             message: error.message
         });
     }
@@ -195,7 +216,7 @@ async function loadEquipments() {
             <td colspan="5" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]">
                 <div class="flex items-center justify-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                    {{ __('A carregar inventário de equipamentos...') }}
+                    A carregar inventário de equipamentos...
                 </div>
             </td>
         </tr>
@@ -224,11 +245,11 @@ async function loadEquipments() {
             tableBody.innerHTML = `
                 <tr>
                     <td colspan="5" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]">
-                        {{ __('Nenhum equipamento encontrado.') }}
+                        Nenhum equipamento encontrado.
                     </td>
                 </tr>
             `;
-            resultsCount.textContent = '0 {{ __("registos") }}';
+            if (resultsCount) resultsCount.textContent = '0 registos';
             return;
         }
 
@@ -249,34 +270,33 @@ async function loadEquipments() {
                         ${eq.status === 'active' 
                             ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' 
                             : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'}">
-                        ${eq.status === 'active' 
-                            ? '{{ __("Operacional") }}' 
-                            : '{{ __("Fora de Serviço") }}'}
+                        ${eq.status === 'active' ? 'Operacional' : 'Fora de Serviço'}
                     </span>
                 </td>
                 <td class="px-5 py-4 text-right text-xs">
-                    <button onclick="openEquipmentModal(${JSON.stringify(eq)})"
-                        class="text-primary hover:text-primary/80 font-medium">
-                        {{ __("Editar") }}
+                    <button onclick="window.openEquipmentModal(${JSON.stringify(eq).replace(/"/g, '&quot;')})"
+                        class="text-primary hover:text-primary/80 font-medium cursor-pointer">
+                        Editar
                     </button>
-                    <button onclick="deleteEquipment(${eq.id})"
-                        class="ml-3 text-red-500 hover:text-red-700 font-medium">
-                        {{ __("Remover") }}
+                    <button onclick="window.deleteEquipment(${eq.id})"
+                        class="ml-3 text-red-500 hover:text-red-700 font-medium cursor-pointer">
+                        Remover
                     </button>
                 </td>
             </tr>
         `).join('');
 
-        resultsCount.textContent = `${equipmentData.length} {{ __("registos") }}`;
+        if (resultsCount) {
+            resultsCount.textContent = `${equipmentData.length} registos`;
+        }
 
-        // Pagination
         renderPagination(data);
     } catch (error) {
         console.error('[Load Equipment Error]:', error);
         tableBody.innerHTML = `
             <tr>
                 <td colspan="5" class="px-5 py-12 text-center text-xs text-red-500">
-                    {{ __('Erro ao carregar equipamentos.') }}
+                    Erro ao carregar equipamentos.
                 </td>
             </tr>
         `;
@@ -295,10 +315,10 @@ function renderPagination(paginationData) {
     paginationContainer.innerHTML = `
         <div class="flex items-center gap-2">
             <span class="text-xs text-[var(--text-soft)]">
-                {{ __("Página") }} ${paginationData.current_page} {{ __("de") }} ${paginationData.last_page}
+                Página ${paginationData.current_page} de ${paginationData.last_page}
             </span>
             <span class="text-xs text-[var(--text-soft)]">
-                {{ __("Total") }} ${paginationData.total} {{ __("registos") }}
+                Total ${paginationData.total} registos
             </span>
         </div>
     `;
@@ -309,6 +329,9 @@ function renderPagination(paginationData) {
  * @param {Object} options - Toast options
  */
 function showToast({ type = 'success', title, message }) {
-    // Implement toast notification
     console.log(`[${type.toUpperCase()}] ${title}: ${message}`);
 }
+
+// Expor funções globalmente para chamadas diretas no HTML (onclick)
+window.openEquipmentModal = openEquipmentModal;
+window.deleteEquipment = deleteEquipment;
