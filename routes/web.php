@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminEquipmentController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\AuthController;
@@ -186,17 +188,17 @@ Route::middleware(['custom.auth'])->group(function () {
         Route::get('/admin/audits', [AuditController::class, 'index'])->name('admin.audits.index');
 
         // Gestão de Utilizadores
-        Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users.index');
-        Route::post('/admin/users', [AdminController::class, 'storeUser'])->name('admin.users.store');
-        Route::patch('/admin/users/{id}', [AdminController::class, 'updateUser'])->name('admin.users.update');
-        Route::patch('/admin/users/{id}/inactive', [AdminController::class, 'inactivateUser'])->name('admin.users.inactivate');
-        Route::get('/admin/profiles', [AdminController::class, 'profiles'])->name('admin.profiles.index');
+        Route::get('/admin/users', [AdminUserController::class, 'index'])->name('admin.users.index');
+        Route::post('/admin/users', [AdminUserController::class, 'store'])->name('admin.users.store');
+        Route::patch('/admin/users/{id}', [AdminUserController::class, 'update'])->name('admin.users.update');
+        Route::patch('/admin/users/{id}/inactive', [AdminUserController::class, 'inactivate'])->name('admin.users.inactivate');
+        Route::get('/admin/profiles', [AdminUserController::class, 'profiles'])->name('admin.profiles.index');
 
         // Gestão de Equipamentos
-        Route::get('/admin/equipment', [AdminController::class, 'equipments'])->name('admin.equipment.index');
-        Route::post('/admin/equipment', [AdminController::class, 'storeEquipment'])->name('admin.equipment.store');
-        Route::patch('/admin/equipment/{id}', [AdminController::class, 'updateEquipment'])->name('admin.equipment.update');
-        Route::delete('/admin/equipment/{id}', [AdminController::class, 'destroyEquipment'])->name('admin.equipment.destroy');
+        Route::get('/admin/equipment', [AdminEquipmentController::class, 'index'])->name('admin.equipment.index');
+        Route::post('/admin/equipment', [AdminEquipmentController::class, 'store'])->name('admin.equipment.store');
+        Route::patch('/admin/equipment/{id}', [AdminEquipmentController::class, 'update'])->name('admin.equipment.update');
+        Route::delete('/admin/equipment/{id}', [AdminEquipmentController::class, 'destroy'])->name('admin.equipment.destroy');
 
         // Gestão de Salas
         Route::get('/admin/rooms', [RoomController::class, 'indexRoom'])->name('admin.rooms.index');

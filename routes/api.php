@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminEquipmentController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\AuthController;
@@ -76,20 +78,20 @@ Route::middleware(['custom.auth'])->group(function () {
     // Admin
     Route::middleware(['role:admin'])->group(function () {
         // Utilizadores
-        Route::get('/admin/users', [AdminController::class, 'users'])->name('api.admin.users.index');
-        Route::post('/admin/users', [AdminController::class, 'storeUser'])->name('api.admin.users.store');
-        Route::patch('/admin/users/{id}', [AdminController::class, 'updateUser'])->name('api.admin.users.update');
-        Route::patch('/admin/users/{id}/inactive', [AdminController::class, 'inactivateUser'])->name('api.admin.users.inactivate');
-        Route::get('/admin/profiles', [AdminController::class, 'profiles'])->name('api.admin.profiles.index');
+        Route::get('/admin/users', [AdminUserController::class, 'index'])->name('api.admin.users.index');
+        Route::post('/admin/users', [AdminUserController::class, 'store'])->name('api.admin.users.store');
+        Route::patch('/admin/users/{id}', [AdminUserController::class, 'update'])->name('api.admin.users.update');
+        Route::patch('/admin/users/{id}/inactive', [AdminUserController::class, 'inactivate'])->name('api.admin.users.inactivate');
+        Route::get('/admin/profiles', [AdminUserController::class, 'profiles'])->name('api.admin.profiles.index');
 
         // Auditoria
         Route::get('/admin/audits', [AuditController::class, 'index'])->name('api.admin.audits.index');
 
         // Equipamentos
-        Route::get('/admin/equipment', [AdminController::class, 'equipments'])->name('api.admin.equipment.index');
-        Route::post('/admin/equipment', [AdminController::class, 'storeEquipment'])->name('api.admin.equipment.store');
-        Route::patch('/admin/equipment/{id}', [AdminController::class, 'updateEquipment'])->name('api.admin.equipment.update');
-        Route::delete('/admin/equipment/{id}', [AdminController::class, 'destroyEquipment'])->name('api.admin.equipment.destroy');
+        Route::get('/admin/equipment', [AdminEquipmentController::class, 'index'])->name('api.admin.equipment.index');
+        Route::post('/admin/equipment', [AdminEquipmentController::class, 'store'])->name('api.admin.equipment.store');
+        Route::patch('/admin/equipment/{id}', [AdminEquipmentController::class, 'update'])->name('api.admin.equipment.update');
+        Route::delete('/admin/equipment/{id}', [AdminEquipmentController::class, 'destroy'])->name('api.admin.equipment.destroy');
 
         // Salas
         Route::get('/admin/rooms', [RoomController::class, 'indexRoom'])->name('api.admin.rooms.index');
