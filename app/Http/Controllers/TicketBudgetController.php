@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DTOs\BudgetSubmissionData;
+use App\Enums\BudgetStatusEnum;
 use App\Enums\TicketStatusEnum;
 use App\Http\Requests\RequestBudgetRequest;
 use App\Http\Requests\SubmitBudgetRequest;
@@ -65,7 +66,7 @@ class TicketBudgetController extends Controller
 
         if ($data->estimatedBudget > $threshold) {
             $ticket->budget_requested = true;
-            $ticket->budget_status = Ticket::BUDGET_PENDING;
+            $ticket->budget_status = BudgetStatusEnum::Pending->value;
             $ticket->budget_amount = $data->estimatedBudget;
             $ticket->budget_requested_at = now();
 
@@ -96,7 +97,7 @@ class TicketBudgetController extends Controller
 
     private function handleAboveThreshold(Ticket $ticket, float $amount, float $threshold): JsonResponse
     {
-        $ticket->budget_status = Ticket::BUDGET_PENDING;
+        $ticket->budget_status = BudgetStatusEnum::Pending->value;
         $ticket->budget_requested_at = now();
 
         $pendingStatusId = $this->statusService->getByName(TicketStatusEnum::PendingBudget);

@@ -7,6 +7,7 @@ use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\TicketAttachmentController;
 use App\Http\Controllers\TicketBudgetController;
@@ -30,7 +31,7 @@ Route::post('/login', [AuthController::class, 'login'])
     ->name('api.login')
     ->middleware(['rate.limit:5,1']);
 
-Route::post('/password/email', [AuthController::class, 'sendResetLink'])
+Route::post('/password/email', [PasswordResetController::class, 'sendResetLink'])
     ->name('api.password.email')
     ->middleware(['rate.limit:3,1']);
 
@@ -38,7 +39,7 @@ Route::get('/password/reset/{token}', function ($token) {
     return view('ui.auth-reset', ['token' => $token]);
 })->name('api.password.reset.form');
 
-Route::post('/password/reset', [AuthController::class, 'resetPassword'])
+Route::post('/password/reset', [PasswordResetController::class, 'resetPassword'])
     ->name('api.password.reset')
     ->middleware(['rate.limit:5,1']);
 
@@ -108,7 +109,7 @@ Route::middleware(['custom.auth'])->group(function () {
     // Analíticos
     Route::middleware(['role:admin'])->group(function () {
         Route::get('/analytics/stats', [AnalyticsController::class, 'stats'])->name('api.analytics.stats');
-        Route::get('/analytics/charts', [AnalyticsController::class, 'charts'])->name('api.analytics.charts');
+        Route::get('/analytics/charts', [AnalyticsController::class, 'stats'])->name('api.analytics.charts');
         Route::get('/analytics/export/csv', [AnalyticsController::class, 'exportCsv'])->name('api.analytics.export.csv');
         Route::get('/analytics/export/pdf', [AnalyticsController::class, 'exportPdf'])->name('api.analytics.export.pdf');
         Route::get('/analytics/export/excel', [AnalyticsController::class, 'exportExcel'])->name('api.analytics.export.excel');

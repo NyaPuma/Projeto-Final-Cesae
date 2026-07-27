@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+use App\Actions\ApproveBudgetAction;
+use App\DTOs\BudgetDecisionData;
 use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use App\Models\TicketStatus;
@@ -142,7 +144,7 @@ class TicketTest extends TestCase
             'opened_at' => now(),
         ]);
 
-        $result = $ticket->startRepair();
+        $result = app(TicketWorkflowService::class)->startRepair($ticket);
 
         $this->assertTrue($result);
         $ticket->refresh();
@@ -166,7 +168,7 @@ class TicketTest extends TestCase
             'opened_at' => now()->subDays(1),
         ]);
 
-        $result = $ticket->reopen();
+        $result = app(TicketWorkflowService::class)->reopen($ticket);
 
         $this->assertTrue($result);
         $ticket->refresh();
@@ -190,7 +192,7 @@ class TicketTest extends TestCase
             'opened_at' => now(),
         ]);
 
-        $result = $ticket->reopen();
+        $result = app(TicketWorkflowService::class)->reopen($ticket);
         $this->assertFalse($result);
     }
 
@@ -311,7 +313,7 @@ class TicketTest extends TestCase
         $adminProfile = UserProfile::where('name', User::ROLE_ADMIN)->first();
         $admin = User::factory()->create(['profile_id' => $adminProfile->id]);
 
-        $inProgressStatusId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
+        $pendingBudgetStatusId = Ticket::getStatusIdByName(Ticket::STATUS_PENDING_BUDGET);
         $user = User::factory()->create();
 
         $ticket = Ticket::create([
@@ -319,15 +321,18 @@ class TicketTest extends TestCase
             'description' => 'Testing budget approval',
             'priority' => Ticket::PRIORITY_HIGH,
             'user_id' => $user->id,
-            'status_id' => $inProgressStatusId,
+            'status_id' => $pendingBudgetStatusId,
             'opened_at' => now(),
-            'in_progress_at' => now(),
+            'budget_requested' => true,
+            'budget_status' => Ticket::BUDGET_PENDING,
+            'budget_amount' => 500.00,
+            'budget_requested_at' => now(),
         ]);
 
-        $result = $ticket->approveBudget($admin, 'approve');
+        $data = new BudgetDecisionData(decision: 'approve');
+        $result = app(ApproveBudgetAction::class)->execute($ticket, $admin, $data);
 
-        $this->assertTrue($result);
-        $ticket->refresh();
+        $this->assertInstanceOf(Ticket::class, $result);
         $this->assertEquals(Ticket::BUDGET_APPROVED, $ticket->budget_status);
         $this->assertEquals($admin->id, $ticket->budget_approved_by);
         $this->assertTrue($ticket->hasStatus(TicketStatusEnum::InProgress));
@@ -350,12 +355,16 @@ class TicketTest extends TestCase
             'user_id' => $user->id,
             'status_id' => $pendingBudgetStatusId,
             'opened_at' => now(),
+            'budget_requested' => true,
+            'budget_status' => Ticket::BUDGET_PENDING,
+            'budget_amount' => 1200.00,
+            'budget_requested_at' => now(),
         ]);
 
-        $result = $ticket->approveBudget($admin, 'reject', 'Orçamento demasiado alto');
+        $data = new BudgetDecisionData(decision: 'reject', feedback: 'Orçamento demasiado alto');
+        $result = app(ApproveBudgetAction::class)->execute($ticket, $admin, $data);
 
-        $this->assertTrue($result);
-        $ticket->refresh();
+        $this->assertInstanceOf(Ticket::class, $result);
         $this->assertEquals(Ticket::BUDGET_REJECTED, $ticket->budget_status);
         $this->assertEquals($admin->id, $ticket->budget_approved_by);
         $this->assertTrue($ticket->hasStatus(TicketStatusEnum::Rejected));
@@ -378,11 +387,13 @@ class TicketTest extends TestCase
             'user_id' => $user->id,
             'status_id' => $pendingBudgetStatusId,
             'opened_at' => now(),
+            'budget_requested' => true,
+            'budget_status' => Ticket::BUDGET_PENDING,
+            'budget_amount' => 200.00,
+            'budget_requested_at' => now(),
         ]);
 
-        $result = $ticket->approveBudget($operator, 'approve');
-
-        $this->assertFalse($result);
+        $this->assertFalse($operator->can('approveBudget', $ticket));
     }
 
     #[Test]

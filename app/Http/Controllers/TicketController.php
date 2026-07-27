@@ -11,6 +11,7 @@ use App\Models\Ticket;
 use App\Models\User;
 use App\Services\AIService;
 use App\Services\TechnicianAssignmentService;
+use App\Services\TicketSearchService;
 use App\Services\TicketStatusService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -20,6 +21,7 @@ class TicketController extends Controller
     public function __construct(
         private readonly TicketStatusService $statusService,
         private readonly TechnicianAssignmentService $technicianService,
+        private readonly TicketSearchService $searchService,
     ) {}
 
     public function index(Request $request): JsonResponse
@@ -74,43 +76,8 @@ class TicketController extends Controller
 
         $filters = TicketFilters::fromRequest($request->all());
 
-        $query = Ticket::with(['equipment', 'room', 'user', 'status', 'technician']);
-
-        if ($filters->query !== null) {
-            $q = str_replace(['%', '_'], ['\%', '\_'], $filters->query);
-            $query->where(function ($sub) use ($q) {
-                $sub->where('title', 'like', "%{$q}%")
-                    ->orWhere('description', 'like', "%{$q}%");
-            });
-        }
-
-        if ($filters->priority !== null) {
-            $query->where('priority', $filters->priority->value);
-        }
-
-        if ($filters->status !== null) {
-            $statusEnum = TicketStatusEnum::fromValue($filters->status);
-            if ($statusEnum) {
-                $statusId = $this->statusService->getByName($statusEnum);
-                $query->where('status_id', $statusId);
-            } else {
-                return response()->json(['message' => 'Estado inválido.'], 422);
-            }
-        }
-
-        if ($filters->dateFrom !== null && $filters->dateTo !== null) {
-            if ($filters->dateFrom > $filters->dateTo) {
-                return response()->json(['message' => 'A data de início não pode ser posterior à data de fim.'], 422);
-            }
-            $query->whereBetween('created_at', [$filters->dateFrom, $filters->dateTo.' 23:59:59']);
-        } elseif ($filters->dateFrom !== null) {
-            $query->whereDate('created_at', '>=', $filters->dateFrom);
-        } elseif ($filters->dateTo !== null) {
-            $query->whereDate('created_at', '<=', $filters->dateTo);
-        }
-
         return response()->json([
-            'tickets' => $query->latest()->paginate(15),
+            'tickets' => $this->searchService->search($filters),
         ]);
     }
 

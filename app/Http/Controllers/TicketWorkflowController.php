@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Notifications\TicketStatusChanged;
 use App\Services\NotificationService;
 use App\Services\TechnicianAssignmentService;
+use App\Services\TicketStatusService;
 use App\Services\TicketWorkflowService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -20,6 +21,7 @@ class TicketWorkflowController extends Controller
 {
     public function __construct(
         private readonly TicketWorkflowService $workflowService,
+        private readonly TicketStatusService $statusService,
         private readonly NotificationService $notificationService,
         private readonly TechnicianAssignmentService $technicianService,
     ) {}
@@ -159,7 +161,7 @@ class TicketWorkflowController extends Controller
 
         $ticket = Ticket::findOrFail($id);
 
-        if (! $ticket->reopen()) {
+        if (! $this->workflowService->reopen($ticket)) {
             return response()->json(['message' => 'Só é possível reabrir tickets fechados'], 422);
         }
 
@@ -217,21 +219,11 @@ class TicketWorkflowController extends Controller
         $ticket = Ticket::findOrFail($id);
         $oldStatus = $ticket->status->name ?? '';
 
-        $inProgressStatusId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
-        $ticket->status_id = $inProgressStatusId;
-        $ticket->assigned_to = $request->tecnico_id;
-        $ticket->in_progress_at = now();
-        $ticket->save();
+        $this->technicianService->assignToTicket($ticket, (int) $request->tecnico_id);
 
-        try {
-            if ($ticket->user && $ticket->user->email) {
-                $ticket->user->notify(new TicketStatusChanged($ticket, $oldStatus, Ticket::STATUS_IN_PROGRESS));
-            }
-            event(new TicketStatusUpdatedBroadcast($ticket, $oldStatus, Ticket::STATUS_IN_PROGRESS));
-        } catch (\Exception $e) {
-        }
+        $this->broadcastStatusChange($ticket, $oldStatus, TicketStatusEnum::InProgress);
 
-        return response()->json(['ticket' => $ticket]);
+        return response()->json(['ticket' => $ticket->load(['equipment', 'room', 'technician', 'status'])]);
     }
 
     private function broadcastStatusChange(Ticket $ticket, string $oldStatus, TicketStatusEnum $newStatus): void

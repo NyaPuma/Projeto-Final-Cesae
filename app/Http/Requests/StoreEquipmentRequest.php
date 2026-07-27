@@ -16,8 +16,9 @@ final class StoreEquipmentRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'serial' => ['required', 'string', 'max:255', 'unique:equipments,serial'],
-            'room_id' => ['nullable', 'integer', 'exists:rooms,id'],
-            'category_id' => ['nullable', 'integer', 'exists:equipment_categories,id'],
+            'room_id' => ['nullable', 'exists:rooms,id'],
+            'category_id' => ['nullable', 'exists:equipment_categories,id'],
+            'active' => ['sometimes', 'boolean'],
         ];
     }
 }

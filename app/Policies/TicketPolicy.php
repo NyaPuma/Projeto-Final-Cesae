@@ -14,38 +14,22 @@ final class TicketPolicy
 
     public function view(User $user, Ticket $ticket): bool
     {
-        if ($user->isAdmin() || $user->isTechnician()) {
-            return true;
-        }
-
-        return (int) $ticket->user_id === (int) $user->id;
+        return $this->canAccessTicket($user, $ticket);
     }
 
     public function comment(User $user, Ticket $ticket): bool
     {
-        if ($user->isAdmin() || $user->isTechnician()) {
-            return true;
-        }
-
-        return (int) $ticket->user_id === (int) $user->id;
+        return $this->canAccessTicket($user, $ticket);
     }
 
     public function attachPhoto(User $user, Ticket $ticket): bool
     {
-        if ($user->isAdmin() || $user->isTechnician()) {
-            return true;
-        }
-
-        return (int) $ticket->user_id === (int) $user->id;
+        return $this->canAccessTicket($user, $ticket);
     }
 
     public function deletePhoto(User $user, Ticket $ticket): bool
     {
-        if ($user->isAdmin() || $user->isTechnician()) {
-            return true;
-        }
-
-        return (int) $ticket->user_id === (int) $user->id;
+        return $this->canAccessTicket($user, $ticket);
     }
 
     public function cancel(User $user, Ticket $ticket): bool
@@ -74,11 +58,7 @@ final class TicketPolicy
 
     public function schedule(User $user, Ticket $ticket): bool
     {
-        if ($user->isAdmin() || $user->isTechnician()) {
-            return true;
-        }
-
-        return (int) $ticket->user_id === (int) $user->id;
+        return $this->canAccessTicket($user, $ticket);
     }
 
     public function submitBudget(User $user, Ticket $ticket): bool
@@ -89,5 +69,14 @@ final class TicketPolicy
     public function approveBudget(User $user, Ticket $ticket): bool
     {
         return $user->isAdmin();
+    }
+
+    private function canAccessTicket(User $user, Ticket $ticket): bool
+    {
+        if ($user->isAdmin() || $user->isTechnician()) {
+            return true;
+        }
+
+        return (int) $ticket->user_id === (int) $user->id;
     }
 }

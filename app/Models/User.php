@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\UserRoleEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -46,12 +47,11 @@ class User extends Authenticatable
         'active' => 'boolean',
     ];
 
-    // Constantes de Roles - mapeadas para os nomes dos perfis
-    public const ROLE_USER = 'user';
+    public const ROLE_USER = UserRoleEnum::User->value;
 
-    public const ROLE_TECHNICIAN = 'technician';
+    public const ROLE_TECHNICIAN = UserRoleEnum::Technician->value;
 
-    public const ROLE_ADMIN = 'admin';
+    public const ROLE_ADMIN = UserRoleEnum::Admin->value;
 
     /**
      * Tickets criados pelo utilizador.
@@ -77,28 +77,19 @@ class User extends Authenticatable
         return $this->belongsTo(UserProfile::class, 'profile_id');
     }
 
-    /**
-     * Verifica se o utilizador é Administrador.
-     */
     public function isAdmin(): bool
     {
-        return $this->profile?->name === self::ROLE_ADMIN;
+        return $this->profile?->name === UserRoleEnum::Admin->value;
     }
 
-    /**
-     * Verifica se o utilizador é Técnico.
-     */
     public function isTechnician(): bool
     {
-        return $this->profile?->name === self::ROLE_TECHNICIAN;
+        return $this->profile?->name === UserRoleEnum::Technician->value;
     }
 
-    /**
-     * Verifica se o utilizador é Utilizador Comum.
-     */
     public function isCommonUser(): bool
     {
-        return $this->profile?->name === self::ROLE_USER;
+        return $this->profile?->name === UserRoleEnum::User->value;
     }
 
     /**
@@ -109,20 +100,14 @@ class User extends Authenticatable
         return $this->isCommonUser();
     }
 
-    /**
-     * Obtém todas as constantes de roles disponíveis.
-     */
     public static function getAvailableRoles(): array
     {
-        return [self::ROLE_USER, self::ROLE_TECHNICIAN, self::ROLE_ADMIN];
+        return UserRoleEnum::values();
     }
 
-    /**
-     * Verifica se um nome de perfil pertence às roles válidas do sistema.
-     */
     public static function isValidProfile(string $profileName): bool
     {
-        return in_array($profileName, self::getAvailableRoles(), true);
+        return in_array($profileName, UserRoleEnum::values(), true);
     }
 
     /**
@@ -148,9 +133,6 @@ class User extends Authenticatable
         });
     }
 
-    /**
-     * Garante centralizadamente que o utilizador possui um perfil válido antes de salvar.
-     */
     private static function ensureValidProfile(User $user): void
     {
         if ($user->profile_id) {
@@ -160,8 +142,7 @@ class User extends Authenticatable
             }
         }
 
-        $defaultRole = self::ROLE_USER;
-        $existingProfile = UserProfile::firstOrCreate(['name' => $defaultRole]);
+        $existingProfile = UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
         $user->profile_id = $existingProfile->id;
     }
 }

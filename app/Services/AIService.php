@@ -2,25 +2,24 @@
 
 namespace App\Services;
 
+use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use App\Models\User;
 use OpenAI\Laravel\Facades\OpenAI;
 
 class AIService
 {
-    /**
-     * Motor de IA exclusivo para apoiar o Administrador na alocação de recursos.
-     */
-    public function recomendarTecnico(Ticket $ticket)
+    public function __construct(
+        private readonly TicketStatusService $statusService,
+    ) {}
+
+    public function recomendarTecnico(Ticket $ticket): array
     {
-        // 1. Procurar técnicos ativos no sistema e calcular dinamicamente a sua carga de trabalho
-        $tecnicos = User::whereHas('profile', function ($query) {
-            $query->where('name', User::ROLE_TECHNICIAN);
-        })
+        $tecnicos = User::whereHas('profile', fn ($q) => $q->where('name', User::ROLE_TECHNICIAN))
             ->where('active', true)
             ->withCount(['assignedTickets as tickets_ativos' => function ($query) {
-                $closedStatusId = Ticket::getStatusIdByName(Ticket::STATUS_CLOSED);
-                $cancelledStatusId = Ticket::getStatusIdByName(Ticket::STATUS_CANCELLED);
+                $closedStatusId = $this->statusService->getByName(TicketStatusEnum::Closed);
+                $cancelledStatusId = $this->statusService->getByName(TicketStatusEnum::Cancelled);
                 $statusIds = array_filter([$closedStatusId, $cancelledStatusId]);
                 if (! empty($statusIds)) {
                     $query->whereNotIn('status_id', $statusIds);

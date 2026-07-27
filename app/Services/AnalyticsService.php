@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Enums\BudgetStatusEnum;
+use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
 use App\Models\Audit;
 use App\Models\Ticket;
@@ -44,7 +46,7 @@ final class AnalyticsService
                 SUM(CASE WHEN status_id = ? AND opened_at IS NOT NULL AND closed_at IS NOT NULL
                     AND (julianday(closed_at) - julianday(opened_at)) * 1440 <= ? THEN 1 ELSE 0 END) as sla_met
             ', [
-                $openStatusId, $inProgressStatusId, Ticket::BUDGET_PENDING, $closedStatusId,
+                $openStatusId, $inProgressStatusId, BudgetStatusEnum::Pending->value, $closedStatusId,
                 $closedStatusId, $inProgressStatusId, $closedStatusId, $slaTargetMinutes,
             ])->first();
 
@@ -62,7 +64,7 @@ final class AnalyticsService
                 SUM(CASE WHEN priority = ? THEN 1 ELSE 0 END) as low,
                 SUM(CASE WHEN priority = ? THEN 1 ELSE 0 END) as medium,
                 SUM(CASE WHEN priority = ? THEN 1 ELSE 0 END) as high
-            ', [Ticket::PRIORITY_LOW, Ticket::PRIORITY_MEDIUM, Ticket::PRIORITY_HIGH])
+            ', [TicketPriorityEnum::Low->value, TicketPriorityEnum::Medium->value, TicketPriorityEnum::High->value])
             ->first();
 
         $monthlyBuckets = $this->buildMonthlySeries($openStatusId, $inProgressStatusId, $closedStatusId);
@@ -99,7 +101,6 @@ final class AnalyticsService
                 'data' => $monthlyBuckets['cost_data'],
             ],
             'top_equipments' => $this->getTopEquipments($baseQuery),
-            'top_equipment' => $this->getTopEquipments($baseQuery),
             'top_rooms' => $this->getTopRooms($baseQuery),
             'top_technicians' => $this->getTopTechnicians($baseQuery),
             'recent_activity' => $this->getRecentActivity(),

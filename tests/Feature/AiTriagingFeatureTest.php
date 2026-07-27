@@ -37,7 +37,7 @@ class AiTriagingFeatureTest extends TestCase
         ]);
 
         $startTime = microtime(true);
-        $service = new AIService;
+        $service = app(AIService::class);
         $recommendation = $service->recomendarTecnico($ticket);
         $elapsed = microtime(true) - $startTime;
 
@@ -57,7 +57,7 @@ class AiTriagingFeatureTest extends TestCase
             new \Exception('API Error'),
         ]);
 
-        $service = new AIService;
+        $service = app(AIService::class);
         $recommendation = $service->recomendarTecnico($ticket);
 
         $this->assertNull($recommendation['tecnico_id']);

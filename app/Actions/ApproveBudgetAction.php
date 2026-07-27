@@ -3,37 +3,51 @@
 namespace App\Actions;
 
 use App\DTOs\BudgetDecisionData;
+use App\Enums\BudgetStatusEnum;
+use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Services\NotificationService;
-use Illuminate\Http\JsonResponse;
+use App\Services\TicketStatusService;
 
 class ApproveBudgetAction
 {
     public function __construct(
         private readonly NotificationService $notificationService,
+        private readonly TicketStatusService $statusService,
     ) {}
 
-    public function execute(Ticket $ticket, User $admin, BudgetDecisionData $data): JsonResponse
+    public function execute(Ticket $ticket, User $admin, BudgetDecisionData $data): Ticket
     {
-        if (! $ticket->budget_requested || $ticket->budget_status !== Ticket::BUDGET_PENDING) {
-            return response()->json(['message' => 'Não existe pedido de orçamento pendente'], 422);
+        if (! $ticket->budget_requested || $ticket->budget_status !== BudgetStatusEnum::Pending->value) {
+            abort(422, 'Não existe pedido de orçamento pendente');
         }
 
-        $approved = $ticket->approveBudget($admin, $data->decision, $data->feedback);
+        $ticket->budget_approved_by = $admin->id;
+        $ticket->budget_decided_at = now();
 
-        if (! $approved) {
-            return response()->json(['message' => 'Aprovação falhou'], 422);
+        if ($data->decision === 'reject') {
+            $ticket->budget_status = BudgetStatusEnum::Rejected->value;
+            $rejectedStatusId = $this->statusService->getByName(TicketStatusEnum::Rejected);
+            if ($rejectedStatusId) {
+                $ticket->status_id = $rejectedStatusId;
+            }
+            if (! empty($data->feedback)) {
+                $ticket->budget_feedback = $data->feedback;
+            }
+        } else {
+            $ticket->budget_status = BudgetStatusEnum::Approved->value;
+            $inProgressStatusId = $this->statusService->getByName(TicketStatusEnum::InProgress);
+            if ($inProgressStatusId) {
+                $ticket->status_id = $inProgressStatusId;
+            }
         }
+
+        $ticket->save();
 
         $this->notifyDecision($ticket, $data);
 
-        return response()->json([
-            'message' => $data->decision === 'approve'
-                ? 'Orçamento aprovado. Ticket desbloqueado para intervenção.'
-                : 'Orçamento recusado. Reparação abortada.',
-            'ticket' => $ticket->load(['equipment', 'room', 'technician', 'status']),
-        ]);
+        return $ticket->load(['equipment', 'room', 'technician', 'status']);
     }
 
     private function notifyDecision(Ticket $ticket, BudgetDecisionData $data): void

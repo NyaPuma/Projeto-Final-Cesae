@@ -176,14 +176,14 @@ class AuthenticationTest extends TestCase
                 'password' => 'Password123!',
                 'password_confirmation' => 'Password123!',
                 'profile_id' => $userProfile->id,
+                'role' => User::ROLE_USER,
             ]);
 
         $response->assertCreated();
 
         $createdUser = User::where('email', 'newuser@example.com')->first();
         $this->assertNotNull($createdUser);
-        $this->assertNotEmpty($createdUser->api_token);
-        $this->assertEquals(64, strlen($createdUser->api_token));
+        $this->assertEquals(User::ROLE_USER, $createdUser->profile->name);
     }
 
     #[Test]

@@ -9,6 +9,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\TicketAttachmentController;
 use App\Http\Controllers\TicketBudgetController;
@@ -46,9 +48,9 @@ Route::middleware(['custom.auth'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])
         ->name('auth.logout')
         ->withoutMiddleware([ValidateCsrfToken::class]);
-    Route::post('/password/change', [AuthController::class, 'changePassword'])
+    Route::post('/password/change', [ProfileController::class, 'changePassword'])
         ->name('auth.password.change');
-    Route::post('/profile/update', [AuthController::class, 'updateProfile'])
+    Route::post('/profile/update', [ProfileController::class, 'updateProfile'])
         ->name('auth.profile.update');
 
     // --- Notificações ---
@@ -168,13 +170,13 @@ Route::middleware(['custom.auth'])->group(function () {
 
         // Analíticos
         Route::get('/analytics', [AnalyticsController::class, 'stats'])->name('analytics.stats');
-        Route::get('/analytics/charts', [AnalyticsController::class, 'charts'])->name('analytics.charts');
+        Route::get('/analytics/charts', [AnalyticsController::class, 'stats'])->name('analytics.charts');
         Route::get('/analytics/export/csv', [AnalyticsController::class, 'exportCsv'])->name('analytics.export.csv');
         Route::get('/analytics/export/pdf', [AnalyticsController::class, 'exportPdf'])->name('analytics.export.pdf');
         Route::get('/analytics/export/excel', [AnalyticsController::class, 'exportExcel'])->name('analytics.export.excel');
 
         // Registo de utilizadores
-        Route::post('/admin/users/register', [AuthController::class, 'register'])
+        Route::post('/admin/users/register', [RegisterController::class, '__invoke'])
             ->name('admin.users.register')
             ->middleware(['rate.limit:5,1']);
 

@@ -26,14 +26,6 @@ class AnalyticsController extends Controller
         return response()->json($this->analyticsService->getDashboardPayload());
     }
 
-    public function charts(Request $request): JsonResponse
-    {
-        $user = $this->authenticatedUser($request);
-        $this->requireRole($user, [User::ROLE_TECHNICIAN, User::ROLE_ADMIN]);
-
-        return response()->json($this->analyticsService->getDashboardPayload());
-    }
-
     public function exportCsv(Request $request): StreamedResponse
     {
         $user = $this->authenticatedUser($request);

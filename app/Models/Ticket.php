@@ -2,12 +2,10 @@
 
 namespace App\Models;
 
+use App\Enums\BudgetStatusEnum;
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
-use App\Services\BudgetCalculatorService;
-use App\Services\TechnicianAssignmentService;
 use App\Services\TicketStatusService;
-use App\Services\TicketWorkflowService;
 use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +13,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
 
 class Ticket extends Model
 {
@@ -23,6 +20,7 @@ class Ticket extends Model
     use HasFactory;
     use SoftDeletes;
 
+    // Deprecated: Use TicketStatusEnum::*->value instead
     public const STATUS_OPEN = 'aberta';
 
     public const STATUS_IN_PROGRESS = 'em curso';
@@ -35,6 +33,7 @@ class Ticket extends Model
 
     public const STATUS_REJECTED = 'recusada';
 
+    // Deprecated: Use TicketPriorityEnum::*->value instead
     public const PRIORITY_LOW = 'baixa';
 
     public const PRIORITY_MEDIUM = 'média';
@@ -43,6 +42,7 @@ class Ticket extends Model
 
     public const PRIORITY_CRITICAL = 'crítica';
 
+    // Deprecated: Use BudgetStatusEnum::*->value instead
     public const BUDGET_PENDING = 'pending';
 
     public const BUDGET_APPROVED = 'approved';
@@ -79,8 +79,6 @@ class Ticket extends Model
         'custo_estimado' => 'decimal:2',
         'budget_details' => 'json',
     ];
-
-    // --- Relationships ---
 
     public function status(): BelongsTo
     {
@@ -127,8 +125,6 @@ class Ticket extends Model
         return $this->hasMany(TicketAttachment::class);
     }
 
-    // --- Workflow helpers (delegated to services) ---
-
     public function hasStatus(TicketStatusEnum $status): bool
     {
         if (! $this->status_id) {
@@ -139,80 +135,6 @@ class Ticket extends Model
 
         return $this->status_id === $statusId;
     }
-
-    public function startRepair(): bool
-    {
-        return app(TicketWorkflowService::class)->startRepair($this);
-    }
-
-    public function reopen(): bool
-    {
-        return app(TicketWorkflowService::class)->reopen($this);
-    }
-
-    public function approveBudget(User $admin, string $decision = 'approve', ?string $feedback = null): bool
-    {
-        if (! $admin->isAdmin()) {
-            return false;
-        }
-
-        $this->budget_approved_by = $admin->id;
-        $this->budget_decided_at = now();
-
-        if ($decision === 'reject') {
-            $this->budget_status = self::BUDGET_REJECTED;
-            $rejectedStatusId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Rejected);
-            if ($rejectedStatusId) {
-                $this->status_id = $rejectedStatusId;
-            }
-            if (! empty($feedback)) {
-                $this->budget_feedback = $feedback;
-            }
-
-            return $this->save();
-        }
-
-        $this->budget_status = self::BUDGET_APPROVED;
-        $inProgressStatusId = app(TicketStatusService::class)->getByName(TicketStatusEnum::InProgress);
-        if ($inProgressStatusId) {
-            $this->status_id = $inProgressStatusId;
-        }
-
-        return $this->save();
-    }
-
-    // --- Budget Accessors ---
-
-    public function getBudgetPauseMinutesAttribute(): int
-    {
-        if ($this->budget_requested_at && $this->budget_decided_at) {
-            return (int) $this->budget_requested_at->diffInMinutes($this->budget_decided_at);
-        }
-
-        return 0;
-    }
-
-    public function getTotalMaterialCostAttribute(): float
-    {
-        return app(BudgetCalculatorService::class)->calculateTotalMaterialCost($this);
-    }
-
-    public function getTotalLaborCostAttribute(): float
-    {
-        return app(BudgetCalculatorService::class)->calculateTotalLaborCost($this);
-    }
-
-    public function getBudgetTotalAttribute(): float
-    {
-        return app(BudgetCalculatorService::class)->calculateBudgetTotal($this);
-    }
-
-    public function getBudgetBreakdownAttribute(): array
-    {
-        return app(BudgetCalculatorService::class)->getBreakdown($this);
-    }
-
-    // --- Scopes ---
 
     public function scopeOpen($query)
     {
@@ -244,39 +166,31 @@ class Ticket extends Model
         return $query->where('assigned_to', $technicianId);
     }
 
-    // --- Static helpers (kept for backward compatibility, delegates to services) ---
+    public function getBudgetPauseMinutesAttribute(): int
+    {
+        if ($this->budget_requested_at && $this->budget_decided_at) {
+            return (int) $this->budget_requested_at->diffInMinutes($this->budget_decided_at);
+        }
 
+        return 0;
+    }
+
+    /** @deprecated Use TicketStatusService::getByName() directly. */
     public static function getStatusIdByName(string $statusName): ?int
     {
-        $enum = TicketStatusEnum::fromValue($statusName);
+        $enum = TicketStatusEnum::tryFrom($statusName);
 
         if ($enum) {
             return app(TicketStatusService::class)->getByName($enum);
         }
 
-        $cached = Cache::get("ticket_status:{$statusName}");
-
-        if ($cached !== null) {
-            return $cached;
-        }
-
-        $id = TicketStatus::where('name', $statusName)->value('id');
-
-        if ($id !== null) {
-            Cache::put("ticket_status:{$statusName}", $id, 3600);
-        }
-
-        return $id;
+        return TicketStatus::where('name', $statusName)->value('id');
     }
 
+    /** @deprecated Use TicketStatusService::flush() directly. */
     public static function flushStatusCache(): void
     {
         app(TicketStatusService::class)->flush();
-    }
-
-    public static function getLeastBusyTechnician(): ?User
-    {
-        return app(TechnicianAssignmentService::class)->getLeastBusyTechnician();
     }
 
     public static function getScheduledEvents(?string $from = null, ?string $to = null): Collection
@@ -294,7 +208,7 @@ class Ticket extends Model
 
         return $query->get()->map(fn ($ticket) => [
             'id' => $ticket->id,
-            'title' => '🔧 #'.$ticket->id.' - '.$ticket->title,
+            'title' => '#'.$ticket->id.' - '.$ticket->title,
             'start' => $ticket->scheduled_at->toIso8601String(),
             'end' => $ticket->scheduled_end?->toIso8601String(),
         ]);

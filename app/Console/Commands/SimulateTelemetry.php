@@ -2,9 +2,12 @@
 
 namespace App\Console\Commands;
 
+use App\Enums\TicketPriorityEnum;
+use App\Enums\TicketStatusEnum;
 use App\Models\Equipment;
 use App\Models\Ticket;
 use App\Models\User;
+use App\Services\TicketStatusService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 
@@ -33,27 +36,27 @@ class SimulateTelemetry extends Command
         [
             'title' => 'Temperatura acima do limite operacional',
             'description' => 'O sensor de temperatura do equipamento registou valores acima dos 85°C durante um período prolongado. Recomenda-se inspeção do sistema de arrefecimento.',
-            'priority' => Ticket::PRIORITY_HIGH,
+            'priority' => TicketPriorityEnum::High->value,
         ],
         [
             'title' => 'Vibração anormal detetada',
             'description' => 'O acelerómetro registou padrões de vibração fora dos parâmetros normais. Poderá indicar desgaste em rolamentos ou desalinhamento mecânico.',
-            'priority' => Ticket::PRIORITY_MEDIUM,
+            'priority' => TicketPriorityEnum::Medium->value,
         ],
         [
             'title' => 'Consumo energético elevado',
             'description' => 'O sistema de monitorização registou consumo elétrico 40% acima do esperado nas últimas 6 horas. Possível avaria no motor ou sobreaquecimento.',
-            'priority' => Ticket::PRIORITY_MEDIUM,
+            'priority' => TicketPriorityEnum::Medium->value,
         ],
         [
             'title' => 'Pressão fora dos limites de segurança',
             'description' => 'O sensor de pressão reportou valores anómalos. É necessária verificação imediata para evitar riscos operacionais.',
-            'priority' => Ticket::PRIORITY_HIGH,
+            'priority' => TicketPriorityEnum::High->value,
         ],
         [
             'title' => 'Alerta de manutenção preventiva programada',
             'description' => 'O equipamento atingiu o intervalo de manutenção preventiva recomendado pelo fabricante (500 horas de operação). Realizar inspeção de rotina.',
-            'priority' => Ticket::PRIORITY_LOW,
+            'priority' => TicketPriorityEnum::Low->value,
         ],
     ];
 
@@ -68,14 +71,7 @@ class SimulateTelemetry extends Command
         $this->info('🔬 A iniciar simulação de telemetria...');
 
         // Buscar utilizador sistema para criar tickets automaticamente
-        $systemUser = User::where('role_id', function ($q) {
-            $q->from('user_profiles')->where('name', User::ROLE_ADMIN)->select('id');
-        })->first();
-
-        if (! $systemUser) {
-            // Fallback: utilizar o primeiro administrador disponível
-            $systemUser = User::whereHas('profile', fn ($q) => $q->where('name', User::ROLE_ADMIN))->first();
-        }
+        $systemUser = User::whereHas('profile', fn ($q) => $q->where('name', User::ROLE_ADMIN))->first();
 
         if (! $systemUser) {
             $this->error('❌ Nenhum utilizador administrador encontrado para criar tickets automaticamente.');
@@ -99,7 +95,7 @@ class SimulateTelemetry extends Command
 
         foreach ($equipments as $equipment) {
             // Verificar se já existe um ticket aberto para este equipamento (evitar duplicação)
-            $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+            $openStatusId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
             $existingOpen = Ticket::where('equipment_id', $equipment->id)
                 ->where('status_id', $openStatusId)
                 ->exists();

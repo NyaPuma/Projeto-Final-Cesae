@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UploadPhotoRequest;
 use App\Models\Ticket;
 use App\Models\TicketAttachment;
-use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -20,7 +19,7 @@ class TicketAttachmentController extends Controller
         $user = $this->authenticatedUser($request);
         $ticket = Ticket::findOrFail($id);
 
-        if (! $this->canAccessTicket($user, $ticket)) {
+        if (! $user->can('view', $ticket)) {
             return response()->json(['message' => 'Acesso negado'], 403);
         }
 
@@ -55,7 +54,7 @@ class TicketAttachmentController extends Controller
         $user = $this->authenticatedUser($request);
         $ticket = Ticket::with('attachments')->findOrFail($id);
 
-        if (! $this->canAccessTicket($user, $ticket)) {
+        if (! $user->can('view', $ticket)) {
             return response()->json(['message' => 'Acesso negado'], 403);
         }
 
@@ -68,7 +67,7 @@ class TicketAttachmentController extends Controller
         $ticket = Ticket::findOrFail($id);
         $attachment = TicketAttachment::where('ticket_id', $ticket->id)->findOrFail($photoId);
 
-        if ($user->isCommon() && (int) $attachment->user_id !== (int) $user->id) {
+        if ($user->cannot('deletePhoto', $ticket)) {
             return response()->json(['message' => 'Acesso negado'], 403);
         }
 
@@ -79,14 +78,5 @@ class TicketAttachmentController extends Controller
         $attachment->delete();
 
         return response()->json(['message' => 'Fotografia removida com sucesso.']);
-    }
-
-    private function canAccessTicket(User $user, Ticket $ticket): bool
-    {
-        if ($user->isAdmin() || $user->isTechnician()) {
-            return true;
-        }
-
-        return (int) $ticket->user_id === (int) $user->id;
     }
 }

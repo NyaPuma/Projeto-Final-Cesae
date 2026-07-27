@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Actions\ApproveBudgetAction;
 use App\Actions\CreatePreventiveTicketAction;
 use App\DTOs\BudgetDecisionData;
+use App\Enums\BudgetStatusEnum;
 use App\Http\Requests\AssignTechnicianRequest;
 use App\Http\Requests\BudgetDecisionRequest;
 use App\Http\Requests\StorePreventiveRequest;
@@ -31,11 +32,17 @@ class AdminController extends Controller
             return $this->jsonNotFound('Ticket não encontrado');
         }
 
-        return $this->approveBudgetAction->execute(
+        $ticket = $this->approveBudgetAction->execute(
             $ticket,
             $admin,
             BudgetDecisionData::fromRequest($request->validated()),
         );
+
+        $message = $ticket->budget_status === BudgetStatusEnum::Approved->value
+            ? 'Orçamento aprovado. Ticket desbloqueado para intervenção.'
+            : 'Orçamento recusado. Reparação abortada.';
+
+        return response()->json(['message' => $message, 'ticket' => $ticket]);
     }
 
     public function assignTechnician(AssignTechnicianRequest $request, int $id): JsonResponse
@@ -62,12 +69,14 @@ class AdminController extends Controller
         $admin = $this->authenticatedUser($request);
         $this->requireRole($admin, [User::ROLE_ADMIN]);
 
-        return $this->createPreventiveAction->execute(
+        $ticket = $this->createPreventiveAction->execute(
             $admin,
             $request->title,
             $request->description,
             $request->technician_id,
             $request->scheduled_at,
         );
+
+        return response()->json(['ticket' => $ticket], 201);
     }
 }

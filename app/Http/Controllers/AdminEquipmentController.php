@@ -26,9 +26,10 @@ class AdminEquipmentController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'room_id' => 'required|exists:rooms,id',
-            'status' => 'required|string|in:active,inactive,maintenance',
+            'serial' => 'required|string|max:255|unique:equipments,serial',
+            'room_id' => 'nullable|exists:rooms,id',
+            'category_id' => 'nullable|exists:equipment_categories,id',
+            'active' => 'sometimes|boolean',
         ]);
 
         $equipment = Equipment::create($validated);
@@ -45,9 +46,10 @@ class AdminEquipmentController extends Controller
 
         $validated = $request->validate([
             'name' => 'sometimes|string|max:255',
-            'description' => 'nullable|string',
-            'room_id' => 'sometimes|exists:rooms,id',
-            'status' => 'sometimes|string|in:active,inactive,maintenance',
+            'serial' => 'sometimes|string|max:255',
+            'room_id' => 'nullable|exists:rooms,id',
+            'category_id' => 'nullable|exists:equipment_categories,id',
+            'active' => 'sometimes|boolean',
         ]);
 
         $equipment->update($validated);

@@ -17,7 +17,7 @@ class AdminUserController extends Controller
 
         $users = User::with('profile')->get();
 
-        return response()->json($users);
+        return response()->json(['users' => $users]);
     }
 
     public function store(Request $request): JsonResponse
@@ -41,7 +41,7 @@ class AdminUserController extends Controller
             'phone' => $validated['phone'] ?? null,
             'role' => $validated['role'],
             'profile_id' => $validated['profile_id'],
-            'is_active' => true,
+            'active' => true,
         ]);
 
         return response()->json(['message' => 'Utilizador criado com sucesso', 'user' => $newUser], 201);
@@ -73,7 +73,7 @@ class AdminUserController extends Controller
         $this->requireRole($user, [User::ROLE_ADMIN]);
 
         $targetUser = User::findOrFail($id);
-        $targetUser->update(['is_active' => false]);
+        $targetUser->update(['active' => false]);
 
         return response()->json(['message' => 'Utilizador inativado', 'user' => $targetUser]);
     }

@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Actions\ApproveBudgetAction;
+use App\DTOs\BudgetDecisionData;
 use App\Enums\TicketStatusEnum;
 use App\Models\Audit;
 use App\Models\Equipment;
@@ -15,6 +17,8 @@ use App\Models\TicketStatus;
 use App\Models\TicketWorkflowHistory;
 use App\Models\User;
 use App\Models\UserProfile;
+use App\Services\BudgetCalculatorService;
+use App\Services\TicketWorkflowService;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
@@ -100,6 +104,8 @@ class DatabasePersistenceTest extends TestCase
             'name' => 'CRUD Test User',
             'email' => 'crud.test.'.uniqid().'@example.invalid',
             'password' => 'Password123!',
+            'password_confirmation' => 'Password123!',
+            'role' => User::ROLE_USER,
             'profile_id' => $profile->id,
         ]);
         $response->assertStatus(201);
@@ -377,6 +383,8 @@ class DatabasePersistenceTest extends TestCase
             'name' => 'Mass Test',
             'email' => 'mass.'.uniqid().'@example.invalid',
             'password' => 'Password123!',
+            'password_confirmation' => 'Password123!',
+            'role' => User::ROLE_USER,
             'profile_id' => $profile->id,
         ]);
         $response->assertStatus(201);
@@ -662,8 +670,8 @@ class DatabasePersistenceTest extends TestCase
         $this->assertTrue($ticket->budget_requested);
         $this->assertNotNull($ticket->budget_requested_at);
 
-        $approved = $ticket->approveBudget($admin, 'approve');
-        $this->assertTrue($approved);
+        $data = new BudgetDecisionData(decision: 'approve');
+        app(ApproveBudgetAction::class)->execute($ticket, $admin, $data);
         $ticket->refresh();
         $this->assertEquals(Ticket::BUDGET_APPROVED, $ticket->budget_status);
         $this->assertNotNull($ticket->budget_decided_at);
@@ -691,8 +699,8 @@ class DatabasePersistenceTest extends TestCase
             'assigned_to' => $technician->id,
         ]);
 
-        $rejected = $ticket->approveBudget($admin, 'reject', 'Too expensive');
-        $this->assertTrue($rejected);
+        $data = new BudgetDecisionData(decision: 'reject', feedback: 'Too expensive');
+        app(ApproveBudgetAction::class)->execute($ticket, $admin, $data);
         $ticket->refresh();
         $this->assertEquals(Ticket::BUDGET_REJECTED, $ticket->budget_status);
         $this->assertEquals('Too expensive', $ticket->budget_feedback);
@@ -970,9 +978,10 @@ class DatabasePersistenceTest extends TestCase
         $ticket->update(['budget_details' => $details]);
         $ticket->refresh();
 
-        $this->assertEquals(20.00, $ticket->total_material_cost);
-        $this->assertEquals(60.00, $ticket->total_labor_cost);
-        $this->assertEquals(80.00, $ticket->budget_total);
+        $calculator = app(BudgetCalculatorService::class);
+        $this->assertEquals(20.00, $calculator->calculateTotalMaterialCost($ticket));
+        $this->assertEquals(60.00, $calculator->calculateTotalLaborCost($ticket));
+        $this->assertEquals(80.00, $calculator->calculateBudgetTotal($ticket));
     }
 
     // ==========================================
@@ -1045,6 +1054,8 @@ class DatabasePersistenceTest extends TestCase
             'name' => 'First User',
             'email' => $email,
             'password' => 'Password123!',
+            'password_confirmation' => 'Password123!',
+            'role' => User::ROLE_USER,
             'profile_id' => $profile->id,
         ])->assertStatus(201);
 
@@ -1052,6 +1063,8 @@ class DatabasePersistenceTest extends TestCase
             'name' => 'Second User',
             'email' => $email,
             'password' => 'Password123!',
+            'password_confirmation' => 'Password123!',
+            'role' => User::ROLE_USER,
             'profile_id' => $profile->id,
         ])->assertStatus(422);
     }
@@ -1207,7 +1220,8 @@ class DatabasePersistenceTest extends TestCase
         $ticket->refresh();
         $this->assertTrue($ticket->hasStatus(TicketStatusEnum::Closed));
 
-        $this->assertTrue($ticket->reopen());
+        $result = app(TicketWorkflowService::class)->reopen($ticket);
+        $this->assertTrue($result);
         $ticket->refresh();
         $this->assertTrue($ticket->hasStatus(TicketStatusEnum::Open));
         $this->assertNotNull($ticket->reopened_at);

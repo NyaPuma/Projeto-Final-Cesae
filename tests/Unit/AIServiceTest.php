@@ -10,6 +10,7 @@ use App\Models\TicketType;
 use App\Models\User;
 use App\Models\UserProfile;
 use App\Services\AIService;
+use App\Services\TicketStatusService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
@@ -24,7 +25,9 @@ class AIServiceTest extends TestCase
     {
         parent::setUp();
 
-        $this->aiService = new AIService;
+        $this->aiService = new AIService(
+            statusService: app(TicketStatusService::class),
+        );
 
         TicketType::firstOrCreate(['name' => 'avaria', 'description' => 'Avaria']);
         $typeId = TicketType::where('name', 'avaria')->first()->id;

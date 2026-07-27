@@ -16,7 +16,7 @@ class TicketCommentController extends Controller
         $user = $this->authenticatedUser($request);
         $ticket = Ticket::findOrFail($id);
 
-        if (! $this->canAccessTicket($user, $ticket)) {
+        if (! $user->can('view', $ticket)) {
             return response()->json(['message' => 'Acesso negado'], 403);
         }
 
@@ -37,14 +37,5 @@ class TicketCommentController extends Controller
         $ticket = Ticket::with(['comments.user'])->findOrFail($id);
 
         return response()->json(['comments' => $ticket->comments]);
-    }
-
-    private function canAccessTicket(User $user, Ticket $ticket): bool
-    {
-        if ($user->isAdmin() || $user->isTechnician()) {
-            return true;
-        }
-
-        return (int) $ticket->user_id === (int) $user->id;
     }
 }

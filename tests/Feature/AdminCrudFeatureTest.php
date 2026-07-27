@@ -48,6 +48,7 @@ class AdminCrudFeatureTest extends TestCase
                 'email' => 'newuser@example.com',
                 'password' => 'Password123!',
                 'password_confirmation' => 'Password123!',
+                'role' => User::ROLE_USER,
                 'profile_id' => $userProfile->id,
             ]);
 

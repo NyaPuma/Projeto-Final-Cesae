@@ -6,6 +6,7 @@ use App\Enums\NotificationTypeEnum;
 use App\Models\Notification;
 use App\Models\Ticket;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 final class NotificationService
@@ -29,7 +30,8 @@ final class NotificationService
                     ticketId: $ticket->id,
                 );
             }
-        } catch (Throwable) {
+        } catch (Throwable $e) {
+            Log::warning('Failed to create notification', ['error' => $e->getMessage()]);
         }
     }
 
@@ -55,7 +57,8 @@ final class NotificationService
                     ticketId: $ticket->id,
                 );
             }
-        } catch (Throwable) {
+        } catch (Throwable $e) {
+            Log::warning('Failed to create notification', ['error' => $e->getMessage()]);
         }
     }
 
@@ -79,13 +82,14 @@ final class NotificationService
             if ($ticket->user_id) {
                 $this->notifyUser(
                     userId: $ticket->user_id,
-                    title: NotificationTypeEnum::BudgetSubmitted->icon()." Decisão Orçamental - Ticket #{$ticket->id}",
+                    title: "{$icon} Decisão Orçamental - Ticket #{$ticket->id}",
                     message: $message,
                     type: $type->value,
                     ticketId: $ticket->id,
                 );
             }
-        } catch (Throwable) {
+        } catch (Throwable $e) {
+            Log::warning('Failed to create notification', ['error' => $e->getMessage()]);
         }
     }
 
@@ -101,7 +105,8 @@ final class NotificationService
                     ticketId: $ticket->id,
                 );
             }
-        } catch (Throwable) {
+        } catch (Throwable $e) {
+            Log::warning('Failed to create notification', ['error' => $e->getMessage()]);
         }
     }
 
@@ -121,7 +126,8 @@ final class NotificationService
                     'link' => "/ui/tickets/{$ticket->id}",
                 ]);
             }
-        } catch (Throwable) {
+        } catch (Throwable $e) {
+            Log::warning('Failed to create notification', ['error' => $e->getMessage()]);
         }
     }
 
