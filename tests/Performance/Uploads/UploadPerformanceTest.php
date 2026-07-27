@@ -95,7 +95,7 @@ class UploadPerformanceTest extends PerformanceTestCase
         });
 
         $this->assertLessThanOrEqual(200 * 1024 * 1024, $memory['peak'],
-            "Upload peak memory: ".round($memory['peak'] / 1024 / 1024, 2).'MB');
+            'Upload peak memory: '.round($memory['peak'] / 1024 / 1024, 2).'MB');
     }
 
     public function test_multiple_uploads_memory_stability(): void
@@ -121,7 +121,7 @@ class UploadPerformanceTest extends PerformanceTestCase
         $growth = $finalMemory - $initialMemory;
 
         $this->assertLessThanOrEqual(20 * 1024 * 1024, $growth,
-            "Memory grew by ".round($growth / 1024 / 1024, 2).'MB after 10 uploads');
+            'Memory grew by '.round($growth / 1024 / 1024, 2).'MB after 10 uploads');
     }
 
     public function test_upload_list_photos_performance(): void

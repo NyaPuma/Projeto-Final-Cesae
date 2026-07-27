@@ -141,7 +141,7 @@ class ReportPerformanceTest extends PerformanceTestCase
         });
 
         $this->assertLessThanOrEqual(200 * 1024 * 1024, $memory['peak'],
-            "CSV export peak memory: ".round($memory['peak'] / 1024 / 1024, 2).'MB');
+            'CSV export peak memory: '.round($memory['peak'] / 1024 / 1024, 2).'MB');
     }
 
     public function test_pdf_export_memory_usage(): void
@@ -159,7 +159,7 @@ class ReportPerformanceTest extends PerformanceTestCase
         });
 
         $this->assertLessThanOrEqual(200 * 1024 * 1024, $memory['peak'],
-            "PDF export peak memory: ".round($memory['peak'] / 1024 / 1024, 2).'MB');
+            'PDF export peak memory: '.round($memory['peak'] / 1024 / 1024, 2).'MB');
     }
 
     public function test_excel_export_memory_usage(): void
@@ -177,7 +177,7 @@ class ReportPerformanceTest extends PerformanceTestCase
         });
 
         $this->assertLessThanOrEqual(200 * 1024 * 1024, $memory['peak'],
-            "Excel export peak memory: ".round($memory['peak'] / 1024 / 1024, 2).'MB');
+            'Excel export peak memory: '.round($memory['peak'] / 1024 / 1024, 2).'MB');
     }
 
     public function test_export_scaling_comparison(): void

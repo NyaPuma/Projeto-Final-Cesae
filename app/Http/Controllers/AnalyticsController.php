@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class AnalyticsController extends Controller
 {
-
     /**
      * Obtém o payload completo do dashboard analítico para a interface web.
      */
@@ -143,7 +142,8 @@ class AnalyticsController extends Controller
                 ->orderByDesc('total')
                 ->limit(5)
                 ->get()
-                ->map(fn ($row) => ['name' => $row->name, 'total' => $row->total, 'subtitle' => 'intervenções'])
+                ->map(fn ($row) => (array) $row)
+                ->map(fn (array $row) => ['name' => $row['name'], 'total' => (int) $row['total'], 'subtitle' => 'intervenções'])
                 ->values();
 
             // Top salas via agregação SQL
@@ -155,7 +155,8 @@ class AnalyticsController extends Controller
                 ->orderByDesc('total')
                 ->limit(5)
                 ->get()
-                ->map(fn ($row) => ['name' => $row->name, 'total' => $row->total, 'subtitle' => 'tickets'])
+                ->map(fn ($row) => (array) $row)
+                ->map(fn (array $row) => ['name' => $row['name'], 'total' => (int) $row['total'], 'subtitle' => 'tickets'])
                 ->values();
 
             // Top técnicos via agregação SQL
@@ -167,7 +168,8 @@ class AnalyticsController extends Controller
                 ->orderByDesc('total')
                 ->limit(5)
                 ->get()
-                ->map(fn ($row) => ['name' => $row->name, 'total' => $row->total, 'subtitle' => 'ações'])
+                ->map(fn ($row) => (array) $row)
+                ->map(fn (array $row) => ['name' => $row['name'], 'total' => (int) $row['total'], 'subtitle' => 'ações'])
                 ->values();
 
             $recentActivity = Audit::query()

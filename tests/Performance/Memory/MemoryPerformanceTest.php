@@ -26,7 +26,7 @@ class MemoryPerformanceTest extends PerformanceTestCase
         $peak = memory_get_peak_usage();
 
         $this->assertLessThanOrEqual(self::MAX_PEAK_MB * 1024 * 1024, $peak,
-            "Peak memory for ticket listing: ".round($peak / 1024 / 1024, 2).'MB');
+            'Peak memory for ticket listing: '.round($peak / 1024 / 1024, 2).'MB');
     }
 
     public function test_analytics_memory_usage(): void
@@ -44,7 +44,7 @@ class MemoryPerformanceTest extends PerformanceTestCase
         });
 
         $this->assertLessThanOrEqual(self::MAX_PEAK_MB * 1024 * 1024, $memory['peak'],
-            "Analytics peak memory: ".round($memory['peak'] / 1024 / 1024, 2).'MB');
+            'Analytics peak memory: '.round($memory['peak'] / 1024 / 1024, 2).'MB');
     }
 
     public function test_search_memory_usage(): void
@@ -62,7 +62,7 @@ class MemoryPerformanceTest extends PerformanceTestCase
         });
 
         $this->assertLessThanOrEqual(self::MAX_PEAK_MB * 1024 * 1024, $memory['peak'],
-            "Search peak memory: ".round($memory['peak'] / 1024 / 1024, 2).'MB');
+            'Search peak memory: '.round($memory['peak'] / 1024 / 1024, 2).'MB');
     }
 
     public function test_memory_stability_under_repeated_requests(): void
@@ -85,7 +85,7 @@ class MemoryPerformanceTest extends PerformanceTestCase
         $growth = $finalMemory - $initialMemory;
 
         $this->assertLessThanOrEqual(10 * 1024 * 1024, $growth,
-            "Memory grew by ".round($growth / 1024 / 1024, 2).'MB after 50 requests (possible leak)');
+            'Memory grew by '.round($growth / 1024 / 1024, 2).'MB after 50 requests (possible leak)');
     }
 
     public function test_memory_stability_analytics_repeated(): void
@@ -108,7 +108,7 @@ class MemoryPerformanceTest extends PerformanceTestCase
         $growth = $finalMemory - $initialMemory;
 
         $this->assertLessThanOrEqual(10 * 1024 * 1024, $growth,
-            "Analytics memory grew by ".round($growth / 1024 / 1024, 2).'MB after 20 calls');
+            'Analytics memory grew by '.round($growth / 1024 / 1024, 2).'MB after 20 calls');
     }
 
     public function test_memory_during_bulk_ticket_creation(): void
@@ -134,7 +134,7 @@ class MemoryPerformanceTest extends PerformanceTestCase
         $growth = $after - $before;
 
         $this->assertLessThanOrEqual(20 * 1024 * 1024, $growth,
-            "Bulk creation memory grew by ".round($growth / 1024 / 1024, 2).'MB');
+            'Bulk creation memory grew by '.round($growth / 1024 / 1024, 2).'MB');
     }
 
     public function test_peak_memory_across_endpoints(): void
@@ -166,6 +166,6 @@ class MemoryPerformanceTest extends PerformanceTestCase
         $maxPeak = max($peakMemories);
 
         $this->assertLessThanOrEqual(self::MAX_PEAK_MB * 1024 * 1024, $maxPeak,
-            "Highest peak memory across all endpoints: ".round($maxPeak / 1024 / 1024, 2).'MB');
+            'Highest peak memory across all endpoints: '.round($maxPeak / 1024 / 1024, 2).'MB');
     }
 }

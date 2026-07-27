@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use App\Traits\Auditable;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 
 class Ticket extends Model
 {
@@ -450,7 +451,7 @@ class Ticket extends Model
      * Atalho de segurança para recolher eventos agendados para o FullCalendar.
      * Filtra por intervalo de datas para evitar carregar todos os tickets agendados.
      */
-    public static function getScheduledEvents(?string $from = null, ?string $to = null): \Illuminate\Support\Collection
+    public static function getScheduledEvents(?string $from = null, ?string $to = null): Collection
     {
         $query = self::whereNotNull('scheduled_at')
             ->select('id', 'title', 'scheduled_at', 'scheduled_end');

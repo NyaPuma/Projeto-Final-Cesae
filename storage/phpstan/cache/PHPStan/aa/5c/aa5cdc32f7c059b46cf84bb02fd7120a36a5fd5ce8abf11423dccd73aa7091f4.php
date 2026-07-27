@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Http\Middleware\CustomAuthMiddleware.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Middleware\CustomAuthMiddleware
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-daeb2f8c7b7cc75debedb833d7dfd404ba3d743476ff28fd4d27fcf519180376',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-54f5f9a95d2f7e504d3df386ba1661b5e73cbab5e2d11aefe1e7918a96c35830',
    'data' => 
   array (
     'locatedSource' => 
@@ -27,7 +27,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     array (
     ),
     'startLine' => 11,
-    'endLine' => 116,
+    'endLine' => 134,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => NULL,
@@ -120,7 +120,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * Trata uma rota protegida validando o token customizado da aplicação.
  */',
         'startLine' => 16,
-        'endLine' => 115,
+        'endLine' => 133,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

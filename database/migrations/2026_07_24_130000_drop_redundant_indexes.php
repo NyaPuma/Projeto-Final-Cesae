@@ -13,7 +13,7 @@ return new class extends Migration
             Schema::table($table, function (Blueprint $table) use ($index) {
                 $table->dropIndex($index);
             });
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             // Index may not exist (e.g., SQLite unique constraint shares the name)
         }
     }

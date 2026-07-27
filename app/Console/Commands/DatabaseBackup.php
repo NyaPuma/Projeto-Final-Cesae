@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 class DatabaseBackup extends Command
@@ -73,14 +72,18 @@ class DatabaseBackup extends Command
 
         $excludeTables = config('backup.database.exclude_tables', []);
 
+        $ignoreArgs = $excludeTables
+            ? implode(' ', array_map('escapeshellarg', array_map(fn ($t) => "--ignore-table={$database}.{$t}", $excludeTables)))
+            : '';
+
         $cmd = sprintf(
-            'mysqldump -h %s -P %d -u %s %s %s --routines --triggers --single-transaction --result-file=%s 2>&1',
+            'mysqldump -h %s -P %d -u %s %s %s %s --routines --triggers --single-transaction --result-file=%s 2>&1',
             escapeshellarg($host),
             (int) $port,
             escapeshellarg($username),
             $password ? '-p'.escapeshellarg($password) : '',
             escapeshellarg($database),
-            implode(' ', array_map('escapeshellarg', array_map(fn ($t) => "--ignore-table={$database}.{$t}", $excludeTables))),
+            $ignoreArgs,
             escapeshellarg($filepath),
         );
 
@@ -116,7 +119,7 @@ class DatabaseBackup extends Command
     {
         $gzFile = $filepath.'.gz';
 
-        exec("gzip -c ".escapeshellarg($filepath).' > '.escapeshellarg($gzFile), $output, $exitCode);
+        exec('gzip -c '.escapeshellarg($filepath).' > '.escapeshellarg($gzFile), $output, $exitCode);
 
         if ($exitCode === 0 && file_exists($gzFile)) {
             unlink($filepath);

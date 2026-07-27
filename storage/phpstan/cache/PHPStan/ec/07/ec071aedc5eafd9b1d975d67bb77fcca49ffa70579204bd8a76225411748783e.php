@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Models\User.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Models\User
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-e33a9a13c62677e2e7262605a4aec926a11ff62d22b9c99d046fb55be26a618b',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-9616a7eea7cbf51e4829821e20c730aee9970056992fe22b279d18315dd19c0c',
    'data' => 
   array (
     'locatedSource' => 
@@ -29,8 +29,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'attributes' => 
     array (
     ),
-    'startLine' => 15,
-    'endLine' => 168,
+    'startLine' => 16,
+    'endLine' => 167,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'Illuminate\\Foundation\\Auth\\User',
@@ -41,6 +41,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     array (
       0 => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
       1 => 'Illuminate\\Notifications\\Notifiable',
+      2 => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
     ),
     'immediateConstants' => 
     array (
@@ -56,20 +57,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'user\'',
           'attributes' => 
           array (
-            'startLine' => 51,
-            'endLine' => 51,
-            'startTokenPos' => 176,
-            'startFilePos' => 1192,
-            'endTokenPos' => 176,
-            'endFilePos' => 1197,
+            'startLine' => 50,
+            'endLine' => 50,
+            'startTokenPos' => 178,
+            'startFilePos' => 1206,
+            'endTokenPos' => 178,
+            'endFilePos' => 1211,
           ),
         ),
         'docComment' => NULL,
         'attributes' => 
         array (
         ),
-        'startLine' => 51,
-        'endLine' => 51,
+        'startLine' => 50,
+        'endLine' => 50,
         'startColumn' => 5,
         'endColumn' => 36,
       ),
@@ -85,20 +86,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'technician\'',
           'attributes' => 
           array (
-            'startLine' => 53,
-            'endLine' => 53,
-            'startTokenPos' => 187,
-            'startFilePos' => 1236,
-            'endTokenPos' => 187,
-            'endFilePos' => 1247,
+            'startLine' => 52,
+            'endLine' => 52,
+            'startTokenPos' => 189,
+            'startFilePos' => 1250,
+            'endTokenPos' => 189,
+            'endFilePos' => 1261,
           ),
         ),
         'docComment' => NULL,
         'attributes' => 
         array (
         ),
-        'startLine' => 53,
-        'endLine' => 53,
+        'startLine' => 52,
+        'endLine' => 52,
         'startColumn' => 5,
         'endColumn' => 48,
       ),
@@ -114,20 +115,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'admin\'',
           'attributes' => 
           array (
-            'startLine' => 55,
-            'endLine' => 55,
-            'startTokenPos' => 198,
-            'startFilePos' => 1281,
-            'endTokenPos' => 198,
-            'endFilePos' => 1287,
+            'startLine' => 54,
+            'endLine' => 54,
+            'startTokenPos' => 200,
+            'startFilePos' => 1295,
+            'endTokenPos' => 200,
+            'endFilePos' => 1301,
           ),
         ),
         'docComment' => NULL,
         'attributes' => 
         array (
         ),
-        'startLine' => 55,
-        'endLine' => 55,
+        'startLine' => 54,
+        'endLine' => 54,
         'startColumn' => 5,
         'endColumn' => 38,
       ),
@@ -146,20 +147,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'users\'',
           'attributes' => 
           array (
-            'startLine' => 20,
-            'endLine' => 20,
-            'startTokenPos' => 64,
-            'startFilePos' => 495,
-            'endTokenPos' => 64,
-            'endFilePos' => 501,
+            'startLine' => 21,
+            'endLine' => 21,
+            'startTokenPos' => 72,
+            'startFilePos' => 554,
+            'endTokenPos' => 72,
+            'endFilePos' => 560,
           ),
         ),
         'docComment' => '/** @var string */',
         'attributes' => 
         array (
         ),
-        'startLine' => 20,
-        'endLine' => 20,
+        'startLine' => 21,
+        'endLine' => 21,
         'startColumn' => 5,
         'endColumn' => 31,
         'isPromoted' => false,
@@ -181,20 +182,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '[\'name\', \'email\', \'password\', \'profile_id\', \'active\', \'api_token\', \'token_created_at\', \'remember_token\']',
           'attributes' => 
           array (
-            'startLine' => 23,
-            'endLine' => 32,
-            'startTokenPos' => 75,
-            'startFilePos' => 560,
-            'endTokenPos' => 101,
-            'endFilePos' => 734,
+            'startLine' => 24,
+            'endLine' => 33,
+            'startTokenPos' => 83,
+            'startFilePos' => 619,
+            'endTokenPos' => 109,
+            'endFilePos' => 793,
           ),
         ),
         'docComment' => '/** @var list<string> */',
         'attributes' => 
         array (
         ),
-        'startLine' => 23,
-        'endLine' => 32,
+        'startLine' => 24,
+        'endLine' => 33,
         'startColumn' => 5,
         'endColumn' => 6,
         'isPromoted' => false,
@@ -213,23 +214,23 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'type' => NULL,
         'default' => 
         array (
-          'code' => '[\'password\', \'remember_token\', \'api_token\', \'_tokens\', \'_password_hash\']',
+          'code' => '[\'password\', \'remember_token\', \'api_token\']',
           'attributes' => 
           array (
-            'startLine' => 35,
-            'endLine' => 41,
-            'startTokenPos' => 112,
-            'startFilePos' => 791,
-            'endTokenPos' => 129,
-            'endFilePos' => 909,
+            'startLine' => 36,
+            'endLine' => 40,
+            'startTokenPos' => 120,
+            'startFilePos' => 850,
+            'endTokenPos' => 131,
+            'endFilePos' => 923,
           ),
         ),
         'docComment' => '/** @var list<string> */',
         'attributes' => 
         array (
         ),
-        'startLine' => 35,
-        'endLine' => 41,
+        'startLine' => 36,
+        'endLine' => 40,
         'startColumn' => 5,
         'endColumn' => 6,
         'isPromoted' => false,
@@ -251,20 +252,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '[\'email_verified_at\' => \'datetime\', \'token_created_at\' => \'datetime\', \'active\' => \'boolean\']',
           'attributes' => 
           array (
-            'startLine' => 44,
-            'endLine' => 48,
-            'startTokenPos' => 140,
-            'startFilePos' => 974,
-            'endTokenPos' => 163,
-            'endFilePos' => 1096,
+            'startLine' => 43,
+            'endLine' => 47,
+            'startTokenPos' => 142,
+            'startFilePos' => 988,
+            'endTokenPos' => 165,
+            'endFilePos' => 1110,
           ),
         ),
         'docComment' => '/** @var array<string, string> */',
         'attributes' => 
         array (
         ),
-        'startLine' => 44,
-        'endLine' => 48,
+        'startLine' => 43,
+        'endLine' => 47,
         'startColumn' => 5,
         'endColumn' => 6,
         'isPromoted' => false,
@@ -299,8 +300,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Tickets criados pelo utilizador.
  */',
-        'startLine' => 60,
-        'endLine' => 63,
+        'startLine' => 59,
+        'endLine' => 62,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -336,8 +337,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Tickets atribuídos ao utilizador (caso seja técnico).
  */',
-        'startLine' => 68,
-        'endLine' => 71,
+        'startLine' => 67,
+        'endLine' => 70,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -373,8 +374,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Perfil associado ao utilizador.
  */',
-        'startLine' => 76,
-        'endLine' => 79,
+        'startLine' => 75,
+        'endLine' => 78,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -410,8 +411,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Verifica se o utilizador é Administrador.
  */',
-        'startLine' => 84,
-        'endLine' => 87,
+        'startLine' => 83,
+        'endLine' => 86,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -447,8 +448,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Verifica se o utilizador é Técnico.
  */',
-        'startLine' => 92,
-        'endLine' => 95,
+        'startLine' => 91,
+        'endLine' => 94,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -484,8 +485,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Verifica se o utilizador é Utilizador Comum.
  */',
-        'startLine' => 100,
-        'endLine' => 103,
+        'startLine' => 99,
+        'endLine' => 102,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -521,8 +522,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Alias de isCommonUser() – utilizado nos controllers para verificar se o utilizador não tem papel elevado.
  */',
-        'startLine' => 108,
-        'endLine' => 111,
+        'startLine' => 107,
+        'endLine' => 110,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -558,8 +559,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Obtém todas as constantes de roles disponíveis.
  */',
-        'startLine' => 116,
-        'endLine' => 119,
+        'startLine' => 115,
+        'endLine' => 118,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -597,8 +598,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 124,
-            'endLine' => 124,
+            'startLine' => 123,
+            'endLine' => 123,
             'startColumn' => 43,
             'endColumn' => 61,
             'parameterIndex' => 0,
@@ -621,8 +622,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Verifica se um nome de perfil pertence às roles válidas do sistema.
  */',
-        'startLine' => 124,
-        'endLine' => 127,
+        'startLine' => 123,
+        'endLine' => 126,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -660,8 +661,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 133,
-            'endLine' => 133,
+            'startLine' => 132,
+            'endLine' => 132,
             'startColumn' => 38,
             'endColumn' => 50,
             'parameterIndex' => 0,
@@ -685,8 +686,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * Gera um hash HMAC-SHA256 do token para armazenamento seguro na BD.
  * O token em texto plano é devolvido ao cliente; o hash fica na BD.
  */',
-        'startLine' => 133,
-        'endLine' => 136,
+        'startLine' => 132,
+        'endLine' => 135,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -722,8 +723,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Registo dos Model Events do Laravel.
  */',
-        'startLine' => 141,
-        'endLine' => 150,
+        'startLine' => 140,
+        'endLine' => 149,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -761,8 +762,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 155,
-            'endLine' => 155,
+            'startLine' => 154,
+            'endLine' => 154,
             'startColumn' => 48,
             'endColumn' => 57,
             'parameterIndex' => 0,
@@ -785,8 +786,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Garante centralizadamente que o utilizador possui um perfil válido antes de salvar.
  */',
-        'startLine' => 155,
-        'endLine' => 167,
+        'startLine' => 154,
+        'endLine' => 166,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

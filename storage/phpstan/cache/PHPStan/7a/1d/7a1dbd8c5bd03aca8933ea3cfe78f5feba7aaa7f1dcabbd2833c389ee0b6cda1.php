@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Http\Controllers\CalendarController.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Controllers\CalendarController
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-ac3998ea0cdd3b76da48f8afc52f3156bd64b844a4d2fc8ee41d7c453407ec38',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-52f9fe5cf57d1c9a9418781d40bdb1423c43ebbbad63f4dc57f40f35c8ad068e',
    'data' => 
   array (
     'locatedSource' => 
@@ -27,7 +27,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     array (
     ),
     'startLine' => 8,
-    'endLine' => 40,
+    'endLine' => 38,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'App\\Http\\Controllers\\Controller',
@@ -84,7 +84,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         ),
         'docComment' => NULL,
         'startLine' => 11,
-        'endLine' => 39,
+        'endLine' => 37,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

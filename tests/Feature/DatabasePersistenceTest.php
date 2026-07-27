@@ -16,7 +16,7 @@ use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 use Tests\TestCase;
 
 class DatabasePersistenceTest extends TestCase
@@ -42,7 +42,7 @@ class DatabasePersistenceTest extends TestCase
     protected function createAdmin(): User
     {
         $profile = UserProfile::firstOrCreate(['name' => User::ROLE_ADMIN]);
-        $token = 'admin-persist-token-' . uniqid();
+        $token = 'admin-persist-token-'.uniqid();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
             'api_token' => $token,
@@ -55,7 +55,7 @@ class DatabasePersistenceTest extends TestCase
     protected function createTechnician(): User
     {
         $profile = UserProfile::firstOrCreate(['name' => User::ROLE_TECHNICIAN]);
-        $token = 'tech-persist-token-' . uniqid();
+        $token = 'tech-persist-token-'.uniqid();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
             'api_token' => $token,
@@ -68,7 +68,7 @@ class DatabasePersistenceTest extends TestCase
     protected function createCommonUser(): User
     {
         $profile = UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
-        $token = 'user-persist-token-' . uniqid();
+        $token = 'user-persist-token-'.uniqid();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
             'api_token' => $token,
@@ -97,7 +97,7 @@ class DatabasePersistenceTest extends TestCase
 
         $response = $this->postJson('/admin/users', [
             'name' => 'CRUD Test User',
-            'email' => 'crud.test.' . uniqid() . '@example.invalid',
+            'email' => 'crud.test.'.uniqid().'@example.invalid',
             'password' => 'Password123!',
             'profile_id' => $profile->id,
         ]);
@@ -158,7 +158,7 @@ class DatabasePersistenceTest extends TestCase
 
         $response = $this->postJson('/admin/equipment', [
             'name' => 'Test Equipment',
-            'serial' => 'EQ-' . uniqid(),
+            'serial' => 'EQ-'.uniqid(),
             'room_id' => $room->id,
             'category_id' => $category->id,
         ]);
@@ -262,7 +262,7 @@ class DatabasePersistenceTest extends TestCase
 
         $equipment = Equipment::create([
             'name' => 'FK Equipment',
-            'serial' => 'FK-' . uniqid(),
+            'serial' => 'FK-'.uniqid(),
             'room_id' => $room->id,
             'category_id' => $category->id,
             'active' => true,
@@ -328,7 +328,7 @@ class DatabasePersistenceTest extends TestCase
 
         $this->postJson('/admin/equipment', [
             'name' => 'Cascade Equipment',
-            'serial' => 'CAS-' . uniqid(),
+            'serial' => 'CAS-'.uniqid(),
             'room_id' => $roomId,
         ]);
 
@@ -374,7 +374,7 @@ class DatabasePersistenceTest extends TestCase
         $profile = UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
         $response = $this->postJson('/admin/users', [
             'name' => 'Mass Test',
-            'email' => 'mass.' . uniqid() . '@example.invalid',
+            'email' => 'mass.'.uniqid().'@example.invalid',
             'password' => 'Password123!',
             'profile_id' => $profile->id,
         ]);
@@ -452,7 +452,7 @@ class DatabasePersistenceTest extends TestCase
         $category = EquipmentCategory::create(['name' => 'Rel Cat', 'active' => true]);
         $equipment = Equipment::create([
             'name' => 'Rel Equipment',
-            'serial' => 'REL-' . uniqid(),
+            'serial' => 'REL-'.uniqid(),
             'room_id' => $room->id,
             'category_id' => $category->id,
             'active' => true,
@@ -507,7 +507,7 @@ class DatabasePersistenceTest extends TestCase
         $category = EquipmentCategory::create(['name' => 'Rel Test Cat', 'active' => true]);
         $equipment = Equipment::create([
             'name' => 'Rel Cat Equipment',
-            'serial' => 'RCAT-' . uniqid(),
+            'serial' => 'RCAT-'.uniqid(),
             'category_id' => $category->id,
             'active' => true,
         ]);
@@ -766,7 +766,7 @@ class DatabasePersistenceTest extends TestCase
 
         $ticket = Ticket::find($ticketId);
         $this->assertNotNull($ticket->opened_at);
-        $this->assertInstanceOf(\Illuminate\Support\Carbon::class, $ticket->opened_at);
+        $this->assertInstanceOf(Carbon::class, $ticket->opened_at);
     }
 
     public function test_ticket_json_cast_budget_details(): void
@@ -877,7 +877,7 @@ class DatabasePersistenceTest extends TestCase
         for ($i = 0; $i < 3; $i++) {
             Equipment::create([
                 'name' => "Cat Equipment {$i}",
-                'serial' => "HM-CAT-" . uniqid("-{$i}"),
+                'serial' => 'HM-CAT-'.uniqid("-{$i}"),
                 'category_id' => $category->id,
                 'active' => true,
             ]);
@@ -894,7 +894,7 @@ class DatabasePersistenceTest extends TestCase
         for ($i = 0; $i < 2; $i++) {
             Equipment::create([
                 'name' => "Room Equipment {$i}",
-                'serial' => "HM-ROOM-" . uniqid("-{$i}"),
+                'serial' => 'HM-ROOM-'.uniqid("-{$i}"),
                 'room_id' => $room->id,
                 'category_id' => $category->id,
                 'active' => true,
@@ -936,7 +936,7 @@ class DatabasePersistenceTest extends TestCase
 
         $user = User::create([
             'name' => 'No Profile User',
-            'email' => 'noprofile.' . uniqid() . '@example.invalid',
+            'email' => 'noprofile.'.uniqid().'@example.invalid',
             'password' => bcrypt('password'),
         ]);
 
@@ -1038,7 +1038,7 @@ class DatabasePersistenceTest extends TestCase
         $this->asUserWithToken($admin);
 
         $profile = UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
-        $email = 'concurrent.' . uniqid() . '@example.invalid';
+        $email = 'concurrent.'.uniqid().'@example.invalid';
 
         $this->postJson('/admin/users', [
             'name' => 'First User',
@@ -1089,7 +1089,7 @@ class DatabasePersistenceTest extends TestCase
         $category = EquipmentCategory::create(['name' => 'Eager Cat', 'active' => true]);
         $equipment = Equipment::create([
             'name' => 'Eager Equipment',
-            'serial' => 'EAGER-' . uniqid(),
+            'serial' => 'EAGER-'.uniqid(),
             'room_id' => $room->id,
             'category_id' => $category->id,
             'active' => true,
@@ -1150,7 +1150,7 @@ class DatabasePersistenceTest extends TestCase
 
         $response = $this->postJson('/admin/equipment', [
             'name' => 'No Category Equipment',
-            'serial' => 'NC-' . uniqid(),
+            'serial' => 'NC-'.uniqid(),
         ]);
         $response->assertStatus(201);
         $eqId = $response->json('equipment.id');

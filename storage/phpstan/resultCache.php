@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 return [
-	'lastFullAnalysisTime' => 1784820453,
+	'lastFullAnalysisTime' => 1785141032,
 	'meta' => array (
   'cacheVersion' => 'v13-packageDependencies',
   'phpstanVersion' => '2.2.5',
@@ -20,7 +20,7 @@ return [
   ),
   'composerLocks' => 
   array (
-    'C:/laravel/Projeto Final Cesae/Projeto-Final-Cesae/composer.lock' => 'dc93b67cf64ba8930a06c99971d6f041079d0aa3a39e521954815ceda43e5f5e',
+    'C:/laravel/Projeto Final Cesae/Projeto-Final-Cesae/composer.lock' => '745a51e2c8d3de1dbc68a3436c2f3c3fdadd9bc7597eba6ff257e1a74dcd69c7',
   ),
   'composerInstalled' => 
   array (
@@ -2227,6 +2227,42 @@ return [
 	'unmatchedLineIgnores' => array (
 ),
 	'collectedDataCallback' => static function (): array { return array (
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Console\\Commands\\DatabaseBackup.php' => 
+  array (
+    'PHPStan\\Rules\\DeadCode\\PossiblyPureFuncCallCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'exec',
+        1 => 90,
+      ),
+      1 => 
+      array (
+        0 => 'exec',
+        1 => 111,
+      ),
+      2 => 
+      array (
+        0 => 'exec',
+        1 => 122,
+      ),
+    ),
+    'PHPStan\\Rules\\DeadCode\\PossiblyPureStaticCallCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'Illuminate\\Support\\Facades\\File',
+        1 => 'makeDirectory',
+        2 => 30,
+      ),
+      1 => 
+      array (
+        0 => 'Illuminate\\Support\\Facades\\File',
+        1 => 'delete',
+        2 => 140,
+      ),
+    ),
+  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Events\\TicketCreatedBroadcast.php' => 
   array (
     'PHPStan\\Rules\\DeadCode\\ConstructorWithoutImpurePointsCollector' => 
@@ -2471,13 +2507,13 @@ return [
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 442,
+        2 => 447,
       ),
       1 => 
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 455,
+        2 => 460,
       ),
     ),
     'PHPStan\\Rules\\Traits\\TraitUseCollector' => 
@@ -2488,69 +2524,105 @@ return [
       ),
     ),
   ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php' => 
+  array (
+    'PHPStan\\Rules\\DeadCode\\MethodWithoutImpurePointsCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'App\\Http\\Controllers\\AnalyticsController',
+        1 => 'buildPayload',
+        2 => 'App\\Http\\Controllers\\AnalyticsController',
+        3 => 
+        array (
+          0 => 'm' . "\0" . 'illuminate\\cache\\repository' . "\0" . 'remember',
+        ),
+      ),
+    ),
+  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuthController.php' => 
   array (
     'Larastan\\Larastan\\Collectors\\UsedTranslationFunctionCollector' => 
     array (
       0 => 
       array (
-        0 => 'Credenciais inválidas.',
-        1 => 155,
+        0 => 'Conta temporariamente bloqueada. Tente novamente mais tarde.',
+        1 => 150,
       ),
       1 => 
       array (
-        0 => 'Sessão terminada com sucesso.',
-        1 => 194,
+        0 => 'Credenciais inválidas.',
+        1 => 168,
       ),
       2 => 
       array (
-        0 => 'Password atual incorreta',
-        1 => 222,
+        0 => 'Sessão terminada com sucesso.',
+        1 => 212,
       ),
       3 => 
       array (
-        0 => 'Password alterada com sucesso.',
-        1 => 229,
+        0 => 'Password atual incorreta',
+        1 => 240,
       ),
       4 => 
       array (
-        0 => 'A palavra-passe atual é obrigatória para alterar a password.',
-        1 => 250,
+        0 => 'Password alterada com sucesso.',
+        1 => 247,
       ),
       5 => 
       array (
-        0 => 'Password atual incorreta',
-        1 => 260,
+        0 => 'A palavra-passe atual é obrigatória para alterar a password.',
+        1 => 268,
       ),
       6 => 
       array (
-        0 => 'Perfil atualizado com sucesso.',
-        1 => 273,
+        0 => 'Password atual incorreta',
+        1 => 278,
       ),
       7 => 
       array (
-        0 => 'Email de recuperação enviado com sucesso.',
-        1 => 308,
+        0 => 'Perfil atualizado com sucesso.',
+        1 => 291,
       ),
       8 => 
       array (
-        0 => 'Token inválido ou expirado.',
-        1 => 337,
+        0 => 'Email de recuperação enviado com sucesso.',
+        1 => 326,
       ),
       9 => 
       array (
-        0 => 'Token expirado. Solicite um novo.',
-        1 => 344,
+        0 => 'Token inválido ou expirado.',
+        1 => 355,
       ),
       10 => 
       array (
-        0 => 'Utilizador não encontrado.',
-        1 => 349,
+        0 => 'Token expirado. Solicite um novo.',
+        1 => 362,
       ),
       11 => 
       array (
+        0 => 'Utilizador não encontrado.',
+        1 => 367,
+      ),
+      12 => 
+      array (
         0 => 'Password reposta com sucesso. Faça login.',
-        1 => 359,
+        1 => 377,
+      ),
+    ),
+    'PHPStan\\Rules\\DeadCode\\PossiblyPureStaticCallCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'Illuminate\\Cache\\Repository',
+        1 => 'put',
+        2 => 166,
+      ),
+      1 => 
+      array (
+        0 => 'Illuminate\\Cache\\Repository',
+        1 => 'forget',
+        2 => 172,
       ),
     ),
   ),
@@ -2574,75 +2646,6 @@ return [
       array (
         0 => 'abort',
         1 => 39,
-      ),
-    ),
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\EquipmentController.php' => 
-  array (
-    'PHPStan\\Rules\\DeadCode\\MethodWithoutImpurePointsCollector' => 
-    array (
-      0 => 
-      array (
-        0 => 'App\\Http\\Controllers\\EquipmentController',
-        1 => 'index',
-        2 => 'App\\Http\\Controllers\\EquipmentController',
-        3 => 
-        array (
-        ),
-      ),
-      1 => 
-      array (
-        0 => 'App\\Http\\Controllers\\EquipmentController',
-        1 => 'create',
-        2 => 'App\\Http\\Controllers\\EquipmentController',
-        3 => 
-        array (
-        ),
-      ),
-      2 => 
-      array (
-        0 => 'App\\Http\\Controllers\\EquipmentController',
-        1 => 'store',
-        2 => 'App\\Http\\Controllers\\EquipmentController',
-        3 => 
-        array (
-        ),
-      ),
-      3 => 
-      array (
-        0 => 'App\\Http\\Controllers\\EquipmentController',
-        1 => 'show',
-        2 => 'App\\Http\\Controllers\\EquipmentController',
-        3 => 
-        array (
-        ),
-      ),
-      4 => 
-      array (
-        0 => 'App\\Http\\Controllers\\EquipmentController',
-        1 => 'edit',
-        2 => 'App\\Http\\Controllers\\EquipmentController',
-        3 => 
-        array (
-        ),
-      ),
-      5 => 
-      array (
-        0 => 'App\\Http\\Controllers\\EquipmentController',
-        1 => 'update',
-        2 => 'App\\Http\\Controllers\\EquipmentController',
-        3 => 
-        array (
-        ),
-      ),
-      6 => 
-      array (
-        0 => 'App\\Http\\Controllers\\EquipmentController',
-        1 => 'destroy',
-        2 => 'App\\Http\\Controllers\\EquipmentController',
-        3 => 
-        array (
-        ),
       ),
     ),
   ),
@@ -2692,12 +2695,12 @@ return [
       0 => 
       array (
         0 => 'session',
-        1 => 29,
+        1 => 37,
       ),
       1 => 
       array (
         0 => 'abort',
-        1 => 51,
+        1 => 66,
       ),
     ),
     'PHPStan\\Rules\\DeadCode\\PossiblyPureStaticCallCollector' => 
@@ -2706,7 +2709,7 @@ return [
       array (
         0 => 'Illuminate\\Support\\Facades\\Mail',
         1 => 'raw',
-        2 => 54,
+        2 => 69,
       ),
     ),
   ),
@@ -2854,37 +2857,37 @@ return [
       0 => 
       array (
         0 => 'Não existem tickets abertos prioritários.',
-        1 => 607,
+        1 => 594,
       ),
       1 => 
       array (
         0 => 'Custo estimado excede o limiar. Ticket pendente de aprovação orçamental.',
-        1 => 885,
+        1 => 872,
       ),
       2 => 
       array (
         0 => 'Custo estimado dentro da autonomia. Pode prosseguir com a intervenção.',
-        1 => 904,
+        1 => 891,
       ),
       3 => 
       array (
         0 => 'Pedido de orçamento submetido com detalhes. Aguarde aprovação.',
-        1 => 950,
+        1 => 937,
       ),
       4 => 
       array (
         0 => 'Custo dentro do limiar. Intervenção autorizada automaticamente.',
-        1 => 962,
+        1 => 949,
       ),
       5 => 
       array (
         0 => 'Estado "fechada" não encontrado.',
-        1 => 1019,
+        1 => 1006,
       ),
       6 => 
       array (
         0 => 'Intervenção concluída e ticket fechado com sucesso.',
-        1 => 1072,
+        1 => 1059,
       ),
     ),
     'Larastan\\Larastan\\Collectors\\UsedViewFunctionCollector' => 
@@ -3007,7 +3010,7 @@ return [
       4 => 
       array (
         0 => 'event',
-        1 => 651,
+        1 => 638,
       ),
     ),
     'PHPStan\\Rules\\DeadCode\\PossiblyPureStaticCallCollector' => 
@@ -3022,49 +3025,55 @@ return [
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 748,
+        2 => 735,
       ),
       2 => 
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 758,
+        2 => 745,
       ),
       3 => 
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 769,
+        2 => 756,
       ),
       4 => 
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 779,
+        2 => 766,
       ),
       5 => 
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 791,
+        2 => 778,
       ),
       6 => 
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 801,
+        2 => 788,
       ),
       7 => 
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 812,
+        2 => 799,
       ),
       8 => 
       array (
+        0 => 'Illuminate\\Database\\Connection',
+        1 => 'transaction',
+        2 => 1013,
+      ),
+      9 => 
+      array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 1052,
+        2 => 1039,
       ),
     ),
     'PHPStan\\Rules\\Traits\\TraitUseCollector' => 
@@ -3094,75 +3103,6 @@ return [
       12 => 'ui.ticket-detail',
       13 => 'ui.analytics',
       14 => 'ui.profile',
-    ),
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UserController.php' => 
-  array (
-    'PHPStan\\Rules\\DeadCode\\MethodWithoutImpurePointsCollector' => 
-    array (
-      0 => 
-      array (
-        0 => 'App\\Http\\Controllers\\UserController',
-        1 => 'index',
-        2 => 'App\\Http\\Controllers\\UserController',
-        3 => 
-        array (
-        ),
-      ),
-      1 => 
-      array (
-        0 => 'App\\Http\\Controllers\\UserController',
-        1 => 'create',
-        2 => 'App\\Http\\Controllers\\UserController',
-        3 => 
-        array (
-        ),
-      ),
-      2 => 
-      array (
-        0 => 'App\\Http\\Controllers\\UserController',
-        1 => 'store',
-        2 => 'App\\Http\\Controllers\\UserController',
-        3 => 
-        array (
-        ),
-      ),
-      3 => 
-      array (
-        0 => 'App\\Http\\Controllers\\UserController',
-        1 => 'show',
-        2 => 'App\\Http\\Controllers\\UserController',
-        3 => 
-        array (
-        ),
-      ),
-      4 => 
-      array (
-        0 => 'App\\Http\\Controllers\\UserController',
-        1 => 'edit',
-        2 => 'App\\Http\\Controllers\\UserController',
-        3 => 
-        array (
-        ),
-      ),
-      5 => 
-      array (
-        0 => 'App\\Http\\Controllers\\UserController',
-        1 => 'update',
-        2 => 'App\\Http\\Controllers\\UserController',
-        3 => 
-        array (
-        ),
-      ),
-      6 => 
-      array (
-        0 => 'App\\Http\\Controllers\\UserController',
-        1 => 'destroy',
-        2 => 'App\\Http\\Controllers\\UserController',
-        3 => 
-        array (
-        ),
-      ),
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CsrfMiddleware.php' => 
@@ -3324,376 +3264,368 @@ return [
         1 => 'App\\Traits\\Auditable',
         2 => 'call_user_func([static::class, $event], function ($model) use ($event) {
     try {
-        $request = null;
-        if (function_exists(\'request\')) {
-            $request = request();
-        }
-        $userId = null;
-        // Tenta obter o utilizador autenticado (o guard pode ser nulo em alguns contextos)
-        $authGuard = null;
-        if (function_exists(\'auth\')) {
-            $authGuard = auth();
-        }
-        if ($authGuard && method_exists($authGuard, \'user\')) {
-            $authUser = $authGuard->user();
-            if ($authUser) {
-                // Suporte para objectos de utilizador Eloquent
-                $userId = $authUser->id ?? $authUser->getKey() ?? null;
-            }
-        } elseif ($request) {
-            $token = $request->header(\'X-Auth-Token\') ?: $request->bearerToken();
-            if (is_string($token) && $token !== \'\') {
-                $u = \\App\\Models\\User::where(\'api_token\', $token)->first();
-                $userId = $u ? $u->id : null;
-            }
-        }
-        $old = null;
-        $new = null;
-        if ($event === \'created\') {
-            $new = $model->getAttributes();
-        } elseif ($event === \'deleted\') {
-            $old = $model->getOriginal();
-        } else {
-            // updated
-            $changes = $model->getChanges();
-            if (!empty($changes)) {
-                $oldVals = [];
-                $newVals = [];
-                foreach ($changes as $k => $v) {
-                    $oldVals[$k] = $model->getOriginal($k);
-                    $newVals[$k] = $v;
-                }
-                $old = $oldVals;
-                $new = $newVals;
-            }
-        }
-        \\App\\Models\\Audit::create([\'user_id\' => $userId, \'auditable_type\' => get_class($model), \'auditable_id\' => $model->getKey(), \'event\' => $event, \'old_values\' => $old, \'new_values\' => $new, \'url\' => $request ? $request->fullUrl() : null, \'ip_address\' => $request ? $request->ip() : null, \'user_agent\' => $request ? $request->userAgent() : null]);
+        self::createAudit($model, $event);
     } catch (\\Throwable $e) {
-        // Falha silenciosamente para não quebrar o fluxo principal se a auditoria falhar
+        \\Illuminate\\Support\\Facades\\Log::warning(\'Audit trail failed\', [\'model\' => get_class($model), \'event\' => $event, \'error\' => $e->getMessage()]);
     }
-}):15',
+}):17',
         3 => NULL,
       ),
       1 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeStaticMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'function_exists(\'request\'):18',
+        2 => 'self::createAudit($model, $event):19',
         3 => NULL,
       ),
       2 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeStaticMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'function_exists(\'request\'):18',
+        2 => '\\Illuminate\\Support\\Facades\\Log::warning(\'Audit trail failed\', [\'model\' => get_class($model), \'event\' => $event, \'error\' => $e->getMessage()]):21',
         3 => NULL,
       ),
       3 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'request():19',
+        2 => 'get_class($model):22',
         3 => NULL,
       ),
       4 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'function_exists(\'auth\'):25',
+        2 => '$e->getMessage():24',
         3 => NULL,
       ),
       5 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'function_exists(\'auth\'):25',
+        2 => 'function_exists(\'request\'):34',
         3 => NULL,
       ),
       6 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'auth():26',
+        2 => 'function_exists(\'request\'):34',
         3 => NULL,
       ),
       7 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$authGuard && method_exists($authGuard, \'user\'):29',
+        2 => 'request():35',
         3 => NULL,
       ),
       8 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeStaticMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'method_exists($authGuard, \'user\'):29',
+        2 => 'self::resolveUserId($request):38',
         3 => NULL,
       ),
       9 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$authGuard:29',
+        2 => '$event === \'created\':43',
         3 => NULL,
       ),
       10 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\StrictComparisonOfDifferentTypesRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'method_exists($authGuard, \'user\'):29',
+        2 => '$event === \'created\':43',
         3 => NULL,
       ),
       11 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$authGuard && method_exists($authGuard, \'user\'):29',
+        2 => '$model->getAttributes():44',
         3 => NULL,
       ),
       12 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ElseIfConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$authGuard->user():30',
+        2 => '$event === \'deleted\':45',
         3 => NULL,
       ),
       13 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\StrictComparisonOfDifferentTypesRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$authUser:31',
+        2 => '$event === \'deleted\':45',
         3 => NULL,
       ),
       14 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$authUser->getKey():33',
+        2 => '$model->getOriginal():46',
         3 => NULL,
       ),
       15 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ElseIfConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$request:35',
+        2 => '$model->getChanges():48',
         3 => NULL,
       ),
       16 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\TernaryOperatorConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$request->header(\'X-Auth-Token\'):36',
+        2 => '!empty($changes):49',
         3 => NULL,
       ),
       17 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanNotConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$request->header(\'X-Auth-Token\'):36',
+        2 => 'empty($changes):49',
         3 => NULL,
       ),
       18 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$request->bearerToken():36',
+        2 => '$model->getOriginal($k):53',
         3 => NULL,
       ),
       19 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeStaticMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'is_string($token) && $token !== \'\':37',
+        2 => '\\App\\Models\\Audit::create([\'user_id\' => $userId, \'auditable_type\' => get_class($model), \'auditable_id\' => $model->getKey(), \'event\' => $event, \'old_values\' => $old, \'new_values\' => $new, \'url\' => $request?->fullUrl(), \'ip_address\' => $request?->ip(), \'user_agent\' => $request?->userAgent()]):61',
         3 => NULL,
       ),
       20 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'is_string($token):37',
+        2 => 'get_class($model):63',
         3 => NULL,
       ),
       21 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\StrictComparisonOfDifferentTypesRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$token !== \'\':37',
+        2 => '$model->getKey():64',
         3 => NULL,
       ),
       22 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'is_string($token):37',
+        2 => '$request->fullUrl():68',
         3 => NULL,
       ),
       23 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$token !== \'\':37',
+        2 => '$request->ip():69',
         3 => NULL,
       ),
       24 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'is_string($token) && $token !== \'\':37',
+        2 => '$request->userAgent():70',
         3 => NULL,
       ),
       25 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '\\App\\Models\\User::where(\'api_token\', $token)->first():38',
+        2 => 'self::$resolvedUserId !== null:76',
         3 => NULL,
       ),
       26 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeStaticMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\StrictComparisonOfDifferentTypesRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '\\App\\Models\\User::where(\'api_token\', $token):38',
+        2 => 'self::$resolvedUserId !== null:76',
         3 => NULL,
       ),
       27 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\TernaryOperatorConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$u:39',
+        2 => 'function_exists(\'auth\'):82',
         3 => NULL,
       ),
       28 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$event === \'created\':46',
+        2 => 'function_exists(\'auth\'):82',
         3 => NULL,
       ),
       29 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\StrictComparisonOfDifferentTypesRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$event === \'created\':46',
+        2 => 'auth()->user():83',
         3 => NULL,
       ),
       30 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$model->getAttributes():47',
+        2 => 'auth():83',
         3 => NULL,
       ),
       31 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ElseIfConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$event === \'deleted\':48',
+        2 => '$authUser:84',
         3 => NULL,
       ),
       32 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\StrictComparisonOfDifferentTypesRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$event === \'deleted\':48',
+        2 => '$authUser->getKey():85',
         3 => NULL,
       ),
       33 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$model->getOriginal():49',
+        2 => '$userId === null && $request:89',
         3 => NULL,
       ),
       34 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\StrictComparisonOfDifferentTypesRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$model->getChanges():51',
+        2 => '$userId === null:89',
         3 => NULL,
       ),
       35 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '!empty($changes):52',
+        2 => '$userId === null:89',
         3 => NULL,
       ),
       36 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\BooleanNotConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'empty($changes):52',
+        2 => '$request:89',
         3 => NULL,
       ),
       37 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$model->getOriginal($k):56',
+        2 => '$userId === null && $request:89',
         3 => NULL,
       ),
       38 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeStaticMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\TernaryOperatorConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '\\App\\Models\\Audit::create([\'user_id\' => $userId, \'auditable_type\' => get_class($model), \'auditable_id\' => $model->getKey(), \'event\' => $event, \'old_values\' => $old, \'new_values\' => $new, \'url\' => $request ? $request->fullUrl() : null, \'ip_address\' => $request ? $request->ip() : null, \'user_agent\' => $request ? $request->userAgent() : null]):64',
+        2 => '$request->header(\'X-Auth-Token\'):90',
         3 => NULL,
       ),
       39 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'get_class($model):66',
+        2 => '$request->header(\'X-Auth-Token\'):90',
         3 => NULL,
       ),
       40 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$model->getKey():67',
+        2 => '$request->bearerToken():90',
         3 => NULL,
       ),
       41 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\TernaryOperatorConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$request:71',
+        2 => 'is_string($token) && $token !== \'\':91',
         3 => NULL,
       ),
       42 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$request->fullUrl():71',
+        2 => 'is_string($token):91',
         3 => NULL,
       ),
       43 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\TernaryOperatorConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\StrictComparisonOfDifferentTypesRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$request:72',
+        2 => '$token !== \'\':91',
         3 => NULL,
       ),
       44 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$request->ip():72',
+        2 => 'is_string($token):91',
         3 => NULL,
       ),
       45 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\TernaryOperatorConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$request:73',
+        2 => '$token !== \'\':91',
         3 => NULL,
       ),
       46 => 
       array (
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
+        1 => 'App\\Traits\\Auditable',
+        2 => 'is_string($token) && $token !== \'\':91',
+        3 => NULL,
+      ),
+      47 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeStaticMethodCallRule',
+        1 => 'App\\Traits\\Auditable',
+        2 => '\\App\\Models\\User::hashToken($token):92',
+        3 => NULL,
+      ),
+      48 => 
+      array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$request->userAgent():73',
+        2 => '\\App\\Models\\User::where(\'api_token\', $hashedToken)->value(\'id\'):93',
+        3 => NULL,
+      ),
+      49 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeStaticMethodCallRule',
+        1 => 'App\\Traits\\Auditable',
+        2 => '\\App\\Models\\User::where(\'api_token\', $hashedToken):93',
+        3 => NULL,
+      ),
+      50 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\TernaryOperatorConstantConditionRule',
+        1 => 'App\\Traits\\Auditable',
+        2 => '$userId !== null:97',
+        3 => NULL,
+      ),
+      51 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\StrictComparisonOfDifferentTypesRule',
+        1 => 'App\\Traits\\Auditable',
+        2 => '$userId !== null:97',
         3 => NULL,
       ),
     ),
@@ -3702,7 +3634,7 @@ return [
       0 => 
       array (
         0 => 'call_user_func',
-        1 => 15,
+        1 => 17,
       ),
     ),
     'PHPStan\\Rules\\DeadCode\\PossiblyPureStaticCallCollector' => 
@@ -3711,7 +3643,7 @@ return [
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 64,
+        2 => 61,
       ),
     ),
     'PHPStan\\Rules\\Traits\\TraitUseCollector' => 
@@ -3723,6 +3655,10 @@ return [
       1 => 
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+      ),
+      2 => 
+      array (
+        0 => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
       ),
     ),
   ),
@@ -3756,376 +3692,368 @@ return [
         1 => 'App\\Traits\\Auditable',
         2 => 'call_user_func([static::class, $event], function ($model) use ($event) {
     try {
-        $request = null;
-        if (function_exists(\'request\')) {
-            $request = request();
-        }
-        $userId = null;
-        // Tenta obter o utilizador autenticado (o guard pode ser nulo em alguns contextos)
-        $authGuard = null;
-        if (function_exists(\'auth\')) {
-            $authGuard = auth();
-        }
-        if ($authGuard && method_exists($authGuard, \'user\')) {
-            $authUser = $authGuard->user();
-            if ($authUser) {
-                // Suporte para objectos de utilizador Eloquent
-                $userId = $authUser->id ?? $authUser->getKey() ?? null;
-            }
-        } elseif ($request) {
-            $token = $request->header(\'X-Auth-Token\') ?: $request->bearerToken();
-            if (is_string($token) && $token !== \'\') {
-                $u = \\App\\Models\\User::where(\'api_token\', $token)->first();
-                $userId = $u ? $u->id : null;
-            }
-        }
-        $old = null;
-        $new = null;
-        if ($event === \'created\') {
-            $new = $model->getAttributes();
-        } elseif ($event === \'deleted\') {
-            $old = $model->getOriginal();
-        } else {
-            // updated
-            $changes = $model->getChanges();
-            if (!empty($changes)) {
-                $oldVals = [];
-                $newVals = [];
-                foreach ($changes as $k => $v) {
-                    $oldVals[$k] = $model->getOriginal($k);
-                    $newVals[$k] = $v;
-                }
-                $old = $oldVals;
-                $new = $newVals;
-            }
-        }
-        \\App\\Models\\Audit::create([\'user_id\' => $userId, \'auditable_type\' => get_class($model), \'auditable_id\' => $model->getKey(), \'event\' => $event, \'old_values\' => $old, \'new_values\' => $new, \'url\' => $request ? $request->fullUrl() : null, \'ip_address\' => $request ? $request->ip() : null, \'user_agent\' => $request ? $request->userAgent() : null]);
+        self::createAudit($model, $event);
     } catch (\\Throwable $e) {
-        // Falha silenciosamente para não quebrar o fluxo principal se a auditoria falhar
+        \\Illuminate\\Support\\Facades\\Log::warning(\'Audit trail failed\', [\'model\' => get_class($model), \'event\' => $event, \'error\' => $e->getMessage()]);
     }
-}):15',
+}):17',
         3 => NULL,
       ),
       1 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeStaticMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'function_exists(\'request\'):18',
+        2 => 'self::createAudit($model, $event):19',
         3 => NULL,
       ),
       2 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeStaticMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'function_exists(\'request\'):18',
+        2 => '\\Illuminate\\Support\\Facades\\Log::warning(\'Audit trail failed\', [\'model\' => get_class($model), \'event\' => $event, \'error\' => $e->getMessage()]):21',
         3 => NULL,
       ),
       3 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'request():19',
+        2 => 'get_class($model):22',
         3 => NULL,
       ),
       4 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'function_exists(\'auth\'):25',
+        2 => '$e->getMessage():24',
         3 => NULL,
       ),
       5 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'function_exists(\'auth\'):25',
+        2 => 'function_exists(\'request\'):34',
         3 => NULL,
       ),
       6 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'auth():26',
+        2 => 'function_exists(\'request\'):34',
         3 => NULL,
       ),
       7 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$authGuard && method_exists($authGuard, \'user\'):29',
+        2 => 'request():35',
         3 => NULL,
       ),
       8 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeStaticMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'method_exists($authGuard, \'user\'):29',
+        2 => 'self::resolveUserId($request):38',
         3 => NULL,
       ),
       9 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$authGuard:29',
+        2 => '$event === \'created\':43',
         3 => NULL,
       ),
       10 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\StrictComparisonOfDifferentTypesRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'method_exists($authGuard, \'user\'):29',
+        2 => '$event === \'created\':43',
         3 => NULL,
       ),
       11 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$authGuard && method_exists($authGuard, \'user\'):29',
+        2 => '$model->getAttributes():44',
         3 => NULL,
       ),
       12 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ElseIfConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$authGuard->user():30',
+        2 => '$event === \'deleted\':45',
         3 => NULL,
       ),
       13 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\StrictComparisonOfDifferentTypesRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$authUser:31',
+        2 => '$event === \'deleted\':45',
         3 => NULL,
       ),
       14 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$authUser->getKey():33',
+        2 => '$model->getOriginal():46',
         3 => NULL,
       ),
       15 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ElseIfConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$request:35',
+        2 => '$model->getChanges():48',
         3 => NULL,
       ),
       16 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\TernaryOperatorConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$request->header(\'X-Auth-Token\'):36',
+        2 => '!empty($changes):49',
         3 => NULL,
       ),
       17 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanNotConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$request->header(\'X-Auth-Token\'):36',
+        2 => 'empty($changes):49',
         3 => NULL,
       ),
       18 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$request->bearerToken():36',
+        2 => '$model->getOriginal($k):53',
         3 => NULL,
       ),
       19 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeStaticMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'is_string($token) && $token !== \'\':37',
+        2 => '\\App\\Models\\Audit::create([\'user_id\' => $userId, \'auditable_type\' => get_class($model), \'auditable_id\' => $model->getKey(), \'event\' => $event, \'old_values\' => $old, \'new_values\' => $new, \'url\' => $request?->fullUrl(), \'ip_address\' => $request?->ip(), \'user_agent\' => $request?->userAgent()]):61',
         3 => NULL,
       ),
       20 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'is_string($token):37',
+        2 => 'get_class($model):63',
         3 => NULL,
       ),
       21 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\StrictComparisonOfDifferentTypesRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$token !== \'\':37',
+        2 => '$model->getKey():64',
         3 => NULL,
       ),
       22 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'is_string($token):37',
+        2 => '$request->fullUrl():68',
         3 => NULL,
       ),
       23 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$token !== \'\':37',
+        2 => '$request->ip():69',
         3 => NULL,
       ),
       24 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'is_string($token) && $token !== \'\':37',
+        2 => '$request->userAgent():70',
         3 => NULL,
       ),
       25 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '\\App\\Models\\User::where(\'api_token\', $token)->first():38',
+        2 => 'self::$resolvedUserId !== null:76',
         3 => NULL,
       ),
       26 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeStaticMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\StrictComparisonOfDifferentTypesRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '\\App\\Models\\User::where(\'api_token\', $token):38',
+        2 => 'self::$resolvedUserId !== null:76',
         3 => NULL,
       ),
       27 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\TernaryOperatorConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$u:39',
+        2 => 'function_exists(\'auth\'):82',
         3 => NULL,
       ),
       28 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$event === \'created\':46',
+        2 => 'function_exists(\'auth\'):82',
         3 => NULL,
       ),
       29 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\StrictComparisonOfDifferentTypesRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$event === \'created\':46',
+        2 => 'auth()->user():83',
         3 => NULL,
       ),
       30 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$model->getAttributes():47',
+        2 => 'auth():83',
         3 => NULL,
       ),
       31 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ElseIfConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$event === \'deleted\':48',
+        2 => '$authUser:84',
         3 => NULL,
       ),
       32 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\StrictComparisonOfDifferentTypesRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$event === \'deleted\':48',
+        2 => '$authUser->getKey():85',
         3 => NULL,
       ),
       33 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$model->getOriginal():49',
+        2 => '$userId === null && $request:89',
         3 => NULL,
       ),
       34 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\StrictComparisonOfDifferentTypesRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$model->getChanges():51',
+        2 => '$userId === null:89',
         3 => NULL,
       ),
       35 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '!empty($changes):52',
+        2 => '$userId === null:89',
         3 => NULL,
       ),
       36 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\BooleanNotConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'empty($changes):52',
+        2 => '$request:89',
         3 => NULL,
       ),
       37 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$model->getOriginal($k):56',
+        2 => '$userId === null && $request:89',
         3 => NULL,
       ),
       38 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeStaticMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\TernaryOperatorConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '\\App\\Models\\Audit::create([\'user_id\' => $userId, \'auditable_type\' => get_class($model), \'auditable_id\' => $model->getKey(), \'event\' => $event, \'old_values\' => $old, \'new_values\' => $new, \'url\' => $request ? $request->fullUrl() : null, \'ip_address\' => $request ? $request->ip() : null, \'user_agent\' => $request ? $request->userAgent() : null]):64',
+        2 => '$request->header(\'X-Auth-Token\'):90',
         3 => NULL,
       ),
       39 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'get_class($model):66',
+        2 => '$request->header(\'X-Auth-Token\'):90',
         3 => NULL,
       ),
       40 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$model->getKey():67',
+        2 => '$request->bearerToken():90',
         3 => NULL,
       ),
       41 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\TernaryOperatorConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$request:71',
+        2 => 'is_string($token) && $token !== \'\':91',
         3 => NULL,
       ),
       42 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$request->fullUrl():71',
+        2 => 'is_string($token):91',
         3 => NULL,
       ),
       43 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\TernaryOperatorConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\StrictComparisonOfDifferentTypesRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$request:72',
+        2 => '$token !== \'\':91',
         3 => NULL,
       ),
       44 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$request->ip():72',
+        2 => 'is_string($token):91',
         3 => NULL,
       ),
       45 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\TernaryOperatorConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$request:73',
+        2 => '$token !== \'\':91',
         3 => NULL,
       ),
       46 => 
       array (
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
+        1 => 'App\\Traits\\Auditable',
+        2 => 'is_string($token) && $token !== \'\':91',
+        3 => NULL,
+      ),
+      47 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeStaticMethodCallRule',
+        1 => 'App\\Traits\\Auditable',
+        2 => '\\App\\Models\\User::hashToken($token):92',
+        3 => NULL,
+      ),
+      48 => 
+      array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$request->userAgent():73',
+        2 => '\\App\\Models\\User::where(\'api_token\', $hashedToken)->value(\'id\'):93',
+        3 => NULL,
+      ),
+      49 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeStaticMethodCallRule',
+        1 => 'App\\Traits\\Auditable',
+        2 => '\\App\\Models\\User::where(\'api_token\', $hashedToken):93',
+        3 => NULL,
+      ),
+      50 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\TernaryOperatorConstantConditionRule',
+        1 => 'App\\Traits\\Auditable',
+        2 => '$userId !== null:97',
+        3 => NULL,
+      ),
+      51 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\StrictComparisonOfDifferentTypesRule',
+        1 => 'App\\Traits\\Auditable',
+        2 => '$userId !== null:97',
         3 => NULL,
       ),
     ),
@@ -4134,7 +4062,7 @@ return [
       0 => 
       array (
         0 => 'call_user_func',
-        1 => 15,
+        1 => 17,
       ),
     ),
     'PHPStan\\Rules\\DeadCode\\PossiblyPureStaticCallCollector' => 
@@ -4143,7 +4071,7 @@ return [
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 64,
+        2 => 61,
       ),
     ),
     'PHPStan\\Rules\\Traits\\TraitUseCollector' => 
@@ -4155,6 +4083,10 @@ return [
       1 => 
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+      ),
+      2 => 
+      array (
+        0 => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
       ),
     ),
   ),
@@ -4168,376 +4100,368 @@ return [
         1 => 'App\\Traits\\Auditable',
         2 => 'call_user_func([static::class, $event], function ($model) use ($event) {
     try {
-        $request = null;
-        if (function_exists(\'request\')) {
-            $request = request();
-        }
-        $userId = null;
-        // Tenta obter o utilizador autenticado (o guard pode ser nulo em alguns contextos)
-        $authGuard = null;
-        if (function_exists(\'auth\')) {
-            $authGuard = auth();
-        }
-        if ($authGuard && method_exists($authGuard, \'user\')) {
-            $authUser = $authGuard->user();
-            if ($authUser) {
-                // Suporte para objectos de utilizador Eloquent
-                $userId = $authUser->id ?? $authUser->getKey() ?? null;
-            }
-        } elseif ($request) {
-            $token = $request->header(\'X-Auth-Token\') ?: $request->bearerToken();
-            if (is_string($token) && $token !== \'\') {
-                $u = \\App\\Models\\User::where(\'api_token\', $token)->first();
-                $userId = $u ? $u->id : null;
-            }
-        }
-        $old = null;
-        $new = null;
-        if ($event === \'created\') {
-            $new = $model->getAttributes();
-        } elseif ($event === \'deleted\') {
-            $old = $model->getOriginal();
-        } else {
-            // updated
-            $changes = $model->getChanges();
-            if (!empty($changes)) {
-                $oldVals = [];
-                $newVals = [];
-                foreach ($changes as $k => $v) {
-                    $oldVals[$k] = $model->getOriginal($k);
-                    $newVals[$k] = $v;
-                }
-                $old = $oldVals;
-                $new = $newVals;
-            }
-        }
-        \\App\\Models\\Audit::create([\'user_id\' => $userId, \'auditable_type\' => get_class($model), \'auditable_id\' => $model->getKey(), \'event\' => $event, \'old_values\' => $old, \'new_values\' => $new, \'url\' => $request ? $request->fullUrl() : null, \'ip_address\' => $request ? $request->ip() : null, \'user_agent\' => $request ? $request->userAgent() : null]);
+        self::createAudit($model, $event);
     } catch (\\Throwable $e) {
-        // Falha silenciosamente para não quebrar o fluxo principal se a auditoria falhar
+        \\Illuminate\\Support\\Facades\\Log::warning(\'Audit trail failed\', [\'model\' => get_class($model), \'event\' => $event, \'error\' => $e->getMessage()]);
     }
-}):15',
+}):17',
         3 => NULL,
       ),
       1 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeStaticMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'function_exists(\'request\'):18',
+        2 => 'self::createAudit($model, $event):19',
         3 => NULL,
       ),
       2 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeStaticMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'function_exists(\'request\'):18',
+        2 => '\\Illuminate\\Support\\Facades\\Log::warning(\'Audit trail failed\', [\'model\' => get_class($model), \'event\' => $event, \'error\' => $e->getMessage()]):21',
         3 => NULL,
       ),
       3 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'request():19',
+        2 => 'get_class($model):22',
         3 => NULL,
       ),
       4 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'function_exists(\'auth\'):25',
+        2 => '$e->getMessage():24',
         3 => NULL,
       ),
       5 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'function_exists(\'auth\'):25',
+        2 => 'function_exists(\'request\'):34',
         3 => NULL,
       ),
       6 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'auth():26',
+        2 => 'function_exists(\'request\'):34',
         3 => NULL,
       ),
       7 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$authGuard && method_exists($authGuard, \'user\'):29',
+        2 => 'request():35',
         3 => NULL,
       ),
       8 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeStaticMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'method_exists($authGuard, \'user\'):29',
+        2 => 'self::resolveUserId($request):38',
         3 => NULL,
       ),
       9 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$authGuard:29',
+        2 => '$event === \'created\':43',
         3 => NULL,
       ),
       10 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\StrictComparisonOfDifferentTypesRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'method_exists($authGuard, \'user\'):29',
+        2 => '$event === \'created\':43',
         3 => NULL,
       ),
       11 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$authGuard && method_exists($authGuard, \'user\'):29',
+        2 => '$model->getAttributes():44',
         3 => NULL,
       ),
       12 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ElseIfConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$authGuard->user():30',
+        2 => '$event === \'deleted\':45',
         3 => NULL,
       ),
       13 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\StrictComparisonOfDifferentTypesRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$authUser:31',
+        2 => '$event === \'deleted\':45',
         3 => NULL,
       ),
       14 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$authUser->getKey():33',
+        2 => '$model->getOriginal():46',
         3 => NULL,
       ),
       15 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ElseIfConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$request:35',
+        2 => '$model->getChanges():48',
         3 => NULL,
       ),
       16 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\TernaryOperatorConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$request->header(\'X-Auth-Token\'):36',
+        2 => '!empty($changes):49',
         3 => NULL,
       ),
       17 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanNotConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$request->header(\'X-Auth-Token\'):36',
+        2 => 'empty($changes):49',
         3 => NULL,
       ),
       18 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$request->bearerToken():36',
+        2 => '$model->getOriginal($k):53',
         3 => NULL,
       ),
       19 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeStaticMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'is_string($token) && $token !== \'\':37',
+        2 => '\\App\\Models\\Audit::create([\'user_id\' => $userId, \'auditable_type\' => get_class($model), \'auditable_id\' => $model->getKey(), \'event\' => $event, \'old_values\' => $old, \'new_values\' => $new, \'url\' => $request?->fullUrl(), \'ip_address\' => $request?->ip(), \'user_agent\' => $request?->userAgent()]):61',
         3 => NULL,
       ),
       20 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'is_string($token):37',
+        2 => 'get_class($model):63',
         3 => NULL,
       ),
       21 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\StrictComparisonOfDifferentTypesRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$token !== \'\':37',
+        2 => '$model->getKey():64',
         3 => NULL,
       ),
       22 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'is_string($token):37',
+        2 => '$request->fullUrl():68',
         3 => NULL,
       ),
       23 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$token !== \'\':37',
+        2 => '$request->ip():69',
         3 => NULL,
       ),
       24 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'is_string($token) && $token !== \'\':37',
+        2 => '$request->userAgent():70',
         3 => NULL,
       ),
       25 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '\\App\\Models\\User::where(\'api_token\', $token)->first():38',
+        2 => 'self::$resolvedUserId !== null:76',
         3 => NULL,
       ),
       26 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeStaticMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\StrictComparisonOfDifferentTypesRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '\\App\\Models\\User::where(\'api_token\', $token):38',
+        2 => 'self::$resolvedUserId !== null:76',
         3 => NULL,
       ),
       27 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\TernaryOperatorConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$u:39',
+        2 => 'function_exists(\'auth\'):82',
         3 => NULL,
       ),
       28 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$event === \'created\':46',
+        2 => 'function_exists(\'auth\'):82',
         3 => NULL,
       ),
       29 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\StrictComparisonOfDifferentTypesRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$event === \'created\':46',
+        2 => 'auth()->user():83',
         3 => NULL,
       ),
       30 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$model->getAttributes():47',
+        2 => 'auth():83',
         3 => NULL,
       ),
       31 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ElseIfConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$event === \'deleted\':48',
+        2 => '$authUser:84',
         3 => NULL,
       ),
       32 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\StrictComparisonOfDifferentTypesRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$event === \'deleted\':48',
+        2 => '$authUser->getKey():85',
         3 => NULL,
       ),
       33 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$model->getOriginal():49',
+        2 => '$userId === null && $request:89',
         3 => NULL,
       ),
       34 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\StrictComparisonOfDifferentTypesRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$model->getChanges():51',
+        2 => '$userId === null:89',
         3 => NULL,
       ),
       35 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '!empty($changes):52',
+        2 => '$userId === null:89',
         3 => NULL,
       ),
       36 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\BooleanNotConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'empty($changes):52',
+        2 => '$request:89',
         3 => NULL,
       ),
       37 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$model->getOriginal($k):56',
+        2 => '$userId === null && $request:89',
         3 => NULL,
       ),
       38 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeStaticMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\TernaryOperatorConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '\\App\\Models\\Audit::create([\'user_id\' => $userId, \'auditable_type\' => get_class($model), \'auditable_id\' => $model->getKey(), \'event\' => $event, \'old_values\' => $old, \'new_values\' => $new, \'url\' => $request ? $request->fullUrl() : null, \'ip_address\' => $request ? $request->ip() : null, \'user_agent\' => $request ? $request->userAgent() : null]):64',
+        2 => '$request->header(\'X-Auth-Token\'):90',
         3 => NULL,
       ),
       39 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => 'get_class($model):66',
+        2 => '$request->header(\'X-Auth-Token\'):90',
         3 => NULL,
       ),
       40 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$model->getKey():67',
+        2 => '$request->bearerToken():90',
         3 => NULL,
       ),
       41 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\TernaryOperatorConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$request:71',
+        2 => 'is_string($token) && $token !== \'\':91',
         3 => NULL,
       ),
       42 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$request->fullUrl():71',
+        2 => 'is_string($token):91',
         3 => NULL,
       ),
       43 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\TernaryOperatorConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\StrictComparisonOfDifferentTypesRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$request:72',
+        2 => '$token !== \'\':91',
         3 => NULL,
       ),
       44 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$request->ip():72',
+        2 => 'is_string($token):91',
         3 => NULL,
       ),
       45 => 
       array (
-        0 => 'PHPStan\\Rules\\Comparison\\TernaryOperatorConstantConditionRule',
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$request:73',
+        2 => '$token !== \'\':91',
         3 => NULL,
       ),
       46 => 
       array (
+        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
+        1 => 'App\\Traits\\Auditable',
+        2 => 'is_string($token) && $token !== \'\':91',
+        3 => NULL,
+      ),
+      47 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeStaticMethodCallRule',
+        1 => 'App\\Traits\\Auditable',
+        2 => '\\App\\Models\\User::hashToken($token):92',
+        3 => NULL,
+      ),
+      48 => 
+      array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Traits\\Auditable',
-        2 => '$request->userAgent():73',
+        2 => '\\App\\Models\\User::where(\'api_token\', $hashedToken)->value(\'id\'):93',
+        3 => NULL,
+      ),
+      49 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeStaticMethodCallRule',
+        1 => 'App\\Traits\\Auditable',
+        2 => '\\App\\Models\\User::where(\'api_token\', $hashedToken):93',
+        3 => NULL,
+      ),
+      50 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\TernaryOperatorConstantConditionRule',
+        1 => 'App\\Traits\\Auditable',
+        2 => '$userId !== null:97',
+        3 => NULL,
+      ),
+      51 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\StrictComparisonOfDifferentTypesRule',
+        1 => 'App\\Traits\\Auditable',
+        2 => '$userId !== null:97',
         3 => NULL,
       ),
     ),
@@ -4597,7 +4521,7 @@ return [
       0 => 
       array (
         0 => 'call_user_func',
-        1 => 15,
+        1 => 17,
       ),
     ),
     'PHPStan\\Rules\\DeadCode\\PossiblyPureStaticCallCollector' => 
@@ -4606,7 +4530,19 @@ return [
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Builder',
         1 => 'create',
-        2 => 64,
+        2 => 61,
+      ),
+      1 => 
+      array (
+        0 => 'Illuminate\\Cache\\Repository',
+        1 => 'put',
+        2 => 396,
+      ),
+      2 => 
+      array (
+        0 => 'Illuminate\\Cache\\Repository',
+        1 => 'forget',
+        2 => 414,
       ),
     ),
     'PHPStan\\Rules\\Traits\\TraitUseCollector' => 
@@ -4742,10 +4678,11 @@ return [
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
         1 => 'Illuminate\\Notifications\\Notifiable',
+        2 => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
       ),
     ),
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php' => 
   array (
     'PHPStan\\Rules\\Traits\\TraitUseCollector' => 
     array (
@@ -4901,7 +4838,7 @@ return [
       0 => 
       array (
         0 => 'App\\Traits\\Auditable',
-        1 => 8,
+        1 => 9,
       ),
     ),
   ),
@@ -4918,6 +4855,20 @@ return [
   ),
 ); },
 	'dependencies' => array (
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Console\\Commands\\DatabaseBackup.php' => 
+  array (
+    'fileHash' => '7133daeb692f693008190c7a7b7a284a68fac42327bb4a4a0d9dcd59d7438ffc',
+    'dependentFiles' => 
+    array (
+    ),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Console\\Commands\\PartitionAudits.php' => 
+  array (
+    'fileHash' => '1835737f27898d1665ad99151198e39023dca18f9b419ca903f6e2a340eab8c1',
+    'dependentFiles' => 
+    array (
+    ),
+  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Console\\Commands\\SimulateTelemetry.php' => 
   array (
     'fileHash' => '814071fd3569dc29aa6c2be2887fc6d0817f1dc18ba6542b1e748a2773e2ccd8',
@@ -4950,14 +4901,14 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminController.php' => 
   array (
-    'fileHash' => 'cee4f3d8f3d194af6d384b4c1b4650e6d108e8fec1cece55438eab78723397ba',
+    'fileHash' => '6ad0e1d3698fafdd4d6027092c5980a1aa5bcf052ba9cd9a20c1e6c230e905ca',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php' => 
   array (
-    'fileHash' => 'bb307b8974813042c7fe743bf6821809c75cfb0ba1ff40c1e5ae5649818fea3f',
+    'fileHash' => '932734b7b23132882d64a43545ae91e0e2cb83cfaca715a21c4027f1ec69600a',
     'dependentFiles' => 
     array (
     ),
@@ -4978,14 +4929,14 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuthController.php' => 
   array (
-    'fileHash' => 'ed9222bb0dc8a488d0ce4233c75004d723b60f1fd6f322d6fe7301d284c4e4a6',
+    'fileHash' => '0ae243816ea2c9700ebc10b050f836c71b327d96fbeec0bd12a382c711de2f3a',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\CalendarController.php' => 
   array (
-    'fileHash' => 'ac3998ea0cdd3b76da48f8afc52f3156bd64b844a4d2fc8ee41d7c453407ec38',
+    'fileHash' => '52f9fe5cf57d1c9a9418781d40bdb1423c43ebbbad63f4dc57f40f35c8ad068e',
     'dependentFiles' => 
     array (
     ),
@@ -5001,32 +4952,23 @@ return [
       3 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuditController.php',
       4 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuthController.php',
       5 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\CalendarController.php',
-      6 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\EquipmentController.php',
-      7 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\NotificationController.php',
-      8 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\PageController.php',
-      9 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php',
-      10 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-      11 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
-      12 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UserController.php',
-    ),
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\EquipmentController.php' => 
-  array (
-    'fileHash' => '089d219206f04da281cb67e1a561109cb3031dd1ed8003ea1dc8c1fe07bc3f06',
-    'dependentFiles' => 
-    array (
+      6 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\NotificationController.php',
+      7 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\PageController.php',
+      8 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php',
+      9 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
+      10 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\NotificationController.php' => 
   array (
-    'fileHash' => 'ee76d58b58f98084ee4e51e61950fe39f3c2d189874f3323b86cf5fade837358',
+    'fileHash' => '83f1199c663599bc0bc2ba1c328e75b929319f7cc6d413d35455c8226279d136',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\PageController.php' => 
   array (
-    'fileHash' => 'c8316bfbe63817d5f6df4ea9f3802a26a4a2a046ac9f52cf94ce0af87bce3d36',
+    'fileHash' => '2b92e4ad5c3f793d8c2cef9372e74a99a8f3b89738c558b12859d01abcf5a94a',
     'dependentFiles' => 
     array (
     ),
@@ -5040,7 +4982,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php' => 
   array (
-    'fileHash' => 'bb432767649d6107134478b3448469033c8cec7c4ce2b2d42bcd5d794ff8f72b',
+    'fileHash' => '524968239a9fde9b0ad8a9cb1d665fd5473c08a962b6a8360cf9f5731b3f5593',
     'dependentFiles' => 
     array (
     ),
@@ -5048,13 +4990,6 @@ return [
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php' => 
   array (
     'fileHash' => 'e9e3bc3eb6e07d5a1adcb44658fbeb29d42360ca544d6f26a339ba617121023b',
-    'dependentFiles' => 
-    array (
-    ),
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UserController.php' => 
-  array (
-    'fileHash' => 'cd9a57cddb39859679020bd2fbcc74c6053312275897ba4d8b4a5174cf7c146d',
     'dependentFiles' => 
     array (
     ),
@@ -5068,7 +5003,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php' => 
   array (
-    'fileHash' => 'daeb2f8c7b7cc75debedb833d7dfd404ba3d743476ff28fd4d27fcf519180376',
+    'fileHash' => '54f5f9a95d2f7e504d3df386ba1661b5e73cbab5e2d11aefe1e7918a96c35830',
     'dependentFiles' => 
     array (
     ),
@@ -5089,7 +5024,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\SecurityHeaders.php' => 
   array (
-    'fileHash' => 'd90a4154ba95483663385adcf6aa93ab826d63053300a807c5df595ce54658ce',
+    'fileHash' => '51b04585aa11aaac30b956076fbd44e5091d168ac6df6313f1a16e795a691eda',
     'dependentFiles' => 
     array (
     ),
@@ -5118,7 +5053,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Audit.php' => 
   array (
-    'fileHash' => '149548fb8315ba9f09685073a7c23df1aaacfe496c3e509b74e440f84072e3d6',
+    'fileHash' => '5aec5f0b9194bf607d51a891898d97fe749dc6fc7dda1c96cf79c3abf9e8ca38',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php',
@@ -5128,28 +5063,19 @@ return [
       4 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
     ),
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Category.php' => 
-  array (
-    'fileHash' => '40f149bdd5c3e829a60c4e7dbc1f78ade091460cb9d0e89471f04ea199eb31ce',
-    'dependentFiles' => 
-    array (
-    ),
-  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php' => 
   array (
-    'fileHash' => '2f18050bf6fe79682e89379f0e96264b350f3dbc997d14d9f30925dcfb66de45',
+    'fileHash' => '782d56fcf298d659e5271b83c682bb9769ff1c0378e8da57c7dddb6a8af4a1a4',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Console\\Commands\\SimulateTelemetry.php',
       1 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminController.php',
-      2 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php',
-      3 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\CalendarController.php',
-      4 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\EquipmentController.php',
-      5 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
-      6 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\EquipmentCategory.php',
-      7 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php',
-      8 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
-      9 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
+      2 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\CalendarController.php',
+      3 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
+      4 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\EquipmentCategory.php',
+      5 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php',
+      6 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
+      7 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\EquipmentCategory.php' => 
@@ -5172,19 +5098,18 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php' => 
   array (
-    'fileHash' => 'a38b9c655bf304912c1c150c5f93cafecd7f240414b61e7beea7ec273d690891',
+    'fileHash' => '651ddc9d23c8858b50afc83709d97fe117143874e7bf333c27d73b601bd55c10',
     'dependentFiles' => 
     array (
-      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php',
-      1 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php',
-      2 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
-      3 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php',
-      4 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
+      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php',
+      1 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
+      2 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php',
+      3 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php' => 
   array (
-    'fileHash' => 'c33313369e7564852a1b93c624172ca6db5b3e9101e606534dc43f48dd54aa37',
+    'fileHash' => 'f2eb03c0b44d7544ece896ead2e85a8a2af27fc720e2032c026abde35ed3212a',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Console\\Commands\\SimulateTelemetry.php',
@@ -5254,7 +5179,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php' => 
   array (
-    'fileHash' => 'e33a9a13c62677e2e7262605a4aec926a11ff62d22b9c99d046fb55be26a618b',
+    'fileHash' => '9616a7eea7cbf51e4829821e20c730aee9970056992fe22b279d18315dd19c0c',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Console\\Commands\\SimulateTelemetry.php',
@@ -5267,23 +5192,22 @@ return [
       7 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php',
       8 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
       9 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
-      10 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UserController.php',
-      11 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php',
-      12 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RateLimitMiddleware.php',
-      13 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RoleMiddleware.php',
-      14 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Audit.php',
-      15 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php',
-      16 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Notification.php',
-      17 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php',
-      18 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
-      19 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketAttachment.php',
-      20 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketComment.php',
-      21 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php',
-      22 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php',
-      23 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
+      10 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php',
+      11 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RateLimitMiddleware.php',
+      12 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RoleMiddleware.php',
+      13 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Audit.php',
+      14 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php',
+      15 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Notification.php',
+      16 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php',
+      17 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
+      18 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketAttachment.php',
+      19 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketComment.php',
+      20 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php',
+      21 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php',
+      22 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
     ),
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php' => 
   array (
     'fileHash' => 'c78095089c35d79d044a292d4ac26a0b9280813a74ac8cd1a6ffe3922a11559d',
     'dependentFiles' => 
@@ -5298,20 +5222,19 @@ return [
       7 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php',
       8 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
       9 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
-      10 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UserController.php',
-      11 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php',
-      12 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RateLimitMiddleware.php',
-      13 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RoleMiddleware.php',
-      14 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Audit.php',
-      15 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php',
-      16 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Notification.php',
-      17 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php',
-      18 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
-      19 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketAttachment.php',
-      20 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketComment.php',
-      21 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php',
-      22 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
-      23 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
+      10 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php',
+      11 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RateLimitMiddleware.php',
+      12 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RoleMiddleware.php',
+      13 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Audit.php',
+      14 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php',
+      15 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Notification.php',
+      16 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php',
+      17 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
+      18 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketAttachment.php',
+      19 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketComment.php',
+      20 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php',
+      21 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
+      22 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\NewTicketNotification.php' => 
@@ -5345,14 +5268,14 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\AppServiceProvider.php' => 
   array (
-    'fileHash' => 'caf306ef6a25a547bbb7edd5508a39b51c365083eb6dd58378cf2242018e94c7',
+    'fileHash' => '200dad3f50a142863dd210eecf1c5c2511218b8e4f7816511d4b5dddf590fae8',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php' => 
   array (
-    'fileHash' => 'd25df3a51daa77ba12d81713cca0d12b1f22ccc84a9fe69421f063be1c7c55c6',
+    'fileHash' => 'a0dbdd8e9ba144380b5d5aa011107974b521c50dd9c276019bf748137d1b6ac3',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
@@ -5360,7 +5283,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Traits\\Auditable.php' => 
   array (
-    'fileHash' => 'abda73c6002ef2c3ab9357c0c9b34e514848a18861606cb15c632f2487674d4c',
+    'fileHash' => 'd0ace2e3521260e41816d729666bef984d68ef27b6d70bb5c403e35e954a5071',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Console\\Commands\\SimulateTelemetry.php',
@@ -5370,22 +5293,21 @@ return [
       4 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminController.php',
       5 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php',
       6 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\CalendarController.php',
-      7 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\EquipmentController.php',
-      8 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php',
-      9 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-      10 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
-      11 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Mail\\TicketCreated.php',
-      12 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php',
-      13 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\EquipmentCategory.php',
-      14 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php',
-      15 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
-      16 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketAttachment.php',
-      17 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketComment.php',
-      18 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketStatus.php',
-      19 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php',
-      20 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
-      21 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\TicketStatusChanged.php',
-      22 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
+      7 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php',
+      8 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
+      9 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
+      10 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Mail\\TicketCreated.php',
+      11 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php',
+      12 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\EquipmentCategory.php',
+      13 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php',
+      14 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
+      15 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketAttachment.php',
+      16 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketComment.php',
+      17 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketStatus.php',
+      18 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php',
+      19 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
+      20 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\TicketStatusChanged.php',
+      21 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
     ),
     'usedTraitDependentFiles' => 
     array (
@@ -5418,25 +5340,27 @@ return [
     1 => 'laravel/framework',
     2 => 'nesbot/carbon',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Events\\TicketStatusUpdatedBroadcast.php' => 
-  array (
-    0 => 'laravel/framework',
-  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Exports\\TicketsExport.php' => 
   array (
     0 => 'maatwebsite/excel',
     1 => 'laravel/framework',
     2 => 'phpoffice/phpspreadsheet',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuthController.php' => 
   array (
     0 => 'zircote/swagger-php',
     1 => 'laravel/framework',
     2 => 'symfony/http-foundation',
     3 => 'nesbot/carbon',
-    4 => 'barryvdh/laravel-dompdf',
-    5 => 'dompdf/dompdf',
-    6 => 'maatwebsite/excel',
+    4 => 'psr/simple-cache',
+    5 => 'symfony/http-kernel',
+    6 => 'psr/container',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Controller.php' => 
+  array (
+    0 => 'symfony/http-kernel',
+    1 => 'laravel/framework',
+    2 => 'symfony/http-foundation',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php' => 
   array (
@@ -5456,88 +5380,6 @@ return [
     3 => 'psr/container',
     4 => 'nesbot/carbon',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\SecurityHeaders.php' => 
-  array (
-    0 => 'laravel/framework',
-    1 => 'symfony/http-foundation',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php' => 
-  array (
-    0 => 'laravel/framework',
-    1 => 'symfony/http-foundation',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php' => 
-  array (
-    0 => 'laravel/framework',
-    1 => 'symfony/http-foundation',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketType.php' => 
-  array (
-    0 => 'laravel/framework',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\NewTicketNotification.php' => 
-  array (
-    0 => 'laravel/framework',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\TicketNotification.php' => 
-  array (
-    0 => 'laravel/framework',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\TicketStatusChanged.php' => 
-  array (
-    0 => 'laravel/framework',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\OpenApi\\OpenApiSpec.php' => 
-  array (
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php' => 
-  array (
-    0 => 'laravel/framework',
-    1 => 'openai-php/client',
-    2 => 'openai-php/laravel',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Traits\\ControllerHelpers.php' => 
-  array (
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminController.php' => 
-  array (
-    0 => 'symfony/http-kernel',
-    1 => 'laravel/framework',
-    2 => 'symfony/http-foundation',
-    3 => 'zircote/swagger-php',
-    4 => 'nesbot/carbon',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Controller.php' => 
-  array (
-    0 => 'symfony/http-kernel',
-    1 => 'laravel/framework',
-    2 => 'symfony/http-foundation',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\EquipmentController.php' => 
-  array (
-    0 => 'laravel/framework',
-    1 => 'symfony/http-foundation',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\PageController.php' => 
-  array (
-    0 => 'laravel/framework',
-    1 => 'symfony/http-foundation',
-    2 => 'symfony/http-kernel',
-    3 => 'psr/container',
-    4 => 'symfony/mailer',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php' => 
-  array (
-    0 => 'symfony/http-kernel',
-    1 => 'laravel/framework',
-    2 => 'symfony/http-foundation',
-    3 => 'zircote/swagger-php',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UserController.php' => 
-  array (
-    0 => 'laravel/framework',
-    1 => 'symfony/http-foundation',
-  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RateLimitMiddleware.php' => 
   array (
     0 => 'laravel/framework',
@@ -5549,21 +5391,18 @@ return [
     1 => 'symfony/http-foundation',
     2 => 'symfony/console',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\EquipmentCategory.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php' => 
   array (
     0 => 'laravel/framework',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Notification.php' => 
-  array (
-    0 => 'laravel/framework',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php' => 
-  array (
-    0 => 'laravel/framework',
-    1 => 'symfony/http-foundation',
-    2 => 'nesbot/carbon',
+    1 => 'psr/log',
+    2 => 'monolog/monolog',
+    3 => 'symfony/http-foundation',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketAttachment.php' => 
+  array (
+    0 => 'laravel/framework',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketComment.php' => 
   array (
     0 => 'laravel/framework',
   ),
@@ -5571,20 +5410,35 @@ return [
   array (
     0 => 'laravel/framework',
   ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php' => 
+  array (
+    0 => 'laravel/framework',
+  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php' => 
+  array (
+    0 => 'laravel/framework',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\TicketStatusChanged.php' => 
   array (
     0 => 'laravel/framework',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\AppServiceProvider.php' => 
   array (
     0 => 'laravel/framework',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Traits\\Auditable.php' => 
-  array (
+    1 => 'psr/log',
+    2 => 'monolog/monolog',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Events\\TicketCreatedBroadcast.php' => 
   array (
     0 => 'laravel/framework',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminController.php' => 
+  array (
+    0 => 'symfony/http-kernel',
+    1 => 'laravel/framework',
+    2 => 'symfony/http-foundation',
+    3 => 'zircote/swagger-php',
+    4 => 'nesbot/carbon',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\ApiDocsController.php' => 
   array (
@@ -5597,14 +5451,92 @@ return [
     1 => 'laravel/framework',
     2 => 'symfony/http-foundation',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuthController.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php' => 
+  array (
+    0 => 'symfony/http-kernel',
+    1 => 'laravel/framework',
+    2 => 'symfony/http-foundation',
+    3 => 'zircote/swagger-php',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php' => 
+  array (
+    0 => 'laravel/framework',
+    1 => 'symfony/http-foundation',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RoleMiddleware.php' => 
+  array (
+    0 => 'laravel/framework',
+    1 => 'symfony/http-foundation',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\SecurityHeaders.php' => 
+  array (
+    0 => 'laravel/framework',
+    1 => 'symfony/http-foundation',
+    2 => 'symfony/http-kernel',
+    3 => 'psr/container',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Mail\\TestMail.php' => 
+  array (
+    0 => 'laravel/framework',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Mail\\TicketCreated.php' => 
+  array (
+    0 => 'laravel/framework',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Audit.php' => 
+  array (
+    0 => 'laravel/framework',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\EquipmentCategory.php' => 
+  array (
+    0 => 'laravel/framework',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php' => 
+  array (
+    0 => 'laravel/framework',
+    1 => 'psr/log',
+    2 => 'monolog/monolog',
+    3 => 'symfony/http-foundation',
+    4 => 'psr/simple-cache',
+    5 => 'nesbot/carbon',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketType.php' => 
+  array (
+    0 => 'laravel/framework',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\OpenApi\\OpenApiSpec.php' => 
+  array (
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Traits\\Auditable.php' => 
+  array (
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Console\\Commands\\DatabaseBackup.php' => 
+  array (
+    0 => 'symfony/console',
+    1 => 'laravel/framework',
+    2 => 'nesbot/carbon',
+    3 => 'symfony/finder',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Console\\Commands\\PartitionAudits.php' => 
+  array (
+    0 => 'symfony/console',
+    1 => 'laravel/framework',
+    2 => 'nesbot/carbon',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Events\\TicketStatusUpdatedBroadcast.php' => 
+  array (
+    0 => 'laravel/framework',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php' => 
   array (
     0 => 'zircote/swagger-php',
     1 => 'laravel/framework',
     2 => 'symfony/http-foundation',
     3 => 'nesbot/carbon',
-    4 => 'symfony/http-kernel',
-    5 => 'psr/container',
+    4 => 'psr/simple-cache',
+    5 => 'barryvdh/laravel-dompdf',
+    6 => 'dompdf/dompdf',
+    7 => 'maatwebsite/excel',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\CalendarController.php' => 
   array (
@@ -5621,10 +5553,13 @@ return [
     4 => 'psr/log',
     5 => 'monolog/monolog',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\PageController.php' => 
   array (
     0 => 'laravel/framework',
     1 => 'symfony/http-foundation',
+    2 => 'symfony/http-kernel',
+    3 => 'psr/container',
+    4 => 'symfony/mailer',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CsrfMiddleware.php' => 
   array (
@@ -5633,41 +5568,228 @@ return [
     2 => 'psr/log',
     3 => 'monolog/monolog',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RoleMiddleware.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php' => 
   array (
     0 => 'laravel/framework',
-    1 => 'symfony/http-foundation',
+    1 => 'psr/log',
+    2 => 'monolog/monolog',
+    3 => 'symfony/http-foundation',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Mail\\TestMail.php' => 
-  array (
-    0 => 'laravel/framework',
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Mail\\TicketCreated.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Notification.php' => 
   array (
     0 => 'laravel/framework',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Audit.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php' => 
   array (
     0 => 'laravel/framework',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Category.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\NewTicketNotification.php' => 
   array (
     0 => 'laravel/framework',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketComment.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\TicketNotification.php' => 
   array (
     0 => 'laravel/framework',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php' => 
   array (
     0 => 'laravel/framework',
+    1 => 'openai-php/client',
+    2 => 'openai-php/laravel',
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Traits\\ControllerHelpers.php' => 
   array (
-    0 => 'laravel/framework',
   ),
 ),
 	'exportedNodesCallback' => static function (): array { return array (
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Console\\Commands\\DatabaseBackup.php' => 
+  array (
+    0 => 
+    \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
+       'name' => 'App\\Console\\Commands\\DatabaseBackup',
+       'phpDoc' => NULL,
+       'abstract' => false,
+       'final' => false,
+       'extends' => 'Illuminate\\Console\\Command',
+       'implements' => 
+      array (
+      ),
+       'usedTraits' => 
+      array (
+      ),
+       'traitUseAdaptations' => 
+      array (
+      ),
+       'statements' => 
+      array (
+        0 => 
+        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
+           'names' => 
+          array (
+            0 => 'signature',
+          ),
+           'phpDoc' => NULL,
+           'type' => NULL,
+           'public' => false,
+           'private' => false,
+           'static' => false,
+           'readonly' => false,
+           'abstract' => false,
+           'final' => false,
+           'publicSet' => false,
+           'protectedSet' => false,
+           'privateSet' => false,
+           'virtual' => false,
+           'attributes' => 
+          array (
+          ),
+           'hooks' => 
+          array (
+          ),
+        )),
+        1 => 
+        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
+           'names' => 
+          array (
+            0 => 'description',
+          ),
+           'phpDoc' => NULL,
+           'type' => NULL,
+           'public' => false,
+           'private' => false,
+           'static' => false,
+           'readonly' => false,
+           'abstract' => false,
+           'final' => false,
+           'publicSet' => false,
+           'protectedSet' => false,
+           'privateSet' => false,
+           'virtual' => false,
+           'attributes' => 
+          array (
+          ),
+           'hooks' => 
+          array (
+          ),
+        )),
+        2 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'handle',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'int',
+           'parameters' => 
+          array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+      ),
+       'attributes' => 
+      array (
+      ),
+    )),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Console\\Commands\\PartitionAudits.php' => 
+  array (
+    0 => 
+    \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
+       'name' => 'App\\Console\\Commands\\PartitionAudits',
+       'phpDoc' => NULL,
+       'abstract' => false,
+       'final' => false,
+       'extends' => 'Illuminate\\Console\\Command',
+       'implements' => 
+      array (
+      ),
+       'usedTraits' => 
+      array (
+      ),
+       'traitUseAdaptations' => 
+      array (
+      ),
+       'statements' => 
+      array (
+        0 => 
+        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
+           'names' => 
+          array (
+            0 => 'signature',
+          ),
+           'phpDoc' => NULL,
+           'type' => NULL,
+           'public' => false,
+           'private' => false,
+           'static' => false,
+           'readonly' => false,
+           'abstract' => false,
+           'final' => false,
+           'publicSet' => false,
+           'protectedSet' => false,
+           'privateSet' => false,
+           'virtual' => false,
+           'attributes' => 
+          array (
+          ),
+           'hooks' => 
+          array (
+          ),
+        )),
+        1 => 
+        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
+           'names' => 
+          array (
+            0 => 'description',
+          ),
+           'phpDoc' => NULL,
+           'type' => NULL,
+           'public' => false,
+           'private' => false,
+           'static' => false,
+           'readonly' => false,
+           'abstract' => false,
+           'final' => false,
+           'publicSet' => false,
+           'protectedSet' => false,
+           'privateSet' => false,
+           'virtual' => false,
+           'attributes' => 
+          array (
+          ),
+           'hooks' => 
+          array (
+          ),
+        )),
+        2 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'handle',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'int',
+           'parameters' => 
+          array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+      ),
+       'attributes' => 
+      array (
+      ),
+    )),
+  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Console\\Commands\\SimulateTelemetry.php' => 
   array (
     0 => 
@@ -7160,8 +7282,8 @@ return [
               'user' => 'App\\Models\\User',
               'pdf' => 'Barryvdh\\DomPDF\\Facade\\Pdf',
               'request' => 'Illuminate\\Http\\Request',
-              'carbon' => 'Illuminate\\Support\\Carbon',
-              'collection' => 'Illuminate\\Support\\Collection',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
+              'db' => 'Illuminate\\Support\\Facades\\DB',
               'excel' => 'Maatwebsite\\Excel\\Facades\\Excel',
               'oa' => 'OpenApi\\Attributes',
               'streamedresponse' => 'Symfony\\Component\\HttpFoundation\\StreamedResponse',
@@ -7226,8 +7348,8 @@ return [
               'user' => 'App\\Models\\User',
               'pdf' => 'Barryvdh\\DomPDF\\Facade\\Pdf',
               'request' => 'Illuminate\\Http\\Request',
-              'carbon' => 'Illuminate\\Support\\Carbon',
-              'collection' => 'Illuminate\\Support\\Collection',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
+              'db' => 'Illuminate\\Support\\Facades\\DB',
               'excel' => 'Maatwebsite\\Excel\\Facades\\Excel',
               'oa' => 'OpenApi\\Attributes',
               'streamedresponse' => 'Symfony\\Component\\HttpFoundation\\StreamedResponse',
@@ -7292,8 +7414,8 @@ return [
               'user' => 'App\\Models\\User',
               'pdf' => 'Barryvdh\\DomPDF\\Facade\\Pdf',
               'request' => 'Illuminate\\Http\\Request',
-              'carbon' => 'Illuminate\\Support\\Carbon',
-              'collection' => 'Illuminate\\Support\\Collection',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
+              'db' => 'Illuminate\\Support\\Facades\\DB',
               'excel' => 'Maatwebsite\\Excel\\Facades\\Excel',
               'oa' => 'OpenApi\\Attributes',
               'streamedresponse' => 'Symfony\\Component\\HttpFoundation\\StreamedResponse',
@@ -7358,8 +7480,8 @@ return [
               'user' => 'App\\Models\\User',
               'pdf' => 'Barryvdh\\DomPDF\\Facade\\Pdf',
               'request' => 'Illuminate\\Http\\Request',
-              'carbon' => 'Illuminate\\Support\\Carbon',
-              'collection' => 'Illuminate\\Support\\Collection',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
+              'db' => 'Illuminate\\Support\\Facades\\DB',
               'excel' => 'Maatwebsite\\Excel\\Facades\\Excel',
               'oa' => 'OpenApi\\Attributes',
               'streamedresponse' => 'Symfony\\Component\\HttpFoundation\\StreamedResponse',
@@ -7424,8 +7546,8 @@ return [
               'user' => 'App\\Models\\User',
               'pdf' => 'Barryvdh\\DomPDF\\Facade\\Pdf',
               'request' => 'Illuminate\\Http\\Request',
-              'carbon' => 'Illuminate\\Support\\Carbon',
-              'collection' => 'Illuminate\\Support\\Collection',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
+              'db' => 'Illuminate\\Support\\Facades\\DB',
               'excel' => 'Maatwebsite\\Excel\\Facades\\Excel',
               'oa' => 'OpenApi\\Attributes',
               'streamedresponse' => 'Symfony\\Component\\HttpFoundation\\StreamedResponse',
@@ -7848,6 +7970,7 @@ return [
               'user' => 'App\\Models\\User',
               'userprofile' => 'App\\Models\\UserProfile',
               'request' => 'Illuminate\\Http\\Request',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
               'db' => 'Illuminate\\Support\\Facades\\DB',
               'hash' => 'Illuminate\\Support\\Facades\\Hash',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
@@ -7900,6 +8023,7 @@ return [
               'user' => 'App\\Models\\User',
               'userprofile' => 'App\\Models\\UserProfile',
               'request' => 'Illuminate\\Http\\Request',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
               'db' => 'Illuminate\\Support\\Facades\\DB',
               'hash' => 'Illuminate\\Support\\Facades\\Hash',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
@@ -8140,334 +8264,6 @@ return [
       ),
     )),
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\EquipmentController.php' => 
-  array (
-    0 => 
-    \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
-       'name' => 'App\\Http\\Controllers\\EquipmentController',
-       'phpDoc' => NULL,
-       'abstract' => false,
-       'final' => false,
-       'extends' => 'App\\Http\\Controllers\\Controller',
-       'implements' => 
-      array (
-      ),
-       'usedTraits' => 
-      array (
-      ),
-       'traitUseAdaptations' => 
-      array (
-      ),
-       'statements' => 
-      array (
-        0 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'index',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Display a listing of the resource.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'equipment' => 'App\\Models\\Equipment',
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => NULL,
-           'parameters' => 
-          array (
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        1 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'create',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Show the form for creating a new resource.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'equipment' => 'App\\Models\\Equipment',
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => NULL,
-           'parameters' => 
-          array (
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        2 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'store',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Store a newly created resource in storage.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'equipment' => 'App\\Models\\Equipment',
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => NULL,
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'request',
-               'type' => 'Illuminate\\Http\\Request',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        3 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'show',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Display the specified resource.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'equipment' => 'App\\Models\\Equipment',
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => NULL,
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'equipment',
-               'type' => 'App\\Models\\Equipment',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        4 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'edit',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Show the form for editing the specified resource.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'equipment' => 'App\\Models\\Equipment',
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => NULL,
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'equipment',
-               'type' => 'App\\Models\\Equipment',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        5 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'update',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Update the specified resource in storage.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'equipment' => 'App\\Models\\Equipment',
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => NULL,
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'request',
-               'type' => 'Illuminate\\Http\\Request',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-            1 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'equipment',
-               'type' => 'App\\Models\\Equipment',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        6 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'destroy',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Remove the specified resource from storage.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'equipment' => 'App\\Models\\Equipment',
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => NULL,
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'equipment',
-               'type' => 'App\\Models\\Equipment',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-      ),
-       'attributes' => 
-      array (
-      ),
-    )),
-  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\NotificationController.php' => 
   array (
     0 => 
@@ -8653,6 +8449,7 @@ return [
          'namespace' => 'App\\Http\\Controllers',
          'uses' => 
         array (
+          'request' => 'Illuminate\\Http\\Request',
           'mail' => 'Illuminate\\Support\\Facades\\Mail',
         ),
          'constUses' => 
@@ -8684,6 +8481,7 @@ return [
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
             array (
+              'request' => 'Illuminate\\Http\\Request',
               'mail' => 'Illuminate\\Support\\Facades\\Mail',
             ),
              'constUses' => 
@@ -8711,10 +8509,14 @@ return [
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
      * Alternar idioma da aplicação (pt / en).
+     *
+     * Se o utilizador já estiver autenticado (token presente no cookie),
+     * redireciona para o painel em vez da página de login.
      */',
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
             array (
+              'request' => 'Illuminate\\Http\\Request',
               'mail' => 'Illuminate\\Support\\Facades\\Mail',
             ),
              'constUses' => 
@@ -8731,6 +8533,19 @@ return [
            'parameters' => 
           array (
             0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'request',
+               'type' => 'Illuminate\\Http\\Request',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+            1 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'locale',
                'type' => 'string',
@@ -8759,6 +8574,7 @@ return [
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
             array (
+              'request' => 'Illuminate\\Http\\Request',
               'mail' => 'Illuminate\\Support\\Facades\\Mail',
             ),
              'constUses' => 
@@ -8790,6 +8606,7 @@ return [
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
             array (
+              'request' => 'Illuminate\\Http\\Request',
               'mail' => 'Illuminate\\Support\\Facades\\Mail',
             ),
              'constUses' => 
@@ -8821,6 +8638,7 @@ return [
              'namespace' => 'App\\Http\\Controllers',
              'uses' => 
             array (
+              'request' => 'Illuminate\\Http\\Request',
               'mail' => 'Illuminate\\Support\\Facades\\Mail',
             ),
              'constUses' => 
@@ -9366,6 +9184,7 @@ return [
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
+              'db' => 'Illuminate\\Support\\Facades\\DB',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'str' => 'Illuminate\\Support\\Str',
@@ -9422,6 +9241,7 @@ return [
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
+              'db' => 'Illuminate\\Support\\Facades\\DB',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'str' => 'Illuminate\\Support\\Str',
@@ -9478,6 +9298,7 @@ return [
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
+              'db' => 'Illuminate\\Support\\Facades\\DB',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'str' => 'Illuminate\\Support\\Str',
@@ -9534,6 +9355,7 @@ return [
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
+              'db' => 'Illuminate\\Support\\Facades\\DB',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'str' => 'Illuminate\\Support\\Str',
@@ -9603,6 +9425,7 @@ return [
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
+              'db' => 'Illuminate\\Support\\Facades\\DB',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'str' => 'Illuminate\\Support\\Str',
@@ -9672,6 +9495,7 @@ return [
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
+              'db' => 'Illuminate\\Support\\Facades\\DB',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'str' => 'Illuminate\\Support\\Str',
@@ -9741,6 +9565,7 @@ return [
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
+              'db' => 'Illuminate\\Support\\Facades\\DB',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'str' => 'Illuminate\\Support\\Str',
@@ -9810,6 +9635,7 @@ return [
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
+              'db' => 'Illuminate\\Support\\Facades\\DB',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'str' => 'Illuminate\\Support\\Str',
@@ -9879,6 +9705,7 @@ return [
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
+              'db' => 'Illuminate\\Support\\Facades\\DB',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'str' => 'Illuminate\\Support\\Str',
@@ -9948,6 +9775,7 @@ return [
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
+              'db' => 'Illuminate\\Support\\Facades\\DB',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'str' => 'Illuminate\\Support\\Str',
@@ -10017,6 +9845,7 @@ return [
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
+              'db' => 'Illuminate\\Support\\Facades\\DB',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'str' => 'Illuminate\\Support\\Str',
@@ -10086,6 +9915,7 @@ return [
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
+              'db' => 'Illuminate\\Support\\Facades\\DB',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'str' => 'Illuminate\\Support\\Str',
@@ -10156,6 +9986,7 @@ return [
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
+              'db' => 'Illuminate\\Support\\Facades\\DB',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'str' => 'Illuminate\\Support\\Str',
@@ -10241,6 +10072,7 @@ return [
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
+              'db' => 'Illuminate\\Support\\Facades\\DB',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'str' => 'Illuminate\\Support\\Str',
@@ -10313,6 +10145,7 @@ return [
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
+              'db' => 'Illuminate\\Support\\Facades\\DB',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'str' => 'Illuminate\\Support\\Str',
@@ -10369,6 +10202,7 @@ return [
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
+              'db' => 'Illuminate\\Support\\Facades\\DB',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'str' => 'Illuminate\\Support\\Str',
@@ -10438,6 +10272,7 @@ return [
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
+              'db' => 'Illuminate\\Support\\Facades\\DB',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'str' => 'Illuminate\\Support\\Str',
@@ -10507,6 +10342,7 @@ return [
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
+              'db' => 'Illuminate\\Support\\Facades\\DB',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'str' => 'Illuminate\\Support\\Str',
@@ -10594,6 +10430,7 @@ return [
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
+              'db' => 'Illuminate\\Support\\Facades\\DB',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'str' => 'Illuminate\\Support\\Str',
@@ -10652,6 +10489,7 @@ return [
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
+              'db' => 'Illuminate\\Support\\Facades\\DB',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'str' => 'Illuminate\\Support\\Str',
@@ -10722,6 +10560,7 @@ return [
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
+              'db' => 'Illuminate\\Support\\Facades\\DB',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'str' => 'Illuminate\\Support\\Str',
@@ -10794,6 +10633,7 @@ return [
               'aiservice' => 'App\\Services\\AIService',
               'controllerhelpers' => 'App\\Traits\\ControllerHelpers',
               'request' => 'Illuminate\\Http\\Request',
+              'db' => 'Illuminate\\Support\\Facades\\DB',
               'storage' => 'Illuminate\\Support\\Facades\\Storage',
               'validator' => 'Illuminate\\Support\\Facades\\Validator',
               'str' => 'Illuminate\\Support\\Str',
@@ -11658,334 +11498,6 @@ return [
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'request',
                'type' => 'Illuminate\\Http\\Request',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-      ),
-       'attributes' => 
-      array (
-      ),
-    )),
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UserController.php' => 
-  array (
-    0 => 
-    \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
-       'name' => 'App\\Http\\Controllers\\UserController',
-       'phpDoc' => NULL,
-       'abstract' => false,
-       'final' => false,
-       'extends' => 'App\\Http\\Controllers\\Controller',
-       'implements' => 
-      array (
-      ),
-       'usedTraits' => 
-      array (
-      ),
-       'traitUseAdaptations' => 
-      array (
-      ),
-       'statements' => 
-      array (
-        0 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'index',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Display a listing of the resource.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'user' => 'App\\Models\\User',
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => NULL,
-           'parameters' => 
-          array (
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        1 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'create',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Show the form for creating a new resource.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'user' => 'App\\Models\\User',
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => NULL,
-           'parameters' => 
-          array (
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        2 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'store',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Store a newly created resource in storage.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'user' => 'App\\Models\\User',
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => NULL,
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'request',
-               'type' => 'Illuminate\\Http\\Request',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        3 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'show',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Display the specified resource.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'user' => 'App\\Models\\User',
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => NULL,
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'user',
-               'type' => 'App\\Models\\User',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        4 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'edit',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Show the form for editing the specified resource.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'user' => 'App\\Models\\User',
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => NULL,
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'user',
-               'type' => 'App\\Models\\User',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        5 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'update',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Update the specified resource in storage.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'user' => 'App\\Models\\User',
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => NULL,
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'request',
-               'type' => 'Illuminate\\Http\\Request',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-            1 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'user',
-               'type' => 'App\\Models\\User',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        6 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'destroy',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Remove the specified resource from storage.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'user' => 'App\\Models\\User',
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => NULL,
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'user',
-               'type' => 'App\\Models\\User',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -13675,54 +13187,95 @@ return [
           array (
           ),
         )),
-      ),
-       'attributes' => 
-      array (
-      ),
-    )),
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Category.php' => 
-  array (
-    0 => 
-    \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
-       'name' => 'App\\Models\\Category',
-       'phpDoc' => NULL,
-       'abstract' => false,
-       'final' => false,
-       'extends' => 'Illuminate\\Database\\Eloquent\\Model',
-       'implements' => 
-      array (
-      ),
-       'usedTraits' => 
-      array (
-      ),
-       'traitUseAdaptations' => 
-      array (
-      ),
-       'statements' => 
-      array (
-        0 => 
-        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
-           'names' => 
-          array (
-            0 => 'fillable',
-          ),
-           'phpDoc' => NULL,
-           'type' => NULL,
-           'public' => false,
+        3 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'update',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Audit records are append-only: UPDATE is forbidden at the Eloquent level.
+     */',
+             'namespace' => 'App\\Models',
+             'uses' => 
+            array (
+              'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+              'model' => 'Illuminate\\Database\\Eloquent\\Model',
+              'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
            'private' => false,
-           'static' => false,
-           'readonly' => false,
            'abstract' => false,
            'final' => false,
-           'publicSet' => false,
-           'protectedSet' => false,
-           'privateSet' => false,
-           'virtual' => false,
+           'static' => false,
+           'returnType' => 'bool',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'attributes',
+               'type' => 'array',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => true,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+            1 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'options',
+               'type' => 'array',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => true,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
            'attributes' => 
           array (
           ),
-           'hooks' => 
+        )),
+        4 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'delete',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Audit records are append-only: DELETE is forbidden at the Eloquent level.
+     */',
+             'namespace' => 'App\\Models',
+             'uses' => 
+            array (
+              'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+              'model' => 'Illuminate\\Database\\Eloquent\\Model',
+              'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'bool',
+           'parameters' => 
+          array (
+          ),
+           'attributes' => 
           array (
           ),
         )),
@@ -13748,6 +13301,7 @@ return [
       array (
         0 => 'App\\Traits\\Auditable',
         1 => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+        2 => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
       ),
        'traitUseAdaptations' => 
       array (
@@ -14120,6 +13674,7 @@ return [
       array (
         0 => 'App\\Traits\\Auditable',
         1 => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+        2 => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
       ),
        'traitUseAdaptations' => 
       array (
@@ -14542,6 +14097,8 @@ return [
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+              'collection' => 'Illuminate\\Support\\Collection',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
             ),
              'constUses' => 
             array (
@@ -14578,6 +14135,8 @@ return [
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+              'collection' => 'Illuminate\\Support\\Collection',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
             ),
              'constUses' => 
             array (
@@ -14632,6 +14191,8 @@ return [
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+              'collection' => 'Illuminate\\Support\\Collection',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
             ),
              'constUses' => 
             array (
@@ -14668,6 +14229,8 @@ return [
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+              'collection' => 'Illuminate\\Support\\Collection',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
             ),
              'constUses' => 
             array (
@@ -14704,6 +14267,8 @@ return [
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+              'collection' => 'Illuminate\\Support\\Collection',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
             ),
              'constUses' => 
             array (
@@ -14740,6 +14305,8 @@ return [
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+              'collection' => 'Illuminate\\Support\\Collection',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
             ),
              'constUses' => 
             array (
@@ -14880,6 +14447,8 @@ return [
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+              'collection' => 'Illuminate\\Support\\Collection',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
             ),
              'constUses' => 
             array (
@@ -14942,6 +14511,8 @@ return [
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+              'collection' => 'Illuminate\\Support\\Collection',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
             ),
              'constUses' => 
             array (
@@ -15017,6 +14588,8 @@ return [
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+              'collection' => 'Illuminate\\Support\\Collection',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
             ),
              'constUses' => 
             array (
@@ -15054,6 +14627,8 @@ return [
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+              'collection' => 'Illuminate\\Support\\Collection',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
             ),
              'constUses' => 
             array (
@@ -15091,6 +14666,8 @@ return [
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+              'collection' => 'Illuminate\\Support\\Collection',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
             ),
              'constUses' => 
             array (
@@ -15127,6 +14704,8 @@ return [
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+              'collection' => 'Illuminate\\Support\\Collection',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
             ),
              'constUses' => 
             array (
@@ -15163,6 +14742,8 @@ return [
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+              'collection' => 'Illuminate\\Support\\Collection',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
             ),
              'constUses' => 
             array (
@@ -15189,6 +14770,7 @@ return [
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
      * Obtém o ID do status pelo nome na tabela `ticket_statuses`.
+     * Utiliza cache estático (per-request) + Cache facade (Redis/disk) para multi-server.
      */',
              'namespace' => 'App\\Models',
              'uses' => 
@@ -15199,6 +14781,8 @@ return [
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+              'collection' => 'Illuminate\\Support\\Collection',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
             ),
              'constUses' => 
             array (
@@ -15233,6 +14817,44 @@ return [
         )),
         35 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'flushStatusCache',
+           'phpDoc' => 
+          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
+             'phpDocString' => '/**
+     * Limpa todos os caches de status (estático + Redis).
+     */',
+             'namespace' => 'App\\Models',
+             'uses' => 
+            array (
+              'auditable' => 'App\\Traits\\Auditable',
+              'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+              'model' => 'Illuminate\\Database\\Eloquent\\Model',
+              'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
+              'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+              'collection' => 'Illuminate\\Support\\Collection',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
+            ),
+             'constUses' => 
+            array (
+            ),
+          )),
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => true,
+           'returnType' => 'void',
+           'parameters' => 
+          array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        36 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'hasStatus',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
@@ -15248,6 +14870,8 @@ return [
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+              'collection' => 'Illuminate\\Support\\Collection',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
             ),
              'constUses' => 
             array (
@@ -15280,7 +14904,7 @@ return [
           array (
           ),
         )),
-        36 => 
+        37 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'getLeastBusyTechnician',
            'phpDoc' => 
@@ -15297,6 +14921,8 @@ return [
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+              'collection' => 'Illuminate\\Support\\Collection',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
             ),
              'constUses' => 
             array (
@@ -15316,13 +14942,14 @@ return [
           array (
           ),
         )),
-        37 => 
+        38 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'getScheduledEvents',
            'phpDoc' => 
           \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
              'phpDocString' => '/**
      * Atalho de segurança para recolher eventos agendados para o FullCalendar.
+     * Filtra por intervalo de datas para evitar carregar todos os tickets agendados.
      */',
              'namespace' => 'App\\Models',
              'uses' => 
@@ -15333,6 +14960,8 @@ return [
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
               'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+              'collection' => 'Illuminate\\Support\\Collection',
+              'cache' => 'Illuminate\\Support\\Facades\\Cache',
             ),
              'constUses' => 
             array (
@@ -15344,9 +14973,35 @@ return [
            'abstract' => false,
            'final' => false,
            'static' => true,
-           'returnType' => NULL,
+           'returnType' => 'Illuminate\\Support\\Collection',
            'parameters' => 
           array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'from',
+               'type' => '?string',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => true,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+            1 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'to',
+               'type' => '?string',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => true,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
           ),
            'attributes' => 
           array (
@@ -15905,6 +15560,7 @@ return [
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
           'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
           'notifiable' => 'Illuminate\\Notifications\\Notifiable',
         ),
@@ -15922,6 +15578,7 @@ return [
       array (
         0 => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
         1 => 'Illuminate\\Notifications\\Notifiable',
+        2 => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
       ),
        'traitUseAdaptations' => 
       array (
@@ -15943,6 +15600,7 @@ return [
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
               'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
               'notifiable' => 'Illuminate\\Notifications\\Notifiable',
             ),
@@ -15983,6 +15641,7 @@ return [
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
               'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
               'notifiable' => 'Illuminate\\Notifications\\Notifiable',
             ),
@@ -16023,6 +15682,7 @@ return [
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
               'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
               'notifiable' => 'Illuminate\\Notifications\\Notifiable',
             ),
@@ -16063,6 +15723,7 @@ return [
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
               'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
               'notifiable' => 'Illuminate\\Notifications\\Notifiable',
             ),
@@ -16156,6 +15817,7 @@ return [
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
               'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
               'notifiable' => 'Illuminate\\Notifications\\Notifiable',
             ),
@@ -16191,6 +15853,7 @@ return [
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
               'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
               'notifiable' => 'Illuminate\\Notifications\\Notifiable',
             ),
@@ -16226,6 +15889,7 @@ return [
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
               'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
               'notifiable' => 'Illuminate\\Notifications\\Notifiable',
             ),
@@ -16261,6 +15925,7 @@ return [
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
               'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
               'notifiable' => 'Illuminate\\Notifications\\Notifiable',
             ),
@@ -16296,6 +15961,7 @@ return [
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
               'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
               'notifiable' => 'Illuminate\\Notifications\\Notifiable',
             ),
@@ -16331,6 +15997,7 @@ return [
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
               'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
               'notifiable' => 'Illuminate\\Notifications\\Notifiable',
             ),
@@ -16366,6 +16033,7 @@ return [
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
               'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
               'notifiable' => 'Illuminate\\Notifications\\Notifiable',
             ),
@@ -16401,6 +16069,7 @@ return [
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
               'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
               'notifiable' => 'Illuminate\\Notifications\\Notifiable',
             ),
@@ -16436,6 +16105,7 @@ return [
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
               'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
               'notifiable' => 'Illuminate\\Notifications\\Notifiable',
             ),
@@ -16485,6 +16155,7 @@ return [
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
               'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
               'notifiable' => 'Illuminate\\Notifications\\Notifiable',
             ),
@@ -16533,6 +16204,7 @@ return [
               'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
               'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
               'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
               'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
               'notifiable' => 'Illuminate\\Notifications\\Notifiable',
             ),
@@ -16560,7 +16232,7 @@ return [
       ),
     )),
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php' => 
   array (
     0 => 
     \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
@@ -17411,6 +17083,8 @@ return [
              'namespace' => 'App\\Providers',
              'uses' => 
             array (
+              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'log' => 'Illuminate\\Support\\Facades\\Log',
               'serviceprovider' => 'Illuminate\\Support\\ServiceProvider',
             ),
              'constUses' => 
@@ -17442,6 +17116,8 @@ return [
              'namespace' => 'App\\Providers',
              'uses' => 
             array (
+              'db' => 'Illuminate\\Support\\Facades\\DB',
+              'log' => 'Illuminate\\Support\\Facades\\Log',
               'serviceprovider' => 'Illuminate\\Support\\ServiceProvider',
             ),
              'constUses' => 

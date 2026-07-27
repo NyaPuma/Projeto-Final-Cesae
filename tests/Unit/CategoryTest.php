@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Models\EquipmentCategory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -26,6 +27,6 @@ class CategoryTest extends TestCase
     public function test_category_has_equipments_relationship(): void
     {
         $category = EquipmentCategory::create(['name' => 'Informática', 'active' => true]);
-        $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\HasMany::class, $category->equipments());
+        $this->assertInstanceOf(HasMany::class, $category->equipments());
     }
 }

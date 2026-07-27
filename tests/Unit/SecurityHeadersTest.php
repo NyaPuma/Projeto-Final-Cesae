@@ -11,20 +11,20 @@ class SecurityHeadersTest extends TestCase
 {
     /**
      * Bug Condition Exploration Test
-     * 
+     *
      * **Property 1: Bug Condition** - Development Resources Blocked by CSP
-     * 
+     *
      * **Validates: Requirements 2.1, 2.2, 2.3**
-     * 
+     *
      * CRITICAL: This test MUST FAIL on unfixed code - failure confirms the bug exists.
      * When this test passes after the fix, it confirms the expected behavior is satisfied.
-     * 
+     *
      * This test verifies that in development environment (APP_ENV=local OR APP_DEBUG=true),
      * the CSP policy should allow:
      * - Vite dev server resources (http://[::1]:5173) in script-src and style-src
      * - Vite WebSocket connections (ws://[::1]:5173) in connect-src
      * - fonts.bunny.net resources in font-src and style-src
-     * 
+     *
      * On UNFIXED code, this test will FAIL because the current hardcoded CSP blocks these resources.
      */
     public function test_development_csp_allows_vite_and_fonts()
@@ -43,18 +43,18 @@ class SecurityHeadersTest extends TestCase
         $csp = $response->headers->get('Content-Security-Policy');
 
         // Assert Vite dev server is allowed in script-src
-        $this->assertStringContainsString('http://localhost:5173', $csp, 
+        $this->assertStringContainsString('http://localhost:5173', $csp,
             'CSP should contain Vite dev server URL for script loading');
-        
+
         // Assert Vite dev server is allowed in style-src
         $this->assertStringContainsString('style-src', $csp);
         $this->assertStringContainsString('http://localhost:5173', $csp,
             'CSP should contain Vite dev server URL for style loading');
-        
+
         // Assert Vite WebSocket is allowed in connect-src
         $this->assertStringContainsString('ws://localhost:5173', $csp,
             'CSP should contain Vite WebSocket URL for HMR connections');
-        
+
         // Assert fonts.bunny.net is allowed in font-src
         $this->assertStringContainsString('https://fonts.bunny.net', $csp,
             'CSP should contain fonts.bunny.net for font loading');
@@ -89,14 +89,14 @@ class SecurityHeadersTest extends TestCase
 
     /**
      * Preservation Property Test
-     * 
+     *
      * **Property 2: Preservation** - Production Security Maintained
-     * 
+     *
      * **Validates: Requirements 3.1, 3.2, 3.3**
-     * 
+     *
      * This test verifies that in production environment (APP_ENV != 'local' AND APP_DEBUG != true),
      * the CSP policy remains exactly as the original restrictive policy.
-     * 
+     *
      * On UNFIXED code, this test should PASS, confirming the baseline behavior to preserve.
      */
     public function test_production_csp_remains_restrictive()
@@ -123,11 +123,11 @@ class SecurityHeadersTest extends TestCase
 
     /**
      * Preservation Property Test - No External Domains in Production
-     * 
+     *
      * **Property 2: Preservation** - Production Security Maintained
-     * 
+     *
      * **Validates: Requirements 3.1, 3.2**
-     * 
+     *
      * Verifies that production CSP does NOT contain external domains like Vite dev server or font CDNs.
      */
     public function test_production_csp_blocks_external_resources()
@@ -156,11 +156,11 @@ class SecurityHeadersTest extends TestCase
 
     /**
      * Preservation Property Test - Staging Environment
-     * 
+     *
      * **Property 2: Preservation** - Production Security Maintained
-     * 
+     *
      * **Validates: Requirements 3.1, 3.3**
-     * 
+     *
      * Verifies that staging environment also gets restrictive CSP (not development CSP).
      */
     public function test_staging_environment_uses_restrictive_csp()
@@ -186,11 +186,11 @@ class SecurityHeadersTest extends TestCase
 
     /**
      * Preservation Property Test - All Non-CSP Security Headers
-     * 
+     *
      * **Property 2: Preservation** - Production Security Maintained
-     * 
+     *
      * **Validates: Requirement 3.3**
-     * 
+     *
      * Verifies that all other security headers remain unchanged regardless of environment.
      */
     public function test_other_security_headers_remain_unchanged()
@@ -227,11 +227,11 @@ class SecurityHeadersTest extends TestCase
 
     /**
      * Preservation Property Test - CSP Override Preservation
-     * 
+     *
      * **Property 2: Preservation** - Production Security Maintained
-     * 
+     *
      * **Validates: Requirement 3.3**
-     * 
+     *
      * Verifies that middleware respects pre-existing CSP headers and doesn't override them.
      */
     public function test_respects_existing_csp_header()
@@ -247,6 +247,7 @@ class SecurityHeadersTest extends TestCase
         $response = $middleware->handle($request, function ($req) use ($customCsp) {
             $response = response('OK');
             $response->headers->set('Content-Security-Policy', $customCsp);
+
             return $response;
         });
 
@@ -256,4 +257,3 @@ class SecurityHeadersTest extends TestCase
             'Middleware should not override pre-existing CSP header');
     }
 }
-

@@ -148,7 +148,7 @@ class AuthController extends Controller
         if ($attempts >= $maxAttempts) {
             return response()->json([
                 'message' => __('Conta temporariamente bloqueada. Tente novamente mais tarde.'),
-            ], 429)->header('Retry-After', $lockoutMinutes * 60);
+            ], 429)->header('Retry-After', (string) ($lockoutMinutes * 60));
         }
 
         $user = User::where('email', $data['email'])->where('active', true)->first();

@@ -18,7 +18,9 @@ abstract class PerformanceTestCase extends TestCase
     use RefreshDatabase;
 
     protected User $admin;
+
     protected User $technician;
+
     protected User $commonUser;
 
     protected function setUp(): void

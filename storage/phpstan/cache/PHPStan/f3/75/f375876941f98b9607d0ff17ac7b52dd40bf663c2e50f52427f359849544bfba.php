@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Models\Audit.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Models\Audit
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-149548fb8315ba9f09685073a7c23df1aaacfe496c3e509b74e440f84072e3d6',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-5aec5f0b9194bf607d51a891898d97fe749dc6fc7dda1c96cf79c3abf9e8ca38',
    'data' => 
   array (
     'locatedSource' => 
@@ -27,7 +27,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     array (
     ),
     'startLine' => 9,
-    'endLine' => 26,
+    'endLine' => 42,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'Illuminate\\Database\\Eloquent\\Model',
@@ -141,6 +141,156 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
+        'isClosure' => false,
+        'isGenerator' => false,
+        'isVariadic' => false,
+        'modifiers' => 1,
+        'namespace' => 'App\\Models',
+        'declaringClassName' => 'App\\Models\\Audit',
+        'implementingClassName' => 'App\\Models\\Audit',
+        'currentClassName' => 'App\\Models\\Audit',
+        'aliasName' => NULL,
+      ),
+      'update' => 
+      array (
+        'name' => 'update',
+        'parameters' => 
+        array (
+          'attributes' => 
+          array (
+            'name' => 'attributes',
+            'default' => 
+            array (
+              'code' => '[]',
+              'attributes' => 
+              array (
+                'startLine' => 30,
+                'endLine' => 30,
+                'startTokenPos' => 141,
+                'startFilePos' => 730,
+                'endTokenPos' => 142,
+                'endFilePos' => 731,
+              ),
+            ),
+            'type' => 
+            array (
+              'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+              'data' => 
+              array (
+                'name' => 'array',
+                'isIdentifier' => true,
+              ),
+            ),
+            'isVariadic' => false,
+            'byRef' => false,
+            'isPromoted' => false,
+            'attributes' => 
+            array (
+            ),
+            'startLine' => 30,
+            'endLine' => 30,
+            'startColumn' => 28,
+            'endColumn' => 49,
+            'parameterIndex' => 0,
+            'isOptional' => true,
+          ),
+          'options' => 
+          array (
+            'name' => 'options',
+            'default' => 
+            array (
+              'code' => '[]',
+              'attributes' => 
+              array (
+                'startLine' => 30,
+                'endLine' => 30,
+                'startTokenPos' => 151,
+                'startFilePos' => 751,
+                'endTokenPos' => 152,
+                'endFilePos' => 752,
+              ),
+            ),
+            'type' => 
+            array (
+              'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+              'data' => 
+              array (
+                'name' => 'array',
+                'isIdentifier' => true,
+              ),
+            ),
+            'isVariadic' => false,
+            'byRef' => false,
+            'isPromoted' => false,
+            'attributes' => 
+            array (
+            ),
+            'startLine' => 30,
+            'endLine' => 30,
+            'startColumn' => 52,
+            'endColumn' => 70,
+            'parameterIndex' => 1,
+            'isOptional' => true,
+          ),
+        ),
+        'returnsReference' => false,
+        'returnType' => 
+        array (
+          'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+          'data' => 
+          array (
+            'name' => 'bool',
+            'isIdentifier' => true,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => '/**
+ * Audit records are append-only: UPDATE is forbidden at the Eloquent level.
+ */',
+        'startLine' => 30,
+        'endLine' => 33,
+        'startColumn' => 5,
+        'endColumn' => 5,
+        'couldThrow' => true,
+        'isClosure' => false,
+        'isGenerator' => false,
+        'isVariadic' => false,
+        'modifiers' => 1,
+        'namespace' => 'App\\Models',
+        'declaringClassName' => 'App\\Models\\Audit',
+        'implementingClassName' => 'App\\Models\\Audit',
+        'currentClassName' => 'App\\Models\\Audit',
+        'aliasName' => NULL,
+      ),
+      'delete' => 
+      array (
+        'name' => 'delete',
+        'parameters' => 
+        array (
+        ),
+        'returnsReference' => false,
+        'returnType' => 
+        array (
+          'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+          'data' => 
+          array (
+            'name' => 'bool',
+            'isIdentifier' => true,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => '/**
+ * Audit records are append-only: DELETE is forbidden at the Eloquent level.
+ */',
+        'startLine' => 38,
+        'endLine' => 41,
+        'startColumn' => 5,
+        'endColumn' => 5,
+        'couldThrow' => true,
         'isClosure' => false,
         'isGenerator' => false,
         'isVariadic' => false,

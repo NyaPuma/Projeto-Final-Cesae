@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Services\AIService.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Services\AIService
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-d25df3a51daa77ba12d81713cca0d12b1f22ccc84a9fe69421f063be1c7c55c6',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-a0dbdd8e9ba144380b5d5aa011107974b521c50dd9c276019bf748137d1b6ac3',
    'data' => 
   array (
     'locatedSource' => 
@@ -27,7 +27,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     array (
     ),
     'startLine' => 9,
-    'endLine' => 93,
+    'endLine' => 97,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => NULL,
@@ -86,7 +86,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * Motor de IA exclusivo para apoiar o Administrador na alocação de recursos.
  */',
         'startLine' => 14,
-        'endLine' => 92,
+        'endLine' => 96,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => true,

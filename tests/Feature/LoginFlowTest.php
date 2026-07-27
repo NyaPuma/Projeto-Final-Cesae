@@ -2,7 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 
 class LoginFlowTest extends TestCase
@@ -11,7 +13,7 @@ class LoginFlowTest extends TestCase
 
     private function seedAll(): void
     {
-        \Illuminate\Support\Facades\Artisan::call('db:seed');
+        Artisan::call('db:seed');
     }
 
     public function test_login_returns_valid_token_and_cookie(): void
@@ -29,7 +31,7 @@ class LoginFlowTest extends TestCase
         $token = $login->json('token');
         $this->assertDatabaseHas('users', [
             'email' => 'admin@example.com',
-            'api_token' => \App\Models\User::hashToken($token),
+            'api_token' => User::hashToken($token),
         ]);
     }
 
@@ -52,7 +54,7 @@ class LoginFlowTest extends TestCase
             $this->assertEquals(
                 200,
                 $response->getStatusCode(),
-                "Expected 200 for {$page}, got " . $response->getStatusCode()
+                "Expected 200 for {$page}, got ".$response->getStatusCode()
             );
         }
     }
@@ -76,7 +78,7 @@ class LoginFlowTest extends TestCase
             $this->assertEquals(
                 200,
                 $response->getStatusCode(),
-                "Expected 200 for {$page}, got " . $response->getStatusCode()
+                "Expected 200 for {$page}, got ".$response->getStatusCode()
             );
         }
     }

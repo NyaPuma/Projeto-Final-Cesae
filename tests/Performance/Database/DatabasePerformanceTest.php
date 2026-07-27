@@ -3,7 +3,6 @@
 namespace Tests\Performance\Database;
 
 use App\Models\Ticket;
-use Illuminate\Support\Facades\DB;
 use Tests\Performance\PerformanceTestCase;
 
 class DatabasePerformanceTest extends PerformanceTestCase
@@ -22,7 +21,7 @@ class DatabasePerformanceTest extends PerformanceTestCase
         $queries = $this->stopQueryLog();
 
         $this->assertLessThanOrEqual(10, count($queries),
-            "N+1 detected: Ticket listing used ".count($queries).' queries');
+            'N+1 detected: Ticket listing used '.count($queries).' queries');
     }
 
     public function test_ticket_detail_n_plus_one_detection(): void
@@ -39,7 +38,7 @@ class DatabasePerformanceTest extends PerformanceTestCase
         $queries = $this->stopQueryLog();
 
         $this->assertLessThanOrEqual(15, count($queries),
-            "N+1 detected: Ticket detail used ".count($queries).' queries');
+            'N+1 detected: Ticket detail used '.count($queries).' queries');
     }
 
     public function test_ticket_search_n_plus_one_detection(): void
@@ -56,7 +55,7 @@ class DatabasePerformanceTest extends PerformanceTestCase
         $queries = $this->stopQueryLog();
 
         $this->assertLessThanOrEqual(15, count($queries),
-            "N+1 detected: Search used ".count($queries).' queries');
+            'N+1 detected: Search used '.count($queries).' queries');
     }
 
     public function test_ticket_search_multiple_filters(): void
@@ -73,7 +72,7 @@ class DatabasePerformanceTest extends PerformanceTestCase
         $queries = $this->stopQueryLog();
 
         $this->assertLessThanOrEqual(15, count($queries),
-            "Filtered search used ".count($queries).' queries');
+            'Filtered search used '.count($queries).' queries');
     }
 
     public function test_admin_users_listing_queries(): void
@@ -88,7 +87,7 @@ class DatabasePerformanceTest extends PerformanceTestCase
         $queries = $this->stopQueryLog();
 
         $this->assertLessThanOrEqual(8, count($queries),
-            "Admin users listing used ".count($queries).' queries');
+            'Admin users listing used '.count($queries).' queries');
     }
 
     public function test_equipments_listing_queries(): void
@@ -104,7 +103,7 @@ class DatabasePerformanceTest extends PerformanceTestCase
         $queries = $this->stopQueryLog();
 
         $this->assertLessThanOrEqual(8, count($queries),
-            "Equipment listing used ".count($queries).' queries');
+            'Equipment listing used '.count($queries).' queries');
     }
 
     public function test_ticket_listing_with_100_records(): void
@@ -179,7 +178,7 @@ class DatabasePerformanceTest extends PerformanceTestCase
         $queries = $this->stopQueryLog();
 
         $this->assertLessThanOrEqual(8, count($queries),
-            "Audits listing used ".count($queries).' queries');
+            'Audits listing used '.count($queries).' queries');
     }
 
     public function test_ticket_detail_eager_loading_relationships(): void

@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Http\Controllers\AuthController.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Controllers\AuthController
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-ed9222bb0dc8a488d0ce4233c75004d723b60f1fd6f322d6fe7301d284c4e4a6',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-0ae243816ea2c9700ebc10b050f836c71b327d96fbeec0bd12a382c711de2f3a',
    'data' => 
   array (
     'locatedSource' => 
@@ -26,8 +26,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'attributes' => 
     array (
     ),
-    'startLine' => 14,
-    'endLine' => 361,
+    'startLine' => 15,
+    'endLine' => 379,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'App\\Http\\Controllers\\Controller',
@@ -39,6 +39,35 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'immediateConstants' => 
     array (
+      'PASSWORD_COMPLEXITY_RULES' => 
+      array (
+        'declaringClassName' => 'App\\Http\\Controllers\\AuthController',
+        'implementingClassName' => 'App\\Http\\Controllers\\AuthController',
+        'name' => 'PASSWORD_COMPLEXITY_RULES',
+        'modifiers' => 4,
+        'type' => NULL,
+        'value' => 
+        array (
+          'code' => '[\'string\', \'min:8\', \'regex:/[A-Z]/\', \'regex:/[a-z]/\', \'regex:/[0-9]/\', \'regex:/[^A-Za-z0-9]/\']',
+          'attributes' => 
+          array (
+            'startLine' => 17,
+            'endLine' => 19,
+            'startTokenPos' => 74,
+            'startFilePos' => 417,
+            'endTokenPos' => 94,
+            'endFilePos' => 525,
+          ),
+        ),
+        'docComment' => NULL,
+        'attributes' => 
+        array (
+        ),
+        'startLine' => 17,
+        'endLine' => 19,
+        'startColumn' => 5,
+        'endColumn' => 6,
+      ),
     ),
     'immediateProperties' => 
     array (
@@ -69,8 +98,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 49,
-            'endLine' => 49,
+            'startLine' => 54,
+            'endLine' => 54,
             'startColumn' => 30,
             'endColumn' => 45,
             'parameterIndex' => 0,
@@ -92,12 +121,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'/register\'',
                 'attributes' => 
                 array (
-                  'startLine' => 17,
-                  'endLine' => 17,
-                  'startTokenPos' => 68,
-                  'startFilePos' => 362,
-                  'endTokenPos' => 68,
-                  'endFilePos' => 372,
+                  'startLine' => 22,
+                  'endLine' => 22,
+                  'startTokenPos' => 104,
+                  'startFilePos' => 558,
+                  'endTokenPos' => 104,
+                  'endFilePos' => 568,
                 ),
               ),
               'tags' => 
@@ -105,12 +134,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[\'Auth\']',
                 'attributes' => 
                 array (
-                  'startLine' => 18,
-                  'endLine' => 18,
-                  'startTokenPos' => 74,
-                  'startFilePos' => 389,
-                  'endTokenPos' => 76,
-                  'endFilePos' => 396,
+                  'startLine' => 23,
+                  'endLine' => 23,
+                  'startTokenPos' => 110,
+                  'startFilePos' => 585,
+                  'endTokenPos' => 112,
+                  'endFilePos' => 592,
                 ),
               ),
               'summary' => 
@@ -118,12 +147,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'Registar utilizador\'',
                 'attributes' => 
                 array (
-                  'startLine' => 19,
-                  'endLine' => 19,
-                  'startTokenPos' => 82,
-                  'startFilePos' => 416,
-                  'endTokenPos' => 82,
-                  'endFilePos' => 436,
+                  'startLine' => 24,
+                  'endLine' => 24,
+                  'startTokenPos' => 118,
+                  'startFilePos' => 612,
+                  'endTokenPos' => 118,
+                  'endFilePos' => 632,
                 ),
               ),
               'requestBody' => 
@@ -131,12 +160,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => 'new \\OpenApi\\Attributes\\RequestBody(required: true, content: new \\OpenApi\\Attributes\\JsonContent(type: \'object\', required: [\'name\', \'email\', \'password\', \'password_confirmation\'], properties: [new \\OpenApi\\Attributes\\Property(property: \'name\', type: \'string\', example: \'João Silva\'), new \\OpenApi\\Attributes\\Property(property: \'email\', type: \'string\', format: \'email\', example: \'joao@example.com\'), new \\OpenApi\\Attributes\\Property(property: \'password\', type: \'string\', format: \'password\', example: \'password123\'), new \\OpenApi\\Attributes\\Property(property: \'password_confirmation\', type: \'string\', format: \'password\', example: \'password123\'), new \\OpenApi\\Attributes\\Property(property: \'profile_id\', type: \'integer\', nullable: true, example: 1)]))',
                 'attributes' => 
                 array (
-                  'startLine' => 20,
-                  'endLine' => 33,
-                  'startTokenPos' => 88,
-                  'startFilePos' => 460,
-                  'endTokenPos' => 278,
-                  'endFilePos' => 1303,
+                  'startLine' => 25,
+                  'endLine' => 38,
+                  'startTokenPos' => 124,
+                  'startFilePos' => 656,
+                  'endTokenPos' => 314,
+                  'endFilePos' => 1499,
                 ),
               ),
               'responses' => 
@@ -144,20 +173,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[new \\OpenApi\\Attributes\\Response(response: 201, description: \'Utilizador criado\', content: new \\OpenApi\\Attributes\\JsonContent(type: \'object\', properties: [new \\OpenApi\\Attributes\\Property(property: \'token\', type: \'string\', example: \'abc123\'), new \\OpenApi\\Attributes\\Property(property: \'user\', type: \'object\')])), new \\OpenApi\\Attributes\\Response(response: 422, description: \'Erro de validação\')]',
                 'attributes' => 
                 array (
-                  'startLine' => 34,
-                  'endLine' => 47,
-                  'startTokenPos' => 284,
-                  'startFilePos' => 1325,
-                  'endTokenPos' => 386,
-                  'endFilePos' => 1865,
+                  'startLine' => 39,
+                  'endLine' => 52,
+                  'startTokenPos' => 320,
+                  'startFilePos' => 1521,
+                  'endTokenPos' => 422,
+                  'endFilePos' => 2061,
                 ),
               ),
             ),
           ),
         ),
         'docComment' => NULL,
-        'startLine' => 16,
-        'endLine' => 94,
+        'startLine' => 21,
+        'endLine' => 97,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -195,8 +224,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 126,
-            'endLine' => 126,
+            'startLine' => 129,
+            'endLine' => 129,
             'startColumn' => 27,
             'endColumn' => 42,
             'parameterIndex' => 0,
@@ -218,12 +247,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'/login\'',
                 'attributes' => 
                 array (
-                  'startLine' => 97,
-                  'endLine' => 97,
-                  'startTokenPos' => 834,
-                  'startFilePos' => 3705,
-                  'endTokenPos' => 834,
-                  'endFilePos' => 3712,
+                  'startLine' => 100,
+                  'endLine' => 100,
+                  'startTokenPos' => 883,
+                  'startFilePos' => 3988,
+                  'endTokenPos' => 883,
+                  'endFilePos' => 3995,
                 ),
               ),
               'tags' => 
@@ -231,12 +260,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[\'Auth\']',
                 'attributes' => 
                 array (
-                  'startLine' => 98,
-                  'endLine' => 98,
-                  'startTokenPos' => 840,
-                  'startFilePos' => 3729,
-                  'endTokenPos' => 842,
-                  'endFilePos' => 3736,
+                  'startLine' => 101,
+                  'endLine' => 101,
+                  'startTokenPos' => 889,
+                  'startFilePos' => 4012,
+                  'endTokenPos' => 891,
+                  'endFilePos' => 4019,
                 ),
               ),
               'summary' => 
@@ -244,12 +273,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'Autenticar utilizador\'',
                 'attributes' => 
                 array (
-                  'startLine' => 99,
-                  'endLine' => 99,
-                  'startTokenPos' => 848,
-                  'startFilePos' => 3756,
-                  'endTokenPos' => 848,
-                  'endFilePos' => 3778,
+                  'startLine' => 102,
+                  'endLine' => 102,
+                  'startTokenPos' => 897,
+                  'startFilePos' => 4039,
+                  'endTokenPos' => 897,
+                  'endFilePos' => 4061,
                 ),
               ),
               'requestBody' => 
@@ -257,12 +286,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => 'new \\OpenApi\\Attributes\\RequestBody(required: true, content: new \\OpenApi\\Attributes\\JsonContent(type: \'object\', required: [\'email\', \'password\'], properties: [new \\OpenApi\\Attributes\\Property(property: \'email\', type: \'string\', format: \'email\', example: \'joao@example.com\'), new \\OpenApi\\Attributes\\Property(property: \'password\', type: \'string\', format: \'password\', example: \'password123\')]))',
                 'attributes' => 
                 array (
-                  'startLine' => 100,
-                  'endLine' => 110,
-                  'startTokenPos' => 854,
-                  'startFilePos' => 3802,
-                  'endTokenPos' => 957,
-                  'endFilePos' => 4279,
+                  'startLine' => 103,
+                  'endLine' => 113,
+                  'startTokenPos' => 903,
+                  'startFilePos' => 4085,
+                  'endTokenPos' => 1006,
+                  'endFilePos' => 4562,
                 ),
               ),
               'responses' => 
@@ -270,20 +299,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[new \\OpenApi\\Attributes\\Response(response: 200, description: \'Autenticado com sucesso\', content: new \\OpenApi\\Attributes\\JsonContent(type: \'object\', properties: [new \\OpenApi\\Attributes\\Property(property: \'token\', type: \'string\', example: \'abc123\'), new \\OpenApi\\Attributes\\Property(property: \'user\', type: \'object\')])), new \\OpenApi\\Attributes\\Response(response: 401, description: \'Credenciais inválidas\')]',
                 'attributes' => 
                 array (
-                  'startLine' => 111,
-                  'endLine' => 124,
-                  'startTokenPos' => 963,
-                  'startFilePos' => 4301,
-                  'endTokenPos' => 1065,
-                  'endFilePos' => 4850,
+                  'startLine' => 114,
+                  'endLine' => 127,
+                  'startTokenPos' => 1012,
+                  'startFilePos' => 4584,
+                  'endTokenPos' => 1114,
+                  'endFilePos' => 5133,
                 ),
               ),
             ),
           ),
         ),
         'docComment' => NULL,
-        'startLine' => 96,
-        'endLine' => 182,
+        'startLine' => 99,
+        'endLine' => 199,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -321,8 +350,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 184,
-            'endLine' => 184,
+            'startLine' => 201,
+            'endLine' => 201,
             'startColumn' => 28,
             'endColumn' => 43,
             'parameterIndex' => 0,
@@ -335,8 +364,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 184,
-        'endLine' => 195,
+        'startLine' => 201,
+        'endLine' => 213,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -374,8 +403,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 197,
-            'endLine' => 197,
+            'startLine' => 215,
+            'endLine' => 215,
             'startColumn' => 36,
             'endColumn' => 51,
             'parameterIndex' => 0,
@@ -388,8 +417,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 197,
-        'endLine' => 230,
+        'startLine' => 215,
+        'endLine' => 248,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -427,8 +456,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 232,
-            'endLine' => 232,
+            'startLine' => 250,
+            'endLine' => 250,
             'startColumn' => 35,
             'endColumn' => 50,
             'parameterIndex' => 0,
@@ -441,8 +470,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 232,
-        'endLine' => 274,
+        'startLine' => 250,
+        'endLine' => 292,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -480,8 +509,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 280,
-            'endLine' => 280,
+            'startLine' => 298,
+            'endLine' => 298,
             'startColumn' => 35,
             'endColumn' => 50,
             'parameterIndex' => 0,
@@ -497,8 +526,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * Envia email com link de reset de password.
  * Rota: POST /api/password/email
  */',
-        'startLine' => 280,
-        'endLine' => 311,
+        'startLine' => 298,
+        'endLine' => 329,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -536,8 +565,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 317,
-            'endLine' => 317,
+            'startLine' => 335,
+            'endLine' => 335,
             'startColumn' => 35,
             'endColumn' => 50,
             'parameterIndex' => 0,
@@ -553,8 +582,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
  * Repõe a password do utilizador usando o token de reset.
  * Rota: POST /api/password/reset
  */',
-        'startLine' => 317,
-        'endLine' => 360,
+        'startLine' => 335,
+        'endLine' => 378,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

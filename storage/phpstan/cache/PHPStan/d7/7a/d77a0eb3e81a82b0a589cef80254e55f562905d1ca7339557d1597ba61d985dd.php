@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Providers\AppServiceProvider.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Providers\AppServiceProvider
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-caf306ef6a25a547bbb7edd5508a39b51c365083eb6dd58378cf2242018e94c7',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-200dad3f50a142863dd210eecf1c5c2511218b8e4f7816511d4b5dddf590fae8',
    'data' => 
   array (
     'locatedSource' => 
@@ -26,8 +26,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'attributes' => 
     array (
     ),
-    'startLine' => 7,
-    'endLine' => 24,
+    'startLine' => 9,
+    'endLine' => 46,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'Illuminate\\Support\\ServiceProvider',
@@ -67,8 +67,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Register any application services.
  */',
-        'startLine' => 12,
-        'endLine' => 15,
+        'startLine' => 14,
+        'endLine' => 17,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -104,8 +104,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Bootstrap any application services.
  */',
-        'startLine' => 20,
-        'endLine' => 23,
+        'startLine' => 22,
+        'endLine' => 25,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -113,6 +113,41 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'isGenerator' => false,
         'isVariadic' => false,
         'modifiers' => 1,
+        'namespace' => 'App\\Providers',
+        'declaringClassName' => 'App\\Providers\\AppServiceProvider',
+        'implementingClassName' => 'App\\Providers\\AppServiceProvider',
+        'currentClassName' => 'App\\Providers\\AppServiceProvider',
+        'aliasName' => NULL,
+      ),
+      'registerSlowQueryListener' => 
+      array (
+        'name' => 'registerSlowQueryListener',
+        'parameters' => 
+        array (
+        ),
+        'returnsReference' => false,
+        'returnType' => 
+        array (
+          'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+          'data' => 
+          array (
+            'name' => 'void',
+            'isIdentifier' => true,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 27,
+        'endLine' => 45,
+        'startColumn' => 5,
+        'endColumn' => 5,
+        'couldThrow' => false,
+        'isClosure' => false,
+        'isGenerator' => false,
+        'isVariadic' => false,
+        'modifiers' => 4,
         'namespace' => 'App\\Providers',
         'declaringClassName' => 'App\\Providers\\AppServiceProvider',
         'implementingClassName' => 'App\\Providers\\AppServiceProvider',

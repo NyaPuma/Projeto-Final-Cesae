@@ -10,7 +10,6 @@ use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class DatabaseOptimizationTest extends TestCase
@@ -175,7 +174,7 @@ class DatabaseOptimizationTest extends TestCase
     protected function createAdminUser(): User
     {
         $profile = UserProfile::firstOrCreate(['name' => User::ROLE_ADMIN]);
-        $token = 'admin-opt-token-' . uniqid();
+        $token = 'admin-opt-token-'.uniqid();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
             'api_token' => $token,

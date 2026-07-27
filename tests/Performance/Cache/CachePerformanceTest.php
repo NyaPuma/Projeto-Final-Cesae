@@ -73,7 +73,7 @@ class CachePerformanceTest extends PerformanceTestCase
         });
 
         $this->assertLessThan($withoutCache, $withCache,
-            "Cache hits should be faster than cache misses");
+            'Cache hits should be faster than cache misses');
     }
 
     public function test_cache_invalidation_performance(): void
@@ -105,7 +105,7 @@ class CachePerformanceTest extends PerformanceTestCase
         $delta = $after - $before;
 
         $this->assertLessThanOrEqual(10 * 1024 * 1024, $delta,
-            "Cache storage used ".($delta / 1024 / 1024).'MB for 1000 entries');
+            'Cache storage used '.($delta / 1024 / 1024).'MB for 1000 entries');
 
         Cache::flush();
     }

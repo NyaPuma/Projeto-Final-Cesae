@@ -12,6 +12,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Providers',
          'uses' => 
         array (
+          'db' => 'Illuminate\\Support\\Facades\\DB',
+          'log' => 'Illuminate\\Support\\Facades\\Log',
           'serviceprovider' => 'Illuminate\\Support\\ServiceProvider',
         ),
          'className' => 'App\\Providers\\AppServiceProvider',
@@ -35,6 +37,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Providers',
          'uses' => 
         array (
+          'db' => 'Illuminate\\Support\\Facades\\DB',
+          'log' => 'Illuminate\\Support\\Facades\\Log',
           'serviceprovider' => 'Illuminate\\Support\\ServiceProvider',
         ),
          'className' => 'App\\Providers\\AppServiceProvider',
@@ -58,6 +62,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Providers',
          'uses' => 
         array (
+          'db' => 'Illuminate\\Support\\Facades\\DB',
+          'log' => 'Illuminate\\Support\\Facades\\Log',
           'serviceprovider' => 'Illuminate\\Support\\ServiceProvider',
         ),
          'className' => 'App\\Providers\\AppServiceProvider',
@@ -76,10 +82,35 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'typeAliasClassName' => NULL,
          'traitData' => NULL,
       )),
+      'a6fd6345291d45f386bde5887b053a6d' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'App\\Providers',
+         'uses' => 
+        array (
+          'db' => 'Illuminate\\Support\\Facades\\DB',
+          'log' => 'Illuminate\\Support\\Facades\\Log',
+          'serviceprovider' => 'Illuminate\\Support\\ServiceProvider',
+        ),
+         'className' => 'App\\Providers\\AppServiceProvider',
+         'functionName' => 'registerSlowQueryListener',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => NULL,
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => NULL,
+         'traitData' => NULL,
+      )),
     ),
     1 => 
     array (
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\AppServiceProvider.php' => 'caf306ef6a25a547bbb7edd5508a39b51c365083eb6dd58378cf2242018e94c7',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\AppServiceProvider.php' => '200dad3f50a142863dd210eecf1c5c2511218b8e4f7816511d4b5dddf590fae8',
     ),
   ),
 ));

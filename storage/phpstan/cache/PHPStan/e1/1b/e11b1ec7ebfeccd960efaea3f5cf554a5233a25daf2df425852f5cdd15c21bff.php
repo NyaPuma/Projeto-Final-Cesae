@@ -18,6 +18,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          'collection' => 'Illuminate\\Support\\Collection',
+          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => NULL,
@@ -42,6 +44,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'audit' => 'App\\Models\\Audit',
           'user' => 'App\\Models\\User',
+          'log' => 'Illuminate\\Support\\Facades\\Log',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => NULL,
@@ -73,9 +76,74 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'audit' => 'App\\Models\\Audit',
           'user' => 'App\\Models\\User',
+          'log' => 'Illuminate\\Support\\Facades\\Log',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'bootAuditable',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => NULL,
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => 'App\\Traits\\Auditable',
+         'traitData' => 
+        array (
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
+          1 => 'App\\Models\\Ticket',
+          2 => 'App\\Traits\\Auditable',
+          3 => NULL,
+          4 => NULL,
+        ),
+      )),
+      'dfa0387c0036bcf86108387bbcb1a77e' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'App\\Traits',
+         'uses' => 
+        array (
+          'audit' => 'App\\Models\\Audit',
+          'user' => 'App\\Models\\User',
+          'log' => 'Illuminate\\Support\\Facades\\Log',
+        ),
+         'className' => 'App\\Models\\Ticket',
+         'functionName' => 'createAudit',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => NULL,
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => 'App\\Traits\\Auditable',
+         'traitData' => 
+        array (
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
+          1 => 'App\\Models\\Ticket',
+          2 => 'App\\Traits\\Auditable',
+          3 => NULL,
+          4 => NULL,
+        ),
+      )),
+      '754e9036fe0f288662efea4d031b96fd' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'App\\Traits',
+         'uses' => 
+        array (
+          'audit' => 'App\\Models\\Audit',
+          'user' => 'App\\Models\\User',
+          'log' => 'Illuminate\\Support\\Facades\\Log',
+        ),
+         'className' => 'App\\Models\\Ticket',
+         'functionName' => 'resolveUserId',
          'templatePhpDocNodes' => 
         array (
         ),
@@ -1397,6 +1465,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          'collection' => 'Illuminate\\Support\\Collection',
+          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'status',
@@ -1425,6 +1495,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          'collection' => 'Illuminate\\Support\\Collection',
+          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'budgetApprovedBy',
@@ -1453,6 +1525,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          'collection' => 'Illuminate\\Support\\Collection',
+          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'workflowHistory',
@@ -1481,6 +1555,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          'collection' => 'Illuminate\\Support\\Collection',
+          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'user',
@@ -1509,6 +1585,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          'collection' => 'Illuminate\\Support\\Collection',
+          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'technician',
@@ -1537,6 +1615,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          'collection' => 'Illuminate\\Support\\Collection',
+          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'equipment',
@@ -1565,6 +1645,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          'collection' => 'Illuminate\\Support\\Collection',
+          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'room',
@@ -1593,6 +1675,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          'collection' => 'Illuminate\\Support\\Collection',
+          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'comments',
@@ -1621,6 +1705,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          'collection' => 'Illuminate\\Support\\Collection',
+          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'attachments',
@@ -1649,6 +1735,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          'collection' => 'Illuminate\\Support\\Collection',
+          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'startRepair',
@@ -1677,6 +1765,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          'collection' => 'Illuminate\\Support\\Collection',
+          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'checkAutoClose',
@@ -1705,6 +1795,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          'collection' => 'Illuminate\\Support\\Collection',
+          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'reopen',
@@ -1733,6 +1825,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          'collection' => 'Illuminate\\Support\\Collection',
+          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'requestBudgetAuthorization',
@@ -1761,6 +1855,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          'collection' => 'Illuminate\\Support\\Collection',
+          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'approveBudget',
@@ -1789,6 +1885,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          'collection' => 'Illuminate\\Support\\Collection',
+          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'getBudgetPauseMinutesAttribute',
@@ -1817,6 +1915,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          'collection' => 'Illuminate\\Support\\Collection',
+          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'getTotalMaterialCostAttribute',
@@ -1845,6 +1945,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          'collection' => 'Illuminate\\Support\\Collection',
+          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'getTotalLaborCostAttribute',
@@ -1873,6 +1975,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          'collection' => 'Illuminate\\Support\\Collection',
+          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'getBudgetTotalAttribute',
@@ -1901,6 +2005,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          'collection' => 'Illuminate\\Support\\Collection',
+          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'getBudgetBreakdownAttribute',
@@ -1929,6 +2035,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          'collection' => 'Illuminate\\Support\\Collection',
+          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'calculateBudgetTotalByType',
@@ -1957,9 +2065,41 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          'collection' => 'Illuminate\\Support\\Collection',
+          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'getStatusIdByName',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => NULL,
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => NULL,
+         'traitData' => NULL,
+      )),
+      '01a9c69bce6a6bec1aacdf1e86791adc' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'App\\Models',
+         'uses' => 
+        array (
+          'auditable' => 'App\\Traits\\Auditable',
+          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+          'model' => 'Illuminate\\Database\\Eloquent\\Model',
+          'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
+          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          'collection' => 'Illuminate\\Support\\Collection',
+          'cache' => 'Illuminate\\Support\\Facades\\Cache',
+        ),
+         'className' => 'App\\Models\\Ticket',
+         'functionName' => 'flushStatusCache',
          'templatePhpDocNodes' => 
         array (
         ),
@@ -1985,6 +2125,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          'collection' => 'Illuminate\\Support\\Collection',
+          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'hasStatus',
@@ -2013,6 +2155,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          'collection' => 'Illuminate\\Support\\Collection',
+          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'getLeastBusyTechnician',
@@ -2041,6 +2185,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          'collection' => 'Illuminate\\Support\\Collection',
+          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'getScheduledEvents',
@@ -2061,8 +2207,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php' => 'c33313369e7564852a1b93c624172ca6db5b3e9101e606534dc43f48dd54aa37',
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Traits\\Auditable.php' => 'abda73c6002ef2c3ab9357c0c9b34e514848a18861606cb15c632f2487674d4c',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php' => 'f2eb03c0b44d7544ece896ead2e85a8a2af27fc720e2032c026abde35ed3212a',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Traits\\Auditable.php' => 'd0ace2e3521260e41816d729666bef984d68ef27b6d70bb5c403e35e954a5071',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Factories\\HasFactory.php' => 'b6cb2b164e90168e80963a5549541f5f3188a3ec8cfd368bf3611bd94fbd46a7',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\SoftDeletes.php' => 'da1b0c13d78ba2f62e97e5627c3149f4e81b9cf9b6092d4ca7f02ca5e5bbcfec',
     ),

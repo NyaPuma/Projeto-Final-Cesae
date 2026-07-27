@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\Ticket;
-use App\Models\TicketStatus;
 use App\Models\User;
 use OpenAI\Laravel\Facades\OpenAI;
 

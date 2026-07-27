@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Http\Controllers\AnalyticsController.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Controllers\AnalyticsController
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-bb307b8974813042c7fe743bf6821809c75cfb0ba1ff40c1e5ae5649818fea3f',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-932734b7b23132882d64a43545ae91e0e2cb83cfaca715a21c4027f1ec69600a',
    'data' => 
   array (
     'locatedSource' => 
@@ -27,7 +27,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     array (
     ),
     'startLine' => 17,
-    'endLine' => 365,
+    'endLine' => 397,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'App\\Http\\Controllers\\Controller',
@@ -95,9 +95,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                   'startLine' => 23,
                   'endLine' => 23,
                   'startTokenPos' => 89,
-                  'startFilePos' => 564,
+                  'startFilePos' => 571,
                   'endTokenPos' => 89,
-                  'endFilePos' => 581,
+                  'endFilePos' => 588,
                 ),
               ),
               'tags' => 
@@ -108,9 +108,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                   'startLine' => 24,
                   'endLine' => 24,
                   'startTokenPos' => 95,
-                  'startFilePos' => 598,
+                  'startFilePos' => 605,
                   'endTokenPos' => 97,
-                  'endFilePos' => 610,
+                  'endFilePos' => 617,
                 ),
               ),
               'summary' => 
@@ -121,9 +121,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                   'startLine' => 25,
                   'endLine' => 25,
                   'startTokenPos' => 103,
-                  'startFilePos' => 630,
+                  'startFilePos' => 637,
                   'endTokenPos' => 103,
-                  'endFilePos' => 647,
+                  'endFilePos' => 654,
                 ),
               ),
               'security' => 
@@ -134,9 +134,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                   'startLine' => 26,
                   'endLine' => 26,
                   'startTokenPos' => 109,
-                  'startFilePos' => 668,
+                  'startFilePos' => 675,
                   'endTokenPos' => 128,
-                  'endFilePos' => 713,
+                  'endFilePos' => 720,
                 ),
               ),
               'responses' => 
@@ -147,9 +147,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                   'startLine' => 27,
                   'endLine' => 29,
                   'startTokenPos' => 134,
-                  'startFilePos' => 735,
+                  'startFilePos' => 742,
                   'endTokenPos' => 153,
-                  'endFilePos' => 820,
+                  'endFilePos' => 827,
                 ),
               ),
             ),
@@ -223,9 +223,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                   'startLine' => 46,
                   'endLine' => 46,
                   'startTokenPos' => 233,
-                  'startFilePos' => 1219,
+                  'startFilePos' => 1226,
                   'endTokenPos' => 233,
-                  'endFilePos' => 1237,
+                  'endFilePos' => 1244,
                 ),
               ),
               'tags' => 
@@ -236,9 +236,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                   'startLine' => 47,
                   'endLine' => 47,
                   'startTokenPos' => 239,
-                  'startFilePos' => 1254,
+                  'startFilePos' => 1261,
                   'endTokenPos' => 241,
-                  'endFilePos' => 1266,
+                  'endFilePos' => 1273,
                 ),
               ),
               'summary' => 
@@ -249,9 +249,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                   'startLine' => 48,
                   'endLine' => 48,
                   'startTokenPos' => 247,
-                  'startFilePos' => 1286,
+                  'startFilePos' => 1293,
                   'endTokenPos' => 247,
-                  'endFilePos' => 1308,
+                  'endFilePos' => 1315,
                 ),
               ),
               'security' => 
@@ -262,9 +262,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                   'startLine' => 49,
                   'endLine' => 49,
                   'startTokenPos' => 253,
-                  'startFilePos' => 1329,
+                  'startFilePos' => 1336,
                   'endTokenPos' => 272,
-                  'endFilePos' => 1374,
+                  'endFilePos' => 1381,
                 ),
               ),
               'responses' => 
@@ -275,9 +275,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                   'startLine' => 50,
                   'endLine' => 52,
                   'startTokenPos' => 278,
-                  'startFilePos' => 1396,
+                  'startFilePos' => 1403,
                   'endTokenPos' => 297,
-                  'endFilePos' => 1489,
+                  'endFilePos' => 1496,
                 ),
               ),
             ),
@@ -322,7 +322,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         ),
         'docComment' => NULL,
         'startLine' => 65,
-        'endLine' => 204,
+        'endLine' => 231,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -336,37 +336,11 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'currentClassName' => 'App\\Http\\Controllers\\AnalyticsController',
         'aliasName' => NULL,
       ),
-      'buildMonthlySeries' => 
+      'buildMonthlySeriesFromDb' => 
       array (
-        'name' => 'buildMonthlySeries',
+        'name' => 'buildMonthlySeriesFromDb',
         'parameters' => 
         array (
-          'tickets' => 
-          array (
-            'name' => 'tickets',
-            'default' => NULL,
-            'type' => 
-            array (
-              'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
-              'data' => 
-              array (
-                'name' => 'Illuminate\\Support\\Collection',
-                'isIdentifier' => false,
-              ),
-            ),
-            'isVariadic' => false,
-            'byRef' => false,
-            'isPromoted' => false,
-            'attributes' => 
-            array (
-            ),
-            'startLine' => 206,
-            'endLine' => 206,
-            'startColumn' => 41,
-            'endColumn' => 59,
-            'parameterIndex' => 0,
-            'isOptional' => false,
-          ),
           'openStatusId' => 
           array (
             'name' => 'openStatusId',
@@ -386,11 +360,11 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 206,
-            'endLine' => 206,
-            'startColumn' => 62,
-            'endColumn' => 78,
-            'parameterIndex' => 1,
+            'startLine' => 233,
+            'endLine' => 233,
+            'startColumn' => 47,
+            'endColumn' => 63,
+            'parameterIndex' => 0,
             'isOptional' => false,
           ),
           'inProgressStatusId' => 
@@ -412,11 +386,11 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 206,
-            'endLine' => 206,
-            'startColumn' => 81,
-            'endColumn' => 103,
-            'parameterIndex' => 2,
+            'startLine' => 233,
+            'endLine' => 233,
+            'startColumn' => 66,
+            'endColumn' => 88,
+            'parameterIndex' => 1,
             'isOptional' => false,
           ),
           'closedStatusId' => 
@@ -425,11 +399,30 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'default' => NULL,
             'type' => 
             array (
-              'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+              'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionUnionType',
               'data' => 
               array (
-                'name' => 'int',
-                'isIdentifier' => true,
+                'types' => 
+                array (
+                  0 => 
+                  array (
+                    'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+                    'data' => 
+                    array (
+                      'name' => 'int',
+                      'isIdentifier' => true,
+                    ),
+                  ),
+                  1 => 
+                  array (
+                    'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+                    'data' => 
+                    array (
+                      'name' => 'null',
+                      'isIdentifier' => true,
+                    ),
+                  ),
+                ),
               ),
             ),
             'isVariadic' => false,
@@ -438,11 +431,11 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 206,
-            'endLine' => 206,
-            'startColumn' => 106,
-            'endColumn' => 124,
-            'parameterIndex' => 3,
+            'startLine' => 233,
+            'endLine' => 233,
+            'startColumn' => 91,
+            'endColumn' => 110,
+            'parameterIndex' => 2,
             'isOptional' => false,
           ),
         ),
@@ -460,8 +453,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 206,
-        'endLine' => 259,
+        'startLine' => 233,
+        'endLine' => 284,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -499,8 +492,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 273,
-            'endLine' => 273,
+            'startLine' => 298,
+            'endLine' => 298,
             'startColumn' => 31,
             'endColumn' => 46,
             'parameterIndex' => 0,
@@ -522,12 +515,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'/analytics/export/csv\'',
                 'attributes' => 
                 array (
-                  'startLine' => 265,
-                  'endLine' => 265,
-                  'startTokenPos' => 2240,
-                  'startFilePos' => 10083,
-                  'endTokenPos' => 2240,
-                  'endFilePos' => 10105,
+                  'startLine' => 290,
+                  'endLine' => 290,
+                  'startTokenPos' => 2168,
+                  'startFilePos' => 12498,
+                  'endTokenPos' => 2168,
+                  'endFilePos' => 12520,
                 ),
               ),
               'tags' => 
@@ -535,12 +528,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[\'Analytics\']',
                 'attributes' => 
                 array (
-                  'startLine' => 266,
-                  'endLine' => 266,
-                  'startTokenPos' => 2246,
-                  'startFilePos' => 10122,
-                  'endTokenPos' => 2248,
-                  'endFilePos' => 10134,
+                  'startLine' => 291,
+                  'endLine' => 291,
+                  'startTokenPos' => 2174,
+                  'startFilePos' => 12537,
+                  'endTokenPos' => 2176,
+                  'endFilePos' => 12549,
                 ),
               ),
               'summary' => 
@@ -548,12 +541,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'Exportar CSV\'',
                 'attributes' => 
                 array (
-                  'startLine' => 267,
-                  'endLine' => 267,
-                  'startTokenPos' => 2254,
-                  'startFilePos' => 10154,
-                  'endTokenPos' => 2254,
-                  'endFilePos' => 10167,
+                  'startLine' => 292,
+                  'endLine' => 292,
+                  'startTokenPos' => 2182,
+                  'startFilePos' => 12569,
+                  'endTokenPos' => 2182,
+                  'endFilePos' => 12582,
                 ),
               ),
               'security' => 
@@ -561,12 +554,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[[\'X-Auth-Token\' => []], [\'BearerAuth\' => []]]',
                 'attributes' => 
                 array (
-                  'startLine' => 268,
-                  'endLine' => 268,
-                  'startTokenPos' => 2260,
-                  'startFilePos' => 10188,
-                  'endTokenPos' => 2279,
-                  'endFilePos' => 10233,
+                  'startLine' => 293,
+                  'endLine' => 293,
+                  'startTokenPos' => 2188,
+                  'startFilePos' => 12603,
+                  'endTokenPos' => 2207,
+                  'endFilePos' => 12648,
                 ),
               ),
               'responses' => 
@@ -574,12 +567,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[new \\OpenApi\\Attributes\\Response(response: 200, description: \'Ficheiro CSV descarregado\')]',
                 'attributes' => 
                 array (
-                  'startLine' => 269,
-                  'endLine' => 271,
-                  'startTokenPos' => 2285,
-                  'startFilePos' => 10255,
-                  'endTokenPos' => 2304,
-                  'endFilePos' => 10351,
+                  'startLine' => 294,
+                  'endLine' => 296,
+                  'startTokenPos' => 2213,
+                  'startFilePos' => 12670,
+                  'endTokenPos' => 2232,
+                  'endFilePos' => 12766,
                 ),
               ),
             ),
@@ -588,8 +581,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Exporta o relatório de todos os tickets em formato de fluxo CSV (Streaming).
  */',
-        'startLine' => 264,
-        'endLine' => 309,
+        'startLine' => 289,
+        'endLine' => 341,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -627,8 +620,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 323,
-            'endLine' => 323,
+            'startLine' => 355,
+            'endLine' => 355,
             'startColumn' => 31,
             'endColumn' => 46,
             'parameterIndex' => 0,
@@ -650,12 +643,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'/analytics/export/pdf\'',
                 'attributes' => 
                 array (
-                  'startLine' => 315,
-                  'endLine' => 315,
-                  'startTokenPos' => 2578,
-                  'startFilePos' => 11819,
-                  'endTokenPos' => 2578,
-                  'endFilePos' => 11841,
+                  'startLine' => 347,
+                  'endLine' => 347,
+                  'startTokenPos' => 2571,
+                  'startFilePos' => 14680,
+                  'endTokenPos' => 2571,
+                  'endFilePos' => 14702,
                 ),
               ),
               'tags' => 
@@ -663,12 +656,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[\'Analytics\']',
                 'attributes' => 
                 array (
-                  'startLine' => 316,
-                  'endLine' => 316,
-                  'startTokenPos' => 2584,
-                  'startFilePos' => 11858,
-                  'endTokenPos' => 2586,
-                  'endFilePos' => 11870,
+                  'startLine' => 348,
+                  'endLine' => 348,
+                  'startTokenPos' => 2577,
+                  'startFilePos' => 14719,
+                  'endTokenPos' => 2579,
+                  'endFilePos' => 14731,
                 ),
               ),
               'summary' => 
@@ -676,12 +669,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'Exportar PDF\'',
                 'attributes' => 
                 array (
-                  'startLine' => 317,
-                  'endLine' => 317,
-                  'startTokenPos' => 2592,
-                  'startFilePos' => 11890,
-                  'endTokenPos' => 2592,
-                  'endFilePos' => 11903,
+                  'startLine' => 349,
+                  'endLine' => 349,
+                  'startTokenPos' => 2585,
+                  'startFilePos' => 14751,
+                  'endTokenPos' => 2585,
+                  'endFilePos' => 14764,
                 ),
               ),
               'security' => 
@@ -689,12 +682,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[[\'X-Auth-Token\' => []], [\'BearerAuth\' => []]]',
                 'attributes' => 
                 array (
-                  'startLine' => 318,
-                  'endLine' => 318,
-                  'startTokenPos' => 2598,
-                  'startFilePos' => 11924,
-                  'endTokenPos' => 2617,
-                  'endFilePos' => 11969,
+                  'startLine' => 350,
+                  'endLine' => 350,
+                  'startTokenPos' => 2591,
+                  'startFilePos' => 14785,
+                  'endTokenPos' => 2610,
+                  'endFilePos' => 14830,
                 ),
               ),
               'responses' => 
@@ -702,12 +695,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[new \\OpenApi\\Attributes\\Response(response: 200, description: \'Ficheiro PDF descarregado\')]',
                 'attributes' => 
                 array (
-                  'startLine' => 319,
-                  'endLine' => 321,
-                  'startTokenPos' => 2623,
-                  'startFilePos' => 11991,
-                  'endTokenPos' => 2642,
-                  'endFilePos' => 12087,
+                  'startLine' => 351,
+                  'endLine' => 353,
+                  'startTokenPos' => 2616,
+                  'startFilePos' => 14852,
+                  'endTokenPos' => 2635,
+                  'endFilePos' => 14948,
                 ),
               ),
             ),
@@ -716,8 +709,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Exporta o relatório de tickets em formato PDF via DOMPDF.
  */',
-        'startLine' => 314,
-        'endLine' => 339,
+        'startLine' => 346,
+        'endLine' => 371,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -755,8 +748,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 353,
-            'endLine' => 353,
+            'startLine' => 385,
+            'endLine' => 385,
             'startColumn' => 33,
             'endColumn' => 48,
             'parameterIndex' => 0,
@@ -778,12 +771,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'/analytics/export/excel\'',
                 'attributes' => 
                 array (
-                  'startLine' => 345,
-                  'endLine' => 345,
-                  'startTokenPos' => 2785,
-                  'startFilePos' => 12771,
-                  'endTokenPos' => 2785,
-                  'endFilePos' => 12795,
+                  'startLine' => 377,
+                  'endLine' => 377,
+                  'startTokenPos' => 2778,
+                  'startFilePos' => 15632,
+                  'endTokenPos' => 2778,
+                  'endFilePos' => 15656,
                 ),
               ),
               'tags' => 
@@ -791,12 +784,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[\'Analytics\']',
                 'attributes' => 
                 array (
-                  'startLine' => 346,
-                  'endLine' => 346,
-                  'startTokenPos' => 2791,
-                  'startFilePos' => 12812,
-                  'endTokenPos' => 2793,
-                  'endFilePos' => 12824,
+                  'startLine' => 378,
+                  'endLine' => 378,
+                  'startTokenPos' => 2784,
+                  'startFilePos' => 15673,
+                  'endTokenPos' => 2786,
+                  'endFilePos' => 15685,
                 ),
               ),
               'summary' => 
@@ -804,12 +797,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'Exportar Excel\'',
                 'attributes' => 
                 array (
-                  'startLine' => 347,
-                  'endLine' => 347,
-                  'startTokenPos' => 2799,
-                  'startFilePos' => 12844,
-                  'endTokenPos' => 2799,
-                  'endFilePos' => 12859,
+                  'startLine' => 379,
+                  'endLine' => 379,
+                  'startTokenPos' => 2792,
+                  'startFilePos' => 15705,
+                  'endTokenPos' => 2792,
+                  'endFilePos' => 15720,
                 ),
               ),
               'security' => 
@@ -817,12 +810,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[[\'X-Auth-Token\' => []], [\'BearerAuth\' => []]]',
                 'attributes' => 
                 array (
-                  'startLine' => 348,
-                  'endLine' => 348,
-                  'startTokenPos' => 2805,
-                  'startFilePos' => 12880,
-                  'endTokenPos' => 2824,
-                  'endFilePos' => 12925,
+                  'startLine' => 380,
+                  'endLine' => 380,
+                  'startTokenPos' => 2798,
+                  'startFilePos' => 15741,
+                  'endTokenPos' => 2817,
+                  'endFilePos' => 15786,
                 ),
               ),
               'responses' => 
@@ -830,12 +823,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[new \\OpenApi\\Attributes\\Response(response: 200, description: \'Ficheiro XLSX descarregado\')]',
                 'attributes' => 
                 array (
-                  'startLine' => 349,
-                  'endLine' => 351,
-                  'startTokenPos' => 2830,
-                  'startFilePos' => 12947,
-                  'endTokenPos' => 2849,
-                  'endFilePos' => 13044,
+                  'startLine' => 381,
+                  'endLine' => 383,
+                  'startTokenPos' => 2823,
+                  'startFilePos' => 15808,
+                  'endTokenPos' => 2842,
+                  'endFilePos' => 15905,
                 ),
               ),
             ),
@@ -844,8 +837,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Exporta o relatório de tickets em formato Excel (.xlsx).
  */',
-        'startLine' => 344,
-        'endLine' => 364,
+        'startLine' => 376,
+        'endLine' => 396,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

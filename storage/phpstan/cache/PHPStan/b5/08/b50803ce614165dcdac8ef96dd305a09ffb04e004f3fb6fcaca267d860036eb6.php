@@ -15,6 +15,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
           'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
           'notifiable' => 'Illuminate\\Notifications\\Notifiable',
         ),
@@ -589,6 +590,1009 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           4 => NULL,
         ),
       )),
+      'fcbe9b83eae869478d589c8fb6b48bc7' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'Illuminate\\Database\\Eloquent',
+         'uses' => 
+        array (
+          'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+          'basecollection' => 'Illuminate\\Support\\Collection',
+        ),
+         'className' => 'App\\Models\\User',
+         'functionName' => NULL,
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => NULL,
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+         'traitData' => 
+        array (
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
+          1 => 'App\\Models\\User',
+          2 => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          3 => NULL,
+          4 => NULL,
+        ),
+      )),
+      'ca7091c8dfee658a699ef1115881e202' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'Illuminate\\Database\\Eloquent',
+         'uses' => 
+        array (
+          'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+          'basecollection' => 'Illuminate\\Support\\Collection',
+        ),
+         'className' => 'App\\Models\\User',
+         'functionName' => 'bootSoftDeletes',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'Illuminate\\Database\\Eloquent',
+           'uses' => 
+          array (
+            'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+            'basecollection' => 'Illuminate\\Support\\Collection',
+          ),
+           'className' => 'App\\Models\\User',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+         'traitData' => 
+        array (
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
+          1 => 'App\\Models\\User',
+          2 => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          3 => NULL,
+          4 => NULL,
+        ),
+      )),
+      'a1724b9ca309dca2227a7f7f24a41153' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'Illuminate\\Database\\Eloquent',
+         'uses' => 
+        array (
+          'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+          'basecollection' => 'Illuminate\\Support\\Collection',
+        ),
+         'className' => 'App\\Models\\User',
+         'functionName' => 'initializeSoftDeletes',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'Illuminate\\Database\\Eloquent',
+           'uses' => 
+          array (
+            'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+            'basecollection' => 'Illuminate\\Support\\Collection',
+          ),
+           'className' => 'App\\Models\\User',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+         'traitData' => 
+        array (
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
+          1 => 'App\\Models\\User',
+          2 => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          3 => NULL,
+          4 => NULL,
+        ),
+      )),
+      '1d127263ec0c9681a018f8475f7cab97' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'Illuminate\\Database\\Eloquent',
+         'uses' => 
+        array (
+          'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+          'basecollection' => 'Illuminate\\Support\\Collection',
+        ),
+         'className' => 'App\\Models\\User',
+         'functionName' => 'forceDelete',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'Illuminate\\Database\\Eloquent',
+           'uses' => 
+          array (
+            'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+            'basecollection' => 'Illuminate\\Support\\Collection',
+          ),
+           'className' => 'App\\Models\\User',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+         'traitData' => 
+        array (
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
+          1 => 'App\\Models\\User',
+          2 => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          3 => NULL,
+          4 => NULL,
+        ),
+      )),
+      'bae2c60a9e37af1841b170f51a65bbdb' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'Illuminate\\Database\\Eloquent',
+         'uses' => 
+        array (
+          'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+          'basecollection' => 'Illuminate\\Support\\Collection',
+        ),
+         'className' => 'App\\Models\\User',
+         'functionName' => 'forceDeleteQuietly',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'Illuminate\\Database\\Eloquent',
+           'uses' => 
+          array (
+            'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+            'basecollection' => 'Illuminate\\Support\\Collection',
+          ),
+           'className' => 'App\\Models\\User',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+         'traitData' => 
+        array (
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
+          1 => 'App\\Models\\User',
+          2 => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          3 => NULL,
+          4 => NULL,
+        ),
+      )),
+      'ea68c4b7785eea0a5be3852698242456' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'Illuminate\\Database\\Eloquent',
+         'uses' => 
+        array (
+          'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+          'basecollection' => 'Illuminate\\Support\\Collection',
+        ),
+         'className' => 'App\\Models\\User',
+         'functionName' => 'forceDestroy',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'Illuminate\\Database\\Eloquent',
+           'uses' => 
+          array (
+            'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+            'basecollection' => 'Illuminate\\Support\\Collection',
+          ),
+           'className' => 'App\\Models\\User',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+         'traitData' => 
+        array (
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
+          1 => 'App\\Models\\User',
+          2 => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          3 => NULL,
+          4 => NULL,
+        ),
+      )),
+      '138688dbea7ff96b062d8cd73fab6d8c' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'Illuminate\\Database\\Eloquent',
+         'uses' => 
+        array (
+          'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+          'basecollection' => 'Illuminate\\Support\\Collection',
+        ),
+         'className' => 'App\\Models\\User',
+         'functionName' => 'performDeleteOnModel',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'Illuminate\\Database\\Eloquent',
+           'uses' => 
+          array (
+            'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+            'basecollection' => 'Illuminate\\Support\\Collection',
+          ),
+           'className' => 'App\\Models\\User',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+         'traitData' => 
+        array (
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
+          1 => 'App\\Models\\User',
+          2 => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          3 => NULL,
+          4 => NULL,
+        ),
+      )),
+      'df09c0c1b8bcb693a1a29736efb4fbb9' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'Illuminate\\Database\\Eloquent',
+         'uses' => 
+        array (
+          'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+          'basecollection' => 'Illuminate\\Support\\Collection',
+        ),
+         'className' => 'App\\Models\\User',
+         'functionName' => 'runSoftDelete',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'Illuminate\\Database\\Eloquent',
+           'uses' => 
+          array (
+            'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+            'basecollection' => 'Illuminate\\Support\\Collection',
+          ),
+           'className' => 'App\\Models\\User',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+         'traitData' => 
+        array (
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
+          1 => 'App\\Models\\User',
+          2 => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          3 => NULL,
+          4 => NULL,
+        ),
+      )),
+      'b7f4531457cf378895c0d07f0cb4be7c' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'Illuminate\\Database\\Eloquent',
+         'uses' => 
+        array (
+          'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+          'basecollection' => 'Illuminate\\Support\\Collection',
+        ),
+         'className' => 'App\\Models\\User',
+         'functionName' => 'restore',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'Illuminate\\Database\\Eloquent',
+           'uses' => 
+          array (
+            'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+            'basecollection' => 'Illuminate\\Support\\Collection',
+          ),
+           'className' => 'App\\Models\\User',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+         'traitData' => 
+        array (
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
+          1 => 'App\\Models\\User',
+          2 => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          3 => NULL,
+          4 => NULL,
+        ),
+      )),
+      'd02a6af54b21b01e579dcc381c0d2f39' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'Illuminate\\Database\\Eloquent',
+         'uses' => 
+        array (
+          'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+          'basecollection' => 'Illuminate\\Support\\Collection',
+        ),
+         'className' => 'App\\Models\\User',
+         'functionName' => 'restoreQuietly',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'Illuminate\\Database\\Eloquent',
+           'uses' => 
+          array (
+            'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+            'basecollection' => 'Illuminate\\Support\\Collection',
+          ),
+           'className' => 'App\\Models\\User',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+         'traitData' => 
+        array (
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
+          1 => 'App\\Models\\User',
+          2 => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          3 => NULL,
+          4 => NULL,
+        ),
+      )),
+      'c522e0bad6b1f1ef5018acc79eaf8ed6' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'Illuminate\\Database\\Eloquent',
+         'uses' => 
+        array (
+          'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+          'basecollection' => 'Illuminate\\Support\\Collection',
+        ),
+         'className' => 'App\\Models\\User',
+         'functionName' => 'trashed',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'Illuminate\\Database\\Eloquent',
+           'uses' => 
+          array (
+            'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+            'basecollection' => 'Illuminate\\Support\\Collection',
+          ),
+           'className' => 'App\\Models\\User',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+         'traitData' => 
+        array (
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
+          1 => 'App\\Models\\User',
+          2 => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          3 => NULL,
+          4 => NULL,
+        ),
+      )),
+      '11bc742508df1f3636ae6e5ea036e0b1' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'Illuminate\\Database\\Eloquent',
+         'uses' => 
+        array (
+          'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+          'basecollection' => 'Illuminate\\Support\\Collection',
+        ),
+         'className' => 'App\\Models\\User',
+         'functionName' => 'softDeleted',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'Illuminate\\Database\\Eloquent',
+           'uses' => 
+          array (
+            'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+            'basecollection' => 'Illuminate\\Support\\Collection',
+          ),
+           'className' => 'App\\Models\\User',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+         'traitData' => 
+        array (
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
+          1 => 'App\\Models\\User',
+          2 => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          3 => NULL,
+          4 => NULL,
+        ),
+      )),
+      '4632f33771fd4adc85c66a3c19017d8e' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'Illuminate\\Database\\Eloquent',
+         'uses' => 
+        array (
+          'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+          'basecollection' => 'Illuminate\\Support\\Collection',
+        ),
+         'className' => 'App\\Models\\User',
+         'functionName' => 'restoring',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'Illuminate\\Database\\Eloquent',
+           'uses' => 
+          array (
+            'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+            'basecollection' => 'Illuminate\\Support\\Collection',
+          ),
+           'className' => 'App\\Models\\User',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+         'traitData' => 
+        array (
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
+          1 => 'App\\Models\\User',
+          2 => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          3 => NULL,
+          4 => NULL,
+        ),
+      )),
+      '8d5bb6c0eb06747d373e792869b509ef' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'Illuminate\\Database\\Eloquent',
+         'uses' => 
+        array (
+          'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+          'basecollection' => 'Illuminate\\Support\\Collection',
+        ),
+         'className' => 'App\\Models\\User',
+         'functionName' => 'restored',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'Illuminate\\Database\\Eloquent',
+           'uses' => 
+          array (
+            'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+            'basecollection' => 'Illuminate\\Support\\Collection',
+          ),
+           'className' => 'App\\Models\\User',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+         'traitData' => 
+        array (
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
+          1 => 'App\\Models\\User',
+          2 => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          3 => NULL,
+          4 => NULL,
+        ),
+      )),
+      '06d2a764112e76d95afdd6eb6c403330' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'Illuminate\\Database\\Eloquent',
+         'uses' => 
+        array (
+          'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+          'basecollection' => 'Illuminate\\Support\\Collection',
+        ),
+         'className' => 'App\\Models\\User',
+         'functionName' => 'forceDeleting',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'Illuminate\\Database\\Eloquent',
+           'uses' => 
+          array (
+            'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+            'basecollection' => 'Illuminate\\Support\\Collection',
+          ),
+           'className' => 'App\\Models\\User',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+         'traitData' => 
+        array (
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
+          1 => 'App\\Models\\User',
+          2 => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          3 => NULL,
+          4 => NULL,
+        ),
+      )),
+      '16e25aaac27649c1b41664fab4bd6104' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'Illuminate\\Database\\Eloquent',
+         'uses' => 
+        array (
+          'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+          'basecollection' => 'Illuminate\\Support\\Collection',
+        ),
+         'className' => 'App\\Models\\User',
+         'functionName' => 'forceDeleted',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'Illuminate\\Database\\Eloquent',
+           'uses' => 
+          array (
+            'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+            'basecollection' => 'Illuminate\\Support\\Collection',
+          ),
+           'className' => 'App\\Models\\User',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+         'traitData' => 
+        array (
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
+          1 => 'App\\Models\\User',
+          2 => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          3 => NULL,
+          4 => NULL,
+        ),
+      )),
+      '9f7a41261a2411e04adf8b68464998c2' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'Illuminate\\Database\\Eloquent',
+         'uses' => 
+        array (
+          'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+          'basecollection' => 'Illuminate\\Support\\Collection',
+        ),
+         'className' => 'App\\Models\\User',
+         'functionName' => 'isForceDeleting',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'Illuminate\\Database\\Eloquent',
+           'uses' => 
+          array (
+            'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+            'basecollection' => 'Illuminate\\Support\\Collection',
+          ),
+           'className' => 'App\\Models\\User',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+         'traitData' => 
+        array (
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
+          1 => 'App\\Models\\User',
+          2 => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          3 => NULL,
+          4 => NULL,
+        ),
+      )),
+      '52ec8bf16192817832a18b6beb9036b6' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'Illuminate\\Database\\Eloquent',
+         'uses' => 
+        array (
+          'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+          'basecollection' => 'Illuminate\\Support\\Collection',
+        ),
+         'className' => 'App\\Models\\User',
+         'functionName' => 'getDeletedAtColumn',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'Illuminate\\Database\\Eloquent',
+           'uses' => 
+          array (
+            'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+            'basecollection' => 'Illuminate\\Support\\Collection',
+          ),
+           'className' => 'App\\Models\\User',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+         'traitData' => 
+        array (
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
+          1 => 'App\\Models\\User',
+          2 => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          3 => NULL,
+          4 => NULL,
+        ),
+      )),
+      '4266cb25becaca2aaedffb6dbcca6910' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'Illuminate\\Database\\Eloquent',
+         'uses' => 
+        array (
+          'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+          'basecollection' => 'Illuminate\\Support\\Collection',
+        ),
+         'className' => 'App\\Models\\User',
+         'functionName' => 'getQualifiedDeletedAtColumn',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => 
+        \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+           'namespace' => 'Illuminate\\Database\\Eloquent',
+           'uses' => 
+          array (
+            'eloquentcollection' => 'Illuminate\\Database\\Eloquent\\Collection',
+            'basecollection' => 'Illuminate\\Support\\Collection',
+          ),
+           'className' => 'App\\Models\\User',
+           'functionName' => NULL,
+           'templatePhpDocNodes' => 
+          array (
+          ),
+           'parent' => NULL,
+           'typeAliasesMap' => 
+          array (
+          ),
+           'bypassTypeAliases' => false,
+           'constUses' => 
+          array (
+          ),
+           'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+           'traitData' => NULL,
+        )),
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+         'traitData' => 
+        array (
+          0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
+          1 => 'App\\Models\\User',
+          2 => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+          3 => NULL,
+          4 => NULL,
+        ),
+      )),
       '5e62c3cb9aaf92025ce735c3a40c78de' => 
       \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
          'namespace' => 'App\\Models',
@@ -597,6 +1601,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
           'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
           'notifiable' => 'Illuminate\\Notifications\\Notifiable',
         ),
@@ -613,6 +1618,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+            'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
             'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
             'notifiable' => 'Illuminate\\Notifications\\Notifiable',
           ),
@@ -650,6 +1656,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
           'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
           'notifiable' => 'Illuminate\\Notifications\\Notifiable',
         ),
@@ -666,6 +1673,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+            'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
             'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
             'notifiable' => 'Illuminate\\Notifications\\Notifiable',
           ),
@@ -703,6 +1711,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
           'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
           'notifiable' => 'Illuminate\\Notifications\\Notifiable',
         ),
@@ -719,6 +1728,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+            'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
             'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
             'notifiable' => 'Illuminate\\Notifications\\Notifiable',
           ),
@@ -756,6 +1766,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
           'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
           'notifiable' => 'Illuminate\\Notifications\\Notifiable',
         ),
@@ -772,6 +1783,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+            'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
             'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
             'notifiable' => 'Illuminate\\Notifications\\Notifiable',
           ),
@@ -809,6 +1821,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
           'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
           'notifiable' => 'Illuminate\\Notifications\\Notifiable',
         ),
@@ -825,6 +1838,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+            'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
             'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
             'notifiable' => 'Illuminate\\Notifications\\Notifiable',
           ),
@@ -862,6 +1876,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
           'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
           'notifiable' => 'Illuminate\\Notifications\\Notifiable',
         ),
@@ -878,6 +1893,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+            'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
             'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
             'notifiable' => 'Illuminate\\Notifications\\Notifiable',
           ),
@@ -915,6 +1931,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
           'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
           'notifiable' => 'Illuminate\\Notifications\\Notifiable',
         ),
@@ -931,6 +1948,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+            'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
             'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
             'notifiable' => 'Illuminate\\Notifications\\Notifiable',
           ),
@@ -968,6 +1986,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
           'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
           'notifiable' => 'Illuminate\\Notifications\\Notifiable',
         ),
@@ -984,6 +2003,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+            'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
             'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
             'notifiable' => 'Illuminate\\Notifications\\Notifiable',
           ),
@@ -1021,6 +2041,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
           'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
           'notifiable' => 'Illuminate\\Notifications\\Notifiable',
         ),
@@ -1037,6 +2058,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+            'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
             'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
             'notifiable' => 'Illuminate\\Notifications\\Notifiable',
           ),
@@ -1074,6 +2096,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
           'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
           'notifiable' => 'Illuminate\\Notifications\\Notifiable',
         ),
@@ -1090,6 +2113,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+            'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
             'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
             'notifiable' => 'Illuminate\\Notifications\\Notifiable',
           ),
@@ -1127,6 +2151,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
           'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
           'notifiable' => 'Illuminate\\Notifications\\Notifiable',
         ),
@@ -1143,6 +2168,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+            'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
             'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
             'notifiable' => 'Illuminate\\Notifications\\Notifiable',
           ),
@@ -1180,6 +2206,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
           'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
           'notifiable' => 'Illuminate\\Notifications\\Notifiable',
         ),
@@ -1196,6 +2223,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+            'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
             'authenticatable' => 'Illuminate\\Foundation\\Auth\\User',
             'notifiable' => 'Illuminate\\Notifications\\Notifiable',
           ),
@@ -1228,11 +2256,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php' => 'e33a9a13c62677e2e7262605a4aec926a11ff62d22b9c99d046fb55be26a618b',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php' => '9616a7eea7cbf51e4829821e20c730aee9970056992fe22b279d18315dd19c0c',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Factories\\HasFactory.php' => 'b6cb2b164e90168e80963a5549541f5f3188a3ec8cfd368bf3611bd94fbd46a7',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Notifications\\Notifiable.php' => '573fa9bb96fa392434450c9cd9deb8d4e40a5bb93c140a648267b48dfa0433ac',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Notifications\\HasDatabaseNotifications.php' => 'a7a163aa1f98a0ae4cd2135905b6852e29a850beb4296aa72c44c37d22832135',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Notifications\\RoutesNotifications.php' => '82891713db67f6df9ea3b400c9905d26da7834b51d26f53dd3bdb1d7f6a78497',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\SoftDeletes.php' => 'da1b0c13d78ba2f62e97e5627c3149f4e81b9cf9b6092d4ca7f02ca5e5bbcfec',
     ),
   ),
 ));
