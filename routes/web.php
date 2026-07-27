@@ -58,7 +58,12 @@ Route::post('/login', [AuthController::class, 'login'])
 */
 Route::middleware(['custom.auth'])->group(function () {
 
+    Route::post('/tickets/{id}/release', [TicketController::class, 'releaseTicket']);
+
     Route::withoutMiddleware([VerifyCsrfToken::class])->group(function () {
+
+        Route::match(['post', 'put'], '/tickets/{id}/claim', [TicketController::class, 'claimTicket']);
+
 
         // Ações de conta comuns
         Route::post('/logout', [AuthController::class, 'logout']);
@@ -118,12 +123,12 @@ Route::middleware(['custom.auth'])->group(function () {
         Route::get('/calendar', [TicketController::class, 'calendarView']);
 
         /*
-         |-- Área Exclusiva do Técnico de Manutenção
+         |-- Área Exclusiva do Técnico de Manutenção e Administradores
          |----------------------------------------------------------------------*/
-        Route::middleware(['role:technician'])->group(function () {
-            Route::put('/technician/tickets/{id}/start', [TicketController::class, 'startTicket']);
-            Route::put('/technician/tickets/{id}/close', [TicketController::class, 'closeTicket']);
-            Route::put('/technician/tickets/{id}/request-budget', [TicketController::class, 'requestBudget']);
+        Route::middleware(['role:technician,admin'])->group(function () {
+            Route::match(['put', 'post'], '/technician/tickets/{id}/start', [TicketController::class, 'startTicket']);
+            Route::match(['put', 'post'], '/technician/tickets/{id}/close', [TicketController::class, 'closeTicket']);
+            Route::match(['put', 'post'], '/technician/tickets/{id}/request-budget', [TicketController::class, 'requestBudget']);
         });
 
         /*
@@ -182,6 +187,5 @@ Route::middleware(['custom.auth'])->group(function () {
             Route::patch('/admin/rooms/{id}', [RoomController::class, 'updateRoom']);
             Route::patch('/admin/rooms/{id}/inactive', [RoomController::class, 'inactivateRoom']);
         });
-
     });
 });
