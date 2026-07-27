@@ -14,6 +14,24 @@
         <testsuite name="Performance">
             <directory>tests/Performance</directory>
         </testsuite>
+        <testsuite name="Security">
+            <directory>tests/Security</directory>
+        </testsuite>
+        <testsuite name="Integration">
+            <directory>tests/Integration</directory>
+        </testsuite>
+        <testsuite name="Authentication">
+            <directory>tests/Authentication</directory>
+        </testsuite>
+        <testsuite name="Authorization">
+            <directory>tests/Authorization</directory>
+        </testsuite>
+        <testsuite name="Console">
+            <directory>tests/Console</directory>
+        </testsuite>
+        <testsuite name="Database">
+            <directory>tests/Database</directory>
+        </testsuite>
     </testsuites>
     <source>
         <include>
