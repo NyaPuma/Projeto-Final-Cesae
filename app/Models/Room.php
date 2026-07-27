@@ -12,9 +12,12 @@ class Room extends Model
     use Auditable;
     use HasFactory;
 
+    protected $table = 'rooms';
+
     protected $fillable = [
         'name',
         'location',
+        'building',
         'active',
     ];
 
@@ -24,11 +27,11 @@ class Room extends Model
 
     public function equipments(): HasMany
     {
-        return $this->hasMany(Equipment::class);
+        return $this->hasMany(Equipment::class, 'room_id', 'id');
     }
 
     public function tickets(): HasMany
     {
-        return $this->hasMany(Ticket::class);
+        return $this->hasMany(Ticket::class, 'room_id', 'id');
     }
 }

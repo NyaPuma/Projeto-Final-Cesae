@@ -12,7 +12,7 @@ use OpenApi\Attributes as OA;
 class RoomController extends Controller
 {
     /**
-     * Lista todas as salas registadas com a contagem de equipamentos e avarias.
+     * Lista todas as salas registadas com a contagem real de equipamentos e avarias.
      */
     #[OA\Get(
         path: '/admin/rooms',
@@ -24,62 +24,42 @@ class RoomController extends Controller
     public function indexRoom(Request $request)
     {
         try {
-            $query = Room::query();
+            // Força o carregamento da contagem direta da relação equipments
+            $query = Room::query()->withCount('equipments');
 
-            // 1. Contagem de equipamentos de forma segura
-            if (Schema::hasTable('equipments') && Schema::hasColumn('equipments', 'room_id')) {
-                if (method_exists(Room::class, 'equipments')) {
-                    $query->withCount('equipments');
-                } elseif (method_exists(Room::class, 'equipment')) {
-                    $query->withCount('equipment');
-                }
-            }
-
-            // 2. Contagem de avarias ativas se existir a relação
-            if (Schema::hasTable('tickets') && Schema::hasColumn('tickets', 'room_id')) {
-                if (method_exists(Room::class, 'tickets')) {
-                    $query->withCount(['tickets as active_tickets_count' => function ($q) {
-                        $q->whereIn('status', ['aberto', 'aberta', 'em curso', 'pendente orçamento']);
-                    }]);
-                }
-            }
-
-            // 3. Pesquisa por nome
+            // 1. Pesquisa por nome
             if ($request->filled('q')) {
                 $query->where('name', 'like', '%' . $request->q . '%');
             }
 
-            // 4. Pesquisa por edifício / localização
+            // 2. Pesquisa por edifício / localização
             if ($request->filled('building')) {
                 $buildingSearch = $request->building;
-                $hasBuilding = Schema::hasColumn('rooms', 'building');
-                $hasLocation = Schema::hasColumn('rooms', 'location');
-
-                $query->where(function ($q) use ($buildingSearch, $hasBuilding, $hasLocation) {
-                    if ($hasBuilding && $hasLocation) {
-                        $q->where('building', 'like', '%' . $buildingSearch . '%')
-                          ->orWhere('location', 'like', '%' . $buildingSearch . '%');
-                    } elseif ($hasBuilding) {
-                        $q->where('building', 'like', '%' . $buildingSearch . '%');
-                    } elseif ($hasLocation) {
-                        $q->where('location', 'like', '%' . $buildingSearch . '%');
-                    } else {
-                        $q->where('name', 'like', '%' . $buildingSearch . '%');
-                    }
+                $query->where(function ($q) use ($buildingSearch) {
+                    $q->where('building', 'like', '%' . $buildingSearch . '%')
+                      ->orWhere('location', 'like', '%' . $buildingSearch . '%');
                 });
             }
 
             $rooms = $query->orderBy('name')->paginate(15);
 
-            // 5. Injeta de forma explícita no JSON
+            // 3. Cruzamento seguro de dados diretamente na coleção paginada
             $rooms->getCollection()->transform(function ($room) {
-                $count = $room->equipments_count ?? $room->equipment_count ?? 0;
+                // Utiliza a contagem gerada pelo withCount ou calcula diretamente se vier nulo
+                $count = $room->equipments_count ?? $room->equipments()->count();
                 $location = $room->location ?? $room->building ?? '-';
 
-                $room->setAttribute('equipment_count', $count);
-                $room->setAttribute('equipments_count', $count);
-                $room->setAttribute('building', $location);
-                $room->setAttribute('active_tickets_count', $room->active_tickets_count ?? 0);
+                $room->equipment_count = $count;
+                $room->equipments_count = $count;
+                $room->building = $location;
+                $room->active_tickets_count = 0;
+
+                // Contagem de avarias ativas se a relação existir
+                if (method_exists($room, 'tickets')) {
+                    $room->active_tickets_count = $room->tickets()
+                        ->whereIn('status', ['aberto', 'aberta', 'em curso', 'pendente orçamento'])
+                        ->count();
+                }
 
                 return $room;
             });
@@ -89,13 +69,13 @@ class RoomController extends Controller
         } catch (\Throwable $e) {
             Log::error('Erro ao carregar salas: ' . $e->getMessage());
 
-            // Fallback de emergência para não bloquear o front-end
-            $rooms = Room::orderBy('name')->paginate(15);
+            $rooms = Room::withCount('equipments')->orderBy('name')->paginate(15);
             $rooms->getCollection()->transform(function ($room) {
-                $room->setAttribute('equipment_count', 0);
-                $room->setAttribute('equipments_count', 0);
-                $room->setAttribute('building', $room->location ?? $room->building ?? '-');
-                $room->setAttribute('active_tickets_count', 0);
+                $count = $room->equipments_count ?? $room->equipments()->count();
+                $room->equipment_count = $count;
+                $room->equipments_count = $count;
+                $room->building = $room->location ?? $room->building ?? '-';
+                $room->active_tickets_count = 0;
                 return $room;
             });
 
