@@ -6,6 +6,7 @@ use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
@@ -148,7 +149,9 @@ class ErrorScenarioFeatureTest extends TestCase
         $user = $this->createUserWithToken(User::ROLE_USER);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->postJson('/tickets/99999/photos');
+            ->postJson('/tickets/99999/photos', [
+                'photo' => UploadedFile::fake()->create('test.jpg', 10, 'image/jpeg'),
+            ]);
 
         $response->assertStatus(404);
     }

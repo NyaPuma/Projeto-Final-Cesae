@@ -97,7 +97,7 @@ class AuthenticationTest extends TestCase
     #[Test]
     public function login_with_missing_fields_returns_422(): void
     {
-        $response = $this->post('/api/login', []);
+        $response = $this->postJson('/api/login', []);
 
         $response->assertStatus(422)
             ->assertJsonValidationErrors(['email', 'password']);

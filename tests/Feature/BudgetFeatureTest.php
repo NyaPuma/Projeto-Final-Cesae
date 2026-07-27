@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserProfile;
@@ -63,7 +64,7 @@ class BudgetFeatureTest extends TestCase
             ]]);
 
         $ticket->refresh();
-        $this->assertTrue($ticket->hasStatus(Ticket::STATUS_PENDING_BUDGET));
+        $this->assertTrue($ticket->hasStatus(TicketStatusEnum::PendingBudget));
         $this->assertTrue($ticket->budget_requested);
         $this->assertEquals(Ticket::BUDGET_PENDING, $ticket->budget_status);
         $this->assertEquals(500.00, (float) $ticket->budget_amount);
@@ -147,7 +148,7 @@ class BudgetFeatureTest extends TestCase
         $response->assertOk();
         $ticket->refresh();
         $this->assertEquals(Ticket::BUDGET_APPROVED, $ticket->budget_status);
-        $this->assertTrue($ticket->hasStatus(Ticket::STATUS_IN_PROGRESS));
+        $this->assertTrue($ticket->hasStatus(TicketStatusEnum::InProgress));
         $this->assertEquals($admin->id, $ticket->budget_approved_by);
         $this->assertNotNull($ticket->budget_decided_at);
     }
@@ -182,7 +183,7 @@ class BudgetFeatureTest extends TestCase
         $response->assertOk();
         $ticket->refresh();
         $this->assertEquals(Ticket::BUDGET_REJECTED, $ticket->budget_status);
-        $this->assertTrue($ticket->hasStatus(Ticket::STATUS_REJECTED));
+        $this->assertTrue($ticket->hasStatus(TicketStatusEnum::Rejected));
         $this->assertEquals($admin->id, $ticket->budget_approved_by);
     }
 

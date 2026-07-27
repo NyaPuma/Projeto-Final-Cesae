@@ -50,4 +50,12 @@ return [
         ],
     ],
 
+    'budget' => [
+        'threshold' => (float) env('BUDGET_THRESHOLD', 50.00),
+    ],
+
+    'analytics' => [
+        'sla_target_minutes' => (int) env('SLA_TARGET_MINUTES', 480),
+    ],
+
 ];

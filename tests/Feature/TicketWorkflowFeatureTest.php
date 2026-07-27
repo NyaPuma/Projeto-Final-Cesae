@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserProfile;
@@ -64,7 +65,7 @@ class TicketWorkflowFeatureTest extends TestCase
 
         $ticket->refresh();
         $this->assertEquals($technician->id, $ticket->assigned_to);
-        $this->assertTrue($ticket->hasStatus(Ticket::STATUS_IN_PROGRESS));
+        $this->assertTrue($ticket->hasStatus(TicketStatusEnum::InProgress));
         $this->assertNotNull($ticket->in_progress_at);
     }
 
@@ -116,7 +117,7 @@ class TicketWorkflowFeatureTest extends TestCase
             ]]);
 
         $ticket->refresh();
-        $this->assertTrue($ticket->hasStatus(Ticket::STATUS_CLOSED));
+        $this->assertTrue($ticket->hasStatus(TicketStatusEnum::Closed));
         $this->assertEquals(120, $ticket->minutes_spent);
         $this->assertEquals(150.50, (float) $ticket->cost);
         $this->assertEquals('Replaced faulty bearing', $ticket->technical_report);
@@ -151,7 +152,7 @@ class TicketWorkflowFeatureTest extends TestCase
             ->assertJsonStructure(['ticket' => ['id', 'status_id', 'reopened_at']]);
 
         $ticket->refresh();
-        $this->assertTrue($ticket->hasStatus(Ticket::STATUS_OPEN));
+        $this->assertTrue($ticket->hasStatus(TicketStatusEnum::Open));
         $this->assertNotNull($ticket->reopened_at);
     }
 
@@ -177,7 +178,7 @@ class TicketWorkflowFeatureTest extends TestCase
 
         $response->assertOk();
         $ticket->refresh();
-        $this->assertTrue($ticket->hasStatus(Ticket::STATUS_CANCELLED));
+        $this->assertTrue($ticket->hasStatus(TicketStatusEnum::Cancelled));
         $this->assertNotNull($ticket->closed_at);
     }
 

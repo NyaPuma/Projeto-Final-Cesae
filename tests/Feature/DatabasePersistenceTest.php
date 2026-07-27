@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Enums\TicketStatusEnum;
 use App\Models\Audit;
 use App\Models\Equipment;
 use App\Models\EquipmentCategory;
@@ -1204,11 +1205,11 @@ class DatabasePersistenceTest extends TestCase
         ]);
 
         $ticket->refresh();
-        $this->assertTrue($ticket->hasStatus(Ticket::STATUS_CLOSED));
+        $this->assertTrue($ticket->hasStatus(TicketStatusEnum::Closed));
 
         $this->assertTrue($ticket->reopen());
         $ticket->refresh();
-        $this->assertTrue($ticket->hasStatus(Ticket::STATUS_OPEN));
+        $this->assertTrue($ticket->hasStatus(TicketStatusEnum::Open));
         $this->assertNotNull($ticket->reopened_at);
         $this->assertNull($ticket->closed_at);
     }

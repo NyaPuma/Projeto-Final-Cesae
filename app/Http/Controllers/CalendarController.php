@@ -2,37 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Ticket;
+use App\Services\CalendarService;
 use Illuminate\Http\Request;
 
 class CalendarController extends Controller
 {
-    // Apresenta a vista do calendário com os tickets correspondentes.
+    public function __construct(
+        private readonly CalendarService $calendarService,
+    ) {}
+
     public function index(Request $request)
     {
         $user = $this->authenticatedUser($request);
-
-        $query = Ticket::with(['equipment', 'equipment.category'])
-            ->whereNotNull('scheduled_at')
-            ->whereNull('deleted_at');
-
-        if ($user->profile->name === 'technician') {
-            $query->where('assigned_to', $user->id);
-        }
-
-        $tickets = $query->get();
-
-        $events = $tickets->map(function ($ticket) {
-            return [
-                'id' => $ticket->id,
-                'title' => $ticket->equipment->name ?? 'Avaria Geral',
-                'start' => $ticket->scheduled_at->toIso8601String(),
-                'end' => $ticket->scheduled_end?->toIso8601String(),
-                'description' => $ticket->description,
-                'url' => url("/ui/tickets/{$ticket->id}"),
-            ];
-        });
+        $events = $this->calendarService->getScheduledEventsForUser($user);
 
         return view('calendar', compact('events', 'user'));
+    }
+
+    public function events(Request $request)
+    {
+        $user = $this->authenticatedUser($request);
+        $events = $this->calendarService->getScheduledEventsForUser($user);
+
+        return response()->json($events);
     }
 }
