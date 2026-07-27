@@ -31,7 +31,7 @@ jobs:
           coverage: none
 
       - name: Composer Security Audit
-        run: composer audit
+        run: composer audit --locked
 
   npm-audit:
     name: npm Audit

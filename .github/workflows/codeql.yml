@@ -35,6 +35,13 @@ jobs:
         uses: github/codeql-action/init@v3
         with:
           languages: ${{ matrix.language }}
+          config: |
+            paths:
+              - resources/js
+              - resources/ts
+            paths-ignore:
+              - vendor
+              - node_modules
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
