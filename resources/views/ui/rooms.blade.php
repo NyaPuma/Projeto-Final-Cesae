@@ -178,7 +178,7 @@ async function fetchIsolatedRooms(page = 1) {
     }
 
     tbody.innerHTML = rooms.map(r => {
-        const equipmentCount = r.equipment_count || (r.equipment ? r.equipment.length : 0);
+        const equipmentCount = r.equipments_count ?? r.equipment_count ?? (r.equipments ? r.equipments.length : (r.equipment ? r.equipment.length : 0));
         const eqLabel = equipmentCount === 1 ? "Equipamento" : "Equipamentos";
 
         // Indicador em tempo real de Avarias
