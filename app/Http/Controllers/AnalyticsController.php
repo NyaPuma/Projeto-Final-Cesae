@@ -141,9 +141,8 @@ class AnalyticsController extends Controller
                 ->groupBy('equipments.name')
                 ->orderByDesc('total')
                 ->limit(5)
-                ->get()
-                ->map(fn ($row) => (array) $row)
-                ->map(fn (array $row) => ['name' => $row['name'], 'total' => (int) $row['total'], 'subtitle' => 'intervenções'])
+                ->pluck('total', 'name')
+                ->map(fn (int|string $total, string $name) => ['name' => $name, 'total' => (int) $total, 'subtitle' => 'intervenções'])
                 ->values();
 
             // Top salas via agregação SQL
@@ -154,9 +153,8 @@ class AnalyticsController extends Controller
                 ->groupBy('rooms.name')
                 ->orderByDesc('total')
                 ->limit(5)
-                ->get()
-                ->map(fn ($row) => (array) $row)
-                ->map(fn (array $row) => ['name' => $row['name'], 'total' => (int) $row['total'], 'subtitle' => 'tickets'])
+                ->pluck('total', 'name')
+                ->map(fn (int|string $total, string $name) => ['name' => $name, 'total' => (int) $total, 'subtitle' => 'tickets'])
                 ->values();
 
             // Top técnicos via agregação SQL
@@ -167,9 +165,8 @@ class AnalyticsController extends Controller
                 ->groupBy('users.name')
                 ->orderByDesc('total')
                 ->limit(5)
-                ->get()
-                ->map(fn ($row) => (array) $row)
-                ->map(fn (array $row) => ['name' => $row['name'], 'total' => (int) $row['total'], 'subtitle' => 'ações'])
+                ->pluck('total', 'name')
+                ->map(fn (int|string $total, string $name) => ['name' => $name, 'total' => (int) $total, 'subtitle' => 'ações'])
                 ->values();
 
             $recentActivity = Audit::query()

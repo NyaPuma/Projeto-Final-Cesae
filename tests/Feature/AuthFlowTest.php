@@ -91,7 +91,7 @@ class AuthFlowTest extends TestCase
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/password/change', [
                 'current_password' => 'wrong-password',
-                'new_password' => 'new-password-123',
+                'new_password' => 'Password123!',
             ]);
 
         $response->assertStatus(403);

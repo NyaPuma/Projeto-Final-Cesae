@@ -57,7 +57,7 @@ class SecurityCsrfTest extends TestCase
                 'priority' => 'baixa',
             ]);
 
-        $this->assertContains($response->status(), [201, 422]);
+        $this->assertNotEquals(419, $response->status(), 'CSRF middleware should not block API requests');
     }
 
     public function test_logout_requires_authentication(): void

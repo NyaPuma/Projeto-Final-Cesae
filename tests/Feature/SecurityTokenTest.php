@@ -61,7 +61,7 @@ class SecurityTokenTest extends TestCase
         $response = $this->withHeader('X-Auth-Token', $oldToken)
             ->postJson('/password/change', [
                 'current_password' => 'current-password',
-                'new_password' => 'new-secure-password-123',
+                'new_password' => 'Password123!',
             ]);
 
         $response->assertOk();
@@ -84,7 +84,7 @@ class SecurityTokenTest extends TestCase
         $this->withHeader('X-Auth-Token', $oldToken)
             ->postJson('/password/change', [
                 'current_password' => 'current-password',
-                'new_password' => 'new-secure-password-123',
+                'new_password' => 'Password123!',
             ]);
 
         // After password change, old token should still work for API access
