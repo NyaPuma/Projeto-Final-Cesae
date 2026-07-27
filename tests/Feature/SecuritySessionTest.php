@@ -28,7 +28,7 @@ class SecuritySessionTest extends TestCase
         $token = Str::random(60);
         $user = User::factory()->create([
             'profile_id' => $profileId,
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('Password123!'),
             'api_token' => $token,
         ]);
 
@@ -50,7 +50,7 @@ class SecuritySessionTest extends TestCase
         $token = Str::random(60);
         $user = User::factory()->create([
             'profile_id' => $profileId,
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('Password123!'),
             'api_token' => $token,
         ]);
 
@@ -69,7 +69,7 @@ class SecuritySessionTest extends TestCase
         $oldToken = Str::random(60);
         User::factory()->create([
             'email' => 'newlogintoken@example.com',
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('Password123!'),
             'profile_id' => $profileId,
             'active' => true,
             'api_token' => $oldToken,
@@ -77,7 +77,7 @@ class SecuritySessionTest extends TestCase
 
         $response = $this->withSession([])->postJson('/login', [
             'email' => 'newlogintoken@example.com',
-            'password' => 'password123',
+            'password' => 'Password123!',
         ]);
 
         $response->assertOk();

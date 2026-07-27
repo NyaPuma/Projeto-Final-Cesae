@@ -98,7 +98,7 @@ class DatabasePersistenceTest extends TestCase
         $response = $this->postJson('/admin/users', [
             'name' => 'CRUD Test User',
             'email' => 'crud.test.' . uniqid() . '@example.invalid',
-            'password' => 'password123456',
+            'password' => 'Password123!',
             'profile_id' => $profile->id,
         ]);
         $response->assertStatus(201);
@@ -375,14 +375,14 @@ class DatabasePersistenceTest extends TestCase
         $response = $this->postJson('/admin/users', [
             'name' => 'Mass Test',
             'email' => 'mass.' . uniqid() . '@example.invalid',
-            'password' => 'password123456',
+            'password' => 'Password123!',
             'profile_id' => $profile->id,
         ]);
         $response->assertStatus(201);
         $newUserId = $response->json('user.id');
 
         $user = User::find($newUserId);
-        $this->assertNotEquals('password123456', $user->api_token);
+        $this->assertNotEquals('Password123!456', $user->api_token);
     }
 
     // ==========================================
@@ -1043,14 +1043,14 @@ class DatabasePersistenceTest extends TestCase
         $this->postJson('/admin/users', [
             'name' => 'First User',
             'email' => $email,
-            'password' => 'password123456',
+            'password' => 'Password123!',
             'profile_id' => $profile->id,
         ])->assertStatus(201);
 
         $this->postJson('/admin/users', [
             'name' => 'Second User',
             'email' => $email,
-            'password' => 'password123456',
+            'password' => 'Password123!',
             'profile_id' => $profile->id,
         ])->assertStatus(422);
     }

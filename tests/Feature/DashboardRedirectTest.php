@@ -27,13 +27,13 @@ class DashboardRedirectTest extends TestCase
         $user = User::factory()->create([
             'profile_id' => UserProfile::where('name', User::ROLE_USER)->firstOrFail()->id,
             'active' => true,
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('Password123!'),
             'api_token' => Str::random(60),
         ]);
 
         $response = $this->postJson('/login', [
             'email' => $user->email,
-            'password' => 'password123',
+            'password' => 'Password123!',
         ]);
 
         // O login endpoint (API) retorna JSON + cookie, então a verificação de redirect deve ser feita

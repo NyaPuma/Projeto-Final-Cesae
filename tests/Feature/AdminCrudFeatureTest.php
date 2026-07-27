@@ -46,8 +46,8 @@ class AdminCrudFeatureTest extends TestCase
             ->postJson('/admin/users', [
                 'name' => 'New User',
                 'email' => 'newuser@example.com',
-                'password' => 'password123',
-                'password_confirmation' => 'password123',
+                'password' => 'Password123!',
+                'password_confirmation' => 'Password123!',
                 'profile_id' => $userProfile->id,
             ]);
 
@@ -66,8 +66,8 @@ class AdminCrudFeatureTest extends TestCase
             ->postJson('/admin/users', [
                 'name' => 'Unauthorized User',
                 'email' => 'unauth@example.com',
-                'password' => 'password123',
-                'password_confirmation' => 'password123',
+                'password' => 'Password123!',
+                'password_confirmation' => 'Password123!',
                 'profile_id' => 1,
             ]);
 

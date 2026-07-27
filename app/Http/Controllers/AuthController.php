@@ -14,6 +14,10 @@ use OpenApi\Attributes as OA;
 
 class AuthController extends Controller
 {
+    private const PASSWORD_COMPLEXITY_RULES = [
+        'string', 'min:8', 'regex:/[A-Z]/', 'regex:/[a-z]/', 'regex:/[0-9]/', 'regex:/[^A-Za-z0-9]/',
+    ];
+
     #[OA\Post(
         path: '/register',
         tags: ['Auth'],
@@ -55,7 +59,7 @@ class AuthController extends Controller
         $validator = Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => array_merge(['required', 'confirmed'], self::PASSWORD_COMPLEXITY_RULES),
         ]);
 
         // Qualquer falha de validação devolve a lista completa de erros para o frontend.
@@ -217,7 +221,7 @@ class AuthController extends Controller
 
         $validator = Validator::make($data, [
             'current_password' => ['required', 'string'],
-            'new_password' => ['required', 'string', 'min:8'],
+            'new_password' => array_merge(['required'], self::PASSWORD_COMPLEXITY_RULES),
         ]);
 
         // Erros de validação são devolvidos para o frontend poder corrigir o formulário.
@@ -335,7 +339,7 @@ class AuthController extends Controller
         $validator = Validator::make($data, [
             'email' => ['required', 'email'],
             'token' => ['required', 'string'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => array_merge(['required', 'confirmed'], self::PASSWORD_COMPLEXITY_RULES),
         ]);
 
         if ($validator->fails()) {

@@ -23,7 +23,7 @@ class SecurityRateLimitTest extends TestCase
     {
         User::factory()->create([
             'email' => 'ratelimit@example.com',
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('Password123!'),
             'profile_id' => UserProfile::where('name', User::ROLE_USER)->value('id'),
             'active' => true,
         ]);
@@ -53,7 +53,7 @@ class SecurityRateLimitTest extends TestCase
     {
         User::factory()->create([
             'email' => 'headers@example.com',
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('Password123!'),
             'profile_id' => UserProfile::where('name', User::ROLE_USER)->value('id'),
             'active' => true,
         ]);
@@ -74,7 +74,7 @@ class SecurityRateLimitTest extends TestCase
     {
         User::factory()->create([
             'email' => 'multiip@example.com',
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('Password123!'),
             'profile_id' => UserProfile::where('name', User::ROLE_USER)->value('id'),
             'active' => true,
         ]);

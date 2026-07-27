@@ -1,55 +1,49 @@
-name: Continuous Integration
+name: CI
 
 on:
   push:
-    branches:
-      - main
-      - develop
-
+    branches: [main, develop]
   pull_request:
-    branches:
-      - main
-      - develop
+    branches: [main, develop]
 
 permissions:
   contents: read
 
-jobs:
-  build:
-    name: Build Laravel Application
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
+jobs:
+  lint:
+    name: Code Style
     runs-on: ubuntu-latest
+    timeout-minutes: 5
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v7
+      - uses: actions/checkout@v4
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-          extensions: mbstring, pdo, pdo_mysql, bcmath, intl, gd
-          coverage: none
+      - uses: ./.github/actions/setup-php-composer
 
       - name: Validate composer.json
         run: composer validate --strict
 
-      - name: Cache Composer packages
-        uses: actions/cache@v6
-        with:
-          path: vendor
-          key: composer-${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            composer-${{ runner.os }}-
-
-      - name: Install Composer dependencies
-        run: composer install --no-interaction --prefer-dist --no-progress
-
       - name: Check code style with Laravel Pint
         run: vendor/bin/pint --test
 
+  build:
+    name: Build Assets
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup-php-composer
+        with:
+          install: false
+
       - name: Setup Node.js
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
@@ -60,14 +54,31 @@ jobs:
       - name: Build Vite assets
         run: npm run build
 
-      - name: Copy environment
-        run: cp .env.example .env
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
 
-      - name: Generate application key
-        run: php artisan key:generate
+    steps:
+      - uses: actions/checkout@v4
 
-      - name: Cache Laravel configuration
-        run: php artisan config:cache
+      - uses: ./.github/actions/setup-php-composer
 
-      - name: Verify Laravel installation
-        run: php artisan --version
+      - name: Prepare environment
+        run: cp .env.example .env && php artisan key:generate
+
+      - name: Run PHPUnit tests
+        run: php artisan test
+
+  static-analysis:
+    name: Static Analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup-php-composer
+
+      - name: Run PHPStan
+        run: vendor/bin/phpstan analyse --memory-limit=1G

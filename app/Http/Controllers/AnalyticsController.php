@@ -73,45 +73,41 @@ class AnalyticsController extends Controller
             $closedStatusId = Ticket::getStatusIdByName(Ticket::STATUS_CLOSED);
             $slaTargetMinutes = 480;
 
-            // Agregação a nível de BD em vez de carregar todos os tickets para memória
             $baseQuery = Ticket::query()->whereNull('tickets.deleted_at');
 
-            $openTickets = (clone $baseQuery)->where('status_id', $openStatusId)->count();
-            $inProgressTickets = (clone $baseQuery)->where('status_id', $inProgressStatusId)->count();
-            $budgetPendingTickets = (clone $baseQuery)->where('budget_status', Ticket::BUDGET_PENDING)->count();
-            $closedTickets = (clone $baseQuery)
-                ->where('status_id', $closedStatusId)
-                ->whereNotNull('opened_at')
-                ->whereNotNull('closed_at')
-                ->count();
+            // Query única: counts + avg resolution + avg waiting + SLA count
+            $kpiRow = (clone $baseQuery)
+                ->selectRaw('
+                    SUM(CASE WHEN status_id = ? THEN 1 ELSE 0 END) as open_tickets,
+                    SUM(CASE WHEN status_id = ? THEN 1 ELSE 0 END) as in_progress_tickets,
+                    SUM(CASE WHEN budget_status = ? THEN 1 ELSE 0 END) as budget_pending_tickets,
+                    SUM(CASE WHEN status_id = ? AND opened_at IS NOT NULL AND closed_at IS NOT NULL THEN 1 ELSE 0 END) as closed_tickets,
+                    AVG(CASE WHEN status_id = ? AND opened_at IS NOT NULL AND closed_at IS NOT NULL
+                        THEN CAST((julianday(closed_at) - julianday(opened_at)) * 1440 AS INTEGER) END) as avg_resolution,
+                    AVG(CASE WHEN status_id != ? AND opened_at IS NOT NULL
+                        THEN CAST((julianday(datetime(\'now\')) - julianday(opened_at)) * 1440 AS INTEGER) END) as avg_waiting,
+                    SUM(CASE WHEN status_id = ? AND opened_at IS NOT NULL AND closed_at IS NOT NULL
+                        AND (julianday(closed_at) - julianday(opened_at)) * 1440 <= ? THEN 1 ELSE 0 END) as sla_met
+                ', [
+                    $openStatusId,
+                    $inProgressStatusId,
+                    Ticket::BUDGET_PENDING,
+                    $closedStatusId,
+                    $closedStatusId,
+                    $inProgressStatusId,
+                    $closedStatusId,
+                    $slaTargetMinutes,
+                ])
+                ->first();
 
-            // Média de resolução via SQL
-            $avgResolution = (clone $baseQuery)
-                ->where('status_id', $closedStatusId)
-                ->whereNotNull('opened_at')
-                ->whereNotNull('closed_at')
-                ->selectRaw('AVG(CAST((julianday(closed_at) - julianday(opened_at)) * 1440 AS INTEGER)) as avg_minutes')
-                ->value('avg_minutes') ?? 0;
-
-            // Média de espera (tickets não fechados)
-            $avgWaiting = (clone $baseQuery)
-                ->where('status_id', '!=', $closedStatusId)
-                ->whereNotNull('opened_at')
-                ->selectRaw('AVG(CAST((julianday(datetime(\'now\')) - julianday(opened_at)) * 1440 AS INTEGER)) as avg_minutes')
-                ->value('avg_minutes') ?? 0;
-
-            // SLA success rate
-            $slaSuccess = $closedTickets > 0
-                ? round(
-                    ((clone $baseQuery)
-                        ->where('status_id', $closedStatusId)
-                        ->whereNotNull('opened_at')
-                        ->whereNotNull('closed_at')
-                        ->whereRaw('(julianday(closed_at) - julianday(opened_at)) * 1440 <= ?', [$slaTargetMinutes])
-                        ->count() / $closedTickets) * 100,
-                    1
-                )
-                : 100;
+            $openTickets = (int) ($kpiRow->open_tickets ?? 0);
+            $inProgressTickets = (int) ($kpiRow->in_progress_tickets ?? 0);
+            $budgetPendingTickets = (int) ($kpiRow->budget_pending_tickets ?? 0);
+            $closedTickets = (int) ($kpiRow->closed_tickets ?? 0);
+            $avgResolution = (float) ($kpiRow->avg_resolution ?? 0);
+            $avgWaiting = (float) ($kpiRow->avg_waiting ?? 0);
+            $slaMet = (int) ($kpiRow->sla_met ?? 0);
+            $slaSuccess = $closedTickets > 0 ? round(($slaMet / $closedTickets) * 100, 1) : 100;
 
             $statusBreakdown = collect([
                 ['label' => 'Abertos', 'value' => $openTickets],
@@ -120,14 +116,22 @@ class AnalyticsController extends Controller
                 ['label' => 'Fechados', 'value' => $closedTickets],
             ]);
 
-            // Priority breakdown via BD
+            // Priority breakdown via query única
+            $priorityRow = (clone $baseQuery)
+                ->selectRaw('
+                    SUM(CASE WHEN priority = ? THEN 1 ELSE 0 END) as low,
+                    SUM(CASE WHEN priority = ? THEN 1 ELSE 0 END) as medium,
+                    SUM(CASE WHEN priority = ? THEN 1 ELSE 0 END) as high
+                ', [Ticket::PRIORITY_LOW, Ticket::PRIORITY_MEDIUM, Ticket::PRIORITY_HIGH])
+                ->first();
+
             $priorityBreakdown = collect([
-                ['label' => 'Baixa', 'value' => (clone $baseQuery)->where('priority', Ticket::PRIORITY_LOW)->count()],
-                ['label' => 'Média', 'value' => (clone $baseQuery)->where('priority', Ticket::PRIORITY_MEDIUM)->count()],
-                ['label' => 'Alta', 'value' => (clone $baseQuery)->where('priority', Ticket::PRIORITY_HIGH)->count()],
+                ['label' => 'Baixa', 'value' => (int) ($priorityRow->low ?? 0)],
+                ['label' => 'Média', 'value' => (int) ($priorityRow->medium ?? 0)],
+                ['label' => 'Alta', 'value' => (int) ($priorityRow->high ?? 0)],
             ]);
 
-            // Monthly series via chunking para não memória
+            // Monthly series via query única com agregação condicional
             $monthlyBuckets = $this->buildMonthlySeriesFromDb($openStatusId, $inProgressStatusId, $closedStatusId);
 
             // Top equipamentos via agregação SQL
@@ -176,7 +180,7 @@ class AnalyticsController extends Controller
                     $description = match ($audit->event) {
                         'created' => 'Registou uma nova entrada no sistema.',
                         'updated' => 'Atualizou campos de um registo.',
-                        'deleted' => 'Removou um registo do sistema.',
+                        'deleted' => 'Removiu um registo do sistema.',
                         default => 'Ação registada na auditoria.',
                     };
 
@@ -188,7 +192,7 @@ class AnalyticsController extends Controller
                 })
                 ->values();
 
-            $payload = [
+            return [
                 'average_resolution_minutes' => round($avgResolution, 1),
                 'average_waiting_minutes' => round($avgWaiting, 1),
                 'open_tickets' => $openTickets,
@@ -221,69 +225,59 @@ class AnalyticsController extends Controller
                 'top_technicians' => $topTechnicians,
                 'recent_activity' => $recentActivity,
             ];
-
-            return $payload;
         });
     }
 
     private function buildMonthlySeriesFromDb(int $openStatusId, int $inProgressStatusId, ?int $closedStatusId): array
     {
-        $months = [];
+        $now = now();
+
+        $monthKeys = [];
+        foreach (range(5, 0) as $offset) {
+            $monthKeys[] = $now->copy()->subMonths($offset)->format('Y-m');
+        }
+
+        $startMonth = $now->copy()->subMonths(5)->startOfMonth()->toDateTimeString();
+        $endMonth = $now->copy()->endOfMonth()->toDateTimeString();
+
+        // Query única com agregação condicional por mês
+        $rows = Ticket::query()
+            ->selectRaw('
+                strftime(\'%Y-%m\', opened_at) as month,
+                SUM(CASE WHEN status_id = ? THEN 1 ELSE 0 END) as open_count,
+                SUM(CASE WHEN status_id = ? THEN 1 ELSE 0 END) as in_progress_count,
+                SUM(CASE WHEN status_id = ? THEN 1 ELSE 0 END) as closed_count,
+                SUM(CASE WHEN status_id = ? AND closed_at IS NOT NULL AND cost IS NOT NULL THEN cost ELSE 0 END) as total_cost
+            ', [$openStatusId, $inProgressStatusId, $closedStatusId, $closedStatusId])
+            ->whereNull('tickets.deleted_at')
+            ->whereNotNull('opened_at')
+            ->whereBetween('opened_at', [$startMonth, $endMonth])
+            ->groupByRaw('strftime(\'%Y-%m\', opened_at)')
+            ->get()
+            ->keyBy('month');
+
         $open = [];
         $inProgress = [];
         $closed = [];
         $costLabels = [];
         $costData = [];
 
-        $now = now();
-
-        foreach (range(5, 0) as $offset) {
-            $monthKey = $now->copy()->subMonths($offset)->format('Y-m');
-            $months[] = $monthKey;
-            $open[$monthKey] = 0;
-            $inProgress[$monthKey] = 0;
-            $closed[$monthKey] = 0;
-            $costLabels[$monthKey] = 0;
+        foreach ($monthKeys as $key) {
+            $row = $rows->get($key);
+            $open[] = (int) ($row->open_count ?? 0);
+            $inProgress[] = (int) ($row->in_progress_count ?? 0);
+            $closed[] = (int) ($row->closed_count ?? 0);
+            $costLabels[] = $key;
+            $costData[] = round((float) ($row->total_cost ?? 0), 2);
         }
 
-        $startMonth = now()->copy()->subMonths(5)->startOfMonth()->toDateTimeString();
-        $endMonth = now()->copy()->endOfMonth()->toDateTimeString();
-
-        // Agregação via chunking para não carregar tudo em memória
-        Ticket::query()
-            ->select('status_id', 'opened_at', 'closed_at', 'cost')
-            ->whereNull('tickets.deleted_at')
-            ->whereNotNull('opened_at')
-            ->whereBetween('opened_at', [$startMonth, $endMonth])
-            ->chunk(500, function ($tickets) use (&$open, &$inProgress, &$closed, &$costData, &$costLabels, $openStatusId, $inProgressStatusId, $closedStatusId) {
-                foreach ($tickets as $ticket) {
-                    $monthKey = \Carbon\Carbon::parse($ticket->opened_at)->format('Y-m');
-                    if (! array_key_exists($monthKey, $open)) {
-                        continue;
-                    }
-
-                    if ($ticket->status_id === $openStatusId) {
-                        $open[$monthKey]++;
-                    }
-                    if ($ticket->status_id === $inProgressStatusId) {
-                        $inProgress[$monthKey]++;
-                    }
-                    if ($ticket->status_id === $closedStatusId) {
-                        $closed[$monthKey]++;
-                        if ($ticket->closed_at && $ticket->cost !== null) {
-                            $costData[$monthKey] = ($costData[$monthKey] ?? 0) + (float) $ticket->cost;
-                        }
-                    }
-                }
-            });
-
         return [
-            'labels' => array_keys($open),
-            'open' => array_values($open),
-            'in_progress' => array_values($inProgress),
-            'closed' => array_values($closed),
-            'cost_labels' => array_keys($costLabels),
-            'cost_data' => array_values($costData),
+            'labels' => $monthKeys,
+            'open' => $open,
+            'in_progress' => $inProgress,
+            'closed' => $closed,
+            'cost_labels' => $costLabels,
+            'cost_data' => $costData,
         ];
     }
 
@@ -316,20 +310,27 @@ class AnalyticsController extends Controller
             $handle = fopen('php://output', 'w');
             fputcsv($handle, ['id', 'title', 'status_id', 'opened_at', 'in_progress_at', 'closed_at', 'minutes_spent', 'cost', 'budget_status', 'budget_amount']);
 
-            foreach (Ticket::cursor() as $ticket) {
-                fputcsv($handle, [
-                    $ticket->id,
-                    $ticket->title,
-                    $ticket->status_id,
-                    optional($ticket->opened_at)->toDateTimeString(),
-                    optional($ticket->in_progress_at)->toDateTimeString(),
-                    optional($ticket->closed_at)->toDateTimeString(),
-                    $ticket->minutes_spent,
-                    $ticket->cost,
-                    $ticket->budget_status,
-                    $ticket->budget_amount,
-                ]);
-            }
+            Ticket::select([
+                'id', 'title', 'status_id', 'opened_at', 'in_progress_at',
+                'closed_at', 'minutes_spent', 'cost', 'budget_status', 'budget_amount',
+            ])
+                ->whereNull('tickets.deleted_at')
+                ->chunk(500, function ($tickets) use ($handle) {
+                    foreach ($tickets as $ticket) {
+                        fputcsv($handle, [
+                            $ticket->id,
+                            $ticket->title,
+                            $ticket->status_id,
+                            optional($ticket->opened_at)->toDateTimeString(),
+                            optional($ticket->in_progress_at)->toDateTimeString(),
+                            optional($ticket->closed_at)->toDateTimeString(),
+                            $ticket->minutes_spent,
+                            $ticket->cost,
+                            $ticket->budget_status,
+                            $ticket->budget_amount,
+                        ]);
+                    }
+                });
 
             fclose($handle);
         };

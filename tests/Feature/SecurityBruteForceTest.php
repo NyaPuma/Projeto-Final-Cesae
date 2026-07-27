@@ -24,7 +24,7 @@ class SecurityBruteForceTest extends TestCase
     {
         User::factory()->create([
             'email' => 'bruteforce@example.com',
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('Password123!'),
             'profile_id' => UserProfile::where('name', User::ROLE_USER)->value('id'),
             'active' => true,
             'api_token' => Str::random(60),
@@ -43,7 +43,7 @@ class SecurityBruteForceTest extends TestCase
     {
         User::factory()->create([
             'email' => 'rapid@example.com',
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('Password123!'),
             'profile_id' => UserProfile::where('name', User::ROLE_USER)->value('id'),
             'active' => true,
             'api_token' => Str::random(60),
@@ -66,7 +66,7 @@ class SecurityBruteForceTest extends TestCase
     {
         User::factory()->create([
             'email' => 'resetcounter@example.com',
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('Password123!'),
             'profile_id' => UserProfile::where('name', User::ROLE_USER)->value('id'),
             'active' => true,
             'api_token' => Str::random(60),
@@ -83,7 +83,7 @@ class SecurityBruteForceTest extends TestCase
         // Successful login
         $response = $this->withSession([])->postJson('/login', [
             'email' => 'resetcounter@example.com',
-            'password' => 'password123',
+            'password' => 'Password123!',
         ]);
         $response->assertOk();
 

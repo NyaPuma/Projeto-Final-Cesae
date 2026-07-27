@@ -20,7 +20,7 @@ class LoginFlowTest extends TestCase
 
         $login = $this->postJson('/login', [
             'email' => 'admin@example.com',
-            'password' => 'admin123',
+            'password' => 'Password123!',
         ]);
 
         $login->assertOk();
@@ -39,7 +39,7 @@ class LoginFlowTest extends TestCase
 
         $login = $this->postJson('/login', [
             'email' => 'admin@example.com',
-            'password' => 'admin123',
+            'password' => 'Password123!',
         ]);
         $login->assertOk();
         $token = $login->json('token');
@@ -63,7 +63,7 @@ class LoginFlowTest extends TestCase
 
         $login = $this->postJson('/login', [
             'email' => 'admin@example.com',
-            'password' => 'admin123',
+            'password' => 'Password123!',
         ]);
         $login->assertOk();
         $token = $login->json('token');
@@ -87,7 +87,7 @@ class LoginFlowTest extends TestCase
 
         $login = $this->postJson('/login', [
             'email' => 'admin@example.com',
-            'password' => 'admin123',
+            'password' => 'Password123!',
         ]);
         $login->assertOk();
         $token = $login->json('token');
@@ -137,7 +137,7 @@ class LoginFlowTest extends TestCase
 
         $login = $this->postJson('/login', [
             'email' => 'admin@example.com',
-            'password' => 'admin123',
+            'password' => 'Password123!',
         ]);
         $login->assertOk();
         $token = $login->json('token');

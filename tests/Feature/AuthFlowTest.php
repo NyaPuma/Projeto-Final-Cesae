@@ -46,14 +46,14 @@ class AuthFlowTest extends TestCase
         User::factory()->create([
             'name' => 'Inactive User',
             'email' => 'inactive@example.com',
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('Password123!'),
             'profile_id' => UserProfile::where('name', User::ROLE_USER)->value('id'),
             'active' => false,
         ]);
 
         $response = $this->withSession([])->postJson('/api/login', [
             'email' => 'inactive@example.com',
-            'password' => 'password123',
+            'password' => 'Password123!',
         ]);
 
         $response->assertStatus(401);
@@ -65,7 +65,7 @@ class AuthFlowTest extends TestCase
         User::create([
             'name' => 'Demo User',
             'email' => 'demo@example.com',
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('Password123!'),
             'profile_id' => UserProfile::where('name', User::ROLE_USER)->value('id'),
             'active' => true,
             'api_token' => Str::random(60),
@@ -73,7 +73,7 @@ class AuthFlowTest extends TestCase
 
         $response = $this->withSession([])->postJson('/login', [
             'email' => 'demo@example.com',
-            'password' => 'password123',
+            'password' => 'Password123!',
         ]);
 
         $response->assertOk();
@@ -85,7 +85,7 @@ class AuthFlowTest extends TestCase
         $user = User::factory()->create([
             'profile_id' => UserProfile::where('name', User::ROLE_USER)->value('id'),
             'api_token' => Str::random(60),
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('Password123!'),
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)

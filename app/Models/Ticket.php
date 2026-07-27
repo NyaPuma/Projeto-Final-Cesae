@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\Auditable;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -369,27 +370,48 @@ class Ticket extends Model
 
     /**
      * Obtém o ID do status pelo nome na tabela `ticket_statuses`.
-     * Utiliza cache estática para eliminar queries repetidas (N+1).
+     * Utiliza cache estático (per-request) + Cache facade (Redis/disk) para multi-server.
      */
     public static function getStatusIdByName(string $statusName): ?int
     {
-        $cacheKey = $statusName;
-
-        if (array_key_exists($cacheKey, self::$statusIdCache)) {
-            return self::$statusIdCache[$cacheKey];
+        // 1. Fast path: in-memory static cache (per-request)
+        if (array_key_exists($statusName, self::$statusIdCache)) {
+            return self::$statusIdCache[$statusName];
         }
 
-        self::$statusIdCache[$cacheKey] = TicketStatus::where('name', $statusName)->value('id');
+        // 2. Slow path: Cache facade — use Redis when configured, file otherwise
+        $cached = Cache::get("ticket_status:{$statusName}");
 
-        return self::$statusIdCache[$cacheKey];
+        if ($cached !== null) {
+            self::$statusIdCache[$statusName] = $cached;
+
+            return $cached;
+        }
+
+        // 3. DB query + cache both layers
+        $id = TicketStatus::where('name', $statusName)->value('id');
+        self::$statusIdCache[$statusName] = $id;
+
+        Cache::put("ticket_status:{$statusName}", $id, 3600); // 1h TTL
+
+        return $id;
     }
 
     /**
-     * Limpa o cache estático de status IDs (útil em testes).
+     * Limpa todos os caches de status (estático + Redis).
      */
     public static function flushStatusCache(): void
     {
         self::$statusIdCache = [];
+
+        $statusNames = [
+            self::STATUS_OPEN, self::STATUS_IN_PROGRESS, self::STATUS_CLOSED,
+            self::STATUS_CANCELLED, self::STATUS_PENDING_BUDGET, self::STATUS_REJECTED,
+        ];
+
+        foreach ($statusNames as $name) {
+            Cache::forget("ticket_status:{$name}");
+        }
     }
 
     /**

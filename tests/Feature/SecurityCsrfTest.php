@@ -27,7 +27,7 @@ class SecurityCsrfTest extends TestCase
         $profileId = UserProfile::where('name', User::ROLE_USER)->value('id');
         User::factory()->create([
             'email' => 'nocsrf@example.com',
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('Password123!'),
             'profile_id' => $profileId,
             'active' => true,
             'api_token' => Str::random(60),
@@ -36,7 +36,7 @@ class SecurityCsrfTest extends TestCase
         $response = $this->withSession([])
             ->postJson('/login', [
                 'email' => 'nocsrf@example.com',
-                'password' => 'password123',
+                'password' => 'Password123!',
             ]);
 
         $response->assertOk();

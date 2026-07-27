@@ -22,16 +22,21 @@ class NotificationController extends Controller
     )]
     public function index(Request $request)
     {
-        // Cada utilizador só vê as notificações que lhe pertencem.
         $user = $this->authenticatedUser($request);
 
-        // Busca as últimas 50 notificações não paginadas para o frontend consumir diretamente como array
+        $perPage = min((int) $request->query('per_page', 50), 200);
+
         $notifications = Notification::where('user_id', $user->id)
             ->orderByDesc('created_at')
-            ->limit(50)
-            ->get();
+            ->paginate($perPage);
 
-        return response()->json(['notifications' => $notifications]);
+        return response()->json([
+            'notifications' => $notifications->items(),
+            'total' => $notifications->total(),
+            'current_page' => $notifications->currentPage(),
+            'last_page' => $notifications->lastPage(),
+            'per_page' => $notifications->perPage(),
+        ]);
     }
 
     #[OA\Patch(

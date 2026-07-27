@@ -38,7 +38,7 @@ class DatabaseIntegrityTest extends TestCase
         User::create([
             'name' => 'Duplicado User',
             'email' => 'duplicado@empresa.pt',
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('Password123!'),
         ]);
     }
 }

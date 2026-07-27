@@ -29,13 +29,13 @@ class AuthenticationTest extends TestCase
         $profile = UserProfile::where('name', User::ROLE_USER)->first();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
-            'password' => Hash::make('secret123'),
+            'password' => Hash::make('Password123!'),
             'active' => true,
         ]);
 
         $response = $this->post('/login', [
             'email' => $user->email,
-            'password' => 'secret123',
+            'password' => 'Password123!',
         ]);
 
         $response->assertOk()
@@ -53,7 +53,7 @@ class AuthenticationTest extends TestCase
         $profile = UserProfile::where('name', User::ROLE_USER)->first();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
-            'password' => Hash::make('secret123'),
+            'password' => Hash::make('Password123!'),
             'active' => true,
         ]);
 
@@ -82,13 +82,13 @@ class AuthenticationTest extends TestCase
         $profile = UserProfile::where('name', User::ROLE_USER)->first();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
-            'password' => Hash::make('secret123'),
+            'password' => Hash::make('Password123!'),
             'active' => false,
         ]);
 
         $response = $this->post('/api/login', [
             'email' => $user->email,
-            'password' => 'secret123',
+            'password' => 'Password123!',
         ]);
 
         $response->assertStatus(401);
@@ -109,7 +109,7 @@ class AuthenticationTest extends TestCase
         $profile = UserProfile::where('name', User::ROLE_USER)->first();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
-            'password' => Hash::make('secret123'),
+            'password' => Hash::make('Password123!'),
             'active' => true,
         ]);
 
@@ -117,7 +117,7 @@ class AuthenticationTest extends TestCase
 
         $response = $this->post('/login', [
             'email' => $user->email,
-            'password' => 'secret123',
+            'password' => 'Password123!',
         ]);
 
         $response->assertOk();
@@ -173,8 +173,8 @@ class AuthenticationTest extends TestCase
             ->postJson('/api/admin/users', [
                 'name' => 'New User',
                 'email' => 'newuser@example.com',
-                'password' => 'password123',
-                'password_confirmation' => 'password123',
+                'password' => 'Password123!',
+                'password_confirmation' => 'Password123!',
                 'profile_id' => $userProfile->id,
             ]);
 
@@ -206,8 +206,8 @@ class AuthenticationTest extends TestCase
             ->postJson('/api/admin/users', [
                 'name' => 'Duplicate User',
                 'email' => 'existing@example.com',
-                'password' => 'password123',
-                'password_confirmation' => 'password123',
+                'password' => 'Password123!',
+                'password_confirmation' => 'Password123!',
                 'profile_id' => $userProfile->id,
             ]);
 
@@ -228,7 +228,7 @@ class AuthenticationTest extends TestCase
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->post('/password/change', [
                 'current_password' => 'oldpassword',
-                'new_password' => 'newpassword123',
+                'new_password' => 'newPassword123!',
             ]);
 
         $response->assertOk();
@@ -248,7 +248,7 @@ class AuthenticationTest extends TestCase
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->post('/password/change', [
                 'current_password' => 'wrongpassword',
-                'new_password' => 'newpassword123',
+                'new_password' => 'newPassword123!',
             ]);
 
         $response->assertStatus(403);

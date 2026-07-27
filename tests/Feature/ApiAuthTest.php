@@ -206,7 +206,7 @@ class ApiAuthTest extends TestCase
         $profile = UserProfile::where('name', User::ROLE_USER)->first();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
-            'password' => Hash::make('secret123'),
+            'password' => Hash::make('Password123!'),
             'active' => true,
         ]);
 
@@ -214,7 +214,7 @@ class ApiAuthTest extends TestCase
 
         $this->post('/login', [
             'email' => $user->email,
-            'password' => 'secret123',
+            'password' => 'Password123!',
         ]);
 
         $this->createAuthenticatedRoute();

@@ -77,7 +77,7 @@ class SecurityVulnerabilitiesTest extends TestCase
             ->postJson('/api/admin/users', [
                 'name' => 'Hacker Account',
                 'email' => 'hacker@empresa.pt',
-                'password' => 'password123',
+                'password' => 'Password123!',
                 'profile_id' => $userProfile->id,
             ]);
 

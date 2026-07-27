@@ -54,7 +54,7 @@ class SecurityPasswordPolicyTest extends TestCase
             ->postJson('/admin/users/register', [
                 'name' => 'Mismatch User',
                 'email' => 'mismatch@example.com',
-                'password' => 'password123',
+                'password' => 'Password123!',
                 'password_confirmation' => 'different-password',
             ]);
 

@@ -19,6 +19,10 @@ class AdminController extends Controller
 {
     use ControllerHelpers;
 
+    private const PASSWORD_COMPLEXITY_RULES = [
+        'string', 'min:8', 'regex:/[A-Z]/', 'regex:/[a-z]/', 'regex:/[0-9]/', 'regex:/[^A-Za-z0-9]/',
+    ];
+
     /**
      * Retorna todos os utilizadores (Apenas para Administradores).
      */
@@ -109,7 +113,7 @@ class AdminController extends Controller
         $validator = Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'string', 'min:8'],
+            'password' => array_merge(['required'], self::PASSWORD_COMPLEXITY_RULES),
             'profile_id' => ['required', 'integer', 'exists:user_profiles,id'],
             'active' => ['sometimes', 'boolean'],
         ]);
@@ -149,7 +153,7 @@ class AdminController extends Controller
         $validator = Validator::make($data, [
             'name' => ['sometimes', 'string', 'max:255'],
             'email' => ['sometimes', 'email', 'max:255', 'unique:users,email,'.$id],
-            'password' => ['nullable', 'string', 'min:8'],
+            'password' => array_merge(['nullable'], self::PASSWORD_COMPLEXITY_RULES),
             'profile_id' => ['sometimes', 'integer', 'exists:user_profiles,id'],
             'active' => ['sometimes', 'boolean'],
         ]);

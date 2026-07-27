@@ -36,7 +36,7 @@ class AuthEdgeCasesTest extends TestCase
 
         User::factory()->create([
             'email' => $email,
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('Password123!'),
             'profile_id' => $userProfile->id,
             'active' => true,
         ]);
@@ -45,8 +45,8 @@ class AuthEdgeCasesTest extends TestCase
             ->postJson('/admin/users/register', [
                 'name' => 'Dup User',
                 'email' => $email,
-                'password' => 'password123',
-                'password_confirmation' => 'password123',
+                'password' => 'Password123!',
+                'password_confirmation' => 'Password123!',
             ]);
 
         $response->assertStatus(422);
@@ -59,12 +59,12 @@ class AuthEdgeCasesTest extends TestCase
             'profile_id' => UserProfile::where('name', User::ROLE_USER)->firstOrFail()->id,
             'api_token' => Str::random(60),
             'active' => false,
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('Password123!'),
         ]);
 
         $response = $this->postJson('/api/login', [
             'email' => $user->email,
-            'password' => 'password123',
+            'password' => 'Password123!',
         ]);
 
         $response->assertStatus(401);
@@ -76,7 +76,7 @@ class AuthEdgeCasesTest extends TestCase
         $user = User::factory()->create([
             'profile_id' => UserProfile::where('name', User::ROLE_USER)->firstOrFail()->id,
             'active' => true,
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('Password123!'),
             'api_token' => Str::random(60),
         ]);
 
@@ -84,7 +84,7 @@ class AuthEdgeCasesTest extends TestCase
 
         $login = $this->postJson('/login', [
             'email' => $user->email,
-            'password' => 'password123',
+            'password' => 'Password123!',
         ]);
 
         $login->assertOk();
@@ -100,7 +100,7 @@ class AuthEdgeCasesTest extends TestCase
         $user = User::factory()->create([
             'profile_id' => UserProfile::where('name', User::ROLE_USER)->firstOrFail()->id,
             'active' => true,
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('Password123!'),
             'api_token' => Str::random(60),
         ]);
 
@@ -114,7 +114,7 @@ class AuthEdgeCasesTest extends TestCase
         $response->assertJson(['message' => 'Current password is incorrect']);
 
         $user->refresh();
-        $this->assertTrue(Hash::check('password123', $user->password));
+        $this->assertTrue(Hash::check('Password123!', $user->password));
         $this->assertFalse(Hash::check('newpassword456', $user->password));
     }
 
@@ -123,13 +123,13 @@ class AuthEdgeCasesTest extends TestCase
         $user = User::factory()->create([
             'profile_id' => UserProfile::where('name', User::ROLE_USER)->firstOrFail()->id,
             'active' => true,
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('Password123!'),
             'api_token' => Str::random(60),
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/password/change', [
-                'current_password' => 'password123',
+                'current_password' => 'Password123!',
                 'new_password' => 'short',
             ]);
 
@@ -142,7 +142,7 @@ class AuthEdgeCasesTest extends TestCase
         $user = User::factory()->create([
             'profile_id' => UserProfile::where('name', User::ROLE_USER)->firstOrFail()->id,
             'active' => true,
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('Password123!'),
             'api_token' => Str::random(60),
         ]);
 
