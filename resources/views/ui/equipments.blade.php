@@ -123,6 +123,8 @@ window.requireAuthOnLoad = true;
                     {{ __('Guardar Equipamento') }}
                 </button>
             </div>
+
+            
         </form>
     </div>
 </div>
