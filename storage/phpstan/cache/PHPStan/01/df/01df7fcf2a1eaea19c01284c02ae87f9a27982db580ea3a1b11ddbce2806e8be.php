@@ -95,7 +95,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php' => 
     array (
-      0 => 'dab09dba6254d8ba7bcb174d43cb164ba974053144f20d5ca5ee80b9e7ea23ae',
+      0 => 'fa20a949f6054b1349491a36fb0fa324b3f65755611fdff8e7290e497dda9680',
       1 => 
       array (
         0 => 'app\\http\\controllers\\analyticscontroller',
@@ -112,24 +112,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\ApiDocsController.php' => 
-    array (
-      0 => 'c824c1f228717cc7921b1b99618f1322ed404bb90817702f6b4d1b6a25586942',
-      1 => 
-      array (
-        0 => 'app\\http\\controllers\\apidocscontroller',
-      ),
-      2 => 
-      array (
-        0 => 'app\\http\\controllers\\swagger',
-      ),
-      3 => 
-      array (
-      ),
-    ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuditController.php' => 
     array (
-      0 => 'adb9c191fbf3d4e3a6a60cbc4aa62f4000cc5bd9d6871f9b9d129a331163f03c',
+      0 => '05f62b5585e7bdc51b4f65e2af2ee80eef0be95db0127fc07f89958755743cc5',
       1 => 
       array (
         0 => 'app\\http\\controllers\\auditcontroller',
@@ -144,7 +129,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuthController.php' => 
     array (
-      0 => '1e791190ebf59d90d54b5f801d15d7422621c9698f681c771fa8c2f7bc2cee60',
+      0 => '722369c3f3a5bb657ada8910458ee9196ea6ed4715b2cb94560454a83f2c5d42',
       1 => 
       array (
         0 => 'app\\http\\controllers\\authcontroller',
@@ -196,7 +181,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\NotificationController.php' => 
     array (
-      0 => '83f1199c663599bc0bc2ba1c328e75b929319f7cc6d413d35455c8226279d136',
+      0 => 'f8a3e71f32de4f913525b17f0e2e71d98faa170facb2c087f0082846a2159b54',
       1 => 
       array (
         0 => 'app\\http\\controllers\\notificationcontroller',
@@ -213,7 +198,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php' => 
     array (
-      0 => 'a87f82c89bf98eb4e04f179aff3b13ca5f491994f507432587b75937e7a63c21',
+      0 => 'dfeebca06b320c5949edeb3f7bf66dcad1e0f11ba53c77f1f8646f07502fd567',
       1 => 
       array (
         0 => 'app\\http\\controllers\\roomcontroller',
@@ -221,12 +206,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       2 => 
       array (
         0 => 'app\\http\\controllers\\indexroom',
-        1 => 'app\\http\\controllers\\createroom',
-        2 => 'app\\http\\controllers\\storeroom',
-        3 => 'app\\http\\controllers\\showroom',
-        4 => 'app\\http\\controllers\\editroom',
-        5 => 'app\\http\\controllers\\updateroom',
-        6 => 'app\\http\\controllers\\inactivateroom',
+        1 => 'app\\http\\controllers\\storeroom',
+        2 => 'app\\http\\controllers\\updateroom',
+        3 => 'app\\http\\controllers\\inactivateroom',
       ),
       3 => 
       array (
@@ -702,7 +684,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\AppServiceProvider.php' => 
     array (
-      0 => '200dad3f50a142863dd210eecf1c5c2511218b8e4f7816511d4b5dddf590fae8',
+      0 => 'a5d1bcbd5ce49be3607a5b124baa54218feef0ac1d538d4805dec493adb72b33',
       1 => 
       array (
         0 => 'app\\providers\\appserviceprovider',
@@ -711,7 +693,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
         0 => 'app\\providers\\register',
         1 => 'app\\providers\\boot',
-        2 => 'app\\providers\\registerslowquerylistener',
+        2 => 'app\\providers\\registerpolicies',
+        3 => 'app\\providers\\registerslowquerylistener',
       ),
       3 => 
       array (
@@ -719,7 +702,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php' => 
     array (
-      0 => 'eb5e1f956f9ffd5cc700b5e156266a74501451565c33d8dc2a055dff053c4d6c',
+      0 => '2116ca0ceb7f6b141b6eb4da9e55e09361c477097afb1cfff7d6f26f7f4c6e9f',
       1 => 
       array (
         0 => 'app\\services\\aiservice',
@@ -1437,7 +1420,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketBudgetController.php' => 
     array (
-      0 => 'f4b4b19b22e9c38ba3405ae4a59282d7028097e1d5b5c8d82f4e91a9f503d3a4',
+      0 => 'a8d20a85cf0eb7b6106309468ed964120fdb2115e3f6f62a1a6a5e7a1cc45e3f',
       1 => 
       array (
         0 => 'app\\http\\controllers\\ticketbudgetcontroller',
@@ -1922,7 +1905,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\EquipmentPolicy.php' => 
     array (
-      0 => '4f4ed313de721f78c2a9039eaaefcd04a2d77d86c7e6ab5049177104aefd5e90',
+      0 => '39ae017c7cdd5cdb0ecfcc235f92858e654be4b12e500e9f82433704fb425f0b',
       1 => 
       array (
         0 => 'app\\policies\\equipmentpolicy',
@@ -1930,6 +1913,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       2 => 
       array (
         0 => 'app\\policies\\manage',
+        1 => 'app\\policies\\manageany',
       ),
       3 => 
       array (
@@ -1937,7 +1921,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\RoomPolicy.php' => 
     array (
-      0 => '00ba77b9fcaa690b536cb17578755540c808bee14ca447f483af7b27c81fa0fb',
+      0 => 'ec77f6e2dd3830328c894724a2644103fac9ed876fd576f3123afbd7dd1ae428',
       1 => 
       array (
         0 => 'app\\policies\\roompolicy',
@@ -1945,6 +1929,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       2 => 
       array (
         0 => 'app\\policies\\manage',
+        1 => 'app\\policies\\manageany',
       ),
       3 => 
       array (
@@ -1952,7 +1937,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\TicketPolicy.php' => 
     array (
-      0 => '091658a6d554b6fe4d413b9c0e33ef71d2f0bc5fef5ae5e22895ea4a8cdc0893',
+      0 => '42fcc11874d42e50ec5e8aaee7df9f45e9682fd353adb5296a77bd822ad6116c',
       1 => 
       array (
         0 => 'app\\policies\\ticketpolicy',
@@ -1971,7 +1956,11 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         9 => 'app\\policies\\schedule',
         10 => 'app\\policies\\submitbudget',
         11 => 'app\\policies\\approvebudget',
-        12 => 'app\\policies\\canaccessticket',
+        12 => 'app\\policies\\update',
+        13 => 'app\\policies\\startrepair',
+        14 => 'app\\policies\\requestbudget',
+        15 => 'app\\policies\\assign',
+        16 => 'app\\policies\\canaccessticket',
       ),
       3 => 
       array (
@@ -1979,7 +1968,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\UserPolicy.php' => 
     array (
-      0 => '70e6652eea576f291b04214be997aa0b55458dd96f3fe4a0b263c9f32da5d163',
+      0 => '0c7a02441f5716287e89a7dffca61be80941678e1cb4a8a4badb25609932a033',
       1 => 
       array (
         0 => 'app\\policies\\userpolicy',
@@ -1987,7 +1976,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       2 => 
       array (
         0 => 'app\\policies\\manage',
-        1 => 'app\\policies\\inactivate',
+        1 => 'app\\policies\\manageany',
+        2 => 'app\\policies\\updateprofile',
+        3 => 'app\\policies\\inactivate',
       ),
       3 => 
       array (
@@ -1995,7 +1986,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AnalyticsService.php' => 
     array (
-      0 => 'f22eca1d24f8ef97408a633fc9f38f42b97cea45e645dc81d003f7ea4a80a846',
+      0 => '94fa610a5c0ed12251786dba978572139b0ebe11f6decd07fc2323a5689989b8',
       1 => 
       array (
         0 => 'app\\services\\analyticsservice',
@@ -2007,6 +1998,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         2 => 'app\\services\\buildpayload',
         3 => 'app\\services\\getrecentactivity',
         4 => 'app\\services\\exportcsv',
+        5 => 'app\\services\\exportcsvtofile',
+        6 => 'app\\services\\exportpdftofile',
+        7 => 'app\\services\\writecsvrows',
       ),
       3 => 
       array (
@@ -2103,7 +2097,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TicketSearchService.php' => 
     array (
-      0 => '755285e761405b6af1378aae84655653bb01109fca4c79d38eeb8bb8b5acadac',
+      0 => '13ca24906aae9f7683bf4638aaeca52a479b41df24f0623c7615e74c6712bc76',
       1 => 
       array (
         0 => 'app\\services\\ticketsearchservice',
@@ -2157,7 +2151,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\UserService.php' => 
     array (
-      0 => '1ff2ec06c246547b7d2fb0e6044d110cd44a23e3227db3ec3e688931dbe36ce3',
+      0 => 'aeed420a8832422513a92ed4382f2dad9f240f844babc7a5ca4c7b0eb3e2052b',
       1 => 
       array (
         0 => 'app\\services\\userservice',
@@ -2249,6 +2243,144 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       2 => 
       array (
         0 => 'app\\models\\users',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Jobs\\ExportCsvJob.php' => 
+    array (
+      0 => '290c69773ab27d10c6c321b369752d32e2c99b6daed62dc282a8c198965edae9',
+      1 => 
+      array (
+        0 => 'app\\jobs\\exportcsvjob',
+      ),
+      2 => 
+      array (
+        0 => 'app\\jobs\\__construct',
+        1 => 'app\\jobs\\handle',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Jobs\\ExportPdfJob.php' => 
+    array (
+      0 => '5fc33a76ef9ff96ae5bc4b20a6f423d393770dd5e19c20d452891e67f163a41b',
+      1 => 
+      array (
+        0 => 'app\\jobs\\exportpdfjob',
+      ),
+      2 => 
+      array (
+        0 => 'app\\jobs\\__construct',
+        1 => 'app\\jobs\\handle',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Jobs\\GenerateAiRecommendationJob.php' => 
+    array (
+      0 => 'a46cff913bcac172102e572b25e14ba1b26f96c1ab9ce375f522945dcd727a16',
+      1 => 
+      array (
+        0 => 'app\\jobs\\generateairecommendationjob',
+      ),
+      2 => 
+      array (
+        0 => 'app\\jobs\\__construct',
+        1 => 'app\\jobs\\handle',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Jobs\\SendTestEmailJob.php' => 
+    array (
+      0 => '3de87eb970f2714db7d4b4b1b8a5b65ea58dcf2c5ebceb041e0bcd6af34fbeba',
+      1 => 
+      array (
+        0 => 'app\\jobs\\sendtestemailjob',
+      ),
+      2 => 
+      array (
+        0 => 'app\\jobs\\__construct',
+        1 => 'app\\jobs\\handle',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\BroadcastTicketUpdate.php' => 
+    array (
+      0 => '8951c9fd53bd62ae9c3a5feb6c52c56dc0855e655aaaf3a2d2eaaee59251f8ca',
+      1 => 
+      array (
+        0 => 'app\\listeners\\broadcastticketupdate',
+      ),
+      2 => 
+      array (
+        0 => 'app\\listeners\\handle',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\LogTicketStatusChange.php' => 
+    array (
+      0 => '0acde67350540f3d93f641512bfaf2455ea5d0453e5bd03cc64bbfc5f08a729f',
+      1 => 
+      array (
+        0 => 'app\\listeners\\logticketstatuschange',
+      ),
+      2 => 
+      array (
+        0 => 'app\\listeners\\handle',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\NotifyAssignedTechnician.php' => 
+    array (
+      0 => 'c629787f9abfc3ad852e24ea252ffc892b66583a4fbc3a5a3bbeb74169e32fdd',
+      1 => 
+      array (
+        0 => 'app\\listeners\\notifyassignedtechnician',
+      ),
+      2 => 
+      array (
+        0 => 'app\\listeners\\handle',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\SendTicketStatusNotification.php' => 
+    array (
+      0 => '90b97c526f051e4067043bfa886eee382cc763f4201baa0d884056b9f8ae4a3b',
+      1 => 
+      array (
+        0 => 'app\\listeners\\sendticketstatusnotification',
+      ),
+      2 => 
+      array (
+        0 => 'app\\listeners\\handle',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\EventServiceProvider.php' => 
+    array (
+      0 => '08d892030dde81ec26f39d6a92da9d5ac772e93bdb5f28a06c97b073d47ec103',
+      1 => 
+      array (
+        0 => 'app\\providers\\eventserviceprovider',
+      ),
+      2 => 
+      array (
       ),
       3 => 
       array (

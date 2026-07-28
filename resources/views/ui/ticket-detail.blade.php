@@ -573,8 +573,8 @@ async function handleBudgetAction(action) {
         return;
     }
 
-    const res = await fetch(`/admin/tickets/${ticketId}/budget-decision`, {
-        method: 'POST',
+    const res = await fetch(`/admin/tickets/${ticketId}/approve-budget`, {
+        method: 'PATCH',
         headers: { ...authHeader(), 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: action, feedback: feedback })
     });

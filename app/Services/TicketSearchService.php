@@ -43,7 +43,7 @@ final class TicketSearchService
 
         $this->applyDateFilters($query, $filters->dateFrom, $filters->dateTo);
 
-        return $query->latest()->paginate(15);
+        return $query->latest()->paginate(config('services.custom.pagination.default_per_page'));
     }
 
     private function applyDateFilters($query, ?string $dateFrom, ?string $dateTo): void

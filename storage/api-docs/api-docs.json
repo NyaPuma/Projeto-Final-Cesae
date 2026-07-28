@@ -250,26 +250,6 @@
                 ]
             }
         },
-        "/analytics/charts": {
-            "get": {
-                "tags": [
-                    "Analytics"
-                ],
-                "summary": "Dados para dashboards",
-                "description": "Fornece os dados para os gráficos do dashboard analítico.",
-                "operationId": "fbb102a8736556d8c0a6a0eab04bc917",
-                "responses": {
-                    "200": {
-                        "description": "Séries para gráficos"
-                    }
-                },
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ]
-            }
-        },
         "/analytics/export/csv": {
             "get": {
                 "tags": [

@@ -9,6 +9,7 @@ use App\Domain\Ticket\Queries\TopEntitiesQuery;
 use App\Enums\TicketStatusEnum;
 use App\Models\Audit;
 use App\Models\Ticket;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
@@ -49,7 +50,7 @@ final class AnalyticsService
             'in_progress_tickets' => $kpiData['in_progress_tickets'],
             'waiting_budget_tickets' => $kpiData['budget_pending_tickets'],
             'closed_tickets' => $kpiData['closed_tickets'],
-            'system_availability' => 99.9,
+            'system_availability' => config('services.custom.analytics.system_availability'),
             'sla_success' => $slaSuccess,
             'by_priority' => [
                 'labels' => collect(['Baixa', 'Média', 'Alta']),
@@ -109,6 +110,40 @@ final class AnalyticsService
     public function exportCsv(): void
     {
         $handle = fopen('php://output', 'w');
+        $this->writeCsvRows($handle);
+        fclose($handle);
+    }
+
+    public function exportCsvToFile(string $path): void
+    {
+        $dir = dirname($path);
+        if (! is_dir($dir)) {
+            mkdir($dir, 0755, true);
+        }
+
+        $handle = fopen($path, 'w');
+        $this->writeCsvRows($handle);
+        fclose($handle);
+    }
+
+    public function exportPdfToFile(string $path): void
+    {
+        $dir = dirname($path);
+        if (! is_dir($dir)) {
+            mkdir($dir, 0755, true);
+        }
+
+        $tickets = Ticket::select([
+            'id', 'title', 'status_id', 'opened_at', 'in_progress_at',
+            'closed_at', 'minutes_spent', 'cost', 'budget_status', 'budget_amount',
+        ])->get();
+
+        $pdf = Pdf::loadView('reports.tickets', ['tickets' => $tickets]);
+        $pdf->save($path);
+    }
+
+    private function writeCsvRows($handle): void
+    {
         fputcsv($handle, ['id', 'title', 'status_id', 'opened_at', 'in_progress_at', 'closed_at', 'minutes_spent', 'cost', 'budget_status', 'budget_amount']);
 
         Ticket::select([
@@ -132,7 +167,5 @@ final class AnalyticsService
                     ]);
                 }
             });
-
-        fclose($handle);
     }
 }

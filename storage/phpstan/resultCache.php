@@ -2973,6 +2973,21 @@ return [
         ),
       ),
     ),
+    'PHPStan\\Rules\\DeadCode\\PossiblyPureStaticCallCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'App\\Jobs\\ExportCsvJob',
+        1 => 'dispatch',
+        2 => 33,
+      ),
+      1 => 
+      array (
+        0 => 'App\\Jobs\\ExportPdfJob',
+        1 => 'dispatch',
+        2 => 43,
+      ),
+    ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuthController.php' => 
   array (
@@ -3045,6 +3060,18 @@ return [
       array (
         0 => 'abort',
         1 => 26,
+      ),
+    ),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\NotificationController.php' => 
+  array (
+    'PHPStan\\Rules\\DeadCode\\PossiblyPureStaticCallCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'App\\Jobs\\SendTestEmailJob',
+        1 => 'dispatch',
+        2 => 83,
       ),
     ),
   ),
@@ -3187,48 +3214,6 @@ return [
       ),
     ),
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php' => 
-  array (
-    'Larastan\\Larastan\\Collectors\\UsedViewFunctionCollector' => 
-    array (
-      0 => 'rooms.create',
-      1 => 'rooms.show',
-      2 => 'rooms.edit',
-    ),
-    'PHPStan\\Rules\\DeadCode\\MethodWithoutImpurePointsCollector' => 
-    array (
-      0 => 
-      array (
-        0 => 'App\\Http\\Controllers\\RoomController',
-        1 => 'createRoom',
-        2 => 'App\\Http\\Controllers\\RoomController',
-        3 => 
-        array (
-          0 => 'f' . "\0" . 'view',
-        ),
-      ),
-      1 => 
-      array (
-        0 => 'App\\Http\\Controllers\\RoomController',
-        1 => 'showRoom',
-        2 => 'App\\Http\\Controllers\\RoomController',
-        3 => 
-        array (
-          0 => 'f' . "\0" . 'view',
-        ),
-      ),
-      2 => 
-      array (
-        0 => 'App\\Http\\Controllers\\RoomController',
-        1 => 'editRoom',
-        2 => 'App\\Http\\Controllers\\RoomController',
-        3 => 
-        array (
-          0 => 'f' . "\0" . 'view',
-        ),
-      ),
-    ),
-  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketBudgetController.php' => 
   array (
     'Larastan\\Larastan\\Collectors\\UsedTranslationFunctionCollector' => 
@@ -3236,22 +3221,22 @@ return [
       0 => 
       array (
         0 => 'Pedido de orçamento submetido com detalhes. Aguarde aprovação.',
-        1 => 81,
+        1 => 79,
       ),
       1 => 
       array (
         0 => 'Custo dentro do limiar. Intervenção autorizada automaticamente.',
-        1 => 93,
+        1 => 91,
       ),
       2 => 
       array (
         0 => 'Custo estimado excede o limiar. Ticket pendente de aprovação orçamental.',
-        1 => 116,
+        1 => 114,
       ),
       3 => 
       array (
         0 => 'Custo estimado dentro da autonomia. Pode prosseguir com a intervenção.',
-        1 => 136,
+        1 => 134,
       ),
     ),
     'PHPStan\\Rules\\DeadCode\\ConstructorWithoutImpurePointsCollector' => 
@@ -4421,6 +4406,175 @@ return [
         3 => 
         array (
         ),
+      ),
+    ),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Jobs\\ExportCsvJob.php' => 
+  array (
+    'PHPStan\\Rules\\DeadCode\\ConstructorWithoutImpurePointsCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'App\\Jobs\\ExportCsvJob',
+        1 => 
+        array (
+        ),
+      ),
+    ),
+    'PHPStan\\Rules\\DeadCode\\PossiblyPureStaticCallCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'Illuminate\\Database\\Eloquent\\Builder',
+        1 => 'create',
+        2 => 31,
+      ),
+    ),
+    'PHPStan\\Rules\\Traits\\TraitUseCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'Illuminate\\Foundation\\Bus\\Dispatchable',
+      ),
+      1 => 
+      array (
+        0 => 'Illuminate\\Queue\\InteractsWithQueue',
+      ),
+      2 => 
+      array (
+        0 => 'Illuminate\\Bus\\Queueable',
+      ),
+      3 => 
+      array (
+        0 => 'Illuminate\\Queue\\SerializesModels',
+      ),
+    ),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Jobs\\ExportPdfJob.php' => 
+  array (
+    'PHPStan\\Rules\\DeadCode\\ConstructorWithoutImpurePointsCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'App\\Jobs\\ExportPdfJob',
+        1 => 
+        array (
+        ),
+      ),
+    ),
+    'PHPStan\\Rules\\DeadCode\\PossiblyPureStaticCallCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'Illuminate\\Database\\Eloquent\\Builder',
+        1 => 'create',
+        2 => 31,
+      ),
+    ),
+    'PHPStan\\Rules\\Traits\\TraitUseCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'Illuminate\\Foundation\\Bus\\Dispatchable',
+      ),
+      1 => 
+      array (
+        0 => 'Illuminate\\Queue\\InteractsWithQueue',
+      ),
+      2 => 
+      array (
+        0 => 'Illuminate\\Bus\\Queueable',
+      ),
+      3 => 
+      array (
+        0 => 'Illuminate\\Queue\\SerializesModels',
+      ),
+    ),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Jobs\\GenerateAiRecommendationJob.php' => 
+  array (
+    'PHPStan\\Rules\\DeadCode\\ConstructorWithoutImpurePointsCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'App\\Jobs\\GenerateAiRecommendationJob',
+        1 => 
+        array (
+        ),
+      ),
+    ),
+    'PHPStan\\Rules\\Traits\\TraitUseCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'Illuminate\\Foundation\\Bus\\Dispatchable',
+      ),
+      1 => 
+      array (
+        0 => 'Illuminate\\Queue\\InteractsWithQueue',
+      ),
+      2 => 
+      array (
+        0 => 'Illuminate\\Bus\\Queueable',
+      ),
+      3 => 
+      array (
+        0 => 'Illuminate\\Queue\\SerializesModels',
+      ),
+    ),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Jobs\\SendTestEmailJob.php' => 
+  array (
+    'PHPStan\\Rules\\DeadCode\\ConstructorWithoutImpurePointsCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'App\\Jobs\\SendTestEmailJob',
+        1 => 
+        array (
+        ),
+      ),
+    ),
+    'PHPStan\\Rules\\Traits\\TraitUseCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'Illuminate\\Foundation\\Bus\\Dispatchable',
+      ),
+      1 => 
+      array (
+        0 => 'Illuminate\\Queue\\InteractsWithQueue',
+      ),
+      2 => 
+      array (
+        0 => 'Illuminate\\Bus\\Queueable',
+      ),
+      3 => 
+      array (
+        0 => 'Illuminate\\Queue\\SerializesModels',
+      ),
+    ),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\BroadcastTicketUpdate.php' => 
+  array (
+    'PHPStan\\Rules\\DeadCode\\PossiblyPureFuncCallCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'broadcast',
+        1 => 24,
+      ),
+    ),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\LogTicketStatusChange.php' => 
+  array (
+    'PHPStan\\Rules\\DeadCode\\PossiblyPureStaticCallCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'Illuminate\\Database\\Eloquent\\Builder',
+        1 => 'create',
+        2 => 30,
       ),
     ),
   ),
@@ -6150,6 +6304,51 @@ return [
       ),
     ),
   ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\UserPolicy.php' => 
+  array (
+    'PHPStan\\Rules\\DeadCode\\MethodWithoutImpurePointsCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'App\\Policies\\UserPolicy',
+        1 => 'updateProfile',
+        2 => 'App\\Policies\\UserPolicy',
+        3 => 
+        array (
+        ),
+      ),
+    ),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\AppServiceProvider.php' => 
+  array (
+    'PHPStan\\Rules\\DeadCode\\PossiblyPureStaticCallCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'Illuminate\\Support\\Facades\\Gate',
+        1 => 'policy',
+        2 => 46,
+      ),
+      1 => 
+      array (
+        0 => 'Illuminate\\Support\\Facades\\Gate',
+        1 => 'policy',
+        2 => 47,
+      ),
+      2 => 
+      array (
+        0 => 'Illuminate\\Support\\Facades\\Gate',
+        1 => 'policy',
+        2 => 48,
+      ),
+      3 => 
+      array (
+        0 => 'Illuminate\\Support\\Facades\\Gate',
+        1 => 'policy',
+        2 => 49,
+      ),
+    ),
+  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php' => 
   array (
     'PHPStan\\Rules\\DeadCode\\ConstructorWithoutImpurePointsCollector' => 
@@ -6762,6 +6961,8 @@ return [
     'fileHash' => '2567e4d663a65c4252b5b85e662aa70985afa9ed4ed5a9041e00f12a84ceb07b',
     'dependentFiles' => 
     array (
+      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\BroadcastTicketUpdate.php',
+      1 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\EventServiceProvider.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Events\\TicketStatusUpdatedBroadcast.php' => 
@@ -6773,6 +6974,11 @@ return [
       1 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketAssignmentController.php',
       2 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketCloseController.php',
       3 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketStartController.php',
+      4 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\BroadcastTicketUpdate.php',
+      5 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\LogTicketStatusChange.php',
+      6 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\NotifyAssignedTechnician.php',
+      7 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\SendTicketStatusNotification.php',
+      8 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\EventServiceProvider.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Exports\\TicketsExport.php' => 
@@ -6806,28 +7012,21 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php' => 
   array (
-    'fileHash' => 'dab09dba6254d8ba7bcb174d43cb164ba974053144f20d5ca5ee80b9e7ea23ae',
-    'dependentFiles' => 
-    array (
-    ),
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\ApiDocsController.php' => 
-  array (
-    'fileHash' => 'c824c1f228717cc7921b1b99618f1322ed404bb90817702f6b4d1b6a25586942',
+    'fileHash' => 'fa20a949f6054b1349491a36fb0fa324b3f65755611fdff8e7290e497dda9680',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuditController.php' => 
   array (
-    'fileHash' => 'adb9c191fbf3d4e3a6a60cbc4aa62f4000cc5bd9d6871f9b9d129a331163f03c',
+    'fileHash' => '05f62b5585e7bdc51b4f65e2af2ee80eef0be95db0127fc07f89958755743cc5',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuthController.php' => 
   array (
-    'fileHash' => '1e791190ebf59d90d54b5f801d15d7422621c9698f681c771fa8c2f7bc2cee60',
+    'fileHash' => '722369c3f3a5bb657ada8910458ee9196ea6ed4715b2cb94560454a83f2c5d42',
     'dependentFiles' => 
     array (
     ),
@@ -6873,7 +7072,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\NotificationController.php' => 
   array (
-    'fileHash' => '83f1199c663599bc0bc2ba1c328e75b929319f7cc6d413d35455c8226279d136',
+    'fileHash' => 'f8a3e71f32de4f913525b17f0e2e71d98faa170facb2c087f0082846a2159b54',
     'dependentFiles' => 
     array (
     ),
@@ -6908,7 +7107,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php' => 
   array (
-    'fileHash' => 'a87f82c89bf98eb4e04f179aff3b13ca5f491994f507432587b75937e7a63c21',
+    'fileHash' => 'dfeebca06b320c5949edeb3f7bf66dcad1e0f11ba53c77f1f8646f07502fd567',
     'dependentFiles' => 
     array (
     ),
@@ -6922,7 +7121,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketBudgetController.php' => 
   array (
-    'fileHash' => 'f4b4b19b22e9c38ba3405ae4a59282d7028097e1d5b5c8d82f4e91a9f503d3a4',
+    'fileHash' => 'a8d20a85cf0eb7b6106309468ed964120fdb2115e3f6f62a1a6a5e7a1cc45e3f',
     'dependentFiles' => 
     array (
     ),
@@ -7231,12 +7430,75 @@ return [
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketAttachmentController.php',
     ),
   ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Jobs\\ExportCsvJob.php' => 
+  array (
+    'fileHash' => '290c69773ab27d10c6c321b369752d32e2c99b6daed62dc282a8c198965edae9',
+    'dependentFiles' => 
+    array (
+      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php',
+    ),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Jobs\\ExportPdfJob.php' => 
+  array (
+    'fileHash' => '5fc33a76ef9ff96ae5bc4b20a6f423d393770dd5e19c20d452891e67f163a41b',
+    'dependentFiles' => 
+    array (
+      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php',
+    ),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Jobs\\GenerateAiRecommendationJob.php' => 
+  array (
+    'fileHash' => 'a46cff913bcac172102e572b25e14ba1b26f96c1ab9ce375f522945dcd727a16',
+    'dependentFiles' => 
+    array (
+    ),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Jobs\\SendTestEmailJob.php' => 
+  array (
+    'fileHash' => '3de87eb970f2714db7d4b4b1b8a5b65ea58dcf2c5ebceb041e0bcd6af34fbeba',
+    'dependentFiles' => 
+    array (
+      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\NotificationController.php',
+    ),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\BroadcastTicketUpdate.php' => 
+  array (
+    'fileHash' => '8951c9fd53bd62ae9c3a5feb6c52c56dc0855e655aaaf3a2d2eaaee59251f8ca',
+    'dependentFiles' => 
+    array (
+      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\EventServiceProvider.php',
+    ),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\LogTicketStatusChange.php' => 
+  array (
+    'fileHash' => '0acde67350540f3d93f641512bfaf2455ea5d0453e5bd03cc64bbfc5f08a729f',
+    'dependentFiles' => 
+    array (
+      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\EventServiceProvider.php',
+    ),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\NotifyAssignedTechnician.php' => 
+  array (
+    'fileHash' => 'c629787f9abfc3ad852e24ea252ffc892b66583a4fbc3a5a3bbeb74169e32fdd',
+    'dependentFiles' => 
+    array (
+      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\EventServiceProvider.php',
+    ),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\SendTicketStatusNotification.php' => 
+  array (
+    'fileHash' => '90b97c526f051e4067043bfa886eee382cc763f4201baa0d884056b9f8ae4a3b',
+    'dependentFiles' => 
+    array (
+      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\EventServiceProvider.php',
+    ),
+  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Mail\\TestMail.php' => 
   array (
     'fileHash' => 'ec05867309ba53eadcb5d911c41353fa444e42bced096f5f9850212a4b3c2447',
     'dependentFiles' => 
     array (
-      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\NotificationController.php',
+      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Jobs\\SendTestEmailJob.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Mail\\TicketCreated.php' => 
@@ -7268,7 +7530,9 @@ return [
       2 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\EquipmentCategory.php',
       3 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php',
       4 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
-      5 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\EquipmentService.php',
+      5 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\EquipmentPolicy.php',
+      6 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\AppServiceProvider.php',
+      7 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\EquipmentService.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\EquipmentCategory.php' => 
@@ -7285,7 +7549,9 @@ return [
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\NotificationController.php',
-      1 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\NotificationService.php',
+      1 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Jobs\\ExportCsvJob.php',
+      2 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Jobs\\ExportPdfJob.php',
+      3 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\NotificationService.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php' => 
@@ -7297,6 +7563,8 @@ return [
       1 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
       2 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php',
       3 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
+      4 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\RoomPolicy.php',
+      5 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\AppServiceProvider.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php' => 
@@ -7319,35 +7587,40 @@ return [
       12 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Events\\TicketStatusUpdatedBroadcast.php',
       13 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Exports\\TicketsExport.php',
       14 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminController.php',
-      15 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php',
-      16 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketAttachmentController.php',
-      17 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketBudgetController.php',
-      18 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketCommentController.php',
-      19 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-      20 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketWorkflowController.php',
-      21 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketAssignmentController.php',
-      22 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketCloseController.php',
-      23 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketLifecycleController.php',
-      24 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketScheduleController.php',
-      25 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketStartController.php',
-      26 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Mail\\TicketCreated.php',
-      27 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php',
-      28 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php',
-      29 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketAttachment.php',
-      30 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketComment.php',
-      31 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketStatus.php',
-      32 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php',
-      33 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
-      34 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\TicketStatusChanged.php',
-      35 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\TicketPolicy.php',
-      36 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
-      37 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AnalyticsService.php',
-      38 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\BudgetCalculatorService.php',
-      39 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\CalendarService.php',
-      40 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\NotificationService.php',
-      41 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TechnicianAssignmentService.php',
-      42 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TicketSearchService.php',
-      43 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TicketWorkflowService.php',
+      15 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketAttachmentController.php',
+      16 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketBudgetController.php',
+      17 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketCommentController.php',
+      18 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
+      19 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketWorkflowController.php',
+      20 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketAssignmentController.php',
+      21 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketCloseController.php',
+      22 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketLifecycleController.php',
+      23 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketScheduleController.php',
+      24 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketStartController.php',
+      25 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Jobs\\GenerateAiRecommendationJob.php',
+      26 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\BroadcastTicketUpdate.php',
+      27 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\LogTicketStatusChange.php',
+      28 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\NotifyAssignedTechnician.php',
+      29 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\SendTicketStatusNotification.php',
+      30 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Mail\\TicketCreated.php',
+      31 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php',
+      32 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php',
+      33 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketAttachment.php',
+      34 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketComment.php',
+      35 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketStatus.php',
+      36 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php',
+      37 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
+      38 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\TicketStatusChanged.php',
+      39 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\TicketPolicy.php',
+      40 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\AppServiceProvider.php',
+      41 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
+      42 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AnalyticsService.php',
+      43 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\BudgetCalculatorService.php',
+      44 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\CalendarService.php',
+      45 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\NotificationService.php',
+      46 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TechnicianAssignmentService.php',
+      47 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TicketSearchService.php',
+      48 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TicketWorkflowService.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketAttachment.php' => 
@@ -7373,10 +7646,12 @@ return [
     'fileHash' => '9302cc683890ae1302927920b700a29bcabe1ba36893687bbe4c53a544182b0d',
     'dependentFiles' => 
     array (
-      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
-      1 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketType.php',
-      2 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php',
-      3 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TicketStatusService.php',
+      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\BroadcastTicketUpdate.php',
+      1 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\LogTicketStatusChange.php',
+      2 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
+      3 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketType.php',
+      4 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php',
+      5 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TicketStatusService.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketType.php' => 
@@ -7392,7 +7667,8 @@ return [
     'fileHash' => 'b76cc60436a11500ca3c1a2e009857009e472d0ea33773e3c0cdfbcf5a8a6772',
     'dependentFiles' => 
     array (
-      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
+      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\LogTicketStatusChange.php',
+      1 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php' => 
@@ -7428,26 +7704,29 @@ return [
       25 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php',
       26 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RateLimitMiddleware.php',
       27 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RoleMiddleware.php',
-      28 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Audit.php',
-      29 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php',
-      30 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Notification.php',
-      31 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php',
-      32 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
-      33 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketAttachment.php',
-      34 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketComment.php',
-      35 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php',
-      36 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php',
-      37 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php',
-      38 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\EquipmentPolicy.php',
-      39 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\RoomPolicy.php',
-      40 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\TicketPolicy.php',
-      41 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\UserPolicy.php',
-      42 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
-      43 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\CalendarService.php',
-      44 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\NotificationService.php',
-      45 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\PasswordResetService.php',
-      46 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TechnicianAssignmentService.php',
-      47 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\UserService.php',
+      28 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\NotifyAssignedTechnician.php',
+      29 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\SendTicketStatusNotification.php',
+      30 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Audit.php',
+      31 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php',
+      32 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Notification.php',
+      33 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php',
+      34 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
+      35 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketAttachment.php',
+      36 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketComment.php',
+      37 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php',
+      38 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php',
+      39 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php',
+      40 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\EquipmentPolicy.php',
+      41 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\RoomPolicy.php',
+      42 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\TicketPolicy.php',
+      43 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\UserPolicy.php',
+      44 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\AppServiceProvider.php',
+      45 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
+      46 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\CalendarService.php',
+      47 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\NotificationService.php',
+      48 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\PasswordResetService.php',
+      49 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TechnicianAssignmentService.php',
+      50 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\UserService.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php' => 
@@ -7482,25 +7761,28 @@ return [
       24 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php',
       25 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RateLimitMiddleware.php',
       26 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RoleMiddleware.php',
-      27 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Audit.php',
-      28 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php',
-      29 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Notification.php',
-      30 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php',
-      31 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
-      32 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketAttachment.php',
-      33 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketComment.php',
-      34 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php',
-      35 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
-      36 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\EquipmentPolicy.php',
-      37 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\RoomPolicy.php',
-      38 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\TicketPolicy.php',
-      39 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\UserPolicy.php',
-      40 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
-      41 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\CalendarService.php',
-      42 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\NotificationService.php',
-      43 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\PasswordResetService.php',
-      44 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TechnicianAssignmentService.php',
-      45 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\UserService.php',
+      27 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\NotifyAssignedTechnician.php',
+      28 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\SendTicketStatusNotification.php',
+      29 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Audit.php',
+      30 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php',
+      31 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Notification.php',
+      32 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php',
+      33 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
+      34 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketAttachment.php',
+      35 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketComment.php',
+      36 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php',
+      37 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
+      38 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\EquipmentPolicy.php',
+      39 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\RoomPolicy.php',
+      40 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\TicketPolicy.php',
+      41 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\UserPolicy.php',
+      42 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\AppServiceProvider.php',
+      43 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
+      44 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\CalendarService.php',
+      45 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\NotificationService.php',
+      46 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\PasswordResetService.php',
+      47 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TechnicianAssignmentService.php',
+      48 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\UserService.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php' => 
@@ -7515,6 +7797,7 @@ return [
     'fileHash' => 'f4fc6740a95d24323e4c7250997f447af58aa87ee4c7a655121d8e3cecacd28b',
     'dependentFiles' => 
     array (
+      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\NotifyAssignedTechnician.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\TicketNotification.php' => 
@@ -7533,6 +7816,7 @@ return [
       1 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketAssignmentController.php',
       2 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketCloseController.php',
       3 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketStartController.php',
+      4 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\SendTicketStatusNotification.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\OpenApi\\OpenApiSpec.php' => 
@@ -7544,53 +7828,69 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\EquipmentPolicy.php' => 
   array (
-    'fileHash' => '4f4ed313de721f78c2a9039eaaefcd04a2d77d86c7e6ab5049177104aefd5e90',
+    'fileHash' => '39ae017c7cdd5cdb0ecfcc235f92858e654be4b12e500e9f82433704fb425f0b',
     'dependentFiles' => 
     array (
+      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\AppServiceProvider.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\RoomPolicy.php' => 
   array (
-    'fileHash' => '00ba77b9fcaa690b536cb17578755540c808bee14ca447f483af7b27c81fa0fb',
+    'fileHash' => 'ec77f6e2dd3830328c894724a2644103fac9ed876fd576f3123afbd7dd1ae428',
     'dependentFiles' => 
     array (
+      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\AppServiceProvider.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\TicketPolicy.php' => 
   array (
-    'fileHash' => '091658a6d554b6fe4d413b9c0e33ef71d2f0bc5fef5ae5e22895ea4a8cdc0893',
+    'fileHash' => '42fcc11874d42e50ec5e8aaee7df9f45e9682fd353adb5296a77bd822ad6116c',
     'dependentFiles' => 
     array (
+      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\AppServiceProvider.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\UserPolicy.php' => 
   array (
-    'fileHash' => '70e6652eea576f291b04214be997aa0b55458dd96f3fe4a0b263c9f32da5d163',
+    'fileHash' => '0c7a02441f5716287e89a7dffca61be80941678e1cb4a8a4badb25609932a033',
     'dependentFiles' => 
     array (
+      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\AppServiceProvider.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\AppServiceProvider.php' => 
   array (
-    'fileHash' => '200dad3f50a142863dd210eecf1c5c2511218b8e4f7816511d4b5dddf590fae8',
+    'fileHash' => 'a5d1bcbd5ce49be3607a5b124baa54218feef0ac1d538d4805dec493adb72b33',
+    'dependentFiles' => 
+    array (
+    ),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\EventServiceProvider.php' => 
+  array (
+    'fileHash' => '08d892030dde81ec26f39d6a92da9d5ac772e93bdb5f28a06c97b073d47ec103',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php' => 
   array (
-    'fileHash' => 'eb5e1f956f9ffd5cc700b5e156266a74501451565c33d8dc2a055dff053c4d6c',
+    'fileHash' => '2116ca0ceb7f6b141b6eb4da9e55e09361c477097afb1cfff7d6f26f7f4c6e9f',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
+      1 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Jobs\\GenerateAiRecommendationJob.php',
+      2 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\AppServiceProvider.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AnalyticsService.php' => 
   array (
-    'fileHash' => 'f22eca1d24f8ef97408a633fc9f38f42b97cea45e645dc81d003f7ea4a80a846',
+    'fileHash' => '94fa610a5c0ed12251786dba978572139b0ebe11f6decd07fc2323a5689989b8',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php',
+      1 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Jobs\\ExportCsvJob.php',
+      2 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Jobs\\ExportPdfJob.php',
+      3 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\AppServiceProvider.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\BudgetCalculatorService.php' => 
@@ -7626,6 +7926,7 @@ return [
       2 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketWorkflowController.php',
       3 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketCloseController.php',
       4 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketStartController.php',
+      5 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\AppServiceProvider.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\PasswordResetService.php' => 
@@ -7649,7 +7950,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TicketSearchService.php' => 
   array (
-    'fileHash' => '755285e761405b6af1378aae84655653bb01109fca4c79d38eeb8bb8b5acadac',
+    'fileHash' => '13ca24906aae9f7683bf4638aaeca52a479b41df24f0623c7615e74c6712bc76',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
@@ -7673,11 +7974,12 @@ return [
       10 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketBudgetController.php',
       11 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
       12 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
-      13 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
-      14 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AnalyticsService.php',
-      15 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TechnicianAssignmentService.php',
-      16 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TicketSearchService.php',
-      17 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TicketWorkflowService.php',
+      13 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\AppServiceProvider.php',
+      14 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
+      15 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AnalyticsService.php',
+      16 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TechnicianAssignmentService.php',
+      17 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TicketSearchService.php',
+      18 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TicketWorkflowService.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TicketWorkflowService.php' => 
@@ -7693,7 +7995,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\UserService.php' => 
   array (
-    'fileHash' => '1ff2ec06c246547b7d2fb0e6044d110cd44a23e3227db3ec3e688931dbe36ce3',
+    'fileHash' => 'aeed420a8832422513a92ed4382f2dad9f240f844babc7a5ca4c7b0eb3e2052b',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AuthController.php',
@@ -7721,40 +8023,47 @@ return [
       13 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Exports\\TicketsExport.php',
       14 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminController.php',
       15 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminEquipmentController.php',
-      16 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AnalyticsController.php',
-      17 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php',
-      18 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketAttachmentController.php',
-      19 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketBudgetController.php',
-      20 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketCommentController.php',
-      21 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-      22 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketWorkflowController.php',
-      23 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketAssignmentController.php',
-      24 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketCloseController.php',
-      25 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketLifecycleController.php',
-      26 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketScheduleController.php',
-      27 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketStartController.php',
-      28 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
-      29 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Mail\\TicketCreated.php',
-      30 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php',
-      31 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\EquipmentCategory.php',
-      32 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php',
-      33 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
-      34 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketAttachment.php',
-      35 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketComment.php',
-      36 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketStatus.php',
-      37 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php',
-      38 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
-      39 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\TicketStatusChanged.php',
-      40 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\TicketPolicy.php',
-      41 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
-      42 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AnalyticsService.php',
-      43 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\BudgetCalculatorService.php',
-      44 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\CalendarService.php',
-      45 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\EquipmentService.php',
-      46 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\NotificationService.php',
-      47 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TechnicianAssignmentService.php',
-      48 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TicketSearchService.php',
-      49 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TicketWorkflowService.php',
+      16 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RoomController.php',
+      17 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketAttachmentController.php',
+      18 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketBudgetController.php',
+      19 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketCommentController.php',
+      20 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
+      21 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketWorkflowController.php',
+      22 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketAssignmentController.php',
+      23 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketCloseController.php',
+      24 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketLifecycleController.php',
+      25 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketScheduleController.php',
+      26 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketStartController.php',
+      27 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
+      28 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Jobs\\GenerateAiRecommendationJob.php',
+      29 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\BroadcastTicketUpdate.php',
+      30 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\LogTicketStatusChange.php',
+      31 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\NotifyAssignedTechnician.php',
+      32 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\SendTicketStatusNotification.php',
+      33 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Mail\\TicketCreated.php',
+      34 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php',
+      35 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\EquipmentCategory.php',
+      36 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php',
+      37 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
+      38 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketAttachment.php',
+      39 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketComment.php',
+      40 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketStatus.php',
+      41 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php',
+      42 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
+      43 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\TicketStatusChanged.php',
+      44 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\EquipmentPolicy.php',
+      45 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\RoomPolicy.php',
+      46 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\TicketPolicy.php',
+      47 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\AppServiceProvider.php',
+      48 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
+      49 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AnalyticsService.php',
+      50 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\BudgetCalculatorService.php',
+      51 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\CalendarService.php',
+      52 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\EquipmentService.php',
+      53 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\NotificationService.php',
+      54 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TechnicianAssignmentService.php',
+      55 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TicketSearchService.php',
+      56 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TicketWorkflowService.php',
     ),
     'usedTraitDependentFiles' => 
     array (
@@ -7850,8 +8159,9 @@ return [
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\AppServiceProvider.php' => 
   array (
     0 => 'laravel/framework',
-    1 => 'psr/log',
-    2 => 'monolog/monolog',
+    1 => 'psr/container',
+    2 => 'psr/log',
+    3 => 'monolog/monolog',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Events\\TicketCreatedBroadcast.php' => 
   array (
@@ -7950,10 +8260,8 @@ return [
   array (
     0 => 'laravel/framework',
     1 => 'symfony/http-foundation',
-    2 => 'barryvdh/laravel-dompdf',
-    3 => 'dompdf/dompdf',
-    4 => 'nesbot/carbon',
-    5 => 'maatwebsite/excel',
+    2 => 'nesbot/carbon',
+    3 => 'maatwebsite/excel',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\CalendarController.php' => 
   array (
@@ -7965,9 +8273,8 @@ return [
     0 => 'zircote/swagger-php',
     1 => 'laravel/framework',
     2 => 'symfony/http-foundation',
-    3 => 'symfony/mailer',
-    4 => 'psr/log',
-    5 => 'monolog/monolog',
+    3 => 'psr/log',
+    4 => 'monolog/monolog',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\PageController.php' => 
   array (
@@ -8353,6 +8660,8 @@ return [
     0 => 'laravel/framework',
     1 => 'psr/simple-cache',
     2 => 'nesbot/carbon',
+    3 => 'barryvdh/laravel-dompdf',
+    4 => 'dompdf/dompdf',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\BudgetCalculatorService.php' => 
   array (
@@ -8414,6 +8723,55 @@ return [
   array (
     0 => 'laravel/framework',
     1 => 'nesbot/carbon',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Jobs\\ExportCsvJob.php' => 
+  array (
+    0 => 'laravel/framework',
+    1 => 'nesbot/carbon',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Jobs\\ExportPdfJob.php' => 
+  array (
+    0 => 'laravel/framework',
+    1 => 'nesbot/carbon',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Jobs\\GenerateAiRecommendationJob.php' => 
+  array (
+    0 => 'laravel/framework',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Jobs\\SendTestEmailJob.php' => 
+  array (
+    0 => 'laravel/framework',
+    1 => 'symfony/mailer',
+    2 => 'psr/log',
+    3 => 'monolog/monolog',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\BroadcastTicketUpdate.php' => 
+  array (
+    0 => 'laravel/framework',
+    1 => 'psr/log',
+    2 => 'monolog/monolog',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\LogTicketStatusChange.php' => 
+  array (
+    0 => 'laravel/framework',
+    1 => 'psr/log',
+    2 => 'monolog/monolog',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\NotifyAssignedTechnician.php' => 
+  array (
+    0 => 'laravel/framework',
+    1 => 'psr/log',
+    2 => 'monolog/monolog',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\SendTicketStatusNotification.php' => 
+  array (
+    0 => 'laravel/framework',
+    1 => 'psr/log',
+    2 => 'monolog/monolog',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\EventServiceProvider.php' => 
+  array (
+    0 => 'laravel/framework',
   ),
 ),
 	'exportedNodesCallback' => static function (): array { return array (
@@ -13630,7 +13988,7 @@ return [
            'abstract' => false,
            'final' => false,
            'static' => false,
-           'returnType' => 'Symfony\\Component\\HttpFoundation\\StreamedResponse',
+           'returnType' => NULL,
            'parameters' => 
           array (
             0 => 
@@ -13686,76 +14044,6 @@ return [
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'exportExcel',
            'phpDoc' => NULL,
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => NULL,
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'request',
-               'type' => 'Illuminate\\Http\\Request',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-      ),
-       'attributes' => 
-      array (
-      ),
-    )),
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\ApiDocsController.php' => 
-  array (
-    0 => 
-    \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
-       'name' => 'App\\Http\\Controllers\\ApiDocsController',
-       'phpDoc' => NULL,
-       'abstract' => false,
-       'final' => false,
-       'extends' => 'App\\Http\\Controllers\\Controller',
-       'implements' => 
-      array (
-      ),
-       'usedTraits' => 
-      array (
-      ),
-       'traitUseAdaptations' => 
-      array (
-      ),
-       'statements' => 
-      array (
-        0 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'swagger',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Retorna a especificação OpenAPI/Swagger para a documentação da API.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -15037,24 +15325,6 @@ return [
         )),
         1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'createRoom',
-           'phpDoc' => NULL,
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => NULL,
-           'parameters' => 
-          array (
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        2 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'storeRoom',
            'phpDoc' => NULL,
            'byRef' => false,
@@ -15084,69 +15354,7 @@ return [
           array (
           ),
         )),
-        3 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'showRoom',
-           'phpDoc' => NULL,
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => NULL,
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'room',
-               'type' => 'App\\Models\\Room',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        4 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'editRoom',
-           'phpDoc' => NULL,
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => NULL,
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'room',
-               'type' => 'App\\Models\\Room',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        5 => 
+        2 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'updateRoom',
            'phpDoc' => NULL,
@@ -15190,7 +15398,7 @@ return [
           array (
           ),
         )),
-        6 => 
+        3 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'inactivateRoom',
            'phpDoc' => NULL,
@@ -19763,6 +19971,608 @@ return [
       ),
     )),
   ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Jobs\\ExportCsvJob.php' => 
+  array (
+    0 => 
+    \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
+       'name' => 'App\\Jobs\\ExportCsvJob',
+       'phpDoc' => NULL,
+       'abstract' => false,
+       'final' => false,
+       'extends' => NULL,
+       'implements' => 
+      array (
+        0 => 'Illuminate\\Contracts\\Queue\\ShouldQueue',
+      ),
+       'usedTraits' => 
+      array (
+        0 => 'Illuminate\\Foundation\\Bus\\Dispatchable',
+        1 => 'Illuminate\\Queue\\InteractsWithQueue',
+        2 => 'Illuminate\\Bus\\Queueable',
+        3 => 'Illuminate\\Queue\\SerializesModels',
+      ),
+       'traitUseAdaptations' => 
+      array (
+      ),
+       'statements' => 
+      array (
+        0 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => '__construct',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => NULL,
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'userId',
+               'type' => 'int',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 65,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        1 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'handle',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'void',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'analyticsService',
+               'type' => 'App\\Services\\AnalyticsService',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+      ),
+       'attributes' => 
+      array (
+      ),
+    )),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Jobs\\ExportPdfJob.php' => 
+  array (
+    0 => 
+    \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
+       'name' => 'App\\Jobs\\ExportPdfJob',
+       'phpDoc' => NULL,
+       'abstract' => false,
+       'final' => false,
+       'extends' => NULL,
+       'implements' => 
+      array (
+        0 => 'Illuminate\\Contracts\\Queue\\ShouldQueue',
+      ),
+       'usedTraits' => 
+      array (
+        0 => 'Illuminate\\Foundation\\Bus\\Dispatchable',
+        1 => 'Illuminate\\Queue\\InteractsWithQueue',
+        2 => 'Illuminate\\Bus\\Queueable',
+        3 => 'Illuminate\\Queue\\SerializesModels',
+      ),
+       'traitUseAdaptations' => 
+      array (
+      ),
+       'statements' => 
+      array (
+        0 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => '__construct',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => NULL,
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'userId',
+               'type' => 'int',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 65,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        1 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'handle',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'void',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'analyticsService',
+               'type' => 'App\\Services\\AnalyticsService',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+      ),
+       'attributes' => 
+      array (
+      ),
+    )),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Jobs\\GenerateAiRecommendationJob.php' => 
+  array (
+    0 => 
+    \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
+       'name' => 'App\\Jobs\\GenerateAiRecommendationJob',
+       'phpDoc' => NULL,
+       'abstract' => false,
+       'final' => false,
+       'extends' => NULL,
+       'implements' => 
+      array (
+        0 => 'Illuminate\\Contracts\\Queue\\ShouldQueue',
+      ),
+       'usedTraits' => 
+      array (
+        0 => 'Illuminate\\Foundation\\Bus\\Dispatchable',
+        1 => 'Illuminate\\Queue\\InteractsWithQueue',
+        2 => 'Illuminate\\Bus\\Queueable',
+        3 => 'Illuminate\\Queue\\SerializesModels',
+      ),
+       'traitUseAdaptations' => 
+      array (
+      ),
+       'statements' => 
+      array (
+        0 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => '__construct',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => NULL,
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'ticket',
+               'type' => 'App\\Models\\Ticket',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 65,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        1 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'handle',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'array',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'aiService',
+               'type' => 'App\\Services\\AIService',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+      ),
+       'attributes' => 
+      array (
+      ),
+    )),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Jobs\\SendTestEmailJob.php' => 
+  array (
+    0 => 
+    \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
+       'name' => 'App\\Jobs\\SendTestEmailJob',
+       'phpDoc' => NULL,
+       'abstract' => false,
+       'final' => false,
+       'extends' => NULL,
+       'implements' => 
+      array (
+        0 => 'Illuminate\\Contracts\\Queue\\ShouldQueue',
+      ),
+       'usedTraits' => 
+      array (
+        0 => 'Illuminate\\Foundation\\Bus\\Dispatchable',
+        1 => 'Illuminate\\Queue\\InteractsWithQueue',
+        2 => 'Illuminate\\Bus\\Queueable',
+        3 => 'Illuminate\\Queue\\SerializesModels',
+      ),
+       'traitUseAdaptations' => 
+      array (
+      ),
+       'statements' => 
+      array (
+        0 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => '__construct',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => NULL,
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'email',
+               'type' => 'string',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 65,
+            )),
+            1 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'name',
+               'type' => 'string',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 65,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        1 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'handle',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'void',
+           'parameters' => 
+          array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+      ),
+       'attributes' => 
+      array (
+      ),
+    )),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\BroadcastTicketUpdate.php' => 
+  array (
+    0 => 
+    \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
+       'name' => 'App\\Listeners\\BroadcastTicketUpdate',
+       'phpDoc' => NULL,
+       'abstract' => false,
+       'final' => false,
+       'extends' => NULL,
+       'implements' => 
+      array (
+      ),
+       'usedTraits' => 
+      array (
+      ),
+       'traitUseAdaptations' => 
+      array (
+      ),
+       'statements' => 
+      array (
+        0 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'handle',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'void',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'event',
+               'type' => 'App\\Events\\TicketCreatedBroadcast',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+      ),
+       'attributes' => 
+      array (
+      ),
+    )),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\LogTicketStatusChange.php' => 
+  array (
+    0 => 
+    \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
+       'name' => 'App\\Listeners\\LogTicketStatusChange',
+       'phpDoc' => NULL,
+       'abstract' => false,
+       'final' => false,
+       'extends' => NULL,
+       'implements' => 
+      array (
+      ),
+       'usedTraits' => 
+      array (
+      ),
+       'traitUseAdaptations' => 
+      array (
+      ),
+       'statements' => 
+      array (
+        0 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'handle',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'void',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'event',
+               'type' => 'App\\Events\\TicketStatusUpdatedBroadcast',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+      ),
+       'attributes' => 
+      array (
+      ),
+    )),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\NotifyAssignedTechnician.php' => 
+  array (
+    0 => 
+    \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
+       'name' => 'App\\Listeners\\NotifyAssignedTechnician',
+       'phpDoc' => NULL,
+       'abstract' => false,
+       'final' => false,
+       'extends' => NULL,
+       'implements' => 
+      array (
+        0 => 'Illuminate\\Contracts\\Queue\\ShouldQueue',
+      ),
+       'usedTraits' => 
+      array (
+      ),
+       'traitUseAdaptations' => 
+      array (
+      ),
+       'statements' => 
+      array (
+        0 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'handle',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'void',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'event',
+               'type' => 'App\\Events\\TicketStatusUpdatedBroadcast',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+      ),
+       'attributes' => 
+      array (
+      ),
+    )),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Listeners\\SendTicketStatusNotification.php' => 
+  array (
+    0 => 
+    \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
+       'name' => 'App\\Listeners\\SendTicketStatusNotification',
+       'phpDoc' => NULL,
+       'abstract' => false,
+       'final' => false,
+       'extends' => NULL,
+       'implements' => 
+      array (
+        0 => 'Illuminate\\Contracts\\Queue\\ShouldQueue',
+      ),
+       'usedTraits' => 
+      array (
+      ),
+       'traitUseAdaptations' => 
+      array (
+      ),
+       'statements' => 
+      array (
+        0 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'handle',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'void',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'event',
+               'type' => 'App\\Events\\TicketStatusUpdatedBroadcast',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+      ),
+       'attributes' => 
+      array (
+      ),
+    )),
+  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Mail\\TestMail.php' => 
   array (
     0 => 
@@ -23257,6 +24067,50 @@ return [
                'phpDoc' => NULL,
                'flags' => 0,
             )),
+            1 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'equipment',
+               'type' => '?App\\Models\\Equipment',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => true,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        1 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'manageAny',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'bool',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'user',
+               'type' => 'App\\Models\\User',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
           ),
            'attributes' => 
           array (
@@ -23291,6 +24145,50 @@ return [
         0 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'manage',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'bool',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'user',
+               'type' => 'App\\Models\\User',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+            1 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'room',
+               'type' => '?App\\Models\\Room',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => true,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        1 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'manageAny',
            'phpDoc' => NULL,
            'byRef' => false,
            'public' => true,
@@ -23860,6 +24758,182 @@ return [
           array (
           ),
         )),
+        12 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'update',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'bool',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'user',
+               'type' => 'App\\Models\\User',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+            1 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'ticket',
+               'type' => 'App\\Models\\Ticket',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        13 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'startRepair',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'bool',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'user',
+               'type' => 'App\\Models\\User',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+            1 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'ticket',
+               'type' => 'App\\Models\\Ticket',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        14 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'requestBudget',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'bool',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'user',
+               'type' => 'App\\Models\\User',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+            1 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'ticket',
+               'type' => 'App\\Models\\Ticket',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        15 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'assign',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'bool',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'user',
+               'type' => 'App\\Models\\User',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+            1 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'ticket',
+               'type' => 'App\\Models\\Ticket',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
       ),
        'attributes' => 
       array (
@@ -23912,12 +24986,87 @@ return [
                'phpDoc' => NULL,
                'flags' => 0,
             )),
+            1 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'target',
+               'type' => '?App\\Models\\User',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => true,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
           ),
            'attributes' => 
           array (
           ),
         )),
         1 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'manageAny',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'bool',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'user',
+               'type' => 'App\\Models\\User',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        2 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'updateProfile',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'bool',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'user',
+               'type' => 'App\\Models\\User',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        3 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'inactivate',
            'phpDoc' => NULL,
@@ -23998,7 +25147,20 @@ return [
              'namespace' => 'App\\Providers',
              'uses' => 
             array (
+              'equipment' => 'App\\Models\\Equipment',
+              'room' => 'App\\Models\\Room',
+              'ticket' => 'App\\Models\\Ticket',
+              'user' => 'App\\Models\\User',
+              'equipmentpolicy' => 'App\\Policies\\EquipmentPolicy',
+              'roompolicy' => 'App\\Policies\\RoomPolicy',
+              'ticketpolicy' => 'App\\Policies\\TicketPolicy',
+              'userpolicy' => 'App\\Policies\\UserPolicy',
+              'aiservice' => 'App\\Services\\AIService',
+              'analyticsservice' => 'App\\Services\\AnalyticsService',
+              'notificationservice' => 'App\\Services\\NotificationService',
+              'ticketstatusservice' => 'App\\Services\\TicketStatusService',
               'db' => 'Illuminate\\Support\\Facades\\DB',
+              'gate' => 'Illuminate\\Support\\Facades\\Gate',
               'log' => 'Illuminate\\Support\\Facades\\Log',
               'serviceprovider' => 'Illuminate\\Support\\ServiceProvider',
             ),
@@ -24031,7 +25193,20 @@ return [
              'namespace' => 'App\\Providers',
              'uses' => 
             array (
+              'equipment' => 'App\\Models\\Equipment',
+              'room' => 'App\\Models\\Room',
+              'ticket' => 'App\\Models\\Ticket',
+              'user' => 'App\\Models\\User',
+              'equipmentpolicy' => 'App\\Policies\\EquipmentPolicy',
+              'roompolicy' => 'App\\Policies\\RoomPolicy',
+              'ticketpolicy' => 'App\\Policies\\TicketPolicy',
+              'userpolicy' => 'App\\Policies\\UserPolicy',
+              'aiservice' => 'App\\Services\\AIService',
+              'analyticsservice' => 'App\\Services\\AnalyticsService',
+              'notificationservice' => 'App\\Services\\NotificationService',
+              'ticketstatusservice' => 'App\\Services\\TicketStatusService',
               'db' => 'Illuminate\\Support\\Facades\\DB',
+              'gate' => 'Illuminate\\Support\\Facades\\Gate',
               'log' => 'Illuminate\\Support\\Facades\\Log',
               'serviceprovider' => 'Illuminate\\Support\\ServiceProvider',
             ),
@@ -24050,6 +25225,57 @@ return [
           array (
           ),
            'attributes' => 
+          array (
+          ),
+        )),
+      ),
+       'attributes' => 
+      array (
+      ),
+    )),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\EventServiceProvider.php' => 
+  array (
+    0 => 
+    \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
+       'name' => 'App\\Providers\\EventServiceProvider',
+       'phpDoc' => NULL,
+       'abstract' => false,
+       'final' => false,
+       'extends' => 'Illuminate\\Foundation\\Support\\Providers\\EventServiceProvider',
+       'implements' => 
+      array (
+      ),
+       'usedTraits' => 
+      array (
+      ),
+       'traitUseAdaptations' => 
+      array (
+      ),
+       'statements' => 
+      array (
+        0 => 
+        \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
+           'names' => 
+          array (
+            0 => 'listen',
+          ),
+           'phpDoc' => NULL,
+           'type' => NULL,
+           'public' => false,
+           'private' => false,
+           'static' => false,
+           'readonly' => false,
+           'abstract' => false,
+           'final' => false,
+           'publicSet' => false,
+           'protectedSet' => false,
+           'privateSet' => false,
+           'virtual' => false,
+           'attributes' => 
+          array (
+          ),
+           'hooks' => 
           array (
           ),
         )),
@@ -24229,6 +25455,68 @@ return [
            'returnType' => 'void',
            'parameters' => 
           array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        3 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'exportCsvToFile',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'void',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'path',
+               'type' => 'string',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        4 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'exportPdfToFile',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'void',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'path',
+               'type' => 'string',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
           ),
            'attributes' => 
           array (

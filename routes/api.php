@@ -114,7 +114,6 @@ Route::middleware(['custom.auth'])->group(function () {
     // Analíticos
     Route::middleware(['role:admin'])->group(function () {
         Route::get('/analytics/stats', [AnalyticsController::class, 'stats'])->name('api.analytics.stats');
-        Route::get('/analytics/charts', [AnalyticsController::class, 'stats'])->name('api.analytics.charts');
         Route::get('/analytics/export/csv', [AnalyticsController::class, 'exportCsv'])->name('api.analytics.export.csv');
         Route::get('/analytics/export/pdf', [AnalyticsController::class, 'exportPdf'])->name('api.analytics.export.pdf');
         Route::get('/analytics/export/excel', [AnalyticsController::class, 'exportExcel'])->name('api.analytics.export.excel');

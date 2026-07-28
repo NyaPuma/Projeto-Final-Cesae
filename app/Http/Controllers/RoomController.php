@@ -15,11 +15,6 @@ class RoomController extends Controller
         return response()->json(['rooms' => Room::orderBy('name')->paginate(15)]);
     }
 
-    public function createRoom()
-    {
-        return view('rooms.create');
-    }
-
     public function storeRoom(StoreRoomRequest $request): JsonResponse
     {
         $room = Room::create([
@@ -29,16 +24,6 @@ class RoomController extends Controller
         ]);
 
         return response()->json(['room' => $room], 201);
-    }
-
-    public function showRoom(Room $room)
-    {
-        return view('rooms.show', compact('room'));
-    }
-
-    public function editRoom(Room $room)
-    {
-        return view('rooms.edit', compact('room'));
     }
 
     public function updateRoom(UpdateRoomRequest $request, int $id): JsonResponse

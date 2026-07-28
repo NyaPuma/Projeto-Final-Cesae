@@ -12,7 +12,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Providers',
          'uses' => 
         array (
+          'equipment' => 'App\\Models\\Equipment',
+          'room' => 'App\\Models\\Room',
+          'ticket' => 'App\\Models\\Ticket',
+          'user' => 'App\\Models\\User',
+          'equipmentpolicy' => 'App\\Policies\\EquipmentPolicy',
+          'roompolicy' => 'App\\Policies\\RoomPolicy',
+          'ticketpolicy' => 'App\\Policies\\TicketPolicy',
+          'userpolicy' => 'App\\Policies\\UserPolicy',
+          'aiservice' => 'App\\Services\\AIService',
+          'analyticsservice' => 'App\\Services\\AnalyticsService',
+          'notificationservice' => 'App\\Services\\NotificationService',
+          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'db' => 'Illuminate\\Support\\Facades\\DB',
+          'gate' => 'Illuminate\\Support\\Facades\\Gate',
           'log' => 'Illuminate\\Support\\Facades\\Log',
           'serviceprovider' => 'Illuminate\\Support\\ServiceProvider',
         ),
@@ -37,7 +50,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Providers',
          'uses' => 
         array (
+          'equipment' => 'App\\Models\\Equipment',
+          'room' => 'App\\Models\\Room',
+          'ticket' => 'App\\Models\\Ticket',
+          'user' => 'App\\Models\\User',
+          'equipmentpolicy' => 'App\\Policies\\EquipmentPolicy',
+          'roompolicy' => 'App\\Policies\\RoomPolicy',
+          'ticketpolicy' => 'App\\Policies\\TicketPolicy',
+          'userpolicy' => 'App\\Policies\\UserPolicy',
+          'aiservice' => 'App\\Services\\AIService',
+          'analyticsservice' => 'App\\Services\\AnalyticsService',
+          'notificationservice' => 'App\\Services\\NotificationService',
+          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'db' => 'Illuminate\\Support\\Facades\\DB',
+          'gate' => 'Illuminate\\Support\\Facades\\Gate',
           'log' => 'Illuminate\\Support\\Facades\\Log',
           'serviceprovider' => 'Illuminate\\Support\\ServiceProvider',
         ),
@@ -62,7 +88,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Providers',
          'uses' => 
         array (
+          'equipment' => 'App\\Models\\Equipment',
+          'room' => 'App\\Models\\Room',
+          'ticket' => 'App\\Models\\Ticket',
+          'user' => 'App\\Models\\User',
+          'equipmentpolicy' => 'App\\Policies\\EquipmentPolicy',
+          'roompolicy' => 'App\\Policies\\RoomPolicy',
+          'ticketpolicy' => 'App\\Policies\\TicketPolicy',
+          'userpolicy' => 'App\\Policies\\UserPolicy',
+          'aiservice' => 'App\\Services\\AIService',
+          'analyticsservice' => 'App\\Services\\AnalyticsService',
+          'notificationservice' => 'App\\Services\\NotificationService',
+          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'db' => 'Illuminate\\Support\\Facades\\DB',
+          'gate' => 'Illuminate\\Support\\Facades\\Gate',
           'log' => 'Illuminate\\Support\\Facades\\Log',
           'serviceprovider' => 'Illuminate\\Support\\ServiceProvider',
         ),
@@ -82,12 +121,63 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'typeAliasClassName' => NULL,
          'traitData' => NULL,
       )),
+      '78202919240ea54f5fbf3a28b2e4ead5' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'App\\Providers',
+         'uses' => 
+        array (
+          'equipment' => 'App\\Models\\Equipment',
+          'room' => 'App\\Models\\Room',
+          'ticket' => 'App\\Models\\Ticket',
+          'user' => 'App\\Models\\User',
+          'equipmentpolicy' => 'App\\Policies\\EquipmentPolicy',
+          'roompolicy' => 'App\\Policies\\RoomPolicy',
+          'ticketpolicy' => 'App\\Policies\\TicketPolicy',
+          'userpolicy' => 'App\\Policies\\UserPolicy',
+          'aiservice' => 'App\\Services\\AIService',
+          'analyticsservice' => 'App\\Services\\AnalyticsService',
+          'notificationservice' => 'App\\Services\\NotificationService',
+          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
+          'db' => 'Illuminate\\Support\\Facades\\DB',
+          'gate' => 'Illuminate\\Support\\Facades\\Gate',
+          'log' => 'Illuminate\\Support\\Facades\\Log',
+          'serviceprovider' => 'Illuminate\\Support\\ServiceProvider',
+        ),
+         'className' => 'App\\Providers\\AppServiceProvider',
+         'functionName' => 'registerPolicies',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => NULL,
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => NULL,
+         'traitData' => NULL,
+      )),
       'a6fd6345291d45f386bde5887b053a6d' => 
       \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
          'namespace' => 'App\\Providers',
          'uses' => 
         array (
+          'equipment' => 'App\\Models\\Equipment',
+          'room' => 'App\\Models\\Room',
+          'ticket' => 'App\\Models\\Ticket',
+          'user' => 'App\\Models\\User',
+          'equipmentpolicy' => 'App\\Policies\\EquipmentPolicy',
+          'roompolicy' => 'App\\Policies\\RoomPolicy',
+          'ticketpolicy' => 'App\\Policies\\TicketPolicy',
+          'userpolicy' => 'App\\Policies\\UserPolicy',
+          'aiservice' => 'App\\Services\\AIService',
+          'analyticsservice' => 'App\\Services\\AnalyticsService',
+          'notificationservice' => 'App\\Services\\NotificationService',
+          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'db' => 'Illuminate\\Support\\Facades\\DB',
+          'gate' => 'Illuminate\\Support\\Facades\\Gate',
           'log' => 'Illuminate\\Support\\Facades\\Log',
           'serviceprovider' => 'Illuminate\\Support\\ServiceProvider',
         ),
@@ -110,7 +200,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\AppServiceProvider.php' => '200dad3f50a142863dd210eecf1c5c2511218b8e4f7816511d4b5dddf590fae8',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Providers\\AppServiceProvider.php' => 'a5d1bcbd5ce49be3607a5b124baa54218feef0ac1d538d4805dec493adb72b33',
     ),
   ),
 ));

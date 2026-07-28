@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Http\Controllers\AuthController.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Controllers\AuthController
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-1e791190ebf59d90d54b5f801d15d7422621c9698f681c771fa8c2f7bc2cee60',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-722369c3f3a5bb657ada8910458ee9196ea6ed4715b2cb94560454a83f2c5d42',
    'data' => 
   array (
     'locatedSource' => 

@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\TestMail;
+use App\Jobs\SendTestEmailJob;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 use OpenApi\Attributes as OA;
 
 class NotificationController extends Controller
@@ -79,15 +78,13 @@ class NotificationController extends Controller
     )]
     public function sendTestEmail(Request $request)
     {
-        // O envio usa o mailer de fallback configurado para demonstração e crédito extra.
         $user = $this->authenticatedUser($request);
 
-        Mail::mailer('mailgun_fallback')->to($user->email)->send(new TestMail($user->name));
-        Log::info('Mailgun fallback test email sent', ['user_id' => $user->id, 'email' => $user->email]);
+        SendTestEmailJob::dispatch($user->email, $user->name);
+        Log::info('Test email queued', ['user_id' => $user->id, 'email' => $user->email]);
 
         return response()->json([
-            'message' => 'Email de teste enviado com sucesso via Mailgun/SendGrid fallback.',
-            'mailer' => 'mailgun_fallback',
+            'message' => 'Email de teste em processamento via fila.',
         ]);
     }
 }

@@ -53,11 +53,11 @@ class DashboardPerformanceTest extends PerformanceTestCase
         $this->asAdmin();
 
         $time = $this->measureTime(function () {
-            $this->getJson('/analytics/charts')->assertOk();
+            $this->getJson('/analytics')->assertOk();
         });
 
         $this->assertLessThanOrEqual(2000, $time,
-            "Analytics charts with 1000 tickets took {$time}ms");
+            "Analytics stats with 1000 tickets took {$time}ms");
     }
 
     public function test_dashboard_loads_multiple_endpoints_sequentially(): void
@@ -70,7 +70,6 @@ class DashboardPerformanceTest extends PerformanceTestCase
 
         $totalTime = $this->measureTime(function () {
             $this->getJson('/analytics')->assertOk();
-            $this->getJson('/analytics/charts')->assertOk();
             $this->getJson('/notifications')->assertOk();
             $this->getJson('/technician/tickets/open')->assertOk();
         });

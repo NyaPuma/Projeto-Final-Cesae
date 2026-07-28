@@ -16,14 +16,9 @@ class AnalyticsFeatureTest extends FeatureTestCase
             ->actingAs($operator)
             ->getJson('/api/analytics/stats')
             ->assertStatus(403);
-
-        $this->withHeader('X-Auth-Token', $operator->api_token)
-            ->actingAs($operator)
-            ->getJson('/api/analytics/charts')
-            ->assertStatus(403);
     }
 
-    public function test_technician_and_admin_can_access_analytics_stats_and_charts()
+    public function test_technician_and_admin_can_access_analytics_stats()
     {
         $statusOpen = TicketStatus::where('name', 'aberta')->first();
         $statusClosed = TicketStatus::where('name', 'fechada')->first();
@@ -66,7 +61,7 @@ class AnalyticsFeatureTest extends FeatureTestCase
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)
             ->get('/api/analytics/export/csv');
 
-        $response->assertStatus(200);
-        $response->assertHeader('Content-Type', 'text/csv; charset=UTF-8');
+        $response->assertOk();
+        $response->assertJsonPath('message', 'Exportação CSV em processamento. Receberá uma notificação quando estiver pronta.');
     }
 }

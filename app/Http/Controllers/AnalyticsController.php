@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Exports\TicketsExport;
-use App\Models\Ticket;
+use App\Jobs\ExportCsvJob;
+use App\Jobs\ExportPdfJob;
 use App\Models\User;
 use App\Services\AnalyticsService;
-use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class AnalyticsController extends Controller
 {
@@ -26,17 +25,14 @@ class AnalyticsController extends Controller
         return response()->json($this->analyticsService->getDashboardPayload());
     }
 
-    public function exportCsv(Request $request): StreamedResponse
+    public function exportCsv(Request $request)
     {
         $user = $this->authenticatedUser($request);
         $this->requireRole($user, [User::ROLE_TECHNICIAN, User::ROLE_ADMIN]);
 
-        $callback = fn () => $this->analyticsService->exportCsv();
+        ExportCsvJob::dispatch($user->id);
 
-        return new StreamedResponse($callback, 200, [
-            'Content-type' => 'text/csv',
-            'Content-Disposition' => 'attachment; filename="tickets_report.csv"',
-        ]);
+        return response()->json(['message' => 'Exportação CSV em processamento. Receberá uma notificação quando estiver pronta.']);
     }
 
     public function exportPdf(Request $request)
@@ -44,14 +40,9 @@ class AnalyticsController extends Controller
         $user = $this->authenticatedUser($request);
         $this->requireRole($user, [User::ROLE_TECHNICIAN, User::ROLE_ADMIN]);
 
-        $tickets = Ticket::select([
-            'id', 'title', 'status_id', 'opened_at', 'in_progress_at',
-            'closed_at', 'minutes_spent', 'cost', 'budget_status', 'budget_amount',
-        ])->get();
+        ExportPdfJob::dispatch($user->id);
 
-        $pdf = PDF::loadView('reports.tickets', ['tickets' => $tickets]);
-
-        return $pdf->download('tickets_report.pdf');
+        return response()->json(['message' => 'Exportação PDF em processamento. Receberá uma notificação quando estiver pronta.']);
     }
 
     public function exportExcel(Request $request)

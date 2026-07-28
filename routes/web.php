@@ -174,7 +174,6 @@ Route::middleware(['custom.auth'])->group(function () {
 
         // Analíticos
         Route::get('/analytics', [AnalyticsController::class, 'stats'])->name('analytics.stats');
-        Route::get('/analytics/charts', [AnalyticsController::class, 'stats'])->name('analytics.charts');
         Route::get('/analytics/export/csv', [AnalyticsController::class, 'exportCsv'])->name('analytics.export.csv');
         Route::get('/analytics/export/pdf', [AnalyticsController::class, 'exportPdf'])->name('analytics.export.pdf');
         Route::get('/analytics/export/excel', [AnalyticsController::class, 'exportExcel'])->name('analytics.export.excel');
@@ -214,9 +213,8 @@ Route::middleware(['custom.auth'])->group(function () {
 
         // Orçamento e Manutenção Preventiva
         Route::post('/admin/preventive', [AdminController::class, 'storePreventive'])->name('admin.preventive.store');
-        Route::patch('/admin/tickets/{id}/approve-budget', [AdminController::class, 'approveBudget'])->name('admin.tickets.approve-budget');
-        Route::post('/admin/tickets/{id}/budget-decision', [AdminController::class, 'approveBudget'])
-            ->name('admin.tickets.budget-decision')
+        Route::patch('/admin/tickets/{id}/approve-budget', [AdminController::class, 'approveBudget'])
+            ->name('admin.tickets.approve-budget')
             ->withoutMiddleware([ValidateCsrfToken::class]);
     });
 });

@@ -71,6 +71,26 @@ final class TicketPolicy
         return $user->isAdmin();
     }
 
+    public function update(User $user, Ticket $ticket): bool
+    {
+        return $user->isAdmin() || $user->isTechnician();
+    }
+
+    public function startRepair(User $user, Ticket $ticket): bool
+    {
+        return $user->isTechnician();
+    }
+
+    public function requestBudget(User $user, Ticket $ticket): bool
+    {
+        return $user->isTechnician() && (int) $ticket->assigned_to === (int) $user->id;
+    }
+
+    public function assign(User $user, Ticket $ticket): bool
+    {
+        return $user->isAdmin();
+    }
+
     private function canAccessTicket(User $user, Ticket $ticket): bool
     {
         if ($user->isAdmin() || $user->isTechnician()) {

@@ -15,8 +15,6 @@ use Illuminate\Http\JsonResponse;
 
 class TicketBudgetController extends Controller
 {
-    private const BUDGET_THRESHOLD = 50.00;
-
     public function __construct(
         private readonly TicketStatusService $statusService,
         private readonly NotificationService $notificationService,
@@ -41,7 +39,7 @@ class TicketBudgetController extends Controller
         $ticket->budget_requested = true;
         $ticket->budget_amount = $data->estimatedBudget;
 
-        $threshold = config('services.budget.threshold', self::BUDGET_THRESHOLD);
+        $threshold = config('services.custom.budget.threshold');
 
         if ($data->estimatedBudget > $threshold) {
             return $this->handleAboveThreshold($ticket, $data->estimatedBudget, $threshold);
@@ -62,7 +60,7 @@ class TicketBudgetController extends Controller
             $ticket->budget_details = $data->budgetDetails;
         }
 
-        $threshold = config('services.budget.threshold', self::BUDGET_THRESHOLD);
+        $threshold = config('services.custom.budget.threshold');
 
         if ($data->estimatedBudget > $threshold) {
             $ticket->budget_requested = true;

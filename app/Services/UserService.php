@@ -33,7 +33,7 @@ final class UserService
 
     public function createToken(User $user, Request $request): string
     {
-        $plainToken = Str::random(60);
+        $plainToken = Str::random(config('services.custom.tokens.length'));
         $user->api_token = $this->hashToken($plainToken);
         $user->token_created_at = now();
         $user->save();

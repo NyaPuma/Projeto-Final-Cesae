@@ -72,11 +72,11 @@ class AIService
 
         try {
             $response = OpenAI::chat()->create([
-                'model' => 'gpt-4o-mini',
+                'model' => config('services.custom.ai.model'),
                 'messages' => [
                     ['role' => 'user', 'content' => $prompt],
                 ],
-                'temperature' => 0.1, // Manter previsível e lógico
+                'temperature' => config('services.custom.ai.temperature'),
             ]);
 
             $resultado = json_decode(trim($response->choices[0]->message->content), true);

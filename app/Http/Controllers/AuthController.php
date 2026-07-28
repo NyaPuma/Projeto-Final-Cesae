@@ -20,8 +20,8 @@ class AuthController extends Controller
     {
         $email = strtolower($request->email);
         $rateLimitKey = "login_attempts:{$email}";
-        $maxAttempts = 5;
-        $lockoutMinutes = 15;
+        $maxAttempts = config('services.custom.auth.max_attempts');
+        $lockoutMinutes = config('services.custom.auth.lockout_minutes');
 
         $attempts = Cache::get($rateLimitKey, 0);
         if ($attempts >= $maxAttempts) {

@@ -148,7 +148,6 @@ class MemoryPerformanceTest extends PerformanceTestCase
         $endpoints = [
             '/api/tickets',
             '/analytics',
-            '/analytics/charts',
             '/admin/users',
             '/admin/equipment',
             '/admin/audits',

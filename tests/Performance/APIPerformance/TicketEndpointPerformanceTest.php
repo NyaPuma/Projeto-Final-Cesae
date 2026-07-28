@@ -264,11 +264,11 @@ class TicketEndpointPerformanceTest extends PerformanceTestCase
         $this->asAdmin();
 
         $time = $this->measureTime(function () {
-            $this->getJson('/analytics/charts')->assertOk();
+            $this->getJson('/analytics')->assertOk();
         });
 
         $this->assertLessThanOrEqual(700, $time,
-            "GET /analytics/charts took {$time}ms");
+            "GET /analytics took {$time}ms");
     }
 
     public function test_open_tickets_response_time(): void
