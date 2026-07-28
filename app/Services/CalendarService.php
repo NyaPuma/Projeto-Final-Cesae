@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Domain\Ticket\Queries\ScheduledEventsQuery;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Support\Collection;
@@ -28,5 +29,10 @@ final class CalendarService
                 'url' => url("/ui/tickets/{$ticket->id}"),
             ];
         });
+    }
+
+    public function getScheduledEvents(?string $from = null, ?string $to = null): Collection
+    {
+        return (new ScheduledEventsQuery($from, $to))->execute();
     }
 }

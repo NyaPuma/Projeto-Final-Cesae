@@ -4,7 +4,6 @@ namespace Tests\Security\MassAssignment;
 
 use App\Models\Ticket;
 use App\Models\User;
-use Illuminate\Support\Str;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Base\FeatureTestCase;
 

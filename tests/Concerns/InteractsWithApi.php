@@ -23,6 +23,16 @@ trait InteractsWithApi
         return $this->withAuthToken($token);
     }
 
+    protected function asUserWithToken($user): self
+    {
+        return $this->withHeader('X-Auth-Token', $user->api_token);
+    }
+
+    protected function withApiUser(string $token): self
+    {
+        return $this->asApiUser($token);
+    }
+
     protected function generateApiToken(): string
     {
         return Str::random(60);

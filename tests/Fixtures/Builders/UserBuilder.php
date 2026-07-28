@@ -24,7 +24,7 @@ class UserBuilder
 
     public static function new(): self
     {
-        return new self();
+        return new self;
     }
 
     public function withName(string $name): self

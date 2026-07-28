@@ -15,6 +15,7 @@ use App\Services\TicketSearchService;
 use App\Services\TicketStatusService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class TicketController extends Controller
 {
@@ -81,7 +82,7 @@ class TicketController extends Controller
         ]);
     }
 
-    public function show(Request $request, int $id): JsonResponse
+    public function show(Request $request, int $id): JsonResponse|View
     {
         $user = $this->authenticatedUser($request);
         $ticket = Ticket::with(['equipment.category', 'room', 'user', 'technician', 'status'])->findOrFail($id);

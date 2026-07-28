@@ -2,7 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
+use App\Models\TicketStatus;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -32,7 +34,7 @@ class TicketAuditLogTest extends TestCase
             'api_token' => Str::random(60),
         ]);
 
-        $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openStatusId = TicketStatus::where('name', TicketStatusEnum::Open->value)->value('id');
 
         $ticket = Ticket::create([
             'user_id' => $user->id,
@@ -70,7 +72,7 @@ class TicketAuditLogTest extends TestCase
             'user_id' => $user->id,
             'title' => 'Audit case',
             'description' => 'Should be audited',
-            'status_id' => Ticket::getStatusIdByName(Ticket::STATUS_OPEN),
+            'status_id' => TicketStatus::where('name', TicketStatusEnum::Open->value)->value('id'),
             'opened_at' => now(),
         ]);
 

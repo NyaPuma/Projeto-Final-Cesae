@@ -4,18 +4,16 @@ namespace Tests\Unit\Actions;
 
 use App\Actions\CreatePreventiveTicketAction;
 use App\Enums\TicketPriorityEnum;
-use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
+use App\Models\TicketStatus;
 use App\Models\User;
 use App\Models\UserProfile;
 use App\Services\TicketStatusService;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Base\DatabaseTestCase;
 
 class CreatePreventiveTicketActionTest extends DatabaseTestCase
 {
-
     private CreatePreventiveTicketAction $action;
 
     private TicketStatusService $statusService;
@@ -41,12 +39,12 @@ class CreatePreventiveTicketActionTest extends DatabaseTestCase
     private function seedTicketStatuses(): void
     {
         // Seed ticket statuses manually
-        \App\Models\TicketStatus::firstOrCreate(['name' => 'aberta'], ['description' => 'Aberta']);
-        \App\Models\TicketStatus::firstOrCreate(['name' => 'em curso'], ['description' => 'Em Curso']);
-        \App\Models\TicketStatus::firstOrCreate(['name' => 'fechada'], ['description' => 'Fechada']);
-        \App\Models\TicketStatus::firstOrCreate(['name' => 'cancelada'], ['description' => 'Cancelada']);
-        \App\Models\TicketStatus::firstOrCreate(['name' => 'pendente orçamento'], ['description' => 'Pendente Orçamento']);
-        \App\Models\TicketStatus::firstOrCreate(['name' => 'recusada'], ['description' => 'Recusada']);
+        TicketStatus::firstOrCreate(['name' => 'aberta'], ['description' => 'Aberta']);
+        TicketStatus::firstOrCreate(['name' => 'em curso'], ['description' => 'Em Curso']);
+        TicketStatus::firstOrCreate(['name' => 'fechada'], ['description' => 'Fechada']);
+        TicketStatus::firstOrCreate(['name' => 'cancelada'], ['description' => 'Cancelada']);
+        TicketStatus::firstOrCreate(['name' => 'pendente orçamento'], ['description' => 'Pendente Orçamento']);
+        TicketStatus::firstOrCreate(['name' => 'recusada'], ['description' => 'Recusada']);
     }
 
     #[Test]

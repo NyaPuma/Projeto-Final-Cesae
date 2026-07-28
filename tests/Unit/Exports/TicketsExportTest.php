@@ -2,6 +2,9 @@
 
 namespace Tests\Unit;
 
+use App\Enums\BudgetStatusEnum;
+use App\Enums\TicketPriorityEnum;
+use App\Enums\TicketStatusEnum;
 use App\Exports\TicketsExport;
 use App\Models\Ticket;
 use App\Models\TicketStatus;
@@ -24,9 +27,9 @@ class TicketsExportTest extends TestCase
 
         TicketType::firstOrCreate(['name' => 'avaria', 'description' => 'Avaria']);
         $typeId = TicketType::where('name', 'avaria')->first()->id;
-        TicketStatus::firstOrCreate(['name' => Ticket::STATUS_OPEN, 'description' => 'Aberto', 'type_id' => $typeId]);
-        TicketStatus::firstOrCreate(['name' => Ticket::STATUS_IN_PROGRESS, 'description' => 'Em Curso', 'type_id' => $typeId]);
-        TicketStatus::firstOrCreate(['name' => Ticket::STATUS_CLOSED, 'description' => 'Fechado', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Open->value, 'description' => 'Aberto', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::InProgress->value, 'description' => 'Em Curso', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Closed->value, 'description' => 'Fechado', 'type_id' => $typeId]);
         UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
     }
 
@@ -64,19 +67,19 @@ class TicketsExportTest extends TestCase
     public function it_maps_ticket_correctly(): void
     {
         $user = User::factory()->create();
-        $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openStatusId = TicketStatus::where('name', TicketStatusEnum::Open->value)->value('id');
         $status = TicketStatus::find($openStatusId);
 
         $ticket = Ticket::create([
             'title' => 'Export Test Ticket',
             'description' => 'Testing export mapping',
-            'priority' => Ticket::PRIORITY_HIGH,
+            'priority' => TicketPriorityEnum::High->value,
             'user_id' => $user->id,
             'status_id' => $openStatusId,
             'opened_at' => now(),
             'minutes_spent' => 120,
             'cost' => 350.50,
-            'budget_status' => Ticket::BUDGET_APPROVED,
+            'budget_status' => BudgetStatusEnum::Approved->value,
             'budget_amount' => 500.00,
         ]);
 
@@ -87,10 +90,10 @@ class TicketsExportTest extends TestCase
         $this->assertEquals($ticket->id, $mapped[0]);
         $this->assertEquals('Export Test Ticket', $mapped[1]);
         $this->assertEquals($status->name, $mapped[2]);
-        $this->assertEquals(Ticket::PRIORITY_HIGH, $mapped[3]);
+        $this->assertEquals(TicketPriorityEnum::High->value, $mapped[3]);
         $this->assertEquals(120, $mapped[7]);
         $this->assertEquals('350,50', $mapped[8]);
-        $this->assertEquals(Ticket::BUDGET_APPROVED, $mapped[9]);
+        $this->assertEquals(BudgetStatusEnum::Approved->value, $mapped[9]);
         $this->assertEquals('500,00', $mapped[10]);
     }
 
@@ -98,12 +101,12 @@ class TicketsExportTest extends TestCase
     public function it_handles_null_dates_in_mapping(): void
     {
         $user = User::factory()->create();
-        $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openStatusId = TicketStatus::where('name', TicketStatusEnum::Open->value)->value('id');
 
         $ticket = Ticket::create([
             'title' => 'Null Dates Ticket',
             'description' => 'Testing null dates',
-            'priority' => Ticket::PRIORITY_LOW,
+            'priority' => TicketPriorityEnum::Low->value,
             'user_id' => $user->id,
             'status_id' => $openStatusId,
             'opened_at' => now(),
@@ -143,12 +146,12 @@ class TicketsExportTest extends TestCase
     public function it_orders_by_created_at_descending(): void
     {
         $user = User::factory()->create();
-        $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openStatusId = TicketStatus::where('name', TicketStatusEnum::Open->value)->value('id');
 
         $ticket1 = Ticket::forceCreate([
             'title' => 'First Ticket',
             'description' => 'Older ticket',
-            'priority' => Ticket::PRIORITY_MEDIUM,
+            'priority' => TicketPriorityEnum::Medium->value,
             'user_id' => $user->id,
             'status_id' => $openStatusId,
             'opened_at' => now()->subDay(),
@@ -159,7 +162,7 @@ class TicketsExportTest extends TestCase
         $ticket2 = Ticket::forceCreate([
             'title' => 'Second Ticket',
             'description' => 'Newer ticket',
-            'priority' => Ticket::PRIORITY_HIGH,
+            'priority' => TicketPriorityEnum::High->value,
             'user_id' => $user->id,
             'status_id' => $openStatusId,
             'opened_at' => now(),

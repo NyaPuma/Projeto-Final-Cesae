@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+use App\Enums\TicketPriorityEnum;
+use App\Enums\TicketStatusEnum;
 use App\Models\EquipmentCategory;
 use App\Models\Room;
 use App\Models\Ticket;
@@ -31,10 +33,10 @@ class AIServiceTest extends TestCase
 
         TicketType::firstOrCreate(['name' => 'avaria', 'description' => 'Avaria']);
         $typeId = TicketType::where('name', 'avaria')->first()->id;
-        TicketStatus::firstOrCreate(['name' => Ticket::STATUS_OPEN, 'description' => 'Aberto', 'type_id' => $typeId]);
-        TicketStatus::firstOrCreate(['name' => Ticket::STATUS_IN_PROGRESS, 'description' => 'Em Curso', 'type_id' => $typeId]);
-        TicketStatus::firstOrCreate(['name' => Ticket::STATUS_CLOSED, 'description' => 'Fechado', 'type_id' => $typeId]);
-        TicketStatus::firstOrCreate(['name' => Ticket::STATUS_CANCELLED, 'description' => 'Cancelado', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Open->value, 'description' => 'Aberto', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::InProgress->value, 'description' => 'Em Curso', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Closed->value, 'description' => 'Fechado', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Cancelled->value, 'description' => 'Cancelado', 'type_id' => $typeId]);
         UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
         UserProfile::firstOrCreate(['name' => User::ROLE_TECHNICIAN]);
         UserProfile::firstOrCreate(['name' => User::ROLE_ADMIN]);
@@ -46,12 +48,12 @@ class AIServiceTest extends TestCase
         $category = EquipmentCategory::factory()->create();
         $room = Room::factory()->create();
         $user = User::factory()->create();
-        $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openStatusId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
             'title' => 'AI Test Ticket',
             'description' => 'Testing AI with no technicians',
-            'priority' => Ticket::PRIORITY_MEDIUM,
+            'priority' => TicketPriorityEnum::Medium->value,
             'user_id' => $user->id,
             'status_id' => $openStatusId,
             'opened_at' => now(),
@@ -75,12 +77,12 @@ class AIServiceTest extends TestCase
         $category = EquipmentCategory::factory()->create();
         $room = Room::factory()->create();
         $user = User::factory()->create();
-        $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openStatusId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
             'title' => 'AI Fallback Test',
             'description' => 'Testing AI fallback response',
-            'priority' => Ticket::PRIORITY_HIGH,
+            'priority' => TicketPriorityEnum::High->value,
             'user_id' => $user->id,
             'status_id' => $openStatusId,
             'opened_at' => now(),
@@ -105,12 +107,12 @@ class AIServiceTest extends TestCase
         $category = EquipmentCategory::factory()->create();
         $room = Room::factory()->create();
         $user = User::factory()->create();
-        $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openStatusId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
             'title' => 'Inactive Tech Test',
             'description' => 'Should not recommend inactive tech',
-            'priority' => Ticket::PRIORITY_MEDIUM,
+            'priority' => TicketPriorityEnum::Medium->value,
             'user_id' => $user->id,
             'status_id' => $openStatusId,
             'opened_at' => now(),
@@ -132,12 +134,12 @@ class AIServiceTest extends TestCase
         ]);
 
         $user = User::factory()->create();
-        $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openStatusId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
             'title' => 'No Equipment Ticket',
             'description' => 'Ticket without equipment association',
-            'priority' => Ticket::PRIORITY_LOW,
+            'priority' => TicketPriorityEnum::Low->value,
             'user_id' => $user->id,
             'equipment_id' => null,
             'room_id' => null,

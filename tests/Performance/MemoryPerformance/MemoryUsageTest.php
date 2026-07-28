@@ -110,7 +110,7 @@ class MemoryUsageTest extends TestCase
         $lazyIncrease = ($lazyMemory - $initialMemory) / 1024 / 1024;
         $eagerIncrease = ($eagerMemory - $initialMemory2) / 1024 / 1024;
 
-        $this->assertLessThanOrEqual($lazyIncrease, $eagerIncrease, "Eager loading should be more memory efficient");
+        $this->assertLessThanOrEqual($lazyIncrease, $eagerIncrease, 'Eager loading should be more memory efficient');
     }
 
     #[Test]

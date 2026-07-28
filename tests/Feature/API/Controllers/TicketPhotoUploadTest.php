@@ -2,7 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
+use App\Models\TicketStatus;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -44,7 +46,7 @@ class TicketPhotoUploadTest extends TestCase
 
         $user = $this->createUserWithToken(User::ROLE_USER);
 
-        $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openStatusId = TicketStatus::where('name', TicketStatusEnum::Open->value)->value('id');
 
         $ticket = Ticket::create([
             'user_id' => $user->id,
@@ -73,7 +75,7 @@ class TicketPhotoUploadTest extends TestCase
         Storage::fake('public');
 
         $user = $this->createUserWithToken(User::ROLE_USER);
-        $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openStatusId = TicketStatus::where('name', TicketStatusEnum::Open->value)->value('id');
 
         $ticket = Ticket::create([
             'user_id' => $user->id,
@@ -97,7 +99,7 @@ class TicketPhotoUploadTest extends TestCase
         Storage::fake('public');
 
         $user = $this->createUserWithToken(User::ROLE_USER);
-        $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openStatusId = TicketStatus::where('name', TicketStatusEnum::Open->value)->value('id');
 
         $ticket = Ticket::create([
             'user_id' => $user->id,

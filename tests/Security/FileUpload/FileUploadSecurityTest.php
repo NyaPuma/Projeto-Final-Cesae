@@ -2,39 +2,29 @@
 
 namespace Tests\Security\FileUpload;
 
-use App\Models\User;
-use App\Models\UserProfile;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\Ticket;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use PHPUnit\Framework\Attributes\Test;
-use Tests\Base\ApiTestCase;
+use Tests\Base\FeatureTestCase;
+use Tests\Concerns\InteractsWithApi;
 
-class FileUploadSecurityTest extends ApiTestCase
+class FileUploadSecurityTest extends FeatureTestCase
 {
-    use RefreshDatabase;
+    use InteractsWithApi;
 
     protected function setUp(): void
     {
         parent::setUp();
         Storage::fake('public');
-        UserProfile::firstOrCreate(['name' => User::ROLE_ADMIN]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
     }
 
     #[Test]
     public function it_rejects_executable_files(): void
     {
-        $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_TECHNICIAN)->first()->id,
-            'api_token' => 'tech-token',
-            'active' => true,
-        ]);
-
-        $ticket = \App\Models\Ticket::factory()->create(['user_id' => $user->id]);
-
-        $response = $this->withApiUser('tech-token')
+        $user = $this->createTechnician();
+        $ticket = Ticket::factory()->create(['user_id' => $user->id]);
+        $response = $this->asApiUser($user->api_token)
             ->post('/tickets/'.$ticket->id.'/photos', [
                 'photo' => UploadedFile::fake()->create('malicious.exe', 100, 'application/x-msdownload'),
             ], ['Accept' => 'application/json']);
@@ -45,15 +35,9 @@ class FileUploadSecurityTest extends ApiTestCase
     #[Test]
     public function it_rejects_php_files(): void
     {
-        $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_TECHNICIAN)->first()->id,
-            'api_token' => 'tech-token',
-            'active' => true,
-        ]);
-
-        $ticket = \App\Models\Ticket::factory()->create(['user_id' => $user->id]);
-
-        $response = $this->withApiUser('tech-token')
+        $user = $this->createTechnician();
+        $ticket = Ticket::factory()->create(['user_id' => $user->id]);
+        $response = $this->asApiUser($user->api_token)
             ->post('/tickets/'.$ticket->id.'/photos', [
                 'photo' => UploadedFile::fake()->create('shell.php', 100, 'application/x-php'),
             ], ['Accept' => 'application/json']);
@@ -64,15 +48,9 @@ class FileUploadSecurityTest extends ApiTestCase
     #[Test]
     public function it_limits_file_size(): void
     {
-        $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_TECHNICIAN)->first()->id,
-            'api_token' => 'tech-token',
-            'active' => true,
-        ]);
-
-        $ticket = \App\Models\Ticket::factory()->create(['user_id' => $user->id]);
-
-        $response = $this->withApiUser('tech-token')
+        $user = $this->createTechnician();
+        $ticket = Ticket::factory()->create(['user_id' => $user->id]);
+        $response = $this->asApiUser($user->api_token)
             ->post('/tickets/'.$ticket->id.'/photos', [
                 'photo' => UploadedFile::fake()->create('huge.jpg', 10240 * 1024), // 10MB
             ], ['Accept' => 'application/json']);
@@ -83,15 +61,9 @@ class FileUploadSecurityTest extends ApiTestCase
     #[Test]
     public function it_validates_mime_type(): void
     {
-        $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_TECHNICIAN)->first()->id,
-            'api_token' => 'tech-token',
-            'active' => true,
-        ]);
-
-        $ticket = \App\Models\Ticket::factory()->create(['user_id' => $user->id]);
-
-        $response = $this->withApiUser('tech-token')
+        $user = $this->createTechnician();
+        $ticket = Ticket::factory()->create(['user_id' => $user->id]);
+        $response = $this->asApiUser($user->api_token)
             ->post('/tickets/'.$ticket->id.'/photos', [
                 'photo' => UploadedFile::fake()->create('fake.jpg', 100, 'text/plain'),
             ], ['Accept' => 'application/json']);
@@ -102,15 +74,9 @@ class FileUploadSecurityTest extends ApiTestCase
     #[Test]
     public function it_accepts_valid_image_files(): void
     {
-        $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_TECHNICIAN)->first()->id,
-            'api_token' => 'tech-token',
-            'active' => true,
-        ]);
-
-        $ticket = \App\Models\Ticket::factory()->create(['user_id' => $user->id]);
-
-        $response = $this->withApiUser('tech-token')
+        $user = $this->createTechnician();
+        $ticket = Ticket::factory()->create(['user_id' => $user->id]);
+        $response = $this->asApiUser($user->api_token)
             ->post('/tickets/'.$ticket->id.'/photos', [
                 'photo' => UploadedFile::fake()->image('test.jpg', 400, 300),
             ], ['Accept' => 'application/json']);
@@ -121,15 +87,9 @@ class FileUploadSecurityTest extends ApiTestCase
     #[Test]
     public function it_sanitizes_filenames(): void
     {
-        $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_TECHNICIAN)->first()->id,
-            'api_token' => 'tech-token',
-            'active' => true,
-        ]);
-
-        $ticket = \App\Models\Ticket::factory()->create(['user_id' => $user->id]);
-
-        $response = $this->withApiUser('tech-token')
+        $user = $this->createTechnician();
+        $ticket = Ticket::factory()->create(['user_id' => $user->id]);
+        $response = $this->asApiUser($user->api_token)
             ->post('/tickets/'.$ticket->id.'/photos', [
                 'photo' => UploadedFile::fake()->image('test with spaces.jpg', 400, 300),
             ], ['Accept' => 'application/json']);
@@ -142,7 +102,7 @@ class FileUploadSecurityTest extends ApiTestCase
     #[Test]
     public function it_requires_authentication_for_upload(): void
     {
-        $ticket = \App\Models\Ticket::factory()->create();
+        $ticket = Ticket::factory()->create();
 
         $response = $this->post('/tickets/'.$ticket->id.'/photos', [
             'photo' => UploadedFile::fake()->image('test.jpg', 400, 300),

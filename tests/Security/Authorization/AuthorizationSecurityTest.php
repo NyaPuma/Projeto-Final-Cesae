@@ -5,7 +5,6 @@ namespace Tests\Security\Authorization;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserProfile;
-use Illuminate\Support\Str;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Base\FeatureTestCase;
 

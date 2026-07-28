@@ -10,13 +10,16 @@ use App\Models\Ticket;
 use App\Models\TicketComment;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Base\FeatureTestCase;
+use Tests\Concerns\InteractsWithApi;
 
 class ForeignKeyIntegrityTest extends FeatureTestCase
 {
+    use InteractsWithApi;
+
     #[Test]
     public function it_references_valid_user(): void
     {
-        $user = $this->createCommonUser();
+        $user = $this->createRegularUser();
         $this->asUserWithToken($user);
 
         $response = $this->postJson('/tickets', [
@@ -35,7 +38,7 @@ class ForeignKeyIntegrityTest extends FeatureTestCase
     #[Test]
     public function it_references_valid_status(): void
     {
-        $user = $this->createCommonUser();
+        $user = $this->createRegularUser();
         $this->asUserWithToken($user);
 
         $response = $this->postJson('/tickets', [
@@ -101,7 +104,7 @@ class ForeignKeyIntegrityTest extends FeatureTestCase
     #[Test]
     public function it_references_valid_user_on_notification(): void
     {
-        $user = $this->createCommonUser();
+        $user = $this->createRegularUser();
 
         $notification = Notification::create([
             'user_id' => $user->id,

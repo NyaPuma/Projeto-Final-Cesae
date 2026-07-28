@@ -11,13 +11,16 @@ use App\Models\TicketStatus;
 use App\Models\User;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Base\FeatureTestCase;
+use Tests\Concerns\InteractsWithApi;
 
 class RelationshipIntegrityTest extends FeatureTestCase
 {
+    use InteractsWithApi;
+
     #[Test]
     public function it_user_has_many_tickets(): void
     {
-        $user = $this->createCommonUser();
+        $user = $this->createRegularUser();
         $this->asUserWithToken($user);
 
         for ($i = 0; $i < 3; $i++) {
@@ -56,7 +59,7 @@ class RelationshipIntegrityTest extends FeatureTestCase
     #[Test]
     public function it_ticket_belongs_to_status(): void
     {
-        $user = $this->createCommonUser();
+        $user = $this->createRegularUser();
         $this->asUserWithToken($user);
 
         $response = $this->postJson('/tickets', [
@@ -87,7 +90,7 @@ class RelationshipIntegrityTest extends FeatureTestCase
             'active' => true,
         ]);
 
-        $user = $this->createCommonUser();
+        $user = $this->createRegularUser();
         $this->asUserWithToken($user);
 
         $response = $this->postJson('/tickets', [
@@ -190,7 +193,7 @@ class RelationshipIntegrityTest extends FeatureTestCase
     public function it_room_has_many_tickets(): void
     {
         $room = Room::create(['name' => 'Ticket Room', 'active' => true]);
-        $user = $this->createCommonUser();
+        $user = $this->createRegularUser();
 
         $openStatus = TicketStatus::where('name', 'aberta')->first();
 
@@ -221,7 +224,7 @@ class RelationshipIntegrityTest extends FeatureTestCase
             'priority' => 'baixa',
         ]);
         $ticketId = $response->json('ticket.id');
-        $user = $this->createCommonUser();
+        $user = $this->createRegularUser();
 
         $attachment = TicketAttachment::create([
             'ticket_id' => $ticketId,

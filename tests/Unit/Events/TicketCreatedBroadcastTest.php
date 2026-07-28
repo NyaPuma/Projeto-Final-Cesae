@@ -5,13 +5,12 @@ namespace Tests\Unit\Events;
 use App\Events\TicketCreatedBroadcast;
 use App\Models\Ticket;
 use Illuminate\Broadcasting\Channel;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Base\DatabaseTestCase;
 
 class TicketCreatedBroadcastTest extends DatabaseTestCase
 {
-
     #[Test]
     public function it_broadcasts_on_tickets_channel(): void
     {
@@ -57,6 +56,6 @@ class TicketCreatedBroadcastTest extends DatabaseTestCase
         $ticket = Ticket::factory()->create();
         $event = new TicketCreatedBroadcast($ticket);
 
-        $this->assertInstanceOf(\Illuminate\Contracts\Broadcasting\ShouldBroadcastNow::class, $event);
+        $this->assertInstanceOf(ShouldBroadcastNow::class, $event);
     }
 }

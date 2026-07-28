@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Concerns\BroadcastsTicketStatus;
 use App\Enums\TicketStatusEnum;
-use App\Events\TicketStatusUpdatedBroadcast;
 use App\Http\Requests\CloseTicketRequest;
 use App\Http\Requests\ScheduleTicketRequest;
 use App\Models\Ticket;
 use App\Models\User;
-use App\Notifications\TicketStatusChanged;
 use App\Services\NotificationService;
 use App\Services\TechnicianAssignmentService;
-use App\Services\TicketStatusService;
 use App\Services\TicketWorkflowService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -19,9 +17,10 @@ use Illuminate\Support\Facades\DB;
 
 class TicketWorkflowController extends Controller
 {
+    use BroadcastsTicketStatus;
+
     public function __construct(
         private readonly TicketWorkflowService $workflowService,
-        private readonly TicketStatusService $statusService,
         private readonly NotificationService $notificationService,
         private readonly TechnicianAssignmentService $technicianService,
     ) {}
@@ -224,16 +223,5 @@ class TicketWorkflowController extends Controller
         $this->broadcastStatusChange($ticket, $oldStatus, TicketStatusEnum::InProgress);
 
         return response()->json(['ticket' => $ticket->load(['equipment', 'room', 'technician', 'status'])]);
-    }
-
-    private function broadcastStatusChange(Ticket $ticket, string $oldStatus, TicketStatusEnum $newStatus): void
-    {
-        try {
-            event(new TicketStatusUpdatedBroadcast($ticket, $oldStatus, $newStatus->value));
-            if ($ticket->user && $ticket->user->email) {
-                $ticket->user->notify(new TicketStatusChanged($ticket, $oldStatus, $newStatus->value));
-            }
-        } catch (\Exception $e) {
-        }
     }
 }

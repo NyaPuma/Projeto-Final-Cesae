@@ -2,9 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\Enums\TicketPriorityEnum;
+use App\Enums\TicketStatusEnum;
 use App\Models\Equipment;
 use App\Models\Room;
 use App\Models\Ticket;
+use App\Models\TicketStatus;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -62,8 +65,8 @@ class TicketOperationsTest extends TestCase
             'description' => 'Printer jammed repeatedly.',
             'equipment_id' => $equipment->id,
             'room_id' => $room->id,
-            'priority' => Ticket::PRIORITY_HIGH,
-            'status_id' => Ticket::getStatusIdByName(Ticket::STATUS_OPEN),
+            'priority' => TicketPriorityEnum::High->value,
+            'status_id' => TicketStatus::where('name', TicketStatusEnum::Open->value)->value('id'),
             'opened_at' => now(),
         ]);
 
@@ -126,7 +129,7 @@ class TicketOperationsTest extends TestCase
             'user_id' => $owner->id,
             'title' => 'Own ticket',
             'description' => 'Created by owner',
-            'status_id' => Ticket::getStatusIdByName(Ticket::STATUS_OPEN),
+            'status_id' => TicketStatus::where('name', TicketStatusEnum::Open->value)->value('id'),
             'opened_at' => now(),
         ]);
 
@@ -164,7 +167,7 @@ class TicketOperationsTest extends TestCase
             'user_id' => $owner->id,
             'title' => 'Another ticket',
             'description' => 'Owned by someone else',
-            'status_id' => Ticket::getStatusIdByName(Ticket::STATUS_OPEN),
+            'status_id' => TicketStatus::where('name', TicketStatusEnum::Open->value)->value('id'),
             'opened_at' => now(),
         ]);
 

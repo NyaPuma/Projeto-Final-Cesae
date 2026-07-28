@@ -6,20 +6,18 @@ use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserProfile;
 use App\Policies\TicketPolicy;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Base\DatabaseTestCase;
 
 class TicketPolicyTest extends DatabaseTestCase
 {
-
     private TicketPolicy $policy;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->policy = new TicketPolicy();
+        $this->policy = new TicketPolicy;
         $this->seedUserProfiles();
     }
 

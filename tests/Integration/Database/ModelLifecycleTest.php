@@ -2,17 +2,18 @@
 
 namespace Tests\Integration\Database;
 
-use App\Models\Equipment;
 use App\Models\EquipmentCategory;
 use App\Models\Room;
-use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserProfile;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Base\FeatureTestCase;
+use Tests\Concerns\InteractsWithApi;
 
 class ModelLifecycleTest extends FeatureTestCase
 {
+    use InteractsWithApi;
+
     #[Test]
     public function it_crud_lifecycle_user(): void
     {
@@ -105,7 +106,7 @@ class ModelLifecycleTest extends FeatureTestCase
     #[Test]
     public function it_crud_lifecycle_ticket(): void
     {
-        $user = $this->createCommonUser();
+        $user = $this->createRegularUser();
         $this->asUserWithToken($user);
 
         $response = $this->postJson('/tickets', [

@@ -3,22 +3,14 @@
 namespace Tests\Security\APITokens;
 
 use App\Models\User;
-use App\Models\UserProfile;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
 use PHPUnit\Framework\Attributes\Test;
-use Tests\Base\ApiTestCase;
+use Tests\Base\FeatureTestCase;
+use Tests\Concerns\InteractsWithApi;
 
-class APITokenSecurityTest extends ApiTestCase
+class APITokenSecurityTest extends FeatureTestCase
 {
-    use RefreshDatabase;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        UserProfile::firstOrCreate(['name' => User::ROLE_ADMIN]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
-    }
+    use InteractsWithApi;
 
     #[Test]
     public function it_rejects_requests_without_token(): void
@@ -40,13 +32,9 @@ class APITokenSecurityTest extends ApiTestCase
     #[Test]
     public function it_rejects_requests_with_expired_token(): void
     {
-        $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->first()->id,
-            'api_token' => 'expired-token',
-            'active' => false,
-        ]);
+        $user = $this->createInactiveUser(User::ROLE_USER);
 
-        $response = $this->withApiUser('expired-token')
+        $response = $this->asApiUser($user->api_token)
             ->getJson('/api/tickets');
 
         $response->assertUnauthorized();
@@ -55,13 +43,9 @@ class APITokenSecurityTest extends ApiTestCase
     #[Test]
     public function it_accepts_requests_with_valid_token(): void
     {
-        $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->first()->id,
-            'api_token' => 'valid-token',
-            'active' => true,
-        ]);
+        $user = $this->createRegularUser();
 
-        $response = $this->withApiUser('valid-token')
+        $response = $this->asApiUser($user->api_token)
             ->getJson('/api/tickets');
 
         $response->assertOk();
@@ -70,12 +54,7 @@ class APITokenSecurityTest extends ApiTestCase
     #[Test]
     public function it_rotates_token_on_login(): void
     {
-        $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->first()->id,
-            'password' => \Illuminate\Support\Facades\Hash::make('password'),
-            'api_token' => 'old-token',
-            'active' => true,
-        ]);
+        $user = $this->createUserWithPassword(User::ROLE_USER, 'login-test@example.com', 'password', ['api_token' => 'old-token']);
 
         $response = $this->post('/login', [
             'email' => $user->email,
@@ -92,13 +71,9 @@ class APITokenSecurityTest extends ApiTestCase
     #[Test]
     public function it_clears_token_on_logout(): void
     {
-        $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->first()->id,
-            'api_token' => 'logout-token',
-            'active' => true,
-        ]);
+        $user = $this->createUserWithToken(User::ROLE_USER, ['api_token' => 'logout-token']);
 
-        $response = $this->withApiUser('logout-token')
+        $response = $this->asApiUser('logout-token')
             ->post('/logout');
 
         $response->assertOk();
@@ -110,17 +85,13 @@ class APITokenSecurityTest extends ApiTestCase
     #[Test]
     public function it_prevents_token_reuse_after_logout(): void
     {
-        $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->first()->id,
-            'api_token' => 'reused-token',
-            'active' => true,
-        ]);
+        $user = $this->createUserWithToken(User::ROLE_USER, ['api_token' => 'reused-token']);
 
-        $this->withApiUser('reused-token')
+        $this->asApiUser('reused-token')
             ->post('/logout')
             ->assertOk();
 
-        $response = $this->withApiUser('reused-token')
+        $response = $this->asApiUser('reused-token')
             ->getJson('/api/tickets');
 
         $response->assertUnauthorized();
@@ -131,7 +102,7 @@ class APITokenSecurityTest extends ApiTestCase
     {
         $tokens = [];
         for ($i = 0; $i < 10; $i++) {
-            $tokens[] = \Illuminate\Support\Str::random(60);
+            $tokens[] = Str::random(60);
         }
 
         $uniqueTokens = array_unique($tokens);
@@ -141,13 +112,8 @@ class APITokenSecurityTest extends ApiTestCase
     #[Test]
     public function it_hashes_tokens_in_database(): void
     {
-        $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->first()->id,
-            'api_token' => 'plain-token',
-            'active' => true,
-        ]);
+        $user = $this->createUserWithToken(User::ROLE_USER);
 
-        $this->assertNotEquals('plain-token', $user->api_token);
         $this->assertEquals(60, strlen($user->api_token));
     }
 }

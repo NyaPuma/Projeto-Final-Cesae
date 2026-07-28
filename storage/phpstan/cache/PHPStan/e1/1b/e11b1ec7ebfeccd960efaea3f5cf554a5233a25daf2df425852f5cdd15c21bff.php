@@ -12,17 +12,89 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
+          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
+          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
+          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
+          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
+          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'auditable' => 'App\\Traits\\Auditable',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'model' => 'Illuminate\\Database\\Eloquent\\Model',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-          'collection' => 'Illuminate\\Support\\Collection',
-          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => NULL,
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => NULL,
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => NULL,
+         'traitData' => NULL,
+      )),
+      '01a9c69bce6a6bec1aacdf1e86791adc' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'App\\Models',
+         'uses' => 
+        array (
+          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
+          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
+          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
+          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
+          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
+          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
+          'auditable' => 'App\\Traits\\Auditable',
+          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+          'model' => 'Illuminate\\Database\\Eloquent\\Model',
+          'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
+          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+        ),
+         'className' => 'App\\Models\\Ticket',
+         'functionName' => 'flushStatusCache',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => NULL,
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => NULL,
+         'traitData' => NULL,
+      )),
+      '06642944d4a72a97e33e3f3d0c50683c' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'App\\Models',
+         'uses' => 
+        array (
+          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
+          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
+          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
+          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
+          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
+          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
+          'auditable' => 'App\\Traits\\Auditable',
+          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+          'model' => 'Illuminate\\Database\\Eloquent\\Model',
+          'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
+          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+        ),
+         'className' => 'App\\Models\\Ticket',
+         'functionName' => 'getStatusIdByName',
          'templatePhpDocNodes' => 
         array (
         ),
@@ -1459,14 +1531,18 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
+          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
+          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
+          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
+          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
+          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'auditable' => 'App\\Traits\\Auditable',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'model' => 'Illuminate\\Database\\Eloquent\\Model',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-          'collection' => 'Illuminate\\Support\\Collection',
-          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'status',
@@ -1489,14 +1565,18 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
+          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
+          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
+          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
+          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
+          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'auditable' => 'App\\Traits\\Auditable',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'model' => 'Illuminate\\Database\\Eloquent\\Model',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-          'collection' => 'Illuminate\\Support\\Collection',
-          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'budgetApprovedBy',
@@ -1519,14 +1599,18 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
+          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
+          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
+          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
+          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
+          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'auditable' => 'App\\Traits\\Auditable',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'model' => 'Illuminate\\Database\\Eloquent\\Model',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-          'collection' => 'Illuminate\\Support\\Collection',
-          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'workflowHistory',
@@ -1549,14 +1633,18 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
+          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
+          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
+          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
+          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
+          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'auditable' => 'App\\Traits\\Auditable',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'model' => 'Illuminate\\Database\\Eloquent\\Model',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-          'collection' => 'Illuminate\\Support\\Collection',
-          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'user',
@@ -1579,14 +1667,18 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
+          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
+          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
+          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
+          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
+          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'auditable' => 'App\\Traits\\Auditable',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'model' => 'Illuminate\\Database\\Eloquent\\Model',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-          'collection' => 'Illuminate\\Support\\Collection',
-          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'technician',
@@ -1609,14 +1701,18 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
+          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
+          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
+          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
+          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
+          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'auditable' => 'App\\Traits\\Auditable',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'model' => 'Illuminate\\Database\\Eloquent\\Model',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-          'collection' => 'Illuminate\\Support\\Collection',
-          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'equipment',
@@ -1639,14 +1735,18 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
+          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
+          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
+          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
+          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
+          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'auditable' => 'App\\Traits\\Auditable',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'model' => 'Illuminate\\Database\\Eloquent\\Model',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-          'collection' => 'Illuminate\\Support\\Collection',
-          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'room',
@@ -1669,14 +1769,18 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
+          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
+          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
+          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
+          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
+          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'auditable' => 'App\\Traits\\Auditable',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'model' => 'Illuminate\\Database\\Eloquent\\Model',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-          'collection' => 'Illuminate\\Support\\Collection',
-          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'comments',
@@ -1699,407 +1803,21 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
+          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
+          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
+          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
+          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
+          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'auditable' => 'App\\Traits\\Auditable',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'model' => 'Illuminate\\Database\\Eloquent\\Model',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-          'collection' => 'Illuminate\\Support\\Collection',
-          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'attachments',
-         'templatePhpDocNodes' => 
-        array (
-        ),
-         'parent' => NULL,
-         'typeAliasesMap' => 
-        array (
-        ),
-         'bypassTypeAliases' => false,
-         'constUses' => 
-        array (
-        ),
-         'typeAliasClassName' => NULL,
-         'traitData' => NULL,
-      )),
-      '7692c8195a3e8fed5ba60b9d0a3d26bb' => 
-      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
-         'namespace' => 'App\\Models',
-         'uses' => 
-        array (
-          'auditable' => 'App\\Traits\\Auditable',
-          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-          'model' => 'Illuminate\\Database\\Eloquent\\Model',
-          'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-          'collection' => 'Illuminate\\Support\\Collection',
-          'cache' => 'Illuminate\\Support\\Facades\\Cache',
-        ),
-         'className' => 'App\\Models\\Ticket',
-         'functionName' => 'startRepair',
-         'templatePhpDocNodes' => 
-        array (
-        ),
-         'parent' => NULL,
-         'typeAliasesMap' => 
-        array (
-        ),
-         'bypassTypeAliases' => false,
-         'constUses' => 
-        array (
-        ),
-         'typeAliasClassName' => NULL,
-         'traitData' => NULL,
-      )),
-      'c306b9461058d7013d85d801dc7a4547' => 
-      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
-         'namespace' => 'App\\Models',
-         'uses' => 
-        array (
-          'auditable' => 'App\\Traits\\Auditable',
-          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-          'model' => 'Illuminate\\Database\\Eloquent\\Model',
-          'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-          'collection' => 'Illuminate\\Support\\Collection',
-          'cache' => 'Illuminate\\Support\\Facades\\Cache',
-        ),
-         'className' => 'App\\Models\\Ticket',
-         'functionName' => 'checkAutoClose',
-         'templatePhpDocNodes' => 
-        array (
-        ),
-         'parent' => NULL,
-         'typeAliasesMap' => 
-        array (
-        ),
-         'bypassTypeAliases' => false,
-         'constUses' => 
-        array (
-        ),
-         'typeAliasClassName' => NULL,
-         'traitData' => NULL,
-      )),
-      '3bd324904fdd743884d78f1aca1c87f4' => 
-      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
-         'namespace' => 'App\\Models',
-         'uses' => 
-        array (
-          'auditable' => 'App\\Traits\\Auditable',
-          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-          'model' => 'Illuminate\\Database\\Eloquent\\Model',
-          'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-          'collection' => 'Illuminate\\Support\\Collection',
-          'cache' => 'Illuminate\\Support\\Facades\\Cache',
-        ),
-         'className' => 'App\\Models\\Ticket',
-         'functionName' => 'reopen',
-         'templatePhpDocNodes' => 
-        array (
-        ),
-         'parent' => NULL,
-         'typeAliasesMap' => 
-        array (
-        ),
-         'bypassTypeAliases' => false,
-         'constUses' => 
-        array (
-        ),
-         'typeAliasClassName' => NULL,
-         'traitData' => NULL,
-      )),
-      'c750cbe10af15e45a8ac9d790c4093bf' => 
-      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
-         'namespace' => 'App\\Models',
-         'uses' => 
-        array (
-          'auditable' => 'App\\Traits\\Auditable',
-          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-          'model' => 'Illuminate\\Database\\Eloquent\\Model',
-          'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-          'collection' => 'Illuminate\\Support\\Collection',
-          'cache' => 'Illuminate\\Support\\Facades\\Cache',
-        ),
-         'className' => 'App\\Models\\Ticket',
-         'functionName' => 'requestBudgetAuthorization',
-         'templatePhpDocNodes' => 
-        array (
-        ),
-         'parent' => NULL,
-         'typeAliasesMap' => 
-        array (
-        ),
-         'bypassTypeAliases' => false,
-         'constUses' => 
-        array (
-        ),
-         'typeAliasClassName' => NULL,
-         'traitData' => NULL,
-      )),
-      '1b243bc10d986bc518245e9673a1c213' => 
-      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
-         'namespace' => 'App\\Models',
-         'uses' => 
-        array (
-          'auditable' => 'App\\Traits\\Auditable',
-          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-          'model' => 'Illuminate\\Database\\Eloquent\\Model',
-          'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-          'collection' => 'Illuminate\\Support\\Collection',
-          'cache' => 'Illuminate\\Support\\Facades\\Cache',
-        ),
-         'className' => 'App\\Models\\Ticket',
-         'functionName' => 'approveBudget',
-         'templatePhpDocNodes' => 
-        array (
-        ),
-         'parent' => NULL,
-         'typeAliasesMap' => 
-        array (
-        ),
-         'bypassTypeAliases' => false,
-         'constUses' => 
-        array (
-        ),
-         'typeAliasClassName' => NULL,
-         'traitData' => NULL,
-      )),
-      '5590fb53bd30834b986fb3bef8061308' => 
-      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
-         'namespace' => 'App\\Models',
-         'uses' => 
-        array (
-          'auditable' => 'App\\Traits\\Auditable',
-          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-          'model' => 'Illuminate\\Database\\Eloquent\\Model',
-          'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-          'collection' => 'Illuminate\\Support\\Collection',
-          'cache' => 'Illuminate\\Support\\Facades\\Cache',
-        ),
-         'className' => 'App\\Models\\Ticket',
-         'functionName' => 'getBudgetPauseMinutesAttribute',
-         'templatePhpDocNodes' => 
-        array (
-        ),
-         'parent' => NULL,
-         'typeAliasesMap' => 
-        array (
-        ),
-         'bypassTypeAliases' => false,
-         'constUses' => 
-        array (
-        ),
-         'typeAliasClassName' => NULL,
-         'traitData' => NULL,
-      )),
-      '6d0cdecd8f601bfe10c9177e16b89f7c' => 
-      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
-         'namespace' => 'App\\Models',
-         'uses' => 
-        array (
-          'auditable' => 'App\\Traits\\Auditable',
-          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-          'model' => 'Illuminate\\Database\\Eloquent\\Model',
-          'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-          'collection' => 'Illuminate\\Support\\Collection',
-          'cache' => 'Illuminate\\Support\\Facades\\Cache',
-        ),
-         'className' => 'App\\Models\\Ticket',
-         'functionName' => 'getTotalMaterialCostAttribute',
-         'templatePhpDocNodes' => 
-        array (
-        ),
-         'parent' => NULL,
-         'typeAliasesMap' => 
-        array (
-        ),
-         'bypassTypeAliases' => false,
-         'constUses' => 
-        array (
-        ),
-         'typeAliasClassName' => NULL,
-         'traitData' => NULL,
-      )),
-      'c29101080524915dc49e5fe3cd4e95a9' => 
-      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
-         'namespace' => 'App\\Models',
-         'uses' => 
-        array (
-          'auditable' => 'App\\Traits\\Auditable',
-          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-          'model' => 'Illuminate\\Database\\Eloquent\\Model',
-          'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-          'collection' => 'Illuminate\\Support\\Collection',
-          'cache' => 'Illuminate\\Support\\Facades\\Cache',
-        ),
-         'className' => 'App\\Models\\Ticket',
-         'functionName' => 'getTotalLaborCostAttribute',
-         'templatePhpDocNodes' => 
-        array (
-        ),
-         'parent' => NULL,
-         'typeAliasesMap' => 
-        array (
-        ),
-         'bypassTypeAliases' => false,
-         'constUses' => 
-        array (
-        ),
-         'typeAliasClassName' => NULL,
-         'traitData' => NULL,
-      )),
-      '3627e56e5214adedac9f0265a0599cd3' => 
-      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
-         'namespace' => 'App\\Models',
-         'uses' => 
-        array (
-          'auditable' => 'App\\Traits\\Auditable',
-          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-          'model' => 'Illuminate\\Database\\Eloquent\\Model',
-          'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-          'collection' => 'Illuminate\\Support\\Collection',
-          'cache' => 'Illuminate\\Support\\Facades\\Cache',
-        ),
-         'className' => 'App\\Models\\Ticket',
-         'functionName' => 'getBudgetTotalAttribute',
-         'templatePhpDocNodes' => 
-        array (
-        ),
-         'parent' => NULL,
-         'typeAliasesMap' => 
-        array (
-        ),
-         'bypassTypeAliases' => false,
-         'constUses' => 
-        array (
-        ),
-         'typeAliasClassName' => NULL,
-         'traitData' => NULL,
-      )),
-      '2c23ede769748977e48fe4a2dfaf7252' => 
-      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
-         'namespace' => 'App\\Models',
-         'uses' => 
-        array (
-          'auditable' => 'App\\Traits\\Auditable',
-          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-          'model' => 'Illuminate\\Database\\Eloquent\\Model',
-          'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-          'collection' => 'Illuminate\\Support\\Collection',
-          'cache' => 'Illuminate\\Support\\Facades\\Cache',
-        ),
-         'className' => 'App\\Models\\Ticket',
-         'functionName' => 'getBudgetBreakdownAttribute',
-         'templatePhpDocNodes' => 
-        array (
-        ),
-         'parent' => NULL,
-         'typeAliasesMap' => 
-        array (
-        ),
-         'bypassTypeAliases' => false,
-         'constUses' => 
-        array (
-        ),
-         'typeAliasClassName' => NULL,
-         'traitData' => NULL,
-      )),
-      '7442d07045b4f10502923a6c23741308' => 
-      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
-         'namespace' => 'App\\Models',
-         'uses' => 
-        array (
-          'auditable' => 'App\\Traits\\Auditable',
-          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-          'model' => 'Illuminate\\Database\\Eloquent\\Model',
-          'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-          'collection' => 'Illuminate\\Support\\Collection',
-          'cache' => 'Illuminate\\Support\\Facades\\Cache',
-        ),
-         'className' => 'App\\Models\\Ticket',
-         'functionName' => 'calculateBudgetTotalByType',
-         'templatePhpDocNodes' => 
-        array (
-        ),
-         'parent' => NULL,
-         'typeAliasesMap' => 
-        array (
-        ),
-         'bypassTypeAliases' => false,
-         'constUses' => 
-        array (
-        ),
-         'typeAliasClassName' => NULL,
-         'traitData' => NULL,
-      )),
-      '06642944d4a72a97e33e3f3d0c50683c' => 
-      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
-         'namespace' => 'App\\Models',
-         'uses' => 
-        array (
-          'auditable' => 'App\\Traits\\Auditable',
-          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-          'model' => 'Illuminate\\Database\\Eloquent\\Model',
-          'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-          'collection' => 'Illuminate\\Support\\Collection',
-          'cache' => 'Illuminate\\Support\\Facades\\Cache',
-        ),
-         'className' => 'App\\Models\\Ticket',
-         'functionName' => 'getStatusIdByName',
-         'templatePhpDocNodes' => 
-        array (
-        ),
-         'parent' => NULL,
-         'typeAliasesMap' => 
-        array (
-        ),
-         'bypassTypeAliases' => false,
-         'constUses' => 
-        array (
-        ),
-         'typeAliasClassName' => NULL,
-         'traitData' => NULL,
-      )),
-      '01a9c69bce6a6bec1aacdf1e86791adc' => 
-      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
-         'namespace' => 'App\\Models',
-         'uses' => 
-        array (
-          'auditable' => 'App\\Traits\\Auditable',
-          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-          'model' => 'Illuminate\\Database\\Eloquent\\Model',
-          'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-          'collection' => 'Illuminate\\Support\\Collection',
-          'cache' => 'Illuminate\\Support\\Facades\\Cache',
-        ),
-         'className' => 'App\\Models\\Ticket',
-         'functionName' => 'flushStatusCache',
          'templatePhpDocNodes' => 
         array (
         ),
@@ -2119,14 +1837,18 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
+          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
+          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
+          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
+          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
+          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'auditable' => 'App\\Traits\\Auditable',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'model' => 'Illuminate\\Database\\Eloquent\\Model',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-          'collection' => 'Illuminate\\Support\\Collection',
-          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => 'hasStatus',
@@ -2144,22 +1866,26 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'typeAliasClassName' => NULL,
          'traitData' => NULL,
       )),
-      '31b753309285317fe9875ddd421f4060' => 
+      '2a09408e13901b728b40826c3ce4c739' => 
       \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
+          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
+          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
+          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
+          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
+          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'auditable' => 'App\\Traits\\Auditable',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'model' => 'Illuminate\\Database\\Eloquent\\Model',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-          'collection' => 'Illuminate\\Support\\Collection',
-          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
-         'functionName' => 'getLeastBusyTechnician',
+         'functionName' => 'scopeOpen',
          'templatePhpDocNodes' => 
         array (
         ),
@@ -2174,22 +1900,196 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'typeAliasClassName' => NULL,
          'traitData' => NULL,
       )),
-      '285df6d42dac469ab9976afc66b5d075' => 
+      '0b013a221980087a0b6bb3ddcf73dc4a' => 
       \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
+          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
+          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
+          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
+          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
+          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'auditable' => 'App\\Traits\\Auditable',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'model' => 'Illuminate\\Database\\Eloquent\\Model',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-          'collection' => 'Illuminate\\Support\\Collection',
-          'cache' => 'Illuminate\\Support\\Facades\\Cache',
         ),
          'className' => 'App\\Models\\Ticket',
-         'functionName' => 'getScheduledEvents',
+         'functionName' => 'scopeInProgress',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => NULL,
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => NULL,
+         'traitData' => NULL,
+      )),
+      '36def27ef25a6e6f19985333947ef9ee' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'App\\Models',
+         'uses' => 
+        array (
+          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
+          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
+          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
+          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
+          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
+          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
+          'auditable' => 'App\\Traits\\Auditable',
+          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+          'model' => 'Illuminate\\Database\\Eloquent\\Model',
+          'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
+          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+        ),
+         'className' => 'App\\Models\\Ticket',
+         'functionName' => 'scopeClosed',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => NULL,
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => NULL,
+         'traitData' => NULL,
+      )),
+      '47eba212961cf12d01b65a740c0c81da' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'App\\Models',
+         'uses' => 
+        array (
+          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
+          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
+          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
+          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
+          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
+          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
+          'auditable' => 'App\\Traits\\Auditable',
+          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+          'model' => 'Illuminate\\Database\\Eloquent\\Model',
+          'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
+          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+        ),
+         'className' => 'App\\Models\\Ticket',
+         'functionName' => 'scopeScheduled',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => NULL,
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => NULL,
+         'traitData' => NULL,
+      )),
+      'ae78cc8cf98f1d5af9e97fbc47527585' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'App\\Models',
+         'uses' => 
+        array (
+          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
+          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
+          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
+          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
+          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
+          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
+          'auditable' => 'App\\Traits\\Auditable',
+          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+          'model' => 'Illuminate\\Database\\Eloquent\\Model',
+          'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
+          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+        ),
+         'className' => 'App\\Models\\Ticket',
+         'functionName' => 'scopeByPriority',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => NULL,
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => NULL,
+         'traitData' => NULL,
+      )),
+      '8c4350a6525d842212cf4d37c35fc7a3' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'App\\Models',
+         'uses' => 
+        array (
+          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
+          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
+          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
+          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
+          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
+          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
+          'auditable' => 'App\\Traits\\Auditable',
+          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+          'model' => 'Illuminate\\Database\\Eloquent\\Model',
+          'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
+          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+        ),
+         'className' => 'App\\Models\\Ticket',
+         'functionName' => 'scopeForTechnician',
+         'templatePhpDocNodes' => 
+        array (
+        ),
+         'parent' => NULL,
+         'typeAliasesMap' => 
+        array (
+        ),
+         'bypassTypeAliases' => false,
+         'constUses' => 
+        array (
+        ),
+         'typeAliasClassName' => NULL,
+         'traitData' => NULL,
+      )),
+      '5590fb53bd30834b986fb3bef8061308' => 
+      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
+         'namespace' => 'App\\Models',
+         'uses' => 
+        array (
+          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
+          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
+          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
+          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
+          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
+          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
+          'auditable' => 'App\\Traits\\Auditable',
+          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
+          'model' => 'Illuminate\\Database\\Eloquent\\Model',
+          'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
+          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
+          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+        ),
+         'className' => 'App\\Models\\Ticket',
+         'functionName' => 'getBudgetPauseMinutesAttribute',
          'templatePhpDocNodes' => 
         array (
         ),
@@ -2207,7 +2107,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php' => 'f2eb03c0b44d7544ece896ead2e85a8a2af27fc720e2032c026abde35ed3212a',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php' => 'e1e2827768bf7de5a795c518b0c6ac32065f08d1846c1dd44a1e257d3916bd90',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Traits\\Auditable.php' => 'd0ace2e3521260e41816d729666bef984d68ef27b6d70bb5c403e35e954a5071',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Factories\\HasFactory.php' => 'b6cb2b164e90168e80963a5549541f5f3188a3ec8cfd368bf3611bd94fbd46a7',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\SoftDeletes.php' => 'da1b0c13d78ba2f62e97e5627c3149f4e81b9cf9b6092d4ca7f02ca5e5bbcfec',

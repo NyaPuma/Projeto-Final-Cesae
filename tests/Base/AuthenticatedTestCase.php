@@ -4,13 +4,14 @@ namespace Tests\Base;
 
 use App\Models\User;
 use App\Models\UserProfile;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 abstract class AuthenticatedTestCase extends BaseTestCase
 {
-    use \Illuminate\Foundation\Testing\RefreshDatabase;
+    use RefreshDatabase;
 
     protected User $currentUser;
 

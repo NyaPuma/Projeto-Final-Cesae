@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Enums\TicketPriorityEnum;
 use App\Models\Room;
 use App\Models\Ticket;
 use App\Models\User;
@@ -38,13 +39,12 @@ class ValidationEdgeCaseTest extends TestCase
     public function test_ticket_title_with_special_characters(): void
     {
         $user = $this->createUserWithToken(User::ROLE_USER);
-        $openId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/tickets', [
                 'title' => 'Teste com acentos: çãõéíóú & símbolos: @#$% 123',
                 'description' => 'Descrição com caracteres especiais: áéíóúçñ',
-                'priority' => Ticket::PRIORITY_MEDIUM,
+                'priority' => TicketPriorityEnum::Medium->value,
             ]);
 
         $response->assertStatus(201);
@@ -61,7 +61,7 @@ class ValidationEdgeCaseTest extends TestCase
             ->postJson('/tickets', [
                 'title' => str_repeat('A', 256),
                 'description' => 'Valid description',
-                'priority' => Ticket::PRIORITY_LOW,
+                'priority' => TicketPriorityEnum::Low->value,
             ]);
 
         $response->assertStatus(422);
@@ -70,14 +70,13 @@ class ValidationEdgeCaseTest extends TestCase
     public function test_ticket_title_exactly_255_characters(): void
     {
         $user = $this->createUserWithToken(User::ROLE_USER);
-        $openId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
 
         $title = str_repeat('A', 255);
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/tickets', [
                 'title' => $title,
                 'description' => 'Valid description at boundary',
-                'priority' => Ticket::PRIORITY_MEDIUM,
+                'priority' => TicketPriorityEnum::Medium->value,
             ]);
 
         $response->assertStatus(201);
@@ -92,7 +91,7 @@ class ValidationEdgeCaseTest extends TestCase
             ->postJson('/tickets', [
                 'title' => 'Ticket with empty description',
                 'description' => '',
-                'priority' => Ticket::PRIORITY_LOW,
+                'priority' => TicketPriorityEnum::Low->value,
             ]);
 
         $response->assertStatus(422);
@@ -144,7 +143,7 @@ class ValidationEdgeCaseTest extends TestCase
             ->postJson('/tickets', [
                 'title' => 'Ticket with invalid room',
                 'description' => 'Testing invalid room reference',
-                'priority' => Ticket::PRIORITY_MEDIUM,
+                'priority' => TicketPriorityEnum::Medium->value,
                 'room_id' => 99999,
             ]);
 
@@ -154,13 +153,12 @@ class ValidationEdgeCaseTest extends TestCase
     public function test_unicode_ticket_title_and_description(): void
     {
         $user = $this->createUserWithToken(User::ROLE_USER);
-        $openId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/tickets', [
                 'title' => '🌍 Teste Unicode: 你好世界 Olá Mundo 🎉',
                 'description' => 'Emoji test: 🔧⚙️🛠️ and Japanese: メンテナンス',
-                'priority' => Ticket::PRIORITY_HIGH,
+                'priority' => TicketPriorityEnum::High->value,
             ]);
 
         $response->assertStatus(201);
@@ -172,7 +170,6 @@ class ValidationEdgeCaseTest extends TestCase
     public function test_sql_injection_variants_in_fields(): void
     {
         $user = $this->createUserWithToken(User::ROLE_USER);
-        $openId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
 
         $payloads = [
             '1; DROP TABLE tickets; --',
@@ -187,7 +184,7 @@ class ValidationEdgeCaseTest extends TestCase
                 ->postJson('/tickets', [
                     'title' => 'SQLi test: '.substr($payload, 0, 50),
                     'description' => $payload,
-                    'priority' => Ticket::PRIORITY_MEDIUM,
+                    'priority' => TicketPriorityEnum::Medium->value,
                 ]);
 
             $response->assertStatus(201);

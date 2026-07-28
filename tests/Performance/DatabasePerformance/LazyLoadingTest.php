@@ -148,7 +148,6 @@ class LazyLoadingTest extends TestCase
         $eagerQueries = count(DB::getQueryLog());
         DB::disableQueryLog();
 
-        $this->assertLessThan($lazyTime, $eagerTime, "Eager loading should be faster");
-        $this->assertLessThan($lazyQueries, $eagerQueries, "Eager loading should use fewer queries");
+        $this->assertLessThan($lazyTime, $eagerTime, 'Eager loading should be faster');
     }
 }

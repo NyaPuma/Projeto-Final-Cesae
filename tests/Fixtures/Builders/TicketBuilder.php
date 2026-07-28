@@ -5,7 +5,6 @@ namespace Tests\Fixtures\Builders;
 use App\Models\Equipment;
 use App\Models\Room;
 use App\Models\Ticket;
-use App\Models\TicketStatus;
 use App\Models\User;
 
 class TicketBuilder
@@ -25,7 +24,7 @@ class TicketBuilder
 
     public static function new(): self
     {
-        return new self();
+        return new self;
     }
 
     public function withTitle(string $title): self

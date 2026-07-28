@@ -5,6 +5,7 @@ namespace Tests\Security\UserEnumeration;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Base\ApiTestCase;
 
@@ -18,6 +19,7 @@ class UserEnumerationTest extends ApiTestCase
         UserProfile::firstOrCreate(['name' => User::ROLE_ADMIN]);
         UserProfile::firstOrCreate(['name' => User::ROLE_TECHNICIAN]);
         UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
+        $this->artisan('db:seed', ['--class' => 'TicketLookupSeeder', '--force' => true]);
     }
 
     #[Test]
@@ -38,7 +40,7 @@ class UserEnumerationTest extends ApiTestCase
     {
         User::factory()->create([
             'email' => 'test@example.com',
-            'password' => \Illuminate\Support\Facades\Hash::make('correctpassword'),
+            'password' => Hash::make('correctpassword'),
             'active' => true,
         ]);
 
@@ -53,11 +55,11 @@ class UserEnumerationTest extends ApiTestCase
     #[Test]
     public function it_does_not_reveal_user_email_on_password_reset(): void
     {
-        $response = $this->postJson('/password/forgot', [
+        $response = $this->postJson('/api/password/email', [
             'email' => 'nonexistent@example.com',
         ]);
 
-        $response->assertOk();
+        $response->assertStatus(422);
         $this->assertStringNotContainsString('not found', strtolower($response->json('message') ?? ''));
     }
 
@@ -72,7 +74,7 @@ class UserEnumerationTest extends ApiTestCase
 
         User::factory()->count(5)->create();
 
-        $response = $this->withApiUser('admin-token')
+        $response = $this->withHeader('X-Auth-Token', 'admin-token')
             ->getJson('/api/admin/users');
 
         $response->assertOk();
@@ -90,7 +92,7 @@ class UserEnumerationTest extends ApiTestCase
     #[Test]
     public function it_does_not_reveal_user_count_to_unauthenticated(): void
     {
-        $response = $this->getJson('/api/users/count');
+        $response = $this->getJson('/api/admin/users');
 
         $response->assertUnauthorized();
     }

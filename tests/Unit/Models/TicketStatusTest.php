@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+use App\Enums\TicketPriorityEnum;
+use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use App\Models\TicketStatus;
 use App\Models\TicketType;
@@ -32,13 +34,13 @@ class TicketStatusTest extends TestCase
         ]);
 
         $status = TicketStatus::create([
-            'name' => Ticket::STATUS_OPEN,
+            'name' => TicketStatusEnum::Open->value,
             'description' => 'Ticket aberto aguardando atribuição',
             'type_id' => $type->id,
         ]);
 
         $this->assertNotNull($status->id);
-        $this->assertEquals(Ticket::STATUS_OPEN, $status->name);
+        $this->assertEquals(TicketStatusEnum::Open->value, $status->name);
         $this->assertEquals($type->id, $status->type_id);
     }
 
@@ -51,7 +53,7 @@ class TicketStatusTest extends TestCase
         ]);
 
         $status = TicketStatus::create([
-            'name' => Ticket::STATUS_IN_PROGRESS,
+            'name' => TicketStatusEnum::InProgress->value,
             'description' => 'Em execução',
             'type_id' => $type->id,
         ]);
@@ -65,7 +67,7 @@ class TicketStatusTest extends TestCase
     {
         $type = TicketType::create(['name' => 'avaria', 'description' => 'Avaria']);
         $status = TicketStatus::create([
-            'name' => Ticket::STATUS_OPEN,
+            'name' => TicketStatusEnum::Open->value,
             'description' => 'Aberto',
             'type_id' => $type->id,
         ]);
@@ -74,7 +76,7 @@ class TicketStatusTest extends TestCase
         Ticket::create([
             'title' => 'Ticket 1',
             'description' => 'First ticket',
-            'priority' => Ticket::PRIORITY_MEDIUM,
+            'priority' => TicketPriorityEnum::Medium->value,
             'user_id' => $user->id,
             'status_id' => $status->id,
             'opened_at' => now(),
@@ -83,7 +85,7 @@ class TicketStatusTest extends TestCase
         Ticket::create([
             'title' => 'Ticket 2',
             'description' => 'Second ticket',
-            'priority' => Ticket::PRIORITY_HIGH,
+            'priority' => TicketPriorityEnum::High->value,
             'user_id' => $user->id,
             'status_id' => $status->id,
             'opened_at' => now(),
@@ -110,14 +112,14 @@ class TicketStatusTest extends TestCase
         $type = TicketType::create(['name' => 'avaria', 'description' => 'Avaria']);
 
         TicketStatus::create([
-            'name' => Ticket::STATUS_OPEN,
+            'name' => TicketStatusEnum::Open->value,
             'description' => 'First open status',
             'type_id' => $type->id,
         ]);
 
         $this->expectException(QueryException::class);
         TicketStatus::create([
-            'name' => Ticket::STATUS_OPEN,
+            'name' => TicketStatusEnum::Open->value,
             'description' => 'Duplicate open status',
             'type_id' => $type->id,
         ]);

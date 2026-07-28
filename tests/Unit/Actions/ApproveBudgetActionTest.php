@@ -5,19 +5,18 @@ namespace Tests\Unit\Actions;
 use App\Actions\ApproveBudgetAction;
 use App\DTOs\BudgetDecisionData;
 use App\Enums\BudgetStatusEnum;
-use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
+use App\Models\TicketStatus;
 use App\Models\User;
 use App\Models\UserProfile;
 use App\Services\NotificationService;
 use App\Services\TicketStatusService;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Tests\Base\DatabaseTestCase;
 
 class ApproveBudgetActionTest extends DatabaseTestCase
 {
-
     private ApproveBudgetAction $action;
 
     private NotificationService $notificationService;
@@ -50,19 +49,19 @@ class ApproveBudgetActionTest extends DatabaseTestCase
     private function seedTicketStatuses(): void
     {
         // Seed ticket statuses manually
-        \App\Models\TicketStatus::firstOrCreate(['name' => 'aberta'], ['description' => 'Aberta']);
-        \App\Models\TicketStatus::firstOrCreate(['name' => 'em curso'], ['description' => 'Em Curso']);
-        \App\Models\TicketStatus::firstOrCreate(['name' => 'fechada'], ['description' => 'Fechada']);
-        \App\Models\TicketStatus::firstOrCreate(['name' => 'cancelada'], ['description' => 'Cancelada']);
-        \App\Models\TicketStatus::firstOrCreate(['name' => 'pendente orçamento'], ['description' => 'Pendente Orçamento']);
-        \App\Models\TicketStatus::firstOrCreate(['name' => 'recusada'], ['description' => 'Recusada']);
+        TicketStatus::firstOrCreate(['name' => 'aberta'], ['description' => 'Aberta']);
+        TicketStatus::firstOrCreate(['name' => 'em curso'], ['description' => 'Em Curso']);
+        TicketStatus::firstOrCreate(['name' => 'fechada'], ['description' => 'Fechada']);
+        TicketStatus::firstOrCreate(['name' => 'cancelada'], ['description' => 'Cancelada']);
+        TicketStatus::firstOrCreate(['name' => 'pendente orçamento'], ['description' => 'Pendente Orçamento']);
+        TicketStatus::firstOrCreate(['name' => 'recusada'], ['description' => 'Recusada']);
     }
 
     #[Test]
     public function it_approves_budget_successfully(): void
     {
         $admin = User::factory()->create(['profile_id' => UserProfile::where('name', User::ROLE_ADMIN)->first()->id]);
-        $statusId = \App\Models\TicketStatus::where('name', 'pendente orçamento')->first()->id;
+        $statusId = TicketStatus::where('name', 'pendente orçamento')->first()->id;
         $ticket = Ticket::factory()->create([
             'budget_requested' => true,
             'budget_status' => BudgetStatusEnum::Pending->value,
@@ -83,7 +82,7 @@ class ApproveBudgetActionTest extends DatabaseTestCase
     public function it_rejects_budget_with_feedback(): void
     {
         $admin = User::factory()->create(['profile_id' => UserProfile::where('name', User::ROLE_ADMIN)->first()->id]);
-        $statusId = \App\Models\TicketStatus::where('name', 'pendente orçamento')->first()->id;
+        $statusId = TicketStatus::where('name', 'pendente orçamento')->first()->id;
         $ticket = Ticket::factory()->create([
             'budget_requested' => true,
             'budget_status' => BudgetStatusEnum::Pending->value,
@@ -104,7 +103,7 @@ class ApproveBudgetActionTest extends DatabaseTestCase
     public function it_fails_when_budget_not_requested(): void
     {
         $admin = User::factory()->create(['profile_id' => UserProfile::where('name', User::ROLE_ADMIN)->first()->id]);
-        $statusId = \App\Models\TicketStatus::where('name', 'aberta')->first()->id;
+        $statusId = TicketStatus::where('name', 'aberta')->first()->id;
         $ticket = Ticket::factory()->create([
             'budget_requested' => false,
             'budget_status' => BudgetStatusEnum::Pending->value,
@@ -113,17 +112,19 @@ class ApproveBudgetActionTest extends DatabaseTestCase
 
         $data = new BudgetDecisionData(decision: 'approve');
 
-        $this->expectException(\Symfony\Component\HttpKernel\Exception\HttpException::class);
-        $this->expectExceptionCode(422);
-
-        $this->action->execute($ticket, $admin, $data);
+        try {
+            $this->action->execute($ticket, $admin, $data);
+            $this->fail('Expected HttpException was not thrown');
+        } catch (HttpException $e) {
+            $this->assertEquals(422, $e->getStatusCode());
+        }
     }
 
     #[Test]
     public function it_fails_when_budget_status_not_pending(): void
     {
         $admin = User::factory()->create(['profile_id' => UserProfile::where('name', User::ROLE_ADMIN)->first()->id]);
-        $statusId = \App\Models\TicketStatus::where('name', 'aberta')->first()->id;
+        $statusId = TicketStatus::where('name', 'aberta')->first()->id;
         $ticket = Ticket::factory()->create([
             'budget_requested' => true,
             'budget_status' => BudgetStatusEnum::Approved->value,
@@ -132,9 +133,11 @@ class ApproveBudgetActionTest extends DatabaseTestCase
 
         $data = new BudgetDecisionData(decision: 'approve');
 
-        $this->expectException(\Symfony\Component\HttpKernel\Exception\HttpException::class);
-        $this->expectExceptionCode(422);
-
-        $this->action->execute($ticket, $admin, $data);
+        try {
+            $this->action->execute($ticket, $admin, $data);
+            $this->fail('Expected HttpException was not thrown');
+        } catch (HttpException $e) {
+            $this->assertEquals(422, $e->getStatusCode());
+        }
     }
 }

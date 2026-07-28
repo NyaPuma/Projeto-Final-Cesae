@@ -2,12 +2,12 @@
 
 namespace Tests\Base;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use Illuminate\Testing\Fluent\AssertableJson;
 
 abstract class ApiTestCase extends BaseTestCase
 {
-    use \Illuminate\Foundation\Testing\RefreshDatabase;
+    use RefreshDatabase;
 
     protected function setUp(): void
     {

@@ -2,12 +2,13 @@
 
 namespace Tests\Base;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 
 abstract class DatabaseTestCase extends BaseTestCase
 {
-    use \Illuminate\Foundation\Testing\RefreshDatabase;
+    use RefreshDatabase;
     use WithFaker;
 
     protected function setUp(): void

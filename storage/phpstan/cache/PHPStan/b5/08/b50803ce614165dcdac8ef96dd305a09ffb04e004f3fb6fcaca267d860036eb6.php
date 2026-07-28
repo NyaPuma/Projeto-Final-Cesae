@@ -12,6 +12,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'userroleenum' => 'App\\Enums\\UserRoleEnum',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -1598,6 +1599,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'userroleenum' => 'App\\Enums\\UserRoleEnum',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -1615,6 +1617,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
            'namespace' => 'App\\Models',
            'uses' => 
           array (
+            'userroleenum' => 'App\\Enums\\UserRoleEnum',
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -1653,6 +1656,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'userroleenum' => 'App\\Enums\\UserRoleEnum',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -1670,6 +1674,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
            'namespace' => 'App\\Models',
            'uses' => 
           array (
+            'userroleenum' => 'App\\Enums\\UserRoleEnum',
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -1708,6 +1713,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'userroleenum' => 'App\\Enums\\UserRoleEnum',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -1725,6 +1731,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
            'namespace' => 'App\\Models',
            'uses' => 
           array (
+            'userroleenum' => 'App\\Enums\\UserRoleEnum',
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -1763,6 +1770,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'userroleenum' => 'App\\Enums\\UserRoleEnum',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -1780,6 +1788,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
            'namespace' => 'App\\Models',
            'uses' => 
           array (
+            'userroleenum' => 'App\\Enums\\UserRoleEnum',
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -1818,6 +1827,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'userroleenum' => 'App\\Enums\\UserRoleEnum',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -1835,6 +1845,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
            'namespace' => 'App\\Models',
            'uses' => 
           array (
+            'userroleenum' => 'App\\Enums\\UserRoleEnum',
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -1873,6 +1884,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'userroleenum' => 'App\\Enums\\UserRoleEnum',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -1890,6 +1902,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
            'namespace' => 'App\\Models',
            'uses' => 
           array (
+            'userroleenum' => 'App\\Enums\\UserRoleEnum',
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -1928,6 +1941,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'userroleenum' => 'App\\Enums\\UserRoleEnum',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -1945,6 +1959,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
            'namespace' => 'App\\Models',
            'uses' => 
           array (
+            'userroleenum' => 'App\\Enums\\UserRoleEnum',
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -1983,6 +1998,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'userroleenum' => 'App\\Enums\\UserRoleEnum',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -2000,6 +2016,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
            'namespace' => 'App\\Models',
            'uses' => 
           array (
+            'userroleenum' => 'App\\Enums\\UserRoleEnum',
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -2038,6 +2055,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'userroleenum' => 'App\\Enums\\UserRoleEnum',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -2055,6 +2073,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
            'namespace' => 'App\\Models',
            'uses' => 
           array (
+            'userroleenum' => 'App\\Enums\\UserRoleEnum',
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -2093,6 +2112,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'userroleenum' => 'App\\Enums\\UserRoleEnum',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -2110,6 +2130,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
            'namespace' => 'App\\Models',
            'uses' => 
           array (
+            'userroleenum' => 'App\\Enums\\UserRoleEnum',
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -2148,6 +2169,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'userroleenum' => 'App\\Enums\\UserRoleEnum',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -2165,6 +2187,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
            'namespace' => 'App\\Models',
            'uses' => 
           array (
+            'userroleenum' => 'App\\Enums\\UserRoleEnum',
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -2203,6 +2226,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
+          'userroleenum' => 'App\\Enums\\UserRoleEnum',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
           'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -2220,6 +2244,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
            'namespace' => 'App\\Models',
            'uses' => 
           array (
+            'userroleenum' => 'App\\Enums\\UserRoleEnum',
             'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
             'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
             'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
@@ -2256,7 +2281,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php' => '9616a7eea7cbf51e4829821e20c730aee9970056992fe22b279d18315dd19c0c',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php' => '2ed5ec960cc5642b9dc200191315accabcb887525ab1248f98595914e879613d',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Factories\\HasFactory.php' => 'b6cb2b164e90168e80963a5549541f5f3188a3ec8cfd368bf3611bd94fbd46a7',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Notifications\\Notifiable.php' => '573fa9bb96fa392434450c9cd9deb8d4e40a5bb93c140a648267b48dfa0433ac',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Notifications\\HasDatabaseNotifications.php' => 'a7a163aa1f98a0ae4cd2135905b6852e29a850beb4296aa72c44c37d22832135',

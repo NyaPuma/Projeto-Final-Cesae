@@ -7,13 +7,16 @@ use App\Models\User;
 use App\Models\UserProfile;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Base\FeatureTestCase;
+use Tests\Concerns\InteractsWithApi;
 
 class MassAssignmentProtectionTest extends FeatureTestCase
 {
+    use InteractsWithApi;
+
     #[Test]
     public function it_prevents_mass_assignment_of_id(): void
     {
-        $user = $this->createCommonUser();
+        $user = $this->createRegularUser();
         $this->asUserWithToken($user);
 
         $response = $this->postJson('/tickets', [

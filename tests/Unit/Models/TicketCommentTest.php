@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+use App\Enums\TicketPriorityEnum;
+use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use App\Models\TicketComment;
 use App\Models\TicketStatus;
@@ -22,7 +24,7 @@ class TicketCommentTest extends TestCase
 
         TicketType::firstOrCreate(['name' => 'avaria', 'description' => 'Avaria']);
         $typeId = TicketType::where('name', 'avaria')->first()->id;
-        TicketStatus::firstOrCreate(['name' => Ticket::STATUS_OPEN, 'description' => 'Aberto', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Open->value, 'description' => 'Aberto', 'type_id' => $typeId]);
         UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
     }
 
@@ -30,11 +32,11 @@ class TicketCommentTest extends TestCase
     public function it_creates_comment_with_valid_data(): void
     {
         $user = User::factory()->create();
-        $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openStatusId = TicketStatus::where('name', TicketStatusEnum::Open->value)->value('id');
         $ticket = Ticket::create([
             'title' => 'Comment Test Ticket',
             'description' => 'Ticket for comments',
-            'priority' => Ticket::PRIORITY_MEDIUM,
+            'priority' => TicketPriorityEnum::Medium->value,
             'user_id' => $user->id,
             'status_id' => $openStatusId,
             'opened_at' => now(),
@@ -56,11 +58,11 @@ class TicketCommentTest extends TestCase
     public function it_belongs_to_a_ticket(): void
     {
         $user = User::factory()->create();
-        $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openStatusId = TicketStatus::where('name', TicketStatusEnum::Open->value)->value('id');
         $ticket = Ticket::create([
             'title' => 'Relation Ticket',
             'description' => 'Testing relations',
-            'priority' => Ticket::PRIORITY_LOW,
+            'priority' => TicketPriorityEnum::Low->value,
             'user_id' => $user->id,
             'status_id' => $openStatusId,
             'opened_at' => now(),
@@ -80,11 +82,11 @@ class TicketCommentTest extends TestCase
     public function it_belongs_to_a_user(): void
     {
         $user = User::factory()->create();
-        $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openStatusId = TicketStatus::where('name', TicketStatusEnum::Open->value)->value('id');
         $ticket = Ticket::create([
             'title' => 'User Relation',
             'description' => 'Testing user relation',
-            'priority' => Ticket::PRIORITY_HIGH,
+            'priority' => TicketPriorityEnum::High->value,
             'user_id' => $user->id,
             'status_id' => $openStatusId,
             'opened_at' => now(),
@@ -115,11 +117,11 @@ class TicketCommentTest extends TestCase
     public function it_can_create_multiple_comments_per_ticket(): void
     {
         $user = User::factory()->create();
-        $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openStatusId = TicketStatus::where('name', TicketStatusEnum::Open->value)->value('id');
         $ticket = Ticket::create([
             'title' => 'Multiple Comments',
             'description' => 'Testing multiple comments',
-            'priority' => Ticket::PRIORITY_MEDIUM,
+            'priority' => TicketPriorityEnum::Medium->value,
             'user_id' => $user->id,
             'status_id' => $openStatusId,
             'opened_at' => now(),

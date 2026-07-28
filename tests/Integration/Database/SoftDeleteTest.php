@@ -7,13 +7,16 @@ use App\Models\Room;
 use App\Models\Ticket;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Base\FeatureTestCase;
+use Tests\Concerns\InteractsWithApi;
 
 class SoftDeleteTest extends FeatureTestCase
 {
+    use InteractsWithApi;
+
     #[Test]
     public function it_soft_deletes_ticket_preserving_record(): void
     {
-        $user = $this->createCommonUser();
+        $user = $this->createRegularUser();
         $this->asUserWithToken($user);
 
         $response = $this->postJson('/tickets', [

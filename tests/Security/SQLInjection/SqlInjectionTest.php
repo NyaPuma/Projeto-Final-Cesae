@@ -4,8 +4,6 @@ namespace Tests\Security\SQLInjection;
 
 use App\Models\Ticket;
 use App\Models\User;
-use App\Models\UserProfile;
-use Illuminate\Support\Str;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Base\FeatureTestCase;
 
@@ -14,10 +12,7 @@ class SqlInjectionTest extends FeatureTestCase
     #[Test]
     public function it_escapes_sql_injection_in_search_query(): void
     {
-        $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_ADMIN)->value('id'),
-            'api_token' => Str::random(60),
-        ]);
+        $user = $this->createAdmin();
         Ticket::factory()->create(['title' => 'Bomba 1']);
 
         $maliciousQuery = "' OR '1'='1";
@@ -35,11 +30,7 @@ class SqlInjectionTest extends FeatureTestCase
     #[Test]
     public function it_handles_xss_payload_in_ticket_description(): void
     {
-        $userProfile = UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
-        $operator = User::factory()->create([
-            'profile_id' => $userProfile->id,
-            'api_token' => Str::random(60),
-        ]);
+        $operator = $this->createRegularUser();
 
         $xssPayload = "<script>alert('XSS')</script>Avaria no motor";
 

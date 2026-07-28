@@ -2,6 +2,7 @@
 
 namespace Tests\Performance;
 
+use App\Enums\TicketPriorityEnum;
 use App\Models\Equipment;
 use App\Models\EquipmentCategory;
 use App\Models\Room;
@@ -147,7 +148,7 @@ abstract class PerformanceTestCase extends TestCase
         $userIds = [$this->admin->id, $this->technician->id, $this->commonUser->id];
         $equipmentIds = Equipment::pluck('id')->toArray();
         $roomIds = Room::pluck('id')->toArray();
-        $priorities = [Ticket::PRIORITY_LOW, Ticket::PRIORITY_MEDIUM, Ticket::PRIORITY_HIGH];
+        $priorities = [TicketPriorityEnum::Low->value, TicketPriorityEnum::Medium->value, TicketPriorityEnum::High->value];
 
         $tickets = [];
 

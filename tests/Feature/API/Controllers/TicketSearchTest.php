@@ -2,7 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Enums\TicketPriorityEnum;
+use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
+use App\Models\TicketStatus;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -36,13 +39,13 @@ class TicketSearchTest extends TestCase
             'user_id' => $technician->id,
             'title' => 'Motor compressor overheating',
             'description' => 'Issue on the main compressor motor.',
-            'priority' => Ticket::PRIORITY_HIGH,
-            'status_id' => Ticket::getStatusIdByName(Ticket::STATUS_OPEN),
+            'priority' => TicketPriorityEnum::High->value,
+            'status_id' => TicketStatus::where('name', TicketStatusEnum::Open->value)->value('id'),
             'opened_at' => now()->subDays(2),
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
-            ->getJson('/tickets/search?q=compressor&priority='.Ticket::PRIORITY_HIGH.'&date_from='.now()->subDays(7)->toDateString());
+            ->getJson('/tickets/search?q=compressor&priority='.TicketPriorityEnum::High->value.'&date_from='.now()->subDays(7)->toDateString());
 
         // CORRIGIDO: O método search() foi implementado - retorna 200 com resultados
         $response->assertOk();

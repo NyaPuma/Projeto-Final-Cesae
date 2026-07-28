@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+use App\Enums\TicketPriorityEnum;
+use App\Enums\TicketStatusEnum;
 use App\Models\Equipment;
 use App\Models\EquipmentCategory;
 use App\Models\Room;
@@ -10,6 +12,7 @@ use App\Models\TicketStatus;
 use App\Models\TicketType;
 use App\Models\User;
 use App\Models\UserProfile;
+use App\Services\TicketStatusService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
@@ -25,7 +28,7 @@ class RoomTest extends TestCase
         // Seed lookup data
         TicketType::firstOrCreate(['name' => 'avaria', 'description' => 'Avaria']);
         $typeId = TicketType::where('name', 'avaria')->first()->id;
-        TicketStatus::firstOrCreate(['name' => Ticket::STATUS_OPEN, 'description' => 'Aberto', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Open->value, 'description' => 'Aberto', 'type_id' => $typeId]);
         UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
     }
 
@@ -76,12 +79,12 @@ class RoomTest extends TestCase
             'room_id' => $room->id,
         ]);
         $user = User::factory()->create();
-        $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openStatusId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         Ticket::create([
             'title' => 'Ticket Room 1',
             'description' => 'First room ticket',
-            'priority' => Ticket::PRIORITY_MEDIUM,
+            'priority' => TicketPriorityEnum::Medium->value,
             'user_id' => $user->id,
             'room_id' => $room->id,
             'equipment_id' => $equipment->id,
@@ -92,7 +95,7 @@ class RoomTest extends TestCase
         Ticket::create([
             'title' => 'Ticket Room 2',
             'description' => 'Second room ticket',
-            'priority' => Ticket::PRIORITY_HIGH,
+            'priority' => TicketPriorityEnum::High->value,
             'user_id' => $user->id,
             'room_id' => $room->id,
             'equipment_id' => $equipment->id,

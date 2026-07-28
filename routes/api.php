@@ -9,11 +9,15 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\Ticket\TicketAssignmentController;
+use App\Http\Controllers\Ticket\TicketCloseController;
+use App\Http\Controllers\Ticket\TicketLifecycleController;
+use App\Http\Controllers\Ticket\TicketScheduleController;
+use App\Http\Controllers\Ticket\TicketStartController;
 use App\Http\Controllers\TicketAttachmentController;
 use App\Http\Controllers\TicketBudgetController;
 use App\Http\Controllers\TicketCommentController;
 use App\Http\Controllers\TicketController;
-use App\Http\Controllers\TicketWorkflowController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -65,14 +69,15 @@ Route::middleware(['custom.auth'])->group(function () {
     Route::delete('/tickets/{id}/photos/{photoId}', [TicketAttachmentController::class, 'destroy'])->name('api.tickets.photos.destroy');
 
     // Workflow
-    Route::post('/tickets/{id}/reopen', [TicketWorkflowController::class, 'reopen'])->name('api.tickets.reopen');
-    Route::post('/tickets/{id}/cancel', [TicketWorkflowController::class, 'cancel'])->name('api.tickets.cancel');
-    Route::post('/tickets/{id}/schedule', [TicketWorkflowController::class, 'schedule'])->name('api.tickets.schedule');
+    Route::post('/tickets/{id}/reopen', [TicketLifecycleController::class, 'reopen'])->name('api.tickets.reopen');
+    Route::post('/tickets/{id}/cancel', [TicketLifecycleController::class, 'cancel'])->name('api.tickets.cancel');
+    Route::post('/tickets/{id}/schedule', TicketScheduleController::class)->name('api.tickets.schedule');
 
     // Técnico
     Route::middleware(['role:technician'])->group(function () {
-        Route::put('/technician/tickets/{id}/start', [TicketWorkflowController::class, 'start'])->name('api.technician.tickets.start');
-        Route::put('/technician/tickets/{id}/close', [TicketWorkflowController::class, 'close'])->name('api.technician.tickets.close');
+        Route::put('/technician/tickets/{id}/start', TicketStartController::class)->name('api.technician.tickets.start');
+        Route::put('/technician/tickets/{id}/close', [TicketCloseController::class, '__invoke'])->name('api.technician.tickets.close');
+        Route::put('/technician/tickets/{id}/close-final', [TicketCloseController::class, 'closeFinal'])->name('api.technician.tickets.close-final');
         Route::put('/technician/tickets/{id}/request-budget', [TicketBudgetController::class, 'requestAuthorization'])->name('api.technician.tickets.request-budget');
     });
 
@@ -103,7 +108,7 @@ Route::middleware(['custom.auth'])->group(function () {
         // Orçamento e Manutenção Preventiva
         Route::post('/admin/preventive', [AdminController::class, 'storePreventive'])->name('api.admin.preventive.store');
         Route::patch('/admin/tickets/{id}/approve-budget', [AdminController::class, 'approveBudget'])->name('api.admin.tickets.approve-budget');
-        Route::patch('/admin/tickets/{id}/atribuir', [TicketWorkflowController::class, 'assignTechnician'])->name('api.admin.tickets.atribuir');
+        Route::patch('/admin/tickets/{id}/atribuir', TicketAssignmentController::class)->name('api.admin.tickets.atribuir');
     });
 
     // Analíticos

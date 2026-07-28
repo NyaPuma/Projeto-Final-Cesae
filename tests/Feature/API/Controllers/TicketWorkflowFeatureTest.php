@@ -2,10 +2,13 @@
 
 namespace Tests\Feature;
 
+use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
+use App\Models\TicketStatus;
 use App\Models\User;
 use App\Models\UserProfile;
+use App\Services\TicketStatusService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\TestCase;
@@ -22,6 +25,9 @@ class TicketWorkflowFeatureTest extends TestCase
         UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
         UserProfile::create(['name' => User::ROLE_ADMIN]);
         $this->artisan('db:seed', ['--class' => 'TicketLookupSeeder', '--force' => true]);
+
+        // Flush the status cache to ensure fresh data for each test
+        app(TicketStatusService::class)->flush();
     }
 
     private function createUserWithToken(string $profileName, bool $active = true): User
@@ -41,8 +47,8 @@ class TicketWorkflowFeatureTest extends TestCase
             'user_id' => $user->id,
             'title' => 'Test equipment fault',
             'description' => 'Equipment making unusual noise',
-            'priority' => Ticket::PRIORITY_HIGH,
-            'status_id' => Ticket::getStatusIdByName(Ticket::STATUS_OPEN),
+            'priority' => TicketPriorityEnum::High->value,
+            'status_id' => TicketStatus::where('name', TicketStatusEnum::Open->value)->value('id'),
             'opened_at' => now(),
         ], $overrides);
 
@@ -84,7 +90,7 @@ class TicketWorkflowFeatureTest extends TestCase
     {
         $user = $this->createUserWithToken(User::ROLE_USER);
         $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
-        $inProgressId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
+        $inProgressId = TicketStatus::where('name', TicketStatusEnum::InProgress->value)->value('id');
         $ticket = $this->createTicket($user, ['status_id' => $inProgressId]);
 
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
@@ -97,7 +103,7 @@ class TicketWorkflowFeatureTest extends TestCase
     {
         $user = $this->createUserWithToken(User::ROLE_USER);
         $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
-        $inProgressId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
+        $inProgressId = TicketStatus::where('name', TicketStatusEnum::InProgress->value)->value('id');
         $ticket = $this->createTicket($user, [
             'status_id' => $inProgressId,
             'assigned_to' => $technician->id,
@@ -139,7 +145,7 @@ class TicketWorkflowFeatureTest extends TestCase
     {
         $user = $this->createUserWithToken(User::ROLE_USER);
         $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
-        $closedId = Ticket::getStatusIdByName(Ticket::STATUS_CLOSED);
+        $closedId = TicketStatus::where('name', TicketStatusEnum::Closed->value)->value('id');
         $ticket = $this->createTicket($user, [
             'status_id' => $closedId,
             'closed_at' => now()->subDay(),

@@ -2,6 +2,7 @@
 
 namespace Tests\Security\PrivilegeEscalation;
 
+use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -124,7 +125,7 @@ class PrivilegeEscalationTest extends ApiTestCase
             'active' => true,
         ]);
 
-        $ticket = \App\Models\Ticket::factory()->create([
+        $ticket = Ticket::factory()->create([
             'budget_requested' => true,
             'budget_status' => 'pending',
         ]);
@@ -144,7 +145,7 @@ class PrivilegeEscalationTest extends ApiTestCase
             'active' => true,
         ]);
 
-        $ticket = \App\Models\Ticket::factory()->create([
+        $ticket = Ticket::factory()->create([
             'budget_requested' => true,
             'budget_status' => 'pending',
         ]);
@@ -164,7 +165,7 @@ class PrivilegeEscalationTest extends ApiTestCase
             'active' => true,
         ]);
 
-        $ticket = \App\Models\Ticket::factory()->create([
+        $ticket = Ticket::factory()->create([
             'budget_requested' => true,
             'budget_status' => 'pending',
         ]);

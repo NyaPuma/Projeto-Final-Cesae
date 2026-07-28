@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+use App\Enums\TicketPriorityEnum;
+use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use App\Models\TicketAttachment;
 use App\Models\TicketStatus;
@@ -22,7 +24,7 @@ class TicketAttachmentTest extends TestCase
 
         TicketType::firstOrCreate(['name' => 'avaria', 'description' => 'Avaria']);
         $typeId = TicketType::where('name', 'avaria')->first()->id;
-        TicketStatus::firstOrCreate(['name' => Ticket::STATUS_OPEN, 'description' => 'Aberto', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Open->value, 'description' => 'Aberto', 'type_id' => $typeId]);
         UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
     }
 
@@ -30,11 +32,11 @@ class TicketAttachmentTest extends TestCase
     public function it_creates_attachment_with_valid_data(): void
     {
         $user = User::factory()->create();
-        $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openStatusId = TicketStatus::where('name', TicketStatusEnum::Open->value)->value('id');
         $ticket = Ticket::create([
             'title' => 'Attachment Test',
             'description' => 'Testing attachments',
-            'priority' => Ticket::PRIORITY_MEDIUM,
+            'priority' => TicketPriorityEnum::Medium->value,
             'user_id' => $user->id,
             'status_id' => $openStatusId,
             'opened_at' => now(),
@@ -60,11 +62,11 @@ class TicketAttachmentTest extends TestCase
     public function it_belongs_to_a_ticket(): void
     {
         $user = User::factory()->create();
-        $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openStatusId = TicketStatus::where('name', TicketStatusEnum::Open->value)->value('id');
         $ticket = Ticket::create([
             'title' => 'Attachment Relation',
             'description' => 'Testing attachment relation',
-            'priority' => Ticket::PRIORITY_LOW,
+            'priority' => TicketPriorityEnum::Low->value,
             'user_id' => $user->id,
             'status_id' => $openStatusId,
             'opened_at' => now(),
@@ -87,11 +89,11 @@ class TicketAttachmentTest extends TestCase
     public function it_belongs_to_a_user(): void
     {
         $user = User::factory()->create();
-        $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openStatusId = TicketStatus::where('name', TicketStatusEnum::Open->value)->value('id');
         $ticket = Ticket::create([
             'title' => 'User Attachment Relation',
             'description' => 'Testing user relation on attachment',
-            'priority' => Ticket::PRIORITY_HIGH,
+            'priority' => TicketPriorityEnum::High->value,
             'user_id' => $user->id,
             'status_id' => $openStatusId,
             'opened_at' => now(),
@@ -128,11 +130,11 @@ class TicketAttachmentTest extends TestCase
     public function it_handles_multiple_attachments_per_ticket(): void
     {
         $user = User::factory()->create();
-        $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openStatusId = TicketStatus::where('name', TicketStatusEnum::Open->value)->value('id');
         $ticket = Ticket::create([
             'title' => 'Multiple Attachments',
             'description' => 'Testing multiple attachments',
-            'priority' => Ticket::PRIORITY_MEDIUM,
+            'priority' => TicketPriorityEnum::Medium->value,
             'user_id' => $user->id,
             'status_id' => $openStatusId,
             'opened_at' => now(),
