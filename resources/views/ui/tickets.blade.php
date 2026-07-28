@@ -79,11 +79,11 @@ window.requireAuthOnLoad = true;
         </div>
     </div>
 
-    {{-- Tabela de Resultados Estruturada --}}
+    {{-- Tabela de Resultados Estruturada Limpa (Como na Imagem do Exemplo) --}}
     <div class="w-full overflow-hidden bg-[var(--surface)] border border-[var(--border)] rounded-2xl shadow-sm" role="region" aria-live="polite" aria-label="{{ __('Lista de tickets') }}">
         <div class="overflow-x-auto">
             <table id="ticketsTable" class="min-w-full divide-y divide-[var(--border)] text-left text-xs">
-                <thead class="bg-[var(--surface-2)] text-[var(--text)] uppercase tracking-wider font-bold text-[10px]">
+                <thead class="bg-[var(--surface-2)] text-[var(--text-soft)] uppercase tracking-wider font-bold text-[10px]">
                     <tr>
                         <th class="px-5 py-4 font-bold">{{ __('ID') }}</th>
                         <th class="px-5 py-4 font-bold">{{ __('Título') }}</th>
@@ -170,24 +170,20 @@ async function loadTickets(page = 1) {
 
     const endpoint = '/tickets/search';
     const url = `${endpoint}?${params.toString()}`;
-    console.log('📡 Fetching:', url);
 
     const tbody = document.getElementById('ticketsBody');
     tbody.innerHTML = `<tr><td colspan="8" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]">${"{{ __('A atualizar dados...') }}"}</td></tr>`;
 
     try {
         const res = await fetch(url, { headers: authHeader() });
-        console.log('📡 Response status:', res.status);
         
         if (res.status === 401) { showFeedback("{{ __('Autenticação necessária. Faça login.') }}", true); window.location = '/ui/login'; return; }
         if (!res.ok) {
             const errData = await res.json().catch(() => ({}));
-            console.error('❌ Erro no servidor:', errData);
             showFeedback(errData.message || "{{ __('Não foi possível carregar os tickets de momento.') }}", true);
             return;
         }
         const data = await res.json().catch(() => ({}));
-        console.log('📡 Dados recebidos:', data);
 
         const tickets = data.tickets?.data ?? data.tickets ?? [];
         const meta    = data.tickets?.meta ?? data.tickets ?? {};
@@ -219,7 +215,7 @@ async function loadTickets(page = 1) {
 
             return `<tr class="hover:bg-[var(--surface-2)]/50 transition-colors duration-150">
                 <td class="px-5 py-4 font-mono text-[var(--text-soft)] font-bold">#${t.id}</td>
-                <td class="px-5 py-4 font-semibold text-[var(--text)] max-w-xs truncate" title="${t.title}">${t.title}</td>
+                <td class="px-5 py-4 font-semibold text-[var(--text)]">${t.title}</td>
                 <td class="px-5 py-4">
                     <span class="inline-block px-2.5 py-1 rounded-lg text-[11px] font-bold uppercase tracking-tight ${priColor}">${priorityLabel}</span>
                 </td>
@@ -228,7 +224,7 @@ async function loadTickets(page = 1) {
                 <td class="px-5 py-4 text-[var(--text-soft)] font-semibold">${t.room ? t.room.name : '—'}</td>
                 <td class="px-5 py-4 text-xs font-semibold text-[var(--text)]">${t.technician ? t.technician.name : '<span class="text-[var(--text-soft)] font-normal italic">—</span>'}</td>
                 <td class="px-5 py-4 text-right">
-                    <a href="/ui/tickets/${t.id}" class="inline-flex items-center justify-center px-3 py-1.5 bg-[var(--surface)] text-[11px] font-semibold text-[var(--text)] border border-[var(--border)] rounded-lg shadow-sm hover:bg-[var(--surface-2)] transition-all min-h-[28px] min-w-[48px]">${"{{ __('Ver') }}"}</a>
+                    <a href="/ui/tickets/${t.id}" class="inline-flex items-center justify-center px-3.5 py-1.5 bg-[var(--surface)] hover:bg-[var(--surface-2)] text-[11px] font-semibold text-[var(--text)] border border-[var(--border)] rounded-lg shadow-sm transition-all min-h-[28px]">${"{{ __('Ver') }}"}</a>
                 </td>
             </tr>`;
         }).join('');
@@ -271,16 +267,13 @@ document.getElementById('filter_q').addEventListener('keydown', e => {
     if (e.key === 'Enter') loadTickets(1);
 });
 
-// Disparar pesquisa automaticamente ao mudar qualquer filtro
 document.getElementById('filter_status')?.addEventListener('change', () => loadTickets(1));
 document.getElementById('filter_priority')?.addEventListener('change', () => loadTickets(1));
 document.getElementById('filter_date_from')?.addEventListener('change', () => loadTickets(1));
 document.getElementById('filter_date_to')?.addEventListener('change', () => loadTickets(1));
 
 window.addEventListener('load', () => {
-    console.log('📋 A carregar tickets...');
     loadTickets(1);
 });
 </script>
 @endpush
-
