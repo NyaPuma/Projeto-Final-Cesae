@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Models\User.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Models\User
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-2ed5ec960cc5642b9dc200191315accabcb887525ab1248f98595914e879613d',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-395f57c65addfaefdda2006539b046dd26ea3cf49668b5f046297c805eef2da5',
    'data' => 
   array (
     'locatedSource' => 
@@ -30,7 +30,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     array (
     ),
     'startLine' => 17,
-    'endLine' => 148,
+    'endLine' => 95,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'Illuminate\\Foundation\\Auth\\User',
@@ -297,11 +297,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'attributes' => 
         array (
         ),
-        'docComment' => '/**
- * Tickets criados pelo utilizador.
- */',
-        'startLine' => 59,
-        'endLine' => 62,
+        'docComment' => NULL,
+        'startLine' => 56,
+        'endLine' => 59,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -334,11 +332,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'attributes' => 
         array (
         ),
-        'docComment' => '/**
- * Tickets atribuídos ao utilizador (caso seja técnico).
- */',
-        'startLine' => 67,
-        'endLine' => 70,
+        'docComment' => NULL,
+        'startLine' => 61,
+        'endLine' => 64,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -371,11 +367,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'attributes' => 
         array (
         ),
-        'docComment' => '/**
- * Perfil associado ao utilizador.
- */',
-        'startLine' => 75,
-        'endLine' => 78,
+        'docComment' => NULL,
+        'startLine' => 66,
+        'endLine' => 69,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -409,8 +403,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 80,
-        'endLine' => 83,
+        'startLine' => 71,
+        'endLine' => 74,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -444,8 +438,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 85,
-        'endLine' => 88,
+        'startLine' => 76,
+        'endLine' => 79,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -479,8 +473,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 90,
-        'endLine' => 93,
+        'startLine' => 81,
+        'endLine' => 84,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -513,11 +507,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'attributes' => 
         array (
         ),
-        'docComment' => '/**
- * Alias de isCommonUser() – utilizado nos controllers para verificar se o utilizador não tem papel elevado.
- */',
-        'startLine' => 98,
-        'endLine' => 101,
+        'docComment' => NULL,
+        'startLine' => 86,
+        'endLine' => 89,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -525,102 +517,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'isGenerator' => false,
         'isVariadic' => false,
         'modifiers' => 1,
-        'namespace' => 'App\\Models',
-        'declaringClassName' => 'App\\Models\\User',
-        'implementingClassName' => 'App\\Models\\User',
-        'currentClassName' => 'App\\Models\\User',
-        'aliasName' => NULL,
-      ),
-      'getAvailableRoles' => 
-      array (
-        'name' => 'getAvailableRoles',
-        'parameters' => 
-        array (
-        ),
-        'returnsReference' => false,
-        'returnType' => 
-        array (
-          'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
-          'data' => 
-          array (
-            'name' => 'array',
-            'isIdentifier' => true,
-          ),
-        ),
-        'attributes' => 
-        array (
-        ),
-        'docComment' => NULL,
-        'startLine' => 103,
-        'endLine' => 106,
-        'startColumn' => 5,
-        'endColumn' => 5,
-        'couldThrow' => false,
-        'isClosure' => false,
-        'isGenerator' => false,
-        'isVariadic' => false,
-        'modifiers' => 17,
-        'namespace' => 'App\\Models',
-        'declaringClassName' => 'App\\Models\\User',
-        'implementingClassName' => 'App\\Models\\User',
-        'currentClassName' => 'App\\Models\\User',
-        'aliasName' => NULL,
-      ),
-      'isValidProfile' => 
-      array (
-        'name' => 'isValidProfile',
-        'parameters' => 
-        array (
-          'profileName' => 
-          array (
-            'name' => 'profileName',
-            'default' => NULL,
-            'type' => 
-            array (
-              'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
-              'data' => 
-              array (
-                'name' => 'string',
-                'isIdentifier' => true,
-              ),
-            ),
-            'isVariadic' => false,
-            'byRef' => false,
-            'isPromoted' => false,
-            'attributes' => 
-            array (
-            ),
-            'startLine' => 108,
-            'endLine' => 108,
-            'startColumn' => 43,
-            'endColumn' => 61,
-            'parameterIndex' => 0,
-            'isOptional' => false,
-          ),
-        ),
-        'returnsReference' => false,
-        'returnType' => 
-        array (
-          'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
-          'data' => 
-          array (
-            'name' => 'bool',
-            'isIdentifier' => true,
-          ),
-        ),
-        'attributes' => 
-        array (
-        ),
-        'docComment' => NULL,
-        'startLine' => 108,
-        'endLine' => 111,
-        'startColumn' => 5,
-        'endColumn' => 5,
-        'couldThrow' => false,
-        'isClosure' => false,
-        'isGenerator' => false,
-        'isVariadic' => false,
-        'modifiers' => 17,
         'namespace' => 'App\\Models',
         'declaringClassName' => 'App\\Models\\User',
         'implementingClassName' => 'App\\Models\\User',
@@ -651,8 +547,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 117,
-            'endLine' => 117,
+            'startLine' => 91,
+            'endLine' => 91,
             'startColumn' => 38,
             'endColumn' => 50,
             'parameterIndex' => 0,
@@ -672,12 +568,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'attributes' => 
         array (
         ),
-        'docComment' => '/**
- * Gera um hash HMAC-SHA256 do token para armazenamento seguro na BD.
- * O token em texto plano é devolvido ao cliente; o hash fica na BD.
- */',
-        'startLine' => 117,
-        'endLine' => 120,
+        'docComment' => NULL,
+        'startLine' => 91,
+        'endLine' => 94,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -685,104 +578,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'isGenerator' => false,
         'isVariadic' => false,
         'modifiers' => 17,
-        'namespace' => 'App\\Models',
-        'declaringClassName' => 'App\\Models\\User',
-        'implementingClassName' => 'App\\Models\\User',
-        'currentClassName' => 'App\\Models\\User',
-        'aliasName' => NULL,
-      ),
-      'booted' => 
-      array (
-        'name' => 'booted',
-        'parameters' => 
-        array (
-        ),
-        'returnsReference' => false,
-        'returnType' => 
-        array (
-          'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
-          'data' => 
-          array (
-            'name' => 'void',
-            'isIdentifier' => true,
-          ),
-        ),
-        'attributes' => 
-        array (
-        ),
-        'docComment' => '/**
- * Registo dos Model Events do Laravel.
- */',
-        'startLine' => 125,
-        'endLine' => 134,
-        'startColumn' => 5,
-        'endColumn' => 5,
-        'couldThrow' => false,
-        'isClosure' => false,
-        'isGenerator' => false,
-        'isVariadic' => false,
-        'modifiers' => 18,
-        'namespace' => 'App\\Models',
-        'declaringClassName' => 'App\\Models\\User',
-        'implementingClassName' => 'App\\Models\\User',
-        'currentClassName' => 'App\\Models\\User',
-        'aliasName' => NULL,
-      ),
-      'ensureValidProfile' => 
-      array (
-        'name' => 'ensureValidProfile',
-        'parameters' => 
-        array (
-          'user' => 
-          array (
-            'name' => 'user',
-            'default' => NULL,
-            'type' => 
-            array (
-              'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
-              'data' => 
-              array (
-                'name' => 'App\\Models\\User',
-                'isIdentifier' => false,
-              ),
-            ),
-            'isVariadic' => false,
-            'byRef' => false,
-            'isPromoted' => false,
-            'attributes' => 
-            array (
-            ),
-            'startLine' => 136,
-            'endLine' => 136,
-            'startColumn' => 48,
-            'endColumn' => 57,
-            'parameterIndex' => 0,
-            'isOptional' => false,
-          ),
-        ),
-        'returnsReference' => false,
-        'returnType' => 
-        array (
-          'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
-          'data' => 
-          array (
-            'name' => 'void',
-            'isIdentifier' => true,
-          ),
-        ),
-        'attributes' => 
-        array (
-        ),
-        'docComment' => NULL,
-        'startLine' => 136,
-        'endLine' => 147,
-        'startColumn' => 5,
-        'endColumn' => 5,
-        'couldThrow' => false,
-        'isClosure' => false,
-        'isGenerator' => false,
-        'isVariadic' => false,
-        'modifiers' => 20,
         'namespace' => 'App\\Models',
         'declaringClassName' => 'App\\Models\\User',
         'implementingClassName' => 'App\\Models\\User',

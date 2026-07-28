@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\CreateTicketAction;
 use App\DTOs\CreateTicketData;
 use App\DTOs\TicketFilters;
 use App\Enums\TicketPriorityEnum;
-use App\Enums\TicketStatusEnum;
 use App\Http\Requests\StoreTicketRequest;
-use App\Models\Ticket;
 use App\Models\User;
+use App\Repositories\Contracts\TicketRepositoryInterface;
 use App\Services\AIService;
 use App\Services\TechnicianAssignmentService;
 use App\Services\TicketSearchService;
-use App\Services\TicketStatusService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -20,23 +19,17 @@ use Illuminate\View\View;
 class TicketController extends Controller
 {
     public function __construct(
-        private readonly TicketStatusService $statusService,
+        private readonly TicketRepositoryInterface $ticketRepository,
+        private readonly CreateTicketAction $createTicketAction,
         private readonly TechnicianAssignmentService $technicianService,
         private readonly TicketSearchService $searchService,
     ) {}
 
     public function index(Request $request): JsonResponse
     {
-        $query = Ticket::with(['equipment', 'room', 'user', 'technician', 'status']);
+        $tickets = $this->ticketRepository->getAll(['equipment', 'room', 'user', 'technician', 'status']);
 
-        if ($request->has('q') && ! empty($request->q)) {
-            $q = str_replace(['%', '_'], ['\%', '\_'], $request->q);
-            $query->where('title', 'like', '%'.$q.'%');
-        }
-
-        return response()->json([
-            'tickets' => $query->latest()->paginate(15),
-        ]);
+        return response()->json(['tickets' => $tickets]);
     }
 
     public function store(StoreTicketRequest $request): JsonResponse
@@ -44,19 +37,7 @@ class TicketController extends Controller
         $user = $this->authenticatedUser($request);
         $data = CreateTicketData::fromRequest($request->validated());
 
-        $openStatusId = $this->statusService->getByName(TicketStatusEnum::Open);
-
-        $ticket = Ticket::create([
-            'title' => $data->title,
-            'description' => $data->description,
-            'priority' => $data->priority->value,
-            'user_id' => $user->id,
-            'equipment_id' => $data->equipmentId,
-            'room_id' => $data->roomId,
-            'status_id' => $openStatusId,
-            'opened_at' => now(),
-        ]);
-
+        $ticket = $this->createTicketAction->execute($user, $data);
         $ticket->load(['equipment', 'room', 'user', 'status']);
 
         return response()->json(['ticket' => $ticket], 201);
@@ -64,7 +45,7 @@ class TicketController extends Controller
 
     public function search(Request $request): JsonResponse
     {
-        $user = $this->authenticatedUser($request);
+        $this->authenticatedUser($request);
 
         if ($request->has('priority') && ! in_array($request->priority, array_merge(
             TicketPriorityEnum::values(),
@@ -85,7 +66,11 @@ class TicketController extends Controller
     public function show(Request $request, int $id): JsonResponse|View
     {
         $user = $this->authenticatedUser($request);
-        $ticket = Ticket::with(['equipment.category', 'room', 'user', 'technician', 'status'])->findOrFail($id);
+        $ticket = $this->ticketRepository->findWithRelations($id, ['equipment.category', 'room', 'user', 'technician', 'status']);
+
+        if (! $ticket) {
+            return response()->json(['message' => 'Ticket não encontrado'], 404);
+        }
 
         if ($user->isCommon() && (int) $ticket->user_id !== (int) $user->id) {
             return response()->json(['message' => 'Acesso negado'], 403);
@@ -105,17 +90,14 @@ class TicketController extends Controller
         $user = $this->authenticatedUser($request);
         $this->requireRole($user, [User::ROLE_TECHNICIAN, User::ROLE_ADMIN]);
 
-        $tickets = Ticket::with(['equipment', 'room', 'user', 'status'])
-            ->open()
-            ->latest()
-            ->paginate(15);
+        $tickets = $this->ticketRepository->getOpenTickets();
 
         return response()->json(['tickets' => $tickets]);
     }
 
     public function getMostUrgentOpenTicket(Request $request): JsonResponse
     {
-        $user = $this->authenticatedUser($request);
+        $this->authenticatedUser($request);
         $excludeId = (int) $request->input('exclude', 0);
 
         $ticket = $this->technicianService->findMostUrgentOpenTicket($excludeId > 0 ? $excludeId : null);

@@ -19,7 +19,7 @@ final readonly class StoreUserData
             email: $data['email'],
             password: $data['password'],
             profileId: $data['profile_id'],
-            active: $data['active'] ?? true,
+            active: isset($data['active']) ? (bool) $data['active'] : true,
         );
     }
 }

@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Http\Controllers\AdminController.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Controllers\AdminController
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-6f386b7d15dd1d0cf5ae3e9e28521aa6ac3080236b91284fbbb65df7d4a5b363',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-7b45600a666f900f748c6c40ee0bb57559592d15168087691d9cd8d25134bc3a',
    'data' => 
   array (
     'locatedSource' => 
@@ -26,8 +26,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'attributes' => 
     array (
     ),
-    'startLine' => 17,
-    'endLine' => 82,
+    'startLine' => 19,
+    'endLine' => 88,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'App\\Http\\Controllers\\Controller',
@@ -42,18 +42,18 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'immediateProperties' => 
     array (
-      'technicianService' => 
+      'ticketRepository' => 
       array (
         'declaringClassName' => 'App\\Http\\Controllers\\AdminController',
         'implementingClassName' => 'App\\Http\\Controllers\\AdminController',
-        'name' => 'technicianService',
+        'name' => 'ticketRepository',
         'modifiers' => 132,
         'type' => 
         array (
           'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
           'data' => 
           array (
-            'name' => 'App\\Services\\TechnicianAssignmentService',
+            'name' => 'App\\Repositories\\Contracts\\TicketRepositoryInterface',
             'isIdentifier' => false,
           ),
         ),
@@ -62,10 +62,10 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'attributes' => 
         array (
         ),
-        'startLine' => 20,
-        'endLine' => 20,
+        'startLine' => 22,
+        'endLine' => 22,
         'startColumn' => 9,
-        'endColumn' => 71,
+        'endColumn' => 68,
         'isPromoted' => true,
         'declaredAtCompileTime' => true,
         'immediateVirtual' => false,
@@ -93,10 +93,41 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'attributes' => 
         array (
         ),
-        'startLine' => 21,
-        'endLine' => 21,
+        'startLine' => 23,
+        'endLine' => 23,
         'startColumn' => 9,
         'endColumn' => 65,
+        'isPromoted' => true,
+        'declaredAtCompileTime' => true,
+        'immediateVirtual' => false,
+        'immediateHooks' => 
+        array (
+        ),
+      ),
+      'assignTechnicianAction' => 
+      array (
+        'declaringClassName' => 'App\\Http\\Controllers\\AdminController',
+        'implementingClassName' => 'App\\Http\\Controllers\\AdminController',
+        'name' => 'assignTechnicianAction',
+        'modifiers' => 132,
+        'type' => 
+        array (
+          'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+          'data' => 
+          array (
+            'name' => 'App\\Actions\\AssignTechnicianAction',
+            'isIdentifier' => false,
+          ),
+        ),
+        'default' => NULL,
+        'docComment' => NULL,
+        'attributes' => 
+        array (
+        ),
+        'startLine' => 24,
+        'endLine' => 24,
+        'startColumn' => 9,
+        'endColumn' => 71,
         'isPromoted' => true,
         'declaredAtCompileTime' => true,
         'immediateVirtual' => false,
@@ -124,8 +155,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'attributes' => 
         array (
         ),
-        'startLine' => 22,
-        'endLine' => 22,
+        'startLine' => 25,
+        'endLine' => 25,
         'startColumn' => 9,
         'endColumn' => 77,
         'isPromoted' => true,
@@ -143,16 +174,16 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'name' => '__construct',
         'parameters' => 
         array (
-          'technicianService' => 
+          'ticketRepository' => 
           array (
-            'name' => 'technicianService',
+            'name' => 'ticketRepository',
             'default' => NULL,
             'type' => 
             array (
               'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
               'data' => 
               array (
-                'name' => 'App\\Services\\TechnicianAssignmentService',
+                'name' => 'App\\Repositories\\Contracts\\TicketRepositoryInterface',
                 'isIdentifier' => false,
               ),
             ),
@@ -162,10 +193,10 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 20,
-            'endLine' => 20,
+            'startLine' => 22,
+            'endLine' => 22,
             'startColumn' => 9,
-            'endColumn' => 71,
+            'endColumn' => 68,
             'parameterIndex' => 0,
             'isOptional' => false,
           ),
@@ -188,11 +219,37 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 21,
-            'endLine' => 21,
+            'startLine' => 23,
+            'endLine' => 23,
             'startColumn' => 9,
             'endColumn' => 65,
             'parameterIndex' => 1,
+            'isOptional' => false,
+          ),
+          'assignTechnicianAction' => 
+          array (
+            'name' => 'assignTechnicianAction',
+            'default' => NULL,
+            'type' => 
+            array (
+              'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+              'data' => 
+              array (
+                'name' => 'App\\Actions\\AssignTechnicianAction',
+                'isIdentifier' => false,
+              ),
+            ),
+            'isVariadic' => false,
+            'byRef' => false,
+            'isPromoted' => true,
+            'attributes' => 
+            array (
+            ),
+            'startLine' => 24,
+            'endLine' => 24,
+            'startColumn' => 9,
+            'endColumn' => 71,
+            'parameterIndex' => 2,
             'isOptional' => false,
           ),
           'createPreventiveAction' => 
@@ -214,11 +271,11 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 22,
-            'endLine' => 22,
+            'startLine' => 25,
+            'endLine' => 25,
             'startColumn' => 9,
             'endColumn' => 77,
-            'parameterIndex' => 2,
+            'parameterIndex' => 3,
             'isOptional' => false,
           ),
         ),
@@ -228,8 +285,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 19,
-        'endLine' => 23,
+        'startLine' => 21,
+        'endLine' => 26,
         'startColumn' => 5,
         'endColumn' => 8,
         'couldThrow' => false,
@@ -267,8 +324,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 25,
-            'endLine' => 25,
+            'startLine' => 28,
+            'endLine' => 28,
             'startColumn' => 35,
             'endColumn' => 64,
             'parameterIndex' => 0,
@@ -293,8 +350,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 25,
-            'endLine' => 25,
+            'startLine' => 28,
+            'endLine' => 28,
             'startColumn' => 67,
             'endColumn' => 73,
             'parameterIndex' => 1,
@@ -315,8 +372,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 25,
-        'endLine' => 46,
+        'startLine' => 28,
+        'endLine' => 49,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -354,8 +411,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 48,
-            'endLine' => 48,
+            'startLine' => 51,
+            'endLine' => 51,
             'startColumn' => 38,
             'endColumn' => 69,
             'parameterIndex' => 0,
@@ -380,8 +437,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 48,
-            'endLine' => 48,
+            'startLine' => 51,
+            'endLine' => 51,
             'startColumn' => 72,
             'endColumn' => 78,
             'parameterIndex' => 1,
@@ -402,8 +459,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 48,
-        'endLine' => 65,
+        'startLine' => 51,
+        'endLine' => 71,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -441,8 +498,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 67,
-            'endLine' => 67,
+            'startLine' => 73,
+            'endLine' => 73,
             'startColumn' => 37,
             'endColumn' => 67,
             'parameterIndex' => 0,
@@ -463,8 +520,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 67,
-        'endLine' => 81,
+        'startLine' => 73,
+        'endLine' => 87,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

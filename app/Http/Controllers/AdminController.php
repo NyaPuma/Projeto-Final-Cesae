@@ -3,22 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Actions\ApproveBudgetAction;
+use App\Actions\AssignTechnicianAction;
 use App\Actions\CreatePreventiveTicketAction;
+use App\DTOs\AssignTechnicianData;
 use App\DTOs\BudgetDecisionData;
 use App\Enums\BudgetStatusEnum;
 use App\Http\Requests\AssignTechnicianRequest;
 use App\Http\Requests\BudgetDecisionRequest;
 use App\Http\Requests\StorePreventiveRequest;
-use App\Models\Ticket;
 use App\Models\User;
-use App\Services\TechnicianAssignmentService;
+use App\Repositories\Contracts\TicketRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 
 class AdminController extends Controller
 {
     public function __construct(
-        private readonly TechnicianAssignmentService $technicianService,
+        private readonly TicketRepositoryInterface $ticketRepository,
         private readonly ApproveBudgetAction $approveBudgetAction,
+        private readonly AssignTechnicianAction $assignTechnicianAction,
         private readonly CreatePreventiveTicketAction $createPreventiveAction,
     ) {}
 
@@ -27,7 +29,7 @@ class AdminController extends Controller
         $admin = $this->authenticatedUser($request);
         $this->requireRole($admin, [User::ROLE_ADMIN]);
 
-        $ticket = Ticket::find($id);
+        $ticket = $this->ticketRepository->findById($id);
         if (! $ticket) {
             return $this->jsonNotFound('Ticket não encontrado');
         }
@@ -50,13 +52,16 @@ class AdminController extends Controller
         $user = $this->authenticatedUser($request);
         $this->requireRole($user, [User::ROLE_ADMIN]);
 
-        $ticket = Ticket::findOrFail($id);
-        $technicianId = $request->validated('technician_id');
+        $ticket = $this->ticketRepository->findById($id);
+        if (! $ticket) {
+            return $this->jsonNotFound('Ticket não encontrado');
+        }
 
-        $technician = $this->technicianService->assignToTicket($ticket, $technicianId ? (int) $technicianId : null);
+        $data = AssignTechnicianData::fromRequest($request->validated());
+        $technician = $this->assignTechnicianAction->execute($ticket, $data->technicianId);
 
         if (! $technician) {
-            $message = $technicianId ? 'Técnico inválido' : 'Não existem técnicos disponíveis';
+            $message = $data->technicianId ? 'Técnico inválido' : 'Não existem técnicos disponíveis';
 
             return response()->json(['message' => $message], 422);
         }

@@ -2,9 +2,6 @@
 
 namespace App\Models;
 
-use App\Domain\Ticket\Services\TicketStatusChecker;
-use App\Domain\Ticket\ValueObjects\BudgetPauseMinutes;
-use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
 use App\Services\TicketStatusService;
 use App\Traits\Auditable;
@@ -96,34 +93,11 @@ class Ticket extends Model
         return $this->hasMany(TicketAttachment::class);
     }
 
-    public function hasStatus(TicketStatusEnum $status): bool
-    {
-        return app(TicketStatusChecker::class)->hasStatus($this->status_id, $status);
-    }
-
     public function scopeOpen($query)
     {
-        return $query->where('status_id', app(TicketStatusService::class)->getByName(TicketStatusEnum::Open));
-    }
+        $statusId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
-    public function scopeInProgress($query)
-    {
-        return $query->where('status_id', app(TicketStatusService::class)->getByName(TicketStatusEnum::InProgress));
-    }
-
-    public function scopeClosed($query)
-    {
-        return $query->where('status_id', app(TicketStatusService::class)->getByName(TicketStatusEnum::Closed));
-    }
-
-    public function scopeScheduled($query)
-    {
-        return $query->whereNotNull('scheduled_at');
-    }
-
-    public function scopeByPriority($query, TicketPriorityEnum $priority)
-    {
-        return $query->where('priority', $priority->value);
+        return $query->where('status_id', $statusId);
     }
 
     public function scopeForTechnician($query, int $technicianId)
@@ -131,8 +105,14 @@ class Ticket extends Model
         return $query->where('assigned_to', $technicianId);
     }
 
-    public function getBudgetPauseMinutesAttribute(): int
+    public function hasStatus(TicketStatusEnum|string $status): bool
     {
-        return (new BudgetPauseMinutes($this->budget_requested_at, $this->budget_decided_at))->value();
+        $statusEnum = is_string($status) ? TicketStatusEnum::tryFrom($status) : $status;
+        if (! $statusEnum) {
+            return false;
+        }
+        $statusId = app(TicketStatusService::class)->getByName($statusEnum);
+
+        return $this->status_id === $statusId;
     }
 }

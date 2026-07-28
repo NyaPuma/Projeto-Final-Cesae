@@ -53,25 +53,16 @@ class User extends Authenticatable
 
     public const ROLE_ADMIN = UserRoleEnum::Admin->value;
 
-    /**
-     * Tickets criados pelo utilizador.
-     */
     public function tickets(): HasMany
     {
         return $this->hasMany(Ticket::class, 'user_id');
     }
 
-    /**
-     * Tickets atribuídos ao utilizador (caso seja técnico).
-     */
     public function assignedTickets(): HasMany
     {
         return $this->hasMany(Ticket::class, 'assigned_to');
     }
 
-    /**
-     * Perfil associado ao utilizador.
-     */
     public function profile(): BelongsTo
     {
         return $this->belongsTo(UserProfile::class, 'profile_id');
@@ -92,57 +83,13 @@ class User extends Authenticatable
         return $this->profile?->name === UserRoleEnum::User->value;
     }
 
-    /**
-     * Alias de isCommonUser() – utilizado nos controllers para verificar se o utilizador não tem papel elevado.
-     */
     public function isCommon(): bool
     {
         return $this->isCommonUser();
     }
 
-    public static function getAvailableRoles(): array
-    {
-        return UserRoleEnum::values();
-    }
-
-    public static function isValidProfile(string $profileName): bool
-    {
-        return in_array($profileName, UserRoleEnum::values(), true);
-    }
-
-    /**
-     * Gera um hash HMAC-SHA256 do token para armazenamento seguro na BD.
-     * O token em texto plano é devolvido ao cliente; o hash fica na BD.
-     */
     public static function hashToken(string $token): string
     {
         return hash_hmac('sha256', $token, config('app.key'));
-    }
-
-    /**
-     * Registo dos Model Events do Laravel.
-     */
-    protected static function booted(): void
-    {
-        static::creating(function (User $user) {
-            self::ensureValidProfile($user);
-        });
-
-        static::updating(function (User $user) {
-            self::ensureValidProfile($user);
-        });
-    }
-
-    private static function ensureValidProfile(User $user): void
-    {
-        if ($user->profile_id) {
-            $profileName = UserProfile::where('id', $user->profile_id)->value('name');
-            if ($profileName && self::isValidProfile($profileName)) {
-                return;
-            }
-        }
-
-        $existingProfile = UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
-        $user->profile_id = $existingProfile->id;
     }
 }

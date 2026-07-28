@@ -2,10 +2,14 @@
 
 namespace App\Providers;
 
+use App\Models\Audit;
 use App\Models\Equipment;
 use App\Models\Room;
 use App\Models\Ticket;
 use App\Models\User;
+use App\Observers\AuditObserver;
+use App\Observers\TicketObserver;
+use App\Observers\UserObserver;
 use App\Policies\EquipmentPolicy;
 use App\Policies\RoomPolicy;
 use App\Policies\TicketPolicy;
@@ -21,9 +25,6 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
     public function register(): void
     {
         $this->app->singleton(TicketStatusService::class);
@@ -32,12 +33,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(AIService::class);
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
         $this->registerPolicies();
+        $this->registerObservers();
         $this->registerSlowQueryListener();
     }
 
@@ -47,6 +46,13 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(User::class, UserPolicy::class);
         Gate::policy(Equipment::class, EquipmentPolicy::class);
         Gate::policy(Room::class, RoomPolicy::class);
+    }
+
+    private function registerObservers(): void
+    {
+        Ticket::observe(TicketObserver::class);
+        User::observe(UserObserver::class);
+        Audit::observe(AuditObserver::class);
     }
 
     private function registerSlowQueryListener(): void

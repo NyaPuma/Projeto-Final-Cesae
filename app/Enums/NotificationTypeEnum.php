@@ -10,6 +10,7 @@ enum NotificationTypeEnum: string
     case BudgetRejected = 'budget_rejected';
     case BudgetAutoApproved = 'budget_auto_approved';
     case TicketClosed = 'ticket_closed';
+    case TicketCreated = 'ticket_created';
     case PriorityOverride = 'priority_override';
 
     public function icon(): string
@@ -21,6 +22,7 @@ enum NotificationTypeEnum: string
             self::BudgetRejected => '❌',
             self::BudgetAutoApproved => '✅',
             self::TicketClosed => '🔧',
+            self::TicketCreated => '🎫',
             self::PriorityOverride => '⚠️',
         };
     }

@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Http\Controllers\RoomController.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Controllers\RoomController
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-dfeebca06b320c5949edeb3f7bf66dcad1e0f11ba53c77f1f8646f07502fd567',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-59294986f2f55e47e722dd1792b5f6d9f084ae7a7596b767748bc10b8d58e3b5',
    'data' => 
   array (
     'locatedSource' => 
@@ -26,8 +26,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'attributes' => 
     array (
     ),
-    'startLine' => 11,
-    'endLine' => 53,
+    'startLine' => 15,
+    'endLine' => 60,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'App\\Http\\Controllers\\Controller',
@@ -42,9 +42,207 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'immediateProperties' => 
     array (
+      'roomRepository' => 
+      array (
+        'declaringClassName' => 'App\\Http\\Controllers\\RoomController',
+        'implementingClassName' => 'App\\Http\\Controllers\\RoomController',
+        'name' => 'roomRepository',
+        'modifiers' => 132,
+        'type' => 
+        array (
+          'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+          'data' => 
+          array (
+            'name' => 'App\\Repositories\\Contracts\\RoomRepositoryInterface',
+            'isIdentifier' => false,
+          ),
+        ),
+        'default' => NULL,
+        'docComment' => NULL,
+        'attributes' => 
+        array (
+        ),
+        'startLine' => 18,
+        'endLine' => 18,
+        'startColumn' => 9,
+        'endColumn' => 64,
+        'isPromoted' => true,
+        'declaredAtCompileTime' => true,
+        'immediateVirtual' => false,
+        'immediateHooks' => 
+        array (
+        ),
+      ),
+      'createRoomAction' => 
+      array (
+        'declaringClassName' => 'App\\Http\\Controllers\\RoomController',
+        'implementingClassName' => 'App\\Http\\Controllers\\RoomController',
+        'name' => 'createRoomAction',
+        'modifiers' => 132,
+        'type' => 
+        array (
+          'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+          'data' => 
+          array (
+            'name' => 'App\\Actions\\CreateRoomAction',
+            'isIdentifier' => false,
+          ),
+        ),
+        'default' => NULL,
+        'docComment' => NULL,
+        'attributes' => 
+        array (
+        ),
+        'startLine' => 19,
+        'endLine' => 19,
+        'startColumn' => 9,
+        'endColumn' => 59,
+        'isPromoted' => true,
+        'declaredAtCompileTime' => true,
+        'immediateVirtual' => false,
+        'immediateHooks' => 
+        array (
+        ),
+      ),
+      'updateRoomAction' => 
+      array (
+        'declaringClassName' => 'App\\Http\\Controllers\\RoomController',
+        'implementingClassName' => 'App\\Http\\Controllers\\RoomController',
+        'name' => 'updateRoomAction',
+        'modifiers' => 132,
+        'type' => 
+        array (
+          'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+          'data' => 
+          array (
+            'name' => 'App\\Actions\\UpdateRoomAction',
+            'isIdentifier' => false,
+          ),
+        ),
+        'default' => NULL,
+        'docComment' => NULL,
+        'attributes' => 
+        array (
+        ),
+        'startLine' => 20,
+        'endLine' => 20,
+        'startColumn' => 9,
+        'endColumn' => 59,
+        'isPromoted' => true,
+        'declaredAtCompileTime' => true,
+        'immediateVirtual' => false,
+        'immediateHooks' => 
+        array (
+        ),
+      ),
     ),
     'immediateMethods' => 
     array (
+      '__construct' => 
+      array (
+        'name' => '__construct',
+        'parameters' => 
+        array (
+          'roomRepository' => 
+          array (
+            'name' => 'roomRepository',
+            'default' => NULL,
+            'type' => 
+            array (
+              'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+              'data' => 
+              array (
+                'name' => 'App\\Repositories\\Contracts\\RoomRepositoryInterface',
+                'isIdentifier' => false,
+              ),
+            ),
+            'isVariadic' => false,
+            'byRef' => false,
+            'isPromoted' => true,
+            'attributes' => 
+            array (
+            ),
+            'startLine' => 18,
+            'endLine' => 18,
+            'startColumn' => 9,
+            'endColumn' => 64,
+            'parameterIndex' => 0,
+            'isOptional' => false,
+          ),
+          'createRoomAction' => 
+          array (
+            'name' => 'createRoomAction',
+            'default' => NULL,
+            'type' => 
+            array (
+              'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+              'data' => 
+              array (
+                'name' => 'App\\Actions\\CreateRoomAction',
+                'isIdentifier' => false,
+              ),
+            ),
+            'isVariadic' => false,
+            'byRef' => false,
+            'isPromoted' => true,
+            'attributes' => 
+            array (
+            ),
+            'startLine' => 19,
+            'endLine' => 19,
+            'startColumn' => 9,
+            'endColumn' => 59,
+            'parameterIndex' => 1,
+            'isOptional' => false,
+          ),
+          'updateRoomAction' => 
+          array (
+            'name' => 'updateRoomAction',
+            'default' => NULL,
+            'type' => 
+            array (
+              'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+              'data' => 
+              array (
+                'name' => 'App\\Actions\\UpdateRoomAction',
+                'isIdentifier' => false,
+              ),
+            ),
+            'isVariadic' => false,
+            'byRef' => false,
+            'isPromoted' => true,
+            'attributes' => 
+            array (
+            ),
+            'startLine' => 20,
+            'endLine' => 20,
+            'startColumn' => 9,
+            'endColumn' => 59,
+            'parameterIndex' => 2,
+            'isOptional' => false,
+          ),
+        ),
+        'returnsReference' => false,
+        'returnType' => NULL,
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 17,
+        'endLine' => 21,
+        'startColumn' => 5,
+        'endColumn' => 8,
+        'couldThrow' => false,
+        'isClosure' => false,
+        'isGenerator' => false,
+        'isVariadic' => false,
+        'modifiers' => 1,
+        'namespace' => 'App\\Http\\Controllers',
+        'declaringClassName' => 'App\\Http\\Controllers\\RoomController',
+        'implementingClassName' => 'App\\Http\\Controllers\\RoomController',
+        'currentClassName' => 'App\\Http\\Controllers\\RoomController',
+        'aliasName' => NULL,
+      ),
       'indexRoom' => 
       array (
         'name' => 'indexRoom',
@@ -69,8 +267,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 13,
-            'endLine' => 13,
+            'startLine' => 23,
+            'endLine' => 23,
             'startColumn' => 31,
             'endColumn' => 46,
             'parameterIndex' => 0,
@@ -91,8 +289,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 13,
-        'endLine' => 16,
+        'startLine' => 23,
+        'endLine' => 26,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -130,8 +328,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 18,
-            'endLine' => 18,
+            'startLine' => 28,
+            'endLine' => 28,
             'startColumn' => 31,
             'endColumn' => 55,
             'parameterIndex' => 0,
@@ -152,8 +350,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 18,
-        'endLine' => 27,
+        'startLine' => 28,
+        'endLine' => 34,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -191,8 +389,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 29,
-            'endLine' => 29,
+            'startLine' => 36,
+            'endLine' => 36,
             'startColumn' => 32,
             'endColumn' => 57,
             'parameterIndex' => 0,
@@ -217,8 +415,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 29,
-            'endLine' => 29,
+            'startLine' => 36,
+            'endLine' => 36,
             'startColumn' => 60,
             'endColumn' => 66,
             'parameterIndex' => 1,
@@ -239,8 +437,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 29,
-        'endLine' => 39,
+        'startLine' => 36,
+        'endLine' => 47,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -278,8 +476,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 41,
-            'endLine' => 41,
+            'startLine' => 49,
+            'endLine' => 49,
             'startColumn' => 36,
             'endColumn' => 51,
             'parameterIndex' => 0,
@@ -304,8 +502,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 41,
-            'endLine' => 41,
+            'startLine' => 49,
+            'endLine' => 49,
             'startColumn' => 54,
             'endColumn' => 60,
             'parameterIndex' => 1,
@@ -326,8 +524,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 41,
-        'endLine' => 52,
+        'startLine' => 49,
+        'endLine' => 59,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

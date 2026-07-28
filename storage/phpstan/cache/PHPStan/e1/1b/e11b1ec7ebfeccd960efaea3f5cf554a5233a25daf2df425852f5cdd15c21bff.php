@@ -12,11 +12,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
-          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'auditable' => 'App\\Traits\\Auditable',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'model' => 'Illuminate\\Database\\Eloquent\\Model',
@@ -1462,11 +1457,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
-          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'auditable' => 'App\\Traits\\Auditable',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'model' => 'Illuminate\\Database\\Eloquent\\Model',
@@ -1495,11 +1485,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
-          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'auditable' => 'App\\Traits\\Auditable',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'model' => 'Illuminate\\Database\\Eloquent\\Model',
@@ -1528,11 +1513,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
-          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'auditable' => 'App\\Traits\\Auditable',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'model' => 'Illuminate\\Database\\Eloquent\\Model',
@@ -1561,11 +1541,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
-          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'auditable' => 'App\\Traits\\Auditable',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'model' => 'Illuminate\\Database\\Eloquent\\Model',
@@ -1594,11 +1569,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
-          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'auditable' => 'App\\Traits\\Auditable',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'model' => 'Illuminate\\Database\\Eloquent\\Model',
@@ -1627,11 +1597,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
-          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'auditable' => 'App\\Traits\\Auditable',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'model' => 'Illuminate\\Database\\Eloquent\\Model',
@@ -1660,11 +1625,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
-          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'auditable' => 'App\\Traits\\Auditable',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'model' => 'Illuminate\\Database\\Eloquent\\Model',
@@ -1693,11 +1653,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
-          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'auditable' => 'App\\Traits\\Auditable',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'model' => 'Illuminate\\Database\\Eloquent\\Model',
@@ -1726,11 +1681,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
-          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'auditable' => 'App\\Traits\\Auditable',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'model' => 'Illuminate\\Database\\Eloquent\\Model',
@@ -1754,49 +1704,11 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'typeAliasClassName' => NULL,
          'traitData' => NULL,
       )),
-      'f3e7a09bc4cd8daa478aa6df48ab8274' => 
-      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
-         'namespace' => 'App\\Models',
-         'uses' => 
-        array (
-          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
-          'auditable' => 'App\\Traits\\Auditable',
-          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-          'model' => 'Illuminate\\Database\\Eloquent\\Model',
-          'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-        ),
-         'className' => 'App\\Models\\Ticket',
-         'functionName' => 'hasStatus',
-         'templatePhpDocNodes' => 
-        array (
-        ),
-         'parent' => NULL,
-         'typeAliasesMap' => 
-        array (
-        ),
-         'bypassTypeAliases' => false,
-         'constUses' => 
-        array (
-        ),
-         'typeAliasClassName' => NULL,
-         'traitData' => NULL,
-      )),
       '2a09408e13901b728b40826c3ce4c739' => 
       \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
-          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'auditable' => 'App\\Traits\\Auditable',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'model' => 'Illuminate\\Database\\Eloquent\\Model',
@@ -1820,148 +1732,11 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'typeAliasClassName' => NULL,
          'traitData' => NULL,
       )),
-      '0b013a221980087a0b6bb3ddcf73dc4a' => 
-      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
-         'namespace' => 'App\\Models',
-         'uses' => 
-        array (
-          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
-          'auditable' => 'App\\Traits\\Auditable',
-          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-          'model' => 'Illuminate\\Database\\Eloquent\\Model',
-          'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-        ),
-         'className' => 'App\\Models\\Ticket',
-         'functionName' => 'scopeInProgress',
-         'templatePhpDocNodes' => 
-        array (
-        ),
-         'parent' => NULL,
-         'typeAliasesMap' => 
-        array (
-        ),
-         'bypassTypeAliases' => false,
-         'constUses' => 
-        array (
-        ),
-         'typeAliasClassName' => NULL,
-         'traitData' => NULL,
-      )),
-      '36def27ef25a6e6f19985333947ef9ee' => 
-      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
-         'namespace' => 'App\\Models',
-         'uses' => 
-        array (
-          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
-          'auditable' => 'App\\Traits\\Auditable',
-          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-          'model' => 'Illuminate\\Database\\Eloquent\\Model',
-          'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-        ),
-         'className' => 'App\\Models\\Ticket',
-         'functionName' => 'scopeClosed',
-         'templatePhpDocNodes' => 
-        array (
-        ),
-         'parent' => NULL,
-         'typeAliasesMap' => 
-        array (
-        ),
-         'bypassTypeAliases' => false,
-         'constUses' => 
-        array (
-        ),
-         'typeAliasClassName' => NULL,
-         'traitData' => NULL,
-      )),
-      '47eba212961cf12d01b65a740c0c81da' => 
-      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
-         'namespace' => 'App\\Models',
-         'uses' => 
-        array (
-          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
-          'auditable' => 'App\\Traits\\Auditable',
-          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-          'model' => 'Illuminate\\Database\\Eloquent\\Model',
-          'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-        ),
-         'className' => 'App\\Models\\Ticket',
-         'functionName' => 'scopeScheduled',
-         'templatePhpDocNodes' => 
-        array (
-        ),
-         'parent' => NULL,
-         'typeAliasesMap' => 
-        array (
-        ),
-         'bypassTypeAliases' => false,
-         'constUses' => 
-        array (
-        ),
-         'typeAliasClassName' => NULL,
-         'traitData' => NULL,
-      )),
-      'ae78cc8cf98f1d5af9e97fbc47527585' => 
-      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
-         'namespace' => 'App\\Models',
-         'uses' => 
-        array (
-          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
-          'auditable' => 'App\\Traits\\Auditable',
-          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-          'model' => 'Illuminate\\Database\\Eloquent\\Model',
-          'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-        ),
-         'className' => 'App\\Models\\Ticket',
-         'functionName' => 'scopeByPriority',
-         'templatePhpDocNodes' => 
-        array (
-        ),
-         'parent' => NULL,
-         'typeAliasesMap' => 
-        array (
-        ),
-         'bypassTypeAliases' => false,
-         'constUses' => 
-        array (
-        ),
-         'typeAliasClassName' => NULL,
-         'traitData' => NULL,
-      )),
       '8c4350a6525d842212cf4d37c35fc7a3' => 
       \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
-          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'auditable' => 'App\\Traits\\Auditable',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'model' => 'Illuminate\\Database\\Eloquent\\Model',
@@ -1985,16 +1760,11 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'typeAliasClassName' => NULL,
          'traitData' => NULL,
       )),
-      '5590fb53bd30834b986fb3bef8061308' => 
+      'f3e7a09bc4cd8daa478aa6df48ab8274' => 
       \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
          'namespace' => 'App\\Models',
          'uses' => 
         array (
-          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'auditable' => 'App\\Traits\\Auditable',
           'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
           'model' => 'Illuminate\\Database\\Eloquent\\Model',
@@ -2003,7 +1773,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
         ),
          'className' => 'App\\Models\\Ticket',
-         'functionName' => 'getBudgetPauseMinutesAttribute',
+         'functionName' => 'hasStatus',
          'templatePhpDocNodes' => 
         array (
         ),
@@ -2021,7 +1791,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php' => 'b46021a1201ce90ff4ea2982617d38493d4c79c811825f323e77b583e3063549',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php' => '9d34979a3eced4d5f0ecf6dac98e763ffb1eab0df43a5e09406abdc2dae07315',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Traits\\Auditable.php' => 'd0ace2e3521260e41816d729666bef984d68ef27b6d70bb5c403e35e954a5071',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Factories\\HasFactory.php' => 'b6cb2b164e90168e80963a5549541f5f3188a3ec8cfd368bf3611bd94fbd46a7',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\SoftDeletes.php' => 'da1b0c13d78ba2f62e97e5627c3149f4e81b9cf9b6092d4ca7f02ca5e5bbcfec',

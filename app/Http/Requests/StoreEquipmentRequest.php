@@ -21,4 +21,16 @@ final class StoreEquipmentRequest extends FormRequest
             'active' => ['sometimes', 'boolean'],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'O nome do equipamento é obrigatório.',
+            'name.max' => 'O nome não pode exceder 255 caracteres.',
+            'serial.required' => 'O número de série é obrigatório.',
+            'serial.unique' => 'Este número de série já está em uso.',
+            'room_id.exists' => 'A sala selecionada não existe.',
+            'category_id.exists' => 'A categoria selecionada não existe.',
+        ];
+    }
 }

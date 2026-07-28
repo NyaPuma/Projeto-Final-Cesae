@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Http\Controllers\TicketController.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Controllers\TicketController
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-29e4270725f7172230306801a9ab47552b03c2bf1c0f6c5b6045617200c477ea',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-39aebf28764c113071f28c7247577bc40e63b0d4487bd84b8bd043e97bbec1f1',
    'data' => 
   array (
     'locatedSource' => 
@@ -26,8 +26,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'attributes' => 
     array (
     ),
-    'startLine' => 20,
-    'endLine' => 133,
+    'startLine' => 19,
+    'endLine' => 115,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'App\\Http\\Controllers\\Controller',
@@ -42,18 +42,49 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'immediateProperties' => 
     array (
-      'statusService' => 
+      'ticketRepository' => 
       array (
         'declaringClassName' => 'App\\Http\\Controllers\\TicketController',
         'implementingClassName' => 'App\\Http\\Controllers\\TicketController',
-        'name' => 'statusService',
+        'name' => 'ticketRepository',
         'modifiers' => 132,
         'type' => 
         array (
           'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
           'data' => 
           array (
-            'name' => 'App\\Services\\TicketStatusService',
+            'name' => 'App\\Repositories\\Contracts\\TicketRepositoryInterface',
+            'isIdentifier' => false,
+          ),
+        ),
+        'default' => NULL,
+        'docComment' => NULL,
+        'attributes' => 
+        array (
+        ),
+        'startLine' => 22,
+        'endLine' => 22,
+        'startColumn' => 9,
+        'endColumn' => 68,
+        'isPromoted' => true,
+        'declaredAtCompileTime' => true,
+        'immediateVirtual' => false,
+        'immediateHooks' => 
+        array (
+        ),
+      ),
+      'createTicketAction' => 
+      array (
+        'declaringClassName' => 'App\\Http\\Controllers\\TicketController',
+        'implementingClassName' => 'App\\Http\\Controllers\\TicketController',
+        'name' => 'createTicketAction',
+        'modifiers' => 132,
+        'type' => 
+        array (
+          'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+          'data' => 
+          array (
+            'name' => 'App\\Actions\\CreateTicketAction',
             'isIdentifier' => false,
           ),
         ),
@@ -65,7 +96,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'startLine' => 23,
         'endLine' => 23,
         'startColumn' => 9,
-        'endColumn' => 59,
+        'endColumn' => 63,
         'isPromoted' => true,
         'declaredAtCompileTime' => true,
         'immediateVirtual' => false,
@@ -143,16 +174,42 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'name' => '__construct',
         'parameters' => 
         array (
-          'statusService' => 
+          'ticketRepository' => 
           array (
-            'name' => 'statusService',
+            'name' => 'ticketRepository',
             'default' => NULL,
             'type' => 
             array (
               'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
               'data' => 
               array (
-                'name' => 'App\\Services\\TicketStatusService',
+                'name' => 'App\\Repositories\\Contracts\\TicketRepositoryInterface',
+                'isIdentifier' => false,
+              ),
+            ),
+            'isVariadic' => false,
+            'byRef' => false,
+            'isPromoted' => true,
+            'attributes' => 
+            array (
+            ),
+            'startLine' => 22,
+            'endLine' => 22,
+            'startColumn' => 9,
+            'endColumn' => 68,
+            'parameterIndex' => 0,
+            'isOptional' => false,
+          ),
+          'createTicketAction' => 
+          array (
+            'name' => 'createTicketAction',
+            'default' => NULL,
+            'type' => 
+            array (
+              'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+              'data' => 
+              array (
+                'name' => 'App\\Actions\\CreateTicketAction',
                 'isIdentifier' => false,
               ),
             ),
@@ -165,8 +222,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'startLine' => 23,
             'endLine' => 23,
             'startColumn' => 9,
-            'endColumn' => 59,
-            'parameterIndex' => 0,
+            'endColumn' => 63,
+            'parameterIndex' => 1,
             'isOptional' => false,
           ),
           'technicianService' => 
@@ -192,7 +249,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'endLine' => 24,
             'startColumn' => 9,
             'endColumn' => 71,
-            'parameterIndex' => 1,
+            'parameterIndex' => 2,
             'isOptional' => false,
           ),
           'searchService' => 
@@ -218,7 +275,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'endLine' => 25,
             'startColumn' => 9,
             'endColumn' => 59,
-            'parameterIndex' => 2,
+            'parameterIndex' => 3,
             'isOptional' => false,
           ),
         ),
@@ -228,7 +285,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 22,
+        'startLine' => 21,
         'endLine' => 26,
         'startColumn' => 5,
         'endColumn' => 8,
@@ -290,7 +347,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         ),
         'docComment' => NULL,
         'startLine' => 28,
-        'endLine' => 40,
+        'endLine' => 33,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -328,8 +385,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 42,
-            'endLine' => 42,
+            'startLine' => 35,
+            'endLine' => 35,
             'startColumn' => 27,
             'endColumn' => 53,
             'parameterIndex' => 0,
@@ -350,8 +407,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 42,
-        'endLine' => 63,
+        'startLine' => 35,
+        'endLine' => 44,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -389,8 +446,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 65,
-            'endLine' => 65,
+            'startLine' => 46,
+            'endLine' => 46,
             'startColumn' => 28,
             'endColumn' => 43,
             'parameterIndex' => 0,
@@ -411,8 +468,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 65,
-        'endLine' => 83,
+        'startLine' => 46,
+        'endLine' => 64,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -450,8 +507,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 85,
-            'endLine' => 85,
+            'startLine' => 66,
+            'endLine' => 66,
             'startColumn' => 26,
             'endColumn' => 41,
             'parameterIndex' => 0,
@@ -476,8 +533,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 85,
-            'endLine' => 85,
+            'startLine' => 66,
+            'endLine' => 66,
             'startColumn' => 44,
             'endColumn' => 50,
             'parameterIndex' => 1,
@@ -517,8 +574,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 85,
-        'endLine' => 101,
+        'startLine' => 66,
+        'endLine' => 86,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -556,8 +613,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 103,
-            'endLine' => 103,
+            'startLine' => 88,
+            'endLine' => 88,
             'startColumn' => 33,
             'endColumn' => 48,
             'parameterIndex' => 0,
@@ -578,8 +635,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 103,
-        'endLine' => 114,
+        'startLine' => 88,
+        'endLine' => 96,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -617,8 +674,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 116,
-            'endLine' => 116,
+            'startLine' => 98,
+            'endLine' => 98,
             'startColumn' => 45,
             'endColumn' => 60,
             'parameterIndex' => 0,
@@ -639,8 +696,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 116,
-        'endLine' => 132,
+        'startLine' => 98,
+        'endLine' => 114,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

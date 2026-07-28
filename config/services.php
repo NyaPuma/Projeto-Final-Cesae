@@ -56,6 +56,31 @@ return [
 
     'analytics' => [
         'sla_target_minutes' => (int) env('SLA_TARGET_MINUTES', 480),
+        'system_availability' => (float) env('SYSTEM_AVAILABILITY', 99.9),
+    ],
+
+    'custom' => [
+        'auth' => [
+            'max_attempts' => (int) env('AUTH_MAX_ATTEMPTS', 5),
+            'lockout_minutes' => (int) env('AUTH_LOCKOUT_MINUTES', 15),
+            'token_expiry_days' => (int) env('AUTH_TOKEN_EXPIRY_DAYS', 30),
+        ],
+        'upload' => [
+            'max_photo_size_kb' => (int) env('UPLOAD_MAX_PHOTO_SIZE_KB', 2048),
+            'max_photo_width' => (int) env('UPLOAD_MAX_PHOTO_WIDTH', 4096),
+            'max_photo_height' => (int) env('UPLOAD_MAX_PHOTO_HEIGHT', 4096),
+            'allowed_photo_mimes' => array_filter(
+                explode(',', env('UPLOAD_ALLOWED_PHOTO_MIMES', 'jpeg,png,jpg,gif,webp')),
+                fn ($v) => trim($v) !== ''
+            ),
+        ],
+        'pagination' => [
+            'per_page' => (int) env('PAGINATION_PER_PAGE', 15),
+        ],
+        'database' => [
+            'slow_query_log' => env('DB_SLOW_QUERY_LOG', false),
+            'slow_query_threshold' => (float) env('DB_SLOW_QUERY_THRESHOLD', 2.0),
+        ],
     ],
 
 ];

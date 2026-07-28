@@ -8,6 +8,8 @@ final readonly class BudgetSubmissionData
         public float $estimatedBudget,
         public ?array $budgetDetails = null,
         public bool $isDetailedRequest = false,
+        public ?float $amount = null,
+        public ?string $details = null,
     ) {}
 
     public static function fromSubmitEstimate(array $data): self
@@ -16,6 +18,8 @@ final readonly class BudgetSubmissionData
             estimatedBudget: (float) ($data['estimatedBudget'] ?? 0),
             budgetDetails: $data['budget_details'] ?? null,
             isDetailedRequest: false,
+            amount: null,
+            details: null,
         );
     }
 
@@ -25,6 +29,8 @@ final readonly class BudgetSubmissionData
             estimatedBudget: (float) ($data['budget_amount'] ?? 0),
             budgetDetails: $data['budget_details'] ?? null,
             isDetailedRequest: true,
+            amount: (float) ($data['budget_amount'] ?? 0),
+            details: $data['budget_details'] ?? null,
         );
     }
 }
