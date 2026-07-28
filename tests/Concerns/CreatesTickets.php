@@ -2,12 +2,16 @@
 
 namespace Tests\Concerns;
 
+use App\Enums\BudgetStatusEnum;
+use App\Enums\TicketPriorityEnum;
+use App\Enums\TicketStatusEnum;
 use App\Models\Equipment;
 use App\Models\Room;
 use App\Models\Ticket;
 use App\Models\TicketStatus;
 use App\Models\TicketType;
 use App\Models\User;
+use App\Services\TicketStatusService;
 
 trait CreatesTickets
 {
@@ -16,12 +20,12 @@ trait CreatesTickets
         $this->ensureTicketLookupData();
 
         $user = $attributes['user_id'] ?? User::factory()->create();
-        $statusId = $attributes['status_id'] ?? Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $statusId = $attributes['status_id'] ?? app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         return Ticket::create(array_merge([
             'title' => 'Test Ticket',
             'description' => 'Test Description',
-            'priority' => Ticket::PRIORITY_MEDIUM,
+            'priority' => TicketPriorityEnum::Medium->value,
             'user_id' => $user->id,
             'status_id' => $statusId,
             'opened_at' => now(),
@@ -41,7 +45,7 @@ trait CreatesTickets
 
     protected function createTicketWithStatus(string $statusName, array $attributes = []): Ticket
     {
-        $statusId = Ticket::getStatusIdByName($statusName);
+        $statusId = app(TicketStatusService::class)->getByName(TicketStatusEnum::from($statusName));
 
         return $this->createTicket(array_merge([
             'status_id' => $statusId,
@@ -68,10 +72,10 @@ trait CreatesTickets
     {
         return $this->createTicket(array_merge([
             'budget_requested' => true,
-            'budget_status' => Ticket::BUDGET_PENDING,
+            'budget_status' => BudgetStatusEnum::Pending->value,
             'budget_amount' => 100.00,
             'budget_requested_at' => now(),
-            'status_id' => Ticket::getStatusIdByName(Ticket::STATUS_PENDING_BUDGET),
+            'status_id' => app(TicketStatusService::class)->getByName(TicketStatusEnum::PendingBudget),
         ], $attributes));
     }
 
@@ -91,11 +95,11 @@ trait CreatesTickets
         TicketType::firstOrCreate(['name' => 'preventiva'], ['description' => 'Manutenção Preventiva']);
 
         $typeId = TicketType::where('name', 'avaria')->first()->id;
-        TicketStatus::firstOrCreate(['name' => Ticket::STATUS_OPEN, 'description' => 'Aberto', 'type_id' => $typeId]);
-        TicketStatus::firstOrCreate(['name' => Ticket::STATUS_IN_PROGRESS, 'description' => 'Em Curso', 'type_id' => $typeId]);
-        TicketStatus::firstOrCreate(['name' => Ticket::STATUS_CLOSED, 'description' => 'Fechado', 'type_id' => $typeId]);
-        TicketStatus::firstOrCreate(['name' => Ticket::STATUS_CANCELLED, 'description' => 'Cancelado', 'type_id' => $typeId]);
-        TicketStatus::firstOrCreate(['name' => Ticket::STATUS_PENDING_BUDGET, 'description' => 'Pendente Orçamento', 'type_id' => $typeId]);
-        TicketStatus::firstOrCreate(['name' => Ticket::STATUS_REJECTED, 'description' => 'Recusada', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Open->value, 'description' => 'Aberto', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::InProgress->value, 'description' => 'Em Curso', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Closed->value, 'description' => 'Fechado', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Cancelled->value, 'description' => 'Cancelado', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::PendingBudget->value, 'description' => 'Pendente Orçamento', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Rejected->value, 'description' => 'Recusada', 'type_id' => $typeId]);
     }
 }

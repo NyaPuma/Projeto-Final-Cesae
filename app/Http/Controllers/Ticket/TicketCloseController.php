@@ -12,7 +12,6 @@ use App\Models\User;
 use App\Services\NotificationService;
 use App\Services\TicketWorkflowService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
 
 final class TicketCloseController extends Controller
 {
@@ -71,7 +70,7 @@ final class TicketCloseController extends Controller
         $cost = (float) $request->validated('actual_cost');
         $report = $request->validated('report');
 
-        DB::transaction(fn () => $this->workflowService->close($ticket, $cost, $report));
+        $this->workflowService->close($ticket, $cost, $report);
 
         if ($force) {
             $higherPriority = $this->workflowService->findHigherPriorityTickets($ticket);

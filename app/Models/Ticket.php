@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Domain\Ticket\Services\TicketStatusChecker;
 use App\Domain\Ticket\ValueObjects\BudgetPauseMinutes;
-use App\Enums\BudgetStatusEnum;
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
 use App\Services\TicketStatusService;
@@ -17,63 +16,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ticket extends Model
 {
-    /** @deprecated Use TicketStatusEnum::Open->value */
-    public const STATUS_OPEN = 'aberta';
-
-    /** @deprecated Use TicketStatusEnum::InProgress->value */
-    public const STATUS_IN_PROGRESS = 'em curso';
-
-    /** @deprecated Use TicketStatusEnum::Closed->value */
-    public const STATUS_CLOSED = 'fechada';
-
-    /** @deprecated Use TicketStatusEnum::Cancelled->value */
-    public const STATUS_CANCELLED = 'cancelada';
-
-    /** @deprecated Use TicketStatusEnum::PendingBudget->value */
-    public const STATUS_PENDING_BUDGET = 'pendente orçamento';
-
-    /** @deprecated Use TicketStatusEnum::Rejected->value */
-    public const STATUS_REJECTED = 'recusada';
-
-    /** @deprecated Use TicketPriorityEnum::Low->value */
-    public const PRIORITY_LOW = 'baixa';
-
-    /** @deprecated Use TicketPriorityEnum::Medium->value */
-    public const PRIORITY_MEDIUM = 'média';
-
-    /** @deprecated Use TicketPriorityEnum::High->value */
-    public const PRIORITY_HIGH = 'alta';
-
-    /** @deprecated Use TicketPriorityEnum::Critical->value */
-    public const PRIORITY_CRITICAL = 'crítica';
-
-    /** @deprecated Use BudgetStatusEnum::Pending->value */
-    public const BUDGET_PENDING = 'pending';
-
-    /** @deprecated Use BudgetStatusEnum::Approved->value */
-    public const BUDGET_APPROVED = 'approved';
-
-    /** @deprecated Use BudgetStatusEnum::Rejected->value */
-    public const BUDGET_REJECTED = 'rejected';
-
-    /** @deprecated Use app(TicketStatusService::class)->getByName(TicketStatusEnum::*) */
-    public static function flushStatusCache(): void
-    {
-        app(TicketStatusService::class)->flush();
-    }
-
-    /** @deprecated Use app(TicketStatusService::class)->getByName(TicketStatusEnum::*) */
-    public static function getStatusIdByName(string $statusName): ?int
-    {
-        $enum = TicketStatusEnum::tryFrom($statusName);
-
-        if ($enum) {
-            return app(TicketStatusService::class)->getByName($enum);
-        }
-
-        return TicketStatus::where('name', $statusName)->value('id');
-    }
-
     use Auditable;
     use HasFactory;
     use SoftDeletes;

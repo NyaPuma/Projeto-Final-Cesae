@@ -2,10 +2,13 @@
 
 namespace Tests\Feature;
 
+use App\Enums\TicketPriorityEnum;
+use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use App\Models\TicketComment;
 use App\Models\User;
 use App\Models\UserProfile;
+use App\Services\TicketStatusService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\TestCase;
@@ -39,13 +42,13 @@ class CommentOperationFeatureTest extends TestCase
     {
         $user = $this->createUserWithToken(User::ROLE_USER);
         $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
-        $openId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
             'user_id' => $user->id,
             'title' => 'Technician comment test',
             'description' => 'Testing technician commenting',
-            'priority' => Ticket::PRIORITY_HIGH,
+            'priority' => TicketPriorityEnum::High->value,
             'status_id' => $openId,
             'opened_at' => now(),
         ]);
@@ -69,13 +72,13 @@ class CommentOperationFeatureTest extends TestCase
     {
         $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
         $user = $this->createUserWithToken(User::ROLE_USER);
-        $openId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
             'user_id' => $user->id,
             'title' => 'Comment validation test',
             'description' => 'Testing comment validation',
-            'priority' => Ticket::PRIORITY_MEDIUM,
+            'priority' => TicketPriorityEnum::Medium->value,
             'status_id' => $openId,
             'opened_at' => now(),
         ]);
@@ -91,13 +94,13 @@ class CommentOperationFeatureTest extends TestCase
     {
         $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
         $user = $this->createUserWithToken(User::ROLE_USER);
-        $openId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
             'user_id' => $user->id,
             'title' => 'Comment listing test',
             'description' => 'Testing comment listing',
-            'priority' => Ticket::PRIORITY_LOW,
+            'priority' => TicketPriorityEnum::Low->value,
             'status_id' => $openId,
             'opened_at' => now(),
         ]);

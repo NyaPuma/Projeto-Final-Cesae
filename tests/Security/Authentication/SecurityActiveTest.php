@@ -2,9 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\Enums\TicketPriorityEnum;
+use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserProfile;
+use App\Services\TicketStatusService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\TestCase;
@@ -82,13 +85,13 @@ class SecurityActiveTest extends TestCase
         $userA = $this->createUserWithToken(User::ROLE_USER);
         $userB = $this->createUserWithToken(User::ROLE_USER);
 
-        $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openStatusId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         // User B creates a ticket
         $ticket = Ticket::create([
             'title' => 'Ticket do User B - confidencial',
             'description' => 'Dados industriais sensíveis do User B',
-            'priority' => Ticket::PRIORITY_HIGH,
+            'priority' => TicketPriorityEnum::High->value,
             'user_id' => $userB->id,
             'status_id' => $openStatusId,
             'opened_at' => now(),
@@ -118,12 +121,12 @@ class SecurityActiveTest extends TestCase
         $userA = $this->createUserWithToken(User::ROLE_USER);
         $userB = $this->createUserWithToken(User::ROLE_USER);
 
-        $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openStatusId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
             'title' => 'Ticket com fotos sensíveis',
             'description' => 'Fotos de equipamento industrial',
-            'priority' => Ticket::PRIORITY_LOW,
+            'priority' => TicketPriorityEnum::Low->value,
             'user_id' => $userB->id,
             'status_id' => $openStatusId,
             'opened_at' => now(),
@@ -163,7 +166,7 @@ class SecurityActiveTest extends TestCase
             ->postJson('/api/tickets', [
                 'title' => 'Mass Assignment Test',
                 'description' => 'Trying to assign to another user',
-                'priority' => Ticket::PRIORITY_LOW,
+                'priority' => TicketPriorityEnum::Low->value,
                 'user_id' => $userB->id,
             ]);
 

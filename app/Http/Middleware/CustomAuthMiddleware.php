@@ -6,6 +6,7 @@ use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class CustomAuthMiddleware
@@ -44,7 +45,8 @@ class CustomAuthMiddleware
         $sessionToken = null;
         try {
             $sessionToken = $request->session()->get('api_token');
-        } catch (\Throwable) {
+        } catch (\Throwable $e) {
+            Log::debug('Session token read failed', ['error' => $e->getMessage()]);
         }
 
         return array_filter([

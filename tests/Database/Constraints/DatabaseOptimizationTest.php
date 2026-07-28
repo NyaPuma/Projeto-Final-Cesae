@@ -1,13 +1,15 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Database\Constraints;
 
+use App\Enums\TicketStatusEnum;
 use App\Models\Equipment;
 use App\Models\Room;
 use App\Models\Ticket;
 use App\Models\TicketStatus;
 use App\Models\User;
 use App\Models\UserProfile;
+use App\Services\TicketStatusService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
@@ -19,43 +21,43 @@ class DatabaseOptimizationTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        Ticket::flushStatusCache();
+        app(TicketStatusService::class)->flush();
     }
 
     public function test_ticket_status_cache_returns_correct_id(): void
     {
-        $status = TicketStatus::create(['name' => 'cached_test', 'description' => 'Test']);
+        $status = TicketStatus::create(['name' => 'aberta', 'description' => 'Aberta']);
 
-        $result = Ticket::getStatusIdByName('cached_test');
+        $result = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
         $this->assertEquals($status->id, $result);
     }
 
-    public function test_ticket_status_cache_returns_null_for_nonexistent(): void
+    public function test_ticket_status_cache_returns_null_when_not_seeded(): void
     {
-        $result = Ticket::getStatusIdByName('nonexistent_status_xyz');
+        $result = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
         $this->assertNull($result);
     }
 
     public function test_ticket_status_cache_returns_consistent_results(): void
     {
-        $status = TicketStatus::create(['name' => 'consistent_test', 'description' => 'Test']);
+        TicketStatus::create(['name' => 'aberta', 'description' => 'Aberta']);
 
-        $first = Ticket::getStatusIdByName('consistent_test');
-        $second = Ticket::getStatusIdByName('consistent_test');
+        $first = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
+        $second = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $this->assertEquals($first, $second);
-        $this->assertEquals($status->id, $first);
+        $this->assertNotNull($first);
     }
 
     public function test_flush_status_cache_clears_cached_values(): void
     {
-        TicketStatus::create(['name' => 'flush_test', 'description' => 'Test']);
+        TicketStatus::create(['name' => 'aberta', 'description' => 'Aberta']);
 
-        Ticket::getStatusIdByName('flush_test');
-        Ticket::flushStatusCache();
+        app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
+        app(TicketStatusService::class)->flush();
 
-        $status = TicketStatus::where('name', 'flush_test')->first();
-        $this->assertEquals($status->id, Ticket::getStatusIdByName('flush_test'));
+        $status = TicketStatus::where('name', 'aberta')->first();
+        $this->assertEquals($status->id, app(TicketStatusService::class)->getByName(TicketStatusEnum::Open));
     }
 
     public function test_room_soft_delete_prevents_hard_delete(): void
@@ -95,8 +97,8 @@ class DatabaseOptimizationTest extends TestCase
     {
         $this->seedLookupData();
 
-        $openId = Ticket::getStatusIdByName('aberta');
-        $closedId = Ticket::getStatusIdByName('fechada');
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
+        $closedId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Closed);
 
         Ticket::factory()->count(5)->create(['status_id' => $openId, 'opened_at' => now()->subHours(2)]);
         Ticket::factory()->count(3)->create([

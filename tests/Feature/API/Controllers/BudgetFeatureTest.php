@@ -2,10 +2,13 @@
 
 namespace Tests\Feature;
 
+use App\Enums\BudgetStatusEnum;
+use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserProfile;
+use App\Services\TicketStatusService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\TestCase;
@@ -39,13 +42,13 @@ class BudgetFeatureTest extends TestCase
     {
         $user = $this->createUserWithToken(User::ROLE_USER);
         $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
-        $inProgressId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
+        $inProgressId = app(TicketStatusService::class)->getByName(TicketStatusEnum::InProgress);
 
         $ticket = Ticket::create([
             'user_id' => $user->id,
             'title' => 'Budget test ticket',
             'description' => 'Needs external parts',
-            'priority' => Ticket::PRIORITY_MEDIUM,
+            'priority' => TicketPriorityEnum::Medium->value,
             'status_id' => $inProgressId,
             'assigned_to' => $technician->id,
             'in_progress_at' => now(),
@@ -66,7 +69,7 @@ class BudgetFeatureTest extends TestCase
         $ticket->refresh();
         $this->assertTrue($ticket->hasStatus(TicketStatusEnum::PendingBudget));
         $this->assertTrue($ticket->budget_requested);
-        $this->assertEquals(Ticket::BUDGET_PENDING, $ticket->budget_status);
+        $this->assertEquals(BudgetStatusEnum::Pending->value, $ticket->budget_status);
         $this->assertEquals(500.00, (float) $ticket->budget_amount);
         $this->assertNotNull($ticket->budget_requested_at);
     }
@@ -74,13 +77,13 @@ class BudgetFeatureTest extends TestCase
     public function test_non_technician_cannot_request_budget(): void
     {
         $user = $this->createUserWithToken(User::ROLE_USER);
-        $inProgressId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
+        $inProgressId = app(TicketStatusService::class)->getByName(TicketStatusEnum::InProgress);
 
         $ticket = Ticket::create([
             'user_id' => $user->id,
             'title' => 'Budget test ticket',
             'description' => 'Needs parts',
-            'priority' => Ticket::PRIORITY_LOW,
+            'priority' => TicketPriorityEnum::Low->value,
             'status_id' => $inProgressId,
             'opened_at' => now(),
         ]);
@@ -97,14 +100,14 @@ class BudgetFeatureTest extends TestCase
     public function test_budget_request_validates_required_fields(): void
     {
         $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
-        $inProgressId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
+        $inProgressId = app(TicketStatusService::class)->getByName(TicketStatusEnum::InProgress);
         $user = $this->createUserWithToken(User::ROLE_USER);
 
         $ticket = Ticket::create([
             'user_id' => $user->id,
             'title' => 'Budget validation ticket',
             'description' => 'Testing validation',
-            'priority' => Ticket::PRIORITY_HIGH,
+            'priority' => TicketPriorityEnum::High->value,
             'status_id' => $inProgressId,
             'assigned_to' => $technician->id,
             'in_progress_at' => now(),
@@ -124,17 +127,17 @@ class BudgetFeatureTest extends TestCase
         $admin = $this->createUserWithToken(User::ROLE_ADMIN);
         $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
         $user = $this->createUserWithToken(User::ROLE_USER);
-        $pendingId = Ticket::getStatusIdByName(Ticket::STATUS_PENDING_BUDGET);
+        $pendingId = app(TicketStatusService::class)->getByName(TicketStatusEnum::PendingBudget);
 
         $ticket = Ticket::create([
             'user_id' => $user->id,
             'title' => 'Budget approval ticket',
             'description' => 'Testing budget approval',
-            'priority' => Ticket::PRIORITY_MEDIUM,
+            'priority' => TicketPriorityEnum::Medium->value,
             'status_id' => $pendingId,
             'assigned_to' => $technician->id,
             'budget_requested' => true,
-            'budget_status' => Ticket::BUDGET_PENDING,
+            'budget_status' => BudgetStatusEnum::Pending->value,
             'budget_amount' => 750.00,
             'budget_requested_at' => now()->subDay(),
             'opened_at' => now()->subDays(2),
@@ -147,7 +150,7 @@ class BudgetFeatureTest extends TestCase
 
         $response->assertOk();
         $ticket->refresh();
-        $this->assertEquals(Ticket::BUDGET_APPROVED, $ticket->budget_status);
+        $this->assertEquals(BudgetStatusEnum::Approved->value, $ticket->budget_status);
         $this->assertTrue($ticket->hasStatus(TicketStatusEnum::InProgress));
         $this->assertEquals($admin->id, $ticket->budget_approved_by);
         $this->assertNotNull($ticket->budget_decided_at);
@@ -158,17 +161,17 @@ class BudgetFeatureTest extends TestCase
         $admin = $this->createUserWithToken(User::ROLE_ADMIN);
         $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
         $user = $this->createUserWithToken(User::ROLE_USER);
-        $pendingId = Ticket::getStatusIdByName(Ticket::STATUS_PENDING_BUDGET);
+        $pendingId = app(TicketStatusService::class)->getByName(TicketStatusEnum::PendingBudget);
 
         $ticket = Ticket::create([
             'user_id' => $user->id,
             'title' => 'Budget rejection ticket',
             'description' => 'Testing budget rejection',
-            'priority' => Ticket::PRIORITY_LOW,
+            'priority' => TicketPriorityEnum::Low->value,
             'status_id' => $pendingId,
             'assigned_to' => $technician->id,
             'budget_requested' => true,
-            'budget_status' => Ticket::BUDGET_PENDING,
+            'budget_status' => BudgetStatusEnum::Pending->value,
             'budget_amount' => 999.99,
             'budget_requested_at' => now()->subDay(),
             'opened_at' => now()->subDays(2),
@@ -182,7 +185,7 @@ class BudgetFeatureTest extends TestCase
 
         $response->assertOk();
         $ticket->refresh();
-        $this->assertEquals(Ticket::BUDGET_REJECTED, $ticket->budget_status);
+        $this->assertEquals(BudgetStatusEnum::Rejected->value, $ticket->budget_status);
         $this->assertTrue($ticket->hasStatus(TicketStatusEnum::Rejected));
         $this->assertEquals($admin->id, $ticket->budget_approved_by);
     }
@@ -191,16 +194,16 @@ class BudgetFeatureTest extends TestCase
     {
         $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
         $user = $this->createUserWithToken(User::ROLE_USER);
-        $pendingId = Ticket::getStatusIdByName(Ticket::STATUS_PENDING_BUDGET);
+        $pendingId = app(TicketStatusService::class)->getByName(TicketStatusEnum::PendingBudget);
 
         $ticket = Ticket::create([
             'user_id' => $user->id,
             'title' => 'Budget unauthorized ticket',
             'description' => 'Testing unauthorized budget decision',
-            'priority' => Ticket::PRIORITY_HIGH,
+            'priority' => TicketPriorityEnum::High->value,
             'status_id' => $pendingId,
             'budget_requested' => true,
-            'budget_status' => Ticket::BUDGET_PENDING,
+            'budget_status' => BudgetStatusEnum::Pending->value,
             'budget_amount' => 200.00,
             'budget_requested_at' => now(),
             'opened_at' => now(),

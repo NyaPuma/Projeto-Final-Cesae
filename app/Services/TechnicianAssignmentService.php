@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use App\Models\User;
@@ -60,7 +61,14 @@ final class TechnicianAssignmentService
             $query->where('id', '!=', $excludeId);
         }
 
-        return $query->orderByRaw("CASE priority WHEN 'crítica' THEN 0 WHEN 'alta' THEN 1 WHEN 'média' THEN 2 WHEN 'baixa' THEN 3 ELSE 99 END")
+        $reversed = array_reverse(TicketPriorityEnum::cases());
+        $cases = array_map(
+            fn (TicketPriorityEnum $p, int $i) => "WHEN '{$p->value}' THEN {$i}",
+            $reversed,
+            array_keys($reversed)
+        );
+
+        return $query->orderByRaw('CASE priority '.implode(' ', $cases).' ELSE 99 END')
             ->orderBy('created_at', 'asc')
             ->first();
     }

@@ -2,8 +2,11 @@
 
 namespace Tests\Security\MassAssignment;
 
+use App\Enums\TicketPriorityEnum;
+use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use App\Models\User;
+use App\Services\TicketStatusService;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Base\FeatureTestCase;
 
@@ -19,7 +22,7 @@ class MassAssignmentTest extends FeatureTestCase
             ->postJson('/api/tickets', [
                 'title' => 'Mass Assignment Test',
                 'description' => 'Trying to assign to another user',
-                'priority' => Ticket::PRIORITY_LOW,
+                'priority' => TicketPriorityEnum::Low->value,
                 'user_id' => $userB->id,
             ]);
 
@@ -50,13 +53,13 @@ class MassAssignmentTest extends FeatureTestCase
     public function it_prevents_mass_assignment_of_protected_fields(): void
     {
         $user = $this->createUserWithToken(User::ROLE_USER);
-        $openId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/tickets', [
                 'title' => 'Mass assignment test',
                 'description' => 'Testing mass assignment protection',
-                'priority' => Ticket::PRIORITY_HIGH,
+                'priority' => TicketPriorityEnum::High->value,
                 'status_id' => $openId,
                 'id' => 99999,
                 'user_id' => 1,
@@ -81,13 +84,13 @@ class MassAssignmentTest extends FeatureTestCase
     public function it_ignores_unexpected_fields(): void
     {
         $user = $this->createUserWithToken(User::ROLE_USER);
-        $openId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/tickets', [
                 'title' => 'Unexpected fields test',
                 'description' => 'Testing unexpected fields are ignored',
-                'priority' => Ticket::PRIORITY_MEDIUM,
+                'priority' => TicketPriorityEnum::Medium->value,
                 'status_id' => $openId,
                 'is_admin' => true,
                 'role' => 'superadmin',
@@ -101,13 +104,13 @@ class MassAssignmentTest extends FeatureTestCase
     public function it_rejects_very_long_input(): void
     {
         $user = $this->createUserWithToken(User::ROLE_USER);
-        $openId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/tickets', [
                 'title' => str_repeat('A', 500),
                 'description' => 'Testing very long title',
-                'priority' => Ticket::PRIORITY_LOW,
+                'priority' => TicketPriorityEnum::Low->value,
                 'status_id' => $openId,
             ]);
 

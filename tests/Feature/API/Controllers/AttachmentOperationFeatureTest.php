@@ -2,10 +2,13 @@
 
 namespace Tests\Feature;
 
+use App\Enums\TicketPriorityEnum;
+use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use App\Models\TicketAttachment;
 use App\Models\User;
 use App\Models\UserProfile;
+use App\Services\TicketStatusService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -43,13 +46,13 @@ class AttachmentOperationFeatureTest extends TestCase
 
         $user = $this->createUserWithToken(User::ROLE_USER);
         $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
-        $openId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
             'user_id' => $user->id,
             'title' => 'Photo delete test',
             'description' => 'Testing photo deletion',
-            'priority' => Ticket::PRIORITY_MEDIUM,
+            'priority' => TicketPriorityEnum::Medium->value,
             'status_id' => $openId,
             'opened_at' => now(),
         ]);
@@ -79,13 +82,13 @@ class AttachmentOperationFeatureTest extends TestCase
         Storage::fake('public');
 
         $user = $this->createUserWithToken(User::ROLE_USER);
-        $openId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
             'user_id' => $user->id,
             'title' => 'Own photo delete test',
             'description' => 'Testing own photo deletion',
-            'priority' => Ticket::PRIORITY_LOW,
+            'priority' => TicketPriorityEnum::Low->value,
             'status_id' => $openId,
             'opened_at' => now(),
         ]);
@@ -115,13 +118,13 @@ class AttachmentOperationFeatureTest extends TestCase
 
         $user1 = $this->createUserWithToken(User::ROLE_USER);
         $user2 = $this->createUserWithToken(User::ROLE_USER);
-        $openId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
             'user_id' => $user1->id,
             'title' => 'Unauthorized photo delete',
             'description' => 'Testing unauthorized deletion',
-            'priority' => Ticket::PRIORITY_HIGH,
+            'priority' => TicketPriorityEnum::High->value,
             'status_id' => $openId,
             'opened_at' => now(),
         ]);
@@ -147,13 +150,13 @@ class AttachmentOperationFeatureTest extends TestCase
     public function test_delete_nonexistent_photo_returns_404(): void
     {
         $user = $this->createUserWithToken(User::ROLE_USER);
-        $openId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
             'user_id' => $user->id,
             'title' => 'Nonexistent photo',
             'description' => 'Testing 404 on photo delete',
-            'priority' => Ticket::PRIORITY_MEDIUM,
+            'priority' => TicketPriorityEnum::Medium->value,
             'status_id' => $openId,
             'opened_at' => now(),
         ]);
@@ -169,13 +172,13 @@ class AttachmentOperationFeatureTest extends TestCase
         Storage::fake('public');
 
         $user = $this->createUserWithToken(User::ROLE_TECHNICIAN);
-        $openId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
             'user_id' => $user->id,
             'title' => 'Photo list test',
             'description' => 'Testing photo listing',
-            'priority' => Ticket::PRIORITY_HIGH,
+            'priority' => TicketPriorityEnum::High->value,
             'status_id' => $openId,
             'opened_at' => now(),
         ]);

@@ -14,7 +14,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
           'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
           'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
           'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
           'ticketstatusservice' => 'App\\Services\\TicketStatusService',
@@ -27,74 +26,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         ),
          'className' => 'App\\Models\\Ticket',
          'functionName' => NULL,
-         'templatePhpDocNodes' => 
-        array (
-        ),
-         'parent' => NULL,
-         'typeAliasesMap' => 
-        array (
-        ),
-         'bypassTypeAliases' => false,
-         'constUses' => 
-        array (
-        ),
-         'typeAliasClassName' => NULL,
-         'traitData' => NULL,
-      )),
-      '01a9c69bce6a6bec1aacdf1e86791adc' => 
-      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
-         'namespace' => 'App\\Models',
-         'uses' => 
-        array (
-          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
-          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
-          'auditable' => 'App\\Traits\\Auditable',
-          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-          'model' => 'Illuminate\\Database\\Eloquent\\Model',
-          'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-        ),
-         'className' => 'App\\Models\\Ticket',
-         'functionName' => 'flushStatusCache',
-         'templatePhpDocNodes' => 
-        array (
-        ),
-         'parent' => NULL,
-         'typeAliasesMap' => 
-        array (
-        ),
-         'bypassTypeAliases' => false,
-         'constUses' => 
-        array (
-        ),
-         'typeAliasClassName' => NULL,
-         'traitData' => NULL,
-      )),
-      '06642944d4a72a97e33e3f3d0c50683c' => 
-      \PHPStan\Analyser\IntermediaryNameScope::__set_state(array(
-         'namespace' => 'App\\Models',
-         'uses' => 
-        array (
-          'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-          'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
-          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
-          'auditable' => 'App\\Traits\\Auditable',
-          'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-          'model' => 'Illuminate\\Database\\Eloquent\\Model',
-          'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-          'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-          'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-        ),
-         'className' => 'App\\Models\\Ticket',
-         'functionName' => 'getStatusIdByName',
          'templatePhpDocNodes' => 
         array (
         ),
@@ -1533,7 +1464,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
           'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
           'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
           'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
           'ticketstatusservice' => 'App\\Services\\TicketStatusService',
@@ -1567,7 +1497,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
           'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
           'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
           'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
           'ticketstatusservice' => 'App\\Services\\TicketStatusService',
@@ -1601,7 +1530,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
           'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
           'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
           'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
           'ticketstatusservice' => 'App\\Services\\TicketStatusService',
@@ -1635,7 +1563,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
           'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
           'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
           'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
           'ticketstatusservice' => 'App\\Services\\TicketStatusService',
@@ -1669,7 +1596,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
           'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
           'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
           'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
           'ticketstatusservice' => 'App\\Services\\TicketStatusService',
@@ -1703,7 +1629,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
           'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
           'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
           'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
           'ticketstatusservice' => 'App\\Services\\TicketStatusService',
@@ -1737,7 +1662,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
           'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
           'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
           'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
           'ticketstatusservice' => 'App\\Services\\TicketStatusService',
@@ -1771,7 +1695,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
           'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
           'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
           'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
           'ticketstatusservice' => 'App\\Services\\TicketStatusService',
@@ -1805,7 +1728,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
           'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
           'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
           'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
           'ticketstatusservice' => 'App\\Services\\TicketStatusService',
@@ -1839,7 +1761,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
           'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
           'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
           'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
           'ticketstatusservice' => 'App\\Services\\TicketStatusService',
@@ -1873,7 +1794,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
           'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
           'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
           'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
           'ticketstatusservice' => 'App\\Services\\TicketStatusService',
@@ -1907,7 +1827,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
           'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
           'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
           'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
           'ticketstatusservice' => 'App\\Services\\TicketStatusService',
@@ -1941,7 +1860,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
           'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
           'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
           'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
           'ticketstatusservice' => 'App\\Services\\TicketStatusService',
@@ -1975,7 +1893,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
           'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
           'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
           'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
           'ticketstatusservice' => 'App\\Services\\TicketStatusService',
@@ -2009,7 +1926,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
           'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
           'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
           'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
           'ticketstatusservice' => 'App\\Services\\TicketStatusService',
@@ -2043,7 +1959,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
           'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
           'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
           'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
           'ticketstatusservice' => 'App\\Services\\TicketStatusService',
@@ -2077,7 +1992,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
           'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-          'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
           'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
           'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
           'ticketstatusservice' => 'App\\Services\\TicketStatusService',
@@ -2107,7 +2021,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php' => 'e1e2827768bf7de5a795c518b0c6ac32065f08d1846c1dd44a1e257d3916bd90',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php' => 'b46021a1201ce90ff4ea2982617d38493d4c79c811825f323e77b583e3063549',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Traits\\Auditable.php' => 'd0ace2e3521260e41816d729666bef984d68ef27b6d70bb5c403e35e954a5071',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\Factories\\HasFactory.php' => 'b6cb2b164e90168e80963a5549541f5f3188a3ec8cfd368bf3611bd94fbd46a7',
       'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\vendor\\composer\\..\\laravel\\framework\\src\\Illuminate\\Database\\Eloquent\\SoftDeletes.php' => 'da1b0c13d78ba2f62e97e5627c3149f4e81b9cf9b6092d4ca7f02ca5e5bbcfec',

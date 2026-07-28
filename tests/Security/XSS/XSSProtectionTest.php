@@ -7,20 +7,11 @@ use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
-use Tests\Base\ApiTestCase;
+use Tests\Base\FeatureTestCase;
 
-class XSSProtectionTest extends ApiTestCase
+class XSSProtectionTest extends FeatureTestCase
 {
     use RefreshDatabase;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        UserProfile::firstOrCreate(['name' => User::ROLE_ADMIN]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
-        $this->artisan('db:seed', ['--class' => 'TicketLookupSeeder', '--force' => true]);
-    }
 
     #[Test]
     public function it_escapes_xss_in_ticket_title(): void

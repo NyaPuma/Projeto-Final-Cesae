@@ -2,11 +2,14 @@
 
 namespace Tests\Feature;
 
+use App\Enums\BudgetStatusEnum;
+use App\Enums\TicketStatusEnum;
 use App\Models\Equipment;
 use App\Models\Room;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserProfile;
+use App\Services\TicketStatusService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\TestCase;
@@ -102,11 +105,11 @@ class AdminManagementTest extends TestCase
             'user_id' => $creator->id,
             'title' => 'Budget flow',
             'description' => 'Needs approval',
-            'status_id' => Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS),
+            'status_id' => app(TicketStatusService::class)->getByName(TicketStatusEnum::InProgress),
             'opened_at' => now(),
             'cost' => 250,
             'budget_requested' => true,
-            'budget_status' => Ticket::BUDGET_PENDING,
+            'budget_status' => BudgetStatusEnum::Pending->value,
             'budget_amount' => 250,
         ]);
 
@@ -114,7 +117,7 @@ class AdminManagementTest extends TestCase
             ->patchJson('/admin/tickets/'.$ticket->id.'/approve-budget');
 
         $response->assertOk();
-        $this->assertSame(Ticket::BUDGET_APPROVED, $ticket->fresh()->budget_status);
+        $this->assertSame(BudgetStatusEnum::Approved->value, $ticket->fresh()->budget_status);
     }
 
     public function test_admin_inventory_routes_require_admin_role_and_reject_invalid_serials(): void

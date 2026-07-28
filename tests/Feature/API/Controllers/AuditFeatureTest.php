@@ -2,10 +2,13 @@
 
 namespace Tests\Feature;
 
+use App\Enums\TicketPriorityEnum;
+use App\Enums\TicketStatusEnum;
 use App\Models\Audit;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserProfile;
+use App\Services\TicketStatusService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\TestCase;
@@ -48,13 +51,13 @@ class AuditFeatureTest extends TestCase
     public function test_audit_created_when_ticket_is_created(): void
     {
         $user = $this->createUserWithToken(User::ROLE_USER);
-        $openId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
             'user_id' => $user->id,
             'title' => 'Audit creation test',
             'description' => 'Testing audit on ticket creation',
-            'priority' => Ticket::PRIORITY_MEDIUM,
+            'priority' => TicketPriorityEnum::Medium->value,
             'status_id' => $openId,
             'opened_at' => now(),
         ]);
@@ -73,18 +76,18 @@ class AuditFeatureTest extends TestCase
     public function test_audit_created_when_ticket_is_updated(): void
     {
         $user = $this->createUserWithToken(User::ROLE_USER);
-        $openId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
             'user_id' => $user->id,
             'title' => 'Audit update test',
             'description' => 'Testing audit on update',
-            'priority' => Ticket::PRIORITY_LOW,
+            'priority' => TicketPriorityEnum::Low->value,
             'status_id' => $openId,
             'opened_at' => now(),
         ]);
 
-        $ticket->update(['priority' => Ticket::PRIORITY_HIGH]);
+        $ticket->update(['priority' => TicketPriorityEnum::High->value]);
 
         $audit = Audit::where('auditable_id', $ticket->id)
             ->where('auditable_type', Ticket::class)
@@ -93,20 +96,20 @@ class AuditFeatureTest extends TestCase
 
         $this->assertNotNull($audit);
         $this->assertEquals('updated', $audit->event);
-        $this->assertEquals(Ticket::PRIORITY_LOW, $audit->old_values['priority']);
-        $this->assertEquals(Ticket::PRIORITY_HIGH, $audit->new_values['priority']);
+        $this->assertEquals(TicketPriorityEnum::Low->value, $audit->old_values['priority']);
+        $this->assertEquals(TicketPriorityEnum::High->value, $audit->new_values['priority']);
     }
 
     public function test_audit_has_correct_structure(): void
     {
         $user = $this->createUserWithToken(User::ROLE_USER);
-        $openId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
             'user_id' => $user->id,
             'title' => 'Audit structure test',
             'description' => 'Testing audit structure',
-            'priority' => Ticket::PRIORITY_HIGH,
+            'priority' => TicketPriorityEnum::High->value,
             'status_id' => $openId,
             'opened_at' => now(),
         ]);

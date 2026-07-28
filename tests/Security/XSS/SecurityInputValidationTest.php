@@ -2,9 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\Enums\TicketPriorityEnum;
+use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserProfile;
+use App\Services\TicketStatusService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\TestCase;
@@ -37,13 +40,13 @@ class SecurityInputValidationTest extends TestCase
     public function test_sql_injection_in_ticket_title_is_sanitized(): void
     {
         $user = $this->createUserWithToken(User::ROLE_USER);
-        $openId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/tickets', [
                 'title' => "'; DROP TABLE tickets; --",
                 'description' => 'SQL injection attempt',
-                'priority' => Ticket::PRIORITY_MEDIUM,
+                'priority' => TicketPriorityEnum::Medium->value,
                 'status_id' => $openId,
             ]);
 
@@ -59,14 +62,14 @@ class SecurityInputValidationTest extends TestCase
     public function test_xss_payload_in_description_is_stored_safely(): void
     {
         $user = $this->createUserWithToken(User::ROLE_USER);
-        $openId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $xssPayload = '<script>alert("XSS")</script>';
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/tickets', [
                 'title' => 'XSS test ticket',
                 'description' => $xssPayload,
-                'priority' => Ticket::PRIORITY_LOW,
+                'priority' => TicketPriorityEnum::Low->value,
                 'status_id' => $openId,
             ]);
 
@@ -83,13 +86,13 @@ class SecurityInputValidationTest extends TestCase
     {
         $user = $this->createUserWithToken(User::ROLE_USER);
         $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
-        $openId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
             'user_id' => $user->id,
             'title' => 'HTML injection test',
             'description' => 'Testing HTML injection in comments',
-            'priority' => Ticket::PRIORITY_MEDIUM,
+            'priority' => TicketPriorityEnum::Medium->value,
             'status_id' => $openId,
             'opened_at' => now(),
         ]);
@@ -113,13 +116,13 @@ class SecurityInputValidationTest extends TestCase
     public function test_mass_assignment_protection_on_ticket_creation(): void
     {
         $user = $this->createUserWithToken(User::ROLE_USER);
-        $openId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/tickets', [
                 'title' => 'Mass assignment test',
                 'description' => 'Testing mass assignment protection',
-                'priority' => Ticket::PRIORITY_HIGH,
+                'priority' => TicketPriorityEnum::High->value,
                 'status_id' => $openId,
                 'id' => 99999,
                 'user_id' => 1,
@@ -143,13 +146,13 @@ class SecurityInputValidationTest extends TestCase
     public function test_unexpected_fields_are_ignored(): void
     {
         $user = $this->createUserWithToken(User::ROLE_USER);
-        $openId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/tickets', [
                 'title' => 'Unexpected fields test',
                 'description' => 'Testing unexpected fields are ignored',
-                'priority' => Ticket::PRIORITY_MEDIUM,
+                'priority' => TicketPriorityEnum::Medium->value,
                 'status_id' => $openId,
                 'is_admin' => true,
                 'role' => 'superadmin',
@@ -162,13 +165,13 @@ class SecurityInputValidationTest extends TestCase
     public function test_very_long_input_is_rejected(): void
     {
         $user = $this->createUserWithToken(User::ROLE_USER);
-        $openId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/tickets', [
                 'title' => str_repeat('A', 500),
                 'description' => 'Testing very long title',
-                'priority' => Ticket::PRIORITY_LOW,
+                'priority' => TicketPriorityEnum::Low->value,
                 'status_id' => $openId,
             ]);
 

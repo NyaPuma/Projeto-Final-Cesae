@@ -2,10 +2,14 @@
 
 namespace Tests\Fixtures\Builders;
 
+use App\Enums\BudgetStatusEnum;
+use App\Enums\TicketPriorityEnum;
+use App\Enums\TicketStatusEnum;
 use App\Models\Equipment;
 use App\Models\Room;
 use App\Models\Ticket;
 use App\Models\User;
+use App\Services\TicketStatusService;
 
 class TicketBuilder
 {
@@ -16,8 +20,8 @@ class TicketBuilder
         $this->attributes = [
             'title' => 'Test Ticket',
             'description' => 'Test Description',
-            'priority' => Ticket::PRIORITY_MEDIUM,
-            'status_id' => Ticket::getStatusIdByName(Ticket::STATUS_OPEN),
+            'priority' => TicketPriorityEnum::Medium->value,
+            'status_id' => app(TicketStatusService::class)->getByName(TicketStatusEnum::Open),
             'opened_at' => now(),
         ];
     }
@@ -50,7 +54,10 @@ class TicketBuilder
 
     public function withStatus(string $status): self
     {
-        $this->attributes['status_id'] = Ticket::getStatusIdByName($status);
+        $enum = TicketStatusEnum::tryFrom($status);
+        $this->attributes['status_id'] = $enum
+            ? app(TicketStatusService::class)->getByName($enum)
+            : null;
 
         return $this;
     }
@@ -94,10 +101,10 @@ class TicketBuilder
     public function withBudget(float $amount): self
     {
         $this->attributes['budget_requested'] = true;
-        $this->attributes['budget_status'] = Ticket::BUDGET_PENDING;
+        $this->attributes['budget_status'] = BudgetStatusEnum::Pending->value;
         $this->attributes['budget_amount'] = $amount;
         $this->attributes['budget_requested_at'] = now();
-        $this->attributes['status_id'] = Ticket::getStatusIdByName(Ticket::STATUS_PENDING_BUDGET);
+        $this->attributes['status_id'] = app(TicketStatusService::class)->getByName(TicketStatusEnum::PendingBudget);
 
         return $this;
     }

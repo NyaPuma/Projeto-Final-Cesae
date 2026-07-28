@@ -2,8 +2,11 @@
 
 namespace Tests\Security\SQLInjection;
 
+use App\Enums\TicketPriorityEnum;
+use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use App\Models\User;
+use App\Services\TicketStatusService;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Base\FeatureTestCase;
 
@@ -52,13 +55,13 @@ class SqlInjectionTest extends FeatureTestCase
     public function it_sanitizes_sql_injection_in_ticket_title(): void
     {
         $user = $this->createUserWithToken(User::ROLE_USER);
-        $openId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/tickets', [
                 'title' => "'; DROP TABLE tickets; --",
                 'description' => 'SQL injection attempt',
-                'priority' => Ticket::PRIORITY_MEDIUM,
+                'priority' => TicketPriorityEnum::Medium->value,
                 'status_id' => $openId,
             ]);
 
@@ -75,14 +78,14 @@ class SqlInjectionTest extends FeatureTestCase
     public function it_stores_xss_payload_in_description_safely(): void
     {
         $user = $this->createUserWithToken(User::ROLE_USER);
-        $openId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $xssPayload = '<script>alert("XSS")</script>';
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/tickets', [
                 'title' => 'XSS test ticket',
                 'description' => $xssPayload,
-                'priority' => Ticket::PRIORITY_LOW,
+                'priority' => TicketPriorityEnum::Low->value,
                 'status_id' => $openId,
             ]);
 
@@ -100,13 +103,13 @@ class SqlInjectionTest extends FeatureTestCase
     {
         $user = $this->createUserWithToken(User::ROLE_USER);
         $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
-        $openId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
             'user_id' => $user->id,
             'title' => 'HTML injection test',
             'description' => 'Testing HTML injection in comments',
-            'priority' => Ticket::PRIORITY_MEDIUM,
+            'priority' => TicketPriorityEnum::Medium->value,
             'status_id' => $openId,
             'opened_at' => now(),
         ]);

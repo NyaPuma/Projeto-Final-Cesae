@@ -2,11 +2,13 @@
 
 namespace Tests\Feature;
 
+use App\Enums\TicketStatusEnum;
 use App\Models\Equipment;
 use App\Models\Room;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Models\Userprofile as UserProfile;
+use App\Services\TicketStatusService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\TestCase;
@@ -44,7 +46,7 @@ class AuditEndpointsTest extends TestCase
             'user_id' => $creator->id,
             'title' => 'Audit ticket',
             'description' => 'Generate audit log',
-            'status_id' => Ticket::getStatusIdByName(Ticket::STATUS_OPEN),
+            'status_id' => app(TicketStatusService::class)->getByName(TicketStatusEnum::Open),
             'opened_at' => now(),
         ]);
 

@@ -3431,7 +3431,7 @@ return [
       0 => 
       array (
         0 => 'Intervenção concluída e ticket fechado com sucesso.',
-        1 => 89,
+        1 => 88,
       ),
     ),
     'PHPStan\\Rules\\Comparison\\ConstantConditionInTraitCollector' => 
@@ -3555,16 +3555,16 @@ return [
           0 => 'App\\Services\\TicketWorkflowService',
         ),
         1 => 'close',
-        2 => 38,
+        2 => 37,
       ),
-    ),
-    'PHPStan\\Rules\\DeadCode\\PossiblyPureStaticCallCollector' => 
-    array (
-      0 => 
+      1 => 
       array (
-        0 => 'Illuminate\\Database\\Connection',
-        1 => 'transaction',
-        2 => 74,
+        0 => 
+        array (
+          0 => 'App\\Services\\TicketWorkflowService',
+        ),
+        1 => 'close',
+        2 => 73,
       ),
     ),
     'PHPStan\\Rules\\Traits\\TraitUseCollector' => 
@@ -5926,7 +5926,7 @@ return [
       ),
     ),
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php' => 
   array (
     'PHPStan\\Rules\\Traits\\TraitUseCollector' => 
     array (
@@ -6381,16 +6381,6 @@ return [
       3 => 
       array (
         0 => 'App\\Services\\TicketWorkflowService',
-        1 => 'close',
-        2 => 'App\\Services\\TicketWorkflowService',
-        3 => 
-        array (
-          0 => 'm' . "\0" . 'app\\domain\\ticket\\actions\\closeticketaction' . "\0" . 'execute',
-        ),
-      ),
-      4 => 
-      array (
-        0 => 'App\\Services\\TicketWorkflowService',
         1 => 'findHigherPriorityTickets',
         2 => 'App\\Services\\TicketWorkflowService',
         3 => 
@@ -6722,7 +6712,8 @@ return [
       7 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
       8 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Requests\\StoreTicketRequest.php',
       9 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
-      10 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TicketSearchService.php',
+      10 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TechnicianAssignmentService.php',
+      11 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TicketSearchService.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Enums\\TicketStatusEnum.php' => 
@@ -6959,7 +6950,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketCloseController.php' => 
   array (
-    'fileHash' => 'f90ea6c44413685e2e311cbbfad027f5f158eecc484273faa56ec5347f83497d',
+    'fileHash' => 'c11ade0b3c2ed4b7657882e35a907ae928d8b829db59f9e88adedb0496394da0',
     'dependentFiles' => 
     array (
     ),
@@ -7001,7 +6992,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php' => 
   array (
-    'fileHash' => '43e905eeeaea2d835c6e8e2214c44ede804cebda3a9055f1d24903c0e5c780ad',
+    'fileHash' => '2093cd1fb90627207160962a0457ce70d2b84248b2256ce9fb6b09bf2cb7fabd',
     'dependentFiles' => 
     array (
     ),
@@ -7310,7 +7301,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php' => 
   array (
-    'fileHash' => 'e1e2827768bf7de5a795c518b0c6ac32065f08d1846c1dd44a1e257d3916bd90',
+    'fileHash' => 'b46021a1201ce90ff4ea2982617d38493d4c79c811825f323e77b583e3063549',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Actions\\ApproveBudgetAction.php',
@@ -7445,27 +7436,21 @@ return [
       33 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketAttachment.php',
       34 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketComment.php',
       35 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php',
-      36 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php',
-      37 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\EquipmentPolicy.php',
-      38 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\RoomPolicy.php',
-      39 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\TicketPolicy.php',
-      40 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\UserPolicy.php',
-      41 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
-      42 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\CalendarService.php',
-      43 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\NotificationService.php',
-      44 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\PasswordResetService.php',
-      45 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TechnicianAssignmentService.php',
-      46 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\UserService.php',
+      36 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php',
+      37 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php',
+      38 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\EquipmentPolicy.php',
+      39 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\RoomPolicy.php',
+      40 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\TicketPolicy.php',
+      41 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\UserPolicy.php',
+      42 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
+      43 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\CalendarService.php',
+      44 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\NotificationService.php',
+      45 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\PasswordResetService.php',
+      46 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TechnicianAssignmentService.php',
+      47 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\UserService.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php' => 
-  array (
-    'fileHash' => 'c78095089c35d79d044a292d4ac26a0b9280813a74ac8cd1a6ffe3922a11559d',
-    'dependentFiles' => 
-    array (
-    ),
-  ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php' => 
   array (
     'fileHash' => 'c78095089c35d79d044a292d4ac26a0b9280813a74ac8cd1a6ffe3922a11559d',
     'dependentFiles' => 
@@ -7488,36 +7473,41 @@ return [
       15 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketBudgetController.php',
       16 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketCommentController.php',
       17 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketController.php',
-      18 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketWorkflowController.php',
-      19 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketAssignmentController.php',
-      20 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketCloseController.php',
-      21 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketLifecycleController.php',
-      22 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketScheduleController.php',
-      23 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketStartController.php',
-      24 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
-      25 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php',
-      26 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RateLimitMiddleware.php',
-      27 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RoleMiddleware.php',
-      28 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Audit.php',
-      29 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php',
-      30 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Notification.php',
-      31 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php',
-      32 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
-      33 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketAttachment.php',
-      34 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketComment.php',
-      35 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php',
-      36 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
-      37 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php',
-      38 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\EquipmentPolicy.php',
-      39 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\RoomPolicy.php',
-      40 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\TicketPolicy.php',
-      41 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\UserPolicy.php',
-      42 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
-      43 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\CalendarService.php',
-      44 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\NotificationService.php',
-      45 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\PasswordResetService.php',
-      46 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TechnicianAssignmentService.php',
-      47 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\UserService.php',
+      18 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketAssignmentController.php',
+      19 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketCloseController.php',
+      20 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketLifecycleController.php',
+      21 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketScheduleController.php',
+      22 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketStartController.php',
+      23 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
+      24 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php',
+      25 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RateLimitMiddleware.php',
+      26 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RoleMiddleware.php',
+      27 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Audit.php',
+      28 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Equipment.php',
+      29 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Notification.php',
+      30 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php',
+      31 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
+      32 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketAttachment.php',
+      33 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketComment.php',
+      34 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\TicketWorkflowHistory.php',
+      35 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\User.php',
+      36 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\EquipmentPolicy.php',
+      37 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\RoomPolicy.php',
+      38 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\TicketPolicy.php',
+      39 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\UserPolicy.php',
+      40 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
+      41 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\CalendarService.php',
+      42 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\NotificationService.php',
+      43 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\PasswordResetService.php',
+      44 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TechnicianAssignmentService.php',
+      45 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\UserService.php',
+    ),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php' => 
+  array (
+    'fileHash' => 'c78095089c35d79d044a292d4ac26a0b9280813a74ac8cd1a6ffe3922a11559d',
+    'dependentFiles' => 
+    array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\NewTicketNotification.php' => 
@@ -7648,7 +7638,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TechnicianAssignmentService.php' => 
   array (
-    'fileHash' => '72ba9fa014628174037543c2e92ade819ea5aa429f31cad9c14b3018215849ef',
+    'fileHash' => 'b1f59a5d349a903796a8c0a49a5b4d104f6eb2c95d6fb5aebd9b27beeb753d5c',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminController.php',
@@ -7692,7 +7682,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TicketWorkflowService.php' => 
   array (
-    'fileHash' => '221c8ac1216254b702cbaa75527bbf4f165dd89541aca521576fad05db4f4316',
+    'fileHash' => '8c74d1baeb5c82742b2ea4565528efb9f91858a0e13eafcb0d0b005f57271dbe',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketWorkflowController.php',
@@ -7809,9 +7799,11 @@ return [
   array (
     0 => 'laravel/framework',
     1 => 'symfony/http-foundation',
-    2 => 'symfony/http-kernel',
-    3 => 'psr/container',
-    4 => 'nesbot/carbon',
+    2 => 'psr/log',
+    3 => 'monolog/monolog',
+    4 => 'symfony/http-kernel',
+    5 => 'psr/container',
+    6 => 'nesbot/carbon',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\RateLimitMiddleware.php' => 
   array (
@@ -20804,619 +20796,6 @@ return [
        'statements' => 
       array (
         0 => 
-        \PHPStan\Dependency\ExportedNode\ExportedClassConstantsNode::__set_state(array(
-           'constants' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedClassConstantNode::__set_state(array(
-               'name' => 'STATUS_OPEN',
-               'value' => '\'aberta\'',
-               'attributes' => 
-              array (
-              ),
-            )),
-          ),
-           'public' => true,
-           'private' => false,
-           'final' => false,
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/** @deprecated Use TicketStatusEnum::Open->value */',
-             'namespace' => 'App\\Models',
-             'uses' => 
-            array (
-              'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-              'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-              'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
-              'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-              'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-              'ticketstatusservice' => 'App\\Services\\TicketStatusService',
-              'auditable' => 'App\\Traits\\Auditable',
-              'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-              'model' => 'Illuminate\\Database\\Eloquent\\Model',
-              'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-              'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-        )),
-        1 => 
-        \PHPStan\Dependency\ExportedNode\ExportedClassConstantsNode::__set_state(array(
-           'constants' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedClassConstantNode::__set_state(array(
-               'name' => 'STATUS_IN_PROGRESS',
-               'value' => '\'em curso\'',
-               'attributes' => 
-              array (
-              ),
-            )),
-          ),
-           'public' => true,
-           'private' => false,
-           'final' => false,
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/** @deprecated Use TicketStatusEnum::InProgress->value */',
-             'namespace' => 'App\\Models',
-             'uses' => 
-            array (
-              'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-              'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-              'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
-              'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-              'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-              'ticketstatusservice' => 'App\\Services\\TicketStatusService',
-              'auditable' => 'App\\Traits\\Auditable',
-              'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-              'model' => 'Illuminate\\Database\\Eloquent\\Model',
-              'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-              'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-        )),
-        2 => 
-        \PHPStan\Dependency\ExportedNode\ExportedClassConstantsNode::__set_state(array(
-           'constants' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedClassConstantNode::__set_state(array(
-               'name' => 'STATUS_CLOSED',
-               'value' => '\'fechada\'',
-               'attributes' => 
-              array (
-              ),
-            )),
-          ),
-           'public' => true,
-           'private' => false,
-           'final' => false,
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/** @deprecated Use TicketStatusEnum::Closed->value */',
-             'namespace' => 'App\\Models',
-             'uses' => 
-            array (
-              'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-              'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-              'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
-              'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-              'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-              'ticketstatusservice' => 'App\\Services\\TicketStatusService',
-              'auditable' => 'App\\Traits\\Auditable',
-              'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-              'model' => 'Illuminate\\Database\\Eloquent\\Model',
-              'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-              'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-        )),
-        3 => 
-        \PHPStan\Dependency\ExportedNode\ExportedClassConstantsNode::__set_state(array(
-           'constants' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedClassConstantNode::__set_state(array(
-               'name' => 'STATUS_CANCELLED',
-               'value' => '\'cancelada\'',
-               'attributes' => 
-              array (
-              ),
-            )),
-          ),
-           'public' => true,
-           'private' => false,
-           'final' => false,
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/** @deprecated Use TicketStatusEnum::Cancelled->value */',
-             'namespace' => 'App\\Models',
-             'uses' => 
-            array (
-              'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-              'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-              'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
-              'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-              'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-              'ticketstatusservice' => 'App\\Services\\TicketStatusService',
-              'auditable' => 'App\\Traits\\Auditable',
-              'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-              'model' => 'Illuminate\\Database\\Eloquent\\Model',
-              'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-              'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-        )),
-        4 => 
-        \PHPStan\Dependency\ExportedNode\ExportedClassConstantsNode::__set_state(array(
-           'constants' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedClassConstantNode::__set_state(array(
-               'name' => 'STATUS_PENDING_BUDGET',
-               'value' => '\'pendente orçamento\'',
-               'attributes' => 
-              array (
-              ),
-            )),
-          ),
-           'public' => true,
-           'private' => false,
-           'final' => false,
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/** @deprecated Use TicketStatusEnum::PendingBudget->value */',
-             'namespace' => 'App\\Models',
-             'uses' => 
-            array (
-              'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-              'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-              'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
-              'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-              'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-              'ticketstatusservice' => 'App\\Services\\TicketStatusService',
-              'auditable' => 'App\\Traits\\Auditable',
-              'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-              'model' => 'Illuminate\\Database\\Eloquent\\Model',
-              'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-              'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-        )),
-        5 => 
-        \PHPStan\Dependency\ExportedNode\ExportedClassConstantsNode::__set_state(array(
-           'constants' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedClassConstantNode::__set_state(array(
-               'name' => 'STATUS_REJECTED',
-               'value' => '\'recusada\'',
-               'attributes' => 
-              array (
-              ),
-            )),
-          ),
-           'public' => true,
-           'private' => false,
-           'final' => false,
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/** @deprecated Use TicketStatusEnum::Rejected->value */',
-             'namespace' => 'App\\Models',
-             'uses' => 
-            array (
-              'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-              'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-              'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
-              'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-              'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-              'ticketstatusservice' => 'App\\Services\\TicketStatusService',
-              'auditable' => 'App\\Traits\\Auditable',
-              'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-              'model' => 'Illuminate\\Database\\Eloquent\\Model',
-              'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-              'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-        )),
-        6 => 
-        \PHPStan\Dependency\ExportedNode\ExportedClassConstantsNode::__set_state(array(
-           'constants' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedClassConstantNode::__set_state(array(
-               'name' => 'PRIORITY_LOW',
-               'value' => '\'baixa\'',
-               'attributes' => 
-              array (
-              ),
-            )),
-          ),
-           'public' => true,
-           'private' => false,
-           'final' => false,
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/** @deprecated Use TicketPriorityEnum::Low->value */',
-             'namespace' => 'App\\Models',
-             'uses' => 
-            array (
-              'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-              'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-              'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
-              'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-              'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-              'ticketstatusservice' => 'App\\Services\\TicketStatusService',
-              'auditable' => 'App\\Traits\\Auditable',
-              'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-              'model' => 'Illuminate\\Database\\Eloquent\\Model',
-              'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-              'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-        )),
-        7 => 
-        \PHPStan\Dependency\ExportedNode\ExportedClassConstantsNode::__set_state(array(
-           'constants' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedClassConstantNode::__set_state(array(
-               'name' => 'PRIORITY_MEDIUM',
-               'value' => '\'média\'',
-               'attributes' => 
-              array (
-              ),
-            )),
-          ),
-           'public' => true,
-           'private' => false,
-           'final' => false,
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/** @deprecated Use TicketPriorityEnum::Medium->value */',
-             'namespace' => 'App\\Models',
-             'uses' => 
-            array (
-              'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-              'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-              'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
-              'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-              'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-              'ticketstatusservice' => 'App\\Services\\TicketStatusService',
-              'auditable' => 'App\\Traits\\Auditable',
-              'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-              'model' => 'Illuminate\\Database\\Eloquent\\Model',
-              'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-              'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-        )),
-        8 => 
-        \PHPStan\Dependency\ExportedNode\ExportedClassConstantsNode::__set_state(array(
-           'constants' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedClassConstantNode::__set_state(array(
-               'name' => 'PRIORITY_HIGH',
-               'value' => '\'alta\'',
-               'attributes' => 
-              array (
-              ),
-            )),
-          ),
-           'public' => true,
-           'private' => false,
-           'final' => false,
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/** @deprecated Use TicketPriorityEnum::High->value */',
-             'namespace' => 'App\\Models',
-             'uses' => 
-            array (
-              'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-              'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-              'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
-              'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-              'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-              'ticketstatusservice' => 'App\\Services\\TicketStatusService',
-              'auditable' => 'App\\Traits\\Auditable',
-              'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-              'model' => 'Illuminate\\Database\\Eloquent\\Model',
-              'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-              'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-        )),
-        9 => 
-        \PHPStan\Dependency\ExportedNode\ExportedClassConstantsNode::__set_state(array(
-           'constants' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedClassConstantNode::__set_state(array(
-               'name' => 'PRIORITY_CRITICAL',
-               'value' => '\'crítica\'',
-               'attributes' => 
-              array (
-              ),
-            )),
-          ),
-           'public' => true,
-           'private' => false,
-           'final' => false,
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/** @deprecated Use TicketPriorityEnum::Critical->value */',
-             'namespace' => 'App\\Models',
-             'uses' => 
-            array (
-              'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-              'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-              'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
-              'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-              'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-              'ticketstatusservice' => 'App\\Services\\TicketStatusService',
-              'auditable' => 'App\\Traits\\Auditable',
-              'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-              'model' => 'Illuminate\\Database\\Eloquent\\Model',
-              'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-              'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-        )),
-        10 => 
-        \PHPStan\Dependency\ExportedNode\ExportedClassConstantsNode::__set_state(array(
-           'constants' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedClassConstantNode::__set_state(array(
-               'name' => 'BUDGET_PENDING',
-               'value' => '\'pending\'',
-               'attributes' => 
-              array (
-              ),
-            )),
-          ),
-           'public' => true,
-           'private' => false,
-           'final' => false,
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/** @deprecated Use BudgetStatusEnum::Pending->value */',
-             'namespace' => 'App\\Models',
-             'uses' => 
-            array (
-              'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-              'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-              'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
-              'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-              'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-              'ticketstatusservice' => 'App\\Services\\TicketStatusService',
-              'auditable' => 'App\\Traits\\Auditable',
-              'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-              'model' => 'Illuminate\\Database\\Eloquent\\Model',
-              'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-              'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-        )),
-        11 => 
-        \PHPStan\Dependency\ExportedNode\ExportedClassConstantsNode::__set_state(array(
-           'constants' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedClassConstantNode::__set_state(array(
-               'name' => 'BUDGET_APPROVED',
-               'value' => '\'approved\'',
-               'attributes' => 
-              array (
-              ),
-            )),
-          ),
-           'public' => true,
-           'private' => false,
-           'final' => false,
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/** @deprecated Use BudgetStatusEnum::Approved->value */',
-             'namespace' => 'App\\Models',
-             'uses' => 
-            array (
-              'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-              'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-              'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
-              'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-              'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-              'ticketstatusservice' => 'App\\Services\\TicketStatusService',
-              'auditable' => 'App\\Traits\\Auditable',
-              'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-              'model' => 'Illuminate\\Database\\Eloquent\\Model',
-              'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-              'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-        )),
-        12 => 
-        \PHPStan\Dependency\ExportedNode\ExportedClassConstantsNode::__set_state(array(
-           'constants' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedClassConstantNode::__set_state(array(
-               'name' => 'BUDGET_REJECTED',
-               'value' => '\'rejected\'',
-               'attributes' => 
-              array (
-              ),
-            )),
-          ),
-           'public' => true,
-           'private' => false,
-           'final' => false,
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/** @deprecated Use BudgetStatusEnum::Rejected->value */',
-             'namespace' => 'App\\Models',
-             'uses' => 
-            array (
-              'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-              'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-              'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
-              'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-              'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-              'ticketstatusservice' => 'App\\Services\\TicketStatusService',
-              'auditable' => 'App\\Traits\\Auditable',
-              'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-              'model' => 'Illuminate\\Database\\Eloquent\\Model',
-              'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-              'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-        )),
-        13 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'flushStatusCache',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/** @deprecated Use app(TicketStatusService::class)->getByName(TicketStatusEnum::*) */',
-             'namespace' => 'App\\Models',
-             'uses' => 
-            array (
-              'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-              'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-              'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
-              'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-              'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-              'ticketstatusservice' => 'App\\Services\\TicketStatusService',
-              'auditable' => 'App\\Traits\\Auditable',
-              'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-              'model' => 'Illuminate\\Database\\Eloquent\\Model',
-              'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-              'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => true,
-           'returnType' => 'void',
-           'parameters' => 
-          array (
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        14 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'getStatusIdByName',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/** @deprecated Use app(TicketStatusService::class)->getByName(TicketStatusEnum::*) */',
-             'namespace' => 'App\\Models',
-             'uses' => 
-            array (
-              'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
-              'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-              'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
-              'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
-              'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
-              'ticketstatusservice' => 'App\\Services\\TicketStatusService',
-              'auditable' => 'App\\Traits\\Auditable',
-              'hasfactory' => 'Illuminate\\Database\\Eloquent\\Factories\\HasFactory',
-              'model' => 'Illuminate\\Database\\Eloquent\\Model',
-              'belongsto' => 'Illuminate\\Database\\Eloquent\\Relations\\BelongsTo',
-              'hasmany' => 'Illuminate\\Database\\Eloquent\\Relations\\HasMany',
-              'softdeletes' => 'Illuminate\\Database\\Eloquent\\SoftDeletes',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => true,
-           'returnType' => '?int',
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'statusName',
-               'type' => 'string',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        15 => 
         \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
            'names' => 
           array (
@@ -21430,7 +20809,6 @@ return [
             array (
               'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
               'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-              'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
               'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
               'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
               'ticketstatusservice' => 'App\\Services\\TicketStatusService',
@@ -21463,7 +20841,7 @@ return [
           array (
           ),
         )),
-        16 => 
+        1 => 
         \PHPStan\Dependency\ExportedNode\ExportedPropertiesNode::__set_state(array(
            'names' => 
           array (
@@ -21477,7 +20855,6 @@ return [
             array (
               'ticketstatuschecker' => 'App\\Domain\\Ticket\\Services\\TicketStatusChecker',
               'budgetpauseminutes' => 'App\\Domain\\Ticket\\ValueObjects\\BudgetPauseMinutes',
-              'budgetstatusenum' => 'App\\Enums\\BudgetStatusEnum',
               'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
               'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
               'ticketstatusservice' => 'App\\Services\\TicketStatusService',
@@ -21510,7 +20887,7 @@ return [
           array (
           ),
         )),
-        17 => 
+        2 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'status',
            'phpDoc' => NULL,
@@ -21528,7 +20905,7 @@ return [
           array (
           ),
         )),
-        18 => 
+        3 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'budgetApprovedBy',
            'phpDoc' => NULL,
@@ -21546,7 +20923,7 @@ return [
           array (
           ),
         )),
-        19 => 
+        4 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'workflowHistory',
            'phpDoc' => NULL,
@@ -21564,7 +20941,7 @@ return [
           array (
           ),
         )),
-        20 => 
+        5 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'user',
            'phpDoc' => NULL,
@@ -21582,7 +20959,7 @@ return [
           array (
           ),
         )),
-        21 => 
+        6 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'technician',
            'phpDoc' => NULL,
@@ -21600,7 +20977,7 @@ return [
           array (
           ),
         )),
-        22 => 
+        7 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'equipment',
            'phpDoc' => NULL,
@@ -21618,7 +20995,7 @@ return [
           array (
           ),
         )),
-        23 => 
+        8 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'room',
            'phpDoc' => NULL,
@@ -21636,7 +21013,7 @@ return [
           array (
           ),
         )),
-        24 => 
+        9 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'comments',
            'phpDoc' => NULL,
@@ -21654,7 +21031,7 @@ return [
           array (
           ),
         )),
-        25 => 
+        10 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'attachments',
            'phpDoc' => NULL,
@@ -21672,7 +21049,7 @@ return [
           array (
           ),
         )),
-        26 => 
+        11 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'hasStatus',
            'phpDoc' => NULL,
@@ -21703,7 +21080,7 @@ return [
           array (
           ),
         )),
-        27 => 
+        12 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'scopeOpen',
            'phpDoc' => NULL,
@@ -21734,7 +21111,7 @@ return [
           array (
           ),
         )),
-        28 => 
+        13 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'scopeInProgress',
            'phpDoc' => NULL,
@@ -21765,7 +21142,7 @@ return [
           array (
           ),
         )),
-        29 => 
+        14 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'scopeClosed',
            'phpDoc' => NULL,
@@ -21796,7 +21173,7 @@ return [
           array (
           ),
         )),
-        30 => 
+        15 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'scopeScheduled',
            'phpDoc' => NULL,
@@ -21827,7 +21204,7 @@ return [
           array (
           ),
         )),
-        31 => 
+        16 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'scopeByPriority',
            'phpDoc' => NULL,
@@ -21871,7 +21248,7 @@ return [
           array (
           ),
         )),
-        32 => 
+        17 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'scopeForTechnician',
            'phpDoc' => NULL,
@@ -21915,7 +21292,7 @@ return [
           array (
           ),
         )),
-        33 => 
+        18 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'getBudgetPauseMinutesAttribute',
            'phpDoc' => NULL,
@@ -23079,7 +22456,7 @@ return [
       ),
     )),
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php' => 
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php' => 
   array (
     0 => 
     \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(

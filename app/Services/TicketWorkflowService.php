@@ -9,6 +9,7 @@ use App\Domain\Ticket\Actions\ReopenTicketAction;
 use App\Domain\Ticket\Actions\StartTicketAction;
 use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
+use Illuminate\Support\Facades\DB;
 
 final class TicketWorkflowService
 {
@@ -38,7 +39,7 @@ final class TicketWorkflowService
 
     public function close(Ticket $ticket, ?float $cost = null, ?string $report = null, ?int $minutesSpent = null): bool
     {
-        return $this->closeAction->execute($ticket, $cost, $report, $minutesSpent);
+        return DB::transaction(fn () => $this->closeAction->execute($ticket, $cost, $report, $minutesSpent));
     }
 
     public function checkAutoClose(Ticket $ticket, float $threshold): bool

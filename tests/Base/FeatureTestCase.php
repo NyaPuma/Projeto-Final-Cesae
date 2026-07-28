@@ -17,5 +17,6 @@ abstract class FeatureTestCase extends TestCase
     {
         parent::setUp();
         $this->seedLookupData();
+        $this->ensureUserProfilesExist();
     }
 }

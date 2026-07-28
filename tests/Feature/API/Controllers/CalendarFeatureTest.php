@@ -2,9 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\Enums\TicketPriorityEnum;
+use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserProfile;
+use App\Services\TicketStatusService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\TestCase;
@@ -37,13 +40,13 @@ class CalendarFeatureTest extends TestCase
     public function test_calendar_events_returns_scheduled_tickets(): void
     {
         $user = $this->createUserWithToken(User::ROLE_USER);
-        $openId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
             'user_id' => $user->id,
             'title' => 'Scheduled maintenance',
             'description' => 'Planned equipment check',
-            'priority' => Ticket::PRIORITY_MEDIUM,
+            'priority' => TicketPriorityEnum::Medium->value,
             'status_id' => $openId,
             'scheduled_at' => now()->addDays(3),
             'scheduled_end' => now()->addDays(3)->addHours(4),
@@ -80,13 +83,13 @@ class CalendarFeatureTest extends TestCase
     public function test_calendar_events_returns_correct_structure(): void
     {
         $user = $this->createUserWithToken(User::ROLE_TECHNICIAN);
-        $openId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         Ticket::create([
             'user_id' => $user->id,
             'title' => 'Routine inspection',
             'description' => 'Monthly check',
-            'priority' => Ticket::PRIORITY_LOW,
+            'priority' => TicketPriorityEnum::Low->value,
             'status_id' => $openId,
             'assigned_to' => $user->id,
             'scheduled_at' => now()->addWeek(),

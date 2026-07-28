@@ -5,21 +5,13 @@ namespace Tests\Security\PrivilegeEscalation;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserProfile;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use PHPUnit\Framework\attributes\Test;
-use Tests\Base\ApiTestCase;
+use PHPUnit\Framework\Attributes\Test;
+use Tests\Base\FeatureTestCase;
+use Tests\Concerns\InteractsWithApi;
 
-class PrivilegeEscalationTest extends ApiTestCase
+class PrivilegeEscalationTest extends FeatureTestCase
 {
-    use RefreshDatabase;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        UserProfile::firstOrCreate(['name' => User::ROLE_ADMIN]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
-    }
+    use InteractsWithApi;
 
     #[Test]
     public function user_cannot_create_admin_account(): void
@@ -56,7 +48,7 @@ class PrivilegeEscalationTest extends ApiTestCase
         $adminProfile = UserProfile::where('name', User::ROLE_ADMIN)->first();
 
         $response = $this->withApiUser('user-token')
-            ->putJson('/api/profile', [
+            ->patchJson('/api/admin/users/'.$user->id, [
                 'profile_id' => $adminProfile->id,
             ]);
 
@@ -131,7 +123,7 @@ class PrivilegeEscalationTest extends ApiTestCase
         ]);
 
         $response = $this->withApiUser('user-token')
-            ->postJson("/tickets/{$ticket->id}/budget/approve");
+            ->patchJson('/api/admin/tickets/'.$ticket->id.'/approve-budget');
 
         $response->assertForbidden();
     }
@@ -151,7 +143,7 @@ class PrivilegeEscalationTest extends ApiTestCase
         ]);
 
         $response = $this->withApiUser('tech-token')
-            ->postJson("/tickets/{$ticket->id}/budget/approve");
+            ->patchJson('/api/admin/tickets/'.$ticket->id.'/approve-budget');
 
         $response->assertForbidden();
     }
@@ -171,7 +163,7 @@ class PrivilegeEscalationTest extends ApiTestCase
         ]);
 
         $response = $this->withApiUser('admin-token')
-            ->postJson("/tickets/{$ticket->id}/budget/approve");
+            ->patchJson('/api/admin/tickets/'.$ticket->id.'/approve-budget');
 
         $response->assertOk();
     }

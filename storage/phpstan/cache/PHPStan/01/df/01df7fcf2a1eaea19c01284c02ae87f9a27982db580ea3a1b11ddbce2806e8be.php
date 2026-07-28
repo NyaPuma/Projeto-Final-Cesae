@@ -306,7 +306,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php' => 
     array (
-      0 => '43e905eeeaea2d835c6e8e2214c44ede804cebda3a9055f1d24903c0e5c780ad',
+      0 => '2093cd1fb90627207160962a0457ce70d2b84248b2256ce9fb6b09bf2cb7fabd',
       1 => 
       array (
         0 => 'app\\http\\middleware\\customauthmiddleware',
@@ -496,32 +496,30 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php' => 
     array (
-      0 => 'e1e2827768bf7de5a795c518b0c6ac32065f08d1846c1dd44a1e257d3916bd90',
+      0 => 'b46021a1201ce90ff4ea2982617d38493d4c79c811825f323e77b583e3063549',
       1 => 
       array (
         0 => 'app\\models\\ticket',
       ),
       2 => 
       array (
-        0 => 'app\\models\\flushstatuscache',
-        1 => 'app\\models\\getstatusidbyname',
-        2 => 'app\\models\\status',
-        3 => 'app\\models\\budgetapprovedby',
-        4 => 'app\\models\\workflowhistory',
-        5 => 'app\\models\\user',
-        6 => 'app\\models\\technician',
-        7 => 'app\\models\\equipment',
-        8 => 'app\\models\\room',
-        9 => 'app\\models\\comments',
-        10 => 'app\\models\\attachments',
-        11 => 'app\\models\\hasstatus',
-        12 => 'app\\models\\scopeopen',
-        13 => 'app\\models\\scopeinprogress',
-        14 => 'app\\models\\scopeclosed',
-        15 => 'app\\models\\scopescheduled',
-        16 => 'app\\models\\scopebypriority',
-        17 => 'app\\models\\scopefortechnician',
-        18 => 'app\\models\\getbudgetpauseminutesattribute',
+        0 => 'app\\models\\status',
+        1 => 'app\\models\\budgetapprovedby',
+        2 => 'app\\models\\workflowhistory',
+        3 => 'app\\models\\user',
+        4 => 'app\\models\\technician',
+        5 => 'app\\models\\equipment',
+        6 => 'app\\models\\room',
+        7 => 'app\\models\\comments',
+        8 => 'app\\models\\attachments',
+        9 => 'app\\models\\hasstatus',
+        10 => 'app\\models\\scopeopen',
+        11 => 'app\\models\\scopeinprogress',
+        12 => 'app\\models\\scopeclosed',
+        13 => 'app\\models\\scopescheduled',
+        14 => 'app\\models\\scopebypriority',
+        15 => 'app\\models\\scopefortechnician',
+        16 => 'app\\models\\getbudgetpauseminutesattribute',
       ),
       3 => 
       array (
@@ -1490,7 +1488,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketCloseController.php' => 
     array (
-      0 => 'f90ea6c44413685e2e311cbbfad027f5f158eecc484273faa56ec5347f83497d',
+      0 => 'c11ade0b3c2ed4b7657882e35a907ae928d8b829db59f9e88adedb0496394da0',
       1 => 
       array (
         0 => 'app\\http\\controllers\\ticket\\ticketclosecontroller',
@@ -1922,21 +1920,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       array (
       ),
     ),
-    'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Userprofile.php' => 
-    array (
-      0 => 'c78095089c35d79d044a292d4ac26a0b9280813a74ac8cd1a6ffe3922a11559d',
-      1 => 
-      array (
-        0 => 'app\\models\\userprofile',
-      ),
-      2 => 
-      array (
-        0 => 'app\\models\\users',
-      ),
-      3 => 
-      array (
-      ),
-    ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Policies\\EquipmentPolicy.php' => 
     array (
       0 => '4f4ed313de721f78c2a9039eaaefcd04a2d77d86c7e6ab5049177104aefd5e90',
@@ -2102,7 +2085,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TechnicianAssignmentService.php' => 
     array (
-      0 => '72ba9fa014628174037543c2e92ade819ea5aa429f31cad9c14b3018215849ef',
+      0 => 'b1f59a5d349a903796a8c0a49a5b4d104f6eb2c95d6fb5aebd9b27beeb753d5c',
       1 => 
       array (
         0 => 'app\\services\\technicianassignmentservice',
@@ -2153,7 +2136,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TicketWorkflowService.php' => 
     array (
-      0 => '221c8ac1216254b702cbaa75527bbf4f165dd89541aca521576fad05db4f4316',
+      0 => '8c74d1baeb5c82742b2ea4565528efb9f91858a0e13eafcb0d0b005f57271dbe',
       1 => 
       array (
         0 => 'app\\services\\ticketworkflowservice',
@@ -2251,6 +2234,21 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         0 => 'app\\services\\createresettoken',
         1 => 'app\\services\\validatetoken',
         2 => 'app\\services\\resetpassword',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php' => 
+    array (
+      0 => 'c78095089c35d79d044a292d4ac26a0b9280813a74ac8cd1a6ffe3922a11559d',
+      1 => 
+      array (
+        0 => 'app\\models\\userprofile',
+      ),
+      2 => 
+      array (
+        0 => 'app\\models\\users',
       ),
       3 => 
       array (
