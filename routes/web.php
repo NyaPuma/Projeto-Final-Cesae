@@ -12,11 +12,15 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\Ticket\TicketAssignmentController;
+use App\Http\Controllers\Ticket\TicketCloseController;
+use App\Http\Controllers\Ticket\TicketLifecycleController;
+use App\Http\Controllers\Ticket\TicketScheduleController;
+use App\Http\Controllers\Ticket\TicketStartController;
 use App\Http\Controllers\TicketAttachmentController;
 use App\Http\Controllers\TicketBudgetController;
 use App\Http\Controllers\TicketCommentController;
 use App\Http\Controllers\TicketController;
-use App\Http\Controllers\TicketWorkflowController;
 use App\Http\Controllers\UiController;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Support\Facades\Route;
@@ -115,13 +119,13 @@ Route::middleware(['custom.auth'])->group(function () {
         ->withoutMiddleware([ValidateCsrfToken::class]);
 
     // --- Tickets: Fluxo de Estado ---
-    Route::post('/tickets/{id}/reopen', [TicketWorkflowController::class, 'reopen'])
+    Route::post('/tickets/{id}/reopen', [TicketLifecycleController::class, 'reopen'])
         ->name('tickets.reopen')
         ->withoutMiddleware([ValidateCsrfToken::class]);
-    Route::post('/tickets/{id}/cancel', [TicketWorkflowController::class, 'cancel'])
+    Route::post('/tickets/{id}/cancel', [TicketLifecycleController::class, 'cancel'])
         ->name('tickets.cancel')
         ->withoutMiddleware([ValidateCsrfToken::class]);
-    Route::post('/tickets/{id}/schedule', [TicketWorkflowController::class, 'schedule'])
+    Route::post('/tickets/{id}/schedule', [TicketScheduleController::class, '__invoke'])
         ->name('tickets.schedule')
         ->withoutMiddleware([ValidateCsrfToken::class]);
 
@@ -129,7 +133,7 @@ Route::middleware(['custom.auth'])->group(function () {
     Route::post('/tickets/{id}/budget', [TicketBudgetController::class, 'submitEstimate'])
         ->name('tickets.budget')
         ->withoutMiddleware([ValidateCsrfToken::class]);
-    Route::post('/tickets/{id}/close', [TicketWorkflowController::class, 'closeFinal'])
+    Route::post('/tickets/{id}/close', [TicketCloseController::class, 'closeFinal'])
         ->name('tickets.close')
         ->withoutMiddleware([ValidateCsrfToken::class]);
 
@@ -139,10 +143,10 @@ Route::middleware(['custom.auth'])->group(function () {
 
     // --- Área do Técnico ---
     Route::middleware(['role:technician'])->group(function () {
-        Route::put('/technician/tickets/{id}/start', [TicketWorkflowController::class, 'start'])
+        Route::put('/technician/tickets/{id}/start', TicketStartController::class)
             ->name('technician.tickets.start')
             ->withoutMiddleware([ValidateCsrfToken::class]);
-        Route::put('/technician/tickets/{id}/close', [TicketWorkflowController::class, 'close'])
+        Route::put('/technician/tickets/{id}/close', [TicketCloseController::class, '__invoke'])
             ->name('technician.tickets.close')
             ->withoutMiddleware([ValidateCsrfToken::class]);
         Route::put('/technician/tickets/{id}/request-budget', [TicketBudgetController::class, 'requestAuthorization'])
@@ -164,7 +168,7 @@ Route::middleware(['custom.auth'])->group(function () {
 
         // Tickets abertos
         Route::get('/technician/tickets/open', [TicketController::class, 'openTickets'])->name('technician.tickets.open');
-        Route::post('/tickets/{id}/assign-technician', [TicketWorkflowController::class, 'assignTechnician'])
+        Route::post('/tickets/{id}/assign-technician', [TicketAssignmentController::class, '__invoke'])
             ->name('tickets.assign-technician')
             ->withoutMiddleware([ValidateCsrfToken::class]);
 
@@ -182,7 +186,7 @@ Route::middleware(['custom.auth'])->group(function () {
 
         // IA
         Route::get('/admin/tickets/{id}', [TicketController::class, 'show'])->name('admin.tickets.show');
-        Route::patch('/admin/tickets/{id}/atribuir', [TicketWorkflowController::class, 'assignTechnician'])
+        Route::patch('/admin/tickets/{id}/atribuir', [TicketAssignmentController::class, '__invoke'])
             ->name('admin.tickets.atribuir')
             ->withoutMiddleware([ValidateCsrfToken::class]);
 

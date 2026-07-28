@@ -7,6 +7,7 @@ use App\Events\TicketStatusUpdatedBroadcast;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Notifications\TicketStatusChanged;
+use Illuminate\Support\Facades\Log;
 
 trait BroadcastsTicketStatus
 {
@@ -21,7 +22,11 @@ trait BroadcastsTicketStatus
             if ($user instanceof User && $user->email) {
                 $user->notify(new TicketStatusChanged($ticket, $oldStatus, $newStatus->value));
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
+            Log::warning('Failed to broadcast ticket status change', [
+                'ticket_id' => $ticket->id,
+                'error' => $e->getMessage(),
+            ]);
         }
     }
 }

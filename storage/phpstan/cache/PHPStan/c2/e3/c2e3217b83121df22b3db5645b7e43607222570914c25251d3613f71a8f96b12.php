@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Notifications\TicketStatusChanged.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Notifications\TicketStatusChanged
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-e4bda4b6c0e366c6b9eca4402cf2da74b36e48f043d9c64005b2d381f7eb4434',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-826bd0b85203b1192a9968c29556f47d0189716aef16b1f97992304f8188e152',
    'data' => 
   array (
     'locatedSource' => 
@@ -22,15 +22,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'isEnum' => false,
     'isBackedEnum' => false,
     'modifiers' => 0,
-    'docComment' => '/**
- * Notificação enviada ao criador do ticket quando o estado da avaria muda.
- * Suporta canal de email. Pode ser estendida com canais adicionais (database, broadcast).
- */',
+    'docComment' => NULL,
     'attributes' => 
     array (
     ),
-    'startLine' => 14,
-    'endLine' => 71,
+    'startLine' => 11,
+    'endLine' => 64,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'Illuminate\\Notifications\\Notification',
@@ -66,8 +63,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'attributes' => 
         array (
         ),
-        'startLine' => 19,
-        'endLine' => 19,
+        'startLine' => 16,
+        'endLine' => 16,
         'startColumn' => 9,
         'endColumn' => 32,
         'isPromoted' => true,
@@ -97,8 +94,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'attributes' => 
         array (
         ),
-        'startLine' => 20,
-        'endLine' => 20,
+        'startLine' => 17,
+        'endLine' => 17,
         'startColumn' => 9,
         'endColumn' => 35,
         'isPromoted' => true,
@@ -128,8 +125,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'attributes' => 
         array (
         ),
-        'startLine' => 21,
-        'endLine' => 21,
+        'startLine' => 18,
+        'endLine' => 18,
         'startColumn' => 9,
         'endColumn' => 35,
         'isPromoted' => true,
@@ -166,8 +163,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 19,
-            'endLine' => 19,
+            'startLine' => 16,
+            'endLine' => 16,
             'startColumn' => 9,
             'endColumn' => 32,
             'parameterIndex' => 0,
@@ -192,8 +189,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 20,
-            'endLine' => 20,
+            'startLine' => 17,
+            'endLine' => 17,
             'startColumn' => 9,
             'endColumn' => 35,
             'parameterIndex' => 1,
@@ -218,8 +215,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 21,
-            'endLine' => 21,
+            'startLine' => 18,
+            'endLine' => 18,
             'startColumn' => 9,
             'endColumn' => 35,
             'parameterIndex' => 2,
@@ -232,8 +229,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
         ),
         'docComment' => NULL,
-        'startLine' => 18,
-        'endLine' => 22,
+        'startLine' => 15,
+        'endLine' => 19,
         'startColumn' => 5,
         'endColumn' => 8,
         'couldThrow' => false,
@@ -271,8 +268,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 27,
-            'endLine' => 27,
+            'startLine' => 21,
+            'endLine' => 21,
             'startColumn' => 25,
             'endColumn' => 42,
             'parameterIndex' => 0,
@@ -292,11 +289,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'attributes' => 
         array (
         ),
-        'docComment' => '/**
- * Define os canais de entrega desta notificação.
- */',
-        'startLine' => 27,
-        'endLine' => 30,
+        'docComment' => NULL,
+        'startLine' => 21,
+        'endLine' => 24,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -334,8 +329,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 35,
-            'endLine' => 35,
+            'startLine' => 26,
+            'endLine' => 26,
             'startColumn' => 28,
             'endColumn' => 45,
             'parameterIndex' => 0,
@@ -355,11 +350,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'attributes' => 
         array (
         ),
-        'docComment' => '/**
- * Constrói a mensagem de email a enviar ao utilizador.
- */',
-        'startLine' => 35,
-        'endLine' => 57,
+        'docComment' => NULL,
+        'startLine' => 26,
+        'endLine' => 42,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -397,8 +390,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 62,
-            'endLine' => 62,
+            'startLine' => 44,
+            'endLine' => 44,
             'startColumn' => 29,
             'endColumn' => 46,
             'parameterIndex' => 0,
@@ -418,11 +411,9 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'attributes' => 
         array (
         ),
-        'docComment' => '/**
- * Representação em array (para canais database/broadcast futuros).
- */',
-        'startLine' => 62,
-        'endLine' => 70,
+        'docComment' => NULL,
+        'startLine' => 44,
+        'endLine' => 52,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -430,6 +421,67 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'isGenerator' => false,
         'isVariadic' => false,
         'modifiers' => 1,
+        'namespace' => 'App\\Notifications',
+        'declaringClassName' => 'App\\Notifications\\TicketStatusChanged',
+        'implementingClassName' => 'App\\Notifications\\TicketStatusChanged',
+        'currentClassName' => 'App\\Notifications\\TicketStatusChanged',
+        'aliasName' => NULL,
+      ),
+      'resolveStatusLabel' => 
+      array (
+        'name' => 'resolveStatusLabel',
+        'parameters' => 
+        array (
+          'status' => 
+          array (
+            'name' => 'status',
+            'default' => NULL,
+            'type' => 
+            array (
+              'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+              'data' => 
+              array (
+                'name' => 'string',
+                'isIdentifier' => true,
+              ),
+            ),
+            'isVariadic' => false,
+            'byRef' => false,
+            'isPromoted' => false,
+            'attributes' => 
+            array (
+            ),
+            'startLine' => 54,
+            'endLine' => 54,
+            'startColumn' => 41,
+            'endColumn' => 54,
+            'parameterIndex' => 0,
+            'isOptional' => false,
+          ),
+        ),
+        'returnsReference' => false,
+        'returnType' => 
+        array (
+          'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+          'data' => 
+          array (
+            'name' => 'string',
+            'isIdentifier' => true,
+          ),
+        ),
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 54,
+        'endLine' => 63,
+        'startColumn' => 5,
+        'endColumn' => 5,
+        'couldThrow' => false,
+        'isClosure' => false,
+        'isGenerator' => false,
+        'isVariadic' => false,
+        'modifiers' => 4,
         'namespace' => 'App\\Notifications',
         'declaringClassName' => 'App\\Notifications\\TicketStatusChanged',
         'implementingClassName' => 'App\\Notifications\\TicketStatusChanged',

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Http\JsonResponse;
@@ -15,52 +17,34 @@ class AdminUserController extends Controller
         $user = $this->authenticatedUser($request);
         $this->requireRole($user, [User::ROLE_ADMIN]);
 
-        $users = User::with('profile')->get();
-
-        return response()->json(['users' => $users]);
+        return response()->json(['users' => User::with('profile')->get()]);
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(StoreUserRequest $request): JsonResponse
     {
         $user = $this->authenticatedUser($request);
         $this->requireRole($user, [User::ROLE_ADMIN]);
 
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8|confirmed',
-            'phone' => 'nullable|string|max:20',
-            'role' => 'required|string|in:user,technician,admin',
-            'profile_id' => 'required|exists:user_profiles,id',
-        ]);
+        $validated = $request->validated();
+        $validated['password'] = Hash::make($validated['password']);
+        $validated['active'] = true;
 
-        $newUser = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
-            'phone' => $validated['phone'] ?? null,
-            'role' => $validated['role'],
-            'profile_id' => $validated['profile_id'],
-            'active' => true,
-        ]);
+        $newUser = User::create($validated);
 
         return response()->json(['message' => 'Utilizador criado com sucesso', 'user' => $newUser], 201);
     }
 
-    public function update(Request $request, int $id): JsonResponse
+    public function update(UpdateUserRequest $request, int $id): JsonResponse
     {
         $user = $this->authenticatedUser($request);
         $this->requireRole($user, [User::ROLE_ADMIN]);
 
         $targetUser = User::findOrFail($id);
+        $validated = $request->validated();
 
-        $validated = $request->validate([
-            'name' => 'sometimes|string|max:255',
-            'email' => 'sometimes|email|unique:users,email,'.$id,
-            'phone' => 'nullable|string|max:20',
-            'role' => 'sometimes|string|in:user,technician,admin',
-            'profile_id' => 'sometimes|exists:user_profiles,id',
-        ]);
+        if (isset($validated['password'])) {
+            $validated['password'] = Hash::make($validated['password']);
+        }
 
         $targetUser->update($validated);
 
@@ -83,8 +67,6 @@ class AdminUserController extends Controller
         $user = $this->authenticatedUser($request);
         $this->requireRole($user, [User::ROLE_ADMIN]);
 
-        $profiles = UserProfile::all();
-
-        return response()->json($profiles);
+        return response()->json(UserProfile::all());
     }
 }

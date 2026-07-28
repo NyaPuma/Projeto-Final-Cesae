@@ -2284,7 +2284,7 @@ return [
       0 => 
       array (
         0 => 'App\\Concerns\\BroadcastsTicketStatus',
-        1 => 11,
+        1 => 12,
       ),
     ),
   ),
@@ -3119,27 +3119,27 @@ return [
       0 => 
       array (
         0 => 'Email de recuperação enviado com sucesso.',
-        1 => 29,
+        1 => 21,
       ),
       1 => 
       array (
         0 => 'Token inválido ou expirado.',
-        1 => 48,
+        1 => 31,
       ),
       2 => 
       array (
-        0 => 'Token expirado. Solicite um novo.',
-        1 => 54,
-      ),
-      3 => 
-      array (
-        0 => 'Utilizador não encontrado.',
-        1 => 59,
-      ),
-      4 => 
-      array (
         0 => 'Password reposta com sucesso. Faça login.',
-        1 => 68,
+        1 => 36,
+      ),
+    ),
+    'PHPStan\\Rules\\DeadCode\\ConstructorWithoutImpurePointsCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'App\\Http\\Controllers\\PasswordResetController',
+        1 => 
+        array (
+        ),
       ),
     ),
   ),
@@ -3290,170 +3290,6 @@ return [
       ),
     ),
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketWorkflowController.php' => 
-  array (
-    'Larastan\\Larastan\\Collectors\\UsedTranslationFunctionCollector' => 
-    array (
-      0 => 
-      array (
-        0 => 'Intervenção concluída e ticket fechado com sucesso.',
-        1 => 151,
-      ),
-    ),
-    'PHPStan\\Rules\\Comparison\\ConstantConditionInTraitCollector' => 
-    array (
-      0 => 
-      array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
-        1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => 'event(new \\App\\Events\\TicketStatusUpdatedBroadcast($ticket, $oldStatus, $newStatus->value)):16',
-        3 => NULL,
-      ),
-      1 => 
-      array (
-        0 => 'PHPStan\\Rules\\Comparison\\TernaryOperatorConstantConditionRule',
-        1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$ticket->relationLoaded(\'user\'):19',
-        3 => NULL,
-      ),
-      2 => 
-      array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
-        1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$ticket->relationLoaded(\'user\'):19',
-        3 => NULL,
-      ),
-      3 => 
-      array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
-        1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$ticket->user()->first():19',
-        3 => NULL,
-      ),
-      4 => 
-      array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
-        1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$ticket->user():19',
-        3 => NULL,
-      ),
-      5 => 
-      array (
-        0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
-        1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$user instanceof \\App\\Models\\User && $user->email:21',
-        3 => NULL,
-      ),
-      6 => 
-      array (
-        0 => 'PHPStan\\Rules\\Classes\\ImpossibleInstanceOfRule',
-        1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$user instanceof \\App\\Models\\User:21',
-        3 => NULL,
-      ),
-      7 => 
-      array (
-        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
-        1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$user instanceof \\App\\Models\\User:21',
-        3 => NULL,
-      ),
-      8 => 
-      array (
-        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
-        1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$user->email:21',
-        3 => NULL,
-      ),
-      9 => 
-      array (
-        0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
-        1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$user instanceof \\App\\Models\\User && $user->email:21',
-        3 => NULL,
-      ),
-      10 => 
-      array (
-        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
-        1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$user->notify(new \\App\\Notifications\\TicketStatusChanged($ticket, $oldStatus, $newStatus->value)):22',
-        3 => NULL,
-      ),
-    ),
-    'PHPStan\\Rules\\DeadCode\\ConstructorWithoutImpurePointsCollector' => 
-    array (
-      0 => 
-      array (
-        0 => 'App\\Http\\Controllers\\TicketWorkflowController',
-        1 => 
-        array (
-        ),
-      ),
-    ),
-    'PHPStan\\Rules\\DeadCode\\PossiblyPureFuncCallCollector' => 
-    array (
-      0 => 
-      array (
-        0 => 'event',
-        1 => 16,
-      ),
-    ),
-    'PHPStan\\Rules\\DeadCode\\PossiblyPureMethodCallCollector' => 
-    array (
-      0 => 
-      array (
-        0 => 
-        array (
-          0 => 'App\\Services\\TicketWorkflowService',
-        ),
-        1 => 'startRepair',
-        2 => 64,
-      ),
-      1 => 
-      array (
-        0 => 
-        array (
-          0 => 'App\\Services\\TicketWorkflowService',
-        ),
-        1 => 'close',
-        2 => 100,
-      ),
-      2 => 
-      array (
-        0 => 
-        array (
-          0 => 'App\\Services\\TicketWorkflowService',
-        ),
-        1 => 'cancel',
-        2 => 188,
-      ),
-      3 => 
-      array (
-        0 => 
-        array (
-          0 => 'App\\Services\\TechnicianAssignmentService',
-        ),
-        1 => 'assignToTicket',
-        2 => 221,
-      ),
-    ),
-    'PHPStan\\Rules\\DeadCode\\PossiblyPureStaticCallCollector' => 
-    array (
-      0 => 
-      array (
-        0 => 'Illuminate\\Database\\Connection',
-        1 => 'transaction',
-        2 => 136,
-      ),
-    ),
-    'PHPStan\\Rules\\Traits\\TraitUseCollector' => 
-    array (
-      0 => 
-      array (
-        0 => 'App\\Concerns\\BroadcastsTicketStatus',
-      ),
-    ),
-  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketAssignmentController.php' => 
   array (
     'PHPStan\\Rules\\Comparison\\ConstantConditionInTraitCollector' => 
@@ -3462,77 +3298,91 @@ return [
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => 'event(new \\App\\Events\\TicketStatusUpdatedBroadcast($ticket, $oldStatus, $newStatus->value)):16',
+        2 => 'event(new \\App\\Events\\TicketStatusUpdatedBroadcast($ticket, $oldStatus, $newStatus->value)):17',
         3 => NULL,
       ),
       1 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\TernaryOperatorConstantConditionRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$ticket->relationLoaded(\'user\'):19',
+        2 => '$ticket->relationLoaded(\'user\'):20',
         3 => NULL,
       ),
       2 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$ticket->relationLoaded(\'user\'):19',
+        2 => '$ticket->relationLoaded(\'user\'):20',
         3 => NULL,
       ),
       3 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$ticket->user()->first():19',
+        2 => '$ticket->user()->first():20',
         3 => NULL,
       ),
       4 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$ticket->user():19',
+        2 => '$ticket->user():20',
         3 => NULL,
       ),
       5 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$user instanceof \\App\\Models\\User && $user->email:21',
+        2 => '$user instanceof \\App\\Models\\User && $user->email:22',
         3 => NULL,
       ),
       6 => 
       array (
         0 => 'PHPStan\\Rules\\Classes\\ImpossibleInstanceOfRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$user instanceof \\App\\Models\\User:21',
+        2 => '$user instanceof \\App\\Models\\User:22',
         3 => NULL,
       ),
       7 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$user instanceof \\App\\Models\\User:21',
+        2 => '$user instanceof \\App\\Models\\User:22',
         3 => NULL,
       ),
       8 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$user->email:21',
+        2 => '$user->email:22',
         3 => NULL,
       ),
       9 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$user instanceof \\App\\Models\\User && $user->email:21',
+        2 => '$user instanceof \\App\\Models\\User && $user->email:22',
         3 => NULL,
       ),
       10 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$user->notify(new \\App\\Notifications\\TicketStatusChanged($ticket, $oldStatus, $newStatus->value)):22',
+        2 => '$user->notify(new \\App\\Notifications\\TicketStatusChanged($ticket, $oldStatus, $newStatus->value)):23',
+        3 => NULL,
+      ),
+      11 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeStaticMethodCallRule',
+        1 => 'App\\Concerns\\BroadcastsTicketStatus',
+        2 => '\\Illuminate\\Support\\Facades\\Log::warning(\'Failed to broadcast ticket status change\', [\'ticket_id\' => $ticket->id, \'error\' => $e->getMessage()]):26',
+        3 => NULL,
+      ),
+      12 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        1 => 'App\\Concerns\\BroadcastsTicketStatus',
+        2 => '$e->getMessage():28',
         3 => NULL,
       ),
     ),
@@ -3551,7 +3401,7 @@ return [
       0 => 
       array (
         0 => 'event',
-        1 => 16,
+        1 => 17,
       ),
     ),
     'PHPStan\\Rules\\DeadCode\\PossiblyPureMethodCallCollector' => 
@@ -3590,77 +3440,91 @@ return [
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => 'event(new \\App\\Events\\TicketStatusUpdatedBroadcast($ticket, $oldStatus, $newStatus->value)):16',
+        2 => 'event(new \\App\\Events\\TicketStatusUpdatedBroadcast($ticket, $oldStatus, $newStatus->value)):17',
         3 => NULL,
       ),
       1 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\TernaryOperatorConstantConditionRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$ticket->relationLoaded(\'user\'):19',
+        2 => '$ticket->relationLoaded(\'user\'):20',
         3 => NULL,
       ),
       2 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$ticket->relationLoaded(\'user\'):19',
+        2 => '$ticket->relationLoaded(\'user\'):20',
         3 => NULL,
       ),
       3 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$ticket->user()->first():19',
+        2 => '$ticket->user()->first():20',
         3 => NULL,
       ),
       4 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$ticket->user():19',
+        2 => '$ticket->user():20',
         3 => NULL,
       ),
       5 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$user instanceof \\App\\Models\\User && $user->email:21',
+        2 => '$user instanceof \\App\\Models\\User && $user->email:22',
         3 => NULL,
       ),
       6 => 
       array (
         0 => 'PHPStan\\Rules\\Classes\\ImpossibleInstanceOfRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$user instanceof \\App\\Models\\User:21',
+        2 => '$user instanceof \\App\\Models\\User:22',
         3 => NULL,
       ),
       7 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$user instanceof \\App\\Models\\User:21',
+        2 => '$user instanceof \\App\\Models\\User:22',
         3 => NULL,
       ),
       8 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$user->email:21',
+        2 => '$user->email:22',
         3 => NULL,
       ),
       9 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$user instanceof \\App\\Models\\User && $user->email:21',
+        2 => '$user instanceof \\App\\Models\\User && $user->email:22',
         3 => NULL,
       ),
       10 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$user->notify(new \\App\\Notifications\\TicketStatusChanged($ticket, $oldStatus, $newStatus->value)):22',
+        2 => '$user->notify(new \\App\\Notifications\\TicketStatusChanged($ticket, $oldStatus, $newStatus->value)):23',
+        3 => NULL,
+      ),
+      11 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeStaticMethodCallRule',
+        1 => 'App\\Concerns\\BroadcastsTicketStatus',
+        2 => '\\Illuminate\\Support\\Facades\\Log::warning(\'Failed to broadcast ticket status change\', [\'ticket_id\' => $ticket->id, \'error\' => $e->getMessage()]):26',
+        3 => NULL,
+      ),
+      12 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        1 => 'App\\Concerns\\BroadcastsTicketStatus',
+        2 => '$e->getMessage():28',
         3 => NULL,
       ),
     ),
@@ -3679,7 +3543,7 @@ return [
       0 => 
       array (
         0 => 'event',
-        1 => 16,
+        1 => 17,
       ),
     ),
     'PHPStan\\Rules\\DeadCode\\PossiblyPureMethodCallCollector' => 
@@ -3744,77 +3608,91 @@ return [
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeFunctionCallRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => 'event(new \\App\\Events\\TicketStatusUpdatedBroadcast($ticket, $oldStatus, $newStatus->value)):16',
+        2 => 'event(new \\App\\Events\\TicketStatusUpdatedBroadcast($ticket, $oldStatus, $newStatus->value)):17',
         3 => NULL,
       ),
       1 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\TernaryOperatorConstantConditionRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$ticket->relationLoaded(\'user\'):19',
+        2 => '$ticket->relationLoaded(\'user\'):20',
         3 => NULL,
       ),
       2 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$ticket->relationLoaded(\'user\'):19',
+        2 => '$ticket->relationLoaded(\'user\'):20',
         3 => NULL,
       ),
       3 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$ticket->user()->first():19',
+        2 => '$ticket->user()->first():20',
         3 => NULL,
       ),
       4 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$ticket->user():19',
+        2 => '$ticket->user():20',
         3 => NULL,
       ),
       5 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\IfConstantConditionRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$user instanceof \\App\\Models\\User && $user->email:21',
+        2 => '$user instanceof \\App\\Models\\User && $user->email:22',
         3 => NULL,
       ),
       6 => 
       array (
         0 => 'PHPStan\\Rules\\Classes\\ImpossibleInstanceOfRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$user instanceof \\App\\Models\\User:21',
+        2 => '$user instanceof \\App\\Models\\User:22',
         3 => NULL,
       ),
       7 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$user instanceof \\App\\Models\\User:21',
+        2 => '$user instanceof \\App\\Models\\User:22',
         3 => NULL,
       ),
       8 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$user->email:21',
+        2 => '$user->email:22',
         3 => NULL,
       ),
       9 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\BooleanAndConstantConditionRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$user instanceof \\App\\Models\\User && $user->email:21',
+        2 => '$user instanceof \\App\\Models\\User && $user->email:22',
         3 => NULL,
       ),
       10 => 
       array (
         0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
         1 => 'App\\Concerns\\BroadcastsTicketStatus',
-        2 => '$user->notify(new \\App\\Notifications\\TicketStatusChanged($ticket, $oldStatus, $newStatus->value)):22',
+        2 => '$user->notify(new \\App\\Notifications\\TicketStatusChanged($ticket, $oldStatus, $newStatus->value)):23',
+        3 => NULL,
+      ),
+      11 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeStaticMethodCallRule',
+        1 => 'App\\Concerns\\BroadcastsTicketStatus',
+        2 => '\\Illuminate\\Support\\Facades\\Log::warning(\'Failed to broadcast ticket status change\', [\'ticket_id\' => $ticket->id, \'error\' => $e->getMessage()]):26',
+        3 => NULL,
+      ),
+      12 => 
+      array (
+        0 => 'PHPStan\\Rules\\Comparison\\ImpossibleCheckTypeMethodCallRule',
+        1 => 'App\\Concerns\\BroadcastsTicketStatus',
+        2 => '$e->getMessage():28',
         3 => NULL,
       ),
     ),
@@ -3833,7 +3711,7 @@ return [
       0 => 
       array (
         0 => 'event',
-        1 => 16,
+        1 => 17,
       ),
     ),
     'PHPStan\\Rules\\DeadCode\\PossiblyPureMethodCallCollector' => 
@@ -3876,6 +3754,16 @@ return [
       13 => 'ui.analytics',
       14 => 'ui.profile',
     ),
+    'PHPStan\\Rules\\DeadCode\\ConstructorWithoutImpurePointsCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'App\\Http\\Controllers\\UiController',
+        1 => 
+        array (
+        ),
+      ),
+    ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CsrfMiddleware.php' => 
   array (
@@ -3885,6 +3773,21 @@ return [
       array (
         0 => 'App\\Http\\Middleware\\CsrfMiddleware',
         1 => 
+        array (
+        ),
+      ),
+    ),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php' => 
+  array (
+    'PHPStan\\Rules\\DeadCode\\MethodWithoutImpurePointsCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'App\\Http\\Middleware\\CustomAuthMiddleware',
+        1 => 'hasInvalidProfile',
+        2 => 'App\\Http\\Middleware\\CustomAuthMiddleware',
+        3 => 
         array (
         ),
       ),
@@ -4130,6 +4033,31 @@ return [
       ),
     ),
   ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Requests\\ResetPasswordRequest.php' => 
+  array (
+    'PHPStan\\Rules\\DeadCode\\MethodWithoutImpurePointsCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'App\\Http\\Requests\\ResetPasswordRequest',
+        1 => 'authorize',
+        2 => 'App\\Http\\Requests\\ResetPasswordRequest',
+        3 => 
+        array (
+        ),
+      ),
+      1 => 
+      array (
+        0 => 'App\\Http\\Requests\\ResetPasswordRequest',
+        1 => 'rules',
+        2 => 'App\\Http\\Requests\\ResetPasswordRequest',
+        3 => 
+        array (
+          0 => 'm' . "\0" . 'app\\http\\requests\\registerrequest' . "\0" . 'passwordrules',
+        ),
+      ),
+    ),
+  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Requests\\ScheduleTicketRequest.php' => 
   array (
     'PHPStan\\Rules\\DeadCode\\MethodWithoutImpurePointsCollector' => 
@@ -4148,6 +4076,30 @@ return [
         0 => 'App\\Http\\Requests\\ScheduleTicketRequest',
         1 => 'rules',
         2 => 'App\\Http\\Requests\\ScheduleTicketRequest',
+        3 => 
+        array (
+        ),
+      ),
+    ),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Requests\\SendResetLinkRequest.php' => 
+  array (
+    'PHPStan\\Rules\\DeadCode\\MethodWithoutImpurePointsCollector' => 
+    array (
+      0 => 
+      array (
+        0 => 'App\\Http\\Requests\\SendResetLinkRequest',
+        1 => 'authorize',
+        2 => 'App\\Http\\Requests\\SendResetLinkRequest',
+        3 => 
+        array (
+        ),
+      ),
+      1 => 
+      array (
+        0 => 'App\\Http\\Requests\\SendResetLinkRequest',
+        1 => 'rules',
+        2 => 'App\\Http\\Requests\\SendResetLinkRequest',
         3 => 
         array (
         ),
@@ -6114,6 +6066,16 @@ return [
         array (
         ),
       ),
+      2 => 
+      array (
+        0 => 'App\\Notifications\\TicketStatusChanged',
+        1 => 'resolveStatusLabel',
+        2 => 'App\\Notifications\\TicketStatusChanged',
+        3 => 
+        array (
+          0 => 'm' . "\0" . 'app\\enums\\ticketstatusenum' . "\0" . 'label',
+        ),
+      ),
     ),
     'PHPStan\\Rules\\Traits\\TraitUseCollector' => 
     array (
@@ -6503,7 +6465,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Concerns\\BroadcastsTicketStatus.php' => 
   array (
-    'fileHash' => 'f4b736de4ede0bee5376d502732e32f8195dfc5f75d2a13d554f9b50302e9c46',
+    'fileHash' => '297fd701f1c71119b46fba4160932d0d01a6e8673fcbf79c41cfb4696fdf2517',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketWorkflowController.php',
@@ -6786,12 +6748,13 @@ return [
       15 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketLifecycleController.php',
       16 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketStartController.php',
       17 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
-      18 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
-      19 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AnalyticsService.php',
-      20 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TechnicianAssignmentService.php',
-      21 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TicketSearchService.php',
-      22 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TicketStatusService.php',
-      23 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TicketWorkflowService.php',
+      18 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\TicketStatusChanged.php',
+      19 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
+      20 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AnalyticsService.php',
+      21 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TechnicianAssignmentService.php',
+      22 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TicketSearchService.php',
+      23 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TicketStatusService.php',
+      24 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TicketWorkflowService.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Enums\\UserRoleEnum.php' => 
@@ -6838,14 +6801,14 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminEquipmentController.php' => 
   array (
-    'fileHash' => '865fa56fcc0a630ca768c0b85fe3db49dcc5060f65ae666c198b1fea65cdc8a9',
+    'fileHash' => '8a95d74947044483bd0a6a2717f585cf7c2701143f13f4cc9bfcc4da0419d94d',
     'dependentFiles' => 
     array (
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminUserController.php' => 
   array (
-    'fileHash' => 'be8f4b41e93a4d0d6970e47d529df64e184330d236cafe1d2460491ec70eb9f3',
+    'fileHash' => '953f4fe52780b0888042333c5af5687a3b414df7c06c282dc6213adefa5576b9',
     'dependentFiles' => 
     array (
     ),
@@ -6933,7 +6896,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\PasswordResetController.php' => 
   array (
-    'fileHash' => 'a185334714721195a9a3cc0c8cc8d53d83c9a09d39ed795c639b67dafc103f5b',
+    'fileHash' => '9aeae56e05ca49bb80bcb3307ec488faabd0ea351060bc3b72437ce2e66b4676',
     'dependentFiles' => 
     array (
     ),
@@ -6987,13 +6950,6 @@ return [
     array (
     ),
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketWorkflowController.php' => 
-  array (
-    'fileHash' => '60d4d1c67362f1ef89240a012f7d8781f9db4239c9dd5bbdae5f8debbbfa2671',
-    'dependentFiles' => 
-    array (
-    ),
-  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketAssignmentController.php' => 
   array (
     'fileHash' => '03dcb68f0c50b7270a28e8c780efb56d7ebe8dc98e2884b8d55d4fe7748f71db',
@@ -7031,7 +6987,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php' => 
   array (
-    'fileHash' => 'e9e3bc3eb6e07d5a1adcb44658fbeb29d42360ca544d6f26a339ba617121023b',
+    'fileHash' => '0db6ec5740094ab81e50c506d7c806cfd6681201471cac950e56da5c00ff0964',
     'dependentFiles' => 
     array (
     ),
@@ -7045,7 +7001,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Middleware\\CustomAuthMiddleware.php' => 
   array (
-    'fileHash' => '54f5f9a95d2f7e504d3df386ba1661b5e73cbab5e2d11aefe1e7918a96c35830',
+    'fileHash' => '43e905eeeaea2d835c6e8e2214c44ede804cebda3a9055f1d24903c0e5c780ad',
     'dependentFiles' => 
     array (
     ),
@@ -7140,9 +7096,9 @@ return [
     'fileHash' => '512ece316e4d200ecc24542f781c69bcbcd68b04a74159faf04812f1df292713',
     'dependentFiles' => 
     array (
-      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\PasswordResetController.php',
-      1 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RegisterController.php',
-      2 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Requests\\ChangePasswordRequest.php',
+      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\RegisterController.php',
+      1 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Requests\\ChangePasswordRequest.php',
+      2 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Requests\\ResetPasswordRequest.php',
       3 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Requests\\StoreUserRequest.php',
       4 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Requests\\UpdateUserRequest.php',
     ),
@@ -7155,6 +7111,14 @@ return [
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketBudgetController.php',
     ),
   ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Requests\\ResetPasswordRequest.php' => 
+  array (
+    'fileHash' => '8f2e86cdf2b514712fe1f4e3577d893f356f1b1e4409d834ffa4c07fc68918e9',
+    'dependentFiles' => 
+    array (
+      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\PasswordResetController.php',
+    ),
+  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Requests\\ScheduleTicketRequest.php' => 
   array (
     'fileHash' => '5b74179caa2b433a8659da9dc6fc348a725d50a5c0839342b6063f7a47dff78f',
@@ -7162,6 +7126,14 @@ return [
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketWorkflowController.php',
       1 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketScheduleController.php',
+    ),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Requests\\SendResetLinkRequest.php' => 
+  array (
+    'fileHash' => '6bca5fa07f76751628f0e66d668a7af610114f69d8fa5981152f360101cfd180',
+    'dependentFiles' => 
+    array (
+      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\PasswordResetController.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Requests\\StartTicketRequest.php' => 
@@ -7185,6 +7157,7 @@ return [
     'fileHash' => '3b6b2962b5d00fb3ddadf681e36382943a50f6b665f4a4ce6a8e13cd2df77875',
     'dependentFiles' => 
     array (
+      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminEquipmentController.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Requests\\StorePreventiveRequest.php' => 
@@ -7216,6 +7189,7 @@ return [
     'fileHash' => '7f8239b51b906aa24aa86bdf374a53a03d0adbd61c9bddad7faa882a480ac392',
     'dependentFiles' => 
     array (
+      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminUserController.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Requests\\SubmitBudgetRequest.php' => 
@@ -7231,6 +7205,7 @@ return [
     'fileHash' => 'c49fc6e3bd9adaf941334d4c7edac44486266d51ca28acc4ceb20f21f454b312',
     'dependentFiles' => 
     array (
+      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminEquipmentController.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Requests\\UpdateProfileRequest.php' => 
@@ -7254,6 +7229,7 @@ return [
     'fileHash' => '0db8b081cbef88c20583b2911bda2c4dcb3ca31cdb3785a6b4c9661e6581022c',
     'dependentFiles' => 
     array (
+      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminUserController.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Requests\\UploadPhotoRequest.php' => 
@@ -7298,11 +7274,10 @@ return [
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Console\\Commands\\SimulateTelemetry.php',
       1 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\AdminEquipmentController.php',
-      2 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
-      3 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\EquipmentCategory.php',
-      4 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php',
-      5 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
-      6 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\EquipmentService.php',
+      2 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\EquipmentCategory.php',
+      3 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Room.php',
+      4 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\Ticket.php',
+      5 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\EquipmentService.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\EquipmentCategory.php' => 
@@ -7478,8 +7453,9 @@ return [
       41 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
       42 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\CalendarService.php',
       43 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\NotificationService.php',
-      44 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TechnicianAssignmentService.php',
-      45 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\UserService.php',
+      44 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\PasswordResetService.php',
+      45 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TechnicianAssignmentService.php',
+      46 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\UserService.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Models\\UserProfile.php' => 
@@ -7539,8 +7515,9 @@ return [
       42 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\AIService.php',
       43 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\CalendarService.php',
       44 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\NotificationService.php',
-      45 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TechnicianAssignmentService.php',
-      46 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\UserService.php',
+      45 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\PasswordResetService.php',
+      46 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TechnicianAssignmentService.php',
+      47 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\UserService.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\NewTicketNotification.php' => 
@@ -7559,7 +7536,7 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Notifications\\TicketStatusChanged.php' => 
   array (
-    'fileHash' => 'e4bda4b6c0e366c6b9eca4402cf2da74b36e48f043d9c64005b2d381f7eb4434',
+    'fileHash' => '826bd0b85203b1192a9968c29556f47d0189716aef16b1f97992304f8188e152',
     'dependentFiles' => 
     array (
       0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketWorkflowController.php',
@@ -7646,6 +7623,7 @@ return [
     'fileHash' => '574ea81e43f46ebca2a952e3e4b262929712b0ac91198251aa391ddb373f7978',
     'dependentFiles' => 
     array (
+      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\UiController.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\NotificationService.php' => 
@@ -7658,6 +7636,14 @@ return [
       2 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketWorkflowController.php',
       3 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketCloseController.php',
       4 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketStartController.php',
+    ),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\PasswordResetService.php' => 
+  array (
+    'fileHash' => '3530be898b2c7d37fc2fb3cd0a52d5a5064cdc9dadf1521e84f31cdfa7a6c887',
+    'dependentFiles' => 
+    array (
+      0 => 'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\PasswordResetController.php',
     ),
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\TechnicianAssignmentService.php' => 
@@ -8167,9 +8153,8 @@ return [
   array (
     0 => 'laravel/framework',
     1 => 'symfony/http-foundation',
-    2 => 'nesbot/carbon',
-    3 => 'symfony/http-kernel',
-    4 => 'psr/container',
+    2 => 'symfony/http-kernel',
+    3 => 'psr/container',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\ProfileController.php' => 
   array (
@@ -8208,12 +8193,16 @@ return [
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketAssignmentController.php' => 
   array (
     0 => 'laravel/framework',
-    1 => 'symfony/http-foundation',
+    1 => 'psr/log',
+    2 => 'monolog/monolog',
+    3 => 'symfony/http-foundation',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketCloseController.php' => 
   array (
     0 => 'laravel/framework',
-    1 => 'symfony/http-foundation',
+    1 => 'psr/log',
+    2 => 'monolog/monolog',
+    3 => 'symfony/http-foundation',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketLifecycleController.php' => 
   array (
@@ -8228,7 +8217,9 @@ return [
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketStartController.php' => 
   array (
     0 => 'laravel/framework',
-    1 => 'symfony/http-foundation',
+    1 => 'psr/log',
+    2 => 'monolog/monolog',
+    3 => 'symfony/http-foundation',
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Requests\\AssignTechnicianRequest.php' => 
   array (
@@ -8416,6 +8407,21 @@ return [
   ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Concerns\\BroadcastsTicketStatus.php' => 
   array (
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Requests\\ResetPasswordRequest.php' => 
+  array (
+    0 => 'laravel/framework',
+    1 => 'symfony/http-foundation',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Requests\\SendResetLinkRequest.php' => 
+  array (
+    0 => 'laravel/framework',
+    1 => 'symfony/http-foundation',
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\PasswordResetService.php' => 
+  array (
+    0 => 'laravel/framework',
+    1 => 'nesbot/carbon',
   ),
 ),
 	'exportedNodesCallback' => static function (): array { return array (
@@ -13224,7 +13230,7 @@ return [
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'request',
-               'type' => 'Illuminate\\Http\\Request',
+               'type' => 'App\\Http\\Requests\\StoreEquipmentRequest',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -13255,7 +13261,7 @@ return [
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'request',
-               'type' => 'Illuminate\\Http\\Request',
+               'type' => 'App\\Http\\Requests\\UpdateEquipmentRequest',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -13400,7 +13406,7 @@ return [
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'request',
-               'type' => 'Illuminate\\Http\\Request',
+               'type' => 'App\\Http\\Requests\\StoreUserRequest',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -13431,7 +13437,7 @@ return [
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'request',
-               'type' => 'Illuminate\\Http\\Request',
+               'type' => 'App\\Http\\Requests\\UpdateUserRequest',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -14713,6 +14719,37 @@ return [
       array (
         0 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => '__construct',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => NULL,
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'passwordResetService',
+               'type' => 'App\\Services\\PasswordResetService',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 68,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        1 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'sendResetLink',
            'phpDoc' => NULL,
            'byRef' => false,
@@ -14727,7 +14764,7 @@ return [
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'request',
-               'type' => 'Illuminate\\Http\\Request',
+               'type' => 'App\\Http\\Requests\\SendResetLinkRequest',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -14742,7 +14779,7 @@ return [
           array (
           ),
         )),
-        1 => 
+        2 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'resetPassword',
            'phpDoc' => NULL,
@@ -14758,7 +14795,7 @@ return [
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'request',
-               'type' => 'Illuminate\\Http\\Request',
+               'type' => 'App\\Http\\Requests\\ResetPasswordRequest',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -15936,398 +15973,6 @@ return [
       ),
     )),
   ),
-  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\TicketWorkflowController.php' => 
-  array (
-    0 => 
-    \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
-       'name' => 'App\\Http\\Controllers\\TicketWorkflowController',
-       'phpDoc' => NULL,
-       'abstract' => false,
-       'final' => false,
-       'extends' => 'App\\Http\\Controllers\\Controller',
-       'implements' => 
-      array (
-      ),
-       'usedTraits' => 
-      array (
-        0 => 'App\\Concerns\\BroadcastsTicketStatus',
-      ),
-       'traitUseAdaptations' => 
-      array (
-      ),
-       'statements' => 
-      array (
-        0 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => '__construct',
-           'phpDoc' => NULL,
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => NULL,
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'workflowService',
-               'type' => 'App\\Services\\TicketWorkflowService',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 68,
-            )),
-            1 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'notificationService',
-               'type' => 'App\\Services\\NotificationService',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 68,
-            )),
-            2 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'technicianService',
-               'type' => 'App\\Services\\TechnicianAssignmentService',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 68,
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        1 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'start',
-           'phpDoc' => NULL,
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => 'Illuminate\\Http\\JsonResponse',
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'request',
-               'type' => 'Illuminate\\Http\\Request',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-            1 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'id',
-               'type' => 'int',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        2 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'close',
-           'phpDoc' => NULL,
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => 'Illuminate\\Http\\JsonResponse',
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'request',
-               'type' => 'Illuminate\\Http\\Request',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-            1 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'id',
-               'type' => 'int',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        3 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'closeFinal',
-           'phpDoc' => NULL,
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => 'Illuminate\\Http\\JsonResponse',
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'request',
-               'type' => 'App\\Http\\Requests\\CloseTicketRequest',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-            1 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'id',
-               'type' => 'int',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        4 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'reopen',
-           'phpDoc' => NULL,
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => 'Illuminate\\Http\\JsonResponse',
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'request',
-               'type' => 'Illuminate\\Http\\Request',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-            1 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'id',
-               'type' => 'int',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        5 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'cancel',
-           'phpDoc' => NULL,
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => 'Illuminate\\Http\\JsonResponse',
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'request',
-               'type' => 'Illuminate\\Http\\Request',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-            1 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'id',
-               'type' => 'int',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        6 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'schedule',
-           'phpDoc' => NULL,
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => 'Illuminate\\Http\\JsonResponse',
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'request',
-               'type' => 'App\\Http\\Requests\\ScheduleTicketRequest',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-            1 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'id',
-               'type' => 'int',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        7 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'assignTechnician',
-           'phpDoc' => NULL,
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => 'Illuminate\\Http\\JsonResponse',
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'request',
-               'type' => 'Illuminate\\Http\\Request',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-            1 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'id',
-               'type' => 'int',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-      ),
-       'attributes' => 
-      array (
-      ),
-    )),
-  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Ticket\\TicketAssignmentController.php' => 
   array (
     0 => 
@@ -16941,24 +16586,8 @@ return [
       array (
         0 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'index',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Mostra o painel principal da interface web.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'user' => 'App\\Models\\User',
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
+           'name' => '__construct',
+           'phpDoc' => NULL,
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -16970,8 +16599,8 @@ return [
           array (
             0 => 
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'request',
-               'type' => 'Illuminate\\Http\\Request',
+               'name' => 'equipmentService',
+               'type' => 'App\\Services\\EquipmentService',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
@@ -16979,7 +16608,7 @@ return [
               array (
               ),
                'phpDoc' => NULL,
-               'flags' => 0,
+               'flags' => 68,
             )),
           ),
            'attributes' => 
@@ -16988,24 +16617,8 @@ return [
         )),
         1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'tickets',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Mostra a página com a lista de tickets.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'user' => 'App\\Models\\User',
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
+           'name' => 'index',
+           'phpDoc' => NULL,
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -17035,24 +16648,8 @@ return [
         )),
         2 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'ticketCreate',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Mostra a página de criação de um novo ticket.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'user' => 'App\\Models\\User',
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
+           'name' => 'tickets',
+           'phpDoc' => NULL,
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -17082,24 +16679,8 @@ return [
         )),
         3 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'equipments',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Mostra a página com os equipamentos registados.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'user' => 'App\\Models\\User',
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
+           'name' => 'ticketCreate',
+           'phpDoc' => NULL,
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -17129,24 +16710,8 @@ return [
         )),
         4 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'users',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Mostra a página com os utilizadores do sistema.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'user' => 'App\\Models\\User',
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
+           'name' => 'equipments',
+           'phpDoc' => NULL,
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -17176,24 +16741,8 @@ return [
         )),
         5 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'userCreate',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Mostra o formulário de criação de utilizador.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'user' => 'App\\Models\\User',
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
+           'name' => 'users',
+           'phpDoc' => NULL,
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -17223,24 +16772,39 @@ return [
         )),
         6 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'userCreate',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => NULL,
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'request',
+               'type' => 'Illuminate\\Http\\Request',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        7 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'userEdit',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Mostra o formulário de edição de utilizador.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'user' => 'App\\Models\\User',
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
+           'phpDoc' => NULL,
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -17281,73 +16845,10 @@ return [
           array (
           ),
         )),
-        7 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'rooms',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Mostra a página com a lista de salas.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'user' => 'App\\Models\\User',
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => NULL,
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'request',
-               'type' => 'Illuminate\\Http\\Request',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
         8 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'roomCreate',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Mostra a página de criação de uma nova sala.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'user' => 'App\\Models\\User',
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
+           'name' => 'rooms',
+           'phpDoc' => NULL,
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -17377,24 +16878,8 @@ return [
         )),
         9 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'roomDetail',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Mostra os detalhes de uma sala específica.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'user' => 'App\\Models\\User',
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
+           'name' => 'roomCreate',
+           'phpDoc' => NULL,
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -17417,19 +16902,6 @@ return [
                'phpDoc' => NULL,
                'flags' => 0,
             )),
-            1 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'id',
-               'type' => 'int',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
           ),
            'attributes' => 
           array (
@@ -17437,24 +16909,8 @@ return [
         )),
         10 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'roomEdit',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Mostra o formulário de edição de uma sala.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'user' => 'App\\Models\\User',
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
+           'name' => 'roomDetail',
+           'phpDoc' => NULL,
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -17497,71 +16953,8 @@ return [
         )),
         11 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'audits',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Mostra a página de auditoria.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'user' => 'App\\Models\\User',
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
-           'byRef' => false,
-           'public' => true,
-           'private' => false,
-           'abstract' => false,
-           'final' => false,
-           'static' => false,
-           'returnType' => NULL,
-           'parameters' => 
-          array (
-            0 => 
-            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
-               'name' => 'request',
-               'type' => 'Illuminate\\Http\\Request',
-               'byRef' => false,
-               'variadic' => false,
-               'hasDefault' => false,
-               'attributes' => 
-              array (
-              ),
-               'phpDoc' => NULL,
-               'flags' => 0,
-            )),
-          ),
-           'attributes' => 
-          array (
-          ),
-        )),
-        12 => 
-        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'ticketDetail',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Mostra os detalhes de um ticket específico.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'user' => 'App\\Models\\User',
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
+           'name' => 'roomEdit',
+           'phpDoc' => NULL,
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -17602,26 +16995,10 @@ return [
           array (
           ),
         )),
-        13 => 
+        12 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'getEquipments',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Retorna a lista de equipamentos para a interface (acessível a todos os utilizadores).
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'user' => 'App\\Models\\User',
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
+           'name' => 'audits',
+           'phpDoc' => NULL,
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -17649,26 +17026,10 @@ return [
           array (
           ),
         )),
-        14 => 
+        13 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
-           'name' => 'analytics',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Mostra a página de analytics com gráficos e relatórios.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'user' => 'App\\Models\\User',
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
+           'name' => 'ticketDetail',
+           'phpDoc' => NULL,
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -17676,6 +17037,50 @@ return [
            'final' => false,
            'static' => false,
            'returnType' => NULL,
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'request',
+               'type' => 'Illuminate\\Http\\Request',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+            1 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'id',
+               'type' => 'int',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        14 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'getEquipments',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'Illuminate\\Http\\JsonResponse',
            'parameters' => 
           array (
             0 => 
@@ -17698,24 +17103,39 @@ return [
         )),
         15 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'analytics',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => NULL,
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'request',
+               'type' => 'Illuminate\\Http\\Request',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        16 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'profile',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Mostra a página de perfil do utilizador autenticado.
-     */',
-             'namespace' => 'App\\Http\\Controllers',
-             'uses' => 
-            array (
-              'equipment' => 'App\\Models\\Equipment',
-              'room' => 'App\\Models\\Room',
-              'user' => 'App\\Models\\User',
-              'request' => 'Illuminate\\Http\\Request',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
+           'phpDoc' => NULL,
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -18009,24 +17429,7 @@ return [
         0 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'handle',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Trata uma rota protegida validando o token customizado da aplicação.
-     */',
-             'namespace' => 'App\\Http\\Middleware',
-             'uses' => 
-            array (
-              'user' => 'App\\Models\\User',
-              'closure' => 'Closure',
-              'request' => 'Illuminate\\Http\\Request',
-              'auth' => 'Illuminate\\Support\\Facades\\Auth',
-              'response' => 'Symfony\\Component\\HttpFoundation\\Response',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
+           'phpDoc' => NULL,
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -19376,11 +18779,135 @@ return [
       ),
     )),
   ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Requests\\ResetPasswordRequest.php' => 
+  array (
+    0 => 
+    \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
+       'name' => 'App\\Http\\Requests\\ResetPasswordRequest',
+       'phpDoc' => NULL,
+       'abstract' => false,
+       'final' => true,
+       'extends' => 'Illuminate\\Foundation\\Http\\FormRequest',
+       'implements' => 
+      array (
+      ),
+       'usedTraits' => 
+      array (
+      ),
+       'traitUseAdaptations' => 
+      array (
+      ),
+       'statements' => 
+      array (
+        0 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'authorize',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'bool',
+           'parameters' => 
+          array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        1 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'rules',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'array',
+           'parameters' => 
+          array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+      ),
+       'attributes' => 
+      array (
+      ),
+    )),
+  ),
   'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Requests\\ScheduleTicketRequest.php' => 
   array (
     0 => 
     \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
        'name' => 'App\\Http\\Requests\\ScheduleTicketRequest',
+       'phpDoc' => NULL,
+       'abstract' => false,
+       'final' => true,
+       'extends' => 'Illuminate\\Foundation\\Http\\FormRequest',
+       'implements' => 
+      array (
+      ),
+       'usedTraits' => 
+      array (
+      ),
+       'traitUseAdaptations' => 
+      array (
+      ),
+       'statements' => 
+      array (
+        0 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'authorize',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'bool',
+           'parameters' => 
+          array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        1 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'rules',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'array',
+           'parameters' => 
+          array (
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+      ),
+       'attributes' => 
+      array (
+      ),
+    )),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Requests\\SendResetLinkRequest.php' => 
+  array (
+    0 => 
+    \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
+       'name' => 'App\\Http\\Requests\\SendResetLinkRequest',
        'phpDoc' => NULL,
        'abstract' => false,
        'final' => true,
@@ -24069,24 +23596,7 @@ return [
     0 => 
     \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
        'name' => 'App\\Notifications\\TicketStatusChanged',
-       'phpDoc' => 
-      \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-         'phpDocString' => '/**
- * Notificação enviada ao criador do ticket quando o estado da avaria muda.
- * Suporta canal de email. Pode ser estendida com canais adicionais (database, broadcast).
- */',
-         'namespace' => 'App\\Notifications',
-         'uses' => 
-        array (
-          'ticket' => 'App\\Models\\Ticket',
-          'queueable' => 'Illuminate\\Bus\\Queueable',
-          'mailmessage' => 'Illuminate\\Notifications\\Messages\\MailMessage',
-          'notification' => 'Illuminate\\Notifications\\Notification',
-        ),
-         'constUses' => 
-        array (
-        ),
-      )),
+       'phpDoc' => NULL,
        'abstract' => false,
        'final' => false,
        'extends' => 'Illuminate\\Notifications\\Notification',
@@ -24162,23 +23672,7 @@ return [
         1 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'via',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Define os canais de entrega desta notificação.
-     */',
-             'namespace' => 'App\\Notifications',
-             'uses' => 
-            array (
-              'ticket' => 'App\\Models\\Ticket',
-              'queueable' => 'Illuminate\\Bus\\Queueable',
-              'mailmessage' => 'Illuminate\\Notifications\\Messages\\MailMessage',
-              'notification' => 'Illuminate\\Notifications\\Notification',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
+           'phpDoc' => NULL,
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -24209,23 +23703,7 @@ return [
         2 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'toMail',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Constrói a mensagem de email a enviar ao utilizador.
-     */',
-             'namespace' => 'App\\Notifications',
-             'uses' => 
-            array (
-              'ticket' => 'App\\Models\\Ticket',
-              'queueable' => 'Illuminate\\Bus\\Queueable',
-              'mailmessage' => 'Illuminate\\Notifications\\Messages\\MailMessage',
-              'notification' => 'Illuminate\\Notifications\\Notification',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
+           'phpDoc' => NULL,
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -24256,23 +23734,7 @@ return [
         3 => 
         \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
            'name' => 'toArray',
-           'phpDoc' => 
-          \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::__set_state(array(
-             'phpDocString' => '/**
-     * Representação em array (para canais database/broadcast futuros).
-     */',
-             'namespace' => 'App\\Notifications',
-             'uses' => 
-            array (
-              'ticket' => 'App\\Models\\Ticket',
-              'queueable' => 'Illuminate\\Bus\\Queueable',
-              'mailmessage' => 'Illuminate\\Notifications\\Messages\\MailMessage',
-              'notification' => 'Illuminate\\Notifications\\Notification',
-            ),
-             'constUses' => 
-            array (
-            ),
-          )),
+           'phpDoc' => NULL,
            'byRef' => false,
            'public' => true,
            'private' => false,
@@ -25974,6 +25436,151 @@ return [
             \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
                'name' => 'urgentCount',
                'type' => 'int',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+      ),
+       'attributes' => 
+      array (
+      ),
+    )),
+  ),
+  'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Services\\PasswordResetService.php' => 
+  array (
+    0 => 
+    \PHPStan\Dependency\ExportedNode\ExportedClassNode::__set_state(array(
+       'name' => 'App\\Services\\PasswordResetService',
+       'phpDoc' => NULL,
+       'abstract' => false,
+       'final' => true,
+       'extends' => NULL,
+       'implements' => 
+      array (
+      ),
+       'usedTraits' => 
+      array (
+      ),
+       'traitUseAdaptations' => 
+      array (
+      ),
+       'statements' => 
+      array (
+        0 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'createResetToken',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'string',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'email',
+               'type' => 'string',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        1 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'validateToken',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => '?App\\Models\\User',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'email',
+               'type' => 'string',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+            1 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'token',
+               'type' => 'string',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+          ),
+           'attributes' => 
+          array (
+          ),
+        )),
+        2 => 
+        \PHPStan\Dependency\ExportedNode\ExportedMethodNode::__set_state(array(
+           'name' => 'resetPassword',
+           'phpDoc' => NULL,
+           'byRef' => false,
+           'public' => true,
+           'private' => false,
+           'abstract' => false,
+           'final' => false,
+           'static' => false,
+           'returnType' => 'void',
+           'parameters' => 
+          array (
+            0 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'user',
+               'type' => 'App\\Models\\User',
+               'byRef' => false,
+               'variadic' => false,
+               'hasDefault' => false,
+               'attributes' => 
+              array (
+              ),
+               'phpDoc' => NULL,
+               'flags' => 0,
+            )),
+            1 => 
+            \PHPStan\Dependency\ExportedNode\ExportedParameterNode::__set_state(array(
+               'name' => 'password',
+               'type' => 'string',
                'byRef' => false,
                'variadic' => false,
                'hasDefault' => false,
