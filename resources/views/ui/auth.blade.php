@@ -89,16 +89,9 @@
         </div>
     </div>
 
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const togglePasswordBtn = document.getElementById('togglePassword');
-        const loginPassword = document.getElementById('loginPassword');
-        togglePasswordBtn?.addEventListener('click', () => {
-            const isPassword = loginPassword.type === 'password';
-            loginPassword.type = isPassword ? 'text' : 'password';
-            togglePasswordBtn.textContent = isPassword ? "{{ __('Ocultar') }}" : "{{ __('Mostrar') }}";
-        });
-    });
+    <script type="module">
+        import { initLogin } from '/resources/js/pages/auth.js';
+        document.addEventListener('DOMContentLoaded', initLogin);
     </script>
 </body>
 </html>

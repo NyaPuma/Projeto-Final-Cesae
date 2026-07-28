@@ -1,6 +1,5 @@
 /**
- * Authentication Pages Module (Não usado ativamente - gestão via inline script em login.blade.php)
- * Mantido para referência. Auth feita via scripts inline nas Blade views.
+ * Authentication Pages Module
  */
 
 /**
@@ -127,6 +126,6 @@ export function initLogin() {
  * Initialize all auth pages
  */
 export function initAuth() {
-    // Auth handled by login.blade.php inline script
+    initLogin();
 }
 

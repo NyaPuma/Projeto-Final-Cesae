@@ -6,6 +6,7 @@ use App\Events\TicketCreated;
 use App\Events\TicketStatusChanged;
 use App\Models\Ticket;
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 
 final readonly class TicketObserver
 {
@@ -14,6 +15,8 @@ final readonly class TicketObserver
         if ($ticket->user && $ticket->user instanceof User) {
             event(new TicketCreated($ticket, $ticket->user));
         }
+
+        $this->invalidateAnalyticsCache();
     }
 
     public function updated(Ticket $ticket): void
@@ -25,5 +28,17 @@ final readonly class TicketObserver
                 (string) $ticket->status_id,
             ));
         }
+
+        $this->invalidateAnalyticsCache();
+    }
+
+    public function deleted(Ticket $ticket): void
+    {
+        $this->invalidateAnalyticsCache();
+    }
+
+    private function invalidateAnalyticsCache(): void
+    {
+        Cache::forget('analytics_dashboard_payload');
     }
 }

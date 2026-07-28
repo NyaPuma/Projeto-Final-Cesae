@@ -1,17 +1,20 @@
 # Sistema Integrado de Gestão de Manutenção
 
-Uma plataforma web desenvolvida em **Laravel 11** para a digitalização, centralização e otimização de todo o ciclo de vida de avarias dentro do **Departamento de Manutenção** da organização. 
+Uma plataforma web desenvolvida em **Laravel 12** para a digitalização, centralização e otimização de todo o ciclo de vida de avarias dentro do **Departamento de Manutenção** da organização.
 
 O sistema mitiga falhas de comunicação e paragens prolongadas de infraestruturas industriais, tornando o fluxo de trabalho mais organizado, rápido e rastreável ao distribuir inteligência operacional entre três perfis internos: **Operador (Operário)**, **Técnico** e **Administrador (Diretor de Operações)**.
 
 ---
 
 ## Stack Tecnológica
-* **Framework Back-End:** Laravel 11 (PHP)
-* **Base de Dados Relacional:** MySQL
+* **Framework Back-End:** Laravel 12 (PHP 8.4)
+* **Base de Dados Relacional:** SQLite (desenvolvimento) / MySQL (produção)
 * **Interface Front-End:** Blade Templates + Tailwind CSS + FullCalendar v6
 * **Inteligência Artificial:** Módulo Assistido (SAD) com motor de triagem por Processamento de Linguagem Natural (NLP) via OpenAI
 * **Comunicação em Tempo Real:** Pusher / Laravel Echo (WebSockets)
+* **Arquitetura:** Clean Architecture, SOLID, DDD, Repository Pattern, Action Classes
+* **Análise Estática:** PHPStan/Larastan (Level 5)
+* **Formatação:** Laravel Pint
 
 ---
 
@@ -85,7 +88,35 @@ php artisan test
 
 ## ✔️ Estado do Projeto
 
-Todas as melhorias anteriormente planeadas foram integradas com sucesso no núcleo do sistema. A plataforma encontra-se na sua versão estável de produção, com suporte total a auditoria, uploads, notificações síncronas/assíncronas, geração de relatórios e documentação OpenAPI viva.
+O projeto foi completamente refatorado seguindo as melhores práticas de desenvolvimento moderno:
+
+### Backend Refactoring
+- **Clean Architecture:** Separação clara de camadas (Actions, Services, Repositories, DTOs)
+- **SOLID Principles:** Single Responsibility, Open/Closed, Dependency Injection
+- **Domain-Driven Design:** Value Objects, Enums, Domain Events
+- **Repository Pattern:** Abstração de acesso a dados com Query Objects
+- **Action Classes:** Classes dedicadas para casos de uso específicos
+- **DTOs:** Data Transfer Objects para validação e transporte de dados
+- **Observers:** Event-driven model lifecycle management
+- **Caching Strategy:** Cache com invalidação automática via observers
+- **Jobs:** Operações assíncronas (exportação, email, IA) processadas em fila
+
+### Frontend Refactoring
+- **Blade Components:** Sistema de componentes reutilizáveis
+- **Modular CSS:** CSS organizado por responsabilidade (components, pages)
+- **ES Modules:** JavaScript modularizado por feature
+- **Design System:** Variáveis CSS e tokens para consistência visual
+- **No Inline Code:** Eliminação completa de CSS/JS inline nas Blade views
+- **Accessibility:** ARIA labels, roles, focus management, keyboard navigation
+- **Responsive Design:** Layouts adaptativos para todos os breakpoints
+
+### Quality Assurance
+- **PHPStan/Larastan:** Análise estática nível máximo (Level 5)
+- **Laravel Pint:** Formatação de código consistente
+- **Test Suite:** Testes unitários, feature e integration
+- **Security:** CSRF, XSS, SQL injection protection, RBAC
+
+A plataforma encontra-se na sua versão estável de produção, com arquitetura enterprise-ready, código limpo e manutenível.
 
 
 ---

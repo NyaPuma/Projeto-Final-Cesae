@@ -1,10 +1,6 @@
 @extends('ui.layout')
 
 @section('content')
-<script>
-window.requireAuthOnLoad = true;
-</script>
-
 @component('ui.partials.page-card', [
     'title' => __('Centro Analítico'),
     'subtitle' => __('Monitorização operacional da plataforma de gestão de avarias.'),
@@ -273,3 +269,10 @@ window.requireAuthOnLoad = true;
 </div>
 @endcomponent
 @endsection
+
+@push('scripts')
+    <script type="module">
+        import '/resources/js/analytics.js';
+        window.requireAuthOnLoad = true;
+    </script>
+@endpush

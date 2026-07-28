@@ -1,11 +1,6 @@
 @extends('ui.layout')
 
 @section('content')
-<script>
-// Marcar que esta página requer autenticação obrigatória
-window.requireAuthOnLoad = true;
-</script>
-
 @php
     $profileName = $user->profile->name ?? 'user';
     $isAdmin = $profileName === 'admin';
@@ -23,6 +18,7 @@ window.requireAuthOnLoad = true;
     'subtitle' => __('Selecione uma dimensão do sistema para monitorização e gestão de ativos.'),
     'actions' => ''
 ])
+    <meta name="user-role" content="{{ $user->profile->name ?? '' }}">
     <div class="mb-6 rounded-2xl border border-[var(--border)] bg-[var(--surface-2)]/70 p-5 shadow-[0_10px_30px_rgba(15,23,42,0.04)]">
         <div class="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
             <div>
@@ -117,64 +113,9 @@ window.requireAuthOnLoad = true;
 @endsection
 
 @push('scripts')
-<script>
-async function loadMetrics() {
-    // Painel de métricas: apenas admin vê (técnicos/utilizadores não)
-    const userRole = '{{ $user->profile->name ?? "" }}';
-
-
-    const panel = document.getElementById('metricsPanel');
-
-    if (!panel) return;
-
-    if (userRole !== 'admin') {
-        panel.innerHTML = `
-
-            <div class="rounded-xl border border-dashed border-[var(--border)] bg-[var(--surface-2)] p-5 col-span-full text-center">
-                <p class="text-xs text-[var(--text-soft)]">${"{{ __('Painel de métricas operacionais disponível apenas para perfis autorizados (Técnicos/Gestores).') }}"}</p>
-            </div>
-        `;
-        return;
-    }
-
-    // Feedback de carregamento inicial assíncrono
-    panel.innerHTML = `
-        <div class="col-span-full text-xs text-[var(--text-soft)] animate-pulse" aria-live="polite">
-            ${"{{ __('A ler indicadores analíticos em tempo real...') }}"}
-        </div>
-    `;
-
-    try {
-        const res = await fetch('/analytics', { headers: authHeader() });
-        if (!res.ok) throw new Error('Falha na comunicação de dados');
-
-        const data = await res.json();
-
-        // Translate labels in JS dynamically
-        const metrics = [
-            ["{{ __('Tempo médio de resolução') }}", `${data.average_resolution_minutes ?? 0} min`],
-            ["{{ __('Tempo médio de espera') }}", `${data.average_waiting_minutes ?? 0} min`],
-            ["{{ __('Tickets em aberto') }}", `${data.open_tickets ?? 0}`],
-            ["{{ __('Tickets fechados') }}", `${data.closed_tickets ?? 0}`],
-        ];
-
-        panel.innerHTML = metrics.map(([label, value]) => `
-            <div class="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[0_1px_2px_rgba(0,0,0,0.01)] animate-[fadeIn_0.3s_ease-out]">
-                <p class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">${label}</p>
-                <p class="mt-2 text-2xl font-semibold tracking-tight text-[var(--text)]">${value}</p>
-            </div>
-        `).join('');
-
-    } catch (err) {
-        panel.innerHTML = `
-            <div class="rounded-xl border border-red-500/20 bg-red-500/5 p-4 col-span-full text-xs text-red-600 dark:text-red-400">
-                ${"{{ __('Não foi possível carregar os indicadores analíticos do servidor.') }}"}
-            </div>
-        `;
-    }
-}
-
-// Inicialização segura após o carregamento completo do DOM
-window.addEventListener('DOMContentLoaded', loadMetrics);
-</script>
+    <script type="module">
+        import { init } from '/resources/js/pages/dashboard.js';
+        window.requireAuthOnLoad = true;
+        init();
+    </script>
 @endpush
