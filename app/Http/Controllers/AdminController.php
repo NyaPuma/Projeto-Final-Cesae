@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use OpenApi\Attributes as OA;
@@ -77,12 +78,10 @@ class AdminController extends Controller
             return response()->json(['message' => 'Utilizador não encontrado'], 404);
         }
 
-        // Um administrador nunca é desativado por esta via para evitar bloqueios acidentais da gestão.
         if ($user->isAdmin()) {
             return response()->json(['message' => 'Não é possível inativar um administrador'], 422);
         }
 
-        // A desativação é lógica: o utilizador deixa de conseguir autenticar-se sem apagar o registo.
         $user->active = false;
         $user->save();
 
@@ -90,37 +89,43 @@ class AdminController extends Controller
     }
 
     /**
-     * Regista um novo utilizador no sistema.
+     * Regista um novo utilizador no sistema (incluindo avatar/foto).
      */
     public function storeUser(Request $request)
     {
-        $data = $request->only(['name', 'email', 'password', 'profile_id', 'active']);
-        $validator = Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'string', 'min:8'],
+        $validator = Validator::make($request->all(), [
+            'name'       => ['required', 'string', 'max:255'],
+            'email'      => ['required', 'email', 'max:255', 'unique:users,email'],
+            'password'   => ['required', 'string', 'min:8'],
             'profile_id' => ['required', 'integer', 'exists:user_profiles,id'],
-            'active' => ['sometimes', 'boolean'],
+            'active'     => ['sometimes', 'boolean'],
+            'avatar'     => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:2048'],
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
+        $avatarPath = null;
+        if ($request->hasFile('avatar')) {
+            $avatarPath = $request->file('avatar')->store('avatars', 'public');
+        }
+
         $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'profile_id' => $data['profile_id'],
-            'active' => $data['active'] ?? true,
-            'api_token' => Str::random(60),
+            'name'       => $request->input('name'),
+            'email'      => $request->input('email'),
+            'password'   => Hash::make($request->input('password')),
+            'profile_id' => $request->input('profile_id'),
+            'active'     => $request->boolean('active', true),
+            'avatar'     => $avatarPath,
+            'api_token'  => Str::random(60),
         ]);
 
         return response()->json(['user' => $user->load('profile')], 201);
     }
 
     /**
-     * Atualiza um utilizador existente.
+     * Atualiza um utilizador existente (incluindo alteração da foto).
      */
     public function updateUser(Request $request, int $id)
     {
@@ -129,13 +134,13 @@ class AdminController extends Controller
             return response()->json(['message' => 'Utilizador não encontrado'], 404);
         }
 
-        $data = $request->only(['name', 'email', 'password', 'profile_id', 'active']);
-        $validator = Validator::make($data, [
-            'name' => ['sometimes', 'string', 'max:255'],
-            'email' => ['sometimes', 'email', 'max:255', 'unique:users,email,'.$id],
-            'password' => ['nullable', 'string', 'min:8'],
+        $validator = Validator::make($request->all(), [
+            'name'       => ['sometimes', 'string', 'max:255'],
+            'email'      => ['sometimes', 'email', 'max:255', 'unique:users,email,'.$id],
+            'password'   => ['nullable', 'string', 'min:8'],
             'profile_id' => ['sometimes', 'integer', 'exists:user_profiles,id'],
-            'active' => ['sometimes', 'boolean'],
+            'active'     => ['sometimes', 'boolean'],
+            'avatar'     => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:2048'],
         ]);
 
         if ($validator->fails()) {
@@ -143,10 +148,19 @@ class AdminController extends Controller
         }
 
         $validated = $validator->validated();
+
         if (! empty($validated['password'])) {
             $validated['password'] = Hash::make($validated['password']);
         } else {
             unset($validated['password']);
+        }
+
+        // Upload e substituição do Avatar
+        if ($request->hasFile('avatar')) {
+            if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
+                Storage::disk('public')->delete($user->avatar);
+            }
+            $validated['avatar'] = $request->file('avatar')->store('avatars', 'public');
         }
 
         $user->update($validated);
@@ -174,7 +188,6 @@ class AdminController extends Controller
     )]
     public function equipments(Request $request)
     {
-        // Ordena e pagina para manter a listagem leve mesmo com inventários grandes.
         return response()->json(['equipments' => Equipment::with('room')->orderBy('name')->paginate(15)]);
     }
 
@@ -195,8 +208,8 @@ class AdminController extends Controller
     {
         $data = $request->only(['name', 'serial', 'room_id']);
         $validator = Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'serial' => ['required', 'string', 'max:255', 'unique:equipments,serial'],
+            'name'    => ['required', 'string', 'max:255'],
+            'serial'  => ['required', 'string', 'max:255', 'unique:equipments,serial'],
             'room_id' => ['nullable', 'integer', 'exists:rooms,id'],
         ]);
 
@@ -204,12 +217,11 @@ class AdminController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        // O equipamento nasce ativo para poder ser usado imediatamente após o registo.
         $equipment = Equipment::create([
-            'name' => $data['name'],
-            'serial' => $data['serial'],
+            'name'    => $data['name'],
+            'serial'  => $data['serial'],
             'room_id' => $data['room_id'] ?? null,
-            'active' => true,
+            'active'  => true,
         ]);
 
         return response()->json(['equipment' => $equipment], 201);
@@ -241,17 +253,16 @@ class AdminController extends Controller
 
         $data = $request->only(['name', 'serial', 'room_id', 'active']);
         $validator = Validator::make($data, [
-            'name' => ['sometimes', 'string', 'max:255'],
-            'serial' => ['sometimes', 'string', 'max:255', 'unique:equipments,serial,'.$id],
+            'name'    => ['sometimes', 'string', 'max:255'],
+            'serial'  => ['sometimes', 'string', 'max:255', 'unique:equipments,serial,'.$id],
             'room_id' => ['nullable', 'integer', 'exists:rooms,id'],
-            'active' => ['sometimes', 'boolean'],
+            'active'  => ['sometimes', 'boolean'],
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        // Só aplicamos os campos validados para não apagar informação que não veio no pedido.
         $equipment->update($validator->validated());
 
         return response()->json(['equipment' => $equipment]);
@@ -280,28 +291,14 @@ class AdminController extends Controller
             return response()->json(['message' => 'Equipamento não encontrado'], 404);
         }
 
-        // Remoção física apenas porque o módulo assume inventário sem histórico neste registo.
         $equipment->delete();
 
         return response()->json(['message' => 'Equipamento eliminado']);
     }
 
     /**
-     * Aprova um pedido de orçamento associado a um ticket de avaria.
+     * Regista uma manutenção preventiva no sistema.
      */
-    #[OA\Patch(
-        path: '/admin/tickets/{id}/approve-budget',
-        tags: ['Admin'],
-        summary: 'Aprovar orçamento',
-        security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
-        parameters: [
-            new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'integer')),
-        ],
-        responses: [
-            new OA\Response(response: 200, description: 'Orçamento aprovado'),
-            new OA\Response(response: 422, description: 'Pedido inválido'),
-        ]
-    )]
     #[OA\Post(
         path: '/admin/preventive',
         tags: ['Admin'],
@@ -319,9 +316,9 @@ class AdminController extends Controller
 
         $data = $request->only(['title', 'description', 'scheduled_at', 'technician_id']);
         $validator = Validator::make($data, [
-            'title' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string'],
-            'scheduled_at' => ['required', 'date'],
+            'title'         => ['required', 'string', 'max:255'],
+            'description'  => ['nullable', 'string'],
+            'scheduled_at'  => ['required', 'date'],
             'technician_id' => ['nullable', 'integer', 'exists:users,id'],
         ]);
 
@@ -339,15 +336,15 @@ class AdminController extends Controller
 
         $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
         $ticket = Ticket::create([
-            'user_id' => $admin->id,
-            'assigned_to' => $technician?->id,
-            'title' => $data['title'],
-            'description' => $data['description'] ?? 'Manutenção preventiva agendada.',
-            'priority' => Ticket::PRIORITY_MEDIUM,
-            'status_id' => $openStatusId,
-            'opened_at' => now(),
+            'user_id'      => $admin->id,
+            'assigned_to'  => $technician?->id,
+            'title'        => $data['title'],
+            'description'  => $data['description'] ?? 'Manutenção preventiva agendada.',
+            'priority'     => Ticket::PRIORITY_MEDIUM,
+            'status_id'    => $openStatusId,
+            'opened_at'    => now(),
             'scheduled_at' => $data['scheduled_at'],
-            'scheduled' => true,
+            'scheduled'    => true,
         ]);
 
         return response()->json(['ticket' => $ticket], 201);
@@ -355,19 +352,12 @@ class AdminController extends Controller
 
     /**
      * Processa a decisão orçamental do Administrador (aprovar ou recusar).
-     * Suporta tanto o formato PATCH original como o POST do frontend (action + feedback).
-     * Rota: PATCH /admin/tickets/{id}/approve-budget
-     * Rota: POST /admin/tickets/{id}/budget-decision (compatibilidade frontend)
      */
     public function approveBudget(Request $request, int $id)
     {
-        // A autorização do admin é sempre verificada a partir do token da própria API.
         $admin = $this->authenticatedUser($request);
-
-        // Redundância intencional: a rota já está protegida, mas confirmamos aqui por defesa em profundidade.
         $this->requireRole($admin, [User::ROLE_ADMIN]);
 
-        // Suporta ambos os formatos: {decision, feedback} e {action, feedback}
         $decision = $request->input('decision', $request->input('action', 'approve'));
         $feedback = $request->input('feedback', null);
 
@@ -381,69 +371,61 @@ class AdminController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        // Só tickets com pedido pendente podem ser aprovados.
         $ticket = Ticket::find($id);
         if (! $ticket) {
             return response()->json(['message' => 'Ticket não encontrado'], 404);
         }
 
-        // Não avançamos se o ticket não estiver no estado correto para aprovação.
         if (! $ticket->budget_requested || $ticket->budget_status !== Ticket::BUDGET_PENDING) {
             return response()->json(['message' => 'Não existe pedido de orçamento pendente'], 422);
         }
 
-        // Se for recusa, guarda o feedback
         if ($decision === 'reject' && ! empty($feedback)) {
             $ticket->budget_feedback = $feedback;
         }
 
-        // A regra de negócio fica no modelo para manter a decisão consistente em toda a aplicação.
         $approved = $ticket->approveBudget($admin, $data['decision'] ?? 'approve', $data['feedback'] ?? null);
 
         if (! $approved) {
             return response()->json(['message' => 'Aprovação falhou'], 422);
         }
 
-        // 🔔 Notificar o técnico e o criador do ticket sobre a decisão
         try {
             $notifyType = $decision === 'approve' ? 'approved' : 'rejected';
             $notifyMessage = $decision === 'approve'
                 ? "O orçamento de {$ticket->budget_amount}€ para o ticket #{$ticket->id} foi APROVADO pelo administrador. Pode prosseguir com a intervenção."
                 : "O orçamento de {$ticket->budget_amount}€ para o ticket #{$ticket->id} foi RECUSADO.".($feedback ? " Motivo: {$feedback}" : '');
 
-            // Notificar o técnico atribuído
             if ($ticket->assigned_to) {
                 Notification::create([
                     'user_id' => $ticket->assigned_to,
-                    'title' => $decision === 'approve'
+                    'title'   => $decision === 'approve'
                         ? "✅ Orçamento Aprovado - Ticket #{$ticket->id}"
                         : "❌ Orçamento Recusado - Ticket #{$ticket->id}",
                     'message' => $notifyMessage,
-                    'type' => "budget_{$notifyType}",
-                    'link' => "/ui/tickets/{$ticket->id}",
+                    'type'    => "budget_{$notifyType}",
+                    'link'    => "/ui/tickets/{$ticket->id}",
                 ]);
             }
 
-            // Notificar o criador do ticket
             if ($ticket->user_id) {
                 Notification::create([
                     'user_id' => $ticket->user_id,
-                    'title' => "📋 Decisão Orçamental - Ticket #{$ticket->id}",
+                    'title'   => "📋 Decisão Orçamental - Ticket #{$ticket->id}",
                     'message' => $notifyMessage,
-                    'type' => "budget_{$notifyType}",
-                    'link' => "/ui/tickets/{$ticket->id}",
+                    'type'    => "budget_{$notifyType}",
+                    'link'    => "/ui/tickets/{$ticket->id}",
                 ]);
             }
         } catch (\Exception $e) {
-            // Silencia falhas de notificação
+            // Silencia falhas
         }
 
-        // Devolve o ticket já com o novo estado para simplificar o consumo no frontend.
         return response()->json([
             'message' => $decision === 'approve'
                 ? 'Orçamento aprovado. Ticket desbloqueado para intervenção.'
                 : 'Orçamento recusado. Reparação abortada.',
-            'ticket' => $ticket->load(['equipment', 'room', 'technician', 'status']),
+            'ticket'  => $ticket->load(['equipment', 'room', 'technician', 'status']),
         ]);
     }
 }

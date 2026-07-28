@@ -18,12 +18,11 @@ Route::get('/user', function (Request $request) {
 // Documentação da API
 Route::redirect('/docs/openapi', '/api/documentation');
 
-// Endpoints Públicos de Autenticação (Guest) - Apenas login e password reset
+// Endpoints Públicos de Autenticação (Guest)
 Route::post('/login', [AuthController::class, 'login'])
     ->middleware(['rate.limit:5,1'])
     ->withoutMiddleware([VerifyCsrfToken::class]);
 
-// Password reset - público (fluxo de email)
 Route::get('/password/reset/{token}', function ($token) {
     return view('ui.auth-reset', ['token' => $token]);
 })->name('password.reset');
@@ -39,7 +38,7 @@ Route::post('/password/reset', [AuthController::class, 'resetPassword'])
 */
 Route::middleware(['custom.auth'])->group(function () {
 
-    // API de Tickets: acessível a qualquer utilizador autenticado
+    // API de Tickets
     Route::get('/tickets', [TicketController::class, 'index']);
     Route::post('/tickets', [TicketController::class, 'store']);
     Route::get('/tickets/{id}', [TicketController::class, 'show']);
@@ -59,10 +58,10 @@ Route::middleware(['custom.auth'])->group(function () {
     Route::put('/technician/tickets/{id}/close', [TicketController::class, 'closeTicket']);
     Route::put('/technician/tickets/{id}/request-budget', [TicketController::class, 'requestBudget']);
 
-    // Rotas de administração
+    // Rotas de administração (Corrigida a rota do utilizador para aceitar POST/PATCH/PUT)
     Route::get('/admin/users', [AdminController::class, 'users']);
     Route::post('/admin/users', [AdminController::class, 'storeUser']);
-    Route::patch('/admin/users/{id}', [AdminController::class, 'updateUser']);
+    Route::match(['post', 'patch', 'put'], '/admin/users/{id}', [AdminController::class, 'updateUser']);
     Route::patch('/admin/users/{id}/inactive', [AdminController::class, 'inactivateUser']);
     Route::get('/admin/profiles', [AdminController::class, 'profiles']);
     Route::get('/admin/audits', [AuditController::class, 'index']);

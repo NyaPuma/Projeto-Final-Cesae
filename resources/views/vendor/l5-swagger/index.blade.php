@@ -56,15 +56,50 @@
     </script>
 
     <style>
-        /* Otimizações de layout amplo e tipografia para Swagger UI */
+        /* Otimizações de layout amplo para Swagger UI */
         .swagger-ui .wrapper {
             max-width: 100% !important;
             padding: 0 !important;
         }
+
+        /* Estrutura Flexbox no Cabeçalho do Card da Tag/Módulo */
         .swagger-ui .opblock-tag {
-            font-weight: 600 !important;
-            letter-spacing: normal !important;
-            font-size: 1.1rem !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            width: 100% !important;
+            font-weight: 700 !important;
+            font-size: 1.15rem !important;
+            padding: 1rem 1.25rem !important;
+        }
+
+        /* Título do Módulo mantido no Lado Esquerdo */
+        .swagger-ui .opblock-tag > a,
+        .swagger-ui .opblock-tag > span:first-child {
+            margin-right: auto !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 0.75rem !important;
+        }
+
+        /* EMPURRAR O BLOCO CENTRAL PARA A EXTREMA DIREITA (Seta Vermelha) */
+        .swagger-ui .opblock-tag small,
+        .swagger-ui .opblock-tag p,
+        .swagger-ui .opblock-tag .tag-description,
+        .swagger-ui .opblock-tag div:not(:first-child) {
+            margin-left: auto !important;
+            margin-right: 1rem !important; /* Espaçamento junto à seta de expandir */
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: flex-end !important; /* Alinha o texto e a badge à direita */
+            text-align: right !important;
+        }
+
+        /* Ajuste do botão/seta de expandir (Chevron) na extrema direita */
+        .swagger-ui .opblock-tag button,
+        .swagger-ui .opblock-tag svg {
+            margin-left: 0 !important;
+            flex-shrink: 0 !important;
         }
     </style>
 </head>

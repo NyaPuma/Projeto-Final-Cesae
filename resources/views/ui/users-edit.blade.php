@@ -7,11 +7,35 @@ window.requireAuthOnLoad = true;
 
 @component('ui.partials.page-card', [
     'title' => __('Editar Utilizador'),
-    'subtitle' => __('Atualize as credenciais e permissões de acesso do perfil de utilizador.'),
+    'subtitle' => __('Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.'),
     'actions' => '<a href="/ui/users" class="inline-flex items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">← Voltar</a>'
 ])
     <div class="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm">
-        <form id="editUserForm" class="space-y-6">
+        <form id="editUserForm" class="space-y-6" enctype="multipart/form-data">
+            
+            {{-- Secção Visual do Avatar / Fotografia de Perfil --}}
+            <div class="flex flex-col sm:flex-row items-center gap-6 p-4 bg-[var(--surface-2)] rounded-2xl border border-[var(--border)]">
+                <div class="relative w-24 h-24 rounded-2xl overflow-hidden border-2 border-primary/30 shadow-md bg-[var(--surface)] flex-shrink-0 flex items-center justify-center">
+                    <img id="avatarPreview" 
+                         src="{{ $targetUser->avatar_url ?? 'https://ui-avatars.com/api/?name=' . urlencode($targetUser->name) . '&background=f97316&color=ffffff&bold=true' }}" 
+                         alt="Foto de Perfil" 
+                         class="w-full h-full object-cover">
+                </div>
+
+                <div class="space-y-2 text-center sm:text-left">
+                    <h4 class="text-sm font-bold text-[var(--text)]">{{ __('Fotografia do Utilizador') }}</h4>
+                    <p class="text-xs text-[var(--text-soft)]">{{ __('Carregue uma imagem (PNG, JPG ou WEBP até 2MB).') }}</p>
+                    
+                    <div class="flex flex-wrap items-center justify-center sm:justify-start gap-3 pt-1">
+                        <label for="avatarInput" class="cursor-pointer px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary font-bold text-xs rounded-xl border border-primary/30 transition shadow-sm inline-flex items-center gap-1.5">
+                            📷 {{ __('Escolher Fotografia') }}
+                        </label>
+                        <input type="file" id="avatarInput" name="avatar" accept="image/*" class="hidden" onchange="previewUserAvatar(this)">
+                        <span id="avatarFileName" class="text-xs text-[var(--text-soft)] truncate max-w-[180px]">{{ __('Nenhum ficheiro selecionado') }}</span>
+                    </div>
+                </div>
+            </div>
+
             <div class="grid gap-6 lg:grid-cols-2">
                 <div>
                     <label class="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">Nome Completo</label>
@@ -53,21 +77,31 @@ window.requireAuthOnLoad = true;
 
 @push('scripts')
 <script>
-// Define as variáveis globais injetadas pelo Blade para uso no JavaScript
 const targetUserId = "{{ $targetUser->id }}";
 const targetProfileId = "{{ $targetUser->profile_id }}";
 
-// Obtém os cabeçalhos padrão com os tokens necessários para a API
+// Função de cabeçalhos sem Content-Type fixo (crucial para FormData)
 function authHeader() {
     const token = localStorage.getItem('api_token');
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-    const headers = { 'Accept': 'application/json', 'Content-Type': 'application/json' };
+    const headers = { 'Accept': 'application/json' };
     if (token) headers['X-Auth-Token'] = token;
     if (csrfToken) headers['X-CSRF-TOKEN'] = csrfToken;
     return headers;
 }
 
-// Carrega os perfis de acesso da API e pré-seleciona o perfil atual do utilizador
+// Pré-visualização instantânea da fotografia
+function previewUserAvatar(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('avatarPreview').src = e.target.result;
+        }
+        reader.readAsDataURL(input.files[0]);
+        document.getElementById('avatarFileName').innerText = input.files[0].name;
+    }
+}
+
 async function loadProfiles() {
     const select = document.getElementById('userProfileId');
     try {
@@ -84,7 +118,6 @@ async function loadProfiles() {
             const opt = document.createElement('option');
             opt.value = p.id;
 
-            // Tradução e mapeamento amigável para PT-PT
             let label = p.name;
             if (p.name === 'admin') label = 'Administrador';
             else if (p.name === 'technician') label = 'Técnico de Manutenção';
@@ -92,7 +125,6 @@ async function loadProfiles() {
 
             opt.textContent = label;
 
-            // Pré-seleciona o perfil atual do utilizador editado
             if (String(p.id) === String(targetProfileId)) {
                 opt.selected = true;
             }
@@ -100,29 +132,33 @@ async function loadProfiles() {
             select.appendChild(opt);
         });
     } catch (e) {
-        console.error('Erro ao carregar perfis:', e);
         select.innerHTML = '<option value="">Erro ao carregar perfis de acesso</option>';
     }
 }
 
-// Submete os dados atualizados do formulário para a API
+// Submissão do Formulário usando FormData
 document.getElementById('editUserForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const form = e.target;
     const message = document.getElementById('formMessage');
     const submitBtn = document.getElementById('submitBtn');
 
-    const name = document.getElementById('userName').value.trim();
-    const email = document.getElementById('userEmail').value.trim();
+    const formData = new FormData();
+    // Spoofing de método para garantir compatibilidade
+    formData.append('_method', 'PATCH');
+
+    formData.append('name', document.getElementById('userName').value.trim());
+    formData.append('email', document.getElementById('userEmail').value.trim());
+    formData.append('profile_id', document.getElementById('userProfileId').value);
+    formData.append('active', document.getElementById('userActive').checked ? '1' : '0');
+
     const password = document.getElementById('userPassword').value;
-    const profile_id = document.getElementById('userProfileId').value;
-    const active = document.getElementById('userActive').checked;
-
-    const payload = { name, email, profile_id, active };
-
-    // Apenas envia o campo password se o utilizador tiver inserido algo
     if (password) {
-        payload.password = password;
+        formData.append('password', password);
+    }
+
+    const avatarInput = document.getElementById('avatarInput');
+    if (avatarInput && avatarInput.files && avatarInput.files[0]) {
+        formData.append('avatar', avatarInput.files[0]);
     }
 
     message.textContent = 'A guardar alterações...';
@@ -131,9 +167,9 @@ document.getElementById('editUserForm').addEventListener('submit', async (e) => 
 
     try {
         const res = await fetch(`/admin/users/${targetUserId}`, {
-            method: 'PATCH',
+            method: 'POST',
             headers: authHeader(),
-            body: JSON.stringify(payload)
+            body: formData
         });
 
         const data = await res.json().catch(() => ({}));

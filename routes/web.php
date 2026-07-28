@@ -64,7 +64,6 @@ Route::middleware(['custom.auth'])->group(function () {
 
         Route::match(['post', 'put'], '/tickets/{id}/claim', [TicketController::class, 'claimTicket']);
 
-
         // Ações de conta comuns
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::post('/password/change', [AuthController::class, 'changePassword']);
@@ -73,9 +72,7 @@ Route::middleware(['custom.auth'])->group(function () {
         Route::patch('/notifications/{id}', [NotificationController::class, 'markAsRead']);
         Route::post('/notifications/test-email', [NotificationController::class, 'sendTestEmail']);
 
-        // ========================================
         // Rotas Gerais da Interface (UI)
-        // ========================================
         Route::get('/ui', [UiController::class, 'index']);
         Route::get('/ui/profile', [UiController::class, 'profile']);
         Route::get('/ui/tickets', [UiController::class, 'tickets']);
@@ -87,14 +84,14 @@ Route::middleware(['custom.auth'])->group(function () {
         Route::get('/ui/rooms', [UiController::class, 'rooms']);
         Route::get('/ui/rooms/{id}', [UiController::class, 'roomDetail']);
 
-        // 📡 API de Salas - Endpoints chamados pelo JavaScript (fetch)
+        // 📡 API de Salas
         Route::get('/rooms', [RoomController::class, 'indexRoom']);
         Route::get('/api/rooms', [RoomController::class, 'indexRoom']);
         Route::post('/api/rooms', [RoomController::class, 'storeRoom']);
         Route::put('/api/rooms/{id}', [RoomController::class, 'updateRoom']);
         Route::patch('/api/rooms/{id}', [RoomController::class, 'updateRoom']);
 
-        // 📦 API de Equipamentos (CRUD) - Corrigido para EquipmentController
+        // 📦 API de Equipamentos (CRUD)
         Route::get('/equipments', [EquipmentController::class, 'index']);
         Route::post('/equipments', [EquipmentController::class, 'store']);
         Route::get('/equipments/{id}', [EquipmentController::class, 'show']);
@@ -138,6 +135,7 @@ Route::middleware(['custom.auth'])->group(function () {
             Route::get('/ui/users', [UiController::class, 'users']);
             Route::get('/ui/audits', [UiController::class, 'audits']);
             Route::get('/technician/tickets/open', [TicketController::class, 'openTickets']);
+            Route::match(['post', 'patch'], '/admin/tickets/{id}/assign', [TicketController::class, 'assignTechnician']);
             Route::post('/tickets/{id}/assign-technician', [TicketController::class, 'assignTechnician']);
         });
 
@@ -163,7 +161,10 @@ Route::middleware(['custom.auth'])->group(function () {
 
             Route::get('/admin/users', [AdminController::class, 'users']);
             Route::post('/admin/users', [AdminController::class, 'storeUser']);
-            Route::patch('/admin/users/{id}', [AdminController::class, 'updateUser']);
+            
+            // 💡 Rota flexibilizada para aceitar POST, PATCH e PUT para uploads de imagem de utilizador
+            Route::match(['post', 'patch', 'put'], '/admin/users/{id}', [AdminController::class, 'updateUser']);
+            
             Route::patch('/admin/users/{id}/inactive', [AdminController::class, 'inactivateUser']);
             Route::get('/admin/profiles', [AdminController::class, 'profiles']);
 

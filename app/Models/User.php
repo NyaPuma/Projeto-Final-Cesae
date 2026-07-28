@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @property-read UserProfile|null $profile
  * @property-read int $tickets_ativos
+ * @property-read string $avatar_url
  */
 class User extends Authenticatable
 {
@@ -25,6 +27,7 @@ class User extends Authenticatable
         'email',
         'password',
         'profile_id',
+        'avatar', // <-- Adicionado para permitir o armazenamento da imagem
         'active',
         'api_token',
         'remember_token',
@@ -45,12 +48,34 @@ class User extends Authenticatable
         'active' => 'boolean',
     ];
 
+    /**
+     * Inclui automaticamente o atributo 'avatar_url' nas respostas JSON
+     *
+     * @var list<string>
+     */
+    protected $appends = [
+        'avatar_url',
+    ];
+
     // Constantes de Roles - mapeadas para os nomes dos perfis
     public const ROLE_USER = 'user';
 
     public const ROLE_TECHNICIAN = 'technician';
 
     public const ROLE_ADMIN = 'admin';
+
+    /**
+     * Retorna a URL completa da foto do utilizador ou gera um avatar com as iniciais.
+     */
+    public function getAvatarUrlAttribute(): string
+    {
+        if ($this->avatar && Storage::disk('public')->exists($this->avatar)) {
+            return asset('storage/' . $this->avatar);
+        }
+
+        // Caso não tenha foto personalizada, gera um avatar dinâmico apelativo com o nome
+        return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=f97316&color=ffffff&bold=true';
+    }
 
     /**
      * Tickets criados pelo utilizador.
@@ -101,7 +126,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Alias de isCommonUser() – utilizado nos controllers para verificar se o utilizador não tem papel elevado.
+     * Alias de isCommonUser() – utilizado nos controllers.
      */
     public function isCommon(): bool
     {
@@ -148,7 +173,6 @@ class User extends Authenticatable
         if (! $user->profile_id || ! self::isValidProfile($profileName)) {
             $defaultRole = self::ROLE_USER;
 
-            // Procura pelo perfil padrão ou cria-o atomicamente caso não exista
             $existingProfile = UserProfile::firstOrCreate(['name' => $defaultRole]);
 
             $user->profile_id = $existingProfile->id;
