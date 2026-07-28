@@ -17,16 +17,18 @@ export function getThemeColors() {
     };
 }
 
+import { authHeader } from '../../utils/api.js';
+
 export async function fetchAnalytics() {
     try {
-        const response = await fetch("/analytics", {
-            method: "GET",
+        const response = await fetch('/analytics', {
+            method: 'GET',
             headers: {
-                "Accept": "application/json",
-                "X-Requested-With": "XMLHttpRequest",
-                ...((typeof window.authHeader === "function") ? window.authHeader() : {})
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                ...authHeader(),
             },
-            credentials: "include"
+            credentials: 'same-origin'
         });
 
         if (!response.ok) throw new Error(`Status ${response.status}`);

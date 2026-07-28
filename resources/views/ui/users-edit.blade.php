@@ -1,5 +1,7 @@
 @extends('ui.layout')
 
+@section('page_key', 'user-edit')
+
 @section('content')
 <div data-user-mode="edit" data-user-id="{{ $targetUser->id }}" data-profile-id="{{ $targetUser->profile_id }}">
 @component('ui.partials.page-card', [
@@ -48,11 +50,3 @@
 @endcomponent
 </div>
 @endsection
-
-@push('scripts')
-    <script type="module">
-        import { init } from '/resources/js/pages/users-form.js';
-        window.requireAuthOnLoad = true;
-        document.addEventListener('DOMContentLoaded', init);
-    </script>
-@endpush

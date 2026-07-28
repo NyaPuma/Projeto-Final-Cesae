@@ -188,7 +188,9 @@ export function initCalendar(loginUrl) {
     }
 }
 
-export function init(loginUrl) {
+export function init() {
+    const loginUrl = document.body.dataset.loginUrl || '/ui/login';
+
     if (typeof FullCalendar !== 'undefined') {
         initCalendar(loginUrl);
 

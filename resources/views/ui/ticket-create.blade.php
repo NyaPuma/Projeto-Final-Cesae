@@ -1,5 +1,7 @@
 @extends('ui.layout')
 
+@section('page_key', 'ticket-create')
+
 @section('content')
 @component('ui.partials.page-card', [
     'title' => __('Criar Ticket'),
@@ -7,128 +9,38 @@
     'actions' => '<a href="' . route('ui.tickets') . '" class="inline-flex items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">← ' . __('Voltar aos tickets') . '</a>'
 ])
     <div class="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm">
-
         <div class="mb-6">
             <h2 class="text-sm font-bold text-[var(--text)]">{{ __('Novo pedido de intervenção') }}</h2>
-            <p class="text-xs text-[var(--text-soft)] mt-0.5">{{ __('Descreva a situação de forma objetiva para que a equipa técnica possa agir rapidamente.') }}</p>
+            <p class="mt-0.5 text-xs text-[var(--text-soft)]">{{ __('Descreva a situação de forma objetiva para que a equipa técnica possa agir rapidamente.') }}</p>
         </div>
 
         <form id="createTicketForm" class="space-y-6" data-redirect-url="{{ route('ui.tickets') }}">
-
-            {{-- Título --}}
-            <div>
-                <label class="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">{{ __('Título *') }}</label>
+            <x-ui.ticket-create.field-group :label="__('Título')" :required="true">
                 <input type="text" id="ticketTitle" name="title" required class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm text-[var(--text)] outline-none focus:border-primary focus:ring-4 focus:ring-primary/15" placeholder="{{ __('Ex.: Ruído anómalo no motor principal do torno') }}">
-            </div>
+            </x-ui.ticket-create.field-group>
 
-            {{-- Descrição --}}
-            <div>
-                <label class="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">{{ __('Descrição *') }}</label>
-                <textarea id="ticketDescription" name="description" rows="4" required class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm text-[var(--text)] outline-none focus:border-primary focus:ring-4 focus:ring-primary/15 resize-none" placeholder="{{ __('Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...') }}"></textarea>
-            </div>
+            <x-ui.ticket-create.field-group :label="__('Descrição')" :required="true">
+                <textarea id="ticketDescription" name="description" rows="4" required class="w-full resize-none rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm text-[var(--text)] outline-none focus:border-primary focus:ring-4 focus:ring-primary/15" placeholder="{{ __('Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...') }}"></textarea>
+            </x-ui.ticket-create.field-group>
 
-            {{-- Nível de Urgência / Prioridade (Cards Interativos) --}}
-            <div>
-                <div class="flex items-center justify-between mb-2">
-                    <label class="block text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">{{ __('Nível de urgência / prioridade *') }}</label>
-                    <span class="text-[11px] text-[var(--text-soft)]">{{ __('Selecione o impacto real na produção') }}</span>
-                </div>
+            <x-ui.ticket-create.priority-selector />
 
-                <input type="hidden" id="ticketPriority" name="priority" value="media" required>
-
-                <div class="grid gap-4 md:grid-cols-4">
-                    {{-- Card Baixa --}}
-                    <div type="button" data-priority="baixa"
-                        class="priority-card cursor-pointer rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4 transition-all hover:border-emerald-500/50">
-                        <div class="flex items-center justify-between mb-2">
-                            <div class="flex items-center gap-2">
-                                <span class="h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
-                                <span class="text-xs font-bold text-[var(--text)]">{{ __('Baixa') }}</span>
-                            </div>
-                            <span class="h-2 w-2 rounded-full bg-emerald-500/40"></span>
-                        </div>
-                        <h4 class="text-xs font-semibold text-[var(--text)] mb-1">{{ __('Manutenção Ligeira') }}</h4>
-                        <p class="text-[11px] leading-relaxed text-[var(--text-soft)]">{{ __('Anomalia menor. Máquina operacional sem risco imediato.') }}</p>
-                    </div>
-
-                    {{-- Card Média (Selecionado por defeito) --}}
-                    <div type="button" data-priority="media"
-                        class="priority-card cursor-pointer rounded-2xl border-2 border-amber-500 bg-[var(--surface-2)] p-4 transition-all shadow-sm">
-                        <div class="flex items-center justify-between mb-2">
-                            <div class="flex items-center gap-2">
-                                <span class="h-2.5 w-2.5 rounded-full bg-amber-500"></span>
-                                <span class="text-xs font-bold text-[var(--text)]">{{ __('Média') }}</span>
-                            </div>
-                            <span class="h-2 w-2 rounded-full bg-amber-500"></span>
-                        </div>
-                        <h4 class="text-xs font-semibold text-[var(--text)] mb-1">{{ __('Degradação Parcial') }}</h4>
-                        <p class="text-[11px] leading-relaxed text-[var(--text-soft)]">{{ __('Funcionamento condicionado. Existe alternativa na sala.') }}</p>
-                    </div>
-
-                    {{-- Card Alta --}}
-                    <div type="button" data-priority="alta"
-                        class="priority-card cursor-pointer rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4 transition-all hover:border-red-500/50">
-                        <div class="flex items-center justify-between mb-2">
-                            <div class="flex items-center gap-2">
-                                <span class="h-2.5 w-2.5 rounded-full bg-red-500"></span>
-                                <span class="text-xs font-bold text-[var(--text)]">{{ __('Alta') }}</span>
-                            </div>
-                            <span class="h-2 w-2 rounded-full bg-red-500/40"></span>
-                        </div>
-                        <h4 class="text-xs font-semibold text-[var(--text)] mb-1">{{ __('Paragem Crítica / Risco') }}</h4>
-                        <p class="text-[11px] leading-relaxed text-[var(--text-soft)]">{{ __('Linha/Máquina inoperacional ou risco de segurança.') }}</p>
-                    </div>
-
-                    {{-- Card Crítica --}}
-                    <div type="button" data-priority="critica"
-                        class="priority-card cursor-pointer rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4 transition-all hover:border-purple-600/50">
-                        <div class="flex items-center justify-between mb-2">
-                            <div class="flex items-center gap-2">
-                                <span class="h-2.5 w-2.5 rounded-full bg-purple-600"></span>
-                                <span class="text-xs font-bold text-[var(--text)]">{{ __('Crítica') }}</span>
-                            </div>
-                            <span class="h-2 w-2 rounded-full bg-purple-600/40"></span>
-                        </div>
-                        <h4 class="text-xs font-semibold text-[var(--text)] mb-1">{{ __('Emergência Imediata') }}</h4>
-                        <p class="text-[11px] leading-relaxed text-[var(--text-soft)]">{{ __('Risco iminente de acidente ou paragem total da operação. Exige ação urgente.') }}</p>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Equipamento & Imagem --}}
             <div class="grid gap-6 lg:grid-cols-2">
-                <div>
-                    <label class="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">{{ __('ID do Equipamento *') }}</label>
+                <x-ui.ticket-create.field-group :label="__('ID do Equipamento')" :required="true">
                     <input type="text" id="equipmentId" name="equipment_id" required class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm text-[var(--text)] outline-none focus:border-primary focus:ring-4 focus:ring-primary/15" placeholder="Ex.: EQ-073">
-                </div>
-                <div>
-                    <label class="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">{{ __('Inserir Imagem (Opcional)') }}</label>
-                    <div class="flex items-center gap-3 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-2.5">
-                        <label for="ticketImage" class="cursor-pointer rounded-xl bg-[var(--surface)] border border-[var(--border)] px-3 py-1.5 text-xs font-semibold text-[var(--text)] hover:bg-[var(--surface-2)] transition">
-                            {{ __('Escolher ficheiro') }}
-                        </label>
-                        <input type="file" id="ticketImage" accept="image/*" class="hidden">
-                        <span id="fileName" class="text-sm text-[var(--text-soft)] truncate">{{ __('Nenhum ficheiro selecionado') }}</span>
-                    </div>
-                </div>
+                </x-ui.ticket-create.field-group>
+
+                <x-ui.ticket-create.file-upload />
             </div>
 
-            {{-- Mensagem de Feedback --}}
             <div id="formMessage" class="min-h-6 text-sm font-medium text-[var(--text-soft)]"></div>
 
-            {{-- Botão de Submissão --}}
             <div class="mt-6 flex flex-wrap gap-3">
-                <button type="submit" id="submitBtn" class="ui-button ui-button--primary inline-flex items-center justify-center rounded-2xl px-6 py-3 text-sm font-bold transition hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-orange-500/20" style="background-color: #f97316; color: #ffffff;">{{ __('GUARDAR TICKET') }}</button>
+                <button type="submit" id="submitBtn" class="inline-flex items-center justify-center rounded-2xl bg-orange-500 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-orange-500/20 transition hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-50">
+                    {{ __('GUARDAR TICKET') }}
+                </button>
             </div>
         </form>
     </div>
 @endcomponent
 @endsection
-
-@push('scripts')
-    <script type="module">
-        import { init } from '/resources/js/pages/ticket-create.js';
-        window.requireAuthOnLoad = true;
-        document.addEventListener('DOMContentLoaded', init);
-    </script>
-@endpush

@@ -14,7 +14,13 @@ use App\Policies\EquipmentPolicy;
 use App\Policies\RoomPolicy;
 use App\Policies\TicketPolicy;
 use App\Policies\UserPolicy;
+use App\Repositories\Contracts\EquipmentRepositoryInterface;
+use App\Repositories\Contracts\RoomRepositoryInterface;
+use App\Repositories\Contracts\TicketRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Repositories\EquipmentRepository;
+use App\Repositories\RoomRepository;
+use App\Repositories\TicketRepository;
 use App\Repositories\UserRepository;
 use App\Services\AIService;
 use App\Services\AnalyticsService;
@@ -30,6 +36,9 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        $this->app->bind(TicketRepositoryInterface::class, TicketRepository::class);
+        $this->app->bind(EquipmentRepositoryInterface::class, EquipmentRepository::class);
+        $this->app->bind(RoomRepositoryInterface::class, RoomRepository::class);
 
         $this->app->singleton(TicketStatusService::class);
         $this->app->singleton(AnalyticsService::class);

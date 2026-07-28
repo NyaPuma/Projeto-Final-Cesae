@@ -44,4 +44,13 @@ enum TicketPriorityEnum: string
     {
         return array_column(self::cases(), 'value');
     }
+
+    public static function acceptedValues(): array
+    {
+        return [
+            ...self::values(),
+            'media',
+            'critica',
+        ];
+    }
 }

@@ -7,6 +7,10 @@ import { init as initRoomsManagement } from '../pages/rooms-management.js';
 import { init as initEquipmentsManagement } from '../pages/equipments-management.js';
 import { init as initTicketCreate } from '../pages/ticket-create.js';
 import { init as initAuthReset } from '../pages/auth-reset.js';
+import { init as initTicketsManagement } from '../pages/tickets-management.js';
+import { init as initUsersManagement } from '../pages/users-management.js';
+import { init as initUsersForm } from '../pages/users-form.js';
+import { init as initAnalytics } from '../pages/analytics/index.js';
 
 const pageRegistry = {
     dashboard: initDashboard,
@@ -16,6 +20,11 @@ const pageRegistry = {
     profile: initProfile,
     rooms: initRoomsManagement,
     equipments: initEquipmentsManagement,
+    tickets: initTicketsManagement,
+    users: initUsersManagement,
+    'user-create': initUsersForm,
+    'user-edit': initUsersForm,
+    analytics: initAnalytics,
     'ticket-create': initTicketCreate,
     'auth-reset': initAuthReset,
 };

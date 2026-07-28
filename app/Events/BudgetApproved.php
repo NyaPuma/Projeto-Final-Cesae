@@ -8,7 +8,7 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-final readonly class BudgetApproved
+final class BudgetApproved
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 

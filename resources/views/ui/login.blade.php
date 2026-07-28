@@ -9,11 +9,7 @@
 
         <div class="absolute top-0 left-1/2 -translate-x-1/2 h-[420px] w-[420px] rounded-full bg-primary/10 blur-3xl"></div>
 
-        <div class="absolute inset-0 opacity-[0.03] dark:opacity-[0.06]"
-             style="background-image: linear-gradient(var(--border) 1px, transparent 1px),
-                                    linear-gradient(90deg,var(--border) 1px,transparent 1px);
-                    background-size:40px 40px;">
-        </div>
+        <div class="ui-login-grid absolute inset-0 opacity-[0.03] dark:opacity-[0.06]"></div>
     </div>
 
     <div class="flex items-center justify-center px-6 py-12">

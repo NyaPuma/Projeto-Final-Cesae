@@ -11,7 +11,7 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen overflow-x-hidden bg-[var(--bg)] text-[var(--text)] antialiased">
+<body data-page="auth-reset" class="min-h-screen overflow-x-hidden bg-[var(--bg)] text-[var(--text)] antialiased">
     <div class="pointer-events-none fixed inset-0 -z-10" aria-hidden="true">
         <div class="absolute inset-0 bg-[var(--bg)]"></div>
         <div class="absolute left-1/2 top-0 h-[900px] w-[900px] -translate-x-1/2 rounded-full bg-primary/10 blur-[180px]"></div>
@@ -93,10 +93,5 @@
             </div>
         </div>
     </div>
-
-    <script type="module">
-        import { init } from '/resources/js/pages/auth-reset.js';
-        document.addEventListener('DOMContentLoaded', init);
-    </script>
 </body>
 </html>

@@ -1,5 +1,7 @@
 @extends('ui.layout')
 
+@section('page_key', 'profile')
+
 @php
     $profileName = $user->profile->name ?? 'user';
     $translatedProfile = [
@@ -78,11 +80,3 @@
     </div>
 @endcomponent
 @endsection
-
-@push('scripts')
-    <script type="module">
-        import { init } from '/resources/js/pages/profile.js';
-        window.requireAuthOnLoad = true;
-        document.addEventListener('DOMContentLoaded', init);
-    </script>
-@endpush

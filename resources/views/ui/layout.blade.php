@@ -15,7 +15,7 @@
     @stack('styles')
 </head>
 
-<body data-page="@yield('page_key')" class="min-h-screen overflow-x-hidden bg-[var(--bg)] text-[var(--text)] antialiased">
+<body data-page="@yield('page_key')" data-login-url="{{ route('ui.login') }}" class="min-h-screen overflow-x-hidden bg-[var(--bg)] text-[var(--text)] antialiased">
 
     @php
         $userRole = $user->profile->name ?? null;

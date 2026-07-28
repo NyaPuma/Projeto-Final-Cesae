@@ -47,10 +47,7 @@ class TicketController extends Controller
     {
         $this->authenticatedUser($request);
 
-        if ($request->has('priority') && ! in_array($request->priority, array_merge(
-            TicketPriorityEnum::values(),
-            ['media', 'critica']
-        ))) {
+        if ($request->has('priority') && ! in_array($request->priority, TicketPriorityEnum::acceptedValues(), true)) {
             return response()->json([
                 'message' => 'Prioridade inválida. Valores válidos: baixa, média, alta, crítica.',
             ], 422);

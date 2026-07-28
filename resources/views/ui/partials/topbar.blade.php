@@ -37,8 +37,7 @@
                     aria-label="{{ __('Notificações') }}">
                     🔔
                     <span id="notificationBadge"
-                        class="hidden absolute -top-1 -right-1 inline-flex items-center justify-center h-4.5 min-w-[18px] px-1 rounded-full bg-rose-500 text-[9px] font-extrabold text-white shadow-sm shadow-rose-500/30 leading-none"
-                        style="font-size:9px;line-height:1">
+                        class="ui-topbar-notification-badge hidden absolute -top-1 -right-1 inline-flex items-center justify-center h-4.5 min-w-[18px] px-1 rounded-full bg-rose-500 font-extrabold text-white shadow-sm shadow-rose-500/30">
                         0
                     </span>
                 </button>

@@ -1,5 +1,7 @@
 @extends('ui.layout')
 
+@section('page_key', 'user-create')
+
 @section('content')
 <div data-user-mode="create">
 @component('ui.partials.page-card', [
@@ -48,11 +50,3 @@
 @endcomponent
 </div>
 @endsection
-
-@push('scripts')
-    <script type="module">
-        import { init } from '/resources/js/pages/users-form.js';
-        window.requireAuthOnLoad = true;
-        document.addEventListener('DOMContentLoaded', init);
-    </script>
-@endpush

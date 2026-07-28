@@ -13,14 +13,19 @@ final class UploadPhotoRequest extends FormRequest
 
     public function rules(): array
     {
+        $allowedMimes = config('services.upload.allowed_photo_mimes');
+        $allowedMimes = is_array($allowedMimes) && $allowedMimes !== []
+            ? $allowedMimes
+            : ['jpeg', 'jpg', 'png', 'gif', 'webp'];
+
+        $maxPhotoSizeKb = (int) config('services.upload.max_photo_size_kb', 2048);
         return [
             'photo' => [
                 'required',
                 'file',
                 'image',
-                'mimes:'.implode(',', config('services.custom.upload.allowed_photo_mimes')),
-                'max:'.config('services.custom.upload.max_photo_size_kb'),
-                'dimensions:max_width='.config('services.custom.upload.max_photo_width').',max_height='.config('services.custom.upload.max_photo_height'),
+                'mimes:'.implode(',', $allowedMimes),
+                'max:'.$maxPhotoSizeKb,
             ],
         ];
     }

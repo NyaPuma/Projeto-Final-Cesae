@@ -18,10 +18,7 @@ final class StoreTicketRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:5000'],
-            'priority' => ['required', 'string', Rule::in(array_merge(
-                TicketPriorityEnum::values(),
-                ['media', 'critica']
-            ))],
+            'priority' => ['required', 'string', Rule::in(TicketPriorityEnum::acceptedValues())],
             'equipment_id' => ['nullable', 'integer', 'exists:equipments,id'],
             'room_id' => ['nullable', 'integer', 'exists:rooms,id'],
         ];

@@ -1,5 +1,7 @@
 @extends('ui.layout')
 
+@section('page_key', 'calendar')
+
 @push('styles')
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800" rel="stylesheet">
@@ -48,12 +50,3 @@
 
     @include('ui.partials.calendar-modal')
 @endsection
-
-@push('scripts')
-    <script type="module">
-        import { init } from '/resources/js/pages/calendar.js';
-        document.addEventListener('DOMContentLoaded', () => {
-            init('{{ route('ui.login') }}');
-        });
-    </script>
-@endpush

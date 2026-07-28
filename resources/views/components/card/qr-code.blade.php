@@ -46,7 +46,7 @@
         <button
             type="button"
             class="ui-card-qrcode__download"
-            onclick="exportQrCode(this)"
+            data-action="download-qr"
             data-value="{{ $value }}"
         >
             Exportar QR
