@@ -330,14 +330,12 @@
 |--------------------------------------------------------------------------
 */
 @media (prefers-reduced-motion: reduce) {
-  .ui-file {
-    &__dropzone,
-    &__icon,
-    &__item,
-    &__item-delete {
-      transition: none;
-      transform: none;
-    }
+  .ui-file__dropzone,
+  .ui-file__icon,
+  .ui-file__item,
+  .ui-file__item-delete {
+    transition: none;
+    transform: none;
   }
 }
 

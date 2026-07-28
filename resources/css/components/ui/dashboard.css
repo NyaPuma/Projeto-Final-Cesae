@@ -1,0 +1,26 @@
+.ui-dashboard-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.ui-dashboard-module {
+    min-height: 100%;
+}
+
+.ui-dashboard-metrics {
+    display: grid;
+    gap: 1rem;
+}
+
+@media (min-width: 640px) {
+    .ui-dashboard-metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1024px) {
+    .ui-dashboard-metrics {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}

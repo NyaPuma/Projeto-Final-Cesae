@@ -1,0 +1,96 @@
+/*
+|--------------------------------------------------------------------------
+| Tickets Page Styles
+|--------------------------------------------------------------------------
+|
+| Page-specific styles for tickets listing and management.
+|
+*/
+
+/* Priority Badge Colors */
+.priority-badge--baixa {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 uppercase tracking-tight;
+}
+
+.priority-badge--media {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-amber-500/10 text-amber-800 dark:text-amber-400 border border-amber-500/20 uppercase tracking-tight;
+}
+
+.priority-badge--alta {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-orange-500/10 text-orange-800 dark:text-orange-400 border border-orange-500/20 uppercase tracking-tight;
+}
+
+.priority-badge--critica {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-purple-500/20 bg-purple-500/10 text-purple-800 dark:text-purple-400 border border-purple-500/25 uppercase tracking-tight;
+}
+
+/* Status Badge Colors */
+.status-badge--aberta {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-500/20 uppercase tracking-tight;
+}
+
+.status-badge--em-curso {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-yellow-500/10 text-yellow-700 dark:text-yellow-400 border border-yellow-500/20 uppercase tracking-tight;
+}
+
+.status-badge--fechada {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-gray-500/10 text-gray-700 dark:text-gray-400 border border-gray-500/20 uppercase tracking-tight;
+}
+
+/* Ticket Table Row Hover */
+.ticket-row {
+    @apply hover:bg-[var(--surface-2)]/50 transition-colors duration-150;
+}
+
+/* Priority Selection Cards */
+.priority-card {
+    @apply cursor-pointer border border-[var(--border)] rounded-xl p-4 transition-all duration-200;
+}
+
+.priority-card--selected-baixa {
+    @apply border-2 border-emerald-500 shadow-sm;
+}
+
+.priority-card--selected-media {
+    @apply border-2 border-amber-500 shadow-sm;
+}
+
+.priority-card--selected-alta {
+    @apply border-2 border-red-500 shadow-sm;
+}
+
+.priority-card--selected-critica {
+    @apply border-2 border-purple-600 shadow-sm;
+}
+
+/* Budget Item */
+.budget-item {
+    @apply flex items-center justify-between p-3 bg-[var(--surface-2)] rounded-lg border border-[var(--border)];
+}
+
+.budget-item--deleting {
+    @apply opacity-50 line-through;
+}
+
+/* Comment Item */
+.comment-item {
+    @apply p-4 bg-[var(--surface-2)] rounded-xl border border-[var(--border)];
+}
+
+/* Photo Grid */
+.photo-grid {
+    @apply grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3;
+}
+
+.photo-item {
+    @apply relative aspect-square rounded-lg overflow-hidden border border-[var(--border)];
+}
+
+.photo-item:hover img,
+.photo-item:focus-within img {
+    @apply scale-105;
+}
+
+.photo-item img {
+    @apply w-full h-full object-cover transition-transform duration-200;
+}

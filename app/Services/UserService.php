@@ -38,7 +38,9 @@ final class UserService
         $user->token_created_at = now();
         $user->save();
 
+        $request->session()->regenerate();
         $request->session()->put('api_token', $plainToken);
+        $request->session()->save();
         $user->load('profile');
 
         return $plainToken;
@@ -53,6 +55,9 @@ final class UserService
 
     public function buildLogoutResponse(Request $request): JsonResponse
     {
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
         return response()->json(['message' => __('Sessão terminada com sucesso.')])
             ->withCookie(cookie('api_token', null, -1, '/', null, $request->secure(), true, false, 'Lax'))
             ->withCookie(cookie('auth_token', null, -1, '/', null, $request->secure(), false, false, 'Lax'));

@@ -28,13 +28,24 @@ export const qsa = (selector, parent = document) => [...parent.querySelectorAll(
 
 export const getCsrfToken = () => qs('meta[name="csrf-token"]')?.content ?? '';
 
-export const getHeaders = (customHeaders = {}) => ({
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-    'X-CSRF-TOKEN': getCsrfToken(),
-    'X-Requested-With': 'XMLHttpRequest',
-    ...customHeaders
-});
+export const getHeaders = (customHeaders = {}) => {
+    const headers = {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': getCsrfToken(),
+        'X-Requested-With': 'XMLHttpRequest',
+        ...customHeaders,
+    };
+
+    const token = getToken();
+
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+        headers['X-Auth-Token'] = token;
+    }
+
+    return headers;
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -48,14 +59,16 @@ export async function request(url, options = {}) {
 
     try {
         const response = await fetch(url, {
+            credentials: 'same-origin',
             ...options,
-            headers: getHeaders(options.headers || {}),
-            signal: controller.signal
+            headers: getHeaders(options.headers ?? {}),
+            signal: controller.signal,
         });
 
         clearTimeout(timeoutId);
 
         let data = {};
+
         try {
             data = await response.json();
         } catch {
@@ -65,16 +78,19 @@ export async function request(url, options = {}) {
         return {
             ok: response.ok,
             status: response.status,
-            data
+            data,
+            redirected: response.redirected,
+            url: response.url,
         };
     } catch (error) {
         clearTimeout(timeoutId);
 
-        // Retorna erro estruturado caso o timeout ou erro de rede ocorra
         return {
             ok: false,
             status: error.name === 'AbortError' ? 408 : 500,
-            data: { message: error.message || 'Erro de conexão' }
+            data: {
+                message: error.message || 'Erro de ligação',
+            },
         };
     }
 }

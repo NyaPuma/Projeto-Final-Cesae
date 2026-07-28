@@ -107,16 +107,9 @@ abstract class DatabaseTestCase extends BaseTestCase
                 'src' => 'resources/js/app.js',
                 'isEntry' => true,
                 'dynamicImports' => [
-                    'resources/js/pages/auth.js',
                     'resources/js/pages/equipments.js',
                     'resources/js/pages/rooms.js',
                 ],
-            ],
-            'resources/js/pages/auth.js' => [
-                'file' => 'assets/auth.js',
-                'name' => 'auth',
-                'src' => 'resources/js/pages/auth.js',
-                'isDynamicEntry' => true,
             ],
             'resources/js/pages/equipments.js' => [
                 'file' => 'assets/equipments.js',

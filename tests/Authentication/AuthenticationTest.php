@@ -157,6 +157,32 @@ class AuthenticationTest extends TestCase
         $response->assertStatus(401);
     }
 
+
+
+    #[Test]
+    public function login_stores_hashed_token_in_database(): void
+    {
+        $profile = UserProfile::where('name', User::ROLE_USER)->first();
+        $user = User::factory()->create([
+            'profile_id' => $profile->id,
+            'password' => Hash::make('Password123!'),
+            'active' => true,
+        ]);
+
+        $login = $this->postJson('/login', [
+            'email' => $user->email,
+            'password' => 'Password123!',
+        ]);
+
+        $login->assertOk();
+
+        $user->refresh();
+        $token = $login->json('token');
+
+        $this->assertSame(User::hashToken($token), $user->api_token);
+        $this->assertNotSame($token, $user->api_token);
+    }
+
     #[Test]
     public function registration_creates_user_with_token(): void
     {

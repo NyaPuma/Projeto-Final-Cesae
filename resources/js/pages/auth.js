@@ -93,8 +93,6 @@ export function initLogin() {
 
             // Guardar token em ambos os formatos para compatibilidade total
             if (j.token) {
-                document.cookie = `api_token=${j.token}; path=/; max-age=2592000; SameSite=Lax; Secure`;
-                document.cookie = `auth_token=${j.token}; path=/; max-age=2592000; SameSite=Lax; Secure`;
                 try {
                     localStorage.setItem('api_token', j.token);
                     localStorage.setItem('auth_token', j.token);

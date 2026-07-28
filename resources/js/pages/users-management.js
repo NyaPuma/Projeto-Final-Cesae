@@ -3,6 +3,8 @@
  * Handles users listing, filtering, and role management
  */
 
+import { authHeader } from '../utils/api.js';
+
 let currentPage = 1;
 
 function isUserActive(user) {
@@ -11,17 +13,6 @@ function isUserActive(user) {
 
 function getUserRole(user) {
     return user.profile?.name || user.role || user.profile || '';
-}
-
-function authHeader() {
-    const token = localStorage.getItem('auth_token');
-    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-    const headers = { 'Accept': 'application/json' };
-
-    if (token) headers['Authorization'] = 'Bearer ' + token;
-    if (csrfToken) headers['X-CSRF-TOKEN'] = csrfToken;
-
-    return headers;
 }
 
 async function loadUsers(page = 1) {

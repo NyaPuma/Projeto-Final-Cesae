@@ -26,7 +26,7 @@
             __('Dashboard') .
             '
                     </a>
-                    <button onclick="calendar.today()" class="w-full sm:w-auto inline-flex items-center justify-center px-5 py-2.5 bg-primary text-sm font-bold text-white border border-transparent rounded-xl shadow-sm hover:opacity-90 transition-all min-h-[44px] cursor-pointer">
+                    <button data-action="calendar-today" class="w-full sm:w-auto inline-flex items-center justify-center px-5 py-2.5 bg-primary text-sm font-bold text-white border border-transparent rounded-xl shadow-sm hover:opacity-90 transition-all min-h-[44px] cursor-pointer">
                         ' .
             __('Hoje') .
             '
@@ -34,269 +34,26 @@
                 </div>',
     ])
         <div class="space-y-12 lg:space-y-16 animate-[fadeIn_0.2s_ease-out]">
-
             {{-- Grelha de Conteúdo Principal --}}
             <div class="grid xl:grid-cols-4 gap-8 lg:gap-10">
-
-                {{-- Painel de Resumo Lateral --}}
-                <div class="bg-[var(--surface)] border border-[var(--border)] rounded-3xl p-8 shadow-sm h-fit space-y-8"
-                    aria-labelledby="summary-title">
-                    <div>
-                        <span
-                            class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-primary">
-                            <span class="h-2 w-2 rounded-full bg-primary" aria-hidden="true"></span>
-                            {{ __('Agenda Inteligente') }}
-                        </span>
-                        <h3 id="summary-title" class="mt-4 text-lg font-bold text-[var(--text)]">
-                            {{ __('Resumo Operacional') }}
-                        </h3>
-                        <p class="text-xs text-[var(--text-soft)] mt-1.5">{{ __('Métricas da agenda atual') }}</p>
-                    </div>
-
-                    <hr class="border-[var(--border)]" aria-hidden="true">
-
-                    <div class="grid grid-cols-2 xl:grid-cols-1 gap-6 lg:gap-8">
-                        <div class="p-6 bg-[var(--surface-2)] border border-[var(--border)] rounded-2xl">
-                            <p class="text-[var(--text-soft)] text-xs font-semibold uppercase tracking-wider">
-                                {{ __('Total de Eventos') }}
-                            </p>
-                            <p class="text-4xl font-black text-[var(--text)] mt-2" id="eventsTotal" aria-live="polite">
-                                --
-                            </p>
-                        </div>
-
-                        <div class="p-6 bg-[var(--surface-2)] border border-[var(--border)] rounded-2xl">
-                            <p class="text-[var(--text-soft)] text-xs font-semibold uppercase tracking-wider">
-                                {{ __('Este Mês') }}
-                            </p>
-                            <p class="text-4xl font-black text-[var(--text)] mt-2" id="monthTotal" aria-live="polite">
-                                --
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="p-6 border border-[var(--border)] rounded-2xl bg-opacity-40 bg-[var(--surface-2)]">
-                        <p class="text-[var(--text-soft)] text-xs font-semibold uppercase tracking-wider">
-                            {{ __('Próxima Intervenção') }}
-                        </p>
-                        <div class="flex items-center gap-3 mt-3">
-                            <span class="relative flex h-2.5 w-2.5" aria-hidden="true">
-                                <span
-                                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
-                            </span>
-                            <p class="text-sm font-semibold text-[var(--text)]">
-                                {{ __('Sincronização Ativa') }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                @include('ui.partials.calendar-summary', ['eventsTotal' => '--', 'monthTotal' => '--'])
 
                 {{-- Contentor da Instância do Calendário --}}
                 <div class="xl:col-span-3 bg-[var(--surface)] border border-[var(--border)] rounded-3xl p-8 lg:p-10 shadow-sm">
                     <div id="calendar"></div>
                 </div>
-
             </div>
         </div>
     @endcomponent
 
-    {{-- WCAG COMPLIANT DIALOG/MODAL --}}
-    <div id="eventModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-        role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-        <div class="relative w-full max-w-md bg-[var(--surface)] border border-[var(--border)] rounded-3xl p-8 shadow-2xl animate-[fadeIn_0.15s_ease-out]"
-            id="modalContent">
-            <h3 id="modalTitle" class="text-lg font-bold text-[var(--text)] mb-2"></h3>
-
-            <div class="space-y-4 my-6">
-                <div>
-                    <p class="text-xs font-semibold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Início') }}
-                    </p>
-                    <p id="modalStart" class="text-sm font-medium text-[var(--text)]"></p>
-                </div>
-                <div>
-                    <p class="text-xs font-semibold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Fim') }}
-                    </p>
-                    <p id="modalEnd" class="text-sm font-medium text-[var(--text)]"></p>
-                </div>
-            </div>
-
-            <div class="flex justify-end gap-3 mt-8">
-                <button onclick="closeModal()" id="closeModalBtn"
-                    class="px-5 py-2.5 bg-[var(--surface-2)] hover:bg-[var(--border)] text-sm font-bold text-[var(--text)] border border-[var(--border)] rounded-xl transition-all cursor-pointer min-h-[44px]">
-                    {{ __('Fechar') }}
-                </button>
-            </div>
-        </div>
-    </div>
+    @include('ui.partials.calendar-modal')
 @endsection
 
 @push('scripts')
-    <script>
-        let calendar;
-        let lastFocusedElement = null;
-
-        function openModal(title, start, end) {
-            // Guarda o elemento focado para devolver o foco após fechar (WCAG 2.4.3)
-            lastFocusedElement = document.activeElement;
-
-            document.getElementById('modalTitle').innerText = `🔧 ${title}`;
-            document.getElementById('modalStart').innerText = start;
-            document.getElementById('modalEnd').innerText = end;
-
-            const modal = document.getElementById('eventModal');
-            modal.classList.remove('hidden');
-
-            // Coloca o foco no botão de fechar para rápida interação por teclado
-            setTimeout(() => {
-                document.getElementById('closeModalBtn').focus();
-            }, 50);
-
-            // Fechar modal ao pressionar ESC
-            document.addEventListener('keydown', handleEscapeKey);
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('eventModal');
-            modal.classList.add('hidden');
-            document.removeEventListener('keydown', handleEscapeKey);
-
-            // Devolve o foco ao elemento original (WCAG)
-            if (lastFocusedElement) {
-                lastFocusedElement.focus();
-            }
-        }
-
-        function handleEscapeKey(e) {
-            if (e.key === 'Escape') {
-                closeModal();
-            }
-        }
-
+    <script type="module">
+        import { init } from '/resources/js/pages/calendar.js';
         document.addEventListener('DOMContentLoaded', () => {
-            if (!isAuthenticated()) {
-                window.location.href = "{{ route('ui.login') }}";
-                return;
-            }
-
-            const calendarEl = document.getElementById("calendar");
-
-            if (calendarEl) {
-                calendar = new FullCalendar.Calendar(calendarEl, {
-                    locale: "{{ app()->getLocale() === 'en' ? 'en' : 'pt' }}",
-                    initialView: "dayGridMonth",
-                    height: "auto",
-                    firstDay: 1, // Começa na Segunda-feira
-                    nowIndicator: true,
-                    navLinks: true,
-                    editable: false,
-                    selectable: true,
-                    expandRows: true,
-                    dayMaxEvents: true,
-                    weekends: true,
-
-                    buttonText: {
-                        today: "{{ __('Hoje') }}",
-                        month: "{{ __('Mês') }}",
-                        week: "{{ __('Semana') }}",
-                        day: "{{ __('Dia') }}"
-                    },
-
-                    headerToolbar: {
-                        left: "prev,next",
-                        center: "title",
-                        right: "dayGridMonth,timeGridWeek,timeGridDay"
-                    },
-
-                    datesSet: function(dateInfo) {
-                        if (calendar && typeof calendar.refetchEvents === 'function') {
-                            // Atualiza os totais e recarrega os dados da rota /calendar/events
-                        }
-                    },
-
-                    events(fetchInfo, successCallback, failureCallback) {
-                        fetch("/calendar/events", {
-                                headers: authHeader()
-                            })
-                            .then(response => {
-                                if (!response.ok) {
-                                    if (response.status === 401) {
-                                        window.location.href = "{{ route('ui.login') }}";
-                                        return;
-                                    }
-                                    throw new Error("Erro ao carregar eventos da infraestrutura.");
-                                }
-                                return response.json();
-                            })
-                            .then(events => {
-                                if (!events) return;
-
-                                // Atualiza o total absoluto no painel lateral
-                                const totalEl = document.getElementById("eventsTotal");
-                                if (totalEl) totalEl.innerText = events.length;
-
-                                // Determinar dinamicamente o mês em visualização ativa
-                                const currentPeriod = calendar ? calendar.getDate() : fetchInfo.start;
-                                const activeMonth = currentPeriod.getMonth();
-                                const activeYear = currentPeriod.getFullYear();
-
-                                // Filtrar eventos do mês ativo na vista do utilizador
-                                const totalMonth = events.filter(e => {
-                                    const eventDate = new Date(e.start);
-                                    return eventDate.getMonth() === activeMonth && eventDate
-                                        .getFullYear() === activeYear;
-                                }).length;
-
-                                const monthEl = document.getElementById("monthTotal");
-                                if (monthEl) monthEl.innerText = totalMonth;
-
-                                successCallback(events);
-                            })
-                            .catch(error => {
-                                console.error(error);
-                                failureCallback(error);
-                            });
-                    },
-
-                    eventDidMount(info) {
-                        info.el.style.cursor = "pointer";
-                        info.el.title = info.event.title;
-                        // WCAG: Define atributos de acessibilidade nos eventos para leitores de ecrã
-                        info.el.setAttribute('tabindex', '0');
-                        info.el.setAttribute('role', 'button');
-                        info.el.setAttribute('aria-label', `${info.event.title}, clique para ver detalhes`);
-
-                        // Permitir acionar o evento via teclado (Enter)
-                        info.el.addEventListener('keydown', (e) => {
-                            if (e.key === 'Enter' || e.key === ' ') {
-                                e.preventDefault();
-                                info.el.click();
-                            }
-                        });
-                    },
-
-                    eventClick(info) {
-                        const options = {
-                            year: 'numeric',
-                            month: '2-digit',
-                            day: '2-digit',
-                            hour: '2-digit',
-                            minute: '2-digit'
-                        };
-                        const start = info.event.start ? info.event.start.toLocaleString("pt-PT", options) :
-                            "-";
-                        const end = info.event.end ? info.event.end.toLocaleString("pt-PT", options) : "-";
-
-                        openModal(info.event.title, start, end);
-                    },
-
-                    loading(isLoading) {
-                        document.body.style.cursor = isLoading ? "progress" : "default";
-                    }
-                });
-
-                calendar.render();
-            }
+            init('{{ route('ui.login') }}');
         });
     </script>
 @endpush

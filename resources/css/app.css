@@ -102,6 +102,8 @@
 @import "./components/input/tel.css";
 @import "./components/input/textarea.css";
 @import "./components/input/url.css";
+@import "./components/ui/dashboard.css";
+@import "./components/ui/upload-preview.css";
 
 
 /* ==========================================================
@@ -111,3 +113,5 @@
 @import "./landing.css";
 @import "./auth.css";
 @import "./pages/calendar.css";
+@import "./pages/tickets.css";
+@import "./pages/audits.css";

@@ -3,6 +3,7 @@
 @props(['name' => 'file', 'label' => 'Upload de Imagem', 'multiple' => false])
 
 <div class="file-upload-wrapper w-full">
+    @php($previewId = $name . '-preview')
     @if($label)
         <label for="{{ $name }}" class="block text-sm font-semibold mb-2 text-[var(--text)]">{{ $label }}</label>
     @endif
@@ -13,8 +14,9 @@
             id="{{ $name }}"
             name="{{ $name }}{{ $multiple ? '[]' : '' }}"
             {{ $multiple ? 'multiple' : '' }}
-            class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-            onchange="handleFilePreview(this)"
+            data-behavior="image-preview"
+            data-preview-target="{{ $previewId }}"
+            class="absolute inset-0 h-full w-full cursor-pointer opacity-0"
         >
 
         <div class="flex flex-col items-center justify-center text-center">
@@ -27,28 +29,5 @@
     </div>
 
     {{-- Pré-visualização --}}
-    <div id="{{ $name }}-preview" class="mt-4 grid grid-cols-2 gap-4"></div>
+    <div id="{{ $previewId }}" class="ui-upload-preview mt-4"></div>
 </div>
-
-<script>
-function handleFilePreview(input) {
-    const previewContainer = document.getElementById(input.id + '-preview');
-    previewContainer.innerHTML = '';
-
-    if (input.files) {
-        Array.from(input.files).forEach(file => {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const div = document.createElement('div');
-                div.className = 'relative rounded-lg overflow-hidden border border-[var(--border)] aspect-square';
-                div.innerHTML = `
-                    <img src="${e.target.result}" class="w-full h-full object-cover">
-                    <button type="button" class="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 text-[10px]" onclick="this.parentElement.remove()">✕</button>
-                `;
-                previewContainer.appendChild(div);
-            }
-            reader.readAsDataURL(file);
-        });
-    }
-}
-</script>

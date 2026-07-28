@@ -1,10 +1,6 @@
 @extends('ui.layout')
 
 @section('content')
-<script>
-window.requireAuthOnLoad = true;
-</script>
-
 @component('ui.partials.page-card', [
     'title' => __('Criar Ticket'),
     'subtitle' => __('Registe uma nova ocorrência de manutenção com contexto técnico e prioridade.'),
@@ -17,7 +13,7 @@ window.requireAuthOnLoad = true;
             <p class="text-xs text-[var(--text-soft)] mt-0.5">{{ __('Descreva a situação de forma objetiva para que a equipa técnica possa agir rapidamente.') }}</p>
         </div>
 
-        <form id="createTicketForm" class="space-y-6">
+        <form id="createTicketForm" class="space-y-6" data-redirect-url="{{ route('ui.tickets') }}">
 
             {{-- Título --}}
             <div>
@@ -42,7 +38,7 @@ window.requireAuthOnLoad = true;
 
                 <div class="grid gap-4 md:grid-cols-4">
                     {{-- Card Baixa --}}
-                    <div type="button" data-priority="baixa" onclick="selectPriority('baixa')"
+                    <div type="button" data-priority="baixa"
                         class="priority-card cursor-pointer rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4 transition-all hover:border-emerald-500/50">
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center gap-2">
@@ -56,7 +52,7 @@ window.requireAuthOnLoad = true;
                     </div>
 
                     {{-- Card Média (Selecionado por defeito) --}}
-                    <div type="button" data-priority="media" onclick="selectPriority('media')"
+                    <div type="button" data-priority="media"
                         class="priority-card cursor-pointer rounded-2xl border-2 border-amber-500 bg-[var(--surface-2)] p-4 transition-all shadow-sm">
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center gap-2">
@@ -70,7 +66,7 @@ window.requireAuthOnLoad = true;
                     </div>
 
                     {{-- Card Alta --}}
-                    <div type="button" data-priority="alta" onclick="selectPriority('alta')"
+                    <div type="button" data-priority="alta"
                         class="priority-card cursor-pointer rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4 transition-all hover:border-red-500/50">
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center gap-2">
@@ -84,7 +80,7 @@ window.requireAuthOnLoad = true;
                     </div>
 
                     {{-- Card Crítica --}}
-                    <div type="button" data-priority="critica" onclick="selectPriority('critica')"
+                    <div type="button" data-priority="critica"
                         class="priority-card cursor-pointer rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4 transition-all hover:border-purple-600/50">
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center gap-2">
@@ -111,7 +107,7 @@ window.requireAuthOnLoad = true;
                         <label for="ticketImage" class="cursor-pointer rounded-xl bg-[var(--surface)] border border-[var(--border)] px-3 py-1.5 text-xs font-semibold text-[var(--text)] hover:bg-[var(--surface-2)] transition">
                             {{ __('Escolher ficheiro') }}
                         </label>
-                        <input type="file" id="ticketImage" accept="image/*" class="hidden" onchange="updateFileName(this)">
+                        <input type="file" id="ticketImage" accept="image/*" class="hidden">
                         <span id="fileName" class="text-sm text-[var(--text-soft)] truncate">{{ __('Nenhum ficheiro selecionado') }}</span>
                     </div>
                 </div>
@@ -130,92 +126,9 @@ window.requireAuthOnLoad = true;
 @endsection
 
 @push('scripts')
-<script>
-function authHeader() {
-    const token = localStorage.getItem('auth_token');
-    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-    const headers = { 'Accept': 'application/json', 'Content-Type': 'application/json' };
-    if (token) headers['Authorization'] = 'Bearer ' + token;
-    if (csrfToken) headers['X-CSRF-TOKEN'] = csrfToken;
-    return headers;
-}
-
-function selectPriority(priority) {
-    document.getElementById('ticketPriority').value = priority;
-
-    const cards = document.querySelectorAll('.priority-card');
-    cards.forEach(card => {
-        const cardPriority = card.getAttribute('data-priority');
-
-        card.classList.remove('border-2', 'border-emerald-500', 'border-amber-500', 'border-red-500', 'border-purple-600', 'shadow-sm');
-        card.classList.add('border', 'border-[var(--border)]');
-
-        if (cardPriority === priority) {
-            card.classList.remove('border', 'border-[var(--border)]');
-            card.classList.add('border-2', 'shadow-sm');
-            if (priority === 'baixa') card.classList.add('border-emerald-500');
-            if (priority === 'media') card.classList.add('border-amber-500');
-            if (priority === 'alta') card.classList.add('border-red-500');
-            if (priority === 'critica') card.classList.add('border-purple-600');
-        }
-    });
-}
-
-function updateFileName(input) {
-    const label = document.getElementById('fileName');
-    if (input.files && input.files[0]) {
-        label.textContent = input.files[0].name;
-    } else {
-        label.textContent = "{{ __('Nenhum ficheiro selecionado') }}";
-    }
-}
-
-document.getElementById('createTicketForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const message = document.getElementById('formMessage');
-    const submitBtn = document.getElementById('submitBtn');
-
-    const title = document.getElementById('ticketTitle').value.trim();
-    const description = document.getElementById('ticketDescription').value.trim();
-    const priority = document.getElementById('ticketPriority').value;
-    const equipment_id = document.getElementById('equipmentId').value.trim();
-
-    message.textContent = "{{ __('A guardar ticket...') }}";
-    message.className = 'min-h-6 text-sm font-medium text-[var(--text-soft)]';
-    submitBtn.disabled = true;
-
-    try {
-        // Só enviar equipment_id se for um número válido
-        const payload = { title, description, priority };
-        const eqId = parseInt(equipment_id, 10);
-        if (equipment_id && !isNaN(eqId) && eqId > 0) {
-            payload.equipment_id = eqId;
-        }
-
-        const res = await fetch('/tickets', {
-            method: 'POST',
-            headers: authHeader(),
-            body: JSON.stringify(payload)
-        });
-
-        const data = await res.json().catch(() => ({}));
-
-        if (!res.ok) {
-            let errorText = data.message || "{{ __('Erro ao criar ticket.') }}";
-            if (data.errors) {
-                errorText = Object.values(data.errors).flat().join(' ');
-            }
-            throw new Error(errorText);
-        }
-
-        message.textContent = "{{ __('Ticket criado com sucesso!') }}";
-        message.className = 'min-h-6 text-sm font-medium text-emerald-600 dark:text-emerald-400';
-        setTimeout(() => { window.location.href = '{{ route('ui.tickets') }}'; }, 1500);
-    } catch (err) {
-        message.textContent = err.message;
-        message.className = 'min-h-6 text-sm font-medium text-red-600 dark:text-red-400';
-        submitBtn.disabled = false;
-    }
-});
-</script>
+    <script type="module">
+        import { init } from '/resources/js/pages/ticket-create.js';
+        window.requireAuthOnLoad = true;
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
 @endpush

@@ -3,16 +3,7 @@
  * Handles dashboard metrics and KPI loading
  */
 
-function authHeader() {
-    const token = localStorage.getItem('auth_token');
-    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-    const headers = { 'Accept': 'application/json' };
-
-    if (token) headers['Authorization'] = 'Bearer ' + token;
-    if (csrfToken) headers['X-CSRF-TOKEN'] = csrfToken;
-
-    return headers;
-}
+import { authHeader } from '../utils/api.js';
 
 async function loadMetrics() {
     const userRole = document.querySelector('meta[name="user-role"]')?.content || '';

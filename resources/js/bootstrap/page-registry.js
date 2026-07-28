@@ -1,0 +1,31 @@
+import { init as initDashboard } from '../pages/dashboard.js';
+import { init as initTicketDetail } from '../pages/ticket-detail.js';
+import { init as initCalendar } from '../pages/calendar.js';
+import { init as initAudits } from '../pages/audits.js';
+import { init as initProfile } from '../pages/profile.js';
+import { init as initRoomsManagement } from '../pages/rooms-management.js';
+import { init as initEquipmentsManagement } from '../pages/equipments-management.js';
+import { init as initTicketCreate } from '../pages/ticket-create.js';
+import { init as initAuthReset } from '../pages/auth-reset.js';
+
+const pageRegistry = {
+    dashboard: initDashboard,
+    'ticket-detail': initTicketDetail,
+    calendar: initCalendar,
+    audits: initAudits,
+    profile: initProfile,
+    rooms: initRoomsManagement,
+    equipments: initEquipmentsManagement,
+    'ticket-create': initTicketCreate,
+    'auth-reset': initAuthReset,
+};
+
+export function bootPageModules(root = document) {
+    const page = root.body?.dataset.page;
+
+    if (!page || !pageRegistry[page]) {
+        return;
+    }
+
+    pageRegistry[page]();
+}

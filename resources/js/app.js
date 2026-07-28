@@ -2,6 +2,9 @@ import './api-client';
 import './analytics';
 import { initTheme } from './core/theme';
 import { initSidebar } from './core/sidebar';
+import { initLogin as initAuthLogin } from './auth/login';
+import { bootPageModules } from './bootstrap/page-registry';
+import { initImagePreview } from './components/upload/image-preview';
 
 /**
  * CORE APPLICATION INITIALIZATION
@@ -32,6 +35,8 @@ const App = {
         this.initDropdowns();
         this.initTooltips();
         this.initAnimations();
+        initImagePreview(document);
+        bootPageModules(document);
     },
 
     // --- SEGURANÇA ---
@@ -62,9 +67,8 @@ const App = {
     },
 
     // --- AUTH MODULE ---
-    // Auth handled by inline scripts in blade views
     initAuth() {
-        // No-op: auth is handled by layout.blade.php inline scripts
+        initAuthLogin();
     },
 
     // --- MANAGEMENT MODULES ---

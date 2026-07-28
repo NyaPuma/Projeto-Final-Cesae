@@ -10,7 +10,7 @@
         <div class="flex items-center gap-4">
             <button
                 type="button"
-                onclick="toggleTheme()"
+                data-action="toggle-theme"
                 class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] text-sm shadow-sm transition-all hover:bg-[var(--surface-2)] cursor-pointer"
                 aria-label="Alternar Tema"
             >

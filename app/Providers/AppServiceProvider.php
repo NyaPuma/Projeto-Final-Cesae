@@ -14,6 +14,8 @@ use App\Policies\EquipmentPolicy;
 use App\Policies\RoomPolicy;
 use App\Policies\TicketPolicy;
 use App\Policies\UserPolicy;
+use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Repositories\UserRepository;
 use App\Services\AIService;
 use App\Services\AnalyticsService;
 use App\Services\NotificationService;
@@ -27,6 +29,8 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
+        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+
         $this->app->singleton(TicketStatusService::class);
         $this->app->singleton(AnalyticsService::class);
         $this->app->singleton(NotificationService::class);

@@ -36,6 +36,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->encryptCookies(except: [
+            'api_token',
             'auth_token',
         ]);
     })

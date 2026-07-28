@@ -89,9 +89,6 @@
         </div>
     </div>
 
-    <script type="module">
-        import { initLogin } from '/resources/js/pages/auth.js';
-        document.addEventListener('DOMContentLoaded', initLogin);
-    </script>
+
 </body>
 </html>

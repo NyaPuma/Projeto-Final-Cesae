@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CustomAuthMiddleware
 {
+
     public function handle(Request $request, Closure $next): Response
     {
         $candidates = $this->collectTokenCandidates($request);
@@ -127,11 +128,17 @@ class CustomAuthMiddleware
                 'errors' => ['api_token' => ['Invalid or user is inactive.']],
             ], 401);
 
-            return $hasCookie ? $response->withCookie(cookie()->forget('api_token')) : $response;
+            return $hasCookie
+                ? $response
+                    ->withCookie(cookie()->forget('api_token'))
+                    ->withCookie(cookie()->forget('auth_token'))
+                : $response;
         }
 
         if ($hasCookie) {
-            return redirect('/ui/login')->withCookie(cookie()->forget('api_token'));
+            return redirect('/ui/login')
+                ->withCookie(cookie()->forget('api_token'))
+                ->withCookie(cookie()->forget('auth_token'));
         }
 
         return redirect('/ui/login');

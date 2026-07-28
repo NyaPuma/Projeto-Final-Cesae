@@ -1,10 +1,7 @@
 @extends('ui.layout')
 
 @section('content')
-<script>
-window.requireAuthOnLoad = true;
-</script>
-
+<div data-user-mode="edit" data-user-id="{{ $targetUser->id }}" data-profile-id="{{ $targetUser->profile_id }}">
 @component('ui.partials.page-card', [
     'title' => __('Editar Utilizador'),
     'subtitle' => __('Atualize as credenciais e permissões de acesso do perfil de utilizador.'),
@@ -49,113 +46,13 @@ window.requireAuthOnLoad = true;
         </form>
     </div>
 @endcomponent
+</div>
 @endsection
 
 @push('scripts')
-<script>
-// Define as variáveis globais injetadas pelo Blade para uso no JavaScript
-const targetUserId = "{{ $targetUser->id }}";
-const targetProfileId = "{{ $targetUser->profile_id }}";
-
-// Obtém os cabeçalhos padrão com os tokens necessários para a API
-function authHeader() {
-    const token = localStorage.getItem('auth_token');
-    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-    const headers = { 'Accept': 'application/json', 'Content-Type': 'application/json' };
-    if (token) headers['Authorization'] = 'Bearer ' + token;
-    if (csrfToken) headers['X-CSRF-TOKEN'] = csrfToken;
-    return headers;
-}
-
-// Carrega os perfis de acesso da API e pré-seleciona o perfil atual do utilizador
-async function loadProfiles() {
-    const select = document.getElementById('userProfileId');
-    try {
-        const res = await fetch('/admin/profiles', { headers: authHeader() });
-        if (!res.ok) throw new Error('Não foi possível carregar os perfis.');
-
-        const data = await res.json();
-        const profiles = data.profiles || [];
-
-        select.innerHTML = '<option value="">Selecione um perfil...</option>';
-        select.removeAttribute('disabled');
-
-        profiles.forEach(p => {
-            const opt = document.createElement('option');
-            opt.value = p.id;
-
-            // Tradução e mapeamento amigável para PT-PT
-            let label = p.name;
-            if (p.name === 'admin') label = 'Administrador';
-            else if (p.name === 'technician') label = 'Técnico de Manutenção';
-            else if (p.name === 'user') label = 'Utilizador Comum';
-
-            opt.textContent = label;
-
-            // Pré-seleciona o perfil atual do utilizador editado
-            if (String(p.id) === String(targetProfileId)) {
-                opt.selected = true;
-            }
-
-            select.appendChild(opt);
-        });
-    } catch (e) {
-        console.error('Erro ao carregar perfis:', e);
-        select.innerHTML = '<option value="">Erro ao carregar perfis de acesso</option>';
-    }
-}
-
-// Submete os dados atualizados do formulário para a API
-document.getElementById('editUserForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const message = document.getElementById('formMessage');
-    const submitBtn = document.getElementById('submitBtn');
-
-    const name = document.getElementById('userName').value.trim();
-    const email = document.getElementById('userEmail').value.trim();
-    const password = document.getElementById('userPassword').value;
-    const profile_id = document.getElementById('userProfileId').value;
-    const active = document.getElementById('userActive').checked;
-
-    const payload = { name, email, profile_id, active };
-
-    // Apenas envia o campo password se o utilizador tiver inserido algo
-    if (password) {
-        payload.password = password;
-    }
-
-    message.textContent = 'A guardar alterações...';
-    message.className = 'min-h-6 text-sm font-medium text-[var(--text-soft)]';
-    submitBtn.disabled = true;
-
-    try {
-        const res = await fetch(`/admin/users/${targetUserId}`, {
-            method: 'PATCH',
-            headers: authHeader(),
-            body: JSON.stringify(payload)
-        });
-
-        const data = await res.json().catch(() => ({}));
-
-        if (!res.ok) {
-            let errorText = data.message || 'Erro ao editar utilizador.';
-            if (data.errors) {
-                errorText = Object.values(data.errors).flat().join(' ');
-            }
-            throw new Error(errorText);
-        }
-
-        message.textContent = 'Utilizador atualizado com sucesso! A redirecionar...';
-        message.className = 'min-h-6 text-sm font-medium text-emerald-600 dark:text-emerald-400';
-        setTimeout(() => { window.location.href = '{{ route('ui.users') }}'; }, 1500);
-    } catch (err) {
-        message.textContent = err.message;
-        message.className = 'min-h-6 text-sm font-medium text-red-600 dark:text-red-400';
-        submitBtn.disabled = false;
-    }
-});
-
-window.addEventListener('load', loadProfiles);
-</script>
+    <script type="module">
+        import { init } from '/resources/js/pages/users-form.js';
+        window.requireAuthOnLoad = true;
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
 @endpush

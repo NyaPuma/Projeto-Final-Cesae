@@ -3,6 +3,8 @@
  * Handles tickets listing, filtering, and search
  */
 
+import { authHeader } from '../utils/api.js';
+
 const priorityColors = {
     baixa: 'border border-emerald-500/20 bg-emerald-500/10 text-emerald-800 dark:text-emerald-400',
     média: 'border border-amber-500/20 bg-amber-500/10 text-amber-800 dark:text-amber-400',
@@ -26,17 +28,6 @@ const statusTranslations = {
 };
 
 let currentPage = 1;
-
-function authHeader() {
-    const token = localStorage.getItem('auth_token');
-    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-    const headers = { 'Accept': 'application/json' };
-
-    if (token) headers['Authorization'] = 'Bearer ' + token;
-    if (csrfToken) headers['X-CSRF-TOKEN'] = csrfToken;
-
-    return headers;
-}
 
 async function loadTickets(page = 1) {
     currentPage = page;

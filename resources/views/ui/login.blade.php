@@ -171,9 +171,4 @@
 </div>
 @endsection
 
-@push('scripts')
-    <script type="module">
-        import { initLogin } from '/resources/js/pages/auth.js';
-        document.addEventListener('DOMContentLoaded', initLogin);
-    </script>
-@endpush
+

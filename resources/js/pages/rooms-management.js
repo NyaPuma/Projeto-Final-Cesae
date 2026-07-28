@@ -3,18 +3,9 @@
  * Handles rooms listing, filtering, and CRUD operations
  */
 
+import { authHeader, authHeaderJson, authPost, authPatch, authDelete } from '../utils/api.js';
+
 let currentPage = 1;
-
-function authHeader() {
-    const token = localStorage.getItem('auth_token');
-    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-    const headers = { 'Accept': 'application/json' };
-
-    if (token) headers['Authorization'] = 'Bearer ' + token;
-    if (csrfToken) headers['X-CSRF-TOKEN'] = csrfToken;
-
-    return headers;
-}
 
 async function loadRooms(page = 1) {
     currentPage = page;
