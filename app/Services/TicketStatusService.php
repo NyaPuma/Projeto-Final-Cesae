@@ -27,11 +27,14 @@ final class TicketStatusService
         }
 
         $id = TicketStatus::where('name', $name)->value('id');
-        self::$statusIdCache[$name] = $id;
 
-        if ($id !== null) {
-            Cache::put("ticket_status:{$name}", $id, 3600);
+        if ($id === null) {
+            $statusModel = TicketStatus::firstOrCreate(['name' => $name]);
+            $id = $statusModel->id;
         }
+
+        self::$statusIdCache[$name] = $id;
+        Cache::put("ticket_status:{$name}", $id, 3600);
 
         return $id;
     }

@@ -8,7 +8,7 @@ final readonly class StoreUserData
         public string $name,
         public string $email,
         public string $password,
-        public int $profileId,
+        public ?int $profileId = null,
         public bool $active = true,
     ) {}
 
@@ -18,7 +18,7 @@ final readonly class StoreUserData
             name: $data['name'],
             email: $data['email'],
             password: $data['password'],
-            profileId: $data['profile_id'],
+            profileId: $data['profile_id'] ?? null,
             active: isset($data['active']) ? (bool) $data['active'] : true,
         );
     }

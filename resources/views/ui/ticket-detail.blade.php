@@ -1,4 +1,4 @@
-﻿@extends('ui.layout')
+@extends('ui.layout')
 @section('page_key', 'ticket-detail')
 
 @section('content')

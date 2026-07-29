@@ -155,8 +155,9 @@ class TicketsExportTest extends TestCase
             'user_id' => $user->id,
             'status_id' => $openStatusId,
             'opened_at' => now()->subDay(),
-            'created_at' => now()->subDay(),
         ]);
+        $ticket1->created_at = now()->subDay();
+        $ticket1->save();
 
         $ticket2 = Ticket::create([
             'title' => 'Second Ticket',
