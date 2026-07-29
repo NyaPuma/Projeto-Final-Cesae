@@ -23,7 +23,7 @@ if (csrfToken) {
 
 // Intercetores
 apiClient.interceptors.request.use((config) => {
-    const token = localStorage.getItem('auth_token') || getCookie('auth_token');
+    const token = localStorage.getItem('api_token') || getCookie('api_token');
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
@@ -47,7 +47,7 @@ window.axios = apiClient;
  * HELPERS
  */
 function handleSessionExpiration() {
-    localStorage.removeItem('auth_token');
+    localStorage.removeItem('api_token');
     localStorage.removeItem('user_role');
     localStorage.removeItem('user_name');
 
@@ -78,3 +78,13 @@ window.api = {
  */
 window.addEventListener('offline', () => window.showToast?.('Modo offline ativo.', 'error'));
 window.addEventListener('online', () => window.showToast?.('Ligação restabelecida.', 'success'));
+
+/**
+ * Converte um HTMLFormElement ou FormData num objeto JavaScript simples
+ * @param {HTMLFormElement|FormData} form 
+ * @returns {Object}
+ */
+export function formToObject(form) {
+    const formData = form instanceof FormData ? form : new FormData(form);
+    return Object.fromEntries(formData.entries());
+}

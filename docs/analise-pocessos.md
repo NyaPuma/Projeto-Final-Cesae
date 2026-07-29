@@ -20,10 +20,13 @@ No cenário analógico ou semi-digitalizado atual, o fluxo de correção de uma 
 Com a introdução da plataforma integrada em PHP Laravel e persistência relacional em MySQL, o fluxo transforma-se numa operação otimizada, segura e inteligente:
 
 ### Fluxo de Abertura Omnicanal e Triagem Assistida por IA
-* **Autonomia de Submissão:** Qualquer utilizador devidamente autenticado (seja Operário, Técnico ou Administrador) pode submeter um ticket imediatamente após detetar uma falha em campo (`POST /tickets`), garantindo a reatividade operacional do departamento.
-* **Triagem e Classificação por NLP:** No momento do registo por texto livre, a Inteligência Artificial processa a descrição, infere a categoria técnica e define o nível de prioridade apropriado, guardando o resultado na tabela `tickets`.
-* **Alocação Inteligente (Módulo Assistido):** O Administrador visualiza o incidente com a recomendação em tempo real do `AIService` (através do modelo `gpt-4o-mini`). O algoritmo analisa a especialidade necessária e a carga horária em curso de cada mecânico ativo, sugerindo o profissional ideal. Em 1 clique, o Administrador valida e efetua a alocação oficial (`PATCH /admin/tickets/{id}/atribuir`).
-* **Segurança e Identidade Blindadas:** O auto-registo público foi totalmente eliminado (`/register` desativado). A criação de utilizadores e atribuição de perfis (*Roles*) passou a ser um processo estritamente restrito e centralizado no Backoffice do Administrador através da rota protegida `/admin/users/register`.
+* **Autonomia de Submissão:** Qualquer utilizador devidamente autenticado na plataforma (seja Operário, Técnico ou Administrador) pode submeter um ticket de avaria imediatamente após detetar uma falha no terreno (POST /tickets). O formulário recolhe a seleção do equipamento, a sala/localização e a descrição do problema em texto livre, atribuindo o estado inicial "Aberto" e gravando a timestamp do servidor.
+
+* **Triagem e Alocação Inteligente (Módulo SAD Exclusivo do Admin):** Ao aceder ao detalhe da ocorrência no Backoffice, o Administrador é apoiado pelo Assistente de Alocação IA (AIService alimentado pelo modelo gpt-4o-mini). O motor analisa o texto livre da avaria por Processamento de Linguagem Natural (NLP), cruza a categoria do problema com as especialidades dos técnicos ativos e avalia a respetiva carga de trabalho atual. A IA exibe a sugestão do técnico ideal com uma justificação operacional fundamentada.
+
+* **Despacho em 1 Clique:** O Administrador valida a recomendação da IA (ou faz uma seleção manual alternativa) e efetua o despacho oficial com 1 clique (PATCH /admin/tickets/{id}/atribuir), transitando o estado da avaria e vinculando o técnico no MySQL.
+
+* **Segurança e Identidade Blindadas:** O auto-registo público foi totalmente eliminado (/register desativado). A criação de utilizadores e atribuição de perfis (Roles) é um processo estritamente restrito e centralizado no Backoffice do Administrador através da rota protegida /admin/users/register.
 
 ### Fluxo de Resolução e Monitorização de KPIs (In-House)
 * **Diagnóstico Prescritivo no Terreno:** O Técnico assume o ticket na sua área exclusiva, movendo o estado para "Em Curso" com carimbo de tempo inviolável capturado pelo relógio do servidor (`NOW()`). O sistema fornece de imediato as sugestões de peças do armazém com base no histórico do ativo.

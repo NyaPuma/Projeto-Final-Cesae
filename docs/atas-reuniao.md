@@ -38,4 +38,4 @@ Este documento regista as decisões cruciais, a evolução das *sprints* e a res
 ---
 
 ## Dica de Equipa
-Sempre que encontrarem um erro complexo durante o código que vos tire 1 ou 2 horas de trabalho, adicionem uma pequena linha aqui nas Atas: *"Erro: X | Resolução: Y"*. Isto é **ouro** para o júri, pois prova que vocês souberam depurar (debugar) o vosso próprio código!
+Sempre que encontrarem um erro complexo durante o código que vos tire 1 ou 2 horas de trabalho, adicionem uma pequena linha aqui nas Atas: *"Erro: X | Resolução: Y"*. 

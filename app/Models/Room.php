@@ -14,10 +14,13 @@ class Room extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $table = 'rooms';
+
     protected $fillable = [
         'name',
         'code',
         'location',
+        'building',
         'active',
     ];
 
@@ -27,11 +30,11 @@ class Room extends Model
 
     public function equipments(): HasMany
     {
-        return $this->hasMany(Equipment::class);
+        return $this->hasMany(Equipment::class, 'room_id', 'id');
     }
 
     public function tickets(): HasMany
     {
-        return $this->hasMany(Ticket::class);
+        return $this->hasMany(Ticket::class, 'room_id', 'id');
     }
 }

@@ -16,6 +16,7 @@ function addEndpointBadges() {
 
         if (
             txt.includes("bearer") ||
+            txt.includes("sanctum") ||
             txt.includes("jwt")
         ) {
             badge.innerHTML = "JWT";

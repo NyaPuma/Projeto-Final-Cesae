@@ -119,7 +119,7 @@ class BudgetFeatureTest extends TestCase
             ->putJson("/technician/tickets/{$ticket->id}/request-budget", []);
 
         $response->assertStatus(422)
-            ->assertJsonValidationErrors(['budget_amount']);
+            ->assertJsonValidationErrors(['budget_amount', 'budget_justification']);
     }
 
     public function test_admin_can_approve_budget(): void

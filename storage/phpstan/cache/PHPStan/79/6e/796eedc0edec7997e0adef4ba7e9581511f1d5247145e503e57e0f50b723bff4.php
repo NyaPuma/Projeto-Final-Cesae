@@ -14,7 +14,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'user' => 'App\\Models\\User',
           'request' => 'Illuminate\\Http\\Request',
-          'auth' => 'Illuminate\\Support\\Facades\\Auth',
           'httpexception' => 'Symfony\\Component\\HttpKernel\\Exception\\HttpException',
         ),
          'className' => 'App\\Http\\Controllers\\Controller',
@@ -40,7 +39,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'user' => 'App\\Models\\User',
           'request' => 'Illuminate\\Http\\Request',
-          'auth' => 'Illuminate\\Support\\Facades\\Auth',
           'httpexception' => 'Symfony\\Component\\HttpKernel\\Exception\\HttpException',
         ),
          'className' => 'App\\Http\\Controllers\\Controller',
@@ -66,7 +64,6 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         array (
           'user' => 'App\\Models\\User',
           'request' => 'Illuminate\\Http\\Request',
-          'auth' => 'Illuminate\\Support\\Facades\\Auth',
           'httpexception' => 'Symfony\\Component\\HttpKernel\\Exception\\HttpException',
         ),
          'className' => 'App\\Http\\Controllers\\Controller',
@@ -88,7 +85,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Controller.php' => '7a22d210e5e61642b9e45b86ea79ba0721a928f2b0c9168bde247a7095004a5a',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Http\\Controllers\\Controller.php' => '70707569c1f7a945698a42517b94c3e584d0bd43d05b95ab4f39ebd51cf99b83',
     ),
   ),
 ));

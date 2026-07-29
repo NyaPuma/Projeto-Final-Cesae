@@ -21,7 +21,7 @@ class Equipment extends Model
         'name',
         'serial',
         'room_id',
-        'category_id', // 2. Garante que está no fillable
+        'category_id',
         'active',
     ];
 
@@ -29,7 +29,6 @@ class Equipment extends Model
         'active' => 'boolean',
     ];
 
-    // 3. Relação corrigida para apontar para EquipmentCategory usando a FK 'category_id'
     public function category(): BelongsTo
     {
         return $this->belongsTo(EquipmentCategory::class, 'category_id');
@@ -37,7 +36,7 @@ class Equipment extends Model
 
     public function room(): BelongsTo
     {
-        return $this->belongsTo(Room::class);
+        return $this->belongsTo(Room::class, 'room_id', 'id');
     }
 
     public function tickets(): HasMany

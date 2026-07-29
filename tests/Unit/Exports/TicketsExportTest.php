@@ -148,7 +148,7 @@ class TicketsExportTest extends TestCase
         $user = User::factory()->create();
         $openStatusId = TicketStatus::where('name', TicketStatusEnum::Open->value)->value('id');
 
-        $ticket1 = Ticket::forceCreate([
+        $ticket1 = Ticket::create([
             'title' => 'First Ticket',
             'description' => 'Older ticket',
             'priority' => TicketPriorityEnum::Medium->value,
@@ -156,10 +156,9 @@ class TicketsExportTest extends TestCase
             'status_id' => $openStatusId,
             'opened_at' => now()->subDay(),
             'created_at' => now()->subDay(),
-            'updated_at' => now()->subDay(),
         ]);
 
-        $ticket2 = Ticket::forceCreate([
+        $ticket2 = Ticket::create([
             'title' => 'Second Ticket',
             'description' => 'Newer ticket',
             'priority' => TicketPriorityEnum::High->value,
@@ -167,7 +166,6 @@ class TicketsExportTest extends TestCase
             'status_id' => $openStatusId,
             'opened_at' => now(),
             'created_at' => now(),
-            'updated_at' => now(),
         ]);
 
         $export = new TicketsExport;

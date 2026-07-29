@@ -1,9 +1,5 @@
 // Inicialização do ecossistema Swagger UI + disparo de utilitários
-window.addEventListener('load', function () {
-    if (typeof SwaggerUIBundle === 'undefined' || !document.getElementById('swagger-ui')) {
-        return;
-    }
-
+window.onload = function () {
     const urls = [];
 
     // URLs vindas do Blade (serão injetadas em runtime)
@@ -57,4 +53,4 @@ window.addEventListener('load', function () {
             usePkceWithAuthorizationCodeGrant: window.SWAGGER_L5_USE_PKCE ?? false
         });
     }
-});
+};
