@@ -24,6 +24,7 @@
         $navItems = [
             ['href' => 'ui', 'active' => 'ui', 'label' => 'Dashboard', 'icon' => '📊', 'exact' => true],
             ['href' => 'ui/tickets', 'active' => 'ui/tickets*', 'label' => 'Tickets', 'icon' => '🎫', 'exact' => false],
+            ['href' => 'ui/my-tickets', 'active' => 'ui/my-tickets*', 'label' => 'Meus Tickets', 'icon' => '📑', 'exact' => false],
             [
                 'href' => 'ui/equipments',
                 'active' => 'ui/equipments*',

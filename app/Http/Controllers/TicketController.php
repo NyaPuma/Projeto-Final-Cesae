@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
+
 class TicketController extends Controller
 {
     use ControllerHelpers;
@@ -32,7 +33,7 @@ class TicketController extends Controller
         $query = Ticket::with(['equipment', 'room', 'technician', 'status']);
 
         if ($request->has('q') && ! empty($request->q)) {
-            $query->where('title', 'like', '%'.$request->q.'%');
+            $query->where('title', 'like', '%' . $request->q . '%');
         }
 
         return response()->json([
@@ -136,7 +137,7 @@ class TicketController extends Controller
                 return response()->json(['message' => 'A data de início não pode ser posterior à data de fim.'], 422);
             }
 
-            $query->whereBetween('created_at', [$dateFrom, $dateTo.' 23:59:59']);
+            $query->whereBetween('created_at', [$dateFrom, $dateTo . ' 23:59:59']);
         } elseif ($request->filled('date_from')) {
             $query->whereDate('created_at', '>=', $request->date_from);
         } elseif ($request->filled('date_to')) {
@@ -151,7 +152,7 @@ class TicketController extends Controller
     /**
      * Exibe o detalhe do ticket injetando a sugestão em tempo real da IA
      */
-    public function show(Request $request, int $id)
+    public function show(Request $request, $id)
     {
         $ticket = Ticket::with(['equipment.category', 'room', 'user', 'technician', 'status'])->findOrFail($id);
 
@@ -702,7 +703,7 @@ class TicketController extends Controller
                     $icon = $eventType === 'approved' ? '✅' : '❌';
                     Notification::create([
                         'user_id' => $ticket->assigned_to,
-                        'title'   => "{$icon} Orçamento ".($eventType === 'approved' ? 'Aprovado' : 'Recusado')." - Ticket #{$ticket->id}",
+                        'title'   => "{$icon} Orçamento " . ($eventType === 'approved' ? 'Aprovado' : 'Recusado') . " - Ticket #{$ticket->id}",
                         'message' => $message,
                         'type'    => "budget_{$eventType}",
                         'link'    => "/ui/tickets/{$ticket->id}",
@@ -784,7 +785,9 @@ class TicketController extends Controller
 
                 $ticket->save();
 
-                $this->notifyBudgetEvent($ticket, 'submitted',
+                $this->notifyBudgetEvent(
+                    $ticket,
+                    'submitted',
                     "O técnico submeteu um orçamento de {$estimatedBudget}€ para o ticket #{$ticket->id} - {$ticket->title}. Aguarda aprovação."
                 );
 
@@ -804,7 +807,9 @@ class TicketController extends Controller
             }
             $ticket->save();
 
-            $this->notifyBudgetEvent($ticket, 'auto_approved',
+            $this->notifyBudgetEvent(
+                $ticket,
+                'auto_approved',
                 "Orçamento de {$estimatedBudget}€ para o ticket #{$ticket->id} foi auto-aprovado (dentro da autonomia de {$threshold}€)."
             );
 
@@ -812,7 +817,6 @@ class TicketController extends Controller
                 'message' => __('Orçamento aprovado automaticamente. Pode prosseguir com a intervenção.'),
                 'ticket'  => $ticket->load(['equipment', 'room', 'technician', 'status']),
             ]);
-
         } catch (\Illuminate\Validation\ValidationException $ve) {
             return response()->json(['message' => 'Por favor verifique os campos do orçamento.', 'errors' => $ve->errors()], 422);
         } catch (\Throwable $e) {
@@ -902,7 +906,9 @@ class TicketController extends Controller
         $ticket->closed_at = now();
         $ticket->save();
 
-        $this->notifyBudgetEvent($ticket, 'closed',
+        $this->notifyBudgetEvent(
+            $ticket,
+            'closed',
             "O ticket #{$ticket->id} - {$ticket->title} foi concluído e fechado com custo final de {$request->actual_cost}€."
         );
 
@@ -941,4 +947,59 @@ class TicketController extends Controller
             'ticket'  => $ticket
         ]);
     }
+
+
+
+    public function myTickets(Request $request)
+    {
+        // Obtém o utilizador autenticado
+        $user = $request->user();
+
+        if (!$user) {
+            return response()->json(['message' => 'Utilizador não autenticado.'], 401);
+        }
+
+        // Inicia a query para filtrar os tickets do utilizador
+        $query = Ticket::with(['equipment', 'room', 'status']);
+
+        // Se for técnico ou utilizador comum, filtra pelos criados por ele OU atribuídos a ele
+        $query->where(function ($q) use ($user) {
+            $q->where('user_id', $user->id)           // Criados pelo utilizador/técnico
+                ->orWhere('assigned_to', $user->id);  // Atribuídos ao técnico
+        });
+
+        // Filtro por termo de pesquisa ('q')
+        if ($request->filled('q')) {
+            $searchTerm = $request->input('q');
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('title', 'like', "%{$searchTerm}%")
+                    ->orWhere('description', 'like', "%{$searchTerm}%");
+            });
+        }
+
+        // Filtro por estado
+        if ($request->filled('status')) {
+            $query->where('status', $request->input('status'));
+        }
+
+        // Filtro por prioridade
+        if ($request->filled('priority')) {
+            $query->where('priority', $request->input('priority'));
+        }
+
+        // Filtro por datas
+        if ($request->filled('date_from')) {
+            $query->whereDate('created_at', '>=', $request->input('date_from'));
+        }
+        if ($request->filled('date_to')) {
+            $query->whereDate('created_at', '<=', $request->input('date_to'));
+        }
+
+        // Ordenação e paginação
+        $tickets = $query->orderBy('created_at', 'desc')->paginate(10);
+
+        return response()->json($tickets);
+    }
+
+
 }
