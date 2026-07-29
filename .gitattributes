@@ -1,5 +1,9 @@
 * text=auto eol=lf
 
+# Impede o Git de alterar quebras de linha em ficheiros JSON e de ambiente
+*.json -text
+.env -text
+
 *.blade.php diff=html
 *.css diff=css
 *.html diff=html
