@@ -141,9 +141,11 @@ class AdminCrudFeatureTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->patchJson("/admin/equipment/{$equipment->id}", [
-                'name' => 'Updated Drill Press',
-            ]);
+    ->patchJson("/admin/equipment/{$equipment->id}", [
+        'name' => 'Updated Drill Press',
+        'category_id' => $equipment->category_id,
+        'room_id' => $equipment->room_id,
+    ]);
 
         $response->assertOk();
         $this->assertDatabaseHas('equipments', [
