@@ -14,15 +14,15 @@ async function loadMetrics() {
 
     if (userRole !== 'admin') {
         panel.innerHTML = `
-            <div class="rounded-xl border border-dashed border-[var(--border)] bg-[var(--surface-2)] p-5 col-span-full text-center">
-                <p class="text-xs text-[var(--text-soft)]">Painel de métricas operacionais disponível apenas para perfis autorizados (Técnicos/Gestores).</p>
+            <div class="rounded-xl border border-dashed border-(--border) bg-(--surface-2) p-5 col-span-full text-center">
+                <p class="text-xs text-(--text-soft)">Painel de métricas operacionais disponível apenas para perfis autorizados (Técnicos/Gestores).</p>
             </div>
         `;
         return;
     }
 
     panel.innerHTML = `
-        <div class="col-span-full text-xs text-[var(--text-soft)] animate-pulse" aria-live="polite">
+        <div class="col-span-full text-xs text-(--text-soft) animate-pulse" aria-live="polite">
             A ler indicadores analíticos em tempo real...
         </div>
     `;
@@ -41,9 +41,9 @@ async function loadMetrics() {
         ];
 
         panel.innerHTML = metrics.map(([label, value]) => `
-            <div class="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[0_1px_2px_rgba(0,0,0,0.01)] animate-[fadeIn_0.3s_ease-out]">
-                <p class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">${label}</p>
-                <p class="mt-2 text-2xl font-semibold tracking-tight text-[var(--text)]">${value}</p>
+            <div class="rounded-xl border border-(--border) bg-(--surface) p-5 shadow-[0_1px_2px_rgba(0,0,0,0.01)] animate-[fadeIn_0.3s_ease-out]">
+                <p class="text-[10px] font-bold uppercase tracking-wider text-(--text-soft)">${label}</p>
+                <p class="mt-2 text-2xl font-semibold tracking-tight text-(--text)">${value}</p>
             </div>
         `).join('');
 

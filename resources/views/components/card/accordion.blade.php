@@ -17,12 +17,15 @@
     'border' => true,
 ])
 
+@php
+    $detailsAttributes = $open ? ['open' => true] : [];
+@endphp
+
 <details
-    {{ $attributes->class([
+    {{ $attributes->merge($detailsAttributes)->class([
         'ui-card-accordion',
         'ui-card-accordion--border' => $border,
     ]) }}
-    @if($open) open @endif
 >
     <summary class="ui-card-accordion__header">
         <div class="ui-card-accordion__title">

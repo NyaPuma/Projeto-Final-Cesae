@@ -52,8 +52,12 @@
         @required($required)
         @readonly($readonly)
         @disabled($disabled)
-        @if($maxlength) maxlength="{{ $maxlength }}" @endif
-        aria-describedby="{{ $hasError ? "{$id}-error" : ($hint ? "{$id}-hint" : '') }}"
+        @if($maxlength)
+            maxlength="{{ $maxlength }}"
+        @endif
+        @if($hasError || $hint)
+            aria-describedby="{{ $hasError ? "{$id}-error" : "{$id}-hint" }}"
+        @endif
         {{ $attributes->except(['id', 'name', 'rows', 'placeholder', 'class']) }}
     >{{ $initialValue }}</textarea>
 

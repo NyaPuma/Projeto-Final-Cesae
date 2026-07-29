@@ -5,18 +5,16 @@ import { addBudgetItem, recalcBudgetTotal, renderBudgetDetailsForAdmin } from '.
 import { fetchComments, bindCommentForm } from './ticket-detail/comments.js';
 import { fetchPhotos, bindPhotoForm, deletePhoto } from './ticket-detail/photos.js';
 import { bindAssignmentActions } from './ticket-detail/assignment.js';
-import { finishTicket, handleBudgetAction, hidePriorityWarning, showPriorityWarning, submitBudget } from './ticket-detail/workflow.js';
-import { showMessage } from './ticket-detail/ui.js';
+import { finishTicket, handleBudgetAction, submitBudget } from './ticket-detail/workflow.js';
+import { bindRepairStartActions } from './ticket-detail/start-actions.js';
+import { bindPriorityModalActions } from './ticket-detail/priority-modal.js';
 
 function currentUserIsAdmin() {
     return localStorage.getItem('user_role') === 'admin';
 }
 
 async function fetchTicket() {
-    if (!state.ticketId) {
-        console.error('ID do Ticket não fornecido.');
-        return;
-    }
+    if (!state.ticketId) return;
 
     const response = await fetch(`/tickets/${state.ticketId}`, { headers: authHeader() });
     if (response.status === 401) {
@@ -24,11 +22,7 @@ async function fetchTicket() {
         window.location = '/ui/login';
         return;
     }
-    if (!response.ok) {
-        const error = await response.json();
-        alert(error.message || 'Erro a carregar ticket');
-        return;
-    }
+    if (!response.ok) return;
 
     const data = await response.json();
     const ticket = data.ticket || data;
@@ -92,91 +86,7 @@ function bindTicketActions() {
     document.getElementById('btnFinishTicket')?.addEventListener('click', () => finishTicket(fetchTicket));
     document.getElementById('btnApproveBudget')?.addEventListener('click', () => handleBudgetAction('approve', fetchTicket));
     document.getElementById('btnRejectBudget')?.addEventListener('click', () => handleBudgetAction('reject', fetchTicket));
-
-    document.getElementById('btnStartRepair')?.addEventListener('click', async () => {
-        const startButton = document.getElementById('btnStartRepair');
-        const forceButton = document.getElementById('btnStartRepairForce');
-
-        if (startButton) {
-            startButton.disabled = true;
-            startButton.innerHTML = '<span class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span> A verificar...';
-        }
-
-        try {
-            const response = await fetch(`/technician/tickets/${state.ticketId}/start`, {
-                method: 'PUT',
-                headers: { ...authHeader(), 'Content-Type': 'application/json' },
-                body: JSON.stringify({ force: false }),
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                showMessage('Reparação iniciada com sucesso!');
-                await fetchTicket();
-                return;
-            }
-
-            if (response.status === 409 && data.warning) {
-                showPriorityWarning(data.urgent_tickets_count || 0, data.current_priority || 'média', state.ticketId, 'start', data.my_urgent_tickets_count || 0);
-
-                if (forceButton) {
-                    forceButton.classList.remove('hidden');
-                    startButton?.classList.add('hidden');
-                }
-
-                showMessage(data.message || '⚠️ Existem tickets mais prioritários por atender.', true);
-                return;
-            }
-
-            showMessage(data.message || 'Erro ao iniciar reparação.', true);
-        } catch {
-            showMessage('Erro de conexão ao iniciar reparação.', true);
-        } finally {
-            if (startButton && forceButton?.classList.contains('hidden')) {
-                startButton.disabled = false;
-                startButton.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"></path></svg> Iniciar Intervenção';
-            }
-        }
-    });
-
-    document.getElementById('btnStartRepairForce')?.addEventListener('click', async () => {
-        const forceButton = document.getElementById('btnStartRepairForce');
-        const startButton = document.getElementById('btnStartRepair');
-
-        if (forceButton) {
-            forceButton.disabled = true;
-            forceButton.innerHTML = '<span class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span> A iniciar...';
-        }
-
-        try {
-            const response = await fetch(`/technician/tickets/${state.ticketId}/start`, {
-                method: 'PUT',
-                headers: { ...authHeader(), 'Content-Type': 'application/json' },
-                body: JSON.stringify({ force: true }),
-            });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                showMessage(data.message || 'Erro ao forçar início da reparação.', true);
-                return;
-            }
-
-            showMessage('Reparação iniciada com sucesso (prioridades ignoradas)! O administrador foi notificado.');
-            hidePriorityWarning();
-            await fetchTicket();
-        } catch {
-            showMessage('Erro de conexão.', true);
-        } finally {
-            if (forceButton) {
-                forceButton.disabled = false;
-                forceButton.innerHTML = '<span>⚠️</span> Forçar Início (ignorar prioritários)';
-                forceButton.classList.add('hidden');
-            }
-            if (startButton) startButton.classList.remove('hidden');
-        }
-    });
+    bindRepairStartActions(fetchTicket);
 }
 
 function setupEventDelegation() {
@@ -188,10 +98,8 @@ function setupEventDelegation() {
 
     document.addEventListener('change', (event) => {
         if (!event.target.classList.contains('item-type')) return;
-
         const item = event.target.closest('.budget-item');
         if (!item) return;
-
         const priceInput = item.querySelector('.item-price');
         priceInput.placeholder = event.target.value === 'labor' ? '€/Hora' : 'P. Unit';
         recalcBudgetTotal();
@@ -213,71 +121,6 @@ function setupEventDelegation() {
     });
 }
 
-function bindPriorityModalActions() {
-    const viewUrgentButton = document.getElementById('btnViewUrgentTickets');
-    const forceActionButton = document.getElementById('btnForceStartTicket');
-
-    viewUrgentButton?.addEventListener('click', async () => {
-        hidePriorityWarning();
-        const pendingId = state.pendingTicketId || state.ticketId;
-
-        try {
-            viewUrgentButton.disabled = true;
-            viewUrgentButton.innerHTML = '<span class="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin"></span> A localizar...';
-
-            const response = await fetch(`/tickets/most-urgent?exclude=${pendingId}`, { headers: authHeader() });
-            if (response.ok) {
-                const data = await response.json();
-                if (data.ticket_id) {
-                    window.location.href = `/ui/tickets/${data.ticket_id}`;
-                    return;
-                }
-            }
-            window.location.href = '/ui/tickets?priority=crítica';
-        } catch {
-            window.location.href = '/ui/tickets?priority=crítica';
-        }
-    });
-
-    forceActionButton?.addEventListener('click', async () => {
-        hidePriorityWarning();
-        const pendingId = state.pendingTicketId || state.ticketId;
-        if (!pendingId) return;
-
-        try {
-            let response;
-
-            if (state.pendingActionType === 'close') {
-                const cost = parseFloat(document.getElementById('techTotalCost')?.value) || 0;
-                const report = document.getElementById('techFinalReport')?.value.trim();
-                response = await fetch(`/tickets/${pendingId}/close`, {
-                    method: 'POST',
-                    headers: { ...authHeader(), 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ actual_cost: cost, report, force: true }),
-                });
-            } else {
-                response = await fetch(`/technician/tickets/${pendingId}/start`, {
-                    method: 'PUT',
-                    headers: { ...authHeader(), 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ force: true }),
-                });
-            }
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                showMessage(data.message || 'Erro de conexão.', true);
-                return;
-            }
-
-            showMessage(state.pendingActionType === 'close' ? 'Intervenção concluída e ticket fechado!' : 'Reparação iniciada com sucesso!');
-            await fetchTicket();
-        } catch {
-            showMessage('Erro de conexão.', true);
-        }
-    });
-}
-
 export function init() {
     const container = document.querySelector('[data-ticket-id]');
     if (container?.dataset.ticketId) {
@@ -293,6 +136,6 @@ export function init() {
     bindCommentForm();
     bindPhotoForm();
     bindAssignmentActions(fetchTicket);
-    bindPriorityModalActions();
+    bindPriorityModalActions(fetchTicket);
     setupEventDelegation();
 }

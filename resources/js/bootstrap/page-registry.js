@@ -11,6 +11,7 @@ import { init as initTicketsManagement } from '../pages/tickets-management.js';
 import { init as initUsersManagement } from '../pages/users-management.js';
 import { init as initUsersForm } from '../pages/users-form.js';
 import { init as initAnalytics } from '../pages/analytics/index.js';
+import { init as initErrorPage } from '../pages/error-page.js';
 
 const pageRegistry = {
     dashboard: initDashboard,
@@ -27,6 +28,7 @@ const pageRegistry = {
     analytics: initAnalytics,
     'ticket-create': initTicketCreate,
     'auth-reset': initAuthReset,
+    error: initErrorPage,
 };
 
 export function bootPageModules(root = document) {

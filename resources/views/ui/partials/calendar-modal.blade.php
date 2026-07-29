@@ -17,11 +17,10 @@
             </div>
         </div>
 
-        <div class="flex justify-end gap-3 mt-8">
-            <button data-action="close-modal" id="closeModalBtn"
-                class="px-5 py-2.5 bg-[var(--surface-2)] hover:bg-[var(--border)] text-sm font-bold text-[var(--text)] border border-[var(--border)] rounded-xl transition-all cursor-pointer min-h-[44px]">
+        <div class="mt-8 flex justify-end gap-3">
+            <x-ui.buttons.button id="closeModalBtn" data-action="close-modal" variant="secondary" size="md" weight="bold" class="rounded-xl">
                 {{ __('Fechar') }}
-            </button>
+            </x-ui.buttons.button>
         </div>
     </div>
 </div>

@@ -35,7 +35,7 @@ async function fetchNotifications() {
         // Se não houver notificações
         if (!notifications.length || notifications.length === 0) {
             list.innerHTML = `
-                <p class="text-xs text-[var(--text-soft)] text-center py-6 italic">
+                <p class="text-xs text-(--text-soft) text-center py-6 italic">
                     🔕 Sem notificações
                 </p>
             `;
@@ -74,26 +74,26 @@ async function fetchNotifications() {
                         n.type?.includes('budget_submitted') ? '📋' :
                         n.type?.includes('priority_override') ? '⚠️' : '📌';
             return `
-                <div class="flex items-start gap-3 px-3 py-2.5 rounded-xl hover:bg-[var(--surface-2)] transition-all ${isUnread ? 'bg-primary/5 border-l-2 border-primary' : ''} ${n.link ? 'cursor-pointer' : ''}" onclick="${n.link ? `window.location='${n.link}'; markNotifRead(${n.id})` : ''}">
+                <div class="flex items-start gap-3 px-3 py-2.5 rounded-xl hover:bg-(--surface-2) transition-all ${isUnread ? 'bg-primary/5 border-l-2 border-primary' : ''} ${n.link ? 'cursor-pointer' : ''}" onclick="${n.link ? `window.location='${n.link}'; markNotifRead(${n.id})` : ''}">
                     <span class="text-base flex-shrink-0 mt-0.5">${icon}</span>
                     <div class="flex-1 min-w-0">
-                        <p class="text-xs font-bold text-[var(--text)] leading-tight ${isUnread ? '' : 'opacity-70'}">${n.title || ''}</p>
-                        <p class="text-[10px] text-[var(--text-soft)] mt-0.5 line-clamp-2">${n.message || n.description || ''}</p>
-                        <p class="text-[9px] text-[var(--text-soft)] mt-1 opacity-50">${n.created_at ? new Date(n.created_at).toLocaleDateString('pt-PT', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : ''}</p>
+                        <p class="text-xs font-bold text-(--text) leading-tight ${isUnread ? '' : 'opacity-70'}">${n.title || ''}</p>
+                        <p class="text-[10px] text-(--text-soft) mt-0.5 line-clamp-2">${n.message || n.description || ''}</p>
+                        <p class="text-[9px] text-(--text-soft) mt-1 opacity-50">${n.created_at ? new Date(n.created_at).toLocaleDateString('pt-PT', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : ''}</p>
                     </div>
                     ${isUnread ? '<span class="w-2 h-2 rounded-full bg-primary flex-shrink-0 mt-1.5"></span>' : ''}
                 </div>
             `;
         }).join('') + (notifications.length > 20 ? `
             <div class="text-center pt-2">
-                <span class="text-[9px] text-[var(--text-soft)] font-medium">+${notifications.length - 20} mais</span>
+                <span class="text-[9px] text-(--text-soft) font-medium">+${notifications.length - 20} mais</span>
             </div>
         ` : '');
     } catch (e) {
         console.warn('Erro ao carregar notificações:', e);
         if (list) {
             list.innerHTML = `
-                <p class="text-xs text-[var(--text-soft)] text-center py-6 italic">⚠️ Erro ao carregar</p>
+                <p class="text-xs text-(--text-soft) text-center py-6 italic">⚠️ Erro ao carregar</p>
             `;
         }
     }

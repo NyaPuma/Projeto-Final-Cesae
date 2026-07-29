@@ -16,8 +16,7 @@
 ])
 
 <p
-    @if($id) id="{{ $id }}" @endif
-    {{ $attributes->class([
+    {{ $attributes->merge($id ? ['id' => $id] : [])->class([
         'ui-input-hint',
         "ui-input-hint--{$variant}",
     ]) }}

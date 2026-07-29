@@ -3,10 +3,6 @@
     'required' => false,
 ])
 
-<div>
-    <label class="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">
-        {{ $label }}@if($required) * @endif
-    </label>
-
+<x-ui.form.field :label="$label" :required="$required">
     {{ $slot }}
-</div>
+</x-ui.form.field>

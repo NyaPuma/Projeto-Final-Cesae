@@ -15,16 +15,16 @@ function renderEquipmentRow(equipment) {
     const serial = equipment.serial ?? `EQ-${String(equipment.id).padStart(3, '0')}`;
     const location = equipment.room ? `${equipment.room.name} (${equipment.room.location ?? '—'})` : '—';
 
-    return `<tr class="transition-colors duration-150 hover:bg-[var(--surface-2)]/50">
-        <td class="px-5 py-4 font-mono font-bold text-[var(--text-soft)]">${serial}</td>
+    return `<tr class="transition-colors duration-150 hover:bg-(--surface-2)/50">
+        <td class="px-5 py-4 font-mono font-bold text-(--text-soft)">${serial}</td>
         <td class="px-5 py-4">
-            <div class="font-semibold text-[var(--text)]">${equipment.name}</div>
-            <div class="mt-0.5 text-[10px] uppercase tracking-wider text-[var(--text-soft)]">${equipment.category?.name ?? 'Genérico'}</div>
+            <div class="font-semibold text-(--text)">${equipment.name}</div>
+            <div class="mt-0.5 text-[10px] uppercase tracking-wider text-(--text-soft)">${equipment.category?.name ?? 'Genérico'}</div>
         </td>
-        <td class="px-5 py-4 font-semibold text-[var(--text-soft)]">${location}</td>
+        <td class="px-5 py-4 font-semibold text-(--text-soft)">${location}</td>
         <td class="px-5 py-4">${renderStatusBadge(equipment)}</td>
         <td class="px-5 py-4 text-right">
-            <a href="/ui/tickets/create?equipment_id=${equipment.id}" class="inline-flex min-h-[28px] items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-1.5 text-[11px] font-semibold text-[var(--text)] shadow-sm transition-all hover:bg-[var(--surface-2)]">Abrir Ticket</a>
+            <a href="/ui/tickets/create?equipment_id=${equipment.id}" class="inline-flex min-h-[28px] items-center justify-center rounded-lg border border-(--border) bg-(--surface) px-3 py-1.5 text-[11px] font-semibold text-(--text) shadow-sm transition-all hover:bg-(--surface-2)">Abrir Ticket</a>
         </td>
     </tr>`;
 }

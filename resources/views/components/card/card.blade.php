@@ -58,6 +58,12 @@
     if ($tabindex !== null) {
         $customAttributes['tabindex'] = $tabindex;
     }
+    if ($disabled) {
+        $customAttributes['aria-disabled'] = 'true';
+    }
+    if ($selected) {
+        $customAttributes['aria-selected'] = 'true';
+    }
 @endphp
 
 <{{ $tag }}
@@ -74,8 +80,6 @@
         'ui-card--flush' => $flush,
         'ui-card--loading' => $loading || $skeleton,
     ]) }}
-    @if($disabled) aria-disabled="true" @endif
-    @if($selected) aria-selected="true" @endif
 >
     @if($loading || $skeleton)
         {{-- Verifica se o programador passou um layout de carregamento personalizado --}}

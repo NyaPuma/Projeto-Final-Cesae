@@ -1,6 +1,8 @@
 <div id="budgetApprovalCard" class="relative hidden overflow-hidden rounded-2xl border border-amber-500/30 bg-[var(--surface)] p-6 shadow-sm space-y-4">
     <div class="absolute left-0 top-0">
-        <span class="inline-block rounded-br-xl bg-amber-500 px-3 py-1 text-[9px] font-extrabold uppercase tracking-widest text-black shadow-sm">{{ __('Ação Requerida') }}</span>
+        <x-ui.text.pill tone="warning" size="xs" class="rounded-br-xl rounded-tl-none border-0 px-3 py-1 text-black shadow-sm">
+            {{ __('Ação Requerida') }}
+        </x-ui.text.pill>
     </div>
 
     <div class="pt-2">
@@ -10,7 +12,7 @@
 
     <div class="flex items-center justify-between rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
         <div>
-            <span class="block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Custo Solicitado') }}</span>
+            <x-ui.text.eyebrow as="span" size="xs" tracking="wider" class="block font-bold">{{ __('Custo Solicitado') }}</x-ui.text.eyebrow>
             <p class="mt-0.5 text-xs text-[var(--text-soft)]">{{ __('Técnico:') }} <span id="budgetTechnicianName" class="font-semibold text-[var(--text)]">—</span></p>
         </div>
         <div class="text-right">
@@ -19,32 +21,31 @@
     </div>
 
     <div id="budgetDetailsContainer" class="hidden rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-4 space-y-2">
-        <h4 class="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">
-            <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-            {{ __('Detalhe do Orçamento') }}
+        <h4 class="flex items-center gap-1.5">
+            <svg class="h-3.5 w-3.5 text-[var(--text-soft)]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+            <x-ui.text.eyebrow as="span" size="xs" tracking="wider" class="font-bold">{{ __('Detalhe do Orçamento') }}</x-ui.text.eyebrow>
         </h4>
         <div id="budgetDetailsList" class="space-y-1.5"></div>
         <div class="mt-1 flex items-center justify-between border-t border-[var(--border)] pt-2">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Total') }}</span>
+            <x-ui.text.eyebrow as="span" size="xs" tracking="wider" class="font-bold">{{ __('Total') }}</x-ui.text.eyebrow>
             <span id="budgetDetailsTotal" class="text-sm font-black text-[var(--text)] font-mono">0.00 €</span>
         </div>
     </div>
 
     <form id="budgetForm" class="space-y-3">
-        <div>
-            <label for="budgetFeedback" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Justificação / Feedback (Obrigatório em Recusa)') }}</label>
-            <textarea id="budgetFeedback" rows="2" class="w-full resize-none rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2 text-xs text-[var(--text)] placeholder-[var(--text-soft)] outline-none transition-all focus:border-[var(--text)]" placeholder="{{ __('Insira o parecer orçamental...') }}"></textarea>
-        </div>
+        <x-ui.form.field id="budgetFeedback" :label="__('Justificação / Feedback (Obrigatório em Recusa)')">
+            <x-ui.form.textarea id="budgetFeedback" name="feedback" rows="2" :placeholder="__('Insira o parecer orçamental...')" class="rounded-xl px-3 py-2 text-xs placeholder-[var(--text-soft)] focus:border-[var(--text)]" />
+        </x-ui.form.field>
 
         <div class="grid grid-cols-2 gap-3 pt-1">
-            <button type="button" id="btnApproveBudget" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-emerald-600 px-4 py-2.5 text-xs font-bold text-white shadow-sm transition-all hover:bg-emerald-500 cursor-pointer">
+            <x-ui.buttons.button id="btnApproveBudget" variant="success" size="sm" weight="bold" class="gap-1.5">
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
                 {{ __('Aprovar Orçamento') }}
-            </button>
-            <button type="button" id="btnRejectBudget" class="inline-flex items-center justify-center gap-1.5 rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-2.5 text-xs font-bold text-rose-500 shadow-sm transition-all hover:bg-rose-500/20 cursor-pointer">
+            </x-ui.buttons.button>
+            <x-ui.buttons.button id="btnRejectBudget" variant="danger" size="sm" weight="bold" class="gap-1.5">
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
                 {{ __('Recusar Orçamento') }}
-            </button>
+            </x-ui.buttons.button>
         </div>
     </form>
 </div>

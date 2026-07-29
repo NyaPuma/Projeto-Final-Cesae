@@ -14,39 +14,28 @@
 @endpush
 
 @section('content')
-    @component('ui.partials.page-card', [
-        'title' => __('Calendário Operacional'),
-        'subtitle' => __(
-            'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.'),
-        'actions' =>
-            '<div class="flex flex-wrap items-center gap-3 w-full sm:w-auto">
-                    <a href="{{ route('ui.index') }}" class="w-full sm:w-auto inline-flex items-center justify-center px-4.5 py-2.5 bg-[var(--surface)] text-sm font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all min-h-[44px]">
-                        <svg class="w-4 h-4 mr-2 text-[var(--text-soft)]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path>
-                        </svg>
-                        ' .
-            __('Dashboard') .
-            '
-                    </a>
-                    <button data-action="calendar-today" class="w-full sm:w-auto inline-flex items-center justify-center px-5 py-2.5 bg-primary text-sm font-bold text-white border border-transparent rounded-xl shadow-sm hover:opacity-90 transition-all min-h-[44px] cursor-pointer">
-                        ' .
-            __('Hoje') .
-            '
-                    </button>
-                </div>',
-    ])
+    <x-ui.partials.page-card
+        :title="__('Calendário Operacional')"
+        :subtitle="__('Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.')"
+    >
+        <x-slot:actions>
+            <x-ui.page-actions.group>
+                <x-ui.page-actions.back-button :href="route('ui.index')" :label="__('Dashboard')" />
+                <x-ui.buttons.button type="button" data-action="calendar-today" variant="primary" size="sm" weight="bold">
+                    {{ __('Hoje') }}
+                </x-ui.buttons.button>
+            </x-ui.page-actions.group>
+        </x-slot:actions>
         <div class="space-y-12 lg:space-y-16 animate-[fadeIn_0.2s_ease-out]">
-            {{-- Grelha de Conteúdo Principal --}}
             <div class="grid xl:grid-cols-4 gap-8 lg:gap-10">
                 @include('ui.partials.calendar-summary', ['eventsTotal' => '--', 'monthTotal' => '--'])
 
-                {{-- Contentor da Instância do Calendário --}}
-                <div class="xl:col-span-3 bg-[var(--surface)] border border-[var(--border)] rounded-3xl p-8 lg:p-10 shadow-sm">
+                <div class="xl:col-span-3 bg-(--surface) border border-(--border) rounded-3xl p-8 lg:p-10 shadow-sm">
                     <div id="calendar"></div>
                 </div>
             </div>
         </div>
-    @endcomponent
+    </x-ui.partials.page-card>
 
     @include('ui.partials.calendar-modal')
 @endsection

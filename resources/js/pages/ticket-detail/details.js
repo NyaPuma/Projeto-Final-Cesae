@@ -26,7 +26,7 @@ function resolveStatusBadge(statusClean, statusName) {
     }
 
     if (statusClean === 'fechada' || statusClean === 'fechado') {
-        return '<span class="inline-block rounded-lg bg-[var(--text-soft)]/10 px-2 py-0.5 text-[11px] font-bold uppercase tracking-tight text-[var(--text-soft)]">Fechada</span>';
+        return '<span class="inline-block rounded-lg bg-(--text-soft)/10 px-2 py-0.5 text-[11px] font-bold uppercase tracking-tight text-(--text-soft)">Fechada</span>';
     }
 
     return `<span class="inline-block rounded-lg bg-blue-500/10 px-2 py-0.5 text-[11px] font-bold uppercase tracking-tight text-blue-600 dark:text-blue-400">${statusLabels[statusClean] ?? statusName ?? 'N/A'}</span>`;
@@ -40,40 +40,40 @@ export function renderTicketDetails(ticket) {
         ? ticket.status.name
         : (typeof ticket.status === 'string' ? ticket.status : null);
     const statusClean = (statusName || '').toLowerCase();
-    const priorityClass = priorityColors[ticket.priority] ?? 'border border-[var(--border)] bg-[var(--surface-2)] text-[var(--text-soft)]';
+    const priorityClass = priorityColors[ticket.priority] ?? 'border border-(--border) bg-(--surface-2) text-(--text-soft)';
     const statusBadge = resolveStatusBadge(statusClean, statusName);
 
     details.innerHTML = `
-        <div class="mb-5 border-b border-[var(--border)] pb-4">
+        <div class="mb-5 border-b border-(--border) pb-4">
             <div class="flex items-center justify-between gap-4">
-                <span class="rounded-lg bg-[var(--surface-2)] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)] font-mono">ID Ocorrência #${ticket.id}</span>
+                <span class="rounded-lg bg-(--surface-2) px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-(--text-soft) font-mono">ID Ocorrência #${ticket.id}</span>
                 <div class="flex gap-1.5">${statusBadge}</div>
             </div>
-            <h2 class="mt-3 text-base font-bold text-[var(--text)]">${ticket.title}</h2>
+            <h2 class="mt-3 text-base font-bold text-(--text)">${ticket.title}</h2>
         </div>
 
         <div class="space-y-5">
             <div>
-                <span class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">Descrição da Ocorrência</span>
-                <div class="rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-3.5 text-xs leading-relaxed text-[var(--text)] whitespace-pre-wrap">${ticket.description || 'Nenhuma descrição providenciada.'}</div>
+                <span class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-(--text-soft)">Descrição da Ocorrência</span>
+                <div class="rounded-xl border border-(--border) bg-(--surface-2) p-3.5 text-xs leading-relaxed text-(--text) whitespace-pre-wrap">${ticket.description || 'Nenhuma descrição providenciada.'}</div>
             </div>
 
             <div class="grid grid-cols-2 gap-x-4 gap-y-4 pt-2">
                 <div>
-                    <span class="block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">Nível de Prioridade</span>
+                    <span class="block text-[10px] font-bold uppercase tracking-wider text-(--text-soft)">Nível de Prioridade</span>
                     <span class="mt-1 inline-block rounded-lg px-2 py-0.5 text-[11px] font-bold uppercase tracking-tight ${priorityClass}">${priorityLabels[ticket.priority] ?? ticket.priority}</span>
                 </div>
                 <div>
-                    <span class="block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">Equipamento / Ativo</span>
-                    <p class="mt-1 text-xs font-semibold text-[var(--text)]">${ticket.equipment ? ticket.equipment.name : '<span class="font-normal text-[var(--text-soft)]">—</span>'}</p>
+                    <span class="block text-[10px] font-bold uppercase tracking-wider text-(--text-soft)">Equipamento / Ativo</span>
+                    <p class="mt-1 text-xs font-semibold text-(--text)">${ticket.equipment ? ticket.equipment.name : '<span class="font-normal text-(--text-soft)">—</span>'}</p>
                 </div>
                 <div>
-                    <span class="block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">Sala / Localização</span>
-                    <p class="mt-1 text-xs font-semibold text-[var(--text)]">${ticket.room ? ticket.room.name : '<span class="font-normal text-[var(--text-soft)]">—</span>'}</p>
+                    <span class="block text-[10px] font-bold uppercase tracking-wider text-(--text-soft)">Sala / Localização</span>
+                    <p class="mt-1 text-xs font-semibold text-(--text)">${ticket.room ? ticket.room.name : '<span class="font-normal text-(--text-soft)">—</span>'}</p>
                 </div>
                 <div>
-                    <span class="block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">Técnico Atribuído</span>
-                    <p class="mt-1 text-xs font-semibold text-[var(--text)]">${ticket.technician ? ticket.technician.name : '<span class="font-normal italic text-rose-500">Pendente de atribuição</span>'}</p>
+                    <span class="block text-[10px] font-bold uppercase tracking-wider text-(--text-soft)">Técnico Atribuído</span>
+                    <p class="mt-1 text-xs font-semibold text-(--text)">${ticket.technician ? ticket.technician.name : '<span class="font-normal italic text-rose-500">Pendente de atribuição</span>'}</p>
                 </div>
             </div>
         </div>

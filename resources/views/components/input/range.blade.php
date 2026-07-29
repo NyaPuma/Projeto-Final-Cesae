@@ -51,7 +51,9 @@
             @class(['ui-range__input', 'ui-range__input--disabled' => $disabled])
             @disabled($disabled)
             {{ $attributes->except(['id', 'name', 'type', 'min', 'max', 'step', 'class']) }}
-            @if($hint) aria-describedby="{{ $id }}-hint" @endif
+            @if($hint)
+                aria-describedby="{{ $id }}-hint"
+            @endif
         />
     </div>
 

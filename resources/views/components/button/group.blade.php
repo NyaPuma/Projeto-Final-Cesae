@@ -19,10 +19,16 @@
     'tag' => 'div',              // Permite alterar a tag wrapper (ex: 'nav', 'div')
 ])
 
+@php
+    $wrapperAttributes = ['role' => 'group'];
+
+    if ($label) {
+        $wrapperAttributes['aria-label'] = $label;
+    }
+@endphp
+
 <{{ $tag }}
-    role="group"
-    @if($label) aria-label="{{ $label }}" @endif
-    {{ $attributes->class([
+    {{ $attributes->merge($wrapperAttributes)->class([
         'ui-button-group',
         "ui-button-group--{$direction}",
         "ui-button-group--{$size}",

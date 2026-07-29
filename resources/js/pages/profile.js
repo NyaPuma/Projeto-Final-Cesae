@@ -1,33 +1,69 @@
-/**
- * Profile Management Module
- * Handles profile update functionality
- */
-
 import { authHeaderJson } from '../utils/api.js';
 
-async function updateProfile(event) {
-    event.preventDefault();
-    const message = document.getElementById('profileMessage');
-    const form = document.getElementById('profileForm');
-    const submitBtn = document.getElementById('submitBtn');
+function getForm() {
+    return document.getElementById('profileForm');
+}
 
-    const name = document.getElementById('profileName').value.trim();
-    const currentPassword = document.getElementById('currentPassword').value;
-    const newPassword = document.getElementById('newPassword').value;
+function getMessageElement() {
+    return document.getElementById('profileMessage');
+}
 
-    if (!name) {
-        message.textContent = "{{ __('Introduza um nome para continuar.') }}";
-        message.className = 'min-h-6 text-sm font-medium text-red-600 dark:text-red-400';
+function getSubmitButton() {
+    return document.getElementById('submitBtn');
+}
+
+function getMessages(form) {
+    return {
+        validation: form?.dataset.validationMessage || 'Introduza um nome para continuar.',
+        saving: form?.dataset.savingMessage || 'A guardar alterações...',
+        success: form?.dataset.successMessage || 'Perfil atualizado com sucesso.',
+        error: form?.dataset.errorMessage || 'Não foi possível atualizar o perfil.',
+    };
+}
+
+function setMessage(message, tone = 'neutral') {
+    const element = getMessageElement();
+
+    if (!element) {
         return;
     }
 
-    message.textContent = "{{ __('A guardar alterações...') }}";
-    message.className = 'min-h-6 text-sm font-medium text-[var(--text-soft)]';
-    submitBtn.disabled = true;
+    const tones = {
+        neutral: 'min-h-6 text-sm font-medium text-[var(--text-soft)]',
+        success: 'min-h-6 text-sm font-medium text-emerald-600 dark:text-emerald-400',
+        error: 'min-h-6 text-sm font-medium text-red-600 dark:text-red-400',
+    };
+
+    element.textContent = message;
+    element.className = tones[tone] || tones.neutral;
+}
+
+async function updateProfile(event) {
+    event.preventDefault();
+
+    const form = getForm();
+    const submitBtn = getSubmitButton();
+    const messages = getMessages(form);
+
+    const name = document.getElementById('profileName')?.value.trim() || '';
+    const currentPassword = document.getElementById('currentPassword')?.value || '';
+    const newPassword = document.getElementById('newPassword')?.value || '';
+
+    if (!name) {
+        setMessage(messages.validation, 'error');
+        return;
+    }
+
+    setMessage(messages.saving, 'neutral');
+
+    if (submitBtn) {
+        submitBtn.disabled = true;
+    }
 
     try {
         const res = await fetch('/profile/update', {
             method: 'POST',
+            credentials: 'same-origin',
             headers: authHeaderJson(),
             body: JSON.stringify({
                 name,
@@ -37,39 +73,45 @@ async function updateProfile(event) {
         });
 
         const data = await res.json().catch(() => ({}));
+
         if (!res.ok) {
-            throw new Error(data.message || "{{ __('Não foi possível atualizar o perfil.') }}");
+            throw new Error(data.message || messages.error);
         }
 
         if (data.user?.name) {
             localStorage.setItem('user_name', data.user.name);
-            const displayUserName = document.getElementById('displayUserName');
-            const displayUserAvatar = document.getElementById('displayUserAvatar');
-            if (displayUserName) displayUserName.textContent = data.user.name;
-            if (displayUserAvatar) displayUserAvatar.textContent = data.user.name.charAt(0).toUpperCase();
+            document.getElementById('displayUserName')?.replaceChildren(document.createTextNode(data.user.name));
+            document.getElementById('displayUserAvatar')?.replaceChildren(document.createTextNode(data.user.name.charAt(0).toUpperCase()));
         }
+
         if (data.user?.profile?.name) {
             localStorage.setItem('user_role', data.user.profile.name);
         }
 
-        document.getElementById('currentPassword').value = '';
-        document.getElementById('newPassword').value = '';
+        const currentPasswordField = document.getElementById('currentPassword');
+        const newPasswordField = document.getElementById('newPassword');
 
-        message.textContent = "{{ __('Perfil atualizado com sucesso.') }}";
-        message.className = 'min-h-6 text-sm font-medium text-emerald-600 dark:text-emerald-400';
+        if (currentPasswordField) currentPasswordField.value = '';
+        if (newPasswordField) newPasswordField.value = '';
+
+        setMessage(messages.success, 'success');
     } catch (error) {
-        message.textContent = error.message || "{{ __('Não foi possível atualizar o perfil.') }}";
-        message.className = 'min-h-6 text-sm font-medium text-red-600 dark:text-red-400';
+        setMessage(error.message || messages.error, 'error');
     } finally {
-        submitBtn.disabled = false;
+        if (submitBtn) {
+            submitBtn.disabled = false;
+        }
     }
 }
 
 function init() {
-    const profileForm = document.getElementById('profileForm');
-    if (profileForm) {
-        profileForm.addEventListener('submit', updateProfile);
+    const profileForm = getForm();
+
+    if (!profileForm) {
+        return;
     }
+
+    profileForm.addEventListener('submit', updateProfile);
 }
 
 export { init };

@@ -2,7 +2,7 @@ export function renderResultsFeedback(element, message, error = false) {
     if (!element) return;
 
     element.textContent = message;
-    element.className = `text-xs font-semibold ${error ? 'text-red-700 dark:text-red-400' : 'text-[var(--text-soft)]'}`;
+    element.className = `text-xs font-semibold ${error ? 'text-red-700 dark:text-red-400' : 'text-(--text-soft)'}`;
 }
 
 export function renderResultsCount(element, total) {
@@ -12,13 +12,13 @@ export function renderResultsCount(element, total) {
 export function renderTableEmptyState({ tbody, colspan, message }) {
     if (!tbody) return;
 
-    tbody.innerHTML = `<tr><td colspan="${colspan}" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]"><div class="mx-auto max-w-sm rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface-2)] p-5">${message}</div></td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="${colspan}" class="px-5 py-12 text-center text-xs text-(--text-soft)"><div class="mx-auto max-w-sm rounded-2xl border border-dashed border-(--border) bg-(--surface-2) p-5">${message}</div></td></tr>`;
 }
 
 export function renderTableErrorState({ tbody, colspan, message }) {
     if (!tbody) return;
 
-    tbody.innerHTML = `<tr><td colspan="${colspan}" class="px-5 py-12 text-center text-xs font-medium text-[var(--color-danger)]">⚠️ ${message}</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="${colspan}" class="px-5 py-12 text-center text-xs font-medium text-(--color-danger)">⚠️ ${message}</td></tr>`;
 }
 
 export function renderSimplePagination({ element, meta, currentPage }) {
@@ -34,9 +34,9 @@ export function renderSimplePagination({ element, meta, currentPage }) {
 
     element.innerHTML = `
         <button data-page="${page - 1}" ${page <= 1 ? 'disabled' : ''}
-            class="ui-button ui-button--primary inline-flex min-h-[36px] items-center justify-center rounded-xl px-3.5 py-2 text-xs font-bold text-[var(--on-primary)] shadow-sm transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40">← Anterior</button>
-        <span class="font-bold text-[var(--text-soft)]">Página ${page} de ${lastPage}</span>
+            class="ui-button ui-button--primary inline-flex min-h-[36px] items-center justify-center rounded-xl px-3.5 py-2 text-xs font-bold text-(--on-primary) shadow-sm transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40">← Anterior</button>
+        <span class="font-bold text-(--text-soft)">Página ${page} de ${lastPage}</span>
         <button data-page="${page + 1}" ${page >= lastPage ? 'disabled' : ''}
-            class="ui-button ui-button--primary inline-flex min-h-[36px] items-center justify-center rounded-xl px-3.5 py-2 text-xs font-bold text-[var(--on-primary)] shadow-sm transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40">Próxima →</button>
+            class="ui-button ui-button--primary inline-flex min-h-[36px] items-center justify-center rounded-xl px-3.5 py-2 text-xs font-bold text-(--on-primary) shadow-sm transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40">Próxima →</button>
     `;
 }

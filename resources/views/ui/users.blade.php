@@ -3,17 +3,17 @@
 @section('page_key', 'users')
 
 @section('content')
-@component('ui.partials.page-card', [
-    'title' => __('Utilizadores'),
-    'subtitle' => __('Consulte as contas dos utilizadores e os respetivos perfis de acesso ao sistema.'),
-    'actions' => '<div class="flex flex-wrap gap-2">'
-        . '<a href="' . route('ui.index') . '" class="inline-flex items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3.5 py-2 text-xs font-semibold text-[var(--text)] shadow-sm transition-all hover:bg-[var(--surface-2)]">'
-            . '<svg class="mr-1.5 h-3.5 w-3.5 text-[var(--text-soft)]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path></svg> '
-            . __('Voltar ao painel')
-        . '</a>'
-        . '<a href="' . route('ui.users.create') . '" class="ui-button ui-button--primary inline-flex items-center justify-center rounded-xl px-3.5 py-2 text-xs font-bold text-[var(--on-primary)] shadow-sm transition-all hover:opacity-90">+ ' . __('Criar Utilizador') . '</a>'
-        . '</div>'
-])
+<x-ui.partials.page-card
+    :title="__('Utilizadores')"
+    :subtitle="__('Consulte as contas dos utilizadores e os respetivos perfis de acesso ao sistema.')"
+>
+    <x-slot:actions>
+        <x-ui.page-actions.group>
+            <x-ui.page-actions.back-button :href="route('ui.index')" :label="__('Voltar ao painel')" />
+            <x-ui.page-actions.create-link :href="route('ui.users.create')" :label="__('Criar Utilizador')" />
+        </x-ui.page-actions.group>
+    </x-slot:actions>
+
     <x-ui.listing.filter-panel>
         <x-ui.listing.filter-field for="usersSearch" :label="__('Termo de Pesquisa')" span="sm:col-span-2 lg:col-span-3 xl:col-span-4">
             <input id="usersSearch" placeholder="{{ __('Pesquise por nome, email...') }}"
@@ -55,5 +55,5 @@
     </x-ui.listing.table-card>
 
     <x-ui.listing.pagination />
-@endcomponent
+</x-ui.partials.page-card>
 @endsection

@@ -16,8 +16,12 @@
             </div>
         </div>
         <div class="flex gap-3 pt-2">
-            <button id="btnForceStartTicket" type="button" class="flex-1 inline-flex items-center justify-center rounded-xl border border-transparent bg-[var(--border)] px-4 py-3 text-xs font-bold text-[var(--text)] transition-all hover:border-rose-500/30 hover:bg-rose-500/10 hover:text-rose-500 cursor-pointer">{{ __('Sim, continuar') }}</button>
-            <button id="btnViewUrgentTickets" type="button" class="flex-1 inline-flex items-center justify-center rounded-xl bg-amber-500 px-4 py-3 text-xs font-bold text-black shadow-sm transition-all hover:bg-amber-400 cursor-pointer">🔥 {{ __('Ir para ticket prioritário') }}</button>
+            <x-ui.buttons.button id="btnForceStartTicket" variant="neutral" size="md" weight="bold" class="flex-1">
+                {{ __('Sim, continuar') }}
+            </x-ui.buttons.button>
+            <x-ui.buttons.button id="btnViewUrgentTickets" variant="warning" size="md" weight="bold" class="flex-1">
+                🔥 {{ __('Ir para ticket prioritário') }}
+            </x-ui.buttons.button>
         </div>
     </div>
 </div>

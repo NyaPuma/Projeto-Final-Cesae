@@ -34,14 +34,14 @@ export function addBudgetItem(description = '', quantity = 1, price = 0, type = 
     item.className = 'budget-item grid grid-cols-[auto_1fr_80px_80px_60px_30px] items-center gap-2';
     item.dataset.index = index;
     item.innerHTML = `
-        <select class="item-type rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-1.5 py-1.5 text-[10px] font-bold uppercase tracking-wider text-[var(--text)] outline-none transition-all focus:border-[var(--text)] cursor-pointer">
+        <select class="item-type rounded-lg border border-(--border) bg-(--surface-2) px-1.5 py-1.5 text-[10px] font-bold uppercase tracking-wider text-(--text) outline-none transition-all focus:border-(--text) cursor-pointer">
             <option value="material" ${type === 'material' ? 'selected' : ''}>🔩 Materiais</option>
             <option value="labor" ${type === 'labor' ? 'selected' : ''}>👷 Mão de Obra</option>
         </select>
-        <input type="text" class="item-desc rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-2.5 py-1.5 text-[11px] text-[var(--text)] outline-none transition-all focus:border-[var(--text)]" placeholder="Descrição" value="${description}">
-        <input type="number" class="item-qty rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-2.5 py-1.5 text-[11px] font-mono text-[var(--text)] outline-none transition-all focus:border-[var(--text)]" placeholder="Qtd/H" min="1" value="${quantity}">
-        <input type="number" step="0.01" class="item-price rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-2.5 py-1.5 text-[11px] font-mono text-[var(--text)] outline-none transition-all focus:border-[var(--text)]" placeholder="${pricePlaceholder}" min="0" value="${price}">
-        <span class="item-subtotal pt-2 text-right text-[11px] font-bold font-mono text-[var(--text)]">${(quantity * price).toFixed(2)}€</span>
+        <input type="text" class="item-desc rounded-lg border border-(--border) bg-(--surface-2) px-2.5 py-1.5 text-[11px] text-(--text) outline-none transition-all focus:border-(--text)" placeholder="Descrição" value="${description}">
+        <input type="number" class="item-qty rounded-lg border border-(--border) bg-(--surface-2) px-2.5 py-1.5 text-[11px] font-mono text-(--text) outline-none transition-all focus:border-(--text)" placeholder="Qtd/H" min="1" value="${quantity}">
+        <input type="number" step="0.01" class="item-price rounded-lg border border-(--border) bg-(--surface-2) px-2.5 py-1.5 text-[11px] font-mono text-(--text) outline-none transition-all focus:border-(--text)" placeholder="${pricePlaceholder}" min="0" value="${price}">
+        <span class="item-subtotal pt-2 text-right text-[11px] font-bold font-mono text-(--text)">${(quantity * price).toFixed(2)}€</span>
         <button type="button" data-action="remove-budget-item" class="btn-remove-item p-1 text-rose-400 transition-all hover:text-rose-500 cursor-pointer" title="Remover item">
             <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
@@ -125,19 +125,19 @@ export function renderBudgetDetailsForAdmin(details) {
         const icon = type === 'labor' ? '👷' : '🔩';
 
         return `
-            <div class="flex items-center justify-between py-1 text-[11px] ${index > 0 ? 'border-t border-[var(--border)]/50' : ''}">
-                <span class="mr-2 flex-1 truncate text-[var(--text)]">${icon} ${item.description || 'Item'}</span>
-                <span class="mx-2 whitespace-nowrap text-[10px] text-[var(--text-soft)]">${detail}</span>
-                <span class="whitespace-nowrap font-bold font-mono text-[var(--text)]">${subtotal.toFixed(2)}€</span>
+            <div class="flex items-center justify-between py-1 text-[11px] ${index > 0 ? 'border-t border-(--border)/50' : ''}">
+                <span class="mr-2 flex-1 truncate text-(--text)">${icon} ${item.description || 'Item'}</span>
+                <span class="mx-2 whitespace-nowrap text-[10px] text-(--text-soft)">${detail}</span>
+                <span class="whitespace-nowrap font-bold font-mono text-(--text)">${subtotal.toFixed(2)}€</span>
             </div>
         `;
     }).join('');
 
     if (materialTotal > 0 || laborTotal > 0) {
         list.innerHTML += `
-            <div class="mt-2 space-y-1 border-t-2 border-[var(--border)] pt-2">
-                ${materialTotal > 0 ? `<div class="flex items-center justify-between text-[10px]"><span class="font-medium text-[var(--text-soft)]">🔩 Total Materiais</span><span class="font-bold font-mono text-[var(--text)]">${materialTotal.toFixed(2)}€</span></div>` : ''}
-                ${laborTotal > 0 ? `<div class="flex items-center justify-between text-[10px]"><span class="font-medium text-[var(--text-soft)]">👷 Total Mão de Obra</span><span class="font-bold font-mono text-[var(--text)]">${laborTotal.toFixed(2)}€</span></div>` : ''}
+            <div class="mt-2 space-y-1 border-t-2 border-(--border) pt-2">
+                ${materialTotal > 0 ? `<div class="flex items-center justify-between text-[10px]"><span class="font-medium text-(--text-soft)">🔩 Total Materiais</span><span class="font-bold font-mono text-(--text)">${materialTotal.toFixed(2)}€</span></div>` : ''}
+                ${laborTotal > 0 ? `<div class="flex items-center justify-between text-[10px]"><span class="font-medium text-(--text-soft)">👷 Total Mão de Obra</span><span class="font-bold font-mono text-(--text)">${laborTotal.toFixed(2)}€</span></div>` : ''}
             </div>
         `;
     }

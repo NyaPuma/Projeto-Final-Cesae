@@ -167,8 +167,8 @@ export function renderEquipmentChart(canvas, data, existingChart, totalElement, 
 
     if (totalElement) {
         totalElement.innerHTML = `
-            <span class="text-4xl font-black text-[var(--text)]">${total}</span>
-            <span class="mt-1 text-[9px] font-bold uppercase tracking-widest text-[var(--text-soft)]">Tickets</span>
+            <span class="text-4xl font-black text-(--text)">${total}</span>
+            <span class="mt-1 text-[9px] font-bold uppercase tracking-widest text-(--text-soft)">Tickets</span>
         `;
     }
 
@@ -210,9 +210,9 @@ export function renderEquipmentChart(canvas, data, existingChart, totalElement, 
                 <div class="flex items-center justify-between text-xs font-semibold">
                     <div class="flex items-center gap-2">
                         <span class="h-2.5 w-2.5 rounded-full ${colorClass}"></span>
-                        <span class="text-[var(--text)]">${label}</span>
+                        <span class="text-(--text)">${label}</span>
                     </div>
-                    <span class="text-[var(--text-soft)]">${count} (${pct}%)</span>
+                    <span class="text-(--text-soft)">${count} (${pct}%)</span>
                 </div>
             `;
         }).join("");

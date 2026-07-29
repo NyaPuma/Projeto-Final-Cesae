@@ -21,13 +21,13 @@
     </div>
 
     <div class="flex gap-3 pt-1">
-        <button id="btnStartRepair" type="button" class="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-bold text-white shadow-sm transition-all hover:bg-blue-500 cursor-pointer">
+        <x-ui.buttons.button id="btnStartRepair" variant="primary" size="sm" weight="bold" class="flex-1 gap-2 bg-blue-600 hover:bg-blue-500 hover:text-white">
             <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"></path></svg>
             {{ __('Iniciar Intervenção') }}
-        </button>
-        <button id="btnStartRepairForce" type="button" class="hidden flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-amber-600 px-4 py-2.5 text-xs font-bold text-white shadow-sm transition-all hover:bg-amber-500 cursor-pointer">
+        </x-ui.buttons.button>
+        <x-ui.buttons.button id="btnStartRepairForce" variant="warning" size="sm" weight="bold" class="hidden flex-1 gap-2 bg-amber-600 text-white hover:bg-amber-500 hover:text-white">
             <span>⚠️</span>
             {{ __('Forçar Início (ignorar prioritários)') }}
-        </button>
+        </x-ui.buttons.button>
     </div>
 </div>

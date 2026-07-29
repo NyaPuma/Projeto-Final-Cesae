@@ -4,49 +4,45 @@
 
 @section('content')
 <div data-user-mode="create">
-@component('ui.partials.page-card', [
-    'title' => __('Criar Utilizador'),
-    'subtitle' => __('Crie um novo perfil de utilizador e defina as suas credenciais e permissões de acesso.'),
-'actions' => '<a href="' . route('ui.users') . '" class="inline-flex items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">← ' . __('Voltar') . '</a>'
-])
-    <div class="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm">
+<x-ui.partials.page-card
+    :title="__('Criar Utilizador')"
+    :subtitle="__('Crie um novo perfil de utilizador e defina as suas credenciais e permissões de acesso.')"
+>
+    <x-slot:actions>
+        <x-ui.page-actions.back-button :href="route('ui.users')" :label="__('Voltar')" compact class="rounded-2xl text-sm shadow-none" />
+    </x-slot:actions>
+
+    <x-ui.form.card>
         <form id="createUserForm" class="space-y-6">
             <div class="grid gap-6 lg:grid-cols-2">
-                <div>
-<label class="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">{{ __('Nome Completo') }}</label>
-                    <input type="text" id="userName" name="name" required class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm text-[var(--text)] outline-none focus:border-primary focus:ring-4 focus:ring-primary/15" placeholder="{{ __('Ex.: João Silva') }}">
-                </div>
-                <div>
-                    <label class="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">{{ __('Email') }}</label>
-                    <input type="email" id="userEmail" name="email" required class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm text-[var(--text)] outline-none focus:border-primary focus:ring-4 focus:ring-primary/15" placeholder="Ex.: joao@empresa.pt">
-                </div>
-                <div>
-                    <label class="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">{{ __('Palavra-passe') }}</label>
-                    <input type="password" id="userPassword" name="password" required class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm text-[var(--text)] outline-none focus:border-primary focus:ring-4 focus:ring-primary/15" placeholder="••••••••">
-                </div>
-                <div>
-                    <label class="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">{{ __('Perfil de Acesso') }}</label>
-                    <select id="userProfileId" name="profile_id" required disabled class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm text-[var(--text)] outline-none focus:border-primary focus:ring-4 focus:ring-primary/15 disabled:opacity-60 disabled:cursor-not-allowed">
-                        <option value="">{{ __('A carregar perfis...') }}</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">{{ __('Estado da Conta') }}</label>
-                    <div class="flex items-center gap-3 mt-2">
-                        <input type="checkbox" id="userActive" name="active" value="1" checked class="h-4 w-4 rounded border-[var(--border)] text-primary focus:ring-primary">
-                        <span class="text-sm font-semibold text-[var(--text)]">{{ __('Conta ativa (permite login)') }}</span>
-                    </div>
-                </div>
+                <x-ui.form.field id="userName" :label="__('Nome Completo')" :required="true">
+                    <x-ui.form.input id="userName" name="name" type="text" :required="true" :placeholder="__('Ex.: João Silva')" />
+                </x-ui.form.field>
+                <x-ui.form.field id="userEmail" :label="__('Email')" :required="true">
+                    <x-ui.form.input id="userEmail" name="email" type="email" :required="true" :placeholder="__('utilizador@empresa.pt')" />
+                </x-ui.form.field>
+                <x-ui.form.field id="userPassword" :label="__('Password')" :required="true">
+                    <x-ui.form.input id="userPassword" name="password" type="password" :required="true" :placeholder="__('Mínimo 8 caracteres')" />
+                </x-ui.form.field>
+                <x-ui.form.field id="userProfile" :label="__('Perfil')" :required="true">
+                    <x-ui.form.select id="userProfile" name="profile_id" :required="true">
+                        <option value="">{{ __('Selecione o perfil') }}</option>
+                    </x-ui.form.select>
+                </x-ui.form.field>
             </div>
 
-            <div id="formMessage" class="min-h-6 text-sm font-medium text-[var(--text-soft)]"></div>
+            <x-ui.form.message id="formMessage" />
 
             <div class="mt-6 flex flex-wrap gap-3">
-<button type="submit" id="submitBtn" class="ui-button ui-button--primary inline-flex items-center justify-center rounded-2xl px-5 py-3 text-sm font-semibold transition hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed">{{ __('Guardar Utilizador') }}</button>
-                <a href="{{ route('ui.users') }}" class="ui-button ui-button--outline inline-flex items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-5 py-3 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">{{ __('Cancelar') }}</a>
+                <x-ui.buttons.submit id="submitBtn" variant="primary" size="md" weight="semibold" class="rounded-2xl disabled:opacity-50 disabled:cursor-not-allowed">
+                    {{ __('Guardar Utilizador') }}
+                </x-ui.buttons.submit>
+                <x-ui.buttons.link :href="route('ui.users')" variant="secondary" size="md" weight="semibold" class="rounded-2xl">
+                    {{ __('Cancelar') }}
+                </x-ui.buttons.link>
             </div>
         </form>
-    </div>
-@endcomponent
+    </x-ui.form.card>
+</x-ui.partials.page-card>
 </div>
 @endsection

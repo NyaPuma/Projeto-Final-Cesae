@@ -47,7 +47,9 @@
             class="ui-search__input"
             placeholder="{{ $placeholder }}"
             autocomplete="{{ $autocomplete }}"
-            @if($autofocus) autofocus @endif
+            @if($autofocus)
+                autofocus
+            @endif
             {{ $attributes->except(['id', 'name', 'type', 'class']) }}
         >
 

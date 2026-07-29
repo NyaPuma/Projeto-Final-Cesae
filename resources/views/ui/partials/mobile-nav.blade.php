@@ -9,11 +9,9 @@
     {{-- Branding Mobile --}}
     <div class="h-20 px-8 flex items-center border-b border-[var(--border)]">
         <div class="flex items-center gap-4">
-            <button type="button" data-action="close-mobile-nav"
-                class="h-11 w-11 rounded-xl bg-primary text-[var(--on-primary)] font-black flex items-center justify-center shadow-md shadow-primary/20 cursor-pointer hover:opacity-90 transition-all flex-shrink-0"
-                aria-label="{{ __('Fechar menu') }}">
+            <x-ui.buttons.icon-button type="button" data-action="close-mobile-nav" variant="primary" size="md" class="font-black shadow-md shadow-primary/20 shrink-0" aria-label="{{ __('Fechar menu') }}">
                 ☰
-            </button>
+            </x-ui.buttons.icon-button>
         </div>
     </div>
 

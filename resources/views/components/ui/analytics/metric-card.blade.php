@@ -8,10 +8,10 @@
     'icon',
 ])
 
-<article class="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-7">
+<article class="rounded-3xl border border-(--border) bg-(--surface) p-7">
     <div class="flex items-center justify-between">
         <div>
-            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-soft">{{ $eyebrow }}</p>
+            <x-ui.text.eyebrow as="p">{{ $eyebrow }}</x-ui.text.eyebrow>
             <h3 id="{{ $value_id }}" class="mt-4 text-4xl font-black">{{ $default_value }}</h3>
         </div>
         <div class="flex h-14 w-14 items-center justify-center rounded-2xl {{ $icon_bg_class }}">

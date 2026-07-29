@@ -14,17 +14,17 @@ export async function fetchComments() {
         const comments = data.comments || data;
 
         if (!comments || comments.length === 0) {
-            section.innerHTML = '<p class="py-1 italic text-[var(--text-soft)]">Sem mensagens registadas.</p>';
+            section.innerHTML = '<p class="py-1 italic text-(--text-soft)">Sem mensagens registadas.</p>';
             return;
         }
 
         section.innerHTML = comments.map((comment) => `
-            <div class="space-y-1 border-b border-[var(--border)]/50 py-2">
-                <div class="flex justify-between font-bold text-[var(--text)]">
+            <div class="space-y-1 border-b border-(--border)/50 py-2">
+                <div class="flex justify-between font-bold text-(--text)">
                     <span>${comment.user ? comment.user.name : 'Sistema'}</span>
-                    <span class="font-mono text-[10px] text-[var(--text-soft)]">${comment.created_at || ''}</span>
+                    <span class="font-mono text-[10px] text-(--text-soft)">${comment.created_at || ''}</span>
                 </div>
-                <p class="text-[var(--text-soft)]">${comment.comment || comment.message || ''}</p>
+                <p class="text-(--text-soft)">${comment.comment || comment.message || ''}</p>
             </div>
         `).join('');
     } catch {

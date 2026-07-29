@@ -5,9 +5,9 @@
 ])
 
 <div @class([$span])>
-    <label for="{{ $for }}" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">
+    <x-ui.text.eyebrow as="label" for="{{ $for }}" size="xs" tracking="wider" class="mb-1.5 block font-bold">
         {{ $label }}
-    </label>
+    </x-ui.text.eyebrow>
 
     {{ $slot }}
 </div>

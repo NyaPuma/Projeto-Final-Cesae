@@ -81,11 +81,9 @@
 
         {{-- Botão Hamburger para Mobile --}}
         <div class="lg:hidden fixed top-[18px] left-8 z-30">
-            <button type="button" data-action="toggle-mobile-nav"
-                class="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary text-[var(--on-primary)] shadow-md shadow-primary/20 transition-all hover:opacity-90 cursor-pointer text-base"
-                aria-label="{{ __('Abrir menu') }}" id="mobileMenuBtn">
+            <x-ui.buttons.icon-button type="button" data-action="toggle-mobile-nav" variant="primary" size="md" class="shadow-md shadow-primary/20" aria-label="{{ __('Abrir menu') }}" id="mobileMenuBtn">
                 ☰
-            </button>
+            </x-ui.buttons.icon-button>
         </div>
 
         {{-- Área de Conteúdo Principal --}}

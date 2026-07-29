@@ -15,11 +15,11 @@ export function selectPriority(priority) {
         const cardPriority = card.getAttribute('data-priority');
 
         card.classList.remove('border-2', 'border-emerald-500', 'border-amber-500', 'border-red-500', 'border-purple-600', 'shadow-sm');
-        card.classList.add('border', 'border-[var(--border)]');
+        card.classList.add('border', 'border-(--border)');
 
         if (cardPriority !== priority) return;
 
-        card.classList.remove('border', 'border-[var(--border)]');
+        card.classList.remove('border', 'border-(--border)');
         card.classList.add('border-2', 'shadow-sm');
 
         const activeBorder = priorityBorders[priority];

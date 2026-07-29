@@ -7,16 +7,14 @@
         <div class="flex items-center gap-3">
             {{-- Language Selector Dropdown --}}
             <div class="relative inline-block text-left" id="langSelectorDropdown">
-                <button type="button" id="langDropdownBtn"
-                    class="inline-flex h-10 px-3 items-center justify-center gap-1.5 rounded-xl border border-[var(--border)] bg-[var(--surface)] text-sm text-[var(--text)] shadow-sm transition-all hover:bg-[var(--surface-2)] cursor-pointer"
-                    aria-label="{{ __('Alterar Idioma') }}" aria-haspopup="true" aria-expanded="false">
+                <x-ui.buttons.button type="button" id="langDropdownBtn" variant="secondary" size="sm" weight="semibold" class="h-10 px-3 text-sm gap-1.5" aria-label="{{ __('Alterar Idioma') }}" aria-haspopup="true" aria-expanded="false">
                     🌐
                     <span class="font-semibold text-xs uppercase text-[var(--text)]">{{ app()->getLocale() }}</span>
                     <svg class="h-3.5 w-3.5 text-[var(--text-soft)]" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor" stroke-width="2.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                     </svg>
-                </button>
+                </x-ui.buttons.button>
                 <div id="langDropdown"
                     class="hidden absolute right-0 mt-2 w-36 rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-lg py-1.5 z-50 animate-[fadeIn_0.15s_ease-out]">
                     <a href="{{ route('lang.switch', 'pt') }}"
@@ -32,15 +30,13 @@
 
             {{-- 🔔 Notificações - Sino com contador --}}
             <div class="relative" id="notificationBellContainer">
-                <button type="button" id="notificationBellBtn"
-                    class="relative inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] text-sm shadow-sm transition-all hover:bg-[var(--surface-2)] cursor-pointer"
-                    aria-label="{{ __('Notificações') }}">
+                <x-ui.buttons.icon-button type="button" id="notificationBellBtn" variant="secondary" size="sm" class="relative" aria-label="{{ __('Notificações') }}">
                     🔔
                     <span id="notificationBadge"
                         class="ui-topbar-notification-badge hidden absolute -top-1 -right-1 inline-flex items-center justify-center h-4.5 min-w-[18px] px-1 rounded-full bg-rose-500 font-extrabold text-white shadow-sm shadow-rose-500/30">
                         0
                     </span>
-                </button>
+                </x-ui.buttons.icon-button>
                 {{-- Dropdown de Notificações --}}
                 <div id="notificationDropdown"
                     class="hidden absolute right-0 mt-2 w-96 rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-2xl py-2 z-50 animate-[fadeIn_0.15s_ease-out] max-h-[420px] flex flex-col">
@@ -59,11 +55,9 @@
                 </div>
             </div>
 
-            <button type="button" data-action="toggle-theme"
-                class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] text-sm shadow-sm transition-all hover:bg-[var(--surface-2)] cursor-pointer"
-                aria-label="{{ __('Alternar Tema') }}">
+            <x-ui.buttons.icon-button type="button" data-action="toggle-theme" variant="secondary" size="sm" aria-label="{{ __('Alternar Tema') }}">
                 🌙
-            </button>
+            </x-ui.buttons.icon-button>
 
             <div class="h-8 w-px bg-[var(--border)]"></div>
 

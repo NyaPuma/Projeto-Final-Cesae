@@ -26,11 +26,11 @@ export function renderKPIs(element, data) {
         }
 
         return `
-            <article class="group overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--surface)] transition-all duration-350 hover:-translate-y-1 hover:shadow-xl p-6">
+            <article class="group overflow-hidden rounded-3xl border border-(--border) bg-(--surface) transition-all duration-350 hover:-translate-y-1 hover:shadow-xl p-6">
                 <div class="flex items-start justify-between">
                     <div>
-                        <p class="text-[10px] font-bold uppercase tracking-widest text-[var(--text-soft)]">${card.title}</p>
-                        <h3 class="mt-5 text-4xl font-black tracking-tight text-[var(--text)]">${card.value}</h3>
+                        <p class="text-[10px] font-bold uppercase tracking-widest text-(--text-soft)">${card.title}</p>
+                        <h3 class="mt-5 text-4xl font-black tracking-tight text-(--text)">${card.value}</h3>
                     </div>
                     <div class="flex h-14 w-14 items-center justify-center rounded-2xl ${colorClasses.split(' ').slice(0,2).join(' ')}">
                         <span class="text-2xl">${card.icon}</span>

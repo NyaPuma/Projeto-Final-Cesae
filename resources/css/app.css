@@ -3,39 +3,37 @@
 /* ==========================================================
    TAILWIND SOURCE SCAN
 ========================================================== */
-
 @source "../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php";
 @source "../../storage/framework/views/*.php";
 @source "../**/*.blade.php";
 @source "../**/*.js";
 
-
 /* ==========================================================
-   THEME
+   DESIGN SYSTEM BASE & VARIABLES
 ========================================================== */
-
+@import "./base/variables.css";
 @import "./theme/variables.css";
 @import "./theme/semantic.css";
 @import "./theme/spacing.css";
 @import "./theme/radius.css";
 @import "./theme/shadows.css";
 @import "./theme/typography.css";
-
-
-/* ==========================================================
-   CORE
-========================================================== */
-
 @import "./tokens.css";
 @import "./base.css";
-@import "./components/sidebar.css";
-
 
 /* ==========================================================
-   BUTTONS
+   LAYOUT MODULES
 ========================================================== */
+@import "./layout/container.css";
+@import "./layout/grid.css";
+@import "./layout/header-title.css";
+@import "./components/sidebar.css";
 
-@import "./components/button/button.css";
+/* ==========================================================
+   BUTTON COMPONENTS
+========================================================== */
+@import "./components/buttons/button-base.css";
+@import "./components/buttons/button-variants.css";
 @import "./components/button/button-icon.css";
 @import "./components/button/button-group.css";
 @import "./components/button/button-dropdown.css";
@@ -43,12 +41,12 @@
 @import "./components/button/button-split.css";
 @import "./components/button/button-fab.css";
 
-
 /* ==========================================================
-   CARDS
+   CARD COMPONENTS
 ========================================================== */
-
-@import "./components/card/card.css";
+@import "./components/cards/card-base.css";
+@import "./components/cards/card-layout.css";
+@import "./components/cards/card-skeleton.css";
 @import "./components/card/card-dashboard.css";
 @import "./components/card/card-actions.css";
 @import "./components/card/card-alert.css";
@@ -73,11 +71,11 @@
 @import "./components/card/card-timeline.css";
 @import "./components/card/card-toolbar.css";
 
-
 /* ==========================================================
-   INPUTS
+   INPUT COMPONENTS
 ========================================================== */
-
+@import "./components/inputs/input-base.css";
+@import "./components/inputs/input-states.css";
 @import "./components/input/addon.css";
 @import "./components/input/autocomplete.css";
 @import "./components/input/checkbox.css";
@@ -90,7 +88,6 @@
 @import "./components/input/group.css";
 @import "./components/input/hint.css";
 @import "./components/input/icon.css";
-@import "./components/input/input.css";
 @import "./components/input/loader.css";
 @import "./components/input/number.css";
 @import "./components/input/otp.css";
@@ -105,11 +102,13 @@
 @import "./components/ui/dashboard.css";
 @import "./components/ui/upload-preview.css";
 
-
 /* ==========================================================
    PAGE STYLES
 ========================================================== */
-
+@import "./pages/dashboard/layout.css";
+@import "./pages/dashboard/metrics.css";
+@import "./pages/dashboard/modules.css";
+@import "./pages/dashboard/footer.css";
 @import "./landing.css";
 @import "./auth.css";
 @import "./pages/calendar.css";

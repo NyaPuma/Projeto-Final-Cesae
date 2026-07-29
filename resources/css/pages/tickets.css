@@ -39,12 +39,17 @@
 
 /* Ticket Table Row Hover */
 .ticket-row {
-    @apply hover:bg-[var(--surface-2)]/50 transition-colors duration-150;
+    @apply transition-colors duration-150;
+}
+
+.ticket-row:hover {
+    background-color: color-mix(in srgb, var(--surface-2) 50%, transparent);
 }
 
 /* Priority Selection Cards */
 .priority-card {
-    @apply cursor-pointer border border-[var(--border)] rounded-xl p-4 transition-all duration-200;
+    @apply cursor-pointer rounded-xl p-4 transition-all duration-200;
+    border: 1px solid var(--border);
 }
 
 .priority-card--selected-baixa {
@@ -65,7 +70,9 @@
 
 /* Budget Item */
 .budget-item {
-    @apply flex items-center justify-between p-3 bg-[var(--surface-2)] rounded-lg border border-[var(--border)];
+    @apply flex items-center justify-between p-3 rounded-lg;
+    background-color: var(--surface-2);
+    border: 1px solid var(--border);
 }
 
 .budget-item--deleting {
@@ -74,7 +81,9 @@
 
 /* Comment Item */
 .comment-item {
-    @apply p-4 bg-[var(--surface-2)] rounded-xl border border-[var(--border)];
+    @apply p-4 rounded-xl;
+    background-color: var(--surface-2);
+    border: 1px solid var(--border);
 }
 
 /* Photo Grid */
@@ -83,7 +92,8 @@
 }
 
 .photo-item {
-    @apply relative aspect-square rounded-lg overflow-hidden border border-[var(--border)];
+    @apply relative aspect-square rounded-lg overflow-hidden;
+    border: 1px solid var(--border);
 }
 
 .photo-item:hover img,

@@ -5,25 +5,21 @@
         <form id="roomForm" class="space-y-4">
             <input id="roomId" name="id" type="hidden">
 
-            <div>
-                <label for="roomName" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Nome / Código da Sala') }}</label>
-                <input id="roomName" name="name" type="text" required
-                    class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2.5 text-xs text-[var(--text)] outline-none transition-all focus:border-orange-500 focus:ring-1 focus:ring-orange-500">
-            </div>
+            <x-ui.form.field id="roomName" :label="__('Nome / Código da Sala')" :required="true">
+                <x-ui.form.input id="roomName" name="name" type="text" :required="true" class="rounded-xl px-3 py-2.5 text-xs focus:border-orange-500 focus:ring-1 focus:ring-orange-500" />
+            </x-ui.form.field>
 
-            <div>
-                <label for="roomLocation" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Localização') }}</label>
-                <input id="roomLocation" name="location" type="text" required
-                    class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2.5 text-xs text-[var(--text)] outline-none transition-all focus:border-orange-500 focus:ring-1 focus:ring-orange-500">
-            </div>
+            <x-ui.form.field id="roomLocation" :label="__('Localização')" :required="true">
+                <x-ui.form.input id="roomLocation" name="location" type="text" :required="true" class="rounded-xl px-3 py-2.5 text-xs focus:border-orange-500 focus:ring-1 focus:ring-orange-500" />
+            </x-ui.form.field>
 
             <div class="mt-6 flex items-center justify-end gap-2 border-t border-[var(--border)] pt-4">
-                <button type="button" data-action="close-room-modal" class="cursor-pointer rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-2 text-xs font-semibold text-[var(--text)] transition-all hover:bg-[var(--border)]">
+                <x-ui.buttons.button type="button" data-action="close-room-modal" variant="secondary" size="sm" weight="semibold">
                     {{ __('Cancelar') }}
-                </button>
-                <button type="submit" class="cursor-pointer rounded-xl bg-orange-500 px-4 py-2 text-xs font-bold text-white shadow-sm transition-all hover:bg-orange-600">
+                </x-ui.buttons.button>
+                <x-ui.buttons.submit variant="accent" size="sm" weight="bold">
                     {{ __('Guardar') }}
-                </button>
+                </x-ui.buttons.submit>
             </div>
         </form>
     </div>
