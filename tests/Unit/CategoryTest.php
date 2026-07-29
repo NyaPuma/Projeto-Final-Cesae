@@ -10,7 +10,7 @@ class CategoryTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_category_fillable_attributes()
+    public function test_category_fillable_attributes(): void
     {
         $category = Category::create(['name' => 'Eletrónica']);
         $this->assertEquals('Eletrónica', $category->name);

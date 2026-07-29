@@ -22,17 +22,17 @@
 
         // Menu lateral: apenas Admin vê Utilizadores/Auditoria/Analytics/Swagger
         $navItems = [
-            ['href' => 'ui', 'active' => 'ui', 'label' => 'Dashboard', 'icon' => '📊', 'exact' => true],
-            ['href' => 'ui/tickets', 'active' => 'ui/tickets*', 'label' => 'Tickets', 'icon' => '🎫', 'exact' => false],
+            ['href' => '/ui', 'active' => 'ui', 'label' => 'Dashboard', 'icon' => '📊', 'exact' => true],
+            ['href' => '/ui/tickets', 'active' => 'ui/tickets*', 'label' => 'Tickets', 'icon' => '🎫', 'exact' => false],
             [
-                'href' => 'ui/equipments',
+                'href' => '/ui/equipments',
                 'active' => 'ui/equipments*',
                 'label' => 'Equipamentos',
                 'icon' => '🖥️',
                 'exact' => false,
             ],
-            ['href' => 'ui/rooms', 'active' => 'ui/rooms*', 'label' => 'Salas', 'icon' => '🚪', 'exact' => false],
-            ['href' => 'calendar', 'active' => 'calendar*', 'label' => 'Agenda', 'icon' => '📅', 'exact' => false],
+            ['href' => '/ui/rooms', 'active' => 'ui/rooms*', 'label' => 'Salas', 'icon' => '🚪', 'exact' => false],
+            ['href' => '/calendar', 'active' => 'calendar*', 'label' => 'Agenda', 'icon' => '📅', 'exact' => false],
         ];
 
         if ($userRole === 'admin') {
@@ -104,7 +104,7 @@
                     $isActive = request()->is($item['active']);
                 @endphp
 
-                <a href="{{ url($item['href'] === '/' ? '/' : $item['href']) }}" onclick="closeMobileNav()"
+                <a href="{{ '/' . ltrim($item['href'], '/') }}" onclick="closeMobileNav()"
                     class="group flex items-center gap-3.5 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200
                     {{ $isActive
                         ? 'bg-primary text-[var(--on-primary)] font-semibold shadow-sm shadow-primary/20'

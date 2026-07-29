@@ -112,7 +112,16 @@ Route::middleware(['custom.auth'])->group(function () {
         Route::post('/tickets/{id}/reopen', [TicketController::class, 'reopenTicket']);
         Route::post('/tickets/{id}/cancel', [TicketController::class, 'cancelTicket']);
         Route::post('/tickets/{id}/schedule', [TicketController::class, 'scheduleTicket']);
-        Route::post('/tickets/{id}/budget', [TicketController::class, 'submitEstimatedBudget']);
+        
+        // Submissão de valor pelo técnico
+        Route::post('/tickets/{id}/submit-budget', [TicketController::class, 'submitEstimatedBudget']);
+        
+        // Decision de aprovação pelo Administrador (Aceita qualquer método e endpoint comum)
+        Route::match(['post', 'patch', 'put'], '/tickets/{id}/budget', [AdminController::class, 'approveBudget']);
+        Route::match(['post', 'patch', 'put'], '/admin/tickets/{id}/approve-budget', [AdminController::class, 'approveBudget']);
+        Route::match(['post', 'patch', 'put'], '/admin/tickets/{id}/budget-decision', [AdminController::class, 'approveBudget']);
+        Route::match(['post', 'patch', 'put'], '/admin/tickets/{id}/budget', [AdminController::class, 'approveBudget']);
+
         Route::post('/tickets/{id}/close', [TicketController::class, 'closeTicketFinal']);
 
         // Calendário Operacional
@@ -162,7 +171,6 @@ Route::middleware(['custom.auth'])->group(function () {
             Route::get('/admin/users', [AdminController::class, 'users']);
             Route::post('/admin/users', [AdminController::class, 'storeUser']);
             
-            // 💡 Rota flexibilizada para aceitar POST, PATCH e PUT para uploads de imagem de utilizador
             Route::match(['post', 'patch', 'put'], '/admin/users/{id}', [AdminController::class, 'updateUser']);
             
             Route::patch('/admin/users/{id}/inactive', [AdminController::class, 'inactivateUser']);
@@ -180,8 +188,6 @@ Route::middleware(['custom.auth'])->group(function () {
             Route::get('/ui/rooms/{id}/edit', [UiController::class, 'roomEdit']);
 
             Route::post('/admin/preventive', [AdminController::class, 'storePreventive']);
-            Route::patch('/admin/tickets/{id}/approve-budget', [AdminController::class, 'approveBudget']);
-            Route::post('/admin/tickets/{id}/budget-decision', [AdminController::class, 'approveBudget']);
 
             Route::get('/admin/rooms', [RoomController::class, 'indexRoom']);
             Route::post('/admin/rooms', [RoomController::class, 'storeRoom']);
@@ -189,4 +195,7 @@ Route::middleware(['custom.auth'])->group(function () {
             Route::patch('/admin/rooms/{id}/inactive', [RoomController::class, 'inactivateRoom']);
         });
     });
+    
+    // Rota de Agendamento Preventivo
+    Route::post('/admin/maintenance/schedule', [AdminController::class, 'scheduleMaintenance']);
 });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Equipment;
 use App\Models\Notification;
 use App\Models\Ticket;
+use App\Models\TicketStatus;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Http\Request;
@@ -355,77 +356,113 @@ class AdminController extends Controller
      */
     public function approveBudget(Request $request, int $id)
     {
-        $admin = $this->authenticatedUser($request);
-        $this->requireRole($admin, [User::ROLE_ADMIN]);
-
-        $decision = $request->input('decision', $request->input('action', 'approve'));
-        $feedback = $request->input('feedback', null);
-
-        $data = ['decision' => $decision, 'feedback' => $feedback];
-        $validator = Validator::make($data, [
-            'decision' => ['nullable', 'string', 'in:approve,reject'],
-            'feedback' => ['nullable', 'string', 'max:5000'],
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
         $ticket = Ticket::find($id);
         if (! $ticket) {
             return response()->json(['message' => 'Ticket não encontrado'], 404);
         }
 
-        if (! $ticket->budget_requested || $ticket->budget_status !== Ticket::BUDGET_PENDING) {
-            return response()->json(['message' => 'Não existe pedido de orçamento pendente'], 422);
+        // Tenta obter a decisão a partir de vários nomes comuns de parâmetros
+        $decision = $request->input('decision') 
+            ?? $request->input('action') 
+            ?? $request->input('status') 
+            ?? 'approve';
+
+        // Normalizar a decisão (ex: 'validar' / 'approve' / 'accept' => 'approve')
+        if (in_array(strtolower($decision), ['approve', 'validar', 'aceitar', 'approved', 'accept'])) {
+            $decision = 'approve';
+        } else {
+            $decision = 'reject';
         }
 
-        if ($decision === 'reject' && ! empty($feedback)) {
-            $ticket->budget_feedback = $feedback;
-        }
+        $feedback = $request->input('feedback', null);
 
-        $approved = $ticket->approveBudget($admin, $data['decision'] ?? 'approve', $data['feedback'] ?? null);
+        // Se o método approveBudget existir na model Ticket, executa-o
+        if (method_exists($ticket, 'approveBudget')) {
+            $approved = $ticket->approveBudget(auth()->user(), $decision, $feedback);
+        } else {
+            // Fallback direto na BD caso a model não tenha o método
+            if ($decision === 'approve') {
+                $statusAberto = TicketStatus::where('name', 'like', '%abert%')->first();
+                $ticket->budget_status = 'approved';
+                $ticket->budget_requested = false;
+                if ($statusAberto) {
+                    $ticket->status_id = $statusAberto->id;
+                }
+            } else {
+                $ticket->budget_status = 'rejected';
+                $ticket->budget_feedback = $feedback;
+            }
+            $approved = $ticket->save();
+        }
 
         if (! $approved) {
-            return response()->json(['message' => 'Aprovação falhou'], 422);
+            return response()->json(['message' => 'Erro ao guardar decisão orçamental.'], 422);
         }
 
+        // Tentar enviar notificação (sem bloquear em caso de erro)
         try {
             $notifyType = $decision === 'approve' ? 'approved' : 'rejected';
             $notifyMessage = $decision === 'approve'
-                ? "O orçamento de {$ticket->budget_amount}€ para o ticket #{$ticket->id} foi APROVADO pelo administrador. Pode prosseguir com a intervenção."
-                : "O orçamento de {$ticket->budget_amount}€ para o ticket #{$ticket->id} foi RECUSADO.".($feedback ? " Motivo: {$feedback}" : '');
+                ? "O orçamento de {$ticket->budget_amount}€ para o ticket #{$ticket->id} foi APROVADO pelo administrador."
+                : "O orçamento para o ticket #{$ticket->id} foi RECUSADO.";
 
             if ($ticket->assigned_to) {
                 Notification::create([
                     'user_id' => $ticket->assigned_to,
-                    'title'   => $decision === 'approve'
-                        ? "✅ Orçamento Aprovado - Ticket #{$ticket->id}"
-                        : "❌ Orçamento Recusado - Ticket #{$ticket->id}",
+                    'title'   => $decision === 'approve' ? "✅ Orçamento Aprovado - Ticket #{$ticket->id}" : "❌ Orçamento Recusado - Ticket #{$ticket->id}",
                     'message' => $notifyMessage,
                     'type'    => "budget_{$notifyType}",
                     'link'    => "/ui/tickets/{$ticket->id}",
                 ]);
             }
-
-            if ($ticket->user_id) {
-                Notification::create([
-                    'user_id' => $ticket->user_id,
-                    'title'   => "📋 Decisão Orçamental - Ticket #{$ticket->id}",
-                    'message' => $notifyMessage,
-                    'type'    => "budget_{$notifyType}",
-                    'link'    => "/ui/tickets/{$ticket->id}",
-                ]);
-            }
-        } catch (\Exception $e) {
-            // Silencia falhas
-        }
+        } catch (\Exception $e) {}
 
         return response()->json([
             'message' => $decision === 'approve'
-                ? 'Orçamento aprovado. Ticket desbloqueado para intervenção.'
-                : 'Orçamento recusado. Reparação abortada.',
-            'ticket'  => $ticket->load(['equipment', 'room', 'technician', 'status']),
+                ? 'Orçamento aprovado com sucesso!'
+                : 'Orçamento recusado.',
+            'ticket'  => $ticket->fresh(['equipment', 'room', 'technician', 'status']),
         ]);
+    }
+
+    /**
+     * Agendar Manutenção Preventiva (Administrador)
+     */
+    public function scheduleMaintenance(Request $request)
+    {
+        $validated = $request->validate([
+            'title'        => 'required|string|max:255',
+            'equipment_id' => 'required|exists:equipments,id',
+            'scheduled_at' => 'required|date',
+            'assigned_to'  => 'nullable|exists:users,id',
+            'description'  => 'nullable|string',
+        ]);
+
+        // Obter o equipamento para associar a sala correspondente
+        $equipment = Equipment::find($validated['equipment_id']);
+
+        // Obter o estado inicial (ex: 'aberto')
+        $status = TicketStatus::where('name', 'aberta')
+            ->orWhere('name', 'aberto')
+            ->first();
+
+        $ticket = Ticket::create([
+            'title'        => $validated['title'],
+            'equipment_id' => $validated['equipment_id'],
+            'room_id'      => $equipment?->room_id,
+            'scheduled_at' => $validated['scheduled_at'],
+            'assigned_to'  => $validated['assigned_to'] ?? null,
+            'description'  => $validated['description'] ?? 'Manutenção preventiva agendada.',
+            'scheduled'    => true,
+            'user_id'      => auth()->id() ?? 1,
+            'status_id'    => $status?->id ?? 1,
+            'priority'     => 'média',
+            'opened_at'    => now(),
+        ]);
+
+        return response()->json([
+            'message' => 'Manutenção preventiva agendada com sucesso!',
+            'ticket'  => $ticket
+        ], 201);
     }
 }
