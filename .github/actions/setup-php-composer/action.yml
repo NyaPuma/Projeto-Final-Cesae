@@ -1,0 +1,41 @@
+name: Setup PHP & Composer
+description: Reusable PHP setup with Composer cache and install
+
+inputs:
+  php-version:
+    description: PHP version to install
+    default: '8.2'
+  extensions:
+    description: PHP extensions to install
+    default: 'mbstring, pdo, sqlite, pdo_sqlite, bcmath, intl, gd'
+  install:
+    description: Whether to run composer install
+    default: 'true'
+
+runs:
+  using: composite
+  steps:
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ inputs.php-version }}
+        extensions: ${{ inputs.extensions }}
+        coverage: none
+
+    - name: Cache Composer packages
+      uses: actions/cache@v4
+      with:
+        path: vendor
+        key: composer-${{ runner.os }}-php${{ inputs.php-version }}-${{ hashFiles('composer.lock', 'composer.json') }}
+        restore-keys: |
+          composer-${{ runner.os }}-php${{ inputs.php-version }}-
+
+    - name: Install Composer dependencies
+      if: inputs.install == 'true'
+      shell: bash
+      run: composer install --no-interaction --prefer-dist --no-progress
+
+    - name: Regenerate autoloader
+      if: inputs.install == 'true'
+      shell: bash
+      run: composer dump-autoload --no-interaction
