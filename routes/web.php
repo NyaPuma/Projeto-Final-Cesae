@@ -100,6 +100,7 @@ Route::middleware(['custom.auth'])->group(function () {
 
         // Endpoints de Tickets
         Route::get('/tickets/search', [TicketController::class, 'search']);
+        Route::get('/tickets/my', [TicketController::class, 'myTickets']);
         Route::get('/tickets', [TicketController::class, 'index']);
         Route::get('/tickets/{id}', [TicketController::class, 'show']);
         Route::post('/tickets', [TicketController::class, 'store']);
@@ -112,10 +113,10 @@ Route::middleware(['custom.auth'])->group(function () {
         Route::post('/tickets/{id}/reopen', [TicketController::class, 'reopenTicket']);
         Route::post('/tickets/{id}/cancel', [TicketController::class, 'cancelTicket']);
         Route::post('/tickets/{id}/schedule', [TicketController::class, 'scheduleTicket']);
-        
+
         // Submissão de valor pelo técnico
         Route::post('/tickets/{id}/submit-budget', [TicketController::class, 'submitEstimatedBudget']);
-        
+
         // Decision de aprovação pelo Administrador (Aceita qualquer método e endpoint comum)
         Route::match(['post', 'patch', 'put'], '/tickets/{id}/budget', [AdminController::class, 'approveBudget']);
         Route::match(['post', 'patch', 'put'], '/admin/tickets/{id}/approve-budget', [AdminController::class, 'approveBudget']);
@@ -127,6 +128,18 @@ Route::middleware(['custom.auth'])->group(function () {
         // Calendário Operacional
         Route::get('/calendar/events', [TicketController::class, 'calendarEvents']);
         Route::get('/calendar', [TicketController::class, 'calendarView']);
+
+        /*
+         |-- Área Exclusiva do Técnico de Manutenção (Apenas Technicians)
+         |----------------------------------------------------------------------*/
+        // =========================================================================
+        // 👇 👇 👇 GRUPO EXCLUSIVO PARA TÉCNICOS (SEM ADMIN) 👇 👇 👇
+        // =========================================================================
+        Route::middleware(['role:technician'])->group(function () {
+            Route::get('/ui/my-tickets', function () {
+                return view('ui.my-tickets');
+            })->name('ui.my-tickets');
+        });
 
         /*
          |-- Área Exclusiva do Técnico de Manutenção e Administradores
@@ -170,9 +183,11 @@ Route::middleware(['custom.auth'])->group(function () {
 
             Route::get('/admin/users', [AdminController::class, 'users']);
             Route::post('/admin/users', [AdminController::class, 'storeUser']);
-            
+
+
+            // 💡 Rota flexibilizada para aceitar POST, PATCH e PUT para uploads de imagem de utilizador
             Route::match(['post', 'patch', 'put'], '/admin/users/{id}', [AdminController::class, 'updateUser']);
-            
+
             Route::patch('/admin/users/{id}/inactive', [AdminController::class, 'inactivateUser']);
             Route::get('/admin/profiles', [AdminController::class, 'profiles']);
 
@@ -195,7 +210,8 @@ Route::middleware(['custom.auth'])->group(function () {
             Route::patch('/admin/rooms/{id}/inactive', [RoomController::class, 'inactivateRoom']);
         });
     });
-    
+
     // Rota de Agendamento Preventivo
     Route::post('/admin/maintenance/schedule', [AdminController::class, 'scheduleMaintenance']);
 });
+

@@ -380,10 +380,15 @@ class Ticket extends Model
         return self::whereNotNull('scheduled_at')->get()->map(function ($ticket) {
             return [
                 'id' => $ticket->id,
-                'title' => '🔧 #'.$ticket->id.' - '.$ticket->title,
+                'title' => '🔧 #' . $ticket->id . ' - ' . $ticket->title,
                 'start' => $ticket->scheduled_at ? $ticket->scheduled_at->toIso8601String() : null,
                 'end' => $ticket->scheduled_end ? $ticket->scheduled_end->toIso8601String() : null,
             ];
         });
+    }
+
+    public function assignedTo()
+    {
+        return $this->belongsTo(User::class, 'assigned_to');
     }
 }

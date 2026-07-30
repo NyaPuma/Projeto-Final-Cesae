@@ -18,12 +18,38 @@
 <body class="min-h-screen bg-[var(--bg)] text-[var(--text)] overflow-x-hidden antialiased">
 
     @php
-        $userRole = $user->profile->name ?? null;
+        // Tenta obter o utilizador atual
+        $currentUser = auth()->user() ?? ($user ?? null);
 
-        // Menu lateral: apenas Admin vê Utilizadores/Auditoria/Analytics/Swagger
+        // Garante que o perfil está carregado
+        if ($currentUser && !$currentUser->relationLoaded('profile')) {
+            $currentUser->load('profile');
+        }
+
+        // Obtém o nome da role/perfil em minúsculas
+        $userRole = strtolower($currentUser->profile->name ?? '');
+
+        // 1. Menu base
         $navItems = [
             ['href' => '/ui', 'active' => 'ui', 'label' => 'Dashboard', 'icon' => '📊', 'exact' => true],
             ['href' => '/ui/tickets', 'active' => 'ui/tickets*', 'label' => 'Tickets', 'icon' => '🎫', 'exact' => false],
+            ['href' => 'ui', 'active' => 'ui', 'label' => 'Dashboard', 'icon' => '📊', 'exact' => true],
+            ['href' => 'ui/tickets', 'active' => 'ui/tickets$', 'label' => 'Tickets', 'icon' => '🎫', 'exact' => true],
+        ];
+
+        // 2. "Meus Tickets" APENAS para Técnico
+        if ($userRole === 'technician' || $userRole === 'tecnico') {
+            $navItems[] = [
+                'href' => 'ui/my-tickets',
+                'active' => 'ui/my-tickets*',
+                'label' => 'Meus Tickets',
+                'icon' => '📋',
+                'exact' => false,
+            ];
+        }
+
+        // 3. Restantes itens comuns
+        $navItems = array_merge($navItems, [
             [
                 'href' => '/ui/equipments',
                 'active' => 'ui/equipments*',
@@ -34,35 +60,17 @@
             ['href' => '/ui/rooms', 'active' => 'ui/rooms*', 'label' => 'Salas', 'icon' => '🚪', 'exact' => false],
             ['href' => '/calendar', 'active' => 'calendar*', 'label' => 'Agenda', 'icon' => '📅', 'exact' => false],
         ];
+            ['href' => 'ui/rooms', 'active' => 'ui/rooms*', 'label' => 'Salas', 'icon' => '🚪', 'exact' => false],
+            ['href' => 'calendar', 'active' => 'calendar*', 'label' => 'Agenda', 'icon' => '📅', 'exact' => false],
+        ]);
 
+        // 4. Admin
         if ($userRole === 'admin') {
             $navItems = array_merge($navItems, [
-                [
-                    'href' => 'ui/users',
-                    'active' => 'ui/users*',
-                    'label' => 'Utilizadores',
-                    'icon' => '👥',
-                    'exact' => false,
-                ],
-                ['href' => 'ui/audits', 'active' => 'ui/audits*', 'label' => 'Auditoria', 'icon' => '📝', 'exact' => false],
-                [
-                    'href' => 'ui/analytics',
-                    'active' => 'ui/analytics*',
-                    'label' => 'Analytics',
-                    'icon' => '📈',
-                    'exact' => false,
-                ],
-                [
-                    'href' => 'docs/openapi',
-                    'active' => 'docs/openapi*',
-                    'label' => 'Swagger',
-                    'icon' => '📚',
-                    'exact' => false,
-                ],
+                // ... itens de admin ...
             ]);
         }
     @endphp
-
 
     <a href="#main-content"
         class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-xl focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[var(--on-primary)]">
@@ -230,15 +238,20 @@
                             {{-- Dropdown de Notificações --}}
                             <div id="notificationDropdown"
                                 class="hidden absolute right-0 mt-2 w-96 rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-2xl py-2 z-50 animate-[fadeIn_0.15s_ease-out] max-h-[420px] flex flex-col">
-                                <div class="px-4 pb-2 border-b border-[var(--border)] flex items-center justify-between">
-                                    <h4 class="text-xs font-bold uppercase tracking-wider text-[var(--text)]">{{ __('Notificações') }}</h4>
-                                    <span id="notifCountLabel" class="text-[10px] text-[var(--text-soft)]">0 {{ __('por ler') }}</span>
+                                <div
+                                    class="px-4 pb-2 border-b border-[var(--border)] flex items-center justify-between">
+                                    <h4 class="text-xs font-bold uppercase tracking-wider text-[var(--text)]">
+                                        {{ __('Notificações') }}</h4>
+                                    <span id="notifCountLabel" class="text-[10px] text-[var(--text-soft)]">0
+                                        {{ __('por ler') }}</span>
                                 </div>
                                 <div id="notificationList" class="overflow-y-auto flex-1 py-1 space-y-0.5 px-1">
-                                    <p class="text-xs text-[var(--text-soft)] text-center py-6 italic">{{ __('A carregar...') }}</p>
+                                    <p class="text-xs text-[var(--text-soft)] text-center py-6 italic">
+                                        {{ __('A carregar...') }}</p>
                                 </div>
                                 <div class="border-t border-[var(--border)] pt-2 px-4">
-                                    <a href="/ui/tickets" class="text-[10px] font-bold uppercase tracking-wider text-primary hover:underline block text-center py-1">
+                                    <a href="/ui/tickets"
+                                        class="text-[10px] font-bold uppercase tracking-wider text-primary hover:underline block text-center py-1">
                                         {{ __('Ver todos os tickets') }} →
                                     </a>
                                 </div>
@@ -548,7 +561,9 @@
             if (!list) return;
 
             try {
-                const res = await fetch('/notifications', { headers: authHeader() });
+                const res = await fetch('/notifications', {
+                    headers: authHeader()
+                });
                 if (!res.ok) throw new Error('Failed');
 
                 const data = await res.json();
@@ -589,12 +604,12 @@
                 list.innerHTML = items.map(n => {
                     const isUnread = !n.is_read && !n.read_at;
                     const icon = n.type?.includes('approved') ? '✅' :
-                                n.type?.includes('rejected') ? '❌' :
-                                n.type?.includes('budget_request') ? '💰' :
-                                n.type?.includes('auto_approved') ? '🟢' :
-                                n.type?.includes('closed') ? '🔧' :
-                                n.type?.includes('budget_submitted') ? '📋' :
-                                n.type?.includes('priority_override') ? '⚠️' : '📌';
+                        n.type?.includes('rejected') ? '❌' :
+                        n.type?.includes('budget_request') ? '💰' :
+                        n.type?.includes('auto_approved') ? '🟢' :
+                        n.type?.includes('closed') ? '🔧' :
+                        n.type?.includes('budget_submitted') ? '📋' :
+                        n.type?.includes('priority_override') ? '⚠️' : '📌';
                     return `
                         <div class="flex items-start gap-3 px-3 py-2.5 rounded-xl hover:bg-[var(--surface-2)] transition-all ${isUnread ? 'bg-primary/5 border-l-2 border-primary' : ''} ${n.link ? 'cursor-pointer' : ''}" onclick="${n.link ? `window.location='${n.link}'; markNotifRead(${n.id})` : ''}">
                             <span class="text-base flex-shrink-0 mt-0.5">${icon}</span>
