@@ -171,6 +171,9 @@ Route::middleware(['custom.auth'])->group(function () {
             Route::get('/analytics/export/pdf', [AnalyticsController::class, 'exportPdf']);
             Route::get('/analytics/export/excel', [AnalyticsController::class, 'exportExcel']);
             Route::get('/ui/analytics', [UiController::class, 'analytics']);
+            // Suporte/Alias para a rota /ui/reports
+Route::get('/ui/reports', [UiController::class, 'analytics']);
+Route::get('/reports', [UiController::class, 'analytics']);
 
             Route::post('/admin/users/register', [AuthController::class, 'register'])
                 ->name('admin.users.register')
