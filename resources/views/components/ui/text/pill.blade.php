@@ -1,3 +1,11 @@
+{{--
+|-------------------------------------------------------------------------- |
+Pill / Badge Component (Otimizado)
+|-------------------------------------------------------------------------- |
+| Componente para exibição de rótulos, badges e estados em formato pílula.
+| • Cores padronizadas via Tailwind e variáveis CSS do tema.
+| • 100% livre de CSS ou JS inline.
+| --}}
 @props([
     'tone' => 'neutral',
     'size' => 'sm',
@@ -9,7 +17,7 @@
         'success' => 'border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400',
         'warning' => 'border-amber-500/20 bg-amber-500/10 text-amber-600 dark:text-amber-400',
         'danger' => 'border-red-500/20 bg-red-500/10 text-red-600 dark:text-red-400',
-        default => 'border-[var(--border)] bg-[var(--surface-2)] text-[var(--text)]',
+        'neutral', default => 'border-[var(--border)] bg-[var(--surface-2)] text-[var(--text)]',
     };
 
     $sizeClasses = match ($size) {

@@ -1,73 +1,76 @@
 {{--
 |--------------------------------------------------------------------------
-| Split Button Component (Otimizado)
+| Split Button Component
 |--------------------------------------------------------------------------
 |
 | Botão dividido com ação primária e gatilho de menu secundário.
-| • Integração nativa com Alpine.js para abertura e fecho de menu.
-| • Tag dinâmica para evitar duplicação desnecessária de HTML.
-| • Cumpre rigorosamente os padrões de acessibilidade ARIA.
+| • Interatividade via Alpine.js sem CSS/JS inline (x-cloak).
+| • Gestão de foco ARIA e fecho por teclado (Escape).
+| • Suporte a tipo 'submit'/'button' e identificadores únicos no DOM.
 |
 --}}
 
 @props([
     'label' => null,
     'href' => null,
+    'type' => 'button',
     'variant' => 'primary',
     'size' => 'md',
-    'align' => 'right', // 'right' ou 'left' para alinhar o menu
+    'align' => 'right', // 'right' ou 'left'
     'disabled' => false,
 ])
 
 @php
-    // Define a tag do botão de ação principal
     $actionTag = $href ? 'a' : 'button';
-
-    // ID único para controle ARIA entre o toggle e o menu
-    $splitId = $attributes->get('id') ?? uniqid('ui-split-');
-
-    // Configuração de atributos para a ação primária
-    $actionAttributes = [];
-    if ($actionTag === 'button') {
-        $actionAttributes['type'] = 'button';
-        if ($disabled) {
-            $actionAttributes['disabled'] = true;
-        }
-    } else {
-        if ($disabled) {
-            $actionAttributes['aria-disabled'] = 'true';
-            $actionAttributes['role'] = 'button';
-            $actionAttributes['tabindex'] = '-1';
-        } else {
-            $actionAttributes['href'] = $href;
-        }
-    }
+    $splitId = $attributes->get('id', 'ui-split-' . \Illuminate\Support\Str::random(6));
+    $actionLabel = $label ?? $actionSlot ?? null;
 @endphp
 
 <div
-    {{ $attributes->except('id')->class([
+    {{ $attributes->except(['id'])->class([
         'ui-split-button',
         "ui-split-button--{$variant}",
         "ui-split-button--{$size}",
         'ui-split-button--disabled' => $disabled,
     ]) }}
-    x-data="{ open: false }"
-    @click.outside="open = false"
-    @keydown.escape.window="open = false"
+    x-data="{
+        open: false,
+        close(focusTrigger = false) {
+            if (!this.open) return;
+            this.open = false;
+            if (focusTrigger) {
+                this.$refs.trigger.focus();
+            }
+        }
+    }"
+    @click.outside="close()"
+    @keydown.escape.window="close(true)"
 >
     {{-- Ação Principal (Esquerda) --}}
     <{{ $actionTag }}
-        {{ new \Illuminate\View\ComponentAttributeBag($actionAttributes) }}
         class="ui-split-button__action"
+        @if($actionTag === 'button')
+            type="{{ $type }}"
+            @disabled($disabled)
+        @else
+            @if($disabled)
+                aria-disabled="true"
+                role="button"
+                tabindex="-1"
+            @else
+                href="{{ $href }}"
+            @endif
+        @endif
     >
-        {{ $label }}
+        {{ $actionLabel }}
     </{{ $actionTag }}>
 
     {{-- Gatilho de Abertura do Menu (Direita) --}}
     <button
         type="button"
-        class="ui-split-button__toggle"
         id="{{ $splitId }}-trigger"
+        x-ref="trigger"
+        class="ui-split-button__toggle"
         @disabled($disabled)
         aria-haspopup="true"
         :aria-expanded="open ? 'true' : 'false'"
@@ -96,13 +99,13 @@
         role="menu"
         aria-labelledby="{{ $splitId }}-trigger"
         x-show="open"
+        x-cloak
         x-transition:enter="ui-dropdown-transition-enter"
         x-transition:enter-start="ui-dropdown-transition-start"
         x-transition:enter-end="ui-dropdown-transition-end"
         x-transition:leave="ui-dropdown-transition-leave"
         x-transition:leave-start="ui-dropdown-transition-leave-start"
         x-transition:leave-end="ui-dropdown-transition-leave-end"
-        style="display: none;"
     >
         <div class="ui-split-button__menu-content" role="none">
             {{ $slot }}

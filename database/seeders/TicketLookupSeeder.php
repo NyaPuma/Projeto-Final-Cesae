@@ -10,35 +10,35 @@ class TicketLookupSeeder extends Seeder
 {
     public function run(): void
     {
-        $hardware = $this->ensureType('Hardware', 'Problemas físicos em computadores, impressoras, periféricos ou componentes.');
-        $software = $this->ensureType('Software', 'Problemas com o Sistema Operativo, aplicações, licenças ou lentidão de software.');
-        $rede = $this->ensureType('Rede / Internet', 'Falhas de ligação, cablagem, Wi-Fi, routers ou acesso a servidores locais.');
+        $hardware = $this->ensureType('HARDWARE', 'Hardware', 'Problemas físicos em computadores, impressoras, periféricos ou componentes.');
+        $software = $this->ensureType('SOFTWARE', 'Software', 'Problemas com o Sistema Operativo, aplicações, licenças ou lentidão de software.');
+        $rede = $this->ensureType('REDE', 'Rede / Internet', 'Falhas de ligação, cablagem, Wi-Fi, routers ou acesso a servidores locais.');
 
-        $this->ensureStatus('aberta', 'Ticket registado com sucesso e a aguardar triagem ou atribuição de técnico.', null);
-        $this->ensureStatus('em curso', 'A avaria está a ser analisada ou reparada por um técnico responsável.', null);
-        $this->ensureStatus('fechada', 'A intervenção foi concluída e o problema foi dado como resolvido.', null);
-        $this->ensureStatus('aguarda peças', 'A reparação física está suspensa até que os componentes necessários cheguem.', $hardware->id);
-        $this->ensureStatus('cancelada', 'O ticket foi cancelado pelo utilizador antes da intervenção começar.', null);
-        $this->ensureStatus('pendente orçamento', 'A reparação aguardou aprovação orçamental por parte da direção.', null);
-        $this->ensureStatus('recusada', 'O pedido de orçamento foi rejeitado e o processo não prosseguiu.', null);
+        $this->ensureStatus('ABERTA', 'aberta', 'Ticket registado com sucesso e a aguardar triagem ou atribuição de técnico.', null);
+        $this->ensureStatus('EM_CURSO', 'em curso', 'A avaria está a ser analisada ou reparada por um técnico responsável.', null);
+        $this->ensureStatus('FECHADA', 'fechada', 'A intervenção foi concluída e o problema foi dado como resolvido.', null);
+        $this->ensureStatus('AGUARDA_PECAS', 'aguarda peças', 'A reparação física está suspensa até que os componentes necessários cheguem.', $hardware->id);
+        $this->ensureStatus('CANCELADA', 'cancelada', 'O ticket foi cancelado pelo utilizador antes da intervenção começar.', null);
+        $this->ensureStatus('PENDENTE_ORCAMENTO', 'pendente orçamento', 'A reparação aguardou aprovação orçamental por parte da direção.', null);
+        $this->ensureStatus('RECUSADA', 'recusada', 'O pedido de orçamento foi rejeitado e o processo não prosseguiu.', null);
 
-        $this->ensureStatus('em revisão', 'Estado de validação complementar para tickets com informação incompleta.', $software->id);
-        $this->ensureStatus('sem rede', 'Estado usado para reportar falhas de conectividade temporárias.', $rede->id);
+        $this->ensureStatus('EM_REVISAO', 'em revisão', 'Estado de validação complementar para tickets com informação incompleta.', $software->id);
+        $this->ensureStatus('SEM_REDE', 'sem rede', 'Estado usado para reportar falhas de conectividade temporárias.', $rede->id);
     }
 
-    private function ensureType(string $name, string $description): TicketType
+    private function ensureType(string $code, string $name, string $description): TicketType
     {
         return TicketType::updateOrCreate(
             ['name' => $name],
-            ['description' => $description]
+            ['code' => $code, 'description' => $description]
         );
     }
 
-    private function ensureStatus(string $name, string $description, ?int $typeId): TicketStatus
+    private function ensureStatus(string $code, string $name, string $description, ?int $typeId): TicketStatus
     {
         return TicketStatus::updateOrCreate(
             ['name' => $name],
-            ['description' => $description, 'type_id' => $typeId]
+            ['code' => $code, 'description' => $description, 'type_id' => $typeId]
         );
     }
 }

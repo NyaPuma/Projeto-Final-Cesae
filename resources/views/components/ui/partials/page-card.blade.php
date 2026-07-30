@@ -1,3 +1,12 @@
+{{--
+|-------------------------------------------------------------------------- |
+Page Header Card Component (Otimizado)
+|-------------------------------------------------------------------------- |
+| Componente estrutural de cabeçalho para páginas de dashboard ou secções.
+| • Padronizado com as variáveis CSS oficiais do Tailwind.
+| • Suporte a título, subtítulo, badge dinâmico animado e ações secundárias.
+| • 100% livre de CSS ou JS inline.
+| --}}
 @props([
     'title' => null,
     'subtitle' => null,
@@ -7,7 +16,7 @@
 
 <div
     {{ $attributes->merge([
-        'class' => 'ui-card group relative overflow-hidden rounded-[28px] border border-(--border) bg-(--surface) shadow-[var(--shadow-sm)] transition-all duration-300 hover:-translate-y-1 hover:border-(--text)/20 hover:shadow-[0_18px_45px_rgba(15,23,42,0.08)]',
+        'class' => 'ui-card group relative overflow-hidden rounded-[28px] border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-sm)] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--text)]/20 hover:shadow-[0_18px_45px_rgba(15,23,42,0.08)]',
     ]) }}
 >
     <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-400/70 to-transparent"></div>
@@ -26,20 +35,20 @@
                             </span>
                         @endif
 
-                        <span class="text-xs font-bold uppercase tracking-[0.30em] text-(--text-soft)">
+                        <span class="text-xs font-bold uppercase tracking-[0.30em] text-[var(--text-soft)]">
                             {{ $badge }}
                         </span>
                     </div>
                 @endif
 
                 @if($title)
-                    <h1 class="text-4xl font-black tracking-tight text-(--text) transition-transform duration-300 group-hover:translate-x-0.5">
+                    <h1 class="text-4xl font-black tracking-tight text-[var(--text)] transition-transform duration-300 group-hover:translate-x-0.5">
                         {{ $title }}
                     </h1>
                 @endif
 
                 @if(!empty($subtitle))
-                    <p class="max-w-3xl text-base leading-8 text-(--text-soft)">
+                    <p class="max-w-3xl text-base leading-8 text-[var(--text-soft)]">
                         {{ $subtitle }}
                     </p>
                 @endif
@@ -52,7 +61,7 @@
             @endif
         </div>
 
-        <div class="mt-10 border-t border-(--border) pt-8">
+        <div class="mt-10 border-t border-[var(--border)] pt-8">
             {{ $slot }}
         </div>
     </div>

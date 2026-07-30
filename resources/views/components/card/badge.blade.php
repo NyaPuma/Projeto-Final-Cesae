@@ -1,36 +1,46 @@
 {{--
 |--------------------------------------------------------------------------
-| Card Badge Component (Otimizado)
+| Card Badge Component
 |--------------------------------------------------------------------------
 |
 | Pequeno indicador visual para estados, prioridades, categorias ou contadores.
-| • Suporta formato pílula (pill) para cantos totalmente ovais.
-| • Inclusão opcional de ícones com alinhamento flexbox perfeito.
-| • Ajuste automático de padding quando usado apenas como ponto de status.
+| • Suporta passagem de texto via prop 'label' ou slot predefinido.
+| • Formato pílula (pill) para cantos totalmente ovais.
+| • Suporte seguro para ícones via prop ou slot nomeado ($iconSlot).
+| • Tratamento de variantes e estados sem texto para acessibilidade.
 |
 --}}
 
 @props([
-    'variant' => 'default', // 'default', 'primary', 'success', 'warning', 'danger', 'info'
+    'label' => null,
+    'variant' => 'default', // 'default', 'primary', 'success', 'warning', 'danger'/'error', 'info'
     'size' => 'md',         // 'sm', 'md', 'lg'
     'dot' => false,         // Exibe um micro-ponto de estado antes do texto
     'pill' => false,        // Se true, aplica cantos totalmente arredondados
-    'icon' => null,         // Ícone SVG opcional
+    'icon' => null,         // Ícone SVG ou componente opcional
 ])
 
 @php
-    $hasSlot = $slot->isNotEmpty();
+    // Normalização de variantes para manter alinhamento com a folha de estilos CSS
+    $normalizedVariant = match($variant) {
+        'error' => 'danger',
+        default => $variant,
+    };
+
+    $badgeLabel = $slot->isNotEmpty() ? $slot : $label;
+    $iconContent = $icon ?? $iconSlot ?? null;
+    $hasLabel = !empty($badgeLabel);
 @endphp
 
 <span
     {{ $attributes->class([
         'ui-card-badge',
-        "ui-card-badge--{$variant}",
+        "ui-card-badge--{$normalizedVariant}",
         "ui-card-badge--{$size}",
         'ui-card-badge--pill' => $pill,
         'ui-card-badge--has-dot' => $dot,
-        'ui-card-badge--dot-only' => $dot && !$hasSlot && !$icon,
-        'ui-card-badge--icon-only' => $icon && !$hasSlot,
+        'ui-card-badge--dot-only' => $dot && !$hasLabel && !$iconContent,
+        'ui-card-badge--icon-only' => $iconContent && !$hasLabel,
     ]) }}
 >
     {{-- Ponto de Estado --}}
@@ -39,16 +49,20 @@
     @endif
 
     {{-- Ícone Opcional --}}
-    @if($icon)
+    @if($iconContent)
         <span class="ui-card-badge__icon" aria-hidden="true">
-            {!! $icon !!}
+            @if(is_string($iconContent) && str_starts_with(trim($iconContent), '<svg'))
+                {!! $iconContent !!}
+            @else
+                {{ $iconContent }}
+            @endif
         </span>
     @endif
 
-    {{-- Texto --}}
-    @if($hasSlot)
+    {{-- Texto / Rótulo --}}
+    @if($hasLabel)
         <span class="ui-card-badge__label">
-            {{ $slot }}
+            {{ $badgeLabel }}
         </span>
     @endif
 </span>

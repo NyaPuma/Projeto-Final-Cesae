@@ -1,12 +1,12 @@
 {{--
 |--------------------------------------------------------------------------
-| Button Dropdown Component (Otimizado)
+| Button Dropdown Component
 |--------------------------------------------------------------------------
 |
 | Componente de Menu Dropdown integrado e acessível.
-| • Suporta Alpine.js nativo para interatividade out-of-the-box.
-| • Cumpre as diretrizes ARIA (Acessibilidade).
-| • Tratamento dinâmico de IDs para evitar colisões na página.
+| • Interatividade via Alpine.js sem CSS/JS inline.
+| • Cumpre as diretrizes ARIA (Acessibilidade) com gestão de foco.
+| • Identificadores únicos para evitar colisões no DOM.
 |
 --}}
 
@@ -20,25 +20,36 @@
 ])
 
 @php
-    // Gera um identificador único para associar o botão ao menu via ARIA
-    $dropdownId = $attributes->get('id') ?? uniqid('ui-dropdown-');
+    // Identificador único para associação ARIA entre botão e menu
+    $dropdownId = $attributes->get('id', 'ui-dropdown-' . \Illuminate\Support\Str::random(6));
+    $hasIcon = $icon || isset($iconSlot);
 @endphp
 
 <div
-    {{ $attributes->except('id')->class([
+    {{ $attributes->except(['id'])->class([
         'ui-button-dropdown',
         "ui-button-dropdown--{$variant}",
         "ui-button-dropdown--{$size}",
         'ui-button-dropdown--disabled' => $disabled,
     ]) }}
-    x-data="{ open: false }"
-    @click.outside="open = false"
-    @keydown.escape.window="open = false"
+    x-data="{
+        open: false,
+        close(focusTrigger = false) {
+            if (!this.open) return;
+            this.open = false;
+            if (focusTrigger) {
+                this.$refs.trigger.focus();
+            }
+        }
+    }"
+    @click.outside="close()"
+    @keydown.escape.window="close(true)"
 >
     {{-- Gatilho (Trigger Button) --}}
     <button
         type="button"
         id="{{ $dropdownId }}-trigger"
+        x-ref="trigger"
         class="ui-button-dropdown__trigger"
         @disabled($disabled)
         aria-haspopup="true"
@@ -46,9 +57,9 @@
         aria-controls="{{ $dropdownId }}-menu"
         @click="open = !open"
     >
-        @if($icon)
+        @if($hasIcon)
             <span class="ui-button-dropdown__icon" aria-hidden="true">
-                {!! $icon !!}
+                {{ $iconSlot ?? (is_string($icon) ? {!! $icon !!} : $icon) }}
             </span>
         @endif
 
@@ -58,7 +69,7 @@
             </span>
         @endif
 
-        {{-- Chevron Otimizado com Rotação Dinâmica --}}
+        {{-- Chevron com Rotação Dinâmica por Classe --}}
         <svg
             class="ui-button-dropdown__chevron"
             :class="{ 'ui-button-dropdown__chevron--active': open }"
@@ -73,20 +84,20 @@
         </svg>
     </button>
 
-    {{-- Menu Dropdown (Conteúdo do Slot) --}}
+    {{-- Menu Dropdown --}}
     <div
         id="{{ $dropdownId }}-menu"
         class="ui-button-dropdown__menu ui-button-dropdown__menu--{{ $align }}"
         role="menu"
         aria-labelledby="{{ $dropdownId }}-trigger"
         x-show="open"
+        x-cloak
         x-transition:enter="ui-dropdown-transition-enter"
         x-transition:enter-start="ui-dropdown-transition-start"
         x-transition:enter-end="ui-dropdown-transition-end"
         x-transition:leave="ui-dropdown-transition-leave"
         x-transition:leave-start="ui-dropdown-transition-leave-start"
         x-transition:leave-end="ui-dropdown-transition-leave-end"
-        style="display: none;"
     >
         <div class="ui-button-dropdown__menu-content" role="none">
             {{ $slot }}

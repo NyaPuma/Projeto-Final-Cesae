@@ -1,12 +1,13 @@
 {{--
 |--------------------------------------------------------------------------
-| Card Avatar Component (Otimizado)
+| Card Avatar Component
 |--------------------------------------------------------------------------
 |
 | Representação visual de utilizadores, técnicos ou equipas.
 | • Iniciais totalmente seguras para caracteres UTF-8 (acentos).
-| • Recuperação automática de erro de imagem (fallback para iniciais).
-| • Estados com semântica de acessibilidade para leitores de ecrã.
+| • Recuperação automática de erro de imagem sem inline CSS (x-cloak).
+| • Fallback elegante para ícone genérico de utilizador.
+| • Estados com semântica de acessibilidade para leitores de ecrã (A11y).
 |
 --}}
 
@@ -58,18 +59,30 @@
             @error="imgError = true"
         >
 
-        {{-- Fallback dinâmico caso o link da imagem quebre --}}
+        {{-- Fallback dinâmico caso a imagem falhe (sem estilos inline) --}}
         <span
             class="ui-card-avatar__initials"
             x-show="imgError"
-            style="display: none;"
+            x-cloak
         >
-            {{ $initials ?: '?' }}
+            @if($initials)
+                {{ $initials }}
+            @else
+                <svg class="ui-card-avatar__icon-placeholder" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                </svg>
+            @endif
         </span>
     @else
-        {{-- Renderização direta das iniciais se não houver src --}}
+        {{-- Renderização de iniciais ou ícone padrão caso não haja src --}}
         <span class="ui-card-avatar__initials">
-            {{ $initials ?: '?' }}
+            @if($initials)
+                {{ $initials }}
+            @else
+                <svg class="ui-card-avatar__icon-placeholder" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                </svg>
+            @endif
         </span>
     @endif
 

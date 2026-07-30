@@ -1,31 +1,45 @@
 {{--
 |--------------------------------------------------------------------------
-| Input Loader Component (Otimizado)
+| Input Loader Component
 |--------------------------------------------------------------------------
 |
-| Spinner SVG acessível e performático.
-| • role="status" / aria-busy="true".
-| • Suporte a tamanhos e variantes via CSS.
+| Spinner SVG acessível e performático para feedback de carregamento.
+| • Validação estrita de tamanhos e variantes BEM (sem classes arbitrárias).
+| • Acessibilidade WCAG completa (role="status", aria-busy="true", aria-live="polite").
+| • Suporte a rótulos acessíveis customizáveis para leitores de ecrã.
+| • 100% livre de CSS ou JS inline.
 |
 --}}
 
 @props([
     'show' => true,
-    'size' => 'md',
-    'variant' => 'primary',
+    'size' => 'md',           // 'xs', 'sm', 'md', 'lg', 'xl'
+    'variant' => 'primary',   // 'primary', 'secondary', 'success', 'warning', 'error', 'neutral', 'muted'
+    'label' => 'A carregar',  // Rótulo acessível configurável
 ])
+
+@php
+    // Validação estrita de tamanhos para evitar classes BEM incorretas
+    $allowedSizes = ['xs', 'sm', 'md', 'lg', 'xl'];
+    $validSize = in_array(mb_strtolower($size), $allowedSizes, true) ? mb_strtolower($size) : 'md';
+
+    // Validação estrita de variantes visuais
+    $allowedVariants = ['primary', 'secondary', 'success', 'warning', 'error', 'neutral', 'muted'];
+    $validVariant = in_array(mb_strtolower($variant), $allowedVariants, true) ? mb_strtolower($variant) : 'primary';
+@endphp
 
 @if($show)
     <span
         {{ $attributes->class([
             'ui-input-loader',
-            "ui-input-loader--{$size}",
-            "ui-input-loader--{$variant}",
+            "ui-input-loader--size-{$validSize}",
+            "ui-input-loader--variant-{$validVariant}",
+        ])->merge([
+            'role' => 'status',
+            'aria-busy' => 'true',
+            'aria-live' => 'polite',
+            'aria-label' => $label,
         ]) }}
-        role="status"
-        aria-busy="true"
-        aria-live="polite"
-        aria-label="A carregar"
     >
         <svg
             class="ui-input-loader__spinner"

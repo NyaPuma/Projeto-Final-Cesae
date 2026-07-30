@@ -1,12 +1,12 @@
 {{--
 |--------------------------------------------------------------------------
-| Floating Action Button (FAB) - Otimizado
+| Floating Action Button (FAB) Component
 |--------------------------------------------------------------------------
 |
-| Botão flutuante para ações principais da página.
-| • Garante acessibilidade com tooltips e aria-labels automáticos.
-| • Evita quebra de tags no IDE utilizando tags dinâmicas.
-| • Tratamento robusto para estados desativados em âncoras (links).
+| Botão flutuante para ações principais da aplicação.
+| • Totalmente acessível com suporte a leitores de ecrã (aria-label).
+| • Flexível com suporte a ícones e textos via props ou slots.
+| • Tratamento automático para links e botões desativados.
 |
 --}}
 
@@ -24,19 +24,16 @@
 ])
 
 @php
-    // Determina se o elemento final será um link ou botão nativo
     $tag = $href ? 'a' : 'button';
+    $hasIcon = $icon || isset($iconSlot);
 
-    // Configuração dinâmica de atributos conforme o tipo de tag e acessibilidade
+    // Atributos dinâmicos para acessibilidade e comportamento
     $customAttributes = [];
 
     if ($tag === 'button') {
         $customAttributes['type'] = $type;
-        if ($disabled) {
-            $customAttributes['disabled'] = true;
-        }
+        $customAttributes['disabled'] = $disabled;
     } else {
-        // Fallback seguro para âncoras desativadas
         if ($disabled) {
             $customAttributes['aria-disabled'] = 'true';
             $customAttributes['role'] = 'button';
@@ -46,12 +43,9 @@
         }
     }
 
-    // UX & Acessibilidade: Se não for estendido, o label vira aria-label e tooltip visual (title)
-    if ($label) {
-        if (!$extended) {
-            $customAttributes['aria-label'] = $label;
-            $customAttributes['title'] = $label;
-        }
+    // Acessibilidade: Quando é apenas ícone, garante aria-label (sem sobresscrever se passado diretamente)
+    if (!$extended && $label && !$attributes->has('aria-label')) {
+        $customAttributes['aria-label'] = $label;
     }
 @endphp
 
@@ -67,16 +61,18 @@
     ]) }}
 >
     {{-- Ícone do FAB --}}
-    @if($icon)
+    @if($hasIcon)
         <span class="ui-fab__icon" aria-hidden="true">
-            {!! $icon !!}
+            {{ $iconSlot ?? (is_string($icon) ? {!! $icon !!} : $icon) }}
         </span>
     @endif
 
-    {{-- Texto visível apenas se estiver no modo expandido --}}
-    @if($extended && $label)
-        <span class="ui-fab__label">
-            {{ $label }}
-        </span>
+    {{-- Rótulo Visível (Modo Expandido) --}}
+    @if($extended)
+        @if($label || $slot->isNotEmpty())
+            <span class="ui-fab__label">
+                {{ $label ?? $slot }}
+            </span>
+        @endif
     @endif
 </{{ $tag }}>

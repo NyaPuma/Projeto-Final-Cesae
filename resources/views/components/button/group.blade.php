@@ -1,34 +1,41 @@
 {{--
 |--------------------------------------------------------------------------
-| Button Group Component (Otimizado)
+| Button Group Component
 |--------------------------------------------------------------------------
 |
 | Agrupa vários botões numa única unidade visual e semântica.
-| • Cumpre as normas ARIA com role="group" e aria-label opcional.
-| • Tag HTML customizável para maior semântica.
-| • Sintaxe moderna do Laravel para junção de classes CSS.
+| • Cumpre as diretrizes ARIA (role="group" dinâmico e aria-label).
+| • Tag HTML customizável para maior semântica (<nav>, <div>, etc.).
+| • Permite o controlo de tamanhos e layout por cascata CSS.
 |
 --}}
 
 @props([
     'direction' => 'horizontal', // 'horizontal' ou 'vertical'
-    'attached' => true,          // Une os botões removendo margens e arredondando apenas os cantos externos
-    'size' => 'md',              // 'sm', 'md', 'lg' (controlado via cascata CSS)
+    'attached' => true,          // Une os botões removendo margens e cantos internos
+    'size' => 'md',              // 'sm', 'md', 'lg'
     'fullWidth' => false,        // Ocupa 100% da largura do container
     'label' => null,             // Nome acessível para leitores de ecrã
-    'tag' => 'div',              // Permite alterar a tag wrapper (ex: 'nav', 'div')
+    'tag' => 'div',              // Tag HTML do container ('div', 'nav', etc.)
 ])
 
 @php
-    $wrapperAttributes = ['role' => 'group'];
+    $customAttributes = [];
 
-    if ($label) {
-        $wrapperAttributes['aria-label'] = $label;
+    // O elemento <nav> já possui um papel semântico implícito no HTML5;
+    // para outras tags (como 'div'), aplicamos role="group" por padrão.
+    if ($tag !== 'nav') {
+        $customAttributes['role'] = 'group';
+    }
+
+    // Define aria-label a menos que já tenha sido passado explicitamente via $attributes
+    if ($label && ! $attributes->has('aria-label')) {
+        $customAttributes['aria-label'] = $label;
     }
 @endphp
 
 <{{ $tag }}
-    {{ $attributes->merge($wrapperAttributes)->class([
+    {{ $attributes->merge($customAttributes)->class([
         'ui-button-group',
         "ui-button-group--{$direction}",
         "ui-button-group--{$size}",

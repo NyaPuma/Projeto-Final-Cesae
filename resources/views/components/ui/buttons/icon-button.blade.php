@@ -1,3 +1,14 @@
+{{--
+|--------------------------------------------------------------------------
+| Icon Button Component Wrapper
+|--------------------------------------------------------------------------
+|
+| Botão wrapper otimizado para ícones com suporte a formas e tamanhos dinâmicos.
+| • 100% livre de CSS ou JS inline.
+| • Eliminação de carateres invisíveis e resolução de conflitos de propriedades.
+|
+--}}
+
 @props([
     'variant' => 'secondary',
     'size' => 'md',
@@ -15,6 +26,12 @@
     };
 @endphp
 
-<x-ui.buttons.button :type="$type" :variant="$variant" size="sm" weight="bold" {{ $attributes->merge(['class' => trim($shapeClasses . ' ' . $sizeClasses . ' px-0')]) }}>
+<x-ui.buttons.button
+    :type="$type"
+    :variant="$variant"
+    :size="$size"
+    weight="bold"
+    {{ $attributes->merge(['class' => trim($shapeClasses . ' ' . $sizeClasses . ' px-0')]) }}
+>
     {{ $slot }}
 </x-ui.buttons.button>

@@ -1,23 +1,31 @@
 {{--
 |--------------------------------------------------------------------------
-| Card Actions Component (Otimizado)
+| Card Actions Component
 |--------------------------------------------------------------------------
 |
 | Área dedicada para ações rápidas, botões e ícones dentro de um card.
 | • Suporta posicionamento absoluto (flutuante sobre imagens/conteúdo).
-| • Alinhamento baseado em Flexbox ('start', 'center', 'end', 'between').
-| • Tags HTML dinâmicas para respeitar a semântica de cabeçalhos/rodapés.
+| • Alinhamento flexível e validação semântica de tags HTML.
+| • Atribuição automática de acessibilidade ARIA para elementos genéricos.
 |
 --}}
 
 @props([
-    'position' => 'end',  // 'start', 'center', 'end', 'between'
+    'position' => 'end',  // 'start', 'center', 'end', 'between', 'stretch'
     'gap' => 'sm',         // 'none', 'xs', 'sm', 'md', 'lg'
-    'absolute' => false,   // Se true, fixa o grupo no canto superior direito do card
-    'tag' => 'div',        // Permite mudar para 'header', 'footer' ou 'aside'
+    'absolute' => false,   // Posição absoluta flutuante sobre o card
+    'tag' => 'div',        // 'div', 'header', 'footer', 'aside', etc.
 ])
 
-<{{ $tag }}
+@php
+    $allowedTags = ['div', 'header', 'footer', 'aside', 'nav', 'section'];
+    $elementTag = in_array(strtolower($tag), $allowedTags, true) ? $tag : 'div';
+@endphp
+
+<{{ $elementTag }}
+    @if($elementTag === 'div' && !$attributes->has('role'))
+        role="group"
+    @endif
     {{ $attributes->class([
         'ui-card-actions',
         "ui-card-actions--{$position}",
@@ -26,4 +34,4 @@
     ]) }}
 >
     {{ $slot }}
-</{{ $tag }}>
+</{{ $elementTag }}>

@@ -1,5 +1,12 @@
+{{--
+|-------------------------------------------------------------------------- |
+| Form Input Component (Otimizado)
+|-------------------------------------------------------------------------- |
+| Campo de texto reutilizável com suporte a estados de validação (old),
+| acessibilidade e variáveis CSS do Design System.
+|--}}
 @props([
-    'id',
+    'id' => null,
     'name',
     'type' => 'text',
     'autocomplete' => null,
@@ -9,14 +16,14 @@
 ])
 
 <input
-    {{ $attributes->merge(array_filter([
-        'id' => $id,
-        'name' => $name,
-        'type' => $type,
-        'autocomplete' => $autocomplete,
-        'placeholder' => $placeholder,
-        'value' => !is_null($value) ? $value : null,
-        'required' => $required ? true : null,
-        'class' => 'w-full rounded-2xl border border-(--border) bg-(--surface-2) px-4 py-3 text-sm text-(--text) outline-none focus:border-primary focus:ring-4 focus:ring-primary/15',
-    ], static fn ($value) => !is_null($value))) }}
+    @if($id) id="{{ $id }}" @endif
+    name="{{ $name }}"
+    type="{{ $type }}"
+    @if($autocomplete) autocomplete="{{ $autocomplete }}" @endif
+    @if($placeholder) placeholder="{{ $placeholder }}" @endif
+    @if($required) required @endif
+    value="{{ old($name, $value) }}"
+    {{ $attributes->merge([
+        'class' => 'w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm text-[var(--text)] outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/15'
+    ]) }}
 >

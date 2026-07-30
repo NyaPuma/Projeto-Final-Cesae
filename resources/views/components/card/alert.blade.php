@@ -1,12 +1,13 @@
 {{--
 |--------------------------------------------------------------------------
-| Card Alert Component (Otimizado)
+| Card Alert Component
 |--------------------------------------------------------------------------
 |
 | Mensagens de feedback e estado visual contextualizadas.
-| • Injeta automaticamente ícones geométricos perfeitos com base na variante.
-| • Integração com Alpine.js para permitir fecho dinâmico com transição.
-| • Acessibilidade garantida para leitores de ecrã (A11y).
+| • Injeta automaticamente ícones SVG com base na variante.
+| • Suporte a slots nomeados ($titleSlot, $iconSlot) para máxima flexibilidade.
+| • Integração com Alpine.js + x-cloak para fecho fluido e sem flashes visuais.
+| • Acessibilidade ARIA dinâmica (role="alert" vs role="status").
 |
 --}}
 
@@ -18,13 +19,13 @@
 ])
 
 @php
-    // Normaliza variações comuns de nomenclatura (ex: 'error' vira 'danger' para consistência CSS)
+    // Normalização de variante para alinhamento com CSS
     $normalizedVariant = match($variant) {
         'error' => 'danger',
         default => $variant,
     };
 
-    // Biblioteca interna de SVGs oficiais para feedback rápido
+    // Biblioteca de ícones SVG padrão
     $defaultIcons = [
         'info' => '<svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>',
         'success' => '<svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>',
@@ -32,42 +33,56 @@
         'danger' => '<svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" /></svg>',
     ];
 
-    $selectedIcon = $icon ?? ($defaultIcons[$normalizedVariant] ?? null);
+    $titleContent = $title ?? $titleSlot ?? null;
+    $iconContent = $icon ?? $iconSlot ?? ($defaultIcons[$normalizedVariant] ?? null);
+
+    // Papel ARIA dinâmico: 'alert' interrompe o leitor de ecrã para avisos críticos; 'status' é mais suave para mensagens informativas
+    $ariaRole = match($normalizedVariant) {
+        'danger', 'warning' => 'alert',
+        default => 'status',
+    };
 @endphp
 
 <div
+    role="{{ $ariaRole }}"
     {{ $attributes->class([
         'ui-card-alert',
         "ui-card-alert--{$normalizedVariant}",
         'ui-card-alert--dismissible' => $dismissible,
     ]) }}
-    role="alert"
     @if($dismissible)
         x-data="{ show: true }"
         x-show="show"
+        x-cloak
         x-transition:leave="ui-card-alert-transition-leave"
         x-transition:leave-start="ui-card-alert-transition-start"
         x-transition:leave-end="ui-card-alert-transition-end"
     @endif
 >
     {{-- Renderização do ícone de estado --}}
-    @if($selectedIcon)
+    @if($iconContent)
         <div class="ui-card-alert__icon" aria-hidden="true">
-            {!! $selectedIcon !!}
+            @if(is_string($iconContent) && str_starts_with(trim($iconContent), '<svg'))
+                {!! $iconContent !!}
+            @else
+                {{ $iconContent }}
+            @endif
         </div>
     @endif
 
     {{-- Área de texto --}}
     <div class="ui-card-alert__content">
-        @if($title)
+        @if($titleContent)
             <strong class="ui-card-alert__title">
-                {{ $title }}
+                {{ $titleContent }}
             </strong>
         @endif
 
-        <div class="ui-card-alert__message">
-            {{ $slot }}
-        </div>
+        @if($slot->isNotEmpty())
+            <div class="ui-card-alert__message">
+                {{ $slot }}
+            </div>
+        @endif
     </div>
 
     {{-- Botão de Fecho Acessível e Reativo --}}

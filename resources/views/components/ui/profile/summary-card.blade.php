@@ -1,3 +1,11 @@
+{{--
+|-------------------------------------------------------------------------- |
+User Profile Card Component (Otimizado)
+|-------------------------------------------------------------------------- |
+| Componente para exibição de detalhes, avatar e metadados do perfil de utilizador.
+| • Padronizado com as variáveis CSS oficiais do Tailwind.
+| • 100% livre de CSS ou JS inline.
+| --}}
 @props([
     'user',
     'translatedProfile',

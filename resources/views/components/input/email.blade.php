@@ -1,16 +1,20 @@
 {{--
 |--------------------------------------------------------------------------
-| Email Input Component (Otimizado)
+| Email Input Component
 |--------------------------------------------------------------------------
 |
-| Campo de email com suporte a A11y (ARIA) e validação nativa Laravel.
-| • Acessibilidade A11y (aria-invalid, aria-describedby).
-| • Tratamento de erros automático.
+| Campo de entrada de email com suporte a A11y (ARIA) e validação nativa Laravel.
+| • Integração automática com Request Validation e Old Input do Laravel.
+| • Sanitização robusta de IDs para campos complexos (pontos e arrays).
+| • Acessibilidade WCAG avançada (aria-invalid, aria-describedby).
+| • Suporte a ícones decorativos e estados dinâmicos (erro, desativado, readonly).
+| • 100% livre de CSS ou JS inline.
 |
 --}}
 
 @props([
-    'name',
+    'id' => null,
+    'name' => null,
     'label' => null,
     'value' => null,
     'placeholder' => 'email@exemplo.com',
@@ -18,20 +22,41 @@
     'disabled' => false,
     'readonly' => false,
     'hint' => null,
+    'error' => null,
     'icon' => true,
 ])
 
 @php
-    $hasError = $errors->has($name);
-    $hintId = $hint ? "{$name}-hint" : null;
-    $errorId = $hasError ? "{$name}-error" : null;
+    // Sanitização segura do nome e geração de ID compatível com DOM (evita erros com notações como user.email)
+    $safeName = $name ?? '';
+    $defaultId = $id ?? ($safeName ? str_replace(['.', '[', ']'], ['_', '', ''], $safeName) : 'email_' . uniqid());
+
+    // Resolução automática de erros do Laravel caso a prop error não venha preenchida
+    $laravelError = $safeName ? $errors->first($safeName) : null;
+    $resolvedError = $error ?? $laravelError;
+    $hasError = !empty($resolvedError);
+
+    // Definição dos IDs para conexões ARIA
+    $hintId = $hint ? "{$defaultId}-hint" : null;
+    $errorId = $hasError ? "{$defaultId}-error" : null;
+    $describedBy = array_filter([$hintId, $errorId]);
+
+    // Valor inicial considerando o old input do Laravel
+    $initialValue = $safeName ? old($safeName, $value) : $value;
 @endphp
 
-<div class="ui-email">
+<div {{ $attributes->except(['id', 'name', 'type', 'value', 'placeholder', 'required', 'disabled', 'readonly', 'autocomplete'])->class([
+    'ui-email',
+    'ui-email--error' => $hasError,
+    'ui-email--disabled' => $disabled,
+    'ui-email--readonly' => $readonly,
+]) }}>
     @if($label)
-        <label for="{{ $name }}" class="ui-email__label">
+        <label for="{{ $defaultId }}" class="ui-email__label">
             {{ $label }}
-            @if($required) <span class="ui-email__required">*</span> @endif
+            @if($required)
+                <span class="ui-email__required-marker" aria-hidden="true">*</span>
+            @endif
         </label>
     @endif
 
@@ -45,29 +70,29 @@
         @endif
 
         <input
-            id="{{ $name }}"
-            name="{{ $name }}"
+            id="{{ $defaultId }}"
+            @if($safeName) name="{{ $safeName }}" @endif
             type="email"
-            value="{{ old($name, $value) }}"
+            value="{{ $initialValue }}"
             placeholder="{{ $placeholder }}"
             autocomplete="email"
-            @class([
-                'ui-email__input',
-                'ui-email__input--error' => $hasError
-            ])
-            @required($required)
-            @disabled($disabled)
-            @readonly($readonly)
-            aria-invalid="{{ $hasError ? 'true' : 'false' }}"
-            aria-describedby="{{ $hasError ? $errorId : $hintId }}"
-            {{ $attributes }}
-        />
+            class="ui-email__input @error($safeName) ui-email__input--error @enderror"
+            @if($required) required @endif
+            @if($disabled) disabled @endif
+            @if($readonly) readonly @endif
+            @if($hasError) aria-invalid="true" @else aria-invalid="false" @endif
+            @if($describedBy) aria-describedby="{{ implode(' ', $describedBy) }}" @endif
+            {{ $attributes->only(['id', 'name', 'type', 'value', 'placeholder', 'required', 'disabled', 'readonly', 'autocomplete']) }}
+        >
     </div>
 
-    {{-- Feedback de Mensagens --}}
-    @if($hasError)
-        <p id="{{ $errorId }}" class="ui-email__error">{{ $errors->first($name) }}</p>
-    @elseif($hint)
+    {{-- Dica de Ajuda (Hint) --}}
+    @if($hint)
         <p id="{{ $hintId }}" class="ui-email__hint">{{ $hint }}</p>
+    @endif
+
+    {{-- Mensagem de Erro do Laravel --}}
+    @if($hasError)
+        <p id="{{ $errorId }}" class="ui-email__error-message" role="alert">{{ $resolvedError }}</p>
     @endif
 </div>

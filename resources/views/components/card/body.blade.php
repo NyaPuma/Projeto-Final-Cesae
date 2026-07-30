@@ -1,41 +1,43 @@
 {{--
 |--------------------------------------------------------------------------
-| Card Body Component (Otimizado)
+| Card Body Component
 |--------------------------------------------------------------------------
 |
 | O contentor principal de conteúdo do card.
 | • Resolução automática de conflitos entre 'flush' (colado) e 'spacing'.
-| • Suporte para altura máxima em corpos com scroll dinâmico.
-| • Tag HTML configurável para respeitar a semântica de formulários ou secções.
+| • Suporte para altura máxima e scroll via classes BEM (zero CSS inline).
+| • Validação de tags HTML para garantir a semântica correta no DOM.
 |
 --}}
 
 @props([
     'spacing' => 'md',      // 'none', 'xs', 'sm', 'md', 'lg'
     'scrollable' => false,  // Ativa overflow-y se o conteúdo exceder a altura
-    'maxHeight' => null,    // Altura máxima (ex: '350px', '20rem') se for scrollable
+    'maxHeight' => null,    // Variantes de altura máxima ('sm', 'md', 'lg', 'xl') via classes CSS
     'flush' => false,       // Remove padding para tabelas ou gráficos colarem nas bordas
-    'tag' => 'div',         // Permite alterar para 'section', 'form' ou 'fieldset'
+    'tag' => 'div',         // Permite alterar para 'section', 'form', 'fieldset' ou 'article'
 ])
 
 @php
+    // Lista restrita de tags HTML permitidas para garantia de segurança e semântica
+    $allowedTags = ['div', 'section', 'form', 'fieldset', 'article'];
+    $validTag = in_array(mb_strtolower($tag), $allowedTags, true) ? mb_strtolower($tag) : 'div';
+
     // Se for 'flush', forçamos o espaçamento a 'none' para evitar conflitos de padding
     $appliedSpacing = $flush ? 'none' : $spacing;
 
-    // Configura estilos inline se houver uma altura máxima definida
-    $styles = [];
-    if ($scrollable && $maxHeight) {
-        $styles[] = "max-height: {$maxHeight}";
-    }
+    // Classe de altura máxima delegada ao CSS em vez de inline styles
+    $maxHeightClass = $maxHeight ? "ui-card-body--max-height-{$maxHeight}" : null;
 @endphp
 
-<{{ $tag }}
+<{{ $validTag }}
     {{ $attributes->class([
         'ui-card-body',
         "ui-card-body--spacing-{$appliedSpacing}",
-        'ui-card-body--scrollable' => $scrollable,
+        'ui-card-body--scrollable' => $scrollable || $maxHeight !== null,
         'ui-card-body--flush' => $flush,
-    ])->merge($styles ? ['style' => implode('; ', $styles)] : []) }}
+        $maxHeightClass => $maxHeight !== null,
+    ]) }}
 >
     {{ $slot }}
-</{{ $tag }}>
+</{{ $validTag }}>

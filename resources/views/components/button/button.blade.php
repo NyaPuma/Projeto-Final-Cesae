@@ -1,9 +1,9 @@
 {{--
 |--------------------------------------------------------------------------
-| Button Component
+| Componente Button
 |--------------------------------------------------------------------------
 |
-| Componente base e flexível para o teu Design System.
+| Componente base acessível e reutilizável para o Design System.
 |
 --}}
 
@@ -21,20 +21,17 @@
 ])
 
 @php
-    // Determina dinamicamente se o elemento deve ser uma âncora ou um botão
+    $isDisabled = $disabled || $loading;
     $tag = $href ? 'a' : 'button';
 
-    // Centralização de Atributos de Acessibilidade e Comportamento
+    // Construção centralizada e limpa de atributos dinâmicos
     $customAttributes = [];
 
     if ($tag === 'button') {
         $customAttributes['type'] = $type;
-        if ($disabled || $loading) {
-            $customAttributes['disabled'] = true;
-        }
+        $customAttributes['disabled'] = $isDisabled;
     } else {
-        // Tratamento robusto para links com comportamento de botão
-        if ($disabled) {
+        if ($isDisabled) {
             $customAttributes['aria-disabled'] = 'true';
             $customAttributes['role'] = 'button';
             $customAttributes['tabindex'] = '-1';
@@ -46,6 +43,9 @@
     if ($loading) {
         $customAttributes['aria-busy'] = 'true';
     }
+
+    // Suporte flexível para ícone via Slot nomeado ou Prop
+    $hasIcon = $icon || isset($iconSlot);
 @endphp
 
 <{{ $tag }}
@@ -54,7 +54,7 @@
         "ui-button--{$variant}",
         "ui-button--{$size}",
         'ui-button--loading' => $loading,
-        'ui-button--disabled' => $disabled,
+        'ui-button--disabled' => $isDisabled,
         'ui-button--block' => $fullWidth,
         'ui-button--rounded' => $rounded,
     ]) }}
@@ -64,22 +64,24 @@
         <span class="ui-button__spinner" aria-hidden="true"></span>
     @endif
 
-    {{-- Ícone à Esquerda (Escondido se estiver a carregar para evitar quebras visuais) --}}
-    @if($icon && $iconPosition === 'left' && !$loading)
+    {{-- Ícone à Esquerda --}}
+    @if($hasIcon && $iconPosition === 'left' && !$loading)
         <span class="ui-button__icon" aria-hidden="true">
-            {!! $icon !!}
+            {{ $iconSlot ?? (is_string($icon) ? {!! $icon !!} : $icon) }}
         </span>
     @endif
 
     {{-- Texto do Botão --}}
-    <span class="ui-button__label">
-        {{ $slot }}
-    </span>
+    @if($slot->isNotEmpty())
+        <span class="ui-button__label">
+            {{ $slot }}
+        </span>
+    @endif
 
-    {{-- Ícone à Direita (Escondido se estiver a carregar) --}}
-    @if($icon && $iconPosition === 'right' && !$loading)
+    {{-- Ícone à Direita --}}
+    @if($hasIcon && $iconPosition === 'right' && !$loading)
         <span class="ui-button__icon" aria-hidden="true">
-            {!! $icon !!}
+            {{ $iconSlot ?? (is_string($icon) ? {!! $icon !!} : $icon) }}
         </span>
     @endif
 </{{ $tag }}>

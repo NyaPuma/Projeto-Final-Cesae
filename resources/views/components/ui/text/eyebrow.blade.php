@@ -1,3 +1,11 @@
+{{--
+|-------------------------------------------------------------------------- |
+Text / Typography Component (Otimizado)
+|-------------------------------------------------------------------------- |
+| Componente dinâmico de texto/rótulo (Span, Heading, P, etc.).
+| • Corrigido o mapeamento de tons para sincronizar com as variáveis do tema.
+| • 100% livre de CSS ou JS inline.
+| --}}
 @props([
     'as' => 'span',
     'tone' => 'muted',
@@ -10,7 +18,8 @@
 
     $toneClasses = match ($tone) {
         'primary' => 'text-primary',
-        default => 'text-soft',
+        'muted' => 'text-[var(--text-soft)]',
+        default => 'text-[var(--text)]',
     };
 
     $sizeClasses = match ($size) {

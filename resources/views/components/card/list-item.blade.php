@@ -1,11 +1,14 @@
 {{--
 |--------------------------------------------------------------------------
-| Card List Item Component (Otimizado)
+| Card List Item Component
 |--------------------------------------------------------------------------
 |
 | Item de linha para listas dentro de cards.
-| • Suporta props para casos simples e slots nomeados para casos ricos.
-| • Acessibilidade garantida (A11y) para estados clicáveis.
+| • Resolução centralizada de conteúdos híbridos (Props ou Slots nomeados).
+| • Deteção automática de interatividade (se tiver 'href', converte para tag <a>).
+| • Renderização segura de SVGs inline para os ícones.
+| • Acessibilidade garantida (A11y) nativa ou via atributos ARIA dinâmicos.
+| • 100% livre de CSS ou JS inline.
 |
 --}}
 
@@ -16,50 +19,86 @@
     'meta' => null,
     'action' => null,
     'clickable' => false,
+    'tag' => 'li',          // Tag HTML padrão ('li', 'div', 'a')
 ])
 
-<li
-    {{ $attributes->class([
+@php
+    // Deteção inteligente de interatividade e roteamento semântico de tag
+    $href = $attributes->get('href');
+    $isLink = !empty($href);
+
+    // Se tiver um href, a tag tem de ser obrigatoriamente um <a> para acessibilidade nativa
+    $resolvedTag = $isLink ? 'a' : (in_array(mb_strtolower($tag), ['li', 'div', 'article', 'a'], true) ? mb_strtolower($tag) : 'li');
+    $resolvedClickable = $clickable || $isLink;
+
+    // Resolução unificada de conteúdos (Aceita prop direta, slot nomeado ou nulo)
+    $iconContent = $icon ?? $iconSlot ?? null;
+    $titleContent = $title ?? $titleSlot ?? null;
+    $descriptionContent = $description ?? $descriptionSlot ?? null;
+    $metaContent = $meta ?? $metaSlot ?? null;
+    $actionContent = $action ?? $actionSlot ?? null;
+
+    // Atributos dinâmicos de acessibilidade
+    $accessibilityAttributes = [];
+    if ($resolvedClickable && !$isLink) {
+        $accessibilityAttributes['role'] = 'button';
+        $accessibilityAttributes['tabindex'] = '0';
+    }
+
+    $hasContent = $titleContent || $descriptionContent || $slot->isNotEmpty();
+@endphp
+
+<{{ $resolvedTag }}
+    {{ $attributes->merge($accessibilityAttributes)->class([
         'ui-card-list-item',
-        'ui-card-list-item--clickable' => $clickable,
-    ])->merge([
-        'role' => $clickable ? 'button' : 'listitem',
-        'tabindex' => $clickable ? '0' : null,
+        'ui-card-list-item--clickable' => $resolvedClickable,
+        'ui-card-list-item--has-action' => !empty($actionContent),
     ]) }}
 >
-    {{-- Ícone --}}
-    @if($icon || isset($iconSlot))
+    {{-- Bloco de Ícone / Avatar --}}
+    @if($iconContent)
         <div class="ui-card-list-item__icon" aria-hidden="true">
-            {{ $iconSlot ?? $icon }}
+            @if(is_string($iconContent) && str_starts_with(trim($iconContent), '<svg'))
+                {!! $iconContent !!}
+            @else
+                {{ $iconContent }}
+            @endif
         </div>
     @endif
 
-    {{-- Conteúdo (Título + Descrição) --}}
-    <div class="ui-card-list-item__content">
-        @if($title || isset($titleSlot))
-            <div class="ui-card-list-item__title">
-                {{ $titleSlot ?? $title }}
-            </div>
-        @endif
+    {{-- Bloco Principal de Conteúdo (Título + Descrição ou HTML Livre) --}}
+    @if($hasContent)
+        <div class="ui-card-list-item__content">
+            @if($titleContent)
+                <div class="ui-card-list-item__title">
+                    {{ $titleContent }}
+                </div>
+            @endif
 
-        @if($description || isset($descriptionSlot))
-            <div class="ui-card-list-item__description">
-                {{ $descriptionSlot ?? $description }}
-            </div>
-        @endif
-    </div>
+            @if($descriptionContent)
+                <div class="ui-card-list-item__description">
+                    {{ $descriptionContent }}
+                </div>
+            @endif
 
-    {{-- Meta Informação (Data, Status, etc) --}}
-    @if($meta || isset($metaSlot))
+            {{-- Permite conteúdo livre se as props/slots de título e descrição não forem usados --}}
+            @if($slot->isNotEmpty() && !$titleContent && !$descriptionContent)
+                {{ $slot }}
+            @endif
+        </div>
+    @endif
+
+    {{-- Bloco Meta (Data, Status, Valores, etc.) --}}
+    @if($metaContent)
         <div class="ui-card-list-item__meta">
-            {{ $metaSlot ?? $meta }}
+            {{ $metaContent }}
         </div>
     @endif
 
-    {{-- Ações (Botões, Menus) --}}
-    @if($action || isset($actionSlot))
+    {{-- Bloco de Ações (Botões, Menus Dropdown) --}}
+    @if($actionContent)
         <div class="ui-card-list-item__action">
-            {{ $actionSlot ?? $action }}
+            {{ $actionContent }}
         </div>
     @endif
-</li>
+</{{ $resolvedTag }}>

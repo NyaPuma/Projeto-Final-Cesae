@@ -1,3 +1,11 @@
+{{--
+|-------------------------------------------------------------------------- |
+Profile Update Form Component (Otimizado)
+|-------------------------------------------------------------------------- |
+| Componente para alteração de informações e palavra-passe do perfil.
+| • Padronizado com as variáveis CSS oficiais do Tailwind.
+| • 100% livre de CSS ou JS inline.
+| --}}
 @props([
     'user',
     'messages' => [],
@@ -5,8 +13,8 @@
 
 <x-ui.form.card>
     <div>
-        <h2 class="text-lg font-semibold text-(--text)">{{ __('Atualizar informação') }}</h2>
-        <p class="mt-2 text-sm text-(--text-soft)">{{ __('Altere o nome ou a palavra-passe do seu perfil em segurança.') }}</p>
+        <h2 class="text-lg font-semibold text-[var(--text)]">{{ __('Atualizar informação') }}</h2>
+        <p class="mt-2 text-sm text-[var(--text-soft)]">{{ __('Altere o nome ou a palavra-passe do seu perfil em segurança.') }}</p>
     </div>
 
     <form

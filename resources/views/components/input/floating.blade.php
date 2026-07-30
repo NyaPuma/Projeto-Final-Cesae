@@ -1,17 +1,20 @@
 {{--
 |--------------------------------------------------------------------------
-| Floating Label Input Component (Otimizado)
+| Floating Label Input Component
 |--------------------------------------------------------------------------
 |
-| Input com label que flutua ao focar ou preencher.
-| • Acessibilidade A11y (ARIA-describedby).
-| • Suporte total a estados de erro.
+| Input com label flutuante com suporte a A11y e validação nativa Laravel.
+| • Integração automática com Request Validation e Old Input do Laravel.
+| • Sanitização robusta de IDs para campos complexos (pontos e arrays).
+| • Ligações ARIA rigorosas (aria-describedby, aria-invalid).
+| • 100% livre de CSS ou JS inline.
 |
 --}}
 
 @props([
-    'name',
-    'label',
+    'id' => null,
+    'name' => null,
+    'label' => null,
     'type' => 'text',
     'value' => null,
     'placeholder' => ' ',
@@ -20,42 +23,66 @@
     'disabled' => false,
     'autocomplete' => null,
     'hint' => null,
+    'error' => null,
 ])
 
 @php
-    $id = $attributes->get('id', $name);
-    $hasError = $errors->has($name);
-    $errorId = "{$id}-error";
-    $hintId = "{$id}-hint";
+    // Sanitização segura do nome e geração de ID compatível com DOM
+    $safeName = $name ?? '';
+    $defaultId = $id ?? ($safeName ? str_replace(['.', '[', ']'], ['_', '', ''], $safeName) : 'floating_' . uniqid());
+
+    // Resolução automática de erros do Laravel caso a prop error não venha preenchida
+    $laravelError = $safeName ? $errors->first($safeName) : null;
+    $resolvedError = $error ?? $laravelError;
+    $hasError = !empty($resolvedError);
+
+    // Definição dos IDs para conexões ARIA
+    $hintId = $hint ? "{$defaultId}-hint" : null;
+    $errorId = $hasError ? "{$defaultId}-error" : null;
+    $describedBy = array_filter([$hintId, $errorId]);
+
+    // Valor inicial considerando o old input do Laravel
+    $initialValue = $safeName ? old($safeName, $value) : $value;
 @endphp
 
-<div class="ui-floating {{ $hasError ? 'ui-floating--error' : '' }}">
+<div {{ $attributes->except(['id', 'name', 'type', 'value', 'placeholder', 'required', 'readonly', 'disabled', 'autocomplete'])->class([
+    'ui-floating',
+    'ui-floating--error' => $hasError,
+    'ui-floating--disabled' => $disabled,
+    'ui-floating--readonly' => $readonly,
+]) }}>
     <input
-        id="{{ $id }}"
-        name="{{ $name }}"
+        id="{{ $defaultId }}"
+        @if($safeName) name="{{ $safeName }}" @endif
         type="{{ $type }}"
-        value="{{ old($name, $value) }}"
+        value="{{ $initialValue }}"
         placeholder="{{ $placeholder }}"
-        autocomplete="{{ $autocomplete }}"
-        @class(['ui-floating__input', 'ui-floating__input--error' => $hasError])
-        @required($required)
-        @readonly($readonly)
-        @disabled($disabled)
-        aria-describedby="{{ $hasError ? $errorId : ($hint ? $hintId : '') }}"
-        aria-invalid="{{ $hasError ? 'true' : 'false' }}"
-        {{ $attributes->except(['id', 'name', 'type', 'placeholder', 'autocomplete', 'class']) }}
+        @if($autocomplete) autocomplete="{{ $autocomplete }}" @endif
+        class="ui-floating__input @error($safeName) ui-floating__input--error @enderror"
+        @if($required) required @endif
+        @if($readonly) readonly @endif
+        @if($disabled) disabled @endif
+        @if($hasError) aria-invalid="true" @else aria-invalid="false" @endif
+        @if($describedBy) aria-describedby="{{ implode(' ', $describedBy) }}" @endif
+        {{ $attributes->only(['id', 'name', 'type', 'value', 'placeholder', 'required', 'readonly', 'disabled', 'autocomplete']) }}
     >
 
-    <label for="{{ $id }}" class="ui-floating__label">
-        {{ $label }}
-        @if($required) <span aria-hidden="true">*</span> @endif
-    </label>
+    @if($label)
+        <label for="{{ $defaultId }}" class="ui-floating__label">
+            {{ $label }}
+            @if($required)
+                <span class="ui-floating__required-marker" aria-hidden="true">*</span>
+            @endif
+        </label>
+    @endif
 
-    @if($hint && !$hasError)
+    {{-- Dica de Ajuda (Hint) --}}
+    @if($hint)
         <x-ui.input.hint id="{{ $hintId }}">{{ $hint }}</x-ui.input.hint>
     @endif
 
-    @error($name)
-        <x-ui.input.error id="{{ $errorId }}">{{ $message }}</x-ui.input.error>
-    @enderror
+    {{-- Mensagem de Erro do Laravel --}}
+    @if($hasError)
+        <x-ui.input.error id="{{ $errorId }}">{{ $resolvedError }}</x-ui.input.error>
+    @endif
 </div>
