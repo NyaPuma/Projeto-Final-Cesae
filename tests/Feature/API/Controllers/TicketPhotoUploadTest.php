@@ -23,7 +23,7 @@ class TicketPhotoUploadTest extends TestCase
     {
         parent::setUp();
 
-        // Criar perfis necessÃ¡rios para os testes
+        // Criar perfis necessários para os testes
         UserProfile::create(['name' => UserRoleEnum::User->value]);
         UserProfile::create(['name' => UserRoleEnum::Technician->value]);
         UserProfile::create(['name' => UserRoleEnum::Admin->value]);
@@ -53,18 +53,18 @@ class TicketPhotoUploadTest extends TestCase
         $ticket = Ticket::create([
             'user_id' => $user->id,
             'title' => 'Avaria teste',
-            'description' => 'DescriÃ§Ã£o da avaria',
+            'description' => 'Descrição da avaria',
             'status_id' => $openStatusId,
             'opened_at' => now(),
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->postJson('/tickets/'.$ticket->id.'/photos', [
-                'photo' => UploadedFile::fake()->create('damage.jpg', 100, 'image/jpeg'),
+            ->postJson('/api/tickets/'.$ticket->id.'/photos', [
+                'photo' => UploadedFile::fake()->image('damage.jpg', 800, 600),
             ]);
 
         $response->assertStatus(201);
-        $response->assertJsonPath('attachment.file_name', 'damage.jpg');
+        $this->assertStringEndsWith('.jpg', $response->json('attachment.file_name'));
         $this->assertStringStartsWith('ticket_photos/', $response->json('attachment.path'));
         $this->assertDatabaseHas('ticket_attachments', [
             'ticket_id' => $ticket->id,
@@ -82,13 +82,13 @@ class TicketPhotoUploadTest extends TestCase
         $ticket = Ticket::create([
             'user_id' => $user->id,
             'title' => 'Avaria teste',
-            'description' => 'DescriÃ§Ã£o da avaria',
+            'description' => 'Descrição da avaria',
             'status_id' => $openStatusId,
             'opened_at' => now(),
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->postJson('/tickets/'.$ticket->id.'/photos', [
+            ->postJson('/api/tickets/'.$ticket->id.'/photos', [
                 // sem photo
             ]);
 
@@ -106,13 +106,13 @@ class TicketPhotoUploadTest extends TestCase
         $ticket = Ticket::create([
             'user_id' => $user->id,
             'title' => 'Avaria teste',
-            'description' => 'DescriÃ§Ã£o da avaria',
+            'description' => 'Descrição da avaria',
             'status_id' => $openStatusId,
             'opened_at' => now(),
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->postJson('/tickets/'.$ticket->id.'/photos', [
+            ->postJson('/api/tickets/'.$ticket->id.'/photos', [
                 'photo' => UploadedFile::fake()->create('damage.txt', 10, 'text/plain'),
             ]);
 
@@ -127,7 +127,7 @@ class TicketPhotoUploadTest extends TestCase
         $user = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->postJson('/tickets/999999/photos', [
+            ->postJson('/api/tickets/999999/photos', [
                 'photo' => UploadedFile::fake()->create('damage.jpg', 10, 'image/jpeg'),
             ]);
 

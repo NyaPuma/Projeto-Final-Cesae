@@ -100,7 +100,7 @@ class NotificationFeatureTest extends TestCase
             'status_id' => $closedId,
             'closed_at' => now(),
             'minutes_spent' => 180,
-            'cost' => 250.00,
+            'estimated_cost' => 250.00,
         ]);
 
         $user->notify(new TicketStatusChanged($ticket, $oldStatus, TicketStatusEnum::Closed->value));

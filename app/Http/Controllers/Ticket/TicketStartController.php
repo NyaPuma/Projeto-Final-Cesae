@@ -32,7 +32,7 @@ final class TicketStartController extends Controller
         $user = $request->user();
 
         // 2. Validação de estado elegível para início
-        if ($ticket->status !== TicketStatusEnum::Open) {
+        if (! $ticket->hasStatus(TicketStatusEnum::Open)) {
             return response()->json([
                 'message' => __('Apenas tickets no estado "Aberto" podem ser iniciados.'),
             ], 422);

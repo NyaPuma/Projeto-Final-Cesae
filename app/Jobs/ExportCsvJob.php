@@ -50,7 +50,7 @@ final class ExportCsvJob implements ShouldQueue
             'user_id' => $this->userId,
             'title' => 'Exportação CSV concluída',
             'message' => "O ficheiro {$filename} está pronto para download.",
-            'type' => 'export',
+            'type' => 'system',
             'is_read' => false,
             'link' => '/storage/exports/'.$filename,
         ]);
@@ -65,7 +65,7 @@ final class ExportCsvJob implements ShouldQueue
             'user_id' => $this->userId,
             'title' => 'Falha na exportação CSV',
             'message' => 'Não foi possível gerar o relatório pretendido. Por favor, tente novamente.',
-            'type' => 'export_error',
+            'type' => 'system',
             'is_read' => false,
             'link' => null,
         ]);

@@ -67,7 +67,7 @@ class MassAssignmentTest extends FeatureTestCase
                 'user_id' => 1,
                 'assigned_to' => 1,
                 'minutes_spent' => 999,
-                'cost' => 99999.99,
+                'estimated_cost' => 99999.99,
             ]);
 
         $this->assertContains($response->status(), [201, 422]);

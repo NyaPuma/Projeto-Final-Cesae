@@ -5,7 +5,7 @@ namespace Tests\Feature;
 
 use App\Enums\UserRoleEnum;
 use App\Models\User;
-use App\Models\Userprofile as UserProfile;
+use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\TestCase;
@@ -17,6 +17,7 @@ class UiAuthorizationTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        $this->withoutVite();
 
         UserProfile::create(['name' => UserRoleEnum::User->value]);
         UserProfile::create(['name' => UserRoleEnum::Technician->value]);

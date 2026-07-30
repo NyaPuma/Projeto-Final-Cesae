@@ -36,12 +36,12 @@ abstract class PerformanceTestCase extends TestCase
 
     protected function seedLookupData(): void
     {
-        TicketStatus::firstOrCreate(['name' => 'aberta'], ['description' => 'Aberta']);
-        TicketStatus::firstOrCreate(['name' => 'em curso'], ['description' => 'Em curso']);
-        TicketStatus::firstOrCreate(['name' => 'fechada'], ['description' => 'Fechada']);
-        TicketStatus::firstOrCreate(['name' => 'cancelada'], ['description' => 'Cancelada']);
-        TicketStatus::firstOrCreate(['name' => 'pendente orÃ§amento'], ['description' => 'Pendente']);
-        TicketStatus::firstOrCreate(['name' => 'recusada'], ['description' => 'Recusada']);
+        TicketStatus::firstOrCreate(['name' => 'aberta'], ['code' => 'ABERTA', 'description' => 'Aberta']);
+        TicketStatus::firstOrCreate(['name' => 'em curso'], ['code' => 'EM_CURSO', 'description' => 'Em curso']);
+        TicketStatus::firstOrCreate(['name' => 'fechada'], ['code' => 'FECHADA', 'description' => 'Fechada']);
+        TicketStatus::firstOrCreate(['name' => 'cancelada'], ['code' => 'CANCELADA', 'description' => 'Cancelada']);
+        TicketStatus::firstOrCreate(['name' => 'pendente orçamento'], ['code' => 'PENDENTE_ORCAMENTO', 'description' => 'Pendente']);
+        TicketStatus::firstOrCreate(['name' => 'recusada'], ['code' => 'RECUSADA', 'description' => 'Recusada']);
     }
 
     protected function createTestUsers(): void
@@ -166,7 +166,7 @@ abstract class PerformanceTestCase extends TestCase
                 'status_id' => $statusIds[array_rand($statusIds)],
                 'opened_at' => now()->subDays(rand(0, 30)),
                 'minutes_spent' => rand(15, 240),
-                'cost' => round(rand(10, 500) / 10, 2),
+                'estimated_cost' => round(rand(10, 500) / 10, 2),
             ], $overrides));
         }
 

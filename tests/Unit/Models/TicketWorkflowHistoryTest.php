@@ -29,13 +29,13 @@ class TicketWorkflowHistoryTest extends TestCase
             'origin_status_id' => $statusA->id,
             'destination_status_id' => $statusB->id,
             'technician_id' => $technician->id,
-            'comment' => 'InÃ­cio dos trabalhos',
+            'comment' => 'Início dos trabalhos',
         ]);
 
         $this->assertEquals($ticket->id, $history->ticket->id);
         $this->assertEquals($statusA->id, $history->originStatus->id);
         $this->assertEquals($statusB->id, $history->destinationStatus->id);
         $this->assertEquals($technician->id, $history->technician->id);
-        $this->assertEquals('InÃ­cio dos trabalhos', $history->comment);
+        $this->assertEquals('Início dos trabalhos', $history->comment);
     }
 }

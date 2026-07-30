@@ -33,19 +33,19 @@ class TicketStatusEnumTest extends TestCase
     #[Test]
     public function it_returns_enum_from_value(): void
     {
-        $this->assertEquals(TicketStatusEnum::Open, TicketStatusEnum::fromValue('aberta'));
-        $this->assertEquals(TicketStatusEnum::InProgress, TicketStatusEnum::fromValue('em curso'));
-        $this->assertEquals(TicketStatusEnum::Closed, TicketStatusEnum::fromValue('fechada'));
-        $this->assertEquals(TicketStatusEnum::Cancelled, TicketStatusEnum::fromValue('cancelada'));
-        $this->assertEquals(TicketStatusEnum::PendingBudget, TicketStatusEnum::fromValue('pendente orçamento'));
-        $this->assertEquals(TicketStatusEnum::Rejected, TicketStatusEnum::fromValue('recusada'));
+        $this->assertEquals(TicketStatusEnum::Open, TicketStatusEnum::from('aberta'));
+        $this->assertEquals(TicketStatusEnum::InProgress, TicketStatusEnum::from('em curso'));
+        $this->assertEquals(TicketStatusEnum::Closed, TicketStatusEnum::from('fechada'));
+        $this->assertEquals(TicketStatusEnum::Cancelled, TicketStatusEnum::from('cancelada'));
+        $this->assertEquals(TicketStatusEnum::PendingBudget, TicketStatusEnum::from('pendente orçamento'));
+        $this->assertEquals(TicketStatusEnum::Rejected, TicketStatusEnum::from('recusada'));
     }
 
     #[Test]
     public function it_returns_null_for_invalid_value(): void
     {
-        $this->assertNull(TicketStatusEnum::fromValue('invalid'));
-        $this->assertNull(TicketStatusEnum::fromValue(''));
+        $this->assertNull(TicketStatusEnum::tryFrom('invalid'));
+        $this->assertNull(TicketStatusEnum::tryFrom(''));
     }
 
     #[Test]

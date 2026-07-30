@@ -12,6 +12,7 @@ use App\Services\TicketStatusService;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 use RuntimeException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 final readonly class ApproveBudgetAction
 {
@@ -24,7 +25,7 @@ final readonly class ApproveBudgetAction
     {
         // Guard Clause: Garante que existe um pedido de orçamento pendente
         if (! $ticket->budget_requested || $ticket->budget_status !== BudgetStatusEnum::Pending->value) {
-            throw new InvalidArgumentException('Não existe pedido de orçamento pendente para este ticket.');
+            throw new HttpException(422, 'Não existe pedido de orçamento pendente para este ticket.');
         }
 
         $isApproved = $data->isApproved();
@@ -72,6 +73,6 @@ final readonly class ApproveBudgetAction
             $message .= " Motivo: {$data->feedback}";
         }
 
-        $this->notificationService->notifyBudgetDecision($ticket, $data->decision, $message);
+        $this->notificationService->notifyBudgetDecision($ticket, $data->decision->value, $message);
     }
 }

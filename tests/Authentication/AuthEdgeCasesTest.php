@@ -84,7 +84,7 @@ class AuthEdgeCasesTest extends TestCase
 
         $oldToken = $user->api_token;
 
-        $login = $this->postJson('/login', [
+        $login = $this->postJson('/api/login', [
             'email' => $user->email,
             'password' => 'Password123!',
         ]);
@@ -107,7 +107,7 @@ class AuthEdgeCasesTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->postJson('/password/change', [
+            ->postJson('/api/password/change', [
                 'current_password' => 'wrong-password',
                 'new_password' => 'Password123!',
             ]);
@@ -130,7 +130,7 @@ class AuthEdgeCasesTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->postJson('/password/change', [
+            ->postJson('/api/password/change', [
                 'current_password' => 'Password123!',
                 'new_password' => 'short',
             ]);

@@ -73,7 +73,7 @@ class AuthFlowTest extends TestCase
             'api_token' => Str::random(60),
         ]);
 
-        $response = $this->withSession([])->postJson('/login', [
+        $response = $this->withSession([])->postJson('/api/login', [
             'email' => 'demo@example.com',
             'password' => 'Password123!',
         ]);
@@ -91,7 +91,7 @@ class AuthFlowTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->postJson('/password/change', [
+            ->postJson('/api/password/change', [
                 'current_password' => 'wrong-password',
                 'new_password' => 'Password123!',
             ]);

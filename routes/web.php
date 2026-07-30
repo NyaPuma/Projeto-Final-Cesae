@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Rotas P├║blicas (Acesso Aberto)
+| Rotas Públicas (Acesso Aberto)
 |--------------------------------------------------------------------------
 */
 
@@ -43,7 +43,7 @@ Route::post('/login', [AuthController::class, 'login'])
 
 /*
 |--------------------------------------------------------------------------
-| Rotas Protegidas (Exigem Token de Autentica├º├úo V├ílido via custom.auth)
+| Rotas Protegidas (Exigem Token de Autenticação Válido via custom.auth)
 |--------------------------------------------------------------------------
 */
 Route::middleware(['custom.auth'])->group(function () {
@@ -57,7 +57,7 @@ Route::middleware(['custom.auth'])->group(function () {
     Route::post('/profile/update', [ProfileController::class, 'updateProfile'])
         ->name('auth.profile.update');
 
-    // --- Notifica├º├Áes ---
+    // --- Notificações ---
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
     Route::patch('/notifications/{id}', [NotificationController::class, 'markAsRead'])
         ->name('notifications.mark-read')
@@ -86,10 +86,10 @@ Route::middleware(['custom.auth'])->group(function () {
     Route::post('/api/rooms', [RoomController::class, 'storeRoom'])
         ->name('rooms.store')
         ->withoutMiddleware([ValidateCsrfToken::class]);
-    Route::put('/api/rooms/{id}', [RoomController::class, 'updateRoom'])
+    Route::put('/api/rooms/{room}', [RoomController::class, 'updateRoom'])
         ->name('rooms.update')
         ->withoutMiddleware([ValidateCsrfToken::class]);
-    Route::patch('/api/rooms/{id}', [RoomController::class, 'updateRoom'])
+    Route::patch('/api/rooms/{room}', [RoomController::class, 'updateRoom'])
         ->name('rooms.update-patch')
         ->withoutMiddleware([ValidateCsrfToken::class]);
 
@@ -97,81 +97,81 @@ Route::middleware(['custom.auth'])->group(function () {
     Route::get('/tickets/search', [TicketController::class, 'search'])->name('tickets.search');
     Route::get('/tickets/most-urgent', [TicketController::class, 'getMostUrgentOpenTicket'])->name('tickets.most-urgent');
     Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index');
-    Route::get('/tickets/{id}', [TicketController::class, 'show'])->name('tickets.show');
+    Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
     Route::post('/tickets', [TicketController::class, 'store'])
         ->name('tickets.store')
         ->withoutMiddleware([ValidateCsrfToken::class]);
 
-    // --- Tickets: Coment├írios ---
-    Route::post('/tickets/{id}/comments', [TicketCommentController::class, 'store'])
+    // --- Tickets: Comentários ---
+    Route::post('/tickets/{ticket}/comments', [TicketCommentController::class, 'store'])
         ->name('tickets.comments.store')
         ->withoutMiddleware([ValidateCsrfToken::class]);
-    Route::get('/tickets/{id}/comments', [TicketCommentController::class, 'index'])->name('tickets.comments.index');
+    Route::get('/tickets/{ticket}/comments', [TicketCommentController::class, 'index'])->name('tickets.comments.index');
 
     // --- Tickets: Fotografias ---
-    Route::post('/tickets/{id}/photos', [TicketAttachmentController::class, 'store'])
+    Route::post('/tickets/{ticket}/photos', [TicketAttachmentController::class, 'store'])
         ->name('tickets.photos.store')
         ->withoutMiddleware([ValidateCsrfToken::class]);
-    Route::get('/tickets/{id}/photos', [TicketAttachmentController::class, 'index'])->name('tickets.photos.index');
-    Route::delete('/tickets/{id}/photos/{photoId}', [TicketAttachmentController::class, 'destroy'])
+    Route::get('/tickets/{ticket}/photos', [TicketAttachmentController::class, 'index'])->name('tickets.photos.index');
+    Route::delete('/tickets/{ticket}/photos/{attachment}', [TicketAttachmentController::class, 'destroy'])
         ->name('tickets.photos.destroy')
         ->withoutMiddleware([ValidateCsrfToken::class]);
 
     // --- Tickets: Fluxo de Estado ---
-    Route::post('/tickets/{id}/reopen', [TicketLifecycleController::class, 'reopen'])
+    Route::post('/tickets/{ticket}/reopen', [TicketLifecycleController::class, 'reopen'])
         ->name('tickets.reopen')
         ->withoutMiddleware([ValidateCsrfToken::class]);
-    Route::post('/tickets/{id}/cancel', [TicketLifecycleController::class, 'cancel'])
+    Route::post('/tickets/{ticket}/cancel', [TicketLifecycleController::class, 'cancel'])
         ->name('tickets.cancel')
         ->withoutMiddleware([ValidateCsrfToken::class]);
-    Route::post('/tickets/{id}/schedule', [TicketScheduleController::class, '__invoke'])
+    Route::post('/tickets/{ticket}/schedule', TicketScheduleController::class)
         ->name('tickets.schedule')
         ->withoutMiddleware([ValidateCsrfToken::class]);
 
-    // --- Tickets: Fluxo Or├ºamental ---
-    Route::post('/tickets/{id}/budget', [TicketBudgetController::class, 'submitEstimate'])
+    // --- Tickets: Fluxo Orçamental ---
+    Route::post('/tickets/{ticket}/budget', [TicketBudgetController::class, 'submitEstimate'])
         ->name('tickets.budget')
         ->withoutMiddleware([ValidateCsrfToken::class]);
-    Route::post('/tickets/{id}/close', [TicketCloseController::class, 'closeFinal'])
+    Route::post('/tickets/{ticket}/close', [TicketCloseController::class, 'closeFinal'])
         ->name('tickets.close')
         ->withoutMiddleware([ValidateCsrfToken::class]);
 
-    // --- Calend├írio ---
+    // --- Calendário ---
     Route::get('/calendar/events', [CalendarController::class, 'events'])->name('calendar.events');
     Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.view');
 
-    // --- ├ürea do T├®cnico ---
+    // --- Área do Técnico ---
     Route::middleware(['role:technician'])->group(function () {
-        Route::put('/technician/tickets/{id}/start', TicketStartController::class)
+        Route::put('/technician/tickets/{ticket}/start', TicketStartController::class)
             ->name('technician.tickets.start')
             ->withoutMiddleware([ValidateCsrfToken::class]);
-        Route::put('/technician/tickets/{id}/close', [TicketCloseController::class, '__invoke'])
+        Route::put('/technician/tickets/{ticket}/close', [TicketCloseController::class, 'simpleClose'])
             ->name('technician.tickets.close')
             ->withoutMiddleware([ValidateCsrfToken::class]);
-        Route::put('/technician/tickets/{id}/request-budget', [TicketBudgetController::class, 'requestAuthorization'])
+        Route::put('/technician/tickets/{ticket}/request-budget', [TicketBudgetController::class, 'requestAuthorization'])
             ->name('technician.tickets.request-budget')
             ->withoutMiddleware([ValidateCsrfToken::class]);
     });
 
-    // --- ├ürea de Administra├º├úo ---
+    // --- Área de Administração ---
     Route::middleware(['role:admin'])->group(function () {
 
         // UI de admin
         Route::get('/ui/users', [UiController::class, 'users'])->name('ui.users');
         Route::get('/ui/audits', [UiController::class, 'audits'])->name('ui.audits');
         Route::get('/ui/users/create', [UiController::class, 'userCreate'])->name('ui.users.create');
-        Route::get('/ui/users/{id}/edit', [UiController::class, 'userEdit'])->name('ui.users.edit');
+        Route::get('/ui/users/{targetUser}/edit', [UiController::class, 'userEdit'])->name('ui.users.edit');
         Route::get('/ui/rooms/create', [UiController::class, 'roomCreate'])->name('ui.rooms.create');
-        Route::get('/ui/rooms/{id}/edit', [UiController::class, 'roomEdit'])->name('ui.rooms.edit');
+        Route::get('/ui/rooms/{room}/edit', [UiController::class, 'roomEdit'])->name('ui.rooms.edit');
         Route::get('/ui/analytics', [UiController::class, 'analytics'])->name('ui.analytics');
 
         // Tickets abertos
         Route::get('/technician/tickets/open', [TicketController::class, 'openTickets'])->name('technician.tickets.open');
-        Route::post('/tickets/{id}/assign-technician', [TicketAssignmentController::class, '__invoke'])
+        Route::post('/tickets/{ticket}/assign-technician', [TicketAssignmentController::class, '__invoke'])
             ->name('tickets.assign-technician')
             ->withoutMiddleware([ValidateCsrfToken::class]);
 
-        // Anal├¡ticos
+        // Analíticos
         Route::get('/analytics', [AnalyticsController::class, 'stats'])->name('analytics.stats');
         Route::get('/analytics/export/csv', [AnalyticsController::class, 'exportCsv'])->name('analytics.export.csv');
         Route::get('/analytics/export/pdf', [AnalyticsController::class, 'exportPdf'])->name('analytics.export.pdf');
@@ -183,36 +183,36 @@ Route::middleware(['custom.auth'])->group(function () {
             ->middleware(['rate.limit:5,1']);
 
         // IA
-        Route::get('/admin/tickets/{id}', [TicketController::class, 'show'])->name('admin.tickets.show');
-        Route::patch('/admin/tickets/{id}/atribuir', [TicketAssignmentController::class, '__invoke'])
+        Route::get('/admin/tickets/{ticket}', [TicketController::class, 'show'])->name('admin.tickets.show');
+        Route::patch('/admin/tickets/{ticket}/atribuir', [TicketAssignmentController::class, '__invoke'])
             ->name('admin.tickets.atribuir')
             ->withoutMiddleware([ValidateCsrfToken::class]);
 
         // Auditoria
         Route::get('/admin/audits', [AuditController::class, 'index'])->name('admin.audits.index');
 
-        // Gest├úo de Utilizadores
+        // Gestão de Utilizadores
         Route::get('/admin/users', [AdminUserController::class, 'index'])->name('admin.users.index');
         Route::post('/admin/users', [AdminUserController::class, 'store'])->name('admin.users.store');
-        Route::patch('/admin/users/{id}', [AdminUserController::class, 'update'])->name('admin.users.update');
-        Route::patch('/admin/users/{id}/inactive', [AdminUserController::class, 'inactivate'])->name('admin.users.inactivate');
+        Route::patch('/admin/users/{targetUser}', [AdminUserController::class, 'update'])->name('admin.users.update');
+        Route::patch('/admin/users/{targetUser}/inactive', [AdminUserController::class, 'inactivate'])->name('admin.users.inactivate');
         Route::get('/admin/profiles', [AdminUserController::class, 'profiles'])->name('admin.profiles.index');
 
-        // Gest├úo de Equipamentos
+        // Gestão de Equipamentos
         Route::get('/admin/equipment', [AdminEquipmentController::class, 'index'])->name('admin.equipment.index');
         Route::post('/admin/equipment', [AdminEquipmentController::class, 'store'])->name('admin.equipment.store');
-        Route::patch('/admin/equipment/{id}', [AdminEquipmentController::class, 'update'])->name('admin.equipment.update');
-        Route::delete('/admin/equipment/{id}', [AdminEquipmentController::class, 'destroy'])->name('admin.equipment.destroy');
+        Route::patch('/admin/equipment/{equipment}', [AdminEquipmentController::class, 'update'])->name('admin.equipment.update');
+        Route::delete('/admin/equipment/{equipment}', [AdminEquipmentController::class, 'destroy'])->name('admin.equipment.destroy');
 
-        // Gest├úo de Salas
+        // Gestão de Salas
         Route::get('/admin/rooms', [RoomController::class, 'indexRoom'])->name('admin.rooms.index');
         Route::post('/admin/rooms', [RoomController::class, 'storeRoom'])->name('admin.rooms.store');
-        Route::patch('/admin/rooms/{id}', [RoomController::class, 'updateRoom'])->name('admin.rooms.update');
-        Route::patch('/admin/rooms/{id}/inactive', [RoomController::class, 'inactivateRoom'])->name('admin.rooms.inactivate');
+        Route::patch('/admin/rooms/{room}', [RoomController::class, 'updateRoom'])->name('admin.rooms.update');
+        Route::patch('/admin/rooms/{room}/inactive', [RoomController::class, 'inactivateRoom'])->name('admin.rooms.inactivate');
 
-        // Or├ºamento e Manuten├º├úo Preventiva
+        // Orçamento e Manutenção Preventiva
         Route::post('/admin/preventive', [AdminController::class, 'storePreventive'])->name('admin.preventive.store');
-        Route::patch('/admin/tickets/{id}/approve-budget', [AdminController::class, 'approveBudget'])
+        Route::patch('/admin/tickets/{ticket}/approve-budget', [AdminController::class, 'approveBudget'])
             ->name('admin.tickets.approve-budget')
             ->withoutMiddleware([ValidateCsrfToken::class]);
     });

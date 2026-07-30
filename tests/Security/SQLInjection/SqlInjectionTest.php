@@ -44,7 +44,7 @@ class SqlInjectionTest extends FeatureTestCase
             ->postJson('/api/tickets', [
                 'title' => 'Avaria XSS Test',
                 'description' => $xssPayload,
-                'priority' => 'mÃ©dia',
+                'priority' => 'média',
             ]);
 
         $response->assertStatus(201);

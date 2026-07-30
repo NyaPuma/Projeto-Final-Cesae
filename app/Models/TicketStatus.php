@@ -15,6 +15,15 @@ final class TicketStatus extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected static function booted(): void
+    {
+        static::creating(function (TicketStatus $status) {
+            if ($status->code === null) {
+                $status->code = strtoupper(substr(preg_replace('/[^a-zA-Z0-9]/', '_', $status->name ?? 'status'), 0, 20));
+            }
+        });
+    }
+
     protected $fillable = [
         'code',
         'name',

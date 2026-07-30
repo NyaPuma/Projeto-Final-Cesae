@@ -17,6 +17,15 @@ final class Room extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected static function booted(): void
+    {
+        static::creating(function (Room $room) {
+            if ($room->code === null) {
+                $room->code = 'RM-' . strtoupper(uniqid());
+            }
+        });
+    }
+
     protected $fillable = [
         'name',
         'code',

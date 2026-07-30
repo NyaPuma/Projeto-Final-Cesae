@@ -32,7 +32,7 @@ class AnalyticsFeatureTest extends FeatureTestCase
             'status_id' => $statusClosed->id,
             'opened_at' => now()->subHours(5),
             'closed_at' => now()->subHours(1),
-            'cost' => 150.00,
+            'estimated_cost' => 150.00,
         ]);
 
         $admin = $this->createAdmin();

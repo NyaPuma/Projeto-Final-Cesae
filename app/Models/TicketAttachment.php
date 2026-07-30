@@ -49,6 +49,12 @@ final class TicketAttachment extends Model
      */
     protected static function booted(): void
     {
+        static::creating(function (self $attachment): void {
+            if ($attachment->original_name === null) {
+                $attachment->original_name = $attachment->file_name ?? 'file_' . uniqid();
+            }
+        });
+
         // Garante que o ficheiro físico é removido do Storage ao apagar o registo na BD
         static::deleting(static function (self $attachment): void {
             if ($attachment->path && Storage::exists($attachment->path)) {

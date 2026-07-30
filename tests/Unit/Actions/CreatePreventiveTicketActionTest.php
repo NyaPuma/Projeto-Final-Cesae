@@ -41,12 +41,12 @@ class CreatePreventiveTicketActionTest extends DatabaseTestCase
     private function seedTicketStatuses(): void
     {
         // Seed ticket statuses manually
-        TicketStatus::firstOrCreate(['name' => 'aberta'], ['description' => 'Aberta']);
+        TicketStatus::firstOrCreate(['name' => 'aberta'], ['code' => 'ABERTA', 'description' => 'Aberta']);
         TicketStatus::firstOrCreate(['name' => 'em curso'], ['description' => 'Em Curso']);
-        TicketStatus::firstOrCreate(['name' => 'fechada'], ['description' => 'Fechada']);
-        TicketStatus::firstOrCreate(['name' => 'cancelada'], ['description' => 'Cancelada']);
-        TicketStatus::firstOrCreate(['name' => 'pendente orÃ§amento'], ['description' => 'Pendente OrÃ§amento']);
-        TicketStatus::firstOrCreate(['name' => 'recusada'], ['description' => 'Recusada']);
+        TicketStatus::firstOrCreate(['name' => 'fechada'], ['code' => 'FECHADA', 'description' => 'Fechada']);
+        TicketStatus::firstOrCreate(['name' => 'cancelada'], ['code' => 'CANCELADA', 'description' => 'Cancelada']);
+        TicketStatus::firstOrCreate(['name' => 'pendente orçamento'], ['description' => 'Pendente Orçamento']);
+        TicketStatus::firstOrCreate(['name' => 'recusada'], ['code' => 'RECUSADA', 'description' => 'Recusada']);
     }
 
     #[Test]
@@ -88,7 +88,7 @@ class CreatePreventiveTicketActionTest extends DatabaseTestCase
 
         $this->assertInstanceOf(Ticket::class, $result);
         $this->assertNull($result->assigned_to);
-        $this->assertEquals('ManutenÃ§Ã£o preventiva agendada.', $result->description);
+        $this->assertEquals('Manutenção preventiva agendada.', $result->description);
     }
 
     #[Test]
@@ -121,7 +121,7 @@ class CreatePreventiveTicketActionTest extends DatabaseTestCase
             now()->addDays(7)->toDateTimeString()
         );
 
-        $this->assertEquals('ManutenÃ§Ã£o preventiva agendada.', $result->description);
+        $this->assertEquals('Manutenção preventiva agendada.', $result->description);
     }
 
     #[Test]

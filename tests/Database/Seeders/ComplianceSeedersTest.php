@@ -19,11 +19,6 @@ class ComplianceSeedersTest extends TestCase
             BulkOperationalDataSeeder::class,
         ]);
 
-        $this->seed([
-            TicketLookupSeeder::class,
-            BulkOperationalDataSeeder::class,
-        ]);
-
         $this->assertGreaterThanOrEqual(100, DB::table('users')->count());
         $this->assertGreaterThanOrEqual(100, DB::table('rooms')->count());
         $this->assertGreaterThanOrEqual(100, DB::table('equipment_categories')->count());

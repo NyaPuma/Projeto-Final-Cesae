@@ -15,6 +15,15 @@ final class TicketType extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected static function booted(): void
+    {
+        static::creating(function (TicketType $type) {
+            if ($type->code === null) {
+                $type->code = strtoupper(uniqid('TYPE_'));
+            }
+        });
+    }
+
     protected $fillable = [
         'code',
         'name',

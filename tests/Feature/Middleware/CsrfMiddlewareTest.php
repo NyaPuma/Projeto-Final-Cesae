@@ -5,7 +5,7 @@ namespace Tests\Feature;
 
 use App\Enums\UserRoleEnum;
 use App\Models\User;
-use App\Models\Userprofile as UserProfile;
+use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -32,7 +32,7 @@ class CsrfMiddlewareTest extends TestCase
             })
             ->name('test.csrf.get');
 
-        // Rota dummy para testar CSRF em POST (HTML/web - nÃ£o JSON)
+        // Rota dummy para testar CSRF em POST (HTML/web - não JSON)
         Route::middleware(['web', 'custom.auth'])
             ->post('/test-csrf-require', function () {
                 return response()->json(['ok' => true], 200);
@@ -61,10 +61,10 @@ class CsrfMiddlewareTest extends TestCase
     {
         $response = $this->get('/test-csrf-require');
 
-        // A rota dummy sÃ³ existe como POST; se o GET falhar por 404,
-        // ainda assim o objetivo do teste (GET skip) nÃ£o estÃ¡ validado.
+        // A rota dummy só existe como POST; se o GET falhar por 404,
+        // ainda assim o objetivo do teste (GET skip) não está validado.
         // Portanto, criamos a rota GET dedicada ao teste.
-        $this->markTestSkipped('Este teste foi preparado para validar GET skip. Atualize as rotas dummy se necessÃ¡rio.');
+        $this->markTestSkipped('Este teste foi preparado para validar GET skip. Atualize as rotas dummy se necessário.');
     }
 
     public function test_post_without_csrf_token_returns_419_with_payload_structure_when_csrf_is_required(): void
@@ -75,8 +75,8 @@ class CsrfMiddlewareTest extends TestCase
             'active' => true,
         ]);
 
-        // ForÃ§a sessÃ£o com _token inexistente/ausente.
-        // ObservaÃ§Ã£o: a suite atual jÃ¡ demonstra que, dependendo do pipeline/config,
+        // Força sessão com _token inexistente/ausente.
+        // Observação: a suite atual já demonstra que, dependendo do pipeline/config,
         // pode haver skip de CSRF mesmo em POST.
         // Portanto, validamos o payload do CSRF em 419 quando ocorrer.
         $response = $this->withSession([])
@@ -87,7 +87,7 @@ class CsrfMiddlewareTest extends TestCase
 
         if ($response->getStatusCode() === 419) {
             $response->assertJson([
-                'message' => 'CSRF Token invÃ¡lido ou expirado.',
+                'message' => 'CSRF Token inválido ou expirado.',
                 'error_code' => 419,
             ])->assertJsonStructure([
                 'message',
@@ -119,7 +119,7 @@ class CsrfMiddlewareTest extends TestCase
 
         if ($response->getStatusCode() === 419) {
             $response->assertJson([
-                'message' => 'CSRF Token invÃ¡lido ou expirado.',
+                'message' => 'CSRF Token inválido ou expirado.',
                 'error_code' => 419,
             ]);
         } else {
@@ -163,7 +163,7 @@ class CsrfMiddlewareTest extends TestCase
             'active' => true,
         ]);
 
-        // ForÃ§a session token para validar
+        // Força session token para validar
         $csrfToken = base64_encode(random_bytes(32));
 
         $response = $this->withSession([
@@ -182,8 +182,8 @@ class CsrfMiddlewareTest extends TestCase
 
     public function test_csrf_is_skipped_for_named_api_auth_login_route(): void
     {
-        // A rota abaixo estÃ¡ nomeada como "api.auth.login" (skip Ã© pelo nome)
-        // E para o skip por JSON/AJAX, o middleware tambÃ©m tende a permitir com headers.
+        // A rota abaixo está nomeada como "api.auth.login" (skip é pelo nome)
+        // E para o skip por JSON/AJAX, o middleware também tende a permitir com headers.
         $response = $this->post('/api/auth/login', [
             'email' => 'a@b.com',
             'password' => '123456',

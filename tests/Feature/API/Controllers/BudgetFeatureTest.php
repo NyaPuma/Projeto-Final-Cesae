@@ -58,7 +58,7 @@ class BudgetFeatureTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
-            ->putJson("/technician/tickets/{$ticket->id}/request-budget", [
+            ->putJson("/api/technician/tickets/{$ticket->id}/request-budget", [
                 'budget_amount' => 500.00,
                 'budget_justification' => 'Need to replace the main motor bearing - special order part',
             ]);
@@ -96,7 +96,7 @@ class BudgetFeatureTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->putJson("/technician/tickets/{$ticket->id}/request-budget", [
+            ->putJson("/api/technician/tickets/{$ticket->id}/request-budget", [
                 'budget_amount' => 100.00,
                 'budget_justification' => 'Test',
             ]);
@@ -123,7 +123,7 @@ class BudgetFeatureTest extends TestCase
 
         // Missing both required fields
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
-            ->putJson("/technician/tickets/{$ticket->id}/request-budget", []);
+            ->putJson("/api/technician/tickets/{$ticket->id}/request-budget", []);
 
         $response->assertStatus(422)
             ->assertJsonValidationErrors(['budget_amount']);
@@ -151,7 +151,7 @@ class BudgetFeatureTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->patchJson("/admin/tickets/{$ticket->id}/approve-budget", [
+            ->patchJson("/api/admin/tickets/{$ticket->id}/approve-budget", [
                 'decision' => 'approve',
             ]);
 
@@ -185,7 +185,7 @@ class BudgetFeatureTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->patchJson("/admin/tickets/{$ticket->id}/approve-budget", [
+            ->patchJson("/api/admin/tickets/{$ticket->id}/approve-budget", [
                 'decision' => 'reject',
                 'feedback' => 'Budget too high for this type of repair',
             ]);
@@ -217,7 +217,7 @@ class BudgetFeatureTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
-            ->patchJson("/admin/tickets/{$ticket->id}/approve-budget", [
+            ->patchJson("/api/admin/tickets/{$ticket->id}/approve-budget", [
                 'decision' => 'approve',
             ]);
 

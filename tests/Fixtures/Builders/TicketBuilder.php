@@ -111,7 +111,7 @@ class TicketBuilder
 
     public function withCost(float $cost): self
     {
-        $this->attributes['cost'] = $cost;
+        $this->attributes['estimated_cost'] = $cost;
 
         return $this;
     }

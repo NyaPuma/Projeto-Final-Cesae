@@ -26,6 +26,7 @@ final readonly class CreateTicketAction
 
         return DB::transaction(function () use ($user, $data, $openStatusId) {
             $ticket = Ticket::create([
+                'reference' => 'TKT-' . now()->format('YmdHis') . '-' . strtoupper(uniqid()),
                 'title' => trim($data->title),
                 'description' => trim($data->description),
                 'priority' => $data->priority->value,

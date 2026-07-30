@@ -5,7 +5,7 @@ namespace Tests\Feature;
 
 use App\Enums\UserRoleEnum;
 use App\Models\User;
-use App\Models\Userprofile as UserProfile;
+use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -81,7 +81,7 @@ class CustomAuthMiddlewareTest extends TestCase
 
         $response->assertStatus(401);
         $response->assertJson([
-            'message' => 'Token invÃ¡lido ou utilizador inativo.',
+            'message' => 'Token inválido ou utilizador inativo.',
             'error_code' => 401,
         ]);
     }
@@ -102,7 +102,7 @@ class CustomAuthMiddlewareTest extends TestCase
 
         $response->assertStatus(401);
         $response->assertJson([
-            'message' => 'Token invÃ¡lido ou utilizador inativo.',
+            'message' => 'Token inválido ou utilizador inativo.',
             'error_code' => 401,
         ]);
     }
@@ -132,7 +132,7 @@ class CustomAuthMiddlewareTest extends TestCase
 
         $response->assertStatus(401);
         $response->assertJson([
-            'message' => 'Token invÃ¡lido ou utilizador inativo.',
+            'message' => 'Token inválido ou utilizador inativo.',
             'error_code' => 401,
             'errors' => [
                 'api_token' => ['Invalid or user is inactive.'],
@@ -164,7 +164,7 @@ class CustomAuthMiddlewareTest extends TestCase
 
         $response->assertStatus(403);
         $response->assertJson([
-            'message' => 'Perfil invÃ¡lido.',
+            'message' => 'Perfil inválido.',
             'error_code' => 403,
             'errors' => [
                 'profile_id' => ['User must have a valid profile assigned.'],
@@ -196,7 +196,7 @@ class CustomAuthMiddlewareTest extends TestCase
 
         $response->assertStatus(403);
         $response->assertJson([
-            'message' => 'Perfil invÃ¡lido.',
+            'message' => 'Perfil inválido.',
             'error_code' => 403,
             'errors' => [
                 'profile_id' => ['User must have a valid profile assigned.'],
@@ -360,9 +360,9 @@ class CustomAuthMiddlewareTest extends TestCase
             ->getJson('/protected-auth');
 
         // Em alguns contextos de teste, o middleware pode falhar por falta de session store;
-        // neste cenÃ¡rio queremos apenas validar que o token invÃ¡lido Ã© recusado.
+        // neste cenário queremos apenas validar que o token inválido é recusado.
         if ($response->getStatusCode() === 500) {
-            $this->markTestIncomplete('Falha por ausÃªncia de session store no request de teste.');
+            $this->markTestIncomplete('Falha por ausência de session store no request de teste.');
 
             return;
         }

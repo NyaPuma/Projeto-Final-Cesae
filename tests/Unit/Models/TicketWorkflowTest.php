@@ -6,6 +6,7 @@ namespace Tests\Unit\Models;
 use App\Enums\UserRoleEnum;
 use App\Actions\ApproveBudgetAction;
 use App\DTOs\BudgetDecisionData;
+use App\Enums\BudgetDecisionEnum;
 use App\Enums\BudgetStatusEnum;
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
@@ -31,16 +32,16 @@ class TicketWorkflowTest extends TestCase
 
     private function seedLookupData(): void
     {
-        TicketType::firstOrCreate(['name' => 'avaria', 'description' => 'Avaria']);
-        TicketType::firstOrCreate(['name' => 'preventiva', 'description' => 'ManutenÃ§Ã£o Preventiva']);
+        TicketType::firstOrCreate(['name' => 'avaria', 'description' => 'Avaria'], ['code' => 'AVARIA']);
+        TicketType::firstOrCreate(['name' => 'preventiva', 'description' => 'Manutenção Preventiva'], ['code' => 'PREVENTIVA']);
 
         $typeId = TicketType::where('name', 'avaria')->first()->id;
-        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Open->value, 'description' => 'Aberto', 'type_id' => $typeId]);
-        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::InProgress->value, 'description' => 'Em Curso', 'type_id' => $typeId]);
-        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Closed->value, 'description' => 'Fechado', 'type_id' => $typeId]);
-        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Cancelled->value, 'description' => 'Cancelado', 'type_id' => $typeId]);
-        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::PendingBudget->value, 'description' => 'Pendente OrÃ§amento', 'type_id' => $typeId]);
-        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Rejected->value, 'description' => 'Recusada', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Open->value], ['code' => 'ABERTA', 'description' => 'Aberto', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::InProgress->value], ['code' => 'EM_CURSO', 'description' => 'Em Curso', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Closed->value], ['code' => 'FECHADA', 'description' => 'Fechado', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Cancelled->value], ['code' => 'CANCELADA', 'description' => 'Cancelado', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::PendingBudget->value], ['code' => 'PENDENTE_ORCAMENTO', 'description' => 'Pendente Orçamento', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Rejected->value], ['code' => 'RECUSADA', 'description' => 'Recusada', 'type_id' => $typeId]);
 
         UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
         UserProfile::firstOrCreate(['name' => UserRoleEnum::Technician->value]);
@@ -126,7 +127,7 @@ class TicketWorkflowTest extends TestCase
             'priority' => TicketPriorityEnum::Medium->value,
             'user_id' => $user->id,
             'status_id' => $inProgressStatusId,
-            'cost' => 50.00,
+            'estimated_cost' => 50.00,
             'opened_at' => now(),
             'in_progress_at' => now(),
         ]);
@@ -151,7 +152,7 @@ class TicketWorkflowTest extends TestCase
             'priority' => TicketPriorityEnum::High->value,
             'user_id' => $user->id,
             'status_id' => $inProgressStatusId,
-            'cost' => 200.00,
+            'estimated_cost' => 200.00,
             'opened_at' => now(),
             'in_progress_at' => now(),
         ]);
@@ -247,7 +248,7 @@ class TicketWorkflowTest extends TestCase
             'budget_requested_at' => now(),
         ]);
 
-        $data = new BudgetDecisionData(decision: 'approve');
+        $data = new BudgetDecisionData(decision: BudgetDecisionEnum::Approve);
         $result = app(ApproveBudgetAction::class)->execute($ticket, $admin, $data);
 
         $this->assertInstanceOf(Ticket::class, $result);
@@ -279,14 +280,14 @@ class TicketWorkflowTest extends TestCase
             'budget_requested_at' => now(),
         ]);
 
-        $data = new BudgetDecisionData(decision: 'reject', feedback: 'OrÃ§amento demasiado alto');
+        $data = new BudgetDecisionData(decision: BudgetDecisionEnum::Reject, feedback: 'Orçamento demasiado alto');
         $result = app(ApproveBudgetAction::class)->execute($ticket, $admin, $data);
 
         $this->assertInstanceOf(Ticket::class, $result);
         $this->assertEquals(BudgetStatusEnum::Rejected->value, $ticket->budget_status);
         $this->assertEquals($admin->id, $ticket->budget_approved_by);
         $this->assertTrue($ticket->hasStatus(TicketStatusEnum::Rejected));
-        $this->assertEquals('OrÃ§amento demasiado alto', $ticket->budget_feedback);
+        $this->assertEquals('Orçamento demasiado alto', $ticket->budget_feedback);
     }
 
     #[Test]

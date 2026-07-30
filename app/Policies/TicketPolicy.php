@@ -158,6 +158,30 @@ final class TicketPolicy
     }
 
     /**
+     * Determina se o utilizador pode aceder às analíticas.
+     */
+    public function viewAnalytics(User $user): bool
+    {
+        return $user->isAdmin() || $user->isTechnician();
+    }
+
+    /**
+     * Determina se o utilizador pode exportar dados analíticos.
+     */
+    public function exportAnalytics(User $user): bool
+    {
+        return $user->isAdmin() || $user->isTechnician();
+    }
+
+    /**
+     * Determina se o administrador pode criar manutenção preventiva.
+     */
+    public function createPreventive(User $user): bool
+    {
+        return $user->isAdmin();
+    }
+
+    /**
      * Verifica se o utilizador tem acesso geral ao ticket (Admin/Técnico ou Criador).
      */
     private function canAccessTicket(User $user, Ticket $ticket): bool

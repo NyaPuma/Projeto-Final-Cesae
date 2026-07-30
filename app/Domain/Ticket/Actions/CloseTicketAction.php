@@ -34,7 +34,7 @@ final readonly class CloseTicketAction
             ];
 
             if ($cost !== null) {
-                $attributes['cost'] = $cost;
+                $attributes['actual_cost'] = $cost;
             }
 
             if ($report !== null) {

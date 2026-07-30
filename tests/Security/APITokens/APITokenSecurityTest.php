@@ -58,7 +58,7 @@ class APITokenSecurityTest extends FeatureTestCase
     {
         $user = $this->createUserWithPassword(UserRoleEnum::User->value, 'login-test@example.com', 'password', ['api_token' => 'old-token']);
 
-        $response = $this->post('/login', [
+        $response = $this->post('/api/login', [
             'email' => $user->email,
             'password' => 'password',
         ]);

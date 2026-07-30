@@ -72,10 +72,10 @@ class AttachmentOperationFeatureTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
-            ->deleteJson("/tickets/{$ticket->id}/photos/{$attachment->id}");
+            ->deleteJson("/api/tickets/{$ticket->id}/photos/{$attachment->id}");
 
         $response->assertOk();
-        $this->assertDatabaseMissing('ticket_attachments', ['id' => $attachment->id]);
+        $this->assertSoftDeleted($attachment);
         Storage::disk('public')->assertMissing($path);
     }
 
@@ -108,10 +108,10 @@ class AttachmentOperationFeatureTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->deleteJson("/tickets/{$ticket->id}/photos/{$attachment->id}");
+            ->deleteJson("/api/tickets/{$ticket->id}/photos/{$attachment->id}");
 
         $response->assertOk();
-        $this->assertDatabaseMissing('ticket_attachments', ['id' => $attachment->id]);
+        $this->assertSoftDeleted($attachment);
     }
 
     public function test_user_cannot_delete_another_users_photo(): void
@@ -144,7 +144,7 @@ class AttachmentOperationFeatureTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $user2->api_token)
-            ->deleteJson("/tickets/{$ticket->id}/photos/{$attachment->id}");
+            ->deleteJson("/api/tickets/{$ticket->id}/photos/{$attachment->id}");
 
         $response->assertStatus(403);
     }
@@ -164,7 +164,7 @@ class AttachmentOperationFeatureTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->deleteJson("/tickets/{$ticket->id}/photos/99999");
+            ->deleteJson("/api/tickets/{$ticket->id}/photos/99999");
 
         $response->assertStatus(404);
     }
@@ -207,7 +207,7 @@ class AttachmentOperationFeatureTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->getJson("/tickets/{$ticket->id}/photos");
+            ->getJson("/api/tickets/{$ticket->id}/photos");
 
         $response->assertOk()
             ->assertJsonStructure(['attachments' => [

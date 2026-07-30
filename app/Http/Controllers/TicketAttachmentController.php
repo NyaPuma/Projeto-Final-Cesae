@@ -21,7 +21,7 @@ final class TicketAttachmentController extends Controller
     public function store(UploadPhotoRequest $request, Ticket $ticket): JsonResponse
     {
         // 1. Autorização via Policy
-        $this->authorize('update', $ticket);
+        $this->authorize('attachPhoto', $ticket);
 
         $file = $request->file('photo');
         $realMime = $file->getMimeType();

@@ -45,7 +45,7 @@ class AuditFeatureTest extends TestCase
         $admin = $this->createUserWithToken(UserRoleEnum::Admin->value);
 
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->getJson('/admin/audits');
+            ->getJson('/api/admin/audits');
 
         $response->assertOk();
     }

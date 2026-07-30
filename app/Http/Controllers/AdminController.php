@@ -97,7 +97,7 @@ final class AdminController extends Controller
             admin: $admin,
             title: $request->validated('title'),
             description: $request->validated('description'),
-            technicianId: $request->integer('technician_id'),
+            technician: $request->integer('technician_id'),
             scheduledAt: $request->date('scheduled_at')
         );
 

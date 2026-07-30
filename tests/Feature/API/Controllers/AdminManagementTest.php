@@ -45,27 +45,27 @@ class AdminManagementTest extends TestCase
             'api_token' => Str::random(60),
         ]);
 
-        $users = $this->withHeader('X-Auth-Token', $admin->api_token)->getJson('/admin/users');
+        $users = $this->withHeader('X-Auth-Token', $admin->api_token)->getJson('/api/admin/users');
         $users->assertOk();
         $users->assertJsonStructure(['users']);
 
         $inactive = $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->patchJson('/admin/users/'.$target->id.'/inactive');
+            ->patchJson('/api/admin/users/'.$target->id.'/inactive');
         $inactive->assertOk();
         $this->assertFalse($target->fresh()->active);
 
         $room = $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->postJson('/admin/rooms', ['name' => 'A1', 'location' => 'Floor 1']);
+            ->postJson('/api/admin/rooms', ['name' => 'A1', 'location' => 'Floor 1']);
         $room->assertCreated();
         $roomId = $room->json('room.id');
 
         $roomUpdate = $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->patchJson('/admin/rooms/'.$roomId, ['location' => 'Floor 2']);
+            ->patchJson('/api/admin/rooms/'.$roomId, ['location' => 'Floor 2']);
         $roomUpdate->assertOk();
         $this->assertSame('Floor 2', Room::findOrFail($roomId)->location);
 
         $equipment = $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->postJson('/admin/equipment', [
+            ->postJson('/api/admin/equipment', [
                 'name' => 'Projector',
                 'serial' => 'PRJ-001',
                 'room_id' => $roomId,
@@ -74,16 +74,16 @@ class AdminManagementTest extends TestCase
         $equipmentId = $equipment->json('equipment.id');
 
         $equipmentUpdate = $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->patchJson('/admin/equipment/'.$equipmentId, ['active' => false]);
+            ->patchJson('/api/admin/equipment/'.$equipmentId, ['active' => false]);
         $equipmentUpdate->assertOk();
         $this->assertFalse(Equipment::findOrFail($equipmentId)->active);
 
         $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->patchJson('/admin/rooms/'.$roomId.'/inactive')
+            ->patchJson('/api/admin/rooms/'.$roomId.'/inactive')
             ->assertOk();
 
         $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->deleteJson('/admin/equipment/'.$equipmentId)
+            ->deleteJson('/api/admin/equipment/'.$equipmentId)
             ->assertOk();
 
         $this->assertSoftDeleted('equipments', ['id' => $equipmentId]);
@@ -109,14 +109,16 @@ class AdminManagementTest extends TestCase
             'description' => 'Needs approval',
             'status_id' => app(TicketStatusService::class)->getByName(TicketStatusEnum::InProgress),
             'opened_at' => now(),
-            'cost' => 250,
+            'estimated_cost' => 250,
             'budget_requested' => true,
             'budget_status' => BudgetStatusEnum::Pending->value,
             'budget_amount' => 250,
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->patchJson('/admin/tickets/'.$ticket->id.'/approve-budget');
+            ->patchJson('/api/admin/tickets/'.$ticket->id.'/approve-budget', [
+                'decision' => 'approve',
+            ]);
 
         $response->assertOk();
         $this->assertSame(BudgetStatusEnum::Approved->value, $ticket->fresh()->budget_status);
@@ -143,24 +145,24 @@ class AdminManagementTest extends TestCase
 
         foreach ([$commonUser, $technician] as $blockedUser) {
             $this->withHeader('X-Auth-Token', $blockedUser->api_token)
-                ->getJson('/admin/equipment')
+                ->getJson('/api/admin/equipment')
                 ->assertStatus(403);
 
             $this->withHeader('X-Auth-Token', $blockedUser->api_token)
-                ->getJson('/admin/rooms')
+                ->getJson('/api/admin/rooms')
                 ->assertStatus(403);
         }
 
         $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->getJson('/admin/equipment')
+            ->getJson('/api/admin/equipment')
             ->assertOk();
 
         $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->getJson('/admin/rooms')
+            ->getJson('/api/admin/rooms')
             ->assertOk();
 
         $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->postJson('/admin/equipment', [
+            ->postJson('/api/admin/equipment', [
                 'name' => 'Projector base',
                 'serial' => 'PRJ-001',
                 'room_id' => null,
@@ -168,7 +170,7 @@ class AdminManagementTest extends TestCase
             ->assertCreated();
 
         $duplicateResponse = $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->postJson('/admin/equipment', [
+            ->postJson('/api/admin/equipment', [
                 'name' => 'Duplicated projector',
                 'serial' => 'PRJ-001',
                 'room_id' => null,
@@ -193,9 +195,9 @@ class AdminManagementTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->postJson('/admin/preventive', [
-                'title' => 'ManutenÃ§Ã£o preventiva de ar-condicionado',
-                'description' => 'Verificar filtros e gÃ¡s.',
+            ->postJson('/api/admin/preventive', [
+                'title' => 'Manutenção preventiva de ar-condicionado',
+                'description' => 'Verificar filtros e gás.',
                 'scheduled_at' => now()->addWeek()->toDateTimeString(),
                 'technician_id' => $technician->id,
             ]);

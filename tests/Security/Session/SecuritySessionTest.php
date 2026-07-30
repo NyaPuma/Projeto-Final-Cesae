@@ -77,7 +77,7 @@ class SecuritySessionTest extends TestCase
             'api_token' => $oldToken,
         ]);
 
-        $response = $this->withSession([])->postJson('/login', [
+        $response = $this->withSession([])->postJson('/api/login', [
             'email' => 'newlogintoken@example.com',
             'password' => 'Password123!',
         ]);

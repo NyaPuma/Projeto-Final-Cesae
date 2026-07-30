@@ -22,10 +22,13 @@ final readonly class BudgetDecisionData
         // Aceita 'decision' ou fallback para 'action'
         $rawDecision = $payload['decision'] ?? $payload['action'] ?? null;
 
-        // Converte a string pura para o Enum correspondente
-        $decision = $rawDecision instanceof BudgetDecisionEnum
-            ? $rawDecision
-            : BudgetDecisionEnum::from($rawDecision);
+        if ($rawDecision === null) {
+            $decision = BudgetDecisionEnum::Approve;
+        } else {
+            $decision = $rawDecision instanceof BudgetDecisionEnum
+                ? $rawDecision
+                : BudgetDecisionEnum::from($rawDecision);
+        }
 
         // Sanitiza o feedback: limpa espaços e converte strings vazias para null
         $rawFeedback = isset($payload['feedback']) ? trim((string) $payload['feedback']) : null;

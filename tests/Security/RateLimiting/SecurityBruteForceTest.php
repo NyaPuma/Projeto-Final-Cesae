@@ -33,7 +33,7 @@ class SecurityBruteForceTest extends TestCase
         ]);
 
         for ($i = 0; $i < 10; $i++) {
-            $response = $this->withSession([])->postJson('/login', [
+            $response = $this->withSession([])->postJson('/api/login', [
                 'email' => 'bruteforce@example.com',
                 'password' => 'wrong-password-'.$i,
             ]);
@@ -54,7 +54,7 @@ class SecurityBruteForceTest extends TestCase
         $start = microtime(true);
 
         for ($i = 0; $i < 10; $i++) {
-            $this->withSession([])->postJson('/login', [
+            $this->withSession([])->postJson('/api/login', [
                 'email' => 'rapid@example.com',
                 'password' => 'wrong-password',
             ]);
@@ -76,14 +76,14 @@ class SecurityBruteForceTest extends TestCase
 
         // 3 failed attempts
         for ($i = 0; $i < 3; $i++) {
-            $this->withSession([])->postJson('/login', [
+            $this->withSession([])->postJson('/api/login', [
                 'email' => 'resetcounter@example.com',
                 'password' => 'wrong-password',
             ]);
         }
 
         // Successful login
-        $response = $this->withSession([])->postJson('/login', [
+        $response = $this->withSession([])->postJson('/api/login', [
             'email' => 'resetcounter@example.com',
             'password' => 'Password123!',
         ]);

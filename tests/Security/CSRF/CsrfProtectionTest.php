@@ -26,7 +26,7 @@ class CsrfProtectionTest extends FeatureTestCase
         ]);
 
         $response = $this->withSession([])
-            ->postJson('/login', [
+            ->postJson('/api/login', [
                 'email' => 'nocsrf@example.com',
                 'password' => 'Password123!',
             ]);
@@ -64,7 +64,7 @@ class CsrfProtectionTest extends FeatureTestCase
     #[Test]
     public function it_requires_authentication_for_password_change(): void
     {
-        $response = $this->postJson('/password/change', [
+        $response = $this->postJson('/api/password/change', [
             'current_password' => 'anything',
             'new_password' => 'new-password-123',
         ]);

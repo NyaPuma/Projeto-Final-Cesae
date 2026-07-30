@@ -31,7 +31,7 @@ final class TicketCloseController extends Controller
         $this->authorize('close', $ticket);
 
         // 2. Validação de estado inicial
-        if ($ticket->status !== TicketStatusEnum::InProgress) {
+        if (! $ticket->hasStatus(TicketStatusEnum::InProgress)) {
             return response()->json([
                 'message' => __('Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.'),
             ], 422);

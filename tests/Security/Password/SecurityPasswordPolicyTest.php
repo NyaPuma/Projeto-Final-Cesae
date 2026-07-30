@@ -74,7 +74,7 @@ class SecurityPasswordPolicyTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->postJson('/password/change', [
+            ->postJson('/api/password/change', [
                 'current_password' => 'current-password',
                 'new_password' => 'short',
             ]);

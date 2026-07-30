@@ -45,14 +45,14 @@ class ErrorScenarioFeatureTest extends TestCase
         $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
 
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
-            ->getJson('/tickets/99999');
+            ->getJson('/api/tickets/99999');
 
         $response->assertStatus(404);
     }
 
     public function test_api_returns_401_without_token(): void
     {
-        $response = $this->getJson('/tickets');
+        $response = $this->getJson('/api/tickets');
 
         $response->assertStatus(401);
     }
@@ -60,7 +60,7 @@ class ErrorScenarioFeatureTest extends TestCase
     public function test_api_returns_401_with_invalid_token(): void
     {
         $response = $this->withHeader('X-Auth-Token', 'invalid-token-12345')
-            ->getJson('/tickets');
+            ->getJson('/api/tickets');
 
         $response->assertStatus(401);
     }
@@ -70,7 +70,7 @@ class ErrorScenarioFeatureTest extends TestCase
         $user = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->putJson('/tickets/search');
+            ->putJson('/api/tickets/search');
 
         $response->assertStatus(405);
     }
@@ -105,7 +105,7 @@ class ErrorScenarioFeatureTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $inactiveUser->api_token)
-            ->postJson('/tickets', [
+            ->postJson('/api/tickets', [
                 'title' => 'Test ticket from inactive user',
                 'description' => 'This should be rejected',
                 'priority' => 'baixa',
@@ -142,7 +142,7 @@ class ErrorScenarioFeatureTest extends TestCase
         $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
 
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
-            ->postJson('/tickets/99999/comments', [
+            ->postJson('/api/tickets/99999/comments', [
                 'comment' => 'Test comment on missing ticket',
             ]);
 
@@ -154,7 +154,7 @@ class ErrorScenarioFeatureTest extends TestCase
         $user = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->postJson('/tickets/99999/photos', [
+            ->postJson('/api/tickets/99999/photos', [
                 'photo' => UploadedFile::fake()->create('test.jpg', 10, 'image/jpeg'),
             ]);
 

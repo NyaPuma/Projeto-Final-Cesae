@@ -29,15 +29,20 @@ final class RegisterRequest extends FormRequest
 
     public static function passwordRules(): array
     {
+        $rule = Password::min(8)
+            ->letters()
+            ->mixedCase()
+            ->numbers()
+            ->symbols();
+
+        if (! app()->environment('testing')) {
+            $rule->uncompromised();
+        }
+
         return [
             'required',
             'confirmed',
-            Password::min(8)
-                ->letters()
-                ->mixedCase()
-                ->numbers()
-                ->symbols()
-                ->uncompromised(),
+            $rule,
         ];
     }
 

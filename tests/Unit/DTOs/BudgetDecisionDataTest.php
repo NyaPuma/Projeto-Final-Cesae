@@ -3,6 +3,7 @@
 namespace Tests\Unit\DTOs;
 
 use App\DTOs\BudgetDecisionData;
+use App\Enums\BudgetDecisionEnum;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
@@ -11,9 +12,9 @@ class BudgetDecisionDataTest extends TestCase
     #[Test]
     public function it_creates_dto_with_approve_decision(): void
     {
-        $dto = new BudgetDecisionData(decision: 'approve');
+        $dto = new BudgetDecisionData(decision: BudgetDecisionEnum::Approve);
 
-        $this->assertEquals('approve', $dto->decision);
+        $this->assertEquals(BudgetDecisionEnum::Approve, $dto->decision);
         $this->assertNull($dto->feedback);
     }
 
@@ -21,11 +22,11 @@ class BudgetDecisionDataTest extends TestCase
     public function it_creates_dto_with_reject_decision_and_feedback(): void
     {
         $dto = new BudgetDecisionData(
-            decision: 'reject',
+            decision: BudgetDecisionEnum::Reject,
             feedback: 'Orçamento demasiado alto'
         );
 
-        $this->assertEquals('reject', $dto->decision);
+        $this->assertEquals(BudgetDecisionEnum::Reject, $dto->decision);
         $this->assertEquals('Orçamento demasiado alto', $dto->feedback);
     }
 
@@ -36,7 +37,7 @@ class BudgetDecisionDataTest extends TestCase
 
         $dto = BudgetDecisionData::fromRequest($data);
 
-        $this->assertEquals('approve', $dto->decision);
+        $this->assertEquals(BudgetDecisionEnum::Approve, $dto->decision);
     }
 
     #[Test]
@@ -46,7 +47,7 @@ class BudgetDecisionDataTest extends TestCase
 
         $dto = BudgetDecisionData::fromRequest($data);
 
-        $this->assertEquals('reject', $dto->decision);
+        $this->assertEquals(BudgetDecisionEnum::Reject, $dto->decision);
     }
 
     #[Test]
@@ -59,7 +60,7 @@ class BudgetDecisionDataTest extends TestCase
 
         $dto = BudgetDecisionData::fromRequest($data);
 
-        $this->assertEquals('reject', $dto->decision);
+        $this->assertEquals(BudgetDecisionEnum::Reject, $dto->decision);
         $this->assertEquals('Test feedback', $dto->feedback);
     }
 
@@ -70,13 +71,13 @@ class BudgetDecisionDataTest extends TestCase
 
         $dto = BudgetDecisionData::fromRequest($data);
 
-        $this->assertEquals('approve', $dto->decision);
+        $this->assertEquals(BudgetDecisionEnum::Approve, $dto->decision);
     }
 
     #[Test]
     public function it_is_readonly(): void
     {
-        $dto = new BudgetDecisionData(decision: 'approve');
+        $dto = new BudgetDecisionData(decision: BudgetDecisionEnum::Approve);
 
         $this->assertInstanceOf(\ReflectionClass::class, new \ReflectionClass($dto));
         $this->assertTrue((new \ReflectionClass($dto))->isReadOnly());

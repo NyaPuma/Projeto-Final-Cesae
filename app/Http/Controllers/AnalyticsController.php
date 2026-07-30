@@ -42,7 +42,7 @@ final class AnalyticsController extends Controller
         $user = $request->user();
 
         // 2. Dispara o job assíncrono em background
-        ExportCsvJob::dispatch($user);
+        ExportCsvJob::dispatch($user->id);
 
         return response()->json([
             'message' => __('Exportação CSV em processamento. Receberá uma notificação quando estiver pronta.'),
@@ -60,7 +60,7 @@ final class AnalyticsController extends Controller
         $user = $request->user();
 
         // 2. Dispara o job assíncrono em background
-        ExportPdfJob::dispatch($user);
+        ExportPdfJob::dispatch($user->id);
 
         return response()->json([
             'message' => __('Exportação PDF em processamento. Receberá uma notificação quando estiver pronta.'),

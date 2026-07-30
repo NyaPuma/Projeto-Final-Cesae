@@ -4,6 +4,7 @@ namespace App\Domain\Ticket\Actions;
 
 use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
+use App\Models\User;
 use App\Services\TicketStatusService;
 use Illuminate\Support\Facades\DB;
 use RuntimeException;
@@ -14,7 +15,7 @@ final readonly class StartTicketAction
         private TicketStatusService $statusService,
     ) {}
 
-    public function execute(Ticket $ticket): bool
+    public function execute(Ticket $ticket, ?User $user = null): bool
     {
         $inProgressStatusId = $this->statusService->getByName(TicketStatusEnum::InProgress);
 
@@ -27,8 +28,9 @@ final readonly class StartTicketAction
             return true;
         }
 
-        return DB::transaction(function () use ($ticket, $inProgressStatusId) {
+        return DB::transaction(function () use ($ticket, $inProgressStatusId, $user) {
             $ticket->status_id = $inProgressStatusId;
+            $ticket->assigned_to = $ticket->assigned_to ?? $user?->id;
 
             // Preserva a data de arranque original caso já tenha sido iniciada antes
             $ticket->in_progress_at = $ticket->in_progress_at ?? now();

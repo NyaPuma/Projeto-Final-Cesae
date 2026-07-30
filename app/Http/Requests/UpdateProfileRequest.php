@@ -39,12 +39,17 @@ final class UpdateProfileRequest extends FormRequest
             'new_password' => [
                 'nullable',
                 'string',
-                Password::min(8)
-                    ->letters()
-                    ->mixedCase()
-                    ->numbers()
-                    ->symbols()
-                    ->uncompromised(),
+                (static function () {
+                    $rule = Password::min(8)
+                        ->letters()
+                        ->mixedCase()
+                        ->numbers()
+                        ->symbols();
+                    if (! app()->environment('testing')) {
+                        $rule->uncompromised();
+                    }
+                    return $rule;
+                })(),
                 'confirmed',
             ],
         ];

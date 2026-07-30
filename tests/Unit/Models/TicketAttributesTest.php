@@ -29,16 +29,16 @@ class TicketAttributesTest extends TestCase
 
     private function seedLookupData(): void
     {
-        TicketType::firstOrCreate(['name' => 'avaria', 'description' => 'Avaria']);
-        TicketType::firstOrCreate(['name' => 'preventiva', 'description' => 'ManutenÃ§Ã£o Preventiva']);
+        TicketType::firstOrCreate(['name' => 'avaria'], ['code' => 'AVARIA', 'description' => 'Avaria']);
+        TicketType::firstOrCreate(['name' => 'preventiva'], ['code' => 'PREVENTIVA', 'description' => 'Manutenção Preventiva']);
 
         $typeId = TicketType::where('name', 'avaria')->first()->id;
-        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Open->value, 'description' => 'Aberto', 'type_id' => $typeId]);
-        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::InProgress->value, 'description' => 'Em Curso', 'type_id' => $typeId]);
-        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Closed->value, 'description' => 'Fechado', 'type_id' => $typeId]);
-        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Cancelled->value, 'description' => 'Cancelado', 'type_id' => $typeId]);
-        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::PendingBudget->value, 'description' => 'Pendente OrÃ§amento', 'type_id' => $typeId]);
-        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Rejected->value, 'description' => 'Recusada', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Open->value], ['code' => 'ABERTA', 'description' => 'Aberto', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::InProgress->value], ['code' => 'EM_CURSO', 'description' => 'Em Curso', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Closed->value], ['code' => 'FECHADA', 'description' => 'Fechado', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Cancelled->value], ['code' => 'CANCELADA', 'description' => 'Cancelado', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::PendingBudget->value], ['code' => 'PENDENTE_ORCAMENTO', 'description' => 'Pendente Orçamento', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Rejected->value], ['code' => 'RECUSADA', 'description' => 'Recusada', 'type_id' => $typeId]);
 
         UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
         UserProfile::firstOrCreate(['name' => UserRoleEnum::Technician->value]);
@@ -52,7 +52,7 @@ class TicketAttributesTest extends TestCase
         $this->assertEquals('em curso', TicketStatusEnum::InProgress->value);
         $this->assertEquals('fechada', TicketStatusEnum::Closed->value);
         $this->assertEquals('cancelada', TicketStatusEnum::Cancelled->value);
-        $this->assertEquals('pendente orÃ§amento', TicketStatusEnum::PendingBudget->value);
+        $this->assertEquals('pendente orçamento', TicketStatusEnum::PendingBudget->value);
         $this->assertEquals('recusada', TicketStatusEnum::Rejected->value);
     }
 
@@ -60,7 +60,7 @@ class TicketAttributesTest extends TestCase
     public function it_has_correct_priority_constants(): void
     {
         $this->assertEquals('baixa', TicketPriorityEnum::Low->value);
-        $this->assertEquals('mÃ©dia', TicketPriorityEnum::Medium->value);
+        $this->assertEquals('média', TicketPriorityEnum::Medium->value);
         $this->assertEquals('alta', TicketPriorityEnum::High->value);
     }
 
@@ -142,7 +142,7 @@ class TicketAttributesTest extends TestCase
             'budget_decided_at' => now(),
         ]);
 
-        $pauseMinutes = $ticket->getBudgetPauseMinutesAttribute();
+        $pauseMinutes = $ticket->budget_pause_minutes;
         $this->assertGreaterThan(0, $pauseMinutes);
         $this->assertLessThanOrEqual(1440, $pauseMinutes);
     }
@@ -160,7 +160,7 @@ class TicketAttributesTest extends TestCase
             'opened_at' => now(),
         ]);
 
-        $pauseMinutes = $ticket->getBudgetPauseMinutesAttribute();
+        $pauseMinutes = $ticket->budget_pause_minutes;
         $this->assertEquals(0, $pauseMinutes);
     }
 

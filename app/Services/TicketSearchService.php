@@ -53,7 +53,11 @@ final class TicketSearchService
             throw new \InvalidArgumentException('A data de início não pode ser posterior à data de fim.');
         }
 
-        $this->applyDateFilters($query, $filters->dateFrom, $filters->dateTo);
+        $this->applyDateFilters(
+            $query,
+            $filters->dateFrom?->toDateString(),
+            $filters->dateTo?->toDateString(),
+        );
 
         /** @var int $perPage */
         $perPage = config('services.custom.pagination.default_per_page', 15);

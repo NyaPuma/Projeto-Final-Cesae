@@ -5,7 +5,7 @@ namespace Tests\Feature;
 
 use App\Enums\UserRoleEnum;
 use App\Models\User;
-use App\Models\Userprofile as UserProfile;
+use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -99,7 +99,7 @@ class RoleMiddlewareTest extends TestCase
 
         $response->assertStatus(401);
         $response->assertJson([
-            'message' => 'Token invÃ¡lido ou utilizador inativo.',
+            'message' => 'Token inválido ou utilizador inativo.',
         ]);
     }
 
@@ -128,7 +128,7 @@ class RoleMiddlewareTest extends TestCase
 
         $response->assertStatus(401);
         $response->assertJson([
-            'message' => 'Token invÃ¡lido ou utilizador inativo.',
+            'message' => 'Token inválido ou utilizador inativo.',
         ]);
     }
 
@@ -154,7 +154,7 @@ class RoleMiddlewareTest extends TestCase
 
         $response->assertStatus(403);
         $response->assertJson([
-            'message' => 'Perfil invÃ¡lido.',
+            'message' => 'Perfil inválido.',
         ]);
     }
 

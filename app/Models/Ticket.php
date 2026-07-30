@@ -21,6 +21,15 @@ final class Ticket extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected static function booted(): void
+    {
+        static::creating(function (Ticket $ticket) {
+            if ($ticket->reference === null) {
+                $ticket->reference = 'TKT-' . now()->format('YmdHis') . '-' . strtoupper(substr(uniqid(), -5));
+            }
+        });
+    }
+
     /** @var list<string> */
     protected $fillable = [
         'title', 'description', 'priority', 'user_id', 'assigned_to',

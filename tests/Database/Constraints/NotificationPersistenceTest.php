@@ -24,12 +24,12 @@ class NotificationPersistenceTest extends TestCase
 
     protected function seedLookupData(): void
     {
-        TicketStatus::firstOrCreate(['name' => 'aberta'], ['description' => 'Aberta']);
-        TicketStatus::firstOrCreate(['name' => 'em curso'], ['description' => 'Em curso']);
-        TicketStatus::firstOrCreate(['name' => 'fechada'], ['description' => 'Fechada']);
-        TicketStatus::firstOrCreate(['name' => 'cancelada'], ['description' => 'Cancelada']);
-        TicketStatus::firstOrCreate(['name' => 'pendente orÃ§amento'], ['description' => 'Pendente']);
-        TicketStatus::firstOrCreate(['name' => 'recusada'], ['description' => 'Recusada']);
+        TicketStatus::firstOrCreate(['name' => 'aberta'], ['code' => 'ABERTA', 'description' => 'Aberta']);
+        TicketStatus::firstOrCreate(['name' => 'em curso'], ['code' => 'EM_CURSO', 'description' => 'Em curso']);
+        TicketStatus::firstOrCreate(['name' => 'fechada'], ['code' => 'FECHADA', 'description' => 'Fechada']);
+        TicketStatus::firstOrCreate(['name' => 'cancelada'], ['code' => 'CANCELADA', 'description' => 'Cancelada']);
+        TicketStatus::firstOrCreate(['name' => 'pendente orçamento'], ['code' => 'PENDENTE_ORCAMENTO', 'description' => 'Pendente']);
+        TicketStatus::firstOrCreate(['name' => 'recusada'], ['code' => 'RECUSADA', 'description' => 'Recusada']);
     }
 
     protected function createAdmin(): User
@@ -87,15 +87,15 @@ class NotificationPersistenceTest extends TestCase
         $technician = $this->createTechnician();
         $this->asUserWithToken($admin);
 
-        $response = $this->postJson('/tickets', [
+        $response = $this->postJson('/api/tickets', [
             'title' => 'Notification Test',
             'description' => 'Test notifications',
-            'priority' => 'mÃ©dia',
+            'priority' => 'média',
         ]);
         $ticketId = $response->json('ticket.id');
 
         $this->asUserWithToken($technician);
-        $response = $this->postJson("/tickets/{$ticketId}/comments", [
+        $response = $this->postJson("/api/tickets/{$ticketId}/comments", [
             'comment' => 'Notification trigger',
         ]);
         $response->assertStatus(201);
@@ -112,7 +112,7 @@ class NotificationPersistenceTest extends TestCase
             'user_id' => $user->id,
             'title' => 'Boolean Cast Test',
             'message' => 'Test',
-            'type' => 'test',
+            'type' => 'comment_added',
             'is_read' => false,
         ]);
 

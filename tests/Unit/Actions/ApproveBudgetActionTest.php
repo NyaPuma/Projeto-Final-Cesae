@@ -6,6 +6,7 @@ namespace Tests\Unit\Actions;
 use App\Enums\UserRoleEnum;
 use App\Actions\ApproveBudgetAction;
 use App\DTOs\BudgetDecisionData;
+use App\Enums\BudgetDecisionEnum;
 use App\Enums\BudgetStatusEnum;
 use App\Models\Ticket;
 use App\Models\TicketStatus;
@@ -51,19 +52,19 @@ class ApproveBudgetActionTest extends DatabaseTestCase
     private function seedTicketStatuses(): void
     {
         // Seed ticket statuses manually
-        TicketStatus::firstOrCreate(['name' => 'aberta'], ['description' => 'Aberta']);
-        TicketStatus::firstOrCreate(['name' => 'em curso'], ['description' => 'Em Curso']);
-        TicketStatus::firstOrCreate(['name' => 'fechada'], ['description' => 'Fechada']);
-        TicketStatus::firstOrCreate(['name' => 'cancelada'], ['description' => 'Cancelada']);
-        TicketStatus::firstOrCreate(['name' => 'pendente orÃ§amento'], ['description' => 'Pendente OrÃ§amento']);
-        TicketStatus::firstOrCreate(['name' => 'recusada'], ['description' => 'Recusada']);
+        TicketStatus::firstOrCreate(['name' => 'aberta'], ['code' => 'ABERTA', 'description' => 'Aberta']);
+        TicketStatus::firstOrCreate(['name' => 'em curso'], ['code' => 'EM_CURSO', 'description' => 'Em Curso']);
+        TicketStatus::firstOrCreate(['name' => 'fechada'], ['code' => 'FECHADA', 'description' => 'Fechada']);
+        TicketStatus::firstOrCreate(['name' => 'cancelada'], ['code' => 'CANCELADA', 'description' => 'Cancelada']);
+        TicketStatus::firstOrCreate(['name' => 'pendente orçamento'], ['code' => 'PENDENTE_ORCAMENTO', 'description' => 'Pendente Orçamento']);
+        TicketStatus::firstOrCreate(['name' => 'recusada'], ['code' => 'RECUSADA', 'description' => 'Recusada']);
     }
 
     #[Test]
     public function it_approves_budget_successfully(): void
     {
         $admin = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::Admin->value)->first()->id]);
-        $statusId = TicketStatus::where('name', 'pendente orÃ§amento')->first()->id;
+        $statusId = TicketStatus::where('name', 'pendente orçamento')->first()->id;
         $ticket = Ticket::factory()->create([
             'budget_requested' => true,
             'budget_status' => BudgetStatusEnum::Pending->value,
@@ -71,7 +72,7 @@ class ApproveBudgetActionTest extends DatabaseTestCase
             'status_id' => $statusId,
         ]);
 
-        $data = new BudgetDecisionData(decision: 'approve');
+        $data = new BudgetDecisionData(decision: BudgetDecisionEnum::Approve);
 
         $result = $this->action->execute($ticket, $admin, $data);
 
@@ -84,7 +85,7 @@ class ApproveBudgetActionTest extends DatabaseTestCase
     public function it_rejects_budget_with_feedback(): void
     {
         $admin = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::Admin->value)->first()->id]);
-        $statusId = TicketStatus::where('name', 'pendente orÃ§amento')->first()->id;
+        $statusId = TicketStatus::where('name', 'pendente orçamento')->first()->id;
         $ticket = Ticket::factory()->create([
             'budget_requested' => true,
             'budget_status' => BudgetStatusEnum::Pending->value,
@@ -92,12 +93,12 @@ class ApproveBudgetActionTest extends DatabaseTestCase
             'status_id' => $statusId,
         ]);
 
-        $data = new BudgetDecisionData(decision: 'reject', feedback: 'OrÃ§amento demasiado alto');
+        $data = new BudgetDecisionData(decision: BudgetDecisionEnum::Reject, feedback: 'Orçamento demasiado alto');
 
         $result = $this->action->execute($ticket, $admin, $data);
 
         $this->assertEquals(BudgetStatusEnum::Rejected->value, $result->budget_status);
-        $this->assertEquals('OrÃ§amento demasiado alto', $result->budget_feedback);
+        $this->assertEquals('Orçamento demasiado alto', $result->budget_feedback);
         $this->assertEquals($admin->id, $result->budget_approved_by);
     }
 
@@ -112,7 +113,7 @@ class ApproveBudgetActionTest extends DatabaseTestCase
             'status_id' => $statusId,
         ]);
 
-        $data = new BudgetDecisionData(decision: 'approve');
+        $data = new BudgetDecisionData(decision: BudgetDecisionEnum::Approve);
 
         try {
             $this->action->execute($ticket, $admin, $data);
@@ -133,7 +134,7 @@ class ApproveBudgetActionTest extends DatabaseTestCase
             'status_id' => $statusId,
         ]);
 
-        $data = new BudgetDecisionData(decision: 'approve');
+        $data = new BudgetDecisionData(decision: BudgetDecisionEnum::Approve);
 
         try {
             $this->action->execute($ticket, $admin, $data);

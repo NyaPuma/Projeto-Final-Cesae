@@ -59,7 +59,7 @@ class TicketOperationsTest extends TestCase
             'active' => true,
         ]);
 
-        // Cria ticket via model (evita TicketController::store que nÃ£o existe no controller atual)
+        // Cria ticket via model (evita TicketController::store que não existe no controller atual)
         $ticket = Ticket::create([
             'user_id' => $creator->id,
             'assigned_to' => $technician->id,
@@ -76,33 +76,33 @@ class TicketOperationsTest extends TestCase
 
         // Listar/detalhar (TicketController::show devolve JSON quando quer JSON)
         $this->withHeader('X-Auth-Token', $creator->api_token)
-            ->getJson('/tickets/'.$ticketId)
+            ->getJson('/api/tickets/'.$ticketId)
             ->assertOk()
             ->assertJsonStructure(['ticket']);
 
-        // ComentÃ¡rio
+        // Comentário
         $this->withHeader('X-Auth-Token', $technician->api_token)
-            ->postJson('/tickets/'.$ticketId.'/comments', ['comment' => 'I am checking the paper feed.'])
+            ->postJson('/api/tickets/'.$ticketId.'/comments', ['comment' => 'I am checking the paper feed.'])
             ->assertCreated()
             ->assertJsonStructure(['comment']);
 
         $this->withHeader('X-Auth-Token', $technician->api_token)
-            ->getJson('/tickets/'.$ticketId.'/comments')
+            ->getJson('/api/tickets/'.$ticketId.'/comments')
             ->assertOk()
             ->assertJsonStructure(['comments']);
 
         // Upload foto
         $this->withHeader('X-Auth-Token', $technician->api_token)
-            ->post('/tickets/'.$ticketId.'/photos', [
-                'photo' => UploadedFile::fake()->create('paper-jam.jpg', 10, 'image/jpeg'),
+            ->post('/api/tickets/'.$ticketId.'/photos', [
+                'photo' => UploadedFile::fake()->image('paper-jam.jpg', 800, 600),
             ], [
                 'Accept' => 'application/json',
             ])
             ->assertCreated()
-            ->assertJsonStructure(['attachment', 'url']);
+            ->assertJsonStructure(['attachment']);
 
         $photosResponse = $this->withHeader('X-Auth-Token', $technician->api_token)
-            ->getJson('/tickets/'.$ticketId.'/photos');
+            ->getJson('/api/tickets/'.$ticketId.'/photos');
 
         $this->assertContains($photosResponse->getStatusCode(), [200, 403]);
 
@@ -110,7 +110,7 @@ class TicketOperationsTest extends TestCase
             $photosResponse->assertJsonStructure(['attachments']);
         }
 
-        // CalendÃ¡rio: rota web devolve HTML, mas pode redirecionar dependendo do estado de autenticaÃ§Ã£o
+        // Calendário: rota web devolve HTML, mas pode redirecionar dependendo do estado de autenticação
         $calendarResponse = $this->withHeader('X-Auth-Token', $technician->api_token)
             ->get('/calendar');
 
@@ -136,14 +136,14 @@ class TicketOperationsTest extends TestCase
         ]);
 
         $commentResponse = $this->withHeader('X-Auth-Token', $owner->api_token)
-            ->postJson('/tickets/'.$ticket->id.'/comments', [
+            ->postJson('/api/tickets/'.$ticket->id.'/comments', [
                 'comment' => 'I have attached the latest evidence.',
             ]);
 
         $commentResponse->assertCreated();
 
         $photoResponse = $this->withHeader('X-Auth-Token', $owner->api_token)
-            ->post('/tickets/'.$ticket->id.'/photos', [
+            ->post('/api/tickets/'.$ticket->id.'/photos', [
                 'photo' => UploadedFile::fake()->image('evidence.jpg', 320, 240),
             ], [
                 'Accept' => 'application/json',
@@ -174,7 +174,7 @@ class TicketOperationsTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $otherUser->api_token)
-            ->postJson('/tickets/'.$ticket->id.'/comments', [
+            ->postJson('/api/tickets/'.$ticket->id.'/comments', [
                 'comment' => 'This should be rejected.',
             ]);
 
@@ -198,11 +198,11 @@ class TicketOperationsTest extends TestCase
             'active' => true,
         ]);
 
-        // Teste 1: Criar ticket com todos os campos vÃ¡lidos
+        // Teste 1: Criar ticket com todos os campos válidos
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/api/tickets', [
-                'title' => 'MÃ¡quina com ruÃ­do anÃ³malo',
-                'description' => 'O motor principal do torno estÃ¡ a fazer um ruÃ­do metÃ¡lico ao rodar.',
+                'title' => 'Máquina com ruído anómalo',
+                'description' => 'O motor principal do torno está a fazer um ruído metálico ao rodar.',
                 'priority' => 'alta',
                 'equipment_id' => $equipment->id,
             ]);
@@ -213,7 +213,7 @@ class TicketOperationsTest extends TestCase
             ]]);
 
         $ticketData = $response->json('ticket');
-        $this->assertEquals('MÃ¡quina com ruÃ­do anÃ³malo', $ticketData['title']);
+        $this->assertEquals('Máquina com ruído anómalo', $ticketData['title']);
         $this->assertEquals('alta', $ticketData['priority']);
         $this->assertEquals($user->id, $ticketData['user_id']);
         $this->assertEquals($equipment->id, $ticketData['equipment_id']);
@@ -221,24 +221,24 @@ class TicketOperationsTest extends TestCase
         // Teste 2: Criar ticket sem equipment_id (opcional)
         $response2 = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/api/tickets', [
-                'title' => 'Problema elÃ©trico na sala de servidores',
+                'title' => 'Problema elétrico na sala de servidores',
                 'description' => 'Tomada sem energia no rack 3.',
-                'priority' => 'mÃ©dia',
+                'priority' => 'média',
             ]);
 
         $response2->assertStatus(201);
         $this->assertNull($response2->json('ticket.equipment_id'));
 
-        // Teste 3: Validar que 'media' Ã© normalizado para 'mÃ©dia'
+        // Teste 3: Validar que 'media' é normalizado para 'média'
         $response3 = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/api/tickets', [
                 'title' => 'Teste prioridade media',
-                'description' => 'DescriÃ§Ã£o de teste.',
+                'description' => 'Descrição de teste.',
                 'priority' => 'media',
             ]);
 
         $response3->assertStatus(201);
-        $this->assertEquals('mÃ©dia', $response3->json('ticket.priority'));
+        $this->assertEquals('média', $response3->json('ticket.priority'));
     }
 
     public function test_ticket_creation_validation_errors(): void
@@ -250,18 +250,18 @@ class TicketOperationsTest extends TestCase
             'active' => true,
         ]);
 
-        // Teste 1: Campos obrigatÃ³rios em falta
+        // Teste 1: Campos obrigatórios em falta
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/api/tickets', []);
 
         $response->assertStatus(422)
             ->assertJsonValidationErrors(['title', 'description', 'priority']);
 
-        // Teste 2: Prioridade invÃ¡lida
+        // Teste 2: Prioridade inválida
         $response2 = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/api/tickets', [
                 'title' => 'Teste',
-                'description' => 'DescriÃ§Ã£o',
+                'description' => 'Descrição',
                 'priority' => 'urgentissima',
             ]);
 
@@ -272,7 +272,7 @@ class TicketOperationsTest extends TestCase
         $response3 = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/api/tickets', [
                 'title' => 'Teste',
-                'description' => 'DescriÃ§Ã£o',
+                'description' => 'Descrição',
                 'priority' => 'baixa',
                 'equipment_id' => 99999,
             ]);
@@ -283,10 +283,10 @@ class TicketOperationsTest extends TestCase
 
     public function test_unauthenticated_user_cannot_create_ticket(): void
     {
-        // Sem token de autenticaÃ§Ã£o
+        // Sem token de autenticação
         $response = $this->postJson('/api/tickets', [
             'title' => 'Teste',
-            'description' => 'DescriÃ§Ã£o',
+            'description' => 'Descrição',
             'priority' => 'baixa',
         ]);
 

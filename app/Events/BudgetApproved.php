@@ -11,7 +11,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-final readonly class BudgetApproved implements ShouldBroadcast
+final class BudgetApproved implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 

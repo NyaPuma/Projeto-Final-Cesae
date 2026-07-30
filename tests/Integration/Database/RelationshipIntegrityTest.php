@@ -26,7 +26,7 @@ class RelationshipIntegrityTest extends FeatureTestCase
         $this->asUserWithToken($user);
 
         for ($i = 0; $i < 3; $i++) {
-            $this->postJson('/tickets', [
+            $this->postJson('/api/tickets', [
                 'title' => "Multi Ticket {$i}",
                 'description' => 'Test',
                 'priority' => 'baixa',
@@ -43,7 +43,7 @@ class RelationshipIntegrityTest extends FeatureTestCase
         $technician = $this->createTechnician();
         $this->asUserWithToken($admin);
 
-        $response = $this->postJson('/tickets', [
+        $response = $this->postJson('/api/tickets', [
             'title' => 'Comment Rel Test',
             'description' => 'Test',
             'priority' => 'baixa',
@@ -51,8 +51,8 @@ class RelationshipIntegrityTest extends FeatureTestCase
         $ticketId = $response->json('ticket.id');
 
         $this->asUserWithToken($technician);
-        $this->postJson("/tickets/{$ticketId}/comments", ['comment' => 'First']);
-        $this->postJson("/tickets/{$ticketId}/comments", ['comment' => 'Second']);
+        $this->postJson("/api/tickets/{$ticketId}/comments", ['comment' => 'First']);
+        $this->postJson("/api/tickets/{$ticketId}/comments", ['comment' => 'Second']);
 
         $ticket = Ticket::find($ticketId);
         $this->assertEquals(2, $ticket->comments()->count());
@@ -64,10 +64,10 @@ class RelationshipIntegrityTest extends FeatureTestCase
         $user = $this->createRegularUser();
         $this->asUserWithToken($user);
 
-        $response = $this->postJson('/tickets', [
+        $response = $this->postJson('/api/tickets', [
             'title' => 'Status Rel Test',
             'description' => 'Test',
-            'priority' => 'mÃ©dia',
+            'priority' => 'média',
         ]);
         $ticketId = $response->json('ticket.id');
 
@@ -95,7 +95,7 @@ class RelationshipIntegrityTest extends FeatureTestCase
         $user = $this->createRegularUser();
         $this->asUserWithToken($user);
 
-        $response = $this->postJson('/tickets', [
+        $response = $this->postJson('/api/tickets', [
             'title' => 'Equipment Rel Test',
             'description' => 'Test',
             'priority' => 'alta',
@@ -220,7 +220,7 @@ class RelationshipIntegrityTest extends FeatureTestCase
         $admin = $this->createAdmin();
         $this->asUserWithToken($admin);
 
-        $response = $this->postJson('/tickets', [
+        $response = $this->postJson('/api/tickets', [
             'title' => 'Attachment Test Ticket',
             'description' => 'Test',
             'priority' => 'baixa',

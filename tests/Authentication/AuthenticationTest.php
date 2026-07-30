@@ -5,7 +5,7 @@ namespace Tests\Feature;
 
 use App\Enums\UserRoleEnum;
 use App\Models\User;
-use App\Models\Userprofile as UserProfile;
+use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -35,7 +35,7 @@ class AuthenticationTest extends TestCase
             'active' => true,
         ]);
 
-        $response = $this->post('/login', [
+        $response = $this->post('/api/login', [
             'email' => $user->email,
             'password' => 'Password123!',
         ]);
@@ -117,7 +117,7 @@ class AuthenticationTest extends TestCase
 
         $oldToken = $user->api_token;
 
-        $response = $this->post('/login', [
+        $response = $this->post('/api/login', [
             'email' => $user->email,
             'password' => 'Password123!',
         ]);
@@ -171,7 +171,7 @@ class AuthenticationTest extends TestCase
             'active' => true,
         ]);
 
-        $login = $this->postJson('/login', [
+        $login = $this->postJson('/api/login', [
             'email' => $user->email,
             'password' => 'Password123!',
         ]);
@@ -254,7 +254,7 @@ class AuthenticationTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->post('/password/change', [
+            ->post('/api/password/change', [
                 'current_password' => 'oldpassword',
                 'new_password' => 'newPassword123!',
             ]);
@@ -274,7 +274,7 @@ class AuthenticationTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->post('/password/change', [
+            ->post('/api/password/change', [
                 'current_password' => 'wrongpassword',
                 'new_password' => 'newPassword123!',
             ]);

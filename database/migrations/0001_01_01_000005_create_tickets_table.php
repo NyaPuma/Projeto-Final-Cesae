@@ -258,9 +258,9 @@ return new class extends Migration
                 ->nullable();
 
             $table->enum('budget_status', [
-                'pendente',
-                'aprovado',
-                'rejeitado',
+                'pending',
+                'approved',
+                'rejected',
             ])
                 ->nullable();
 

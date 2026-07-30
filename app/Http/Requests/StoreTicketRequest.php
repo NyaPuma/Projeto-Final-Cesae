@@ -33,7 +33,7 @@ final class StoreTicketRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:5000'],
-            'priority' => ['required', Rule::enum(TicketPriorityEnum::class)],
+            'priority' => ['required', Rule::in(TicketPriorityEnum::acceptedValues())],
             'equipment_id' => ['nullable', 'integer', Rule::exists(Equipment::class, 'id')],
             'room_id' => ['nullable', 'integer', Rule::exists(Room::class, 'id')],
         ];

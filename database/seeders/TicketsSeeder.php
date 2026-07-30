@@ -60,29 +60,20 @@ class TicketsSeeder extends Seeder
                 'in_progress_at' => now()->subDays(4)->addHours(2),
                 'closed_at' => now()->subDays(3),
                 'minutes_spent' => 1320,
-                'cost' => 125.50,
+                'estimated_cost' => 125.50,
             ],
         ];
 
         foreach ($baseTickets as $i => $ticket) {
-            DB::table('tickets')->insert([
-                'reference' => 'TKT-' . now()->format('YmdHis') . '-' . ($i + 1),
-                'user_id' => $ticket['user_id'],
-                'assigned_to' => $ticket['assigned_to'],
-                'room_id' => $ticket['room_id'],
-                'equipment_id' => $ticket['equipment_id'],
-                'status_id' => $ticket['status_id'],
-                'title' => $ticket['title'],
-                'description' => $ticket['description'],
-                'priority' => $ticket['priority'],
-                'opened_at' => $ticket['opened_at'],
-                'in_progress_at' => $ticket['in_progress_at'] ?? null,
-                'closed_at' => $ticket['closed_at'] ?? null,
-                'minutes_spent' => $ticket['minutes_spent'] ?? null,
-                'estimated_cost' => $ticket['cost'] ?? null,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+            $ref = 'TKT-' . now()->format('YmdHis') . '-' . ($i + 1);
+            DB::table('tickets')->updateOrInsert(
+                ['reference' => $ref],
+                array_merge($ticket, [
+                    'reference' => $ref,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ])
+            );
         }
 
         $targetCount = 100;
@@ -92,25 +83,29 @@ class TicketsSeeder extends Seeder
             $index = $i + $currentCount;
             $statusId = $statusIds[array_rand($statusIds)] ?? $statusIds[0];
             $priority = ['baixa', 'média', 'alta'][array_rand(['baixa', 'média', 'alta'])];
+            $ref = 'TKT-SYNTH-' . now()->format('YmdHis') . '-' . str_pad($index, 4, '0', STR_PAD_LEFT);
 
-            DB::table('tickets')->insert([
-                'reference' => 'TKT-SYNTH-' . now()->format('YmdHis') . '-' . str_pad($index, 4, '0', STR_PAD_LEFT),
-                'user_id' => $userIds[array_rand($userIds)],
-                'assigned_to' => $technicianIds[array_rand($technicianIds)],
-                'room_id' => $roomIds[array_rand($roomIds)],
-                'equipment_id' => $equipmentIds[array_rand($equipmentIds)],
-                'status_id' => $statusId,
-                'title' => sprintf('Ocorrência sintética %03d', $index),
-                'description' => sprintf('Ticket gerado automaticamente para o cenário operacional %03d.', $index),
-                'priority' => $priority,
-                'opened_at' => now()->subDays(rand(1, 30))->subHours(rand(1, 24)),
-                'in_progress_at' => rand(0, 1) ? now()->subDays(rand(1, 20)) : null,
-                'closed_at' => rand(0, 1) ? now()->subDays(rand(1, 10)) : null,
-                'minutes_spent' => rand(20, 240),
-                'estimated_cost' => round(rand(100, 5000) / 10, 2),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+            DB::table('tickets')->updateOrInsert(
+                ['reference' => $ref],
+                [
+                    'reference' => $ref,
+                    'user_id' => $userIds[array_rand($userIds)],
+                    'assigned_to' => $technicianIds[array_rand($technicianIds)],
+                    'room_id' => $roomIds[array_rand($roomIds)],
+                    'equipment_id' => $equipmentIds[array_rand($equipmentIds)],
+                    'status_id' => $statusId,
+                    'title' => sprintf('Ocorrência sintética %03d', $index),
+                    'description' => sprintf('Ticket gerado automaticamente para o cenário operacional %03d.', $index),
+                    'priority' => $priority,
+                    'opened_at' => now()->subDays(rand(1, 30))->subHours(rand(1, 24)),
+                    'in_progress_at' => rand(0, 1) ? now()->subDays(rand(1, 20)) : null,
+                    'closed_at' => rand(0, 1) ? now()->subDays(rand(1, 10)) : null,
+                    'minutes_spent' => rand(20, 240),
+                    'estimated_cost' => round(rand(100, 5000) / 10, 2),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]
+            );
         }
     }
 }

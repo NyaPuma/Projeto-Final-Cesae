@@ -25,7 +25,7 @@ class AuthorizationSecurityTest extends FeatureTestCase
 
         $ticket = Ticket::create([
             'title' => 'Ticket do User B - confidencial',
-            'description' => 'Dados industriais sensÃ­veis do User B',
+            'description' => 'Dados industriais sensíveis do User B',
             'priority' => TicketPriorityEnum::High->value,
             'user_id' => $userB->id,
             'status_id' => $openStatusId,
@@ -58,7 +58,7 @@ class AuthorizationSecurityTest extends FeatureTestCase
         $openStatusId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
-            'title' => 'Ticket com fotos sensÃ­veis',
+            'title' => 'Ticket com fotos sensíveis',
             'description' => 'Fotos de equipamento industrial',
             'priority' => TicketPriorityEnum::Low->value,
             'user_id' => $userB->id,

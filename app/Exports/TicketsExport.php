@@ -46,15 +46,15 @@ final class TicketsExport implements
         return ($this->customQuery ?? Ticket::query())
             ->select([
                 'id',
-                'code',
+                'reference',
                 'title',
-                'status',
+                'status_id',
                 'priority',
                 'opened_at',
                 'in_progress_at',
                 'closed_at',
                 'minutes_spent',
-                'cost',
+                'actual_cost',
                 'budget_status',
                 'budget_amount',
                 'created_at',
@@ -109,7 +109,7 @@ final class TicketsExport implements
 
         return [
             $ticket->id,
-            $ticket->code ?? "#{$ticket->id}",
+            $ticket->reference ?? "#{$ticket->id}",
             $ticket->title,
             $statusLabel,
             $priorityLabel,
@@ -117,7 +117,7 @@ final class TicketsExport implements
             $ticket->in_progress_at?->format('d/m/Y H:i') ?? '-',
             $ticket->closed_at?->format('d/m/Y H:i') ?? '-',
             $ticket->minutes_spent ?? 0,
-            (float) ($ticket->cost ?? 0),
+            (float) ($ticket->actual_cost ?? 0),
             $ticket->budget_status ?? 'N/A',
             (float) ($ticket->budget_amount ?? 0),
         ];

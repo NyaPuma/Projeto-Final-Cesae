@@ -24,11 +24,12 @@ class ModelLifecycleTest extends FeatureTestCase
 
         $profile = UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
 
+        $password = 'Str0ng!'.uniqid().'#Xx';
         $response = $this->postJson('/admin/users', [
             'name' => 'CRUD Test User',
             'email' => 'crud.test.'.uniqid().'@example.invalid',
-            'password' => 'Password123!',
-            'password_confirmation' => 'Password123!',
+            'password' => $password,
+            'password_confirmation' => $password,
             'role' => UserRoleEnum::User->value,
             'profile_id' => $profile->id,
         ]);
@@ -87,7 +88,7 @@ class ModelLifecycleTest extends FeatureTestCase
         $admin = $this->createAdmin();
         $this->asUserWithToken($admin);
 
-        $room = Room::create(['name' => 'Eq Room', 'active' => true]);
+        $room = Room::create(['name' => 'Eq Room', 'code' => 'RM-'.uniqid(), 'active' => true]);
         $category = EquipmentCategory::create(['name' => 'Test Cat', 'active' => true]);
 
         $response = $this->postJson('/admin/equipment', [
@@ -114,7 +115,7 @@ class ModelLifecycleTest extends FeatureTestCase
         $response = $this->postJson('/tickets', [
             'title' => 'Persistence Test Ticket',
             'description' => 'Full lifecycle test',
-            'priority' => 'mÃ©dia',
+            'priority' => 'média',
         ]);
         $response->assertStatus(201);
         $ticketId = $response->json('ticket.id');

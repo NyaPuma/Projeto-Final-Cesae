@@ -45,7 +45,7 @@ class AdminCrudFeatureTest extends TestCase
         $userProfile = UserProfile::where('name', UserRoleEnum::User->value)->first();
 
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->postJson('/admin/users', [
+            ->postJson('/api/admin/users', [
                 'name' => 'New User',
                 'email' => 'newuser@example.com',
                 'password' => 'Password123!',
@@ -66,7 +66,7 @@ class AdminCrudFeatureTest extends TestCase
         $user = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->postJson('/admin/users', [
+            ->postJson('/api/admin/users', [
                 'name' => 'Unauthorized User',
                 'email' => 'unauth@example.com',
                 'password' => 'Password123!',
@@ -83,7 +83,7 @@ class AdminCrudFeatureTest extends TestCase
         $targetUser = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->patchJson("/admin/users/{$targetUser->id}", [
+            ->patchJson("/api/admin/users/{$targetUser->id}", [
                 'name' => 'Updated Name',
             ]);
 
@@ -100,7 +100,7 @@ class AdminCrudFeatureTest extends TestCase
         $targetUser = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->patchJson("/admin/users/{$targetUser->id}/inactive");
+            ->patchJson("/api/admin/users/{$targetUser->id}/inactive");
 
         $response->assertOk();
         $this->assertDatabaseHas('users', [
@@ -117,7 +117,7 @@ class AdminCrudFeatureTest extends TestCase
         $room = Room::create(['name' => 'Server Room', 'location' => 'Floor 2', 'active' => true]);
 
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->postJson('/admin/equipment', [
+            ->postJson('/api/admin/equipment', [
                 'name' => 'New CNC Machine',
                 'serial' => 'CNC-2024-001',
                 'room_id' => $room->id,
@@ -143,7 +143,7 @@ class AdminCrudFeatureTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)
-    ->patchJson("/admin/equipment/{$equipment->id}", [
+    ->patchJson("/api/admin/equipment/{$equipment->id}", [
         'name' => 'Updated Drill Press',
         'category_id' => $equipment->category_id,
         'room_id' => $equipment->room_id,
@@ -168,7 +168,7 @@ class AdminCrudFeatureTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->deleteJson("/admin/equipment/{$equipment->id}");
+            ->deleteJson("/api/admin/equipment/{$equipment->id}");
 
         $response->assertOk();
         $this->assertSoftDeleted('equipments', ['id' => $equipment->id]);
@@ -181,7 +181,7 @@ class AdminCrudFeatureTest extends TestCase
         $admin = $this->createUserWithToken(UserRoleEnum::Admin->value);
 
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->postJson('/admin/rooms', [
+            ->postJson('/api/admin/rooms', [
                 'name' => 'New Laboratory',
                 'location' => 'Floor 4, Building B',
                 'active' => true,
@@ -199,7 +199,7 @@ class AdminCrudFeatureTest extends TestCase
         $room = Room::create(['name' => 'Old Lab', 'location' => 'Floor 1', 'active' => true]);
 
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->patchJson("/admin/rooms/{$room->id}", [
+            ->patchJson("/api/admin/rooms/{$room->id}", [
                 'name' => 'Renovated Lab',
             ]);
 
@@ -216,7 +216,7 @@ class AdminCrudFeatureTest extends TestCase
         $room = Room::create(['name' => 'Decommissioned Room', 'location' => 'Floor 5', 'active' => true]);
 
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->patchJson("/admin/rooms/{$room->id}/inactive");
+            ->patchJson("/api/admin/rooms/{$room->id}/inactive");
 
         $response->assertOk();
         $this->assertDatabaseHas('rooms', [

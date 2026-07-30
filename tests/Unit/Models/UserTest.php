@@ -211,8 +211,8 @@ class UserTest extends TestCase
         // Verify hidden attributes are not serialized in JSON response
         $jsonResponse = json_encode($user);
 
-        $this->assertStringNotContainsString('password', $jsonResponse, 'Password should be hidden');
-        $this->assertStringNotContainsString('_tokens', $jsonResponse, '_tokens should be hidden');
+        $this->assertStringNotContainsString('"password"', $jsonResponse, 'Password should be hidden');
+        $this->assertStringNotContainsString('"_tokens"', $jsonResponse, '_tokens should be hidden');
     }
 
     #[Test]

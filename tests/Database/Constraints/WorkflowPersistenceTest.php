@@ -6,6 +6,7 @@ namespace Tests\Database\Constraints;
 use App\Enums\UserRoleEnum;
 use App\Actions\ApproveBudgetAction;
 use App\DTOs\BudgetDecisionData;
+use App\Enums\BudgetDecisionEnum;
 use App\Enums\BudgetStatusEnum;
 use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
@@ -28,12 +29,12 @@ class WorkflowPersistenceTest extends TestCase
 
     protected function seedLookupData(): void
     {
-        TicketStatus::firstOrCreate(['name' => 'aberta'], ['description' => 'Aberta']);
-        TicketStatus::firstOrCreate(['name' => 'em curso'], ['description' => 'Em curso']);
-        TicketStatus::firstOrCreate(['name' => 'fechada'], ['description' => 'Fechada']);
-        TicketStatus::firstOrCreate(['name' => 'cancelada'], ['description' => 'Cancelada']);
-        TicketStatus::firstOrCreate(['name' => 'pendente orÃ§amento'], ['description' => 'Pendente']);
-        TicketStatus::firstOrCreate(['name' => 'recusada'], ['description' => 'Recusada']);
+        TicketStatus::firstOrCreate(['name' => 'aberta'], ['code' => 'ABERTA', 'description' => 'Aberta']);
+        TicketStatus::firstOrCreate(['name' => 'em curso'], ['code' => 'EM_CURSO', 'description' => 'Em curso']);
+        TicketStatus::firstOrCreate(['name' => 'fechada'], ['code' => 'FECHADA', 'description' => 'Fechada']);
+        TicketStatus::firstOrCreate(['name' => 'cancelada'], ['code' => 'CANCELADA', 'description' => 'Cancelada']);
+        TicketStatus::firstOrCreate(['name' => 'pendente orçamento'], ['code' => 'PENDENTE_ORCAMENTO', 'description' => 'Pendente']);
+        TicketStatus::firstOrCreate(['name' => 'recusada'], ['code' => 'RECUSADA', 'description' => 'Recusada']);
     }
 
     protected function createAdmin(): User
@@ -115,7 +116,7 @@ class WorkflowPersistenceTest extends TestCase
         ]);
         $ticketId = $response->json('ticket.id');
 
-        $pendingStatus = TicketStatus::where('name', 'pendente orÃ§amento')->first();
+        $pendingStatus = TicketStatus::where('name', 'pendente orçamento')->first();
         $ticket = Ticket::find($ticketId);
         $ticket->update([
             'status_id' => $pendingStatus->id,
@@ -131,7 +132,7 @@ class WorkflowPersistenceTest extends TestCase
         $this->assertTrue($ticket->budget_requested);
         $this->assertNotNull($ticket->budget_requested_at);
 
-        $data = new BudgetDecisionData(decision: 'approve');
+        $data = new BudgetDecisionData(decision: BudgetDecisionEnum::Approve);
         app(ApproveBudgetAction::class)->execute($ticket, $admin, $data);
         $ticket->refresh();
         $this->assertEquals(BudgetStatusEnum::Approved->value, $ticket->budget_status);
@@ -160,7 +161,7 @@ class WorkflowPersistenceTest extends TestCase
             'assigned_to' => $technician->id,
         ]);
 
-        $data = new BudgetDecisionData(decision: 'reject', feedback: 'Too expensive');
+        $data = new BudgetDecisionData(decision: BudgetDecisionEnum::Reject, feedback: 'Too expensive');
         app(ApproveBudgetAction::class)->execute($ticket, $admin, $data);
         $ticket->refresh();
         $this->assertEquals(BudgetStatusEnum::Rejected->value, $ticket->budget_status);
@@ -180,7 +181,7 @@ class WorkflowPersistenceTest extends TestCase
         $response = $this->postJson('/tickets', [
             'title' => 'Reopen Test',
             'description' => 'Will be closed then reopened',
-            'priority' => 'mÃ©dia',
+            'priority' => 'média',
         ]);
         $ticketId = $response->json('ticket.id');
 

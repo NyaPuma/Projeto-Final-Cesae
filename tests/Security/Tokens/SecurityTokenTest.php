@@ -61,7 +61,7 @@ class SecurityTokenTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $oldToken)
-            ->postJson('/password/change', [
+            ->postJson('/api/password/change', [
                 'current_password' => 'current-password',
                 'new_password' => 'Password123!',
             ]);
@@ -85,7 +85,7 @@ class SecurityTokenTest extends TestCase
         ]);
 
         $this->withHeader('X-Auth-Token', $oldToken)
-            ->postJson('/password/change', [
+            ->postJson('/api/password/change', [
                 'current_password' => 'current-password',
                 'new_password' => 'Password123!',
             ]);

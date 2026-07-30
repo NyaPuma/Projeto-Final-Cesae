@@ -28,12 +28,12 @@ class RelationshipIntegrityTest extends TestCase
 
     protected function seedLookupData(): void
     {
-        TicketStatus::firstOrCreate(['name' => 'aberta'], ['description' => 'Aberta']);
-        TicketStatus::firstOrCreate(['name' => 'em curso'], ['description' => 'Em curso']);
-        TicketStatus::firstOrCreate(['name' => 'fechada'], ['description' => 'Fechada']);
-        TicketStatus::firstOrCreate(['name' => 'cancelada'], ['description' => 'Cancelada']);
-        TicketStatus::firstOrCreate(['name' => 'pendente orÃ§amento'], ['description' => 'Pendente']);
-        TicketStatus::firstOrCreate(['name' => 'recusada'], ['description' => 'Recusada']);
+        TicketStatus::firstOrCreate(['name' => 'aberta'], ['code' => 'ABERTA', 'description' => 'Aberta']);
+        TicketStatus::firstOrCreate(['name' => 'em curso'], ['code' => 'EM_CURSO', 'description' => 'Em curso']);
+        TicketStatus::firstOrCreate(['name' => 'fechada'], ['code' => 'FECHADA', 'description' => 'Fechada']);
+        TicketStatus::firstOrCreate(['name' => 'cancelada'], ['code' => 'CANCELADA', 'description' => 'Cancelada']);
+        TicketStatus::firstOrCreate(['name' => 'pendente orçamento'], ['code' => 'PENDENTE_ORCAMENTO', 'description' => 'Pendente']);
+        TicketStatus::firstOrCreate(['name' => 'recusada'], ['code' => 'RECUSADA', 'description' => 'Recusada']);
     }
 
     protected function createAdmin(): User
@@ -149,7 +149,7 @@ class RelationshipIntegrityTest extends TestCase
 
     public function test_equipment_references_valid_room_and_category(): void
     {
-        $room = Room::create(['name' => 'FK Room', 'active' => true]);
+        $room = Room::create(['name' => 'FK Room', 'code' => 'RM-'.uniqid(), 'active' => true]);
         $category = EquipmentCategory::create(['name' => 'FK Cat', 'active' => true]);
 
         $equipment = Equipment::create([
@@ -174,7 +174,7 @@ class RelationshipIntegrityTest extends TestCase
             'user_id' => $user->id,
             'title' => 'FK Notification Test',
             'message' => 'Test',
-            'type' => 'test',
+            'type' => 'system',
         ]);
 
         $this->assertNotNull($notification->user);
@@ -230,7 +230,7 @@ class RelationshipIntegrityTest extends TestCase
         $response = $this->postJson('/tickets', [
             'title' => 'Status Rel Test',
             'description' => 'Test',
-            'priority' => 'mÃ©dia',
+            'priority' => 'média',
         ]);
         $ticketId = $response->json('ticket.id');
 
@@ -244,7 +244,7 @@ class RelationshipIntegrityTest extends TestCase
         $admin = $this->createAdmin();
         $this->asUserWithToken($admin);
 
-        $room = Room::create(['name' => 'Rel Room', 'active' => true]);
+        $room = Room::create(['name' => 'Rel Room', 'code' => 'RM-'.uniqid(), 'active' => true]);
         $category = EquipmentCategory::create(['name' => 'Rel Cat', 'active' => true]);
         $equipment = Equipment::create([
             'name' => 'Rel Equipment',
@@ -335,7 +335,7 @@ class RelationshipIntegrityTest extends TestCase
 
     public function test_room_has_many_equipments(): void
     {
-        $room = Room::create(['name' => 'HasMany Room', 'active' => true]);
+        $room = Room::create(['name' => 'HasMany Room', 'code' => 'RM-'.uniqid(), 'active' => true]);
         $category = EquipmentCategory::create(['name' => 'Room Eq Cat', 'active' => true]);
 
         for ($i = 0; $i < 2; $i++) {
@@ -353,7 +353,7 @@ class RelationshipIntegrityTest extends TestCase
 
     public function test_room_has_many_tickets(): void
     {
-        $room = Room::create(['name' => 'Ticket Room', 'active' => true]);
+        $room = Room::create(['name' => 'Ticket Room', 'code' => 'RM-'.uniqid(), 'active' => true]);
         $user = $this->createCommonUser();
 
         $openStatus = TicketStatus::where('name', 'aberta')->first();
@@ -401,7 +401,7 @@ class RelationshipIntegrityTest extends TestCase
         $technician = $this->createTechnician();
         $this->asUserWithToken($admin);
 
-        $room = Room::create(['name' => 'Eager Room', 'active' => true]);
+        $room = Room::create(['name' => 'Eager Room', 'code' => 'RM-'.uniqid(), 'active' => true]);
         $category = EquipmentCategory::create(['name' => 'Eager Cat', 'active' => true]);
         $equipment = Equipment::create([
             'name' => 'Eager Equipment',

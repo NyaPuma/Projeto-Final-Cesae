@@ -18,6 +18,7 @@ class DashboardRedirectTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        $this->withoutVite();
 
         UserProfile::create(['name' => UserRoleEnum::User->value]);
         UserProfile::create(['name' => UserRoleEnum::Technician->value]);
@@ -33,14 +34,14 @@ class DashboardRedirectTest extends TestCase
             'api_token' => Str::random(60),
         ]);
 
-        $response = $this->postJson('/login', [
+        $response = $this->postJson('/api/login', [
             'email' => $user->email,
             'password' => 'Password123!',
         ]);
 
-        // O login endpoint (API) retorna JSON + cookie, entÃ£o a verificaÃ§Ã£o de redirect deve ser feita
+        // O login endpoint (API) retorna JSON + cookie, então a verificação de redirect deve ser feita
         // para rotas UI que usam o dashboard.
-        // MantÃ©m o teste focado no que Ã© observÃ¡vel e estÃ¡vel: depois de login, o acesso ao dashboard deve funcionar.
+        // Mantém o teste focado no que é observável e estável: depois de login, o acesso ao dashboard deve funcionar.
         $token = $response->json('token');
 
         // UI dashboard (rotas baseadas em UiController)
@@ -50,7 +51,7 @@ class DashboardRedirectTest extends TestCase
 
         $dashboard->assertStatus(200);
 
-        // ConteÃºdo esperado (Blade layout do dashboard)
+        // Conteúdo esperado (Blade layout do dashboard)
         $dashboard->assertSee('Tickets');
 
         // Verifica que os links do menu apontam para rotas reais (sem '*')

@@ -11,6 +11,12 @@ class LoginFlowTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->withoutVite();
+    }
+
     private function seedAll(): void
     {
         Artisan::call('db:seed');
@@ -20,7 +26,7 @@ class LoginFlowTest extends TestCase
     {
         $this->seedAll();
 
-        $login = $this->postJson('/login', [
+        $login = $this->postJson('/api/login', [
             'email' => 'admin@example.com',
             'password' => 'Password123!',
         ]);
@@ -39,7 +45,7 @@ class LoginFlowTest extends TestCase
     {
         $this->seedAll();
 
-        $login = $this->postJson('/login', [
+        $login = $this->postJson('/api/login', [
             'email' => 'admin@example.com',
             'password' => 'Password123!',
         ]);
@@ -63,7 +69,7 @@ class LoginFlowTest extends TestCase
     {
         $this->seedAll();
 
-        $login = $this->postJson('/login', [
+        $login = $this->postJson('/api/login', [
             'email' => 'admin@example.com',
             'password' => 'Password123!',
         ]);
@@ -87,7 +93,7 @@ class LoginFlowTest extends TestCase
     {
         $this->seedAll();
 
-        $login = $this->postJson('/login', [
+        $login = $this->postJson('/api/login', [
             'email' => 'admin@example.com',
             'password' => 'Password123!',
         ]);
@@ -137,7 +143,7 @@ class LoginFlowTest extends TestCase
     {
         $this->seedAll();
 
-        $login = $this->postJson('/login', [
+        $login = $this->postJson('/api/login', [
             'email' => 'admin@example.com',
             'password' => 'Password123!',
         ]);

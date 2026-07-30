@@ -5,6 +5,7 @@ namespace App\Domain\Ticket\Queries;
 use App\Models\Ticket;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 final readonly class MonthlyTicketsQuery
 {
@@ -38,19 +39,31 @@ final readonly class MonthlyTicketsQuery
         $startMonth = $this->now->copy()->subMonths(5)->startOfMonth()->toDateTimeString();
         $endMonth = $this->now->copy()->endOfMonth()->toDateTimeString();
 
+        $monthExpr = $this->monthExpression('opened_at');
+
         return Ticket::query()
             ->selectRaw("
-                DATE_FORMAT(opened_at, '%Y-%m') as month,
+                {$monthExpr} as month,
                 SUM(CASE WHEN status_id = ? THEN 1 ELSE 0 END) as open_count,
                 SUM(CASE WHEN status_id = ? THEN 1 ELSE 0 END) as in_progress_count,
                 SUM(CASE WHEN status_id = ? THEN 1 ELSE 0 END) as closed_count,
-                SUM(CASE WHEN status_id = ? AND closed_at IS NOT NULL AND cost IS NOT NULL THEN cost ELSE 0 END) as total_cost
+                SUM(CASE WHEN status_id = ? AND closed_at IS NOT NULL AND actual_cost IS NOT NULL THEN actual_cost ELSE 0 END) as total_cost
             ", [$this->openStatusId, $this->inProgressStatusId, $this->closedStatusId, $this->closedStatusId])
             ->whereNull('tickets.deleted_at')
             ->whereNotNull('opened_at')
             ->whereBetween('opened_at', [$startMonth, $endMonth])
-            ->groupByRaw("DATE_FORMAT(opened_at, '%Y-%m')")
+            ->groupByRaw($monthExpr)
             ->get();
+    }
+
+    private function monthExpression(string $column): string
+    {
+        $driver = DB::connection()->getDriverName();
+
+        return match ($driver) {
+            'sqlite' => "strftime('%Y-%m', {$column})",
+            default => "DATE_FORMAT({$column}, '%Y-%m')",
+        };
     }
 
     private function formatResults(array $monthKeys, $rows): array

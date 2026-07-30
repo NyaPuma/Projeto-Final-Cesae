@@ -123,7 +123,7 @@ class AuthenticationSecurityTest extends FeatureTestCase
         $oldToken = $user->api_token;
         $this->assertNotEmpty($oldToken);
 
-        $this->post('/login', [
+        $this->post('/api/login', [
             'email' => $user->email,
             'password' => 'Password123!',
         ]);

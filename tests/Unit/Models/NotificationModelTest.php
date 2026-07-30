@@ -18,7 +18,7 @@ class NotificationModelTest extends TestCase
             'user_id' => $user->id,
             'title' => 'Nova Avaria',
             'message' => 'Um novo ticket foi atribuído.',
-            'type' => 'info',
+            'type' => 'ticket_created',
             'is_read' => false,
         ]);
 

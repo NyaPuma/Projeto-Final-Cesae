@@ -39,13 +39,13 @@ class RoomTest extends TestCase
     {
         $room = Room::create([
             'name' => 'Sala Principal',
-            'location' => 'Piso 2, EdifÃ­cio A',
+            'location' => 'Piso 2, Edifício A',
             'active' => true,
         ]);
 
         $this->assertNotNull($room->id);
         $this->assertEquals('Sala Principal', $room->name);
-        $this->assertEquals('Piso 2, EdifÃ­cio A', $room->location);
+        $this->assertEquals('Piso 2, Edifício A', $room->location);
         $this->assertTrue($room->active);
     }
 

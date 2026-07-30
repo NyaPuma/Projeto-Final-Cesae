@@ -21,7 +21,7 @@ class AiTriagingFeatureTest extends TestCase
     {
         $techProfile = UserProfile::firstOrCreate(['name' => UserRoleEnum::Technician->value]);
         $technician = User::factory()->create(['profile_id' => $techProfile->id, 'active' => true]);
-        $ticket = Ticket::factory()->create(['description' => 'Fuga de Ã³leo no motor hidrÃ¡ulico']);
+        $ticket = Ticket::factory()->create(['description' => 'Fuga de óleo no motor hidráulico']);
 
         OpenAI::fake([
             CreateResponse::fake([
@@ -30,7 +30,7 @@ class AiTriagingFeatureTest extends TestCase
                         'message' => [
                             'content' => json_encode([
                                 'tecnico_id' => $technician->id,
-                                'justificacao' => 'Recomendado por ter menor carga e especialidade tÃ©cnica.',
+                                'justificacao' => 'Recomendado por ter menor carga e especialidade técnica.',
                             ]),
                         ],
                     ],
@@ -63,6 +63,6 @@ class AiTriagingFeatureTest extends TestCase
         $recommendation = $service->recomendarTecnico($ticket);
 
         $this->assertNull($recommendation['tecnico_id']);
-        $this->assertStringContainsString('Assistente de IA indisponÃ­vel', $recommendation['justificacao']);
+        $this->assertStringContainsString('Assistente de IA indisponível', $recommendation['justificacao']);
     }
 }

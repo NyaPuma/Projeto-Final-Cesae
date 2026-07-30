@@ -6,6 +6,12 @@ use Tests\TestCase;
 
 class UiUsabilityTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->withoutVite();
+    }
+
     public function test_homepage_renders_core_operational_sections(): void
     {
         $response = $this->get('/');

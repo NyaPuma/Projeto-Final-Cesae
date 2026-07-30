@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Enums\TicketStatusEnum;
 use App\Models\TicketStatus;
 use Illuminate\Support\Facades\Cache;
+use RuntimeException;
 
 final class TicketStatusService
 {
@@ -44,7 +45,15 @@ final class TicketStatusService
         $id = TicketStatus::where('name', $name)->value('id');
 
         if ($id === null) {
-            $statusModel = TicketStatus::firstOrCreate(['name' => $name]);
+            $code = match ($status) {
+                TicketStatusEnum::Open => 'ABERTA',
+                TicketStatusEnum::InProgress => 'EM_CURSO',
+                TicketStatusEnum::Closed => 'FECHADA',
+                TicketStatusEnum::Cancelled => 'CANCELADA',
+                TicketStatusEnum::PendingBudget => 'PENDENTE_ORCAMENTO',
+                TicketStatusEnum::Rejected => 'RECUSADA',
+            };
+            $statusModel = TicketStatus::firstOrCreate(['name' => $name], ['code' => $code]);
             $id = $statusModel->id;
         }
 

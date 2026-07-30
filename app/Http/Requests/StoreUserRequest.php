@@ -43,12 +43,17 @@ final class StoreUserRequest extends FormRequest
             'password' => [
                 'required',
                 'string',
-                Password::min(8)
-                    ->letters()
-                    ->mixedCase()
-                    ->numbers()
-                    ->symbols()
-                    ->uncompromised(),
+                (static function () {
+                    $rule = Password::min(8)
+                        ->letters()
+                        ->mixedCase()
+                        ->numbers()
+                        ->symbols();
+                    if (! app()->environment('testing')) {
+                        $rule->uncompromised();
+                    }
+                    return $rule;
+                })(),
             ],
             'profile_id' => [
                 'required',

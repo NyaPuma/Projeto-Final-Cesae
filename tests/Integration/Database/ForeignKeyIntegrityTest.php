@@ -110,7 +110,7 @@ class ForeignKeyIntegrityTest extends FeatureTestCase
             'user_id' => $user->id,
             'title' => 'FK Notification Test',
             'message' => 'Test',
-            'type' => 'test',
+            'type' => 'ticket_created',
         ]);
 
         $this->assertNotNull($notification->user);

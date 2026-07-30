@@ -2,6 +2,8 @@
 
 namespace App\Events;
 
+use App\Enums\TicketPriorityEnum;
+use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use App\Models\User;
 use Carbon\CarbonImmutable;
@@ -11,7 +13,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-final readonly class TicketCreated implements ShouldBroadcast
+final class TicketCreated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -53,19 +55,22 @@ final readonly class TicketCreated implements ShouldBroadcast
      */
     public function broadcastWith(): array
     {
+        $statusEnum = $this->ticket->status ? TicketStatusEnum::tryFrom($this->ticket->status->name) : null;
+        $priorityEnum = is_string($this->ticket->priority) ? TicketPriorityEnum::tryFrom($this->ticket->priority) : null;
+
         return [
             'ticket_id' => $this->ticket->id,
-            'code' => $this->ticket->code ?? null,
+            'code' => $this->ticket->status?->code ?? null,
             'title' => $this->ticket->title ?? $this->ticket->name ?? null,
             'status' => [
-                'value' => $this->ticket->status?->value ?? null,
-                'label' => $this->ticket->status?->label() ?? null,
-                'color' => $this->ticket->status?->color() ?? null,
+                'value' => $statusEnum?->value ?? null,
+                'label' => $statusEnum?->label() ?? null,
+                'color' => $statusEnum?->color() ?? null,
             ],
             'priority' => [
-                'value' => $this->ticket->priority?->value ?? null,
-                'label' => $this->ticket->priority?->label() ?? null,
-                'color' => $this->ticket->priority?->color() ?? null,
+                'value' => $priorityEnum?->value ?? null,
+                'label' => $priorityEnum?->label() ?? null,
+                'color' => $priorityEnum?->color() ?? null,
             ],
             'creator' => [
                 'id' => $this->creator->id,

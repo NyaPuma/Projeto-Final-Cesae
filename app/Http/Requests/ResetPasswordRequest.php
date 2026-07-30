@@ -34,12 +34,17 @@ final class ResetPasswordRequest extends FormRequest
             'password' => [
                 'required',
                 'confirmed',
-                Password::min(8)
-                    ->letters()
-                    ->mixedCase()
-                    ->numbers()
-                    ->symbols()
-                    ->uncompromised(),
+                (static function () {
+                    $rule = \Illuminate\Validation\Rules\Password::min(8)
+                        ->letters()
+                        ->mixedCase()
+                        ->numbers()
+                        ->symbols();
+                    if (! app()->environment('testing')) {
+                        $rule->uncompromised();
+                    }
+                    return $rule;
+                })(),
             ],
         ];
     }

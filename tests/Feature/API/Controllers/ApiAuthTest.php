@@ -5,7 +5,7 @@ namespace Tests\Feature;
 
 use App\Enums\UserRoleEnum;
 use App\Models\User;
-use App\Models\Userprofile as UserProfile;
+use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
@@ -210,11 +210,12 @@ class ApiAuthTest extends TestCase
             'profile_id' => $profile->id,
             'password' => Hash::make('Password123!'),
             'active' => true,
+            'api_token' => Str::random(60),
         ]);
 
         $firstToken = $user->api_token;
 
-        $this->post('/login', [
+        $this->post('/api/login', [
             'email' => $user->email,
             'password' => 'Password123!',
         ]);

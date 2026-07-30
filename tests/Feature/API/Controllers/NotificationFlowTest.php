@@ -39,24 +39,24 @@ class NotificationFlowTest extends TestCase
             'user_id' => $user->id,
             'title' => 'Avaria atualizada',
             'message' => 'O ticket foi atualizado.',
-            'type' => 'ticket',
+            'type' => 'ticket_updated',
             'is_read' => false,
             'link' => '/ui/tickets/1',
         ]);
 
         $this->withHeader('X-Auth-Token', $user->api_token)
-            ->getJson('/notifications')
+            ->getJson('/api/notifications')
             ->assertOk()
             ->assertJsonStructure(['notifications']);
 
         $this->withHeader('X-Auth-Token', $user->api_token)
-            ->patchJson('/notifications/'.$notification->id)
+            ->patchJson('/api/notifications/'.$notification->id)
             ->assertOk();
 
         $this->assertTrue($notification->fresh()->is_read);
 
         $this->withHeader('X-Auth-Token', $user->api_token)
-            ->postJson('/notifications/test-email')
+            ->postJson('/api/notifications/test-email')
             ->assertOk();
 
         Mail::assertSent(TestMail::class);
@@ -72,11 +72,11 @@ class NotificationFlowTest extends TestCase
     public function test_invalid_token_cannot_access_notifications_endpoints(): void
     {
         $this->withHeader('X-Auth-Token', 'invalid-token')
-            ->getJson('/notifications')
+            ->getJson('/api/notifications')
             ->assertStatus(401);
 
         $this->withHeader('X-Auth-Token', 'invalid-token')
-            ->postJson('/notifications/test-email')
+            ->postJson('/api/notifications/test-email')
             ->assertStatus(401);
     }
 
@@ -96,13 +96,13 @@ class NotificationFlowTest extends TestCase
             'user_id' => $owner->id,
             'title' => 'Private update',
             'message' => 'This belongs to the owner.',
-            'type' => 'ticket',
+            'type' => 'ticket_updated',
             'is_read' => false,
             'link' => '/ui/tickets/2',
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $otherUser->api_token)
-            ->patchJson('/notifications/'.$notification->id);
+            ->patchJson('/api/notifications/'.$notification->id);
 
         $response->assertStatus(404);
         $this->assertFalse($notification->fresh()->is_read);

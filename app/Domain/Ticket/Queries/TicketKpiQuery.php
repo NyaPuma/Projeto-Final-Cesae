@@ -5,6 +5,7 @@ namespace App\Domain\Ticket\Queries;
 use App\Enums\BudgetStatusEnum;
 use App\Models\Ticket;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 
 final readonly class TicketKpiQuery
 {
@@ -34,18 +35,22 @@ final readonly class TicketKpiQuery
 
     private function buildKpiQuery(Builder $query): Builder
     {
-        return $query->selectRaw('
+        $diffExpr = $this->diffMinutesExpression('opened_at', 'closed_at');
+        $nowExpr = $this->nowExpression();
+        $diffNowExpr = $this->diffMinutesExpression('opened_at', $nowExpr);
+
+        return $query->selectRaw("
             SUM(CASE WHEN status_id = ? THEN 1 ELSE 0 END) as open_tickets,
             SUM(CASE WHEN status_id = ? THEN 1 ELSE 0 END) as in_progress_tickets,
             SUM(CASE WHEN budget_status = ? THEN 1 ELSE 0 END) as budget_pending_tickets,
             SUM(CASE WHEN status_id = ? AND opened_at IS NOT NULL AND closed_at IS NOT NULL THEN 1 ELSE 0 END) as closed_tickets,
             AVG(CASE WHEN status_id = ? AND opened_at IS NOT NULL AND closed_at IS NOT NULL
-                THEN TIMESTAMPDIFF(MINUTE, opened_at, closed_at) END) as avg_resolution,
+                THEN {$diffExpr} END) as avg_resolution,
             AVG(CASE WHEN status_id != ? AND opened_at IS NOT NULL
-                THEN TIMESTAMPDIFF(MINUTE, opened_at, NOW()) END) as avg_waiting,
+                THEN {$diffNowExpr} END) as avg_waiting,
             SUM(CASE WHEN status_id = ? AND opened_at IS NOT NULL AND closed_at IS NOT NULL
-                AND TIMESTAMPDIFF(MINUTE, opened_at, closed_at) <= ? THEN 1 ELSE 0 END) as sla_met
-        ', [
+                AND {$diffExpr} <= ? THEN 1 ELSE 0 END) as sla_met
+        ", [
             $this->openStatusId,
             $this->inProgressStatusId,
             BudgetStatusEnum::Pending->value,
@@ -55,5 +60,26 @@ final readonly class TicketKpiQuery
             $this->closedStatusId,
             $this->slaTargetMinutes,
         ]);
+    }
+
+    private function diffMinutesExpression(string $start, string $end): string
+    {
+        $driver = DB::connection()->getDriverName();
+
+        return match ($driver) {
+            'sqlite' => "(julianday({$end}) - julianday({$start})) * 1440",
+            'pgsql' => "EXTRACT(EPOCH FROM {$end} - {$start}) / 60",
+            default => "TIMESTAMPDIFF(MINUTE, {$start}, {$end})",
+        };
+    }
+
+    private function nowExpression(): string
+    {
+        $driver = DB::connection()->getDriverName();
+
+        return match ($driver) {
+            'sqlite' => "datetime('now')",
+            default => 'NOW()',
+        };
     }
 }

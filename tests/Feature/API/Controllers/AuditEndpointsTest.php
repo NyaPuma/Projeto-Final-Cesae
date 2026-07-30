@@ -9,7 +9,7 @@ use App\Models\Equipment;
 use App\Models\Room;
 use App\Models\Ticket;
 use App\Models\User;
-use App\Models\Userprofile as UserProfile;
+use App\Models\UserProfile;
 use App\Services\TicketStatusService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
@@ -53,7 +53,7 @@ class AuditEndpointsTest extends TestCase
         ]);
 
         $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->getJson('/admin/audits')
+            ->getJson('/api/admin/audits')
             ->assertOk()
             ->assertJsonStructure(['audits']);
 
@@ -80,7 +80,7 @@ class AuditEndpointsTest extends TestCase
         ]);
 
         $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->getJson('/admin/audits')
+            ->getJson('/api/admin/audits')
             ->assertOk()
             ->assertJsonStructure(['audits'])
             ->assertJsonPath('audits.data', []);
@@ -95,7 +95,7 @@ class AuditEndpointsTest extends TestCase
         ]);
 
         $this->withHeader('X-Auth-Token', $user->api_token)
-            ->getJson('/admin/audits')
+            ->getJson('/api/admin/audits')
             ->assertStatus(403);
     }
 }

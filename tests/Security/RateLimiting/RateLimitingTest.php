@@ -25,7 +25,7 @@ class RateLimitingTest extends FeatureTestCase
         ]);
 
         for ($i = 0; $i < 10; $i++) {
-            $response = $this->withSession([])->postJson('/login', [
+            $response = $this->withSession([])->postJson('/api/login', [
                 'email' => 'bruteforce@example.com',
                 'password' => 'wrong-password-'.$i,
             ]);
@@ -47,7 +47,7 @@ class RateLimitingTest extends FeatureTestCase
         $start = microtime(true);
 
         for ($i = 0; $i < 10; $i++) {
-            $this->withSession([])->postJson('/login', [
+            $this->withSession([])->postJson('/api/login', [
                 'email' => 'rapid@example.com',
                 'password' => 'wrong-password',
             ]);
@@ -69,13 +69,13 @@ class RateLimitingTest extends FeatureTestCase
         ]);
 
         for ($i = 0; $i < 3; $i++) {
-            $this->withSession([])->postJson('/login', [
+            $this->withSession([])->postJson('/api/login', [
                 'email' => 'resetcounter@example.com',
                 'password' => 'wrong-password',
             ]);
         }
 
-        $response = $this->withSession([])->postJson('/login', [
+        $response = $this->withSession([])->postJson('/api/login', [
             'email' => 'resetcounter@example.com',
             'password' => 'Password123!',
         ]);
@@ -100,14 +100,14 @@ class RateLimitingTest extends FeatureTestCase
         ]);
 
         for ($i = 0; $i < 5; $i++) {
-            $response = $this->withSession([])->postJson('/login', [
+            $response = $this->withSession([])->postJson('/api/login', [
                 'email' => 'ratelimit@example.com',
                 'password' => 'wrong-password',
             ]);
             $response->assertStatus(401);
         }
 
-        $response = $this->withSession([])->postJson('/login', [
+        $response = $this->withSession([])->postJson('/api/login', [
             'email' => 'ratelimit@example.com',
             'password' => 'wrong-password',
         ]);
@@ -129,7 +129,7 @@ class RateLimitingTest extends FeatureTestCase
         ]);
 
         for ($i = 0; $i < 6; $i++) {
-            $response = $this->withSession([])->postJson('/login', [
+            $response = $this->withSession([])->postJson('/api/login', [
                 'email' => 'headers@example.com',
                 'password' => 'wrong-password',
             ]);
@@ -153,7 +153,7 @@ class RateLimitingTest extends FeatureTestCase
         for ($i = 0; $i < 5; $i++) {
             $response = $this->withSession([])
                 ->withServerVariables(['REMOTE_ADDR' => '192.168.1.1'])
-                ->postJson('/login', [
+                ->postJson('/api/login', [
                     'email' => 'multiip@example.com',
                     'password' => 'wrong-password',
                 ]);
@@ -162,7 +162,7 @@ class RateLimitingTest extends FeatureTestCase
 
         $response = $this->withSession([])
             ->withServerVariables(['REMOTE_ADDR' => '192.168.1.2'])
-            ->postJson('/login', [
+            ->postJson('/api/login', [
                 'email' => 'multiip@example.com',
                 'password' => 'wrong-password',
             ]);

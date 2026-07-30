@@ -60,7 +60,8 @@ class CalendarFeatureTest extends TestCase
             ->getJson('/calendar/events');
 
         $response->assertOk();
-        $events = $response->json();
+        $body = $response->json();
+        $events = $body['events'] ?? [];
         $this->assertIsArray($events);
         $this->assertCount(1, $events);
         $this->assertEquals($ticket->id, $events[0]['id']);
@@ -77,7 +78,8 @@ class CalendarFeatureTest extends TestCase
             ->getJson('/calendar/events');
 
         $response->assertOk();
-        $events = $response->json();
+        $body = $response->json();
+        $events = $body['events'] ?? [];
         $this->assertIsArray($events);
         $this->assertCount(0, $events);
     }
@@ -103,7 +105,9 @@ class CalendarFeatureTest extends TestCase
             ->getJson('/calendar/events');
 
         $response->assertOk();
-        $events = $response->json();
+        $body = $response->json();
+        $events = $body['events'] ?? [];
+        $this->assertIsArray($events);
         $this->assertCount(1, $events);
         $this->assertArrayHasKey('id', $events[0]);
         $this->assertArrayHasKey('title', $events[0]);

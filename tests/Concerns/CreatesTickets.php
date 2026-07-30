@@ -91,15 +91,15 @@ trait CreatesTickets
 
     protected function ensureTicketLookupData(): void
     {
-        TicketType::firstOrCreate(['name' => 'avaria'], ['description' => 'Avaria']);
-        TicketType::firstOrCreate(['name' => 'preventiva'], ['description' => 'Manutenção Preventiva']);
+        TicketType::firstOrCreate(['name' => 'avaria'], ['code' => 'AVARIA', 'description' => 'Avaria']);
+        TicketType::firstOrCreate(['name' => 'preventiva'], ['code' => 'PREVENTIVA', 'description' => 'Manutenção Preventiva']);
 
         $typeId = TicketType::where('name', 'avaria')->first()->id;
-        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Open->value, 'description' => 'Aberto', 'type_id' => $typeId]);
-        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::InProgress->value, 'description' => 'Em Curso', 'type_id' => $typeId]);
-        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Closed->value, 'description' => 'Fechado', 'type_id' => $typeId]);
-        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Cancelled->value, 'description' => 'Cancelado', 'type_id' => $typeId]);
-        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::PendingBudget->value, 'description' => 'Pendente Orçamento', 'type_id' => $typeId]);
-        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Rejected->value, 'description' => 'Recusada', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Open->value], ['code' => 'ABERTA', 'description' => 'Aberto', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::InProgress->value], ['code' => 'EM_CURSO', 'description' => 'Em Curso', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Closed->value], ['code' => 'FECHADA', 'description' => 'Fechado', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Cancelled->value], ['code' => 'CANCELADA', 'description' => 'Cancelado', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::PendingBudget->value], ['code' => 'PENDENTE_ORCAMENTO', 'description' => 'Pendente Orçamento', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Rejected->value], ['code' => 'RECUSADA', 'description' => 'Recusada', 'type_id' => $typeId]);
     }
 }

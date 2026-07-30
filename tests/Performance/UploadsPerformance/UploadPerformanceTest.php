@@ -26,7 +26,7 @@ class UploadPerformanceTest extends PerformanceTestCase
         $this->startQueryLog();
 
         $time = $this->measureTime(function () use ($tickets, $file) {
-            $this->postJson('/tickets/'.$tickets[0]->id.'/photos', [
+            $this->postJson('/api/tickets/'.$tickets[0]->id.'/photos', [
                 'photo' => $file,
             ])->assertStatus(201);
         });
@@ -49,7 +49,7 @@ class UploadPerformanceTest extends PerformanceTestCase
         $this->asUser();
 
         $time = $this->measureTime(function () use ($tickets, $file) {
-            $this->postJson('/tickets/'.$tickets[0]->id.'/photos', [
+            $this->postJson('/api/tickets/'.$tickets[0]->id.'/photos', [
                 'photo' => $file,
             ])->assertStatus(201);
         });
@@ -69,7 +69,7 @@ class UploadPerformanceTest extends PerformanceTestCase
         $this->asUser();
 
         $time = $this->measureTime(function () use ($tickets, $file) {
-            $this->postJson('/tickets/'.$tickets[0]->id.'/photos', [
+            $this->postJson('/api/tickets/'.$tickets[0]->id.'/photos', [
                 'photo' => $file,
             ])->assertStatus(201);
         });
@@ -89,7 +89,7 @@ class UploadPerformanceTest extends PerformanceTestCase
         $this->asUser();
 
         $memory = $this->measureMemory(function () use ($tickets, $file) {
-            $this->postJson('/tickets/'.$tickets[0]->id.'/photos', [
+            $this->postJson('/api/tickets/'.$tickets[0]->id.'/photos', [
                 'photo' => $file,
             ])->assertStatus(201);
         });
@@ -111,7 +111,7 @@ class UploadPerformanceTest extends PerformanceTestCase
 
         for ($i = 0; $i < 10; $i++) {
             $file = UploadedFile::fake()->image("photo_{$i}.jpg", 400, 300)->size(100);
-            $this->postJson('/tickets/'.$tickets[0]->id.'/photos', [
+            $this->postJson('/api/tickets/'.$tickets[0]->id.'/photos', [
                 'photo' => $file,
             ])->assertStatus(201);
         }
@@ -134,11 +134,11 @@ class UploadPerformanceTest extends PerformanceTestCase
 
         for ($i = 0; $i < 20; $i++) {
             $file = UploadedFile::fake()->image("photo_{$i}.jpg", 400, 300)->size(100);
-            $this->postJson('/tickets/'.$tickets[0]->id.'/photos', ['photo' => $file]);
+            $this->postJson('/api/tickets/'.$tickets[0]->id.'/photos', ['photo' => $file]);
         }
 
         $time = $this->measureTime(function () use ($tickets) {
-            $this->getJson('/tickets/'.$tickets[0]->id.'/photos')->assertOk();
+            $this->getJson('/api/tickets/'.$tickets[0]->id.'/photos')->assertOk();
         });
 
         $this->assertLessThanOrEqual(300, $time,
@@ -154,13 +154,13 @@ class UploadPerformanceTest extends PerformanceTestCase
         $this->asUser();
 
         $file = UploadedFile::fake()->image('photo.jpg', 400, 300)->size(100);
-        $response = $this->postJson('/tickets/'.$tickets[0]->id.'/photos', ['photo' => $file])
+        $response = $this->postJson('/api/tickets/'.$tickets[0]->id.'/photos', ['photo' => $file])
             ->json();
 
         $photoId = $response['attachment']['id'];
 
         $time = $this->measureTime(function () use ($tickets, $photoId) {
-            $this->deleteJson('/tickets/'.$tickets[0]->id.'/photos/'.$photoId)->assertOk();
+            $this->deleteJson('/api/tickets/'.$tickets[0]->id.'/photos/'.$photoId)->assertOk();
         });
 
         $this->assertLessThanOrEqual(300, $time,

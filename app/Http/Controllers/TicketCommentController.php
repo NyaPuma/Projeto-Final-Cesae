@@ -14,8 +14,10 @@ final class TicketCommentController extends Controller
     /**
      * Adiciona um novo comentário a um ticket específico.
      */
-    public function store(StoreCommentRequest $request, Ticket $ticket): JsonResponse
+    public function store(StoreCommentRequest $request, int $id): JsonResponse
     {
+        $ticket = Ticket::findOrFail($id);
+
         // 1. Autorização via Policy
         $this->authorize('view', $ticket);
 

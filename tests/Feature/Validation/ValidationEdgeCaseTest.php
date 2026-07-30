@@ -43,15 +43,15 @@ class ValidationEdgeCaseTest extends TestCase
         $user = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->postJson('/tickets', [
-                'title' => 'Teste com acentos: Ã§Ã£ÃµÃ©Ã­Ã³Ãº & sÃ­mbolos: @#$% 123',
-                'description' => 'DescriÃ§Ã£o com caracteres especiais: Ã¡Ã©Ã­Ã³ÃºÃ§Ã±',
+            ->postJson('/api/tickets', [
+                'title' => 'Teste com acentos: çãõéíóú & símbolos: @#$% 123',
+                'description' => 'Descrição com caracteres especiais: áéíóúçñ',
                 'priority' => TicketPriorityEnum::Medium->value,
             ]);
 
         $response->assertStatus(201);
         $this->assertDatabaseHas('tickets', [
-            'title' => 'Teste com acentos: Ã§Ã£ÃµÃ©Ã­Ã³Ãº & sÃ­mbolos: @#$% 123',
+            'title' => 'Teste com acentos: çãõéíóú & símbolos: @#$% 123',
         ]);
     }
 
@@ -60,7 +60,7 @@ class ValidationEdgeCaseTest extends TestCase
         $user = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->postJson('/tickets', [
+            ->postJson('/api/tickets', [
                 'title' => str_repeat('A', 256),
                 'description' => 'Valid description',
                 'priority' => TicketPriorityEnum::Low->value,
@@ -75,7 +75,7 @@ class ValidationEdgeCaseTest extends TestCase
 
         $title = str_repeat('A', 255);
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->postJson('/tickets', [
+            ->postJson('/api/tickets', [
                 'title' => $title,
                 'description' => 'Valid description at boundary',
                 'priority' => TicketPriorityEnum::Medium->value,
@@ -90,7 +90,7 @@ class ValidationEdgeCaseTest extends TestCase
         $user = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->postJson('/tickets', [
+            ->postJson('/api/tickets', [
                 'title' => 'Ticket with empty description',
                 'description' => '',
                 'priority' => TicketPriorityEnum::Low->value,
@@ -104,7 +104,7 @@ class ValidationEdgeCaseTest extends TestCase
         $user = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->postJson('/tickets', [
+            ->postJson('/api/tickets', [
                 'title' => 'Invalid priority test',
                 'description' => 'Testing invalid priority',
                 'priority' => 'urgentissima',
@@ -120,14 +120,14 @@ class ValidationEdgeCaseTest extends TestCase
         $room = Room::factory()->create();
 
         $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->postJson('/admin/equipment', [
+            ->postJson('/api/admin/equipment', [
                 'name' => 'First Equipment',
                 'serial' => 'SN-UNIQUE-001',
                 'room_id' => $room->id,
             ])->assertStatus(201);
 
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)
-            ->postJson('/admin/equipment', [
+            ->postJson('/api/admin/equipment', [
                 'name' => 'Duplicate Equipment',
                 'serial' => 'SN-UNIQUE-001',
                 'room_id' => $room->id,
@@ -142,7 +142,7 @@ class ValidationEdgeCaseTest extends TestCase
         $user = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->postJson('/tickets', [
+            ->postJson('/api/tickets', [
                 'title' => 'Ticket with invalid room',
                 'description' => 'Testing invalid room reference',
                 'priority' => TicketPriorityEnum::Medium->value,
@@ -157,15 +157,15 @@ class ValidationEdgeCaseTest extends TestCase
         $user = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->postJson('/tickets', [
-                'title' => 'ðŸŒ Teste Unicode: ä½ å¥½ä¸–ç•Œ OlÃ¡ Mundo ðŸŽ‰',
+            ->postJson('/api/tickets', [
+                'title' => 'ðŸŒ Teste Unicode: ä½ å¥½ä¸–ç•Œ Olá Mundo ðŸŽ‰',
                 'description' => 'Emoji test: ðŸ”§âš™ï¸ðŸ› ï¸ and Japanese: ãƒ¡ãƒ³ãƒ†ãƒŠãƒ³ã‚¹',
                 'priority' => TicketPriorityEnum::High->value,
             ]);
 
         $response->assertStatus(201);
         $this->assertDatabaseHas('tickets', [
-            'title' => 'ðŸŒ Teste Unicode: ä½ å¥½ä¸–ç•Œ OlÃ¡ Mundo ðŸŽ‰',
+            'title' => 'ðŸŒ Teste Unicode: ä½ å¥½ä¸–ç•Œ Olá Mundo ðŸŽ‰',
         ]);
     }
 
@@ -183,7 +183,7 @@ class ValidationEdgeCaseTest extends TestCase
 
         foreach ($payloads as $payload) {
             $response = $this->withHeader('X-Auth-Token', $user->api_token)
-                ->postJson('/tickets', [
+                ->postJson('/api/tickets', [
                     'title' => 'SQLi test: '.substr($payload, 0, 50),
                     'description' => $payload,
                     'priority' => TicketPriorityEnum::Medium->value,

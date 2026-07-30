@@ -57,7 +57,7 @@ class EquipmentTest extends TestCase
     #[Test]
     public function it_belongs_to_a_category(): void
     {
-        $category = EquipmentCategory::factory()->create(['name' => 'ElÃ©trica']);
+        $category = EquipmentCategory::factory()->create(['name' => 'Elétrica']);
         $room = Room::factory()->create();
 
         $equipment = Equipment::factory()->create([
@@ -66,7 +66,7 @@ class EquipmentTest extends TestCase
         ]);
 
         $this->assertInstanceOf(EquipmentCategory::class, $equipment->category);
-        $this->assertEquals('ElÃ©trica', $equipment->category->name);
+        $this->assertEquals('Elétrica', $equipment->category->name);
     }
 
     #[Test]

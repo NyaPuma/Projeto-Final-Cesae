@@ -43,16 +43,17 @@ class TicketsExportTest extends TestCase
 
         $expectedHeadings = [
             'ID',
-            'TÃ­tulo',
+            'Código',
+            'Título',
             'Estado',
             'Prioridade',
             'Aberto em',
             'Em Progresso em',
             'Fechado em',
             'Minutos Gastos',
-            'Custo (â‚¬)',
-            'Estado OrÃ§amento',
-            'Montante OrÃ§amento (â‚¬)',
+            'Custo (€)',
+            'Estado Orçamento',
+            'Montante Orçamento (€)',
         ];
 
         $this->assertEquals($expectedHeadings, $headings);
@@ -62,7 +63,7 @@ class TicketsExportTest extends TestCase
     public function it_returns_correct_title(): void
     {
         $export = new TicketsExport;
-        $this->assertEquals('RelatÃ³rio de Tickets', $export->title());
+        $this->assertEquals('Relatório de Tickets', $export->title());
     }
 
     #[Test]
@@ -80,23 +81,26 @@ class TicketsExportTest extends TestCase
             'status_id' => $openStatusId,
             'opened_at' => now(),
             'minutes_spent' => 120,
-            'cost' => 350.50,
+            'actual_cost' => 350.50,
             'budget_status' => BudgetStatusEnum::Approved->value,
             'budget_amount' => 500.00,
         ]);
 
+        $ticket->refresh();
+
         $export = new TicketsExport;
         $mapped = $export->map($ticket);
 
-        $this->assertCount(11, $mapped);
+        $this->assertCount(12, $mapped);
         $this->assertEquals($ticket->id, $mapped[0]);
-        $this->assertEquals('Export Test Ticket', $mapped[1]);
-        $this->assertEquals($status->name, $mapped[2]);
-        $this->assertEquals(TicketPriorityEnum::High->value, $mapped[3]);
-        $this->assertEquals(120, $mapped[7]);
-        $this->assertEquals('350,50', $mapped[8]);
-        $this->assertEquals(BudgetStatusEnum::Approved->value, $mapped[9]);
-        $this->assertEquals('500,00', $mapped[10]);
+        $this->assertEquals($ticket->reference, $mapped[1]);
+        $this->assertEquals('Export Test Ticket', $mapped[2]);
+        $this->assertEquals($status->name, $mapped[3]);
+        $this->assertEquals(TicketPriorityEnum::High->value, $mapped[4]);
+        $this->assertEquals(120, $mapped[8]);
+        $this->assertEquals(350.50, $mapped[9]);
+        $this->assertEquals(BudgetStatusEnum::Approved->value, $mapped[10]);
+        $this->assertEquals(500.00, $mapped[11]);
     }
 
     #[Test]
@@ -117,10 +121,10 @@ class TicketsExportTest extends TestCase
         $export = new TicketsExport;
         $mapped = $export->map($ticket);
 
-        $this->assertCount(11, $mapped);
-        $this->assertEquals('N/A', $mapped[9]); // budget_status
-        $this->assertEquals('0,00', $mapped[8]); // cost
-        $this->assertEquals('0,00', $mapped[10]); // budget_amount
+        $this->assertCount(12, $mapped);
+        $this->assertEquals('N/A', $mapped[10]); // budget_status
+        $this->assertEquals(0.0, $mapped[9]); // cost
+        $this->assertEquals(0.0, $mapped[11]); // budget_amount
     }
 
     #[Test]

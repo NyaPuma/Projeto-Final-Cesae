@@ -56,7 +56,7 @@ final class TicketLifecycleController extends Controller
         $this->authorize('cancel', $ticket);
 
         // 2. Validação de estado elegível para cancelamento
-        if ($ticket->status !== TicketStatusEnum::Open) {
+        if (! $ticket->hasStatus(TicketStatusEnum::Open)) {
             return response()->json([
                 'message' => __('Apenas tickets no estado "Aberto" podem ser cancelados.'),
             ], 422);

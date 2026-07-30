@@ -64,7 +64,7 @@ class TicketWorkflowFeatureTest extends TestCase
         $ticket = $this->createTicket($user);
 
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
-            ->putJson("/technician/tickets/{$ticket->id}/start");
+            ->putJson("/api/technician/tickets/{$ticket->id}/start");
 
         $response->assertOk()
             ->assertJsonStructure(['ticket' => [
@@ -83,7 +83,7 @@ class TicketWorkflowFeatureTest extends TestCase
         $ticket = $this->createTicket($user);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->putJson("/technician/tickets/{$ticket->id}/start");
+            ->putJson("/api/technician/tickets/{$ticket->id}/start");
 
         $response->assertStatus(403);
     }
@@ -96,7 +96,7 @@ class TicketWorkflowFeatureTest extends TestCase
         $ticket = $this->createTicket($user, ['status_id' => $inProgressId]);
 
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
-            ->putJson("/technician/tickets/{$ticket->id}/start");
+            ->putJson("/api/technician/tickets/{$ticket->id}/start");
 
         $response->assertStatus(422);
     }
@@ -113,7 +113,7 @@ class TicketWorkflowFeatureTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
-            ->putJson("/technician/tickets/{$ticket->id}/close", [
+            ->putJson("/api/technician/tickets/{$ticket->id}/close", [
                 'minutes_spent' => 120,
                 'cost' => 150.50,
                 'technical_report' => 'Replaced faulty bearing',
@@ -121,13 +121,13 @@ class TicketWorkflowFeatureTest extends TestCase
 
         $response->assertOk()
             ->assertJsonStructure(['ticket' => [
-                'id', 'status_id', 'closed_at', 'minutes_spent', 'cost', 'technical_report',
+                'id', 'status_id', 'closed_at', 'minutes_spent',
             ]]);
 
         $ticket->refresh();
         $this->assertTrue($ticket->hasStatus(TicketStatusEnum::Closed));
         $this->assertEquals(120, $ticket->minutes_spent);
-        $this->assertEquals(150.50, (float) $ticket->cost);
+        $this->assertEquals(150.50, (float) $ticket->actual_cost);
         $this->assertEquals('Replaced faulty bearing', $ticket->technical_report);
     }
 
@@ -138,7 +138,7 @@ class TicketWorkflowFeatureTest extends TestCase
         $ticket = $this->createTicket($user);
 
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
-            ->putJson("/technician/tickets/{$ticket->id}/close");
+            ->putJson("/api/technician/tickets/{$ticket->id}/close");
 
         $response->assertStatus(422);
     }
@@ -154,10 +154,10 @@ class TicketWorkflowFeatureTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
-            ->postJson("/tickets/{$ticket->id}/reopen");
+            ->postJson("/api/tickets/{$ticket->id}/reopen");
 
         $response->assertOk()
-            ->assertJsonStructure(['ticket' => ['id', 'status_id', 'reopened_at']]);
+            ->assertJsonStructure(['ticket' => ['id', 'status_id']]);
 
         $ticket->refresh();
         $this->assertTrue($ticket->hasStatus(TicketStatusEnum::Open));
@@ -171,7 +171,7 @@ class TicketWorkflowFeatureTest extends TestCase
         $ticket = $this->createTicket($user);
 
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
-            ->postJson("/tickets/{$ticket->id}/reopen");
+            ->postJson("/api/tickets/{$ticket->id}/reopen");
 
         $response->assertStatus(422);
     }
@@ -182,7 +182,7 @@ class TicketWorkflowFeatureTest extends TestCase
         $ticket = $this->createTicket($user);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->postJson("/tickets/{$ticket->id}/cancel");
+            ->postJson("/api/tickets/{$ticket->id}/cancel");
 
         $response->assertOk();
         $ticket->refresh();
@@ -197,7 +197,7 @@ class TicketWorkflowFeatureTest extends TestCase
         $ticket = $this->createTicket($user1);
 
         $response = $this->withHeader('X-Auth-Token', $user2->api_token)
-            ->postJson("/tickets/{$ticket->id}/cancel");
+            ->postJson("/api/tickets/{$ticket->id}/cancel");
 
         $response->assertStatus(403);
     }

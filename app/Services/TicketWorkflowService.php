@@ -11,6 +11,7 @@ use App\Domain\Ticket\Actions\ReopenTicketAction;
 use App\Domain\Ticket\Actions\StartTicketAction;
 use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 final class TicketWorkflowService
@@ -38,9 +39,9 @@ final class TicketWorkflowService
      * @param Ticket $ticket
      * @return bool
      */
-    public function startRepair(Ticket $ticket): bool
+    public function startRepair(Ticket $ticket, ?User $user = null): bool
     {
-        return $this->startAction->execute($ticket);
+        return $this->startAction->execute($ticket, $user);
     }
 
     /**
@@ -88,7 +89,7 @@ final class TicketWorkflowService
      */
     public function checkAutoClose(Ticket $ticket, float $threshold): bool
     {
-        if ($ticket->cost === null || $ticket->cost > $threshold) {
+        if ($ticket->estimated_cost === null || $ticket->estimated_cost > $threshold) {
             return false;
         }
 

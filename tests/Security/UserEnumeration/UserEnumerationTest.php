@@ -52,7 +52,7 @@ class UserEnumerationTest extends FeatureTestCase
             'email' => 'nonexistent@example.com',
         ]);
 
-        $response->assertStatus(422);
+        $response->assertOk();
         $this->assertStringNotContainsString('not found', strtolower($response->json('message') ?? ''));
     }
 

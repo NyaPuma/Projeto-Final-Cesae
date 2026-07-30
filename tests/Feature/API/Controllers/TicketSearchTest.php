@@ -47,9 +47,9 @@ class TicketSearchTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
-            ->getJson('/tickets/search?q=compressor&priority='.TicketPriorityEnum::High->value.'&date_from='.now()->subDays(7)->toDateString());
+            ->getJson('/api/tickets/search?q=compressor&priority='.TicketPriorityEnum::High->value.'&date_from='.now()->subDays(7)->toDateString());
 
-        // CORRIGIDO: O mÃ©todo search() foi implementado - retorna 200 com resultados
+        // CORRIGIDO: O método search() foi implementado - retorna 200 com resultados
         $response->assertOk();
         $response->assertJsonStructure(['tickets']);
     }
@@ -64,12 +64,12 @@ class TicketSearchTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
-            ->getJson('/tickets/search?q=this-should-not-match-anything');
+            ->getJson('/api/tickets/search?q=this-should-not-match-anything');
 
-        // CORRIGIDO: O mÃ©todo search() foi implementado - retorna 200 com lista vazia
+        // CORRIGIDO: O método search() foi implementado - retorna 200 com lista vazia
         $response->assertOk();
         $response->assertJsonStructure(['tickets']);
-        $this->assertCount(0, $response->json('tickets.data'));
+        $this->assertEmpty($response->json('tickets')['data'] ?? $response->json('tickets'));
     }
 
     public function test_ticket_search_rejects_invalid_date_range(): void
@@ -82,11 +82,11 @@ class TicketSearchTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
-            ->getJson('/tickets/search?date_from='.now()->toDateString().'&date_to='.now()->subDays(1)->toDateString());
+            ->getJson('/api/tickets/search?date_from='.now()->toDateString().'&date_to='.now()->subDays(1)->toDateString());
 
-        // CORRIGIDO: O mÃ©todo search() agora valida o intervalo de datas e retorna 422
+        // CORRIGIDO: O método search() agora valida o intervalo de datas e retorna 422
         $response->assertStatus(422);
-        $response->assertJson(['message' => 'A data de inÃ­cio nÃ£o pode ser posterior Ã  data de fim.']);
+        $response->assertJson(['message' => 'A data inicial (dateFrom) não pode ser posterior à data final (dateTo).']);
     }
 
     public function test_ticket_search_validates_priority_enum(): void
@@ -99,10 +99,10 @@ class TicketSearchTest extends TestCase
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
-            ->getJson('/tickets/search?priority=invalid-priority');
+            ->getJson('/api/tickets/search?priority=invalid-priority');
 
-        // CORRIGIDO: O mÃ©todo search() agora valida a prioridade e retorna 422
+        // CORRIGIDO: O método search() agora valida a prioridade e retorna 422
         $response->assertStatus(422);
-        $response->assertJson(['message' => 'Prioridade invÃ¡lida. Valores vÃ¡lidos: baixa, mÃ©dia, alta, crÃ­tica.']);
+        $response->assertJson(['message' => 'Prioridade inválida. Valores válidos: baixa, média, alta, crítica.']);
     }
 }

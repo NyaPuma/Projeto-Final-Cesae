@@ -51,7 +51,7 @@ class PasswordSecurityTest extends FeatureTestCase
         $user = $this->createUserWithPassword(UserRoleEnum::User->value, 'shortpwchange@example.com', 'current-password');
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->postJson('/password/change', [
+            ->postJson('/api/password/change', [
                 'current_password' => 'current-password',
                 'new_password' => 'short',
             ]);

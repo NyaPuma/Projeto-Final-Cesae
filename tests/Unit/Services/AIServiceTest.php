@@ -64,7 +64,7 @@ class AIServiceTest extends TestCase
         $result = $this->aiService->recomendarTecnico($ticket);
 
         $this->assertNull($result['tecnico_id']);
-        $this->assertStringContainsString('nÃ£o existem tÃ©cnicos', $result['justificacao']);
+        $this->assertStringContainsString('não existem técnicos', $result['justificacao']);
     }
 
     #[Test]
@@ -93,7 +93,7 @@ class AIServiceTest extends TestCase
         $result = $this->aiService->recomendarTecnico($ticket);
 
         $this->assertNull($result['tecnico_id']);
-        $this->assertStringContainsString('indisponÃ­vel', $result['justificacao']);
+        $this->assertStringContainsString('indisponível', $result['justificacao']);
     }
 
     #[Test]
@@ -123,7 +123,7 @@ class AIServiceTest extends TestCase
         $result = $this->aiService->recomendarTecnico($ticket);
 
         $this->assertNull($result['tecnico_id']);
-        $this->assertStringContainsString('nÃ£o existem tÃ©cnicos', $result['justificacao']);
+        $this->assertStringContainsString('não existem técnicos', $result['justificacao']);
     }
 
     #[Test]
@@ -152,7 +152,7 @@ class AIServiceTest extends TestCase
         $result = $this->aiService->recomendarTecnico($ticket);
 
         $this->assertNull($result['tecnico_id']);
-        $this->assertStringContainsString('indisponÃ­vel', $result['justificacao']);
+        $this->assertStringContainsString('indisponível', $result['justificacao']);
     }
 
     #[Test]

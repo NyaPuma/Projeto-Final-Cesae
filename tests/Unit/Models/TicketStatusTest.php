@@ -37,7 +37,7 @@ class TicketStatusTest extends TestCase
 
         $status = TicketStatus::create([
             'name' => TicketStatusEnum::Open->value,
-            'description' => 'Ticket aberto aguardando atribuiÃ§Ã£o',
+            'description' => 'Ticket aberto aguardando atribuição',
             'type_id' => $type->id,
         ]);
 
@@ -51,12 +51,12 @@ class TicketStatusTest extends TestCase
     {
         $type = TicketType::create([
             'name' => 'preventiva',
-            'description' => 'ManutenÃ§Ã£o Preventiva',
+            'description' => 'Manutenção Preventiva',
         ]);
 
         $status = TicketStatus::create([
             'name' => TicketStatusEnum::InProgress->value,
-            'description' => 'Em execuÃ§Ã£o',
+            'description' => 'Em execução',
             'type_id' => $type->id,
         ]);
 

@@ -32,7 +32,7 @@ class SecurityRateLimitTest extends TestCase
 
         // The route has rate.limit:5,1 - 5 requests per minute
         for ($i = 0; $i < 5; $i++) {
-            $response = $this->withSession([])->postJson('/login', [
+            $response = $this->withSession([])->postJson('/api/login', [
                 'email' => 'ratelimit@example.com',
                 'password' => 'wrong-password',
             ]);
@@ -40,7 +40,7 @@ class SecurityRateLimitTest extends TestCase
         }
 
         // 6th attempt should be rate limited
-        $response = $this->withSession([])->postJson('/login', [
+        $response = $this->withSession([])->postJson('/api/login', [
             'email' => 'ratelimit@example.com',
             'password' => 'wrong-password',
         ]);
@@ -61,7 +61,7 @@ class SecurityRateLimitTest extends TestCase
         ]);
 
         for ($i = 0; $i < 6; $i++) {
-            $response = $this->withSession([])->postJson('/login', [
+            $response = $this->withSession([])->postJson('/api/login', [
                 'email' => 'headers@example.com',
                 'password' => 'wrong-password',
             ]);
@@ -85,7 +85,7 @@ class SecurityRateLimitTest extends TestCase
         for ($i = 0; $i < 5; $i++) {
             $response = $this->withSession([])
                 ->withServerVariables(['REMOTE_ADDR' => '192.168.1.1'])
-                ->postJson('/login', [
+                ->postJson('/api/login', [
                     'email' => 'multiip@example.com',
                     'password' => 'wrong-password',
                 ]);
@@ -95,7 +95,7 @@ class SecurityRateLimitTest extends TestCase
         // 6th attempt from IP 2 â€” same email is already rate-limited (email-based)
         $response = $this->withSession([])
             ->withServerVariables(['REMOTE_ADDR' => '192.168.1.2'])
-            ->postJson('/login', [
+            ->postJson('/api/login', [
                 'email' => 'multiip@example.com',
                 'password' => 'wrong-password',
             ]);

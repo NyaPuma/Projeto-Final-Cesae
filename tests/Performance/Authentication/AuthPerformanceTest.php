@@ -17,7 +17,7 @@ class AuthPerformanceTest extends PerformanceTestCase
         $this->startQueryLog();
 
         $time = $this->measureTime(function () use ($password) {
-            $this->postJson('/login', [
+            $this->postJson('/api/login', [
                 'email' => $this->commonUser->email,
                 'password' => $password,
             ])->assertOk();
@@ -26,7 +26,7 @@ class AuthPerformanceTest extends PerformanceTestCase
         $queries = $this->stopQueryLog();
 
         $this->assertLessThanOrEqual(800, $time,
-            "POST /login took {$time}ms, exceeds 800ms");
+            "POST /api/login took {$time}ms, exceeds 800ms");
         $this->assertLessThanOrEqual(10, count($queries),
             'Login should use 10 or fewer queries, used '.count($queries));
     }
@@ -92,7 +92,7 @@ class AuthPerformanceTest extends PerformanceTestCase
 
         $totalTime = $this->measureTime(function () use ($password) {
             for ($i = 0; $i < 20; $i++) {
-                $this->postJson('/login', [
+                $this->postJson('/api/login', [
                     'email' => $this->commonUser->email,
                     'password' => $password,
                 ])->assertOk();
@@ -142,7 +142,7 @@ class AuthPerformanceTest extends PerformanceTestCase
         $this->asUser();
 
         $time = $this->measureTime(function () use ($password) {
-            $this->postJson('/password/change', [
+            $this->postJson('/api/password/change', [
                 'current_password' => $password,
                 'new_password' => 'NewPassword456!',
             ])->assertOk();

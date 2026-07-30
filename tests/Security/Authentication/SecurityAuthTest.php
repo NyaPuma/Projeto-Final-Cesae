@@ -5,7 +5,7 @@ namespace Tests\Feature;
 
 use App\Enums\UserRoleEnum;
 use App\Models\User;
-use App\Models\Userprofile as UserProfile;
+use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -161,7 +161,7 @@ class SecurityAuthTest extends TestCase
         $oldToken = $user->api_token;
         $this->assertNotEmpty($oldToken);
 
-        $this->post('/login', [
+        $this->post('/api/login', [
             'email' => $user->email,
             'password' => 'Password123!',
         ]);
