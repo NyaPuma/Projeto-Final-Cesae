@@ -2,6 +2,8 @@
 
 namespace Tests\Database\Constraints;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\Ticket;
 use App\Models\TicketStatus;
 use App\Models\User;
@@ -25,13 +27,13 @@ class ConcurrencyTest extends TestCase
         TicketStatus::firstOrCreate(['name' => 'em curso'], ['description' => 'Em curso']);
         TicketStatus::firstOrCreate(['name' => 'fechada'], ['description' => 'Fechada']);
         TicketStatus::firstOrCreate(['name' => 'cancelada'], ['description' => 'Cancelada']);
-        TicketStatus::firstOrCreate(['name' => 'pendente orçamento'], ['description' => 'Pendente']);
+        TicketStatus::firstOrCreate(['name' => 'pendente orÃ§amento'], ['description' => 'Pendente']);
         TicketStatus::firstOrCreate(['name' => 'recusada'], ['description' => 'Recusada']);
     }
 
     protected function createAdmin(): User
     {
-        $profile = UserProfile::firstOrCreate(['name' => User::ROLE_ADMIN]);
+        $profile = UserProfile::firstOrCreate(['name' => UserRoleEnum::Admin->value]);
         $token = 'admin-persist-token-'.uniqid();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
@@ -44,7 +46,7 @@ class ConcurrencyTest extends TestCase
 
     protected function createCommonUser(): User
     {
-        $profile = UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
+        $profile = UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
         $token = 'user-persist-token-'.uniqid();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
@@ -98,7 +100,7 @@ class ConcurrencyTest extends TestCase
         $admin = $this->createAdmin();
         $this->asUserWithToken($admin);
 
-        $profile = UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
+        $profile = UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
         $email = 'concurrent.'.uniqid().'@example.invalid';
 
         $this->postJson('/admin/users', [
@@ -106,7 +108,7 @@ class ConcurrencyTest extends TestCase
             'email' => $email,
             'password' => 'Password123!',
             'password_confirmation' => 'Password123!',
-            'role' => User::ROLE_USER,
+            'role' => UserRoleEnum::User->value,
             'profile_id' => $profile->id,
         ])->assertStatus(201);
 
@@ -115,7 +117,7 @@ class ConcurrencyTest extends TestCase
             'email' => $email,
             'password' => 'Password123!',
             'password_confirmation' => 'Password123!',
-            'role' => User::ROLE_USER,
+            'role' => UserRoleEnum::User->value,
             'profile_id' => $profile->id,
         ])->assertStatus(422);
     }

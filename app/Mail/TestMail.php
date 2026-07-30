@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
@@ -8,18 +10,19 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class TestMail extends Mailable
+final class TestMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public function __construct(
-        public string $recipientName
+        public readonly string $recipientName,
     ) {}
 
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Teste de envio por Mailgun'
+            subject: 'Teste de Envio de E-mail',
         );
     }
 
@@ -27,9 +30,7 @@ class TestMail extends Mailable
     {
         return new Content(
             view: 'emails.test-mail',
-            with: [
-                'recipientName' => $this->recipientName,
-            ]
+            // O $recipientName já é injetado automaticamente na view por ser uma propriedade pública
         );
     }
 }

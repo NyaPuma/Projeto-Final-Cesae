@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\Userprofile as UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -20,9 +22,9 @@ class CustomAuthMiddlewareTest extends TestCase
         parent::setUp();
 
         // Create necessary profiles for tests
-        UserProfile::create(['name' => User::ROLE_USER]);
-        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::create(['name' => User::ROLE_ADMIN]);
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
+        UserProfile::create(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::create(['name' => UserRoleEnum::Admin->value]);
 
         // Seed ticket statuses if not already done
         $this->artisan('db:seed', ['--class' => 'TicketLookupSeeder', '--force' => true]);
@@ -32,7 +34,7 @@ class CustomAuthMiddlewareTest extends TestCase
     public function it_allows_access_when_user_has_valid_token_and_correct_profile()
     {
         // Create user with technician profile and API token
-        $userProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
+        $userProfile = UserProfile::where('name', UserRoleEnum::Technician->value)->first();
 
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,
@@ -59,7 +61,7 @@ class CustomAuthMiddlewareTest extends TestCase
     public function it_denies_access_when_user_has_no_valid_profile()
     {
         // Create user with technician profile but no API token (will fail validation)
-        $userProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
+        $userProfile = UserProfile::where('name', UserRoleEnum::Technician->value)->first();
 
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,
@@ -79,7 +81,7 @@ class CustomAuthMiddlewareTest extends TestCase
 
         $response->assertStatus(401);
         $response->assertJson([
-            'message' => 'Token inválido ou utilizador inativo.',
+            'message' => 'Token invÃ¡lido ou utilizador inativo.',
             'error_code' => 401,
         ]);
     }
@@ -100,7 +102,7 @@ class CustomAuthMiddlewareTest extends TestCase
 
         $response->assertStatus(401);
         $response->assertJson([
-            'message' => 'Token inválido ou utilizador inativo.',
+            'message' => 'Token invÃ¡lido ou utilizador inativo.',
             'error_code' => 401,
         ]);
     }
@@ -109,7 +111,7 @@ class CustomAuthMiddlewareTest extends TestCase
     public function it_denies_access_when_user_is_not_active()
     {
         // Create user with technician profile but inactive status and API token
-        $userProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
+        $userProfile = UserProfile::where('name', UserRoleEnum::Technician->value)->first();
 
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,
@@ -130,7 +132,7 @@ class CustomAuthMiddlewareTest extends TestCase
 
         $response->assertStatus(401);
         $response->assertJson([
-            'message' => 'Token inválido ou utilizador inativo.',
+            'message' => 'Token invÃ¡lido ou utilizador inativo.',
             'error_code' => 401,
             'errors' => [
                 'api_token' => ['Invalid or user is inactive.'],
@@ -142,7 +144,7 @@ class CustomAuthMiddlewareTest extends TestCase
     public function it_denies_access_when_user_has_no_profile_id()
     {
         // Create user with technician profile but no API token (will fail validation)
-        $userProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
+        $userProfile = UserProfile::where('name', UserRoleEnum::Technician->value)->first();
 
         $user = User::factory()->create([
             'api_token' => bin2hex(random_bytes(32)), // Generate random token
@@ -162,7 +164,7 @@ class CustomAuthMiddlewareTest extends TestCase
 
         $response->assertStatus(403);
         $response->assertJson([
-            'message' => 'Perfil inválido.',
+            'message' => 'Perfil invÃ¡lido.',
             'error_code' => 403,
             'errors' => [
                 'profile_id' => ['User must have a valid profile assigned.'],
@@ -174,7 +176,7 @@ class CustomAuthMiddlewareTest extends TestCase
     public function it_denies_access_when_user_has_no_profile_name()
     {
         // Create user with technician profile but no API token (will fail validation)
-        $userProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
+        $userProfile = UserProfile::where('name', UserRoleEnum::Technician->value)->first();
 
         $user = User::factory()->create([
             'api_token' => bin2hex(random_bytes(32)), // Generate random token
@@ -194,7 +196,7 @@ class CustomAuthMiddlewareTest extends TestCase
 
         $response->assertStatus(403);
         $response->assertJson([
-            'message' => 'Perfil inválido.',
+            'message' => 'Perfil invÃ¡lido.',
             'error_code' => 403,
             'errors' => [
                 'profile_id' => ['User must have a valid profile assigned.'],
@@ -206,7 +208,7 @@ class CustomAuthMiddlewareTest extends TestCase
     public function it_allows_access_when_user_has_valid_token_and_active_status()
     {
         // Create user with technician profile and API token, active status
-        $userProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
+        $userProfile = UserProfile::where('name', UserRoleEnum::Technician->value)->first();
 
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,
@@ -234,7 +236,7 @@ class CustomAuthMiddlewareTest extends TestCase
     public function it_allows_access_when_user_has_multiple_roles()
     {
         // Create user with technician profile and API token, active status
-        $userProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
+        $userProfile = UserProfile::where('name', UserRoleEnum::Technician->value)->first();
 
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,
@@ -260,7 +262,7 @@ class CustomAuthMiddlewareTest extends TestCase
     public function it_allows_access_when_user_has_admin_role()
     {
         // Create user with admin profile and API token, active status
-        $userProfile = UserProfile::where('name', User::ROLE_ADMIN)->first();
+        $userProfile = UserProfile::where('name', UserRoleEnum::Admin->value)->first();
 
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,
@@ -286,7 +288,7 @@ class CustomAuthMiddlewareTest extends TestCase
     public function it_allows_access_when_user_has_no_role()
     {
         // Create user with technician profile and API token, active status
-        $userProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
+        $userProfile = UserProfile::where('name', UserRoleEnum::Technician->value)->first();
 
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,
@@ -312,7 +314,7 @@ class CustomAuthMiddlewareTest extends TestCase
     public function it_allows_access_when_user_has_bearer_token()
     {
         // Create user with technician profile and API token, active status
-        $userProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
+        $userProfile = UserProfile::where('name', UserRoleEnum::Technician->value)->first();
 
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,
@@ -338,7 +340,7 @@ class CustomAuthMiddlewareTest extends TestCase
     public function it_allows_access_when_user_has_cookie_token()
     {
         // Create user with technician profile and API token, active status
-        $userProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
+        $userProfile = UserProfile::where('name', UserRoleEnum::Technician->value)->first();
 
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,
@@ -358,9 +360,9 @@ class CustomAuthMiddlewareTest extends TestCase
             ->getJson('/protected-auth');
 
         // Em alguns contextos de teste, o middleware pode falhar por falta de session store;
-        // neste cenário queremos apenas validar que o token inválido é recusado.
+        // neste cenÃ¡rio queremos apenas validar que o token invÃ¡lido Ã© recusado.
         if ($response->getStatusCode() === 500) {
-            $this->markTestIncomplete('Falha por ausência de session store no request de teste.');
+            $this->markTestIncomplete('Falha por ausÃªncia de session store no request de teste.');
 
             return;
         }

@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Enums\BudgetStatusEnum;
 use App\Enums\TicketStatusEnum;
 use App\Models\Equipment;
@@ -22,16 +24,16 @@ class AdminManagementTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::create(['name' => User::ROLE_USER]);
-        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::create(['name' => User::ROLE_ADMIN]);
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
+        UserProfile::create(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::create(['name' => UserRoleEnum::Admin->value]);
         $this->artisan('db:seed', ['--class' => 'TicketLookupSeeder', '--force' => true]);
     }
 
     public function test_admin_can_manage_users_rooms_and_equipment(): void
     {
-        $adminProfile = UserProfile::where('name', User::ROLE_ADMIN)->firstOrFail();
-        $userProfile = UserProfile::where('name', User::ROLE_USER)->firstOrFail();
+        $adminProfile = UserProfile::where('name', UserRoleEnum::Admin->value)->firstOrFail();
+        $userProfile = UserProfile::where('name', UserRoleEnum::User->value)->firstOrFail();
 
         $admin = User::factory()->create([
             'profile_id' => $adminProfile->id,
@@ -89,8 +91,8 @@ class AdminManagementTest extends TestCase
 
     public function test_admin_can_approve_budget(): void
     {
-        $adminProfile = UserProfile::where('name', User::ROLE_ADMIN)->firstOrFail();
-        $userProfile = UserProfile::where('name', User::ROLE_USER)->firstOrFail();
+        $adminProfile = UserProfile::where('name', UserRoleEnum::Admin->value)->firstOrFail();
+        $userProfile = UserProfile::where('name', UserRoleEnum::User->value)->firstOrFail();
 
         $admin = User::factory()->create([
             'profile_id' => $adminProfile->id,
@@ -122,9 +124,9 @@ class AdminManagementTest extends TestCase
 
     public function test_admin_inventory_routes_require_admin_role_and_reject_invalid_serials(): void
     {
-        $adminProfile = UserProfile::where('name', User::ROLE_ADMIN)->firstOrFail();
-        $userProfile = UserProfile::where('name', User::ROLE_USER)->firstOrFail();
-        $technicianProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->firstOrFail();
+        $adminProfile = UserProfile::where('name', UserRoleEnum::Admin->value)->firstOrFail();
+        $userProfile = UserProfile::where('name', UserRoleEnum::User->value)->firstOrFail();
+        $technicianProfile = UserProfile::where('name', UserRoleEnum::Technician->value)->firstOrFail();
 
         $commonUser = User::factory()->create([
             'profile_id' => $userProfile->id,
@@ -178,8 +180,8 @@ class AdminManagementTest extends TestCase
 
     public function test_admin_can_schedule_preventive_maintenance(): void
     {
-        $adminProfile = UserProfile::where('name', User::ROLE_ADMIN)->firstOrFail();
-        $technicianProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->firstOrFail();
+        $adminProfile = UserProfile::where('name', UserRoleEnum::Admin->value)->firstOrFail();
+        $technicianProfile = UserProfile::where('name', UserRoleEnum::Technician->value)->firstOrFail();
 
         $admin = User::factory()->create([
             'profile_id' => $adminProfile->id,
@@ -192,8 +194,8 @@ class AdminManagementTest extends TestCase
 
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)
             ->postJson('/admin/preventive', [
-                'title' => 'Manutenção preventiva de ar-condicionado',
-                'description' => 'Verificar filtros e gás.',
+                'title' => 'ManutenÃ§Ã£o preventiva de ar-condicionado',
+                'description' => 'Verificar filtros e gÃ¡s.',
                 'scheduled_at' => now()->addWeek()->toDateTimeString(),
                 'technician_id' => $technician->id,
             ]);

@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,15 +19,15 @@ class SecurityTokenTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::create(['name' => User::ROLE_USER]);
-        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::create(['name' => User::ROLE_ADMIN]);
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
+        UserProfile::create(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::create(['name' => UserRoleEnum::Admin->value]);
     }
 
     public function test_token_is_60_characters_long(): void
     {
         $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->value('id'),
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->value('id'),
             'api_token' => Str::random(60),
         ]);
 
@@ -34,7 +36,7 @@ class SecurityTokenTest extends TestCase
 
     public function test_token_is_unique_across_users(): void
     {
-        $profileId = UserProfile::where('name', User::ROLE_USER)->value('id');
+        $profileId = UserProfile::where('name', UserRoleEnum::User->value)->value('id');
         $token1 = Str::random(60);
         $token2 = Str::random(60);
 
@@ -49,7 +51,7 @@ class SecurityTokenTest extends TestCase
 
     public function test_token_regenerated_on_password_change(): void
     {
-        $profileId = UserProfile::where('name', User::ROLE_USER)->value('id');
+        $profileId = UserProfile::where('name', UserRoleEnum::User->value)->value('id');
         $oldToken = Str::random(60);
 
         $user = User::factory()->create([
@@ -73,7 +75,7 @@ class SecurityTokenTest extends TestCase
 
     public function test_old_token_still_works_after_password_change(): void
     {
-        $profileId = UserProfile::where('name', User::ROLE_USER)->value('id');
+        $profileId = UserProfile::where('name', UserRoleEnum::User->value)->value('id');
         $oldToken = Str::random(60);
 
         $user = User::factory()->create([

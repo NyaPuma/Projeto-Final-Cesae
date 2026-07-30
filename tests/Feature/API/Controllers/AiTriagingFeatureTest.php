@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserProfile;
@@ -17,9 +19,9 @@ class AiTriagingFeatureTest extends TestCase
 
     public function test_ai_service_recommends_technician_within_sla_time_limit()
     {
-        $techProfile = UserProfile::firstOrCreate(['name' => User::ROLE_TECHNICIAN]);
+        $techProfile = UserProfile::firstOrCreate(['name' => UserRoleEnum::Technician->value]);
         $technician = User::factory()->create(['profile_id' => $techProfile->id, 'active' => true]);
-        $ticket = Ticket::factory()->create(['description' => 'Fuga de óleo no motor hidráulico']);
+        $ticket = Ticket::factory()->create(['description' => 'Fuga de Ã³leo no motor hidrÃ¡ulico']);
 
         OpenAI::fake([
             CreateResponse::fake([
@@ -28,7 +30,7 @@ class AiTriagingFeatureTest extends TestCase
                         'message' => [
                             'content' => json_encode([
                                 'tecnico_id' => $technician->id,
-                                'justificacao' => 'Recomendado por ter menor carga e especialidade técnica.',
+                                'justificacao' => 'Recomendado por ter menor carga e especialidade tÃ©cnica.',
                             ]),
                         ],
                     ],
@@ -49,7 +51,7 @@ class AiTriagingFeatureTest extends TestCase
 
     public function test_ai_service_fallback_when_openai_fails()
     {
-        $techProfile = UserProfile::firstOrCreate(['name' => User::ROLE_TECHNICIAN]);
+        $techProfile = UserProfile::firstOrCreate(['name' => UserRoleEnum::Technician->value]);
         $technician = User::factory()->create(['profile_id' => $techProfile->id, 'active' => true]);
         $ticket = Ticket::factory()->create();
 
@@ -61,6 +63,6 @@ class AiTriagingFeatureTest extends TestCase
         $recommendation = $service->recomendarTecnico($ticket);
 
         $this->assertNull($recommendation['tecnico_id']);
-        $this->assertStringContainsString('Assistente de IA indisponível', $recommendation['justificacao']);
+        $this->assertStringContainsString('Assistente de IA indisponÃ­vel', $recommendation['justificacao']);
     }
 }

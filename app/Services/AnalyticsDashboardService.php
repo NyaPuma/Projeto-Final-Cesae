@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Domain\Ticket\Queries\MonthlyTicketsQuery;
@@ -14,15 +16,28 @@ use Illuminate\Support\Facades\Cache;
 
 final class AnalyticsDashboardService
 {
+    /**
+     * @param TicketStatusService $statusService
+     */
     public function __construct(
         private readonly TicketStatusService $statusService,
     ) {}
 
+    /**
+     * Retorna o payload completo do painel analítico (com cache).
+     *
+     * @return array<string, mixed>
+     */
     public function getDashboardPayload(): array
     {
         return Cache::remember('analytics_dashboard_payload', 60, fn () => $this->buildPayload());
     }
 
+    /**
+     * Constrói o payload de dados para o painel analítico.
+     *
+     * @return array<string, mixed>
+     */
     private function buildPayload(): array
     {
         $openStatusId = $this->statusService->getByName(TicketStatusEnum::Open);
@@ -47,7 +62,7 @@ final class AnalyticsDashboardService
             'in_progress_tickets' => $kpiData['in_progress_tickets'],
             'waiting_budget_tickets' => $kpiData['budget_pending_tickets'],
             'closed_tickets' => $kpiData['closed_tickets'],
-            'system_availability' => config('services.custom.analytics.system_availability'),
+            'system_availability' => config('services.custom.analytics.system_availability', 99.9),
             'sla_success' => $slaSuccess,
             'by_priority' => [
                 'labels' => collect(['Baixa', 'Média', 'Alta']),
@@ -79,6 +94,11 @@ final class AnalyticsDashboardService
         ];
     }
 
+    /**
+     * Obtém a atividade recente registada nas auditorias do sistema.
+     *
+     * @return Collection<int, array{title: string, description: string, time: string}>
+     */
     private function getRecentActivity(): Collection
     {
         return Audit::query()
@@ -94,12 +114,15 @@ final class AnalyticsDashboardService
             ->values();
     }
 
+    /**
+     * Traduz o evento de auditoria numa descrição legível.
+     */
     private function getAuditDescription(string $event): string
     {
         return match ($event) {
             'created' => 'Registou uma nova entrada no sistema.',
             'updated' => 'Atualizou campos de um registo.',
-            'deleted' => 'Removu um registo do sistema.',
+            'deleted' => 'Removeu um registo do sistema.',
             default => 'Ação registada na auditoria.',
         };
     }

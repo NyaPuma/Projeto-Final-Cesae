@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
 
     /*
@@ -42,7 +44,7 @@ return [
             'scheme' => env('MAIL_SCHEME'),
             'url' => env('MAIL_URL'),
             'host' => env('MAIL_HOST', '127.0.0.1'),
-            'port' => env('MAIL_PORT', 2525),
+            'port' => (int) env('MAIL_PORT', 2525),
             'username' => env('MAIL_USERNAME'),
             'password' => env('MAIL_PASSWORD'),
             'timeout' => null,
@@ -58,7 +60,7 @@ return [
             'scheme' => env('SENDGRID_SCHEME', 'tls'),
             'url' => env('SENDGRID_URL'),
             'host' => env('SENDGRID_HOST', 'smtp.sendgrid.net'),
-            'port' => env('SENDGRID_PORT', 587),
+            'port' => (int) env('SENDGRID_PORT', 587),
             'username' => env('SENDGRID_USERNAME', 'apikey'),
             'password' => env('SENDGRID_PASSWORD'),
             'timeout' => null,

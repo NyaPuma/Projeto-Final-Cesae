@@ -3,27 +3,37 @@
 namespace App\Http\Controllers;
 
 use App\Services\CalendarService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
-class CalendarController extends Controller
+final class CalendarController extends Controller
 {
     public function __construct(
         private readonly CalendarService $calendarService,
     ) {}
 
-    public function index(Request $request)
+    /**
+     * Renderiza a vista do calendário para o utilizador autenticado.
+     */
+    public function index(Request $request): View
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user();
         $events = $this->calendarService->getScheduledEventsForUser($user);
 
         return view('calendar', compact('events', 'user'));
     }
 
-    public function events(Request $request)
+    /**
+     * Retorna os eventos agendados do utilizador em formato JSON.
+     */
+    public function events(Request $request): JsonResponse
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user();
         $events = $this->calendarService->getScheduledEventsForUser($user);
 
-        return response()->json($events);
+        return response()->json([
+            'events' => $events,
+        ]);
     }
 }

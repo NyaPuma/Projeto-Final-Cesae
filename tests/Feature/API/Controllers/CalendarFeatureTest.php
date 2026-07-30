@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
@@ -20,9 +22,9 @@ class CalendarFeatureTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::create(['name' => User::ROLE_USER]);
-        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::create(['name' => User::ROLE_ADMIN]);
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
+        UserProfile::create(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::create(['name' => UserRoleEnum::Admin->value]);
         $this->artisan('db:seed', ['--class' => 'TicketLookupSeeder', '--force' => true]);
     }
 
@@ -39,7 +41,7 @@ class CalendarFeatureTest extends TestCase
 
     public function test_calendar_events_returns_scheduled_tickets(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
         $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
@@ -69,7 +71,7 @@ class CalendarFeatureTest extends TestCase
 
     public function test_calendar_events_empty_when_no_scheduled_tickets(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->getJson('/calendar/events');
@@ -82,7 +84,7 @@ class CalendarFeatureTest extends TestCase
 
     public function test_calendar_events_returns_correct_structure(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_TECHNICIAN);
+        $user = $this->createUserWithToken(UserRoleEnum::Technician->value);
         $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         Ticket::create([

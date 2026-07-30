@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,7 +18,7 @@ class SecurityRateLimitTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::create(['name' => User::ROLE_USER]);
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
     }
 
     public function test_login_rate_limits_after_multiple_attempts(): void
@@ -24,7 +26,7 @@ class SecurityRateLimitTest extends TestCase
         User::factory()->create([
             'email' => 'ratelimit@example.com',
             'password' => Hash::make('Password123!'),
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->value('id'),
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->value('id'),
             'active' => true,
         ]);
 
@@ -54,7 +56,7 @@ class SecurityRateLimitTest extends TestCase
         User::factory()->create([
             'email' => 'headers@example.com',
             'password' => Hash::make('Password123!'),
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->value('id'),
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->value('id'),
             'active' => true,
         ]);
 
@@ -75,11 +77,11 @@ class SecurityRateLimitTest extends TestCase
         User::factory()->create([
             'email' => 'multiip@example.com',
             'password' => Hash::make('Password123!'),
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->value('id'),
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->value('id'),
             'active' => true,
         ]);
 
-        // 5 attempts from IP 1 — all wrong password
+        // 5 attempts from IP 1 â€” all wrong password
         for ($i = 0; $i < 5; $i++) {
             $response = $this->withSession([])
                 ->withServerVariables(['REMOTE_ADDR' => '192.168.1.1'])
@@ -90,7 +92,7 @@ class SecurityRateLimitTest extends TestCase
             $response->assertStatus(401);
         }
 
-        // 6th attempt from IP 2 — same email is already rate-limited (email-based)
+        // 6th attempt from IP 2 â€” same email is already rate-limited (email-based)
         $response = $this->withSession([])
             ->withServerVariables(['REMOTE_ADDR' => '192.168.1.2'])
             ->postJson('/login', [

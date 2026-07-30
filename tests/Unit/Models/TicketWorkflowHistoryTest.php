@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\Ticket;
 use App\Models\TicketStatus;
 use App\Models\TicketWorkflowHistory;
@@ -19,7 +21,7 @@ class TicketWorkflowHistoryTest extends TestCase
         $ticket = Ticket::factory()->create();
         $statusA = TicketStatus::factory()->create(['name' => 'Aberto']);
         $statusB = TicketStatus::factory()->create(['name' => 'Em Curso']);
-        $techProfile = UserProfile::firstOrCreate(['name' => User::ROLE_TECHNICIAN]);
+        $techProfile = UserProfile::firstOrCreate(['name' => UserRoleEnum::Technician->value]);
         $technician = User::factory()->create(['profile_id' => $techProfile->id]);
 
         $history = TicketWorkflowHistory::create([
@@ -27,13 +29,13 @@ class TicketWorkflowHistoryTest extends TestCase
             'origin_status_id' => $statusA->id,
             'destination_status_id' => $statusB->id,
             'technician_id' => $technician->id,
-            'comment' => 'Início dos trabalhos',
+            'comment' => 'InÃ­cio dos trabalhos',
         ]);
 
         $this->assertEquals($ticket->id, $history->ticket->id);
         $this->assertEquals($statusA->id, $history->originStatus->id);
         $this->assertEquals($statusB->id, $history->destinationStatus->id);
         $this->assertEquals($technician->id, $history->technician->id);
-        $this->assertEquals('Início dos trabalhos', $history->comment);
+        $this->assertEquals('InÃ­cio dos trabalhos', $history->comment);
     }
 }

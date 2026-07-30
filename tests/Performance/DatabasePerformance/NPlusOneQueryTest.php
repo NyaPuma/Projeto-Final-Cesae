@@ -2,6 +2,8 @@
 
 namespace Tests\Performance\DatabasePerformance;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\Equipment;
 use App\Models\Room;
 use App\Models\Ticket;
@@ -22,9 +24,9 @@ class NPlusOneQueryTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::firstOrCreate(['name' => User::ROLE_ADMIN]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::Admin->value]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
 
         TicketStatus::firstOrCreate(['name' => 'aberta'], ['description' => 'Aberta']);
         TicketStatus::firstOrCreate(['name' => 'em curso'], ['description' => 'Em Curso']);

@@ -2,6 +2,8 @@
 
 namespace Tests\Unit\Models;
 
+
+use App\Enums\UserRoleEnum;
 use App\Actions\ApproveBudgetAction;
 use App\DTOs\BudgetDecisionData;
 use App\Enums\BudgetStatusEnum;
@@ -30,19 +32,19 @@ class TicketWorkflowTest extends TestCase
     private function seedLookupData(): void
     {
         TicketType::firstOrCreate(['name' => 'avaria', 'description' => 'Avaria']);
-        TicketType::firstOrCreate(['name' => 'preventiva', 'description' => 'Manutenção Preventiva']);
+        TicketType::firstOrCreate(['name' => 'preventiva', 'description' => 'ManutenÃ§Ã£o Preventiva']);
 
         $typeId = TicketType::where('name', 'avaria')->first()->id;
         TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Open->value, 'description' => 'Aberto', 'type_id' => $typeId]);
         TicketStatus::firstOrCreate(['name' => TicketStatusEnum::InProgress->value, 'description' => 'Em Curso', 'type_id' => $typeId]);
         TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Closed->value, 'description' => 'Fechado', 'type_id' => $typeId]);
         TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Cancelled->value, 'description' => 'Cancelado', 'type_id' => $typeId]);
-        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::PendingBudget->value, 'description' => 'Pendente Orçamento', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::PendingBudget->value, 'description' => 'Pendente OrÃ§amento', 'type_id' => $typeId]);
         TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Rejected->value, 'description' => 'Recusada', 'type_id' => $typeId]);
 
-        UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_ADMIN]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::Admin->value]);
     }
 
     #[Test]
@@ -226,7 +228,7 @@ class TicketWorkflowTest extends TestCase
     #[Test]
     public function it_approves_budget_as_admin(): void
     {
-        $adminProfile = UserProfile::where('name', User::ROLE_ADMIN)->first();
+        $adminProfile = UserProfile::where('name', UserRoleEnum::Admin->value)->first();
         $admin = User::factory()->create(['profile_id' => $adminProfile->id]);
 
         $pendingBudgetStatusId = TicketStatus::where('name', TicketStatusEnum::PendingBudget->value)->value('id');
@@ -258,7 +260,7 @@ class TicketWorkflowTest extends TestCase
     #[Test]
     public function it_rejects_budget_as_admin(): void
     {
-        $adminProfile = UserProfile::where('name', User::ROLE_ADMIN)->first();
+        $adminProfile = UserProfile::where('name', UserRoleEnum::Admin->value)->first();
         $admin = User::factory()->create(['profile_id' => $adminProfile->id]);
 
         $pendingBudgetStatusId = TicketStatus::where('name', TicketStatusEnum::PendingBudget->value)->value('id');
@@ -277,20 +279,20 @@ class TicketWorkflowTest extends TestCase
             'budget_requested_at' => now(),
         ]);
 
-        $data = new BudgetDecisionData(decision: 'reject', feedback: 'Orçamento demasiado alto');
+        $data = new BudgetDecisionData(decision: 'reject', feedback: 'OrÃ§amento demasiado alto');
         $result = app(ApproveBudgetAction::class)->execute($ticket, $admin, $data);
 
         $this->assertInstanceOf(Ticket::class, $result);
         $this->assertEquals(BudgetStatusEnum::Rejected->value, $ticket->budget_status);
         $this->assertEquals($admin->id, $ticket->budget_approved_by);
         $this->assertTrue($ticket->hasStatus(TicketStatusEnum::Rejected));
-        $this->assertEquals('Orçamento demasiado alto', $ticket->budget_feedback);
+        $this->assertEquals('OrÃ§amento demasiado alto', $ticket->budget_feedback);
     }
 
     #[Test]
     public function it_rejects_budget_approval_from_non_admin(): void
     {
-        $operatorProfile = UserProfile::where('name', User::ROLE_USER)->first();
+        $operatorProfile = UserProfile::where('name', UserRoleEnum::User->value)->first();
         $operator = User::factory()->create(['profile_id' => $operatorProfile->id]);
 
         $pendingBudgetStatusId = TicketStatus::where('name', TicketStatusEnum::PendingBudget->value)->value('id');

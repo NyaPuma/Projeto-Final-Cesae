@@ -8,13 +8,15 @@ use App\DTOs\StoreUserData;
 use App\DTOs\UpdateUserData;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Resources\UserProfileResource;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Models\UserProfile;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class AdminUserController extends Controller
+final class AdminUserController extends Controller
 {
     public function __construct(
         private readonly UserRepositoryInterface $userRepository,
@@ -22,61 +24,100 @@ class AdminUserController extends Controller
         private readonly UpdateUserAction $updateUserAction,
     ) {}
 
+    /**
+     * Lista todos os utilizadores com os seus respetivos perfis.
+     */
     public function index(Request $request): JsonResponse
     {
-        $user = $this->authenticatedUser($request);
-        $this->requireRole($user, [User::ROLE_ADMIN]);
+        // 1. Autorização via Policy
+        $this->authorize('viewAny', User::class);
 
-        return response()->json(['users' => $this->userRepository->getAll(['profile'])]);
+        // 2. Procura de utilizadores com eager loading do perfil
+        $users = $this->userRepository->getAll(['profile']);
+
+        return response()->json([
+            'users' => UserResource::collection($users),
+        ]);
     }
 
+    /**
+     * Regista um novo utilizador no sistema.
+     */
     public function store(StoreUserRequest $request): JsonResponse
     {
-        $user = $this->authenticatedUser($request);
-        $this->requireRole($user, [User::ROLE_ADMIN]);
+        // 1. Autorização via Policy
+        $this->authorize('create', User::class);
 
+        // 2. Executa DTO e Action para criação
         $data = StoreUserData::fromRequest($request->validated());
         $newUser = $this->createUserAction->execute($data);
 
-        return response()->json(['message' => 'Utilizador criado com sucesso', 'user' => $newUser], 201);
+        $newUser->loadMissing('profile');
+
+        return response()->json([
+            'message' => __('Utilizador criado com sucesso.'),
+            'user' => new UserResource($newUser),
+        ], 201);
     }
 
-    public function update(UpdateUserRequest $request, int $id): JsonResponse
+    /**
+     * Atualiza as informações de um utilizador existente.
+     */
+    public function update(UpdateUserRequest $request, User $targetUser): JsonResponse
     {
-        $user = $this->authenticatedUser($request);
-        $this->requireRole($user, [User::ROLE_ADMIN]);
+        // 1. Autorização via Policy
+        $this->authorize('update', $targetUser);
 
-        $targetUser = $this->userRepository->findById($id);
-        if (! $targetUser) {
-            return response()->json(['message' => 'Utilizador não encontrado'], 404);
-        }
-
+        // 2. Executa DTO e Action para atualização
         $data = UpdateUserData::fromRequest($request->validated());
-        $targetUser = $this->updateUserAction->execute($targetUser, $data);
+        $updatedUser = $this->updateUserAction->execute($targetUser, $data);
 
-        return response()->json(['message' => 'Utilizador atualizado', 'user' => $targetUser]);
+        $updatedUser->loadMissing('profile');
+
+        return response()->json([
+            'message' => __('Utilizador atualizado com sucesso.'),
+            'user' => new UserResource($updatedUser),
+        ]);
     }
 
-    public function inactivate(Request $request, int $id): JsonResponse
+    /**
+     * Inativa a conta de um utilizador no sistema.
+     */
+    public function inactivate(Request $request, User $targetUser): JsonResponse
     {
-        $user = $this->authenticatedUser($request);
-        $this->requireRole($user, [User::ROLE_ADMIN]);
+        // 1. Autorização via Policy
+        $this->authorize('inactivate', $targetUser);
 
-        $targetUser = $this->userRepository->findById($id);
-        if (! $targetUser) {
-            return response()->json(['message' => 'Utilizador não encontrado'], 404);
+        // 2. Regra de negócio: impede que o próprio administrador se inative a si mesmo
+        if ($request->user()->id === $targetUser->id) {
+            return response()->json([
+                'message' => __('Não é possível inativar a sua própria conta.'),
+            ], 422);
         }
 
+        // 3. Inativação do utilizador via Repositório
         $this->userRepository->inactivate($targetUser);
 
-        return response()->json(['message' => 'Utilizador inativado', 'user' => $targetUser]);
+        $targetUser->loadMissing('profile');
+
+        return response()->json([
+            'message' => __('Utilizador inativado com sucesso.'),
+            'user' => new UserResource($targetUser),
+        ]);
     }
 
+    /**
+     * Lista todos os perfis/funções disponíveis no sistema.
+     */
     public function profiles(Request $request): JsonResponse
     {
-        $user = $this->authenticatedUser($request);
-        $this->requireRole($user, [User::ROLE_ADMIN]);
+        // 1. Autorização via Policy (ou reutilização de permissão da model UserProfile)
+        $this->authorize('viewAny', UserProfile::class);
 
-        return response()->json(UserProfile::all());
+        $profiles = UserProfile::all();
+
+        return response()->json([
+            'profiles' => UserProfileResource::collection($profiles),
+        ]);
     }
 }

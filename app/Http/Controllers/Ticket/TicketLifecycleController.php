@@ -2,54 +2,79 @@
 
 namespace App\Http\Controllers\Ticket;
 
+use App\Concerns\BroadcastsTicketStatus;
 use App\Enums\TicketStatusEnum;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
-use App\Models\User;
 use App\Services\TicketWorkflowService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 final class TicketLifecycleController extends Controller
 {
+    use BroadcastsTicketStatus;
+
     public function __construct(
         private readonly TicketWorkflowService $workflowService,
     ) {}
 
-    public function reopen(Request $request, int $id): JsonResponse
+    /**
+     * Reabre um ticket anteriormente fechado ou cancelado.
+     */
+    public function reopen(Request $request, Ticket $ticket): JsonResponse
     {
-        $user = $this->authenticatedUser($request);
-        $this->requireRole($user, [User::ROLE_TECHNICIAN, User::ROLE_ADMIN]);
+        // 1. Autorização via Policy
+        $this->authorize('reopen', $ticket);
 
-        $ticket = Ticket::findOrFail($id);
+        $oldStatus = $ticket->status;
 
+        // 2. Executa a reabertura no serviço de workflow
         if (! $this->workflowService->reopen($ticket)) {
-            return response()->json(['message' => 'Só é possível reabrir tickets fechados'], 422);
+            return response()->json([
+                'message' => __('Apenas tickets fechados ou cancelados podem ser reabertos.'),
+            ], 422);
         }
 
-        return response()->json(['ticket' => $ticket]);
+        // 3. Notifica clientes via WebSockets sobre a mudança de estado
+        $this->broadcastStatusChange($ticket, $oldStatus, $ticket->status);
+
+        $ticket->loadMissing(['equipment', 'room', 'technician', 'status']);
+
+        return response()->json([
+            'message' => __('Ticket reaberto com sucesso.'),
+            'ticket' => new TicketResource($ticket),
+        ]);
     }
 
-    public function cancel(Request $request, int $id): JsonResponse
+    /**
+     * Cancela um ticket submetido pelo utilizador.
+     */
+    public function cancel(Request $request, Ticket $ticket): JsonResponse
     {
-        $user = $this->authenticatedUser($request);
+        // 1. Autorização via Policy (Valida se é o dono e se tem permissão)
+        $this->authorize('cancel', $ticket);
 
-        if (! $user->isCommon()) {
-            return response()->json(['message' => 'Acesso negado'], 403);
+        // 2. Validação de estado elegível para cancelamento
+        if ($ticket->status !== TicketStatusEnum::Open) {
+            return response()->json([
+                'message' => __('Apenas tickets no estado "Aberto" podem ser cancelados.'),
+            ], 422);
         }
 
-        $ticket = Ticket::findOrFail($id);
+        $oldStatus = $ticket->status;
 
-        if ($ticket->user_id !== $user->id) {
-            return response()->json(['message' => 'Acesso negado'], 403);
-        }
-
-        if (! $ticket->hasStatus(TicketStatusEnum::Open)) {
-            return response()->json(['message' => 'Só é possível cancelar tickets abertos'], 403);
-        }
-
+        // 3. Executa o cancelamento no serviço
         $this->workflowService->cancel($ticket);
 
-        return response()->json(['ticket' => $ticket]);
+        // 4. Emite o evento WebSocket
+        $this->broadcastStatusChange($ticket, $oldStatus, TicketStatusEnum::Cancelled);
+
+        $ticket->loadMissing(['equipment', 'room', 'technician', 'status']);
+
+        return response()->json([
+            'message' => __('Ticket cancelado com sucesso.'),
+            'ticket' => new TicketResource($ticket),
+        ]);
     }
 }

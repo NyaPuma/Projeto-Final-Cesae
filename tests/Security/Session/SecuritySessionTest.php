@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,14 +19,14 @@ class SecuritySessionTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::create(['name' => User::ROLE_USER]);
-        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::create(['name' => User::ROLE_ADMIN]);
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
+        UserProfile::create(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::create(['name' => UserRoleEnum::Admin->value]);
     }
 
     public function test_logout_clears_session_token(): void
     {
-        $profileId = UserProfile::where('name', User::ROLE_USER)->value('id');
+        $profileId = UserProfile::where('name', UserRoleEnum::User->value)->value('id');
         $token = Str::random(60);
         $user = User::factory()->create([
             'profile_id' => $profileId,
@@ -46,7 +48,7 @@ class SecuritySessionTest extends TestCase
 
     public function test_api_token_nullified_in_database_on_logout(): void
     {
-        $profileId = UserProfile::where('name', User::ROLE_USER)->value('id');
+        $profileId = UserProfile::where('name', UserRoleEnum::User->value)->value('id');
         $token = Str::random(60);
         $user = User::factory()->create([
             'profile_id' => $profileId,
@@ -65,7 +67,7 @@ class SecuritySessionTest extends TestCase
 
     public function test_new_login_generates_different_token(): void
     {
-        $profileId = UserProfile::where('name', User::ROLE_USER)->value('id');
+        $profileId = UserProfile::where('name', UserRoleEnum::User->value)->value('id');
         $oldToken = Str::random(60);
         User::factory()->create([
             'email' => 'newlogintoken@example.com',

@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
 use App\Models\Equipment;
@@ -24,9 +26,9 @@ class TicketOperationsTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::create(['name' => User::ROLE_USER]);
-        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::create(['name' => User::ROLE_ADMIN]);
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
+        UserProfile::create(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::create(['name' => UserRoleEnum::Admin->value]);
         $this->artisan('db:seed', ['--class' => 'TicketLookupSeeder', '--force' => true]);
     }
 
@@ -34,8 +36,8 @@ class TicketOperationsTest extends TestCase
     {
         Storage::fake('public');
 
-        $userProfile = UserProfile::where('name', User::ROLE_USER)->firstOrFail();
-        $techProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->firstOrFail();
+        $userProfile = UserProfile::where('name', UserRoleEnum::User->value)->firstOrFail();
+        $techProfile = UserProfile::where('name', UserRoleEnum::Technician->value)->firstOrFail();
 
         $creator = User::factory()->create([
             'profile_id' => $userProfile->id,
@@ -57,7 +59,7 @@ class TicketOperationsTest extends TestCase
             'active' => true,
         ]);
 
-        // Cria ticket via model (evita TicketController::store que não existe no controller atual)
+        // Cria ticket via model (evita TicketController::store que nÃ£o existe no controller atual)
         $ticket = Ticket::create([
             'user_id' => $creator->id,
             'assigned_to' => $technician->id,
@@ -78,7 +80,7 @@ class TicketOperationsTest extends TestCase
             ->assertOk()
             ->assertJsonStructure(['ticket']);
 
-        // Comentário
+        // ComentÃ¡rio
         $this->withHeader('X-Auth-Token', $technician->api_token)
             ->postJson('/tickets/'.$ticketId.'/comments', ['comment' => 'I am checking the paper feed.'])
             ->assertCreated()
@@ -108,7 +110,7 @@ class TicketOperationsTest extends TestCase
             $photosResponse->assertJsonStructure(['attachments']);
         }
 
-        // Calendário: rota web devolve HTML, mas pode redirecionar dependendo do estado de autenticação
+        // CalendÃ¡rio: rota web devolve HTML, mas pode redirecionar dependendo do estado de autenticaÃ§Ã£o
         $calendarResponse = $this->withHeader('X-Auth-Token', $technician->api_token)
             ->get('/calendar');
 
@@ -119,7 +121,7 @@ class TicketOperationsTest extends TestCase
     {
         Storage::fake('public');
 
-        $userProfile = UserProfile::where('name', User::ROLE_USER)->firstOrFail();
+        $userProfile = UserProfile::where('name', UserRoleEnum::User->value)->firstOrFail();
         $owner = User::factory()->create([
             'profile_id' => $userProfile->id,
             'api_token' => Str::random(60),
@@ -152,7 +154,7 @@ class TicketOperationsTest extends TestCase
 
     public function test_common_user_cannot_comment_on_another_users_ticket(): void
     {
-        $userProfile = UserProfile::where('name', User::ROLE_USER)->firstOrFail();
+        $userProfile = UserProfile::where('name', UserRoleEnum::User->value)->firstOrFail();
         $owner = User::factory()->create([
             'profile_id' => $userProfile->id,
             'api_token' => Str::random(60),
@@ -181,7 +183,7 @@ class TicketOperationsTest extends TestCase
 
     public function test_user_can_create_ticket_via_api(): void
     {
-        $userProfile = UserProfile::where('name', User::ROLE_USER)->firstOrFail();
+        $userProfile = UserProfile::where('name', UserRoleEnum::User->value)->firstOrFail();
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,
             'api_token' => Str::random(60),
@@ -196,11 +198,11 @@ class TicketOperationsTest extends TestCase
             'active' => true,
         ]);
 
-        // Teste 1: Criar ticket com todos os campos válidos
+        // Teste 1: Criar ticket com todos os campos vÃ¡lidos
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/api/tickets', [
-                'title' => 'Máquina com ruído anómalo',
-                'description' => 'O motor principal do torno está a fazer um ruído metálico ao rodar.',
+                'title' => 'MÃ¡quina com ruÃ­do anÃ³malo',
+                'description' => 'O motor principal do torno estÃ¡ a fazer um ruÃ­do metÃ¡lico ao rodar.',
                 'priority' => 'alta',
                 'equipment_id' => $equipment->id,
             ]);
@@ -211,7 +213,7 @@ class TicketOperationsTest extends TestCase
             ]]);
 
         $ticketData = $response->json('ticket');
-        $this->assertEquals('Máquina com ruído anómalo', $ticketData['title']);
+        $this->assertEquals('MÃ¡quina com ruÃ­do anÃ³malo', $ticketData['title']);
         $this->assertEquals('alta', $ticketData['priority']);
         $this->assertEquals($user->id, $ticketData['user_id']);
         $this->assertEquals($equipment->id, $ticketData['equipment_id']);
@@ -219,47 +221,47 @@ class TicketOperationsTest extends TestCase
         // Teste 2: Criar ticket sem equipment_id (opcional)
         $response2 = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/api/tickets', [
-                'title' => 'Problema elétrico na sala de servidores',
+                'title' => 'Problema elÃ©trico na sala de servidores',
                 'description' => 'Tomada sem energia no rack 3.',
-                'priority' => 'média',
+                'priority' => 'mÃ©dia',
             ]);
 
         $response2->assertStatus(201);
         $this->assertNull($response2->json('ticket.equipment_id'));
 
-        // Teste 3: Validar que 'media' é normalizado para 'média'
+        // Teste 3: Validar que 'media' Ã© normalizado para 'mÃ©dia'
         $response3 = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/api/tickets', [
                 'title' => 'Teste prioridade media',
-                'description' => 'Descrição de teste.',
+                'description' => 'DescriÃ§Ã£o de teste.',
                 'priority' => 'media',
             ]);
 
         $response3->assertStatus(201);
-        $this->assertEquals('média', $response3->json('ticket.priority'));
+        $this->assertEquals('mÃ©dia', $response3->json('ticket.priority'));
     }
 
     public function test_ticket_creation_validation_errors(): void
     {
-        $userProfile = UserProfile::where('name', User::ROLE_USER)->firstOrFail();
+        $userProfile = UserProfile::where('name', UserRoleEnum::User->value)->firstOrFail();
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,
             'api_token' => Str::random(60),
             'active' => true,
         ]);
 
-        // Teste 1: Campos obrigatórios em falta
+        // Teste 1: Campos obrigatÃ³rios em falta
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/api/tickets', []);
 
         $response->assertStatus(422)
             ->assertJsonValidationErrors(['title', 'description', 'priority']);
 
-        // Teste 2: Prioridade inválida
+        // Teste 2: Prioridade invÃ¡lida
         $response2 = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/api/tickets', [
                 'title' => 'Teste',
-                'description' => 'Descrição',
+                'description' => 'DescriÃ§Ã£o',
                 'priority' => 'urgentissima',
             ]);
 
@@ -270,7 +272,7 @@ class TicketOperationsTest extends TestCase
         $response3 = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/api/tickets', [
                 'title' => 'Teste',
-                'description' => 'Descrição',
+                'description' => 'DescriÃ§Ã£o',
                 'priority' => 'baixa',
                 'equipment_id' => 99999,
             ]);
@@ -281,10 +283,10 @@ class TicketOperationsTest extends TestCase
 
     public function test_unauthenticated_user_cannot_create_ticket(): void
     {
-        // Sem token de autenticação
+        // Sem token de autenticaÃ§Ã£o
         $response = $this->postJson('/api/tickets', [
             'title' => 'Teste',
-            'description' => 'Descrição',
+            'description' => 'DescriÃ§Ã£o',
             'priority' => 'baixa',
         ]);
 

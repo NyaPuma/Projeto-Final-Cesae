@@ -2,45 +2,82 @@
 
 namespace App\Exports;
 
+use App\Enums\TicketPriorityEnum;
+use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use Illuminate\Database\Eloquent\Builder;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithTitle;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 /**
- * Classe de exportação para ficheiro Excel utilizando o pacote Maatwebsite/Excel.
- * Implementa FromQuery para processar os dados em modo streaming,
- * evitando problemas de memória com grandes volumes de registos.
+ * Classe de exportação de Tickets para Excel.
+ * Suporta filtragem dinâmica, formatação nativa de moedas/datas e leitura em blocos.
  */
-class TicketsExport implements FromQuery, ShouldAutoSize, WithHeadings, WithMapping, WithStyles, WithTitle
+final class TicketsExport implements
+    FromQuery,
+    ShouldAutoSize,
+    WithHeadings,
+    WithMapping,
+    WithStyles,
+    WithTitle,
+    WithColumnFormatting,
+    WithChunkReading
 {
     /**
-     * Query base para a exportação. Utiliza cursor-friendly eager loading mínimo.
+     * Permite injetar uma query personalizada/filtrada a partir do Controller.
+     */
+    public function __construct(
+        private readonly ?Builder $customQuery = null
+    ) {}
+
+    /**
+     * Query base para a exportação.
      */
     public function query(): Builder
     {
-        return Ticket::query()
+        return ($this->customQuery ?? Ticket::query())
             ->select([
-                'id', 'title', 'status_id', 'priority',
-                'opened_at', 'in_progress_at', 'closed_at',
-                'minutes_spent', 'cost', 'budget_status', 'budget_amount',
+                'id',
+                'code',
+                'title',
+                'status',
+                'priority',
+                'opened_at',
+                'in_progress_at',
+                'closed_at',
+                'minutes_spent',
+                'cost',
+                'budget_status',
+                'budget_amount',
+                'created_at',
             ])
-            ->with(['status:id,name'])
             ->orderBy('created_at', 'desc');
     }
 
     /**
-     * Define o cabeçalho da folha de cálculo.
+     * Tamanho dos blocos de leitura na base de dados para otimização de memória.
+     */
+    public function chunkSize(): int
+    {
+        return 1000;
+    }
+
+    /**
+     * Cabeçalho da folha de cálculo.
      */
     public function headings(): array
     {
         return [
             'ID',
+            'Código',
             'Título',
             'Estado',
             'Prioridade',
@@ -55,27 +92,51 @@ class TicketsExport implements FromQuery, ShouldAutoSize, WithHeadings, WithMapp
     }
 
     /**
-     * Mapeia cada registo Eloquent para uma linha da folha de cálculo.
+     * Mapeia cada registo Eloquent para uma linha do Excel.
+     *
+     * @param Ticket $ticket
      */
-    public function map($ticket): array
+    public function map(mixed $ticket): array
     {
+        /** @var Ticket $ticket */
+        $statusLabel = $ticket->status instanceof TicketStatusEnum
+            ? $ticket->status->label()
+            : ($ticket->status->name ?? (string) ($ticket->status ?? 'N/A'));
+
+        $priorityLabel = $ticket->priority instanceof TicketPriorityEnum
+            ? $ticket->priority->label()
+            : (string) ($ticket->priority ?? 'N/A');
+
         return [
             $ticket->id,
+            $ticket->code ?? "#{$ticket->id}",
             $ticket->title,
-            $ticket->status->name ?? 'N/A',
-            $ticket->priority,
-            optional($ticket->opened_at)->format('d/m/Y H:i'),
-            optional($ticket->in_progress_at)->format('d/m/Y H:i'),
-            optional($ticket->closed_at)->format('d/m/Y H:i'),
-            $ticket->minutes_spent,
-            number_format((float) ($ticket->cost ?? 0), 2, ',', '.'),
+            $statusLabel,
+            $priorityLabel,
+            $ticket->opened_at?->format('d/m/Y H:i') ?? '-',
+            $ticket->in_progress_at?->format('d/m/Y H:i') ?? '-',
+            $ticket->closed_at?->format('d/m/Y H:i') ?? '-',
+            $ticket->minutes_spent ?? 0,
+            (float) ($ticket->cost ?? 0),
             $ticket->budget_status ?? 'N/A',
-            number_format((float) ($ticket->budget_amount ?? 0), 2, ',', '.'),
+            (float) ($ticket->budget_amount ?? 0),
         ];
     }
 
     /**
-     * Título da folha no ficheiro Excel.
+     * Formatação nativa das colunas no Excel (Permite cálculos e somas nas células).
+     */
+    public function columnFormats(): array
+    {
+        return [
+            'I' => NumberFormat::FORMAT_NUMBER,
+            'J' => '#,##0.00 "€"',
+            'L' => '#,##0.00 "€"',
+        ];
+    }
+
+    /**
+     * Título do separador no Excel.
      */
     public function title(): string
     {
@@ -83,7 +144,7 @@ class TicketsExport implements FromQuery, ShouldAutoSize, WithHeadings, WithMapp
     }
 
     /**
-     * Aplica estilos à folha – cabeçalho em negrito com fundo azul escuro.
+     * Estilização visual da folha (Cabeçalho).
      */
     public function styles(Worksheet $sheet): array
     {

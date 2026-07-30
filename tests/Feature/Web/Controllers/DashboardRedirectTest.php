@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,15 +19,15 @@ class DashboardRedirectTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::create(['name' => User::ROLE_USER]);
-        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::create(['name' => User::ROLE_ADMIN]);
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
+        UserProfile::create(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::create(['name' => UserRoleEnum::Admin->value]);
     }
 
     public function test_after_login_user_is_redirected_to_dashboard_to_manage_tickets(): void
     {
         $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->firstOrFail()->id,
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->firstOrFail()->id,
             'active' => true,
             'password' => Hash::make('Password123!'),
             'api_token' => Str::random(60),
@@ -36,9 +38,9 @@ class DashboardRedirectTest extends TestCase
             'password' => 'Password123!',
         ]);
 
-        // O login endpoint (API) retorna JSON + cookie, então a verificação de redirect deve ser feita
+        // O login endpoint (API) retorna JSON + cookie, entÃ£o a verificaÃ§Ã£o de redirect deve ser feita
         // para rotas UI que usam o dashboard.
-        // Mantém o teste focado no que é observável e estável: depois de login, o acesso ao dashboard deve funcionar.
+        // MantÃ©m o teste focado no que Ã© observÃ¡vel e estÃ¡vel: depois de login, o acesso ao dashboard deve funcionar.
         $token = $response->json('token');
 
         // UI dashboard (rotas baseadas em UiController)
@@ -48,7 +50,7 @@ class DashboardRedirectTest extends TestCase
 
         $dashboard->assertStatus(200);
 
-        // Conteúdo esperado (Blade layout do dashboard)
+        // ConteÃºdo esperado (Blade layout do dashboard)
         $dashboard->assertSee('Tickets');
 
         // Verifica que os links do menu apontam para rotas reais (sem '*')

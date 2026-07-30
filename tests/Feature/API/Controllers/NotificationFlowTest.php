@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Mail\TestMail;
 use App\Models\Notification;
 use App\Models\User;
@@ -19,14 +21,14 @@ class NotificationFlowTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::create(['name' => User::ROLE_USER]);
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
     }
 
     public function test_user_can_list_notifications_mark_as_read_and_send_test_email(): void
     {
         Mail::fake();
 
-        $profile = UserProfile::where('name', User::ROLE_USER)->firstOrFail();
+        $profile = UserProfile::where('name', UserRoleEnum::User->value)->firstOrFail();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
             'api_token' => Str::random(60),
@@ -80,7 +82,7 @@ class NotificationFlowTest extends TestCase
 
     public function test_user_cannot_mark_another_users_notification_as_read(): void
     {
-        $profile = UserProfile::where('name', User::ROLE_USER)->firstOrFail();
+        $profile = UserProfile::where('name', UserRoleEnum::User->value)->firstOrFail();
         $owner = User::factory()->create([
             'profile_id' => $profile->id,
             'api_token' => Str::random(60),

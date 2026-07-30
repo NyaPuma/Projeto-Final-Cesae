@@ -6,9 +6,11 @@ use App\Actions\CreateTicketAction;
 use App\DTOs\CreateTicketData;
 use App\DTOs\TicketFilters;
 use App\Enums\TicketPriorityEnum;
+use App\Enums\UserRoleEnum;
 use App\Http\Requests\StoreTicketRequest;
+use App\Http\Resources\TicketResource;
+use App\Models\Ticket;
 use App\Models\User;
-use App\Repositories\Contracts\TicketRepositoryInterface;
 use App\Services\AIService;
 use App\Services\TechnicianAssignmentService;
 use App\Services\TicketSearchService;
@@ -16,65 +18,88 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class TicketController extends Controller
+final class TicketController extends Controller
 {
     public function __construct(
-        private readonly TicketRepositoryInterface $ticketRepository,
+        private readonly \App\Repositories\Contracts\TicketRepositoryInterface $ticketRepository,
         private readonly CreateTicketAction $createTicketAction,
         private readonly TechnicianAssignmentService $technicianService,
         private readonly TicketSearchService $searchService,
     ) {}
 
+    /**
+     * Lista todos os tickets registados no sistema com as relações necessárias.
+     */
     public function index(Request $request): JsonResponse
     {
+        // 1. Autorização via Policy (ViewAny)
+        $this->authorize('viewAny', Ticket::class);
+
         $tickets = $this->ticketRepository->getAll(['equipment', 'room', 'user', 'technician', 'status']);
 
-        return response()->json(['tickets' => $tickets]);
+        return response()->json([
+            'tickets' => TicketResource::collection($tickets),
+        ]);
     }
 
+    /**
+     * Cria um novo ticket de suporte.
+     */
     public function store(StoreTicketRequest $request): JsonResponse
     {
-        $user = $this->authenticatedUser($request);
+        // 1. Autorização via Policy (Create)
+        $this->authorize('create', Ticket::class);
+
+        $user = $request->user();
         $data = CreateTicketData::fromRequest($request->validated());
 
         $ticket = $this->createTicketAction->execute($user, $data);
-        $ticket->load(['equipment', 'room', 'user', 'status']);
+        $ticket->loadMissing(['equipment', 'room', 'user', 'status']);
 
-        return response()->json(['ticket' => $ticket], 201);
+        return response()->json([
+            'message' => __('Ticket criado com sucesso.'),
+            'ticket' => new TicketResource($ticket),
+        ], 201);
     }
 
+    /**
+     * Pesquisa e filtra tickets com base nos critérios submetidos.
+     */
     public function search(Request $request): JsonResponse
     {
-        $this->authenticatedUser($request);
+        // 1. Autorização via Policy
+        $this->authorize('viewAny', Ticket::class);
 
-        if ($request->has('priority') && ! in_array($request->priority, TicketPriorityEnum::acceptedValues(), true)) {
+        $priority = $request->input('priority');
+        if ($priority && ! in_array($priority, TicketPriorityEnum::acceptedValues(), true)) {
             return response()->json([
-                'message' => 'Prioridade inv├ílida. Valores v├ílidos: baixa, m├®dia, alta, cr├¡tica.',
+                'message' => __('Prioridade inválida. Valores válidos: baixa, média, alta, crítica.'),
             ], 422);
         }
 
         $filters = TicketFilters::fromRequest($request->all());
+        $tickets = $this->searchService->search($filters);
 
         return response()->json([
-            'tickets' => $this->searchService->search($filters),
+            'tickets' => TicketResource::collection($tickets),
         ]);
     }
 
-    public function show(Request $request, int $id): JsonResponse|View
+    /**
+     * Exibe o detalhe de um ticket específico (suporta JSON para API ou View para Frontend Web).
+     */
+    public function show(Request $request, Ticket $ticket): JsonResponse|View
     {
-        $user = $this->authenticatedUser($request);
-        $ticket = $this->ticketRepository->findWithRelations($id, ['equipment.category', 'room', 'user', 'technician', 'status']);
+        // 1. Autorização via Policy
+        $this->authorize('view', $ticket);
 
-        if (! $ticket) {
-            return response()->json(['message' => 'Ticket n├úo encontrado'], 404);
-        }
-
-        if ($user->isCommon() && (int) $ticket->user_id !== (int) $user->id) {
-            return response()->json(['message' => 'Acesso negado'], 403);
-        }
+        // 2. Carrega relações avançadas se necessário
+        $ticket->loadMissing(['equipment.category', 'room', 'user', 'technician', 'status']);
 
         if ($request->wantsJson() || $request->ajax()) {
-            return response()->json(['ticket' => $ticket]);
+            return response()->json([
+                'ticket' => new TicketResource($ticket),
+            ]);
         }
 
         $recomendacaoIA = app(AIService::class)->recomendarTecnico($ticket);
@@ -82,25 +107,42 @@ class TicketController extends Controller
         return view('ui.ticket-detail', compact('ticket', 'recomendacaoIA'));
     }
 
+    /**
+     * Lista todos os tickets que se encontram abertos no sistema.
+     */
     public function openTickets(Request $request): JsonResponse
     {
-        $user = $this->authenticatedUser($request);
-        $this->requireRole($user, [User::ROLE_TECHNICIAN, User::ROLE_ADMIN]);
+        // 1. Autorização via Policy (ViewAny restrito a técnicos/admins)
+        $this->authorize('viewAny', Ticket::class);
+
+        $user = $request->user();
+        if (! $user->profile || ! in_array($user->profile->name, [UserRoleEnum::Technician->value, UserRoleEnum::Admin->value], true)) {
+            return response()->json(['message' => __('Acesso proibido para o seu perfil.')], 403);
+        }
 
         $tickets = $this->ticketRepository->getOpenTickets();
 
-        return response()->json(['tickets' => $tickets]);
+        return response()->json([
+            'tickets' => TicketResource::collection($tickets),
+        ]);
     }
 
+    /**
+     * Retorna o ticket aberto mais urgente para atribuição prioritária.
+     */
     public function getMostUrgentOpenTicket(Request $request): JsonResponse
     {
-        $this->authenticatedUser($request);
-        $excludeId = (int) $request->input('exclude', 0);
+        // 1. Autorização via Policy
+        $this->authorize('viewAny', Ticket::class);
 
+        $excludeId = (int) $request->input('exclude', 0);
         $ticket = $this->technicianService->findMostUrgentOpenTicket($excludeId > 0 ? $excludeId : null);
 
         if (! $ticket) {
-            return response()->json(['ticket_id' => null, 'message' => __('N├úo existem tickets abertos priorit├írios.')], 404);
+            return response()->json([
+                'ticket_id' => null,
+                'message' => __('Não existem tickets abertos prioritários.'),
+            ], 404);
         }
 
         return response()->json([

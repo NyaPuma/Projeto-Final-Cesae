@@ -2,6 +2,8 @@
 
 namespace Tests\Security\MassAssignment;
 
+
+use App\Enums\UserRoleEnum;
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
@@ -15,8 +17,8 @@ class MassAssignmentTest extends FeatureTestCase
     #[Test]
     public function it_prevents_setting_user_id_on_ticket_creation(): void
     {
-        $userA = $this->createUserWithToken(User::ROLE_USER);
-        $userB = $this->createUserWithToken(User::ROLE_USER);
+        $userA = $this->createUserWithToken(UserRoleEnum::User->value);
+        $userB = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $response = $this->withHeader('X-Auth-Token', $userA->api_token)
             ->postJson('/api/tickets', [
@@ -36,7 +38,7 @@ class MassAssignmentTest extends FeatureTestCase
             $this->assertNotNull($createdTicket, 'Ticket should have been created');
 
             if ($createdTicket->user_id == $userB->id) {
-                \Log::critical('T4 — MASS ASSIGNMENT CONFIRMED', [
+                \Log::critical('T4 â€” MASS ASSIGNMENT CONFIRMED', [
                     'user_a' => $userA->id,
                     'ticket_user_id' => $createdTicket->user_id,
                 ]);
@@ -52,7 +54,7 @@ class MassAssignmentTest extends FeatureTestCase
     #[Test]
     public function it_prevents_mass_assignment_of_protected_fields(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
         $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
@@ -83,7 +85,7 @@ class MassAssignmentTest extends FeatureTestCase
     #[Test]
     public function it_ignores_unexpected_fields(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
         $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
@@ -103,7 +105,7 @@ class MassAssignmentTest extends FeatureTestCase
     #[Test]
     public function it_rejects_very_long_input(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
         $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)

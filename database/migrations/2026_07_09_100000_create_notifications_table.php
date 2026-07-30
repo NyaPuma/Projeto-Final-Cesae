@@ -10,13 +10,155 @@ return new class extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->string('title');
+
+            /*
+            |--------------------------------------------------------------------------
+            | Destinatário
+            |--------------------------------------------------------------------------
+            */
+
+            $table->foreignId('user_id')
+                ->constrained('users')
+                ->cascadeOnDelete();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Conteúdo
+            |--------------------------------------------------------------------------
+            */
+
+            $table->string('title', 150);
+
             $table->text('message');
-            $table->string('type')->nullable();
-            $table->boolean('is_read')->default(false);
-            $table->string('link')->nullable();
+
+            $table->enum('type', [
+                'ticket_created',
+                'ticket_updated',
+                'ticket_assigned',
+                'ticket_closed',
+                'comment_added',
+                'attachment_added',
+                'budget_requested',
+                'budget_approved',
+                'budget_rejected',
+                'system',
+            ])->default('system');
+
+            $table->enum('priority', [
+                'low',
+                'normal',
+                'high',
+                'critical',
+            ])->default('normal');
+
+            /*
+            |--------------------------------------------------------------------------
+            | Estado
+            |--------------------------------------------------------------------------
+            */
+
+            $table->boolean('is_read')
+                ->default(false);
+
+            $table->timestamp('read_at')
+                ->nullable();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Navegação
+            |--------------------------------------------------------------------------
+            */
+
+            $table->string('link', 2048)
+                ->nullable();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Entidade relacionada (Polimórfica)
+            |--------------------------------------------------------------------------
+            */
+
+            $table->string('notifiable_type', 150)
+                ->nullable();
+
+            $table->unsignedBigInteger('notifiable_id')
+                ->nullable();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Dados adicionais
+            |--------------------------------------------------------------------------
+            */
+
+            $table->json('data')
+                ->nullable();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Expiração
+            |--------------------------------------------------------------------------
+            */
+
+            $table->timestamp('expires_at')
+                ->nullable();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Timestamps
+            |--------------------------------------------------------------------------
+            */
+
             $table->timestamps();
+
+            $table->softDeletes();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Índices
+            |--------------------------------------------------------------------------
+            */
+
+            // Notificações pendentes do utilizador
+            $table->index(
+                ['user_id', 'is_read', 'created_at'],
+                'notifications_unread_idx'
+            );
+
+            // Histórico de notificações do utilizador
+            $table->index(
+                ['user_id', 'created_at'],
+                'notifications_user_created_idx'
+            );
+
+            // Filtragem por tipo
+            $table->index(
+                ['type', 'created_at'],
+                'notifications_type_created_idx'
+            );
+
+            // Entidade relacionada
+            $table->index(
+                ['notifiable_type', 'notifiable_id'],
+                'notifications_notifiable_idx'
+            );
+
+            // Prioridade para alertas urgentes
+            $table->index(
+                ['priority', 'is_read', 'created_at'],
+                'notifications_priority_idx'
+            );
+
+            // Expiração automática
+            $table->index(
+                'expires_at',
+                'notifications_expires_idx'
+            );
+
+            // Soft deletes
+            $table->index(
+                ['deleted_at', 'user_id'],
+                'notifications_deleted_user_idx'
+            );
         });
     }
 

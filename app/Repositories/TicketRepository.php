@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repositories;
 
 use App\DTOs\TicketFilters;
@@ -9,28 +11,40 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 final class TicketRepository implements TicketRepositoryInterface
 {
+    /**
+     * {@inheritDoc}
+     */
     public function findById(int $id): ?Ticket
     {
         return Ticket::find($id);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function findWithRelations(int $id, array $relations = []): ?Ticket
     {
         return Ticket::with($relations)->find($id);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getAll(array $relations = []): LengthAwarePaginator
     {
         return Ticket::with($relations)->latest()->paginate(15);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function search(TicketFilters $filters): LengthAwarePaginator
     {
         $query = Ticket::with(['equipment', 'room', 'user', 'technician', 'status']);
 
         if ($filters->query) {
             $q = str_replace(['%', '_'], ['\%', '\_'], $filters->query);
-            $query->where('title', 'like', '%'.$q.'%');
+            $query->where('title', 'like', '%' . $q . '%');
         }
 
         if ($filters->status) {
@@ -60,21 +74,33 @@ final class TicketRepository implements TicketRepositoryInterface
         return $query->latest()->paginate(15);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function create(array $data): Ticket
     {
         return Ticket::create($data);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function update(Ticket $ticket, array $data): bool
     {
         return $ticket->update($data);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function delete(Ticket $ticket): bool
     {
         return $ticket->delete();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getOpenTickets(): LengthAwarePaginator
     {
         return Ticket::with(['equipment', 'room', 'user', 'status'])
@@ -83,6 +109,9 @@ final class TicketRepository implements TicketRepositoryInterface
             ->paginate(15);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getTicketsByTechnician(int $technicianId): LengthAwarePaginator
     {
         return Ticket::with(['equipment', 'room', 'user', 'status'])
@@ -91,6 +120,9 @@ final class TicketRepository implements TicketRepositoryInterface
             ->paginate(15);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getTicketsByUser(int $userId): LengthAwarePaginator
     {
         return Ticket::with(['equipment', 'room', 'technician', 'status'])

@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,14 +19,14 @@ class AuthFlowTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::create(['name' => User::ROLE_USER]);
-        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::create(['name' => User::ROLE_ADMIN]);
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
+        UserProfile::create(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::create(['name' => UserRoleEnum::Admin->value]);
     }
 
     public function test_register_rejects_invalid_payload(): void
     {
-        $adminProfile = UserProfile::where('name', User::ROLE_ADMIN)->firstOrFail();
+        $adminProfile = UserProfile::where('name', UserRoleEnum::Admin->value)->firstOrFail();
 
         $admin = User::factory()->create([
             'profile_id' => $adminProfile->id,
@@ -47,7 +49,7 @@ class AuthFlowTest extends TestCase
             'name' => 'Inactive User',
             'email' => 'inactive@example.com',
             'password' => Hash::make('Password123!'),
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->value('id'),
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->value('id'),
             'active' => false,
         ]);
 
@@ -66,7 +68,7 @@ class AuthFlowTest extends TestCase
             'name' => 'Demo User',
             'email' => 'demo@example.com',
             'password' => Hash::make('Password123!'),
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->value('id'),
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->value('id'),
             'active' => true,
             'api_token' => Str::random(60),
         ]);
@@ -83,7 +85,7 @@ class AuthFlowTest extends TestCase
     public function test_change_password_rejects_wrong_current_password(): void
     {
         $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->value('id'),
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->value('id'),
             'api_token' => Str::random(60),
             'password' => Hash::make('Password123!'),
         ]);

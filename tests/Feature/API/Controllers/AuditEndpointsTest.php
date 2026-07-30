@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Enums\TicketStatusEnum;
 use App\Models\Equipment;
 use App\Models\Room;
@@ -21,15 +23,15 @@ class AuditEndpointsTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::create(['name' => User::ROLE_USER]);
-        UserProfile::create(['name' => User::ROLE_ADMIN]);
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
+        UserProfile::create(['name' => UserRoleEnum::Admin->value]);
         $this->artisan('db:seed', ['--class' => 'TicketLookupSeeder', '--force' => true]);
     }
 
     public function test_admin_can_access_audit_endpoints_and_audits_are_paginated(): void
     {
-        $adminProfile = UserProfile::where('name', User::ROLE_ADMIN)->firstOrFail();
-        $userProfile = UserProfile::where('name', User::ROLE_USER)->firstOrFail();
+        $adminProfile = UserProfile::where('name', UserRoleEnum::Admin->value)->firstOrFail();
+        $userProfile = UserProfile::where('name', UserRoleEnum::User->value)->firstOrFail();
 
         $admin = User::factory()->create([
             'profile_id' => $adminProfile->id,
@@ -71,7 +73,7 @@ class AuditEndpointsTest extends TestCase
 
     public function test_admin_audit_endpoint_returns_empty_payload_when_no_history_exists(): void
     {
-        $adminProfile = UserProfile::where('name', User::ROLE_ADMIN)->firstOrFail();
+        $adminProfile = UserProfile::where('name', UserRoleEnum::Admin->value)->firstOrFail();
         $admin = User::factory()->create([
             'profile_id' => $adminProfile->id,
             'api_token' => Str::random(60),
@@ -86,7 +88,7 @@ class AuditEndpointsTest extends TestCase
 
     public function test_admin_audit_endpoint_is_forbidden_for_common_user(): void
     {
-        $userProfile = UserProfile::where('name', User::ROLE_USER)->firstOrFail();
+        $userProfile = UserProfile::where('name', UserRoleEnum::User->value)->firstOrFail();
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,
             'api_token' => Str::random(60),

@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
 final class ResetPasswordRequest extends FormRequest
 {
@@ -11,12 +14,33 @@ final class ResetPasswordRequest extends FormRequest
         return true;
     }
 
+    /**
+     * Normalize email input before running token or password validation.
+     */
+    protected function prepareForValidation(): void
+    {
+        if ($this->has('email')) {
+            $this->merge([
+                'email' => strtolower(trim((string) $this->email)),
+            ]);
+        }
+    }
+
     public function rules(): array
     {
         return [
-            'email' => ['required', 'email'],
             'token' => ['required', 'string'],
-            'password' => ['required', 'confirmed', ...RegisterRequest::passwordRules()],
+            'email' => ['required', 'string', 'lowercase', 'email'],
+            'password' => [
+                'required',
+                'confirmed',
+                Password::min(8)
+                    ->letters()
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols()
+                    ->uncompromised(),
+            ],
         ];
     }
 }

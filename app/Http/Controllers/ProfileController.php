@@ -4,48 +4,72 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\UpdateProfileRequest;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 
-class ProfileController extends Controller
+final class ProfileController extends Controller
 {
+    /**
+     * Altera a password do utilizador autenticado.
+     */
     public function changePassword(ChangePasswordRequest $request): JsonResponse
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user();
 
-        if (! Hash::check($request->current_password, $user->password)) {
-            return response()->json(['message' => __('Password atual incorreta')], 403);
+        if (! Hash::check($request->input('current_password'), $user->password)) {
+            return response()->json([
+                'message' => __('Password atual incorreta.'),
+            ], 403);
         }
 
-        $user->password = Hash::make($request->new_password);
+        $user->password = Hash::make($request->input('new_password'));
         $user->save();
 
-        return response()->json(['message' => __('Password alterada com sucesso.')]);
+        return response()->json([
+            'message' => __('Password alterada com sucesso.'),
+        ]);
     }
 
+    /**
+     * Atualiza os dados do perfil do utilizador autenticado.
+     */
     public function updateProfile(UpdateProfileRequest $request): JsonResponse
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user();
 
-        if (! empty($request->new_password)) {
-            if (empty($request->current_password)) {
-                return response()->json(['message' => __('A palavra-passe atual é obrigatória para alterar a password.')], 422);
+        $newPassword = $request->input('new_password');
+
+        if (! empty($newPassword)) {
+            $currentPassword = $request->input('current_password');
+
+            if (empty($currentPassword)) {
+                return response()->json([
+                    'message' => __('A palavra-passe atual é obrigatória para alterar a password.'),
+                ], 422);
             }
 
-            if (! Hash::check($request->current_password, $user->password)) {
-                return response()->json(['message' => __('Password atual incorreta')], 403);
+            if (! Hash::check($currentPassword, $user->password)) {
+                return response()->json([
+                    'message' => __('Password atual incorreta.'),
+                ], 403);
             }
 
-            $user->password = Hash::make($request->new_password);
+            $user->password = Hash::make($newPassword);
         }
 
-        if (! empty($request->name)) {
-            $user->name = $request->name;
+        $name = $request->input('name');
+
+        if (! empty($name)) {
+            $user->name = $name;
         }
 
         $user->save();
-        $user->load('profile');
+        $user->loadMissing('profile');
 
-        return response()->json(['message' => __('Perfil atualizado com sucesso.'), 'user' => $user]);
+        return response()->json([
+            'message' => __('Perfil atualizado com sucesso.'),
+            'user' => new UserResource($user),
+        ]);
     }
 }

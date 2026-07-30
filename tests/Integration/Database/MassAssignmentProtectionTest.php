@@ -2,6 +2,8 @@
 
 namespace Tests\Integration\Database;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserProfile;
@@ -41,13 +43,13 @@ class MassAssignmentProtectionTest extends FeatureTestCase
         $admin = $this->createAdmin();
         $this->asUserWithToken($admin);
 
-        $profile = UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
+        $profile = UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
         $response = $this->postJson('/admin/users', [
             'name' => 'Mass Test',
             'email' => 'mass.'.uniqid().'@example.invalid',
             'password' => 'Password123!',
             'password_confirmation' => 'Password123!',
-            'role' => User::ROLE_USER,
+            'role' => UserRoleEnum::User->value,
             'profile_id' => $profile->id,
         ]);
         $response->assertStatus(201);

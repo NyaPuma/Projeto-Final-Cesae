@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
 use App\Models\Audit;
@@ -21,9 +23,9 @@ class AuditFeatureTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::create(['name' => User::ROLE_USER]);
-        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::create(['name' => User::ROLE_ADMIN]);
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
+        UserProfile::create(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::create(['name' => UserRoleEnum::Admin->value]);
         $this->artisan('db:seed', ['--class' => 'TicketLookupSeeder', '--force' => true]);
     }
 
@@ -40,7 +42,7 @@ class AuditFeatureTest extends TestCase
 
     public function test_admin_can_list_audits(): void
     {
-        $admin = $this->createUserWithToken(User::ROLE_ADMIN);
+        $admin = $this->createUserWithToken(UserRoleEnum::Admin->value);
 
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)
             ->getJson('/admin/audits');
@@ -50,7 +52,7 @@ class AuditFeatureTest extends TestCase
 
     public function test_audit_created_when_ticket_is_created(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
         $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
@@ -75,7 +77,7 @@ class AuditFeatureTest extends TestCase
 
     public function test_audit_created_when_ticket_is_updated(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
         $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
@@ -102,7 +104,7 @@ class AuditFeatureTest extends TestCase
 
     public function test_audit_has_correct_structure(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
         $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([

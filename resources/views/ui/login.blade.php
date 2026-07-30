@@ -9,10 +9,7 @@
 
         <div class="absolute top-0 left-1/2 -translate-x-1/2 h-[420px] w-[420px] rounded-full bg-primary/10 blur-3xl"></div>
 
-        <div class="absolute inset-0 opacity-[0.03] dark:opacity-[0.06]"
-             style="background-image: linear-gradient(var(--border) 1px, transparent 1px),
-                                    linear-gradient(90deg,var(--border) 1px,transparent 1px);
-                    background-size:40px 40px;">
+        <div class="absolute inset-0 opacity-[0.03] dark:opacity-[0.06] login-grid-bg">
         </div>
     </div>
 
@@ -116,6 +113,7 @@
                         </div>
 
                         <button
+                            id="loginButton"
                             type="submit"
                             class="group w-full rounded-2xl bg-primary py-3.5 font-bold text-black transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/20 active:translate-y-0">
 
@@ -171,67 +169,4 @@
 </div>
 @endsection
 
-@push('scripts')
-<script>
-document.getElementById('loginForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const form = e.target;
-    const msgEl = document.getElementById('msg');
 
-    // Estado: A verificar dados
-    msgEl.className = 'mt-4 text-center text-xs font-semibold text-amber-600 dark:text-amber-400 animate-pulse';
-    msgEl.innerText = 'A verificar credenciais no servidor...';
-
-    const data = {
-        email: form.email.value,
-        password: form.password.value
-    };
-
-    try {
-        const res = await fetch('/login', {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: JSON.stringify(data)
-        });
-
-        if (res.status !== 200) {
-            const j = await res.json();
-            msgEl.className = 'mt-4 text-center text-xs font-bold text-red-600 dark:text-red-400 p-3 bg-red-500/5 rounded-xl border border-red-500/10 animate-[fadeIn_0.2s_ease-out]';
-            msgEl.innerText = j.message || 'Credenciais de acesso incorretas.';
-            return;
-        }
-
-        const j = await res.json();
-        
-        // Armazenamento duplo para compatibilidade total com todos os m├│dulos
-        localStorage.setItem('auth_token', j.token);
-        localStorage.setItem('api_token', j.token);
-        if (j.user) {
-            localStorage.setItem('user_name', j.user.name || 'Utilizador');
-            localStorage.setItem('user_role', j.user.profile?.name || 'user');
-        }
-
-        // Definir cookies de sess├úo
-        document.cookie = `auth_token=${j.token}; path=/; max-age=86400; SameSite=Lax`;
-        document.cookie = `api_token=${j.token}; path=/; max-age=86400; SameSite=Lax`;
-
-        msgEl.className = 'mt-4 text-center text-xs font-bold text-emerald-600 dark:text-emerald-400 p-3 bg-emerald-500/5 rounded-xl border border-emerald-500/10 animate-[fadeIn_0.2s_ease-out]';
-        msgEl.innerText = 'Autentica├º├úo bem-sucedida! A redirecionar...';
-
-        setTimeout(() => {
-            window.location = '/ui';
-        }, 500);
-
-    } catch (err) {
-        msgEl.className = 'mt-4 text-center text-xs font-bold text-red-600 dark:text-red-400 p-3 bg-red-500/5 rounded-xl border border-red-500/10';
-        msgEl.innerText = 'Falha cr├¡tica na comunica├º├úo com o servidor.';
-    }
-});
-</script>
-@endpush

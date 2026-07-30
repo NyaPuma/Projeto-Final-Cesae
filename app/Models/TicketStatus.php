@@ -1,28 +1,50 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class TicketStatus extends Model
+final class TicketStatus extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
-    protected $fillable = ['name', 'description', 'type_id'];
+    protected $fillable = [
+        'code',
+        'name',
+        'description',
+        'notes',
+        'active',
+        'type_id',
+    ];
+
+    // --- RELAÇÕES ---
 
     /**
-     * Obtém o tipo de avaria ao qual este estado pertence.
+     * Tipo de avaria ao qual este estado pertence.
+     * Manteve-se 'type_id' explicitamente para coincidir com a coluna da tabela.
      */
+    protected function casts(): array
+    {
+        return [
+            'active' => 'boolean',
+        ];
+    }
+
     public function type(): BelongsTo
     {
         return $this->belongsTo(TicketType::class, 'type_id');
     }
 
     /**
-     * Obtém os tickets que estão atualmente neste estado.
+     * Chamados/Tickets que se encontram atualmente neste estado.
+     * Manteve-se 'status_id' explicitamente para coincidir com a coluna da tabela 'tickets'.
      */
     public function tickets(): HasMany
     {

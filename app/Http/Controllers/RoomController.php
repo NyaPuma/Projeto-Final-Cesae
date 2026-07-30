@@ -8,11 +8,13 @@ use App\DTOs\StoreRoomData;
 use App\DTOs\UpdateRoomData;
 use App\Http\Requests\StoreRoomRequest;
 use App\Http\Requests\UpdateRoomRequest;
+use App\Http\Resources\RoomResource;
+use App\Models\Room;
 use App\Repositories\Contracts\RoomRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class RoomController extends Controller
+final class RoomController extends Controller
 {
     public function __construct(
         private readonly RoomRepositoryInterface $roomRepository,
@@ -20,41 +22,71 @@ class RoomController extends Controller
         private readonly UpdateRoomAction $updateRoomAction,
     ) {}
 
+    /**
+     * Lista todas as salas registadas no sistema.
+     */
     public function indexRoom(Request $request): JsonResponse
     {
-        return response()->json(['rooms' => $this->roomRepository->getAll()]);
+        // 1. Autorização via Policy
+        $this->authorize('viewAny', Room::class);
+
+        // 2. Procura de salas através do repositório
+        $rooms = $this->roomRepository->getAll();
+
+        return response()->json([
+            'rooms' => RoomResource::collection($rooms),
+        ]);
     }
 
+    /**
+     * Cria uma nova sala no sistema.
+     */
     public function storeRoom(StoreRoomRequest $request): JsonResponse
     {
+        // 1. Autorização via Policy
+        $this->authorize('create', Room::class);
+
+        // 2. Executa DTO e Action para criação
         $data = StoreRoomData::fromRequest($request->validated());
         $room = $this->createRoomAction->execute($data);
 
-        return response()->json(['room' => $room], 201);
+        return response()->json([
+            'message' => __('Sala criada com sucesso.'),
+            'room' => new RoomResource($room),
+        ], 201);
     }
 
-    public function updateRoom(UpdateRoomRequest $request, int $id): JsonResponse
+    /**
+     * Atualiza os dados de uma sala existente.
+     */
+    public function updateRoom(UpdateRoomRequest $request, Room $room): JsonResponse
     {
-        $room = $this->roomRepository->findById($id);
-        if (! $room) {
-            return $this->jsonNotFound('Sala n├úo encontrada');
-        }
+        // 1. Autorização via Policy
+        $this->authorize('update', $room);
 
+        // 2. Executa DTO e Action para atualização
         $data = UpdateRoomData::fromRequest($request->validated());
-        $room = $this->updateRoomAction->execute($room, $data);
+        $updatedRoom = $this->updateRoomAction->execute($room, $data);
 
-        return response()->json(['room' => $room]);
+        return response()->json([
+            'message' => __('Sala atualizada com sucesso.'),
+            'room' => new RoomResource($updatedRoom),
+        ]);
     }
 
-    public function inactivateRoom(Request $request, int $id): JsonResponse
+    /**
+     * Inativa uma sala existente no sistema.
+     */
+    public function inactivateRoom(Request $request, Room $room): JsonResponse
     {
-        $room = $this->roomRepository->findById($id);
-        if (! $room) {
-            return $this->jsonNotFound('Sala n├úo encontrada');
-        }
+        // 1. Autorização via Policy
+        $this->authorize('update', $room);
 
+        // 2. Inativação via Repositório
         $this->roomRepository->inactivate($room);
 
-        return response()->json(['message' => 'Sala inativada com sucesso']);
+        return response()->json([
+            'message' => __('Sala inativada com sucesso.'),
+        ]);
     }
 }

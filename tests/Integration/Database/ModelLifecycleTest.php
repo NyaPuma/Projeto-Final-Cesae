@@ -2,6 +2,8 @@
 
 namespace Tests\Integration\Database;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\EquipmentCategory;
 use App\Models\Room;
 use App\Models\User;
@@ -20,14 +22,14 @@ class ModelLifecycleTest extends FeatureTestCase
         $admin = $this->createAdmin();
         $this->asUserWithToken($admin);
 
-        $profile = UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
+        $profile = UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
 
         $response = $this->postJson('/admin/users', [
             'name' => 'CRUD Test User',
             'email' => 'crud.test.'.uniqid().'@example.invalid',
             'password' => 'Password123!',
             'password_confirmation' => 'Password123!',
-            'role' => User::ROLE_USER,
+            'role' => UserRoleEnum::User->value,
             'profile_id' => $profile->id,
         ]);
         $response->assertStatus(201);
@@ -112,7 +114,7 @@ class ModelLifecycleTest extends FeatureTestCase
         $response = $this->postJson('/tickets', [
             'title' => 'Persistence Test Ticket',
             'description' => 'Full lifecycle test',
-            'priority' => 'média',
+            'priority' => 'mÃ©dia',
         ]);
         $response->assertStatus(201);
         $ticketId = $response->json('ticket.id');

@@ -9,15 +9,15 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
-class CsrfMiddleware
+final class CsrfMiddleware
 {
-    protected SessionContract $session;
+    public function __construct(
+        private readonly SessionContract $session
+    ) {}
 
-    public function __construct(SessionContract $session)
-    {
-        $this->session = $session;
-    }
-
+    /**
+     * Handle an incoming request.
+     */
     public function handle(Request $request, Closure $next): Response
     {
         if ($this->shouldSkipCsrfValidation($request)) {
@@ -28,7 +28,7 @@ class CsrfMiddleware
 
         if (! $token || ! $this->validateCsrfToken($token)) {
             return response()->json([
-                'message' => 'CSRF Token inv├ílido ou expirado.',
+                'message' => __('CSRF Token inválido ou expirado.'),
                 'error_code' => 419,
                 'errors' => [
                     '_token' => ['The CSRF token is invalid or has expired.'],
@@ -41,13 +41,16 @@ class CsrfMiddleware
         return $next($request);
     }
 
+    /**
+     * Determina se a validação CSRF deve ser ignorada para o pedido atual.
+     */
     protected function shouldSkipCsrfValidation(Request $request): bool
     {
         if ($request->isMethod('GET')) {
             return true;
         }
 
-        if ($request->is('login') || $request->is('register')) {
+        if ($request->is('login', 'register')) {
             return true;
         }
 
@@ -61,7 +64,7 @@ class CsrfMiddleware
             'api.ticket.create',
             'api.equipment.create',
             'api.notification.create',
-        ])) {
+        ], true)) {
             $token = $request->header('X-Auth-Token') ?: $request->bearerToken();
 
             if ($token && ! empty($this->session->get('_token'))) {
@@ -84,6 +87,9 @@ class CsrfMiddleware
         return false;
     }
 
+    /**
+     * Extrai o token CSRF do pedido (cabeçalho ou sessão).
+     */
     protected function getCsrfTokenFromRequest(Request $request): ?string
     {
         $token = $request->header('X-CSRF-Token');
@@ -92,20 +98,25 @@ class CsrfMiddleware
             return $token;
         }
 
-        return $this->session->get('_token') ?: null;
+        return $this->session->get('_token');
     }
 
+    /**
+     * Valida se o token fornecido corresponde ao armazenado em sessão.
+     */
     protected function validateCsrfToken(string $token): bool
     {
-        if (empty(trim($token))) {
+        $trimmedToken = trim($token);
+
+        if (empty($trimmedToken)) {
             return false;
         }
 
         $storedToken = $this->session->get('_token');
 
-        if ($storedToken !== trim($token)) {
+        if ($storedToken !== $trimmedToken) {
             Log::debug('CsrfMiddleware - Token mismatch', [
-                'provided_token' => substr(trim($token), 0, 8).'...',
+                'provided_token' => substr($trimmedToken, 0, 8) . '...',
                 'stored_token' => $storedToken ?: null,
             ]);
 
@@ -115,6 +126,9 @@ class CsrfMiddleware
         return true;
     }
 
+    /**
+     * Regenera o ID de sessão para segurança adicional contra fixation attacks.
+     */
     protected function regenerateSessionId(): void
     {
         $token = $this->session->get('_token');

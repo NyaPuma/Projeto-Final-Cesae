@@ -2,6 +2,8 @@
 
 namespace Tests\Database\Constraints;
 
+
+use App\Enums\UserRoleEnum;
 use App\Enums\TicketStatusEnum;
 use App\Models\Equipment;
 use App\Models\Room;
@@ -169,13 +171,13 @@ class DatabaseOptimizationTest extends TestCase
         TicketStatus::firstOrCreate(['name' => 'em curso'], ['description' => 'Em curso']);
         TicketStatus::firstOrCreate(['name' => 'fechada'], ['description' => 'Fechada']);
         TicketStatus::firstOrCreate(['name' => 'cancelada'], ['description' => 'Cancelada']);
-        TicketStatus::firstOrCreate(['name' => 'pendente orçamento'], ['description' => 'Pendente']);
+        TicketStatus::firstOrCreate(['name' => 'pendente orÃ§amento'], ['description' => 'Pendente']);
         TicketStatus::firstOrCreate(['name' => 'recusada'], ['description' => 'Recusada']);
     }
 
     protected function createAdminUser(): User
     {
-        $profile = UserProfile::firstOrCreate(['name' => User::ROLE_ADMIN]);
+        $profile = UserProfile::firstOrCreate(['name' => UserRoleEnum::Admin->value]);
         $token = 'admin-opt-token-'.uniqid();
         $user = User::factory()->create([
             'profile_id' => $profile->id,

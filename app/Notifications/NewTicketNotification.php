@@ -1,56 +1,63 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Notifications;
 
+use App\Models\Ticket;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class NewTicketNotification extends Notification
+final class NewTicketNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    /**
-     * Create a new notification instance.
-     */
-    public function __construct()
-    {
-        //
-    }
+    public function __construct(
+        public readonly Ticket $ticket,
+    ) {}
 
     /**
-     * Get the notification's delivery channels.
+     * Define os canais de envio (E-mail e Base de Dados/Painel).
      *
      * @return array<int, string>
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
-     * Get the mail representation of the notification.
+     * Representação da notificação por E-mail.
      */
     public function toMail(object $notifiable): MailMessage
     {
+        $ticketUrl = url("/ui/tickets/{$this->ticket->id}");
+
         return (new MailMessage)
-            ->subject('Novo Ticket Registado')
-            ->greeting('Olá!')
-            ->line('Um novo ticket de manutenção foi registado no sistema.')
-            ->action('Ver Ticket', url('/ui/tickets'))
-            ->line('Por favor, aceda ao painel para mais detalhes.')
-            ->salutation('Cumprimentos, Departamento de Manutenção');
+            ->subject("Novo Ticket Registado [#{$this->ticket->id}]")
+            ->greeting("Olá, {$notifiable->name}!")
+            ->line("Um novo ticket de manutenção foi registado com o título: **{$this->ticket->title}**.")
+            ->line("Prioridade: **" . ucfirst((string) $this->ticket->priority) . "**")
+            ->action('Ver Ticket', $ticketUrl)
+            ->line('Aceda ao painel de controlo para atribuir ou acompanhar o progresso deste chamado.')
+            ->salutation('Cumprimentos, Sistema de Gestão de Manutenção');
     }
 
     /**
-     * Get the array representation of the notification.
+     * Representação da notificação na Base de Dados (Painel do Utilizador).
      *
      * @return array<string, mixed>
      */
     public function toArray(object $notifiable): array
     {
         return [
-            //
+            'ticket_id' => $this->ticket->id,
+            'title'     => 'Novo chamado registado',
+            'message'   => "Foi criado o ticket #{$this->ticket->id}: {$this->ticket->title}",
+            'type'      => 'info',
+            'link'      => "/ui/tickets/{$this->ticket->id}",
         ];
     }
 }

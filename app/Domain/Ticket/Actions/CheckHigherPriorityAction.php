@@ -10,36 +10,57 @@ use App\Services\TicketStatusService;
 final readonly class CheckHigherPriorityAction
 {
     public function __construct(
-        private readonly TicketStatusService $statusService,
+        private TicketStatusService $statusService,
     ) {}
 
     public function execute(Ticket $ticket): array
     {
-        $currentWeight = TicketPriorityEnum::normalize($ticket->priority)->weight();
-        $openStatusId = $this->statusService->getByName(TicketStatusEnum::Open);
+        $normalized = TicketPriorityEnum::normalize($ticket->priority);
+        if ($normalized === null) {
+            return [
+                'total' => 0,
+                'assigned_to_user' => 0,
+                'has_higher' => false,
+            ];
+        }
+        $currentWeight = $normalized->weight();
 
+        // Filtra prioridades estritamente superiores
         $higherPriorities = array_filter(
             TicketPriorityEnum::cases(),
             fn (TicketPriorityEnum $p) => $p->weight() > $currentWeight
         );
 
-        $query = Ticket::where('status_id', $openStatusId)
+        // Guard Clause: Se não existirem prioridades superiores (já é prioridade máxima),
+        // evita ir à base de dados e previne o bug do array vazio.
+        if (empty($higherPriorities)) {
+            return [
+                'total' => 0,
+                'assigned_to_user' => 0,
+                'has_higher' => false,
+            ];
+        }
+
+        $openStatusId = $this->statusService->getByName(TicketStatusEnum::Open);
+        $priorityValues = array_map(fn (TicketPriorityEnum $p) => $p->value, $higherPriorities);
+
+        // Otimização: calcula o total geral e o total por técnico numa única query
+        $result = Ticket::query()
+            ->where('status_id', $openStatusId)
             ->where('id', '!=', $ticket->id)
-            ->where(function ($q) use ($higherPriorities) {
-                foreach ($higherPriorities as $priority) {
-                    $q->orWhere('priority', $priority->value);
-                }
-            });
+            ->whereIn('priority', $priorityValues)
+            ->selectRaw('
+                COUNT(*) as total,
+                SUM(CASE WHEN assigned_to = ? THEN 1 ELSE 0 END) as assigned_to_user
+            ', [$ticket->assigned_to])
+            ->first();
 
-        $total = (clone $query)->count();
-
-        $assignedToTicket = (clone $query)
-            ->where('assigned_to', $ticket->assigned_to)
-            ->count();
+        $total = (int) ($result->total ?? 0);
+        $assignedToUser = $ticket->assigned_to !== null ? (int) ($result->assigned_to_user ?? 0) : 0;
 
         return [
             'total' => $total,
-            'assigned_to_user' => $assignedToTicket,
+            'assigned_to_user' => $assignedToUser,
             'has_higher' => $total > 0,
         ];
     }

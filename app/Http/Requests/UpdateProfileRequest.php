@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
 final class UpdateProfileRequest extends FormRequest
 {
@@ -11,12 +14,52 @@ final class UpdateProfileRequest extends FormRequest
         return true;
     }
 
+    /**
+     * Limpa espaços sobressalentes nos dados enviados.
+     */
+    protected function prepareForValidation(): void
+    {
+        if ($this->has('name')) {
+            $this->merge([
+                'name' => $this->filled('name') ? trim((string) $this->name) : $this->name,
+            ]);
+        }
+    }
+
     public function rules(): array
     {
         return [
-            'name' => ['nullable', 'string', 'max:255'],
-            'current_password' => ['nullable', 'string'],
-            'new_password' => ['nullable', 'string', 'min:8'],
+            'name' => ['sometimes', 'string', 'max:255'],
+            'current_password' => [
+                'required_with:new_password',
+                'nullable',
+                'string',
+                'current_password',
+            ],
+            'new_password' => [
+                'nullable',
+                'string',
+                Password::min(8)
+                    ->letters()
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols()
+                    ->uncompromised(),
+                'confirmed',
+            ],
+        ];
+    }
+
+    /**
+     * Nomes amigáveis dos atributos para as mensagens de erro do Laravel.
+     */
+    public function attributes(): array
+    {
+        return [
+            'name' => 'nome',
+            'current_password' => 'palavra-passe atual',
+            'new_password' => 'nova palavra-passe',
+            'new_password_confirmation' => 'confirmação da nova palavra-passe',
         ];
     }
 }

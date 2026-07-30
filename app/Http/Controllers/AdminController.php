@@ -11,77 +11,101 @@ use App\Enums\BudgetStatusEnum;
 use App\Http\Requests\AssignTechnicianRequest;
 use App\Http\Requests\BudgetDecisionRequest;
 use App\Http\Requests\StorePreventiveRequest;
-use App\Models\User;
-use App\Repositories\Contracts\TicketRepositoryInterface;
+use App\Http\Resources\TicketResource;
+use App\Models\Ticket;
 use Illuminate\Http\JsonResponse;
 
-class AdminController extends Controller
+final class AdminController extends Controller
 {
     public function __construct(
-        private readonly TicketRepositoryInterface $ticketRepository,
         private readonly ApproveBudgetAction $approveBudgetAction,
         private readonly AssignTechnicianAction $assignTechnicianAction,
         private readonly CreatePreventiveTicketAction $createPreventiveAction,
     ) {}
 
-    public function approveBudget(BudgetDecisionRequest $request, int $id): JsonResponse
+    /**
+     * Aprova ou recusa o orçamento associado a um ticket.
+     */
+    public function approveBudget(BudgetDecisionRequest $request, Ticket $ticket): JsonResponse
     {
-        $admin = $this->authenticatedUser($request);
-        $this->requireRole($admin, [User::ROLE_ADMIN]);
+        // 1. Autorização via Policy
+        $this->authorize('approveBudget', $ticket);
 
-        $ticket = $this->ticketRepository->findById($id);
-        if (! $ticket) {
-            return $this->jsonNotFound('Ticket n├úo encontrado');
-        }
+        $admin = $request->user();
 
-        $ticket = $this->approveBudgetAction->execute(
+        // 2. Executa a ação de aprovação/recusa do orçamento
+        $updatedTicket = $this->approveBudgetAction->execute(
             $ticket,
             $admin,
-            BudgetDecisionData::fromRequest($request->validated()),
+            BudgetDecisionData::fromRequest($request->validated())
         );
 
-        $message = $ticket->budget_status === BudgetStatusEnum::Approved->value
-            ? 'Or├ºamento aprovado. Ticket desbloqueado para interven├º├úo.'
-            : 'Or├ºamento recusado. Repara├º├úo abortada.';
+        // 3. Validação do estado e definição da mensagem formatada com i18n
+        $isApproved = $updatedTicket->budget_status === BudgetStatusEnum::Approved;
+        $message = $isApproved
+            ? __('Orçamento aprovado. Ticket desbloqueado para intervenção.')
+            : __('Orçamento recusado. Reparação abortada.');
 
-        return response()->json(['message' => $message, 'ticket' => $ticket]);
+        $updatedTicket->loadMissing(['equipment', 'room', 'technician', 'status']);
+
+        return response()->json([
+            'message' => $message,
+            'ticket' => new TicketResource($updatedTicket),
+        ]);
     }
 
-    public function assignTechnician(AssignTechnicianRequest $request, int $id): JsonResponse
+    /**
+     * Atribui manualmente ou automaticamente um técnico a um ticket.
+     */
+    public function assignTechnician(AssignTechnicianRequest $request, Ticket $ticket): JsonResponse
     {
-        $user = $this->authenticatedUser($request);
-        $this->requireRole($user, [User::ROLE_ADMIN]);
-
-        $ticket = $this->ticketRepository->findById($id);
-        if (! $ticket) {
-            return $this->jsonNotFound('Ticket n├úo encontrado');
-        }
+        // 1. Autorização via Policy
+        $this->authorize('assignTechnician', $ticket);
 
         $data = AssignTechnicianData::fromRequest($request->validated());
         $technician = $this->assignTechnicianAction->execute($ticket, $data->technicianId);
 
+        // 2. Trata falha na atribuição de técnico
         if (! $technician) {
-            $message = $data->technicianId ? 'T├®cnico inv├ílido' : 'N├úo existem t├®cnicos dispon├¡veis';
+            $message = $data->technicianId
+                ? __('Técnico selecionado é inválido ou indisponível.')
+                : __('Não existem técnicos disponíveis de momento.');
 
             return response()->json(['message' => $message], 422);
         }
 
-        return response()->json(['ticket' => $ticket]);
+        $ticket->loadMissing(['equipment', 'room', 'technician', 'status']);
+
+        return response()->json([
+            'message' => __('Técnico atribuído com sucesso.'),
+            'ticket' => new TicketResource($ticket),
+        ]);
     }
 
+    /**
+     * Cria um novo ticket de manutenção preventiva.
+     */
     public function storePreventive(StorePreventiveRequest $request): JsonResponse
     {
-        $admin = $this->authenticatedUser($request);
-        $this->requireRole($admin, [User::ROLE_ADMIN]);
+        // 1. Autorização via Policy (verificação na classe Model)
+        $this->authorize('createPreventive', Ticket::class);
 
+        $admin = $request->user();
+
+        // 2. Executa a criação do ticket preventivo com os dados validados
         $ticket = $this->createPreventiveAction->execute(
-            $admin,
-            $request->title,
-            $request->description,
-            $request->technician_id,
-            $request->scheduled_at,
+            admin: $admin,
+            title: $request->validated('title'),
+            description: $request->validated('description'),
+            technicianId: $request->integer('technician_id'),
+            scheduledAt: $request->date('scheduled_at')
         );
 
-        return response()->json(['ticket' => $ticket], 201);
+        $ticket->loadMissing(['equipment', 'room', 'technician', 'status']);
+
+        return response()->json([
+            'message' => __('Ticket preventivo criado com sucesso.'),
+            'ticket' => new TicketResource($ticket),
+        ], 201);
     }
 }

@@ -1,8 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
+use App\Models\User;
+use App\Models\UserProfile;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 
 final class UpdateUserRequest extends FormRequest
 {
@@ -11,16 +17,64 @@ final class UpdateUserRequest extends FormRequest
         return true;
     }
 
+    /**
+     * Normaliza e higieniza os dados antes da validação.
+     */
+    protected function prepareForValidation(): void
+    {
+        if ($this->has('name')) {
+            $this->merge([
+                'name' => $this->filled('name') ? trim((string) $this->name) : $this->name,
+            ]);
+        }
+
+        if ($this->has('email')) {
+            $this->merge([
+                'email' => $this->filled('email') ? strtolower(trim((string) $this->email)) : $this->email,
+            ]);
+        }
+    }
+
     public function rules(): array
     {
-        $userId = $this->route('id');
+        /** @var User|int|string|null $user */
+        $user = $this->route('user') ?? $this->route('id');
 
         return [
             'name' => ['sometimes', 'string', 'max:255'],
-            'email' => ['sometimes', 'email', 'max:255', "unique:users,email,{$userId}"],
-            'password' => ['nullable', ...RegisterRequest::passwordRules()],
-            'profile_id' => ['sometimes', 'integer', 'exists:user_profiles,id'],
+            'email' => [
+                'sometimes',
+                'string',
+                'email',
+                'max:255',
+                Rule::unique(User::class, 'email')->ignore($user),
+            ],
+            'password' => [
+                'nullable',
+                'string',
+                Password::min(8)
+                    ->letters()
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols()
+                    ->uncompromised(),
+            ],
+            'profile_id' => ['sometimes', 'integer', Rule::exists(UserProfile::class, 'id')],
             'active' => ['sometimes', 'boolean'],
+        ];
+    }
+
+    /**
+     * Nomes amigáveis dos atributos para as mensagens de erro do Laravel.
+     */
+    public function attributes(): array
+    {
+        return [
+            'name' => 'nome',
+            'email' => 'e-mail',
+            'password' => 'palavra-passe',
+            'profile_id' => 'perfil de utilizador',
+            'active' => 'status ativo',
         ];
     }
 }

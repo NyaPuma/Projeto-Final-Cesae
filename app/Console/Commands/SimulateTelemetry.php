@@ -4,34 +4,28 @@ namespace App\Console\Commands;
 
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
+use App\Enums\UserRoleEnum;
 use App\Models\Equipment;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Services\TicketStatusService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Comando de simulação de telemetria para manutenção preventiva.
  * Gera tickets de avaria automáticos com base em anomalias aleatórias nos equipamentos.
- * Deve ser agendado via `routes/console.php` para execução periódica.
- *
- * Uso: php artisan telemetry:simulate
  */
 class SimulateTelemetry extends Command
 {
-    /**
-     * A assinatura e descrição do comando Artisan.
-     */
     protected $signature = 'telemetry:simulate
                             {--equipments=3 : Número máximo de equipamentos a verificar por execução}
-                            {--probability=30 : Percentagem de probabilidade de anomalia (0-100)}';
+                            {--probability=30 : Percentagem de probabilidade de anomalia (0-100)}
+                            {--dry-run : Executa a simulação sem gravar tickets na base de dados}';
 
-    protected $description = 'Simula telemetria de equipamentos e gera tickets de manutenção preventiva automaticamente quando são detetadas anomalias.';
+    protected $description = 'Simula telemetria de equipamentos e gera tickets de manutenção preventiva automaticamente ao detetar anomalias.';
 
-    /**
-     * Tipos de anomalia possíveis e as respetivas descrições geradas automaticamente.
-     */
     private array $anomalyTypes = [
         [
             'title' => 'Temperatura acima do limite operacional',
@@ -60,27 +54,33 @@ class SimulateTelemetry extends Command
         ],
     ];
 
-    /**
-     * Execução principal do comando de simulação.
-     */
-    public function handle(): int
+    public function handle(TicketStatusService $statusService): int
     {
         $maxEquipments = (int) $this->option('equipments');
         $probability = (int) $this->option('probability');
+        $dryRun = (bool) $this->option('dry-run');
 
         $this->info('🔬 A iniciar simulação de telemetria...');
 
-        // Buscar utilizador sistema para criar tickets automaticamente
-        $systemUser = User::whereHas('profile', fn ($q) => $q->where('name', User::ROLE_ADMIN))->first();
+        // Procura utilizador administrador do sistema
+        $systemUser = User::whereHas('profile', fn ($q) => $q->where('name', UserRoleEnum::Admin->value))->first()
+            ?? User::where('is_admin', true)->first();
 
         if (! $systemUser) {
-            $this->error('❌ Nenhum utilizador administrador encontrado para criar tickets automaticamente.');
+            $this->error('❌ Nenhum utilizador administrador encontrado para atribuir como autor dos tickets.');
 
-            return Command::FAILURE;
+            return self::FAILURE;
         }
 
-        // Selecionar equipamentos ativos aleatoriamente
+        // Obtém o ID do estado Aberto antecipadamente (resolve N+1)
+        $openStatusId = $statusService->getByName(TicketStatusEnum::Open);
+
+        // Carrega equipamentos ativos e faz Eager Loading dos tickets não resolvidos para evitar N+1
         $equipments = Equipment::where('active', true)
+            ->withExists(['tickets as has_open_ticket' => function ($query) use ($openStatusId) {
+                // Considera aberto se estiver em Open ou estados ativos não concluídos
+                $query->where('status_id', $openStatusId);
+            }])
             ->inRandomOrder()
             ->limit($maxEquipments)
             ->get();
@@ -88,55 +88,59 @@ class SimulateTelemetry extends Command
         if ($equipments->isEmpty()) {
             $this->warn('⚠️  Nenhum equipamento ativo encontrado na base de dados.');
 
-            return Command::SUCCESS;
+            return self::SUCCESS;
         }
 
         $ticketsCreated = 0;
 
         foreach ($equipments as $equipment) {
-            // Verificar se já existe um ticket aberto para este equipamento (evitar duplicação)
-            $openStatusId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
-            $existingOpen = Ticket::where('equipment_id', $equipment->id)
-                ->where('status_id', $openStatusId)
-                ->exists();
-
-            if ($existingOpen) {
-                $this->line("  ⏭  Equipamento #{$equipment->id} ({$equipment->name}) já tem ticket aberto. A ignorar.");
+            // Evita duplicação consultando o atributo pré-carregado no Eloquent
+            if ($equipment->has_open_ticket) {
+                $this->line("  ⏭  Equipamento #{$equipment->id} ({$equipment->name}) já tem um ticket ativo. A ignorar.");
 
                 continue;
             }
 
-            // Simular probabilidade de anomalia
-            if (rand(1, 100) > $probability) {
+            // Teste de probabilidade de anomalia (0 a 100)
+            if (random_int(1, 100) > $probability) {
                 $this->line("  ✅ Equipamento #{$equipment->id} ({$equipment->name}) sem anomalias detetadas.");
 
                 continue;
             }
 
-            // Selecionar tipo de anomalia aleatória
             $anomaly = Arr::random($this->anomalyTypes);
 
-            $ticket = Ticket::create([
-                'user_id' => $systemUser->id,
-                'equipment_id' => $equipment->id,
-                'room_id' => $equipment->room_id ?? null,
-                'title' => "[TELEMETRIA] {$anomaly['title']} — {$equipment->name}",
-                'description' => $anomaly['description']."\n\n".
-                                  "Equipamento: {$equipment->name}\n".
-                                  "ID do Equipamento: #{$equipment->id}\n".
-                                  'Data da anomalia: '.now()->format('d/m/Y H:i:s')."\n".
-                                  'Gerado automaticamente pelo sistema de telemetria.',
-                'priority' => $anomaly['priority'],
-                'status_id' => $openStatusId,
-                'opened_at' => now(),
-            ]);
+            if ($dryRun) {
+                $this->info("  [DRY-RUN] Criaria Ticket para equip. #{$equipment->id} ({$equipment->name}): {$anomaly['title']}");
+                $ticketsCreated++;
 
-            $ticketsCreated++;
-            $this->info("  🚨 Ticket #{$ticket->id} criado para equip. #{$equipment->id} ({$equipment->name}): {$anomaly['title']}");
+                continue;
+            }
+
+            DB::transaction(function () use ($systemUser, $equipment, $anomaly, $openStatusId, &$ticketsCreated) {
+                $ticket = Ticket::create([
+                    'user_id' => $systemUser->id,
+                    'equipment_id' => $equipment->id,
+                    'room_id' => $equipment->room_id ?? null,
+                    'title' => "[TELEMETRIA] {$anomaly['title']} — {$equipment->name}",
+                    'description' => $anomaly['description'] . "\n\n" .
+                                     "Equipamento: {$equipment->name}\n" .
+                                     "ID do Equipamento: #{$equipment->id}\n" .
+                                     'Data da anomalia: ' . now()->format('d/m/Y H:i:s') . "\n" .
+                                     'Gerado automaticamente pelo sistema de telemetria.',
+                    'priority' => $anomaly['priority'],
+                    'status_id' => $openStatusId,
+                    'opened_at' => now(),
+                ]);
+
+                $ticketsCreated++;
+                $this->info("  🚨 Ticket #{$ticket->id} criado para equip. #{$equipment->id} ({$equipment->name}): {$anomaly['title']}");
+            });
         }
 
-        $this->info("✅ Simulação concluída. {$ticketsCreated} ticket(s) de manutenção preventiva criado(s).");
+        $prefix = $dryRun ? '[DRY-RUN] ' : '';
+        $this->info("✅ Simulação concluída. {$prefix}{$ticketsCreated} ticket(s) de manutenção gerado(s).");
 
-        return Command::SUCCESS;
+        return self::SUCCESS;
     }
 }

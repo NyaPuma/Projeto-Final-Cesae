@@ -2,6 +2,8 @@
 
 namespace Tests\Unit\Actions;
 
+
+use App\Enums\UserRoleEnum;
 use App\Actions\ApproveBudgetAction;
 use App\DTOs\BudgetDecisionData;
 use App\Enums\BudgetStatusEnum;
@@ -41,9 +43,9 @@ class ApproveBudgetActionTest extends DatabaseTestCase
 
     private function seedUserProfiles(): void
     {
-        UserProfile::firstOrCreate(['name' => User::ROLE_ADMIN]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::Admin->value]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
     }
 
     private function seedTicketStatuses(): void
@@ -53,15 +55,15 @@ class ApproveBudgetActionTest extends DatabaseTestCase
         TicketStatus::firstOrCreate(['name' => 'em curso'], ['description' => 'Em Curso']);
         TicketStatus::firstOrCreate(['name' => 'fechada'], ['description' => 'Fechada']);
         TicketStatus::firstOrCreate(['name' => 'cancelada'], ['description' => 'Cancelada']);
-        TicketStatus::firstOrCreate(['name' => 'pendente orçamento'], ['description' => 'Pendente Orçamento']);
+        TicketStatus::firstOrCreate(['name' => 'pendente orÃ§amento'], ['description' => 'Pendente OrÃ§amento']);
         TicketStatus::firstOrCreate(['name' => 'recusada'], ['description' => 'Recusada']);
     }
 
     #[Test]
     public function it_approves_budget_successfully(): void
     {
-        $admin = User::factory()->create(['profile_id' => UserProfile::where('name', User::ROLE_ADMIN)->first()->id]);
-        $statusId = TicketStatus::where('name', 'pendente orçamento')->first()->id;
+        $admin = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::Admin->value)->first()->id]);
+        $statusId = TicketStatus::where('name', 'pendente orÃ§amento')->first()->id;
         $ticket = Ticket::factory()->create([
             'budget_requested' => true,
             'budget_status' => BudgetStatusEnum::Pending->value,
@@ -81,8 +83,8 @@ class ApproveBudgetActionTest extends DatabaseTestCase
     #[Test]
     public function it_rejects_budget_with_feedback(): void
     {
-        $admin = User::factory()->create(['profile_id' => UserProfile::where('name', User::ROLE_ADMIN)->first()->id]);
-        $statusId = TicketStatus::where('name', 'pendente orçamento')->first()->id;
+        $admin = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::Admin->value)->first()->id]);
+        $statusId = TicketStatus::where('name', 'pendente orÃ§amento')->first()->id;
         $ticket = Ticket::factory()->create([
             'budget_requested' => true,
             'budget_status' => BudgetStatusEnum::Pending->value,
@@ -90,19 +92,19 @@ class ApproveBudgetActionTest extends DatabaseTestCase
             'status_id' => $statusId,
         ]);
 
-        $data = new BudgetDecisionData(decision: 'reject', feedback: 'Orçamento demasiado alto');
+        $data = new BudgetDecisionData(decision: 'reject', feedback: 'OrÃ§amento demasiado alto');
 
         $result = $this->action->execute($ticket, $admin, $data);
 
         $this->assertEquals(BudgetStatusEnum::Rejected->value, $result->budget_status);
-        $this->assertEquals('Orçamento demasiado alto', $result->budget_feedback);
+        $this->assertEquals('OrÃ§amento demasiado alto', $result->budget_feedback);
         $this->assertEquals($admin->id, $result->budget_approved_by);
     }
 
     #[Test]
     public function it_fails_when_budget_not_requested(): void
     {
-        $admin = User::factory()->create(['profile_id' => UserProfile::where('name', User::ROLE_ADMIN)->first()->id]);
+        $admin = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::Admin->value)->first()->id]);
         $statusId = TicketStatus::where('name', 'aberta')->first()->id;
         $ticket = Ticket::factory()->create([
             'budget_requested' => false,
@@ -123,7 +125,7 @@ class ApproveBudgetActionTest extends DatabaseTestCase
     #[Test]
     public function it_fails_when_budget_status_not_pending(): void
     {
-        $admin = User::factory()->create(['profile_id' => UserProfile::where('name', User::ROLE_ADMIN)->first()->id]);
+        $admin = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::Admin->value)->first()->id]);
         $statusId = TicketStatus::where('name', 'aberta')->first()->id;
         $ticket = Ticket::factory()->create([
             'budget_requested' => true,

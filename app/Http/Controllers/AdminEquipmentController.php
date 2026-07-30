@@ -8,12 +8,13 @@ use App\DTOs\StoreEquipmentData;
 use App\DTOs\UpdateEquipmentData;
 use App\Http\Requests\StoreEquipmentRequest;
 use App\Http\Requests\UpdateEquipmentRequest;
-use App\Models\User;
+use App\Http\Resources\EquipmentResource;
+use App\Models\Equipment;
 use App\Repositories\Contracts\EquipmentRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class AdminEquipmentController extends Controller
+final class AdminEquipmentController extends Controller
 {
     public function __construct(
         private readonly EquipmentRepositoryInterface $equipmentRepository,
@@ -21,53 +22,75 @@ class AdminEquipmentController extends Controller
         private readonly UpdateEquipmentAction $updateEquipmentAction,
     ) {}
 
+    /**
+     * Lista todos os equipamentos registados no sistema.
+     */
     public function index(Request $request): JsonResponse
     {
-        $user = $this->authenticatedUser($request);
-        $this->requireRole($user, [User::ROLE_ADMIN]);
+        // 1. Autorização via Policy
+        $this->authorize('viewAny', Equipment::class);
 
-        return response()->json(['equipments' => $this->equipmentRepository->getAll()]);
+        // 2. Procura de equipamentos (suporta paginação se implementada no repositório)
+        $equipments = $this->equipmentRepository->getAll();
+
+        return response()->json([
+            'equipments' => EquipmentResource::collection($equipments),
+        ]);
     }
 
+    /**
+     * Cria um novo equipamento no sistema.
+     */
     public function store(StoreEquipmentRequest $request): JsonResponse
     {
-        $user = $this->authenticatedUser($request);
-        $this->requireRole($user, [User::ROLE_ADMIN]);
+        // 1. Autorização via Policy
+        $this->authorize('create', Equipment::class);
 
+        // 2. Executa DTO e Action para criar o equipamento
         $data = StoreEquipmentData::fromRequest($request->validated());
         $equipment = $this->createEquipmentAction->execute($data);
 
-        return response()->json(['message' => 'Equipamento criado', 'equipment' => $equipment], 201);
+        $equipment->loadMissing('room');
+
+        return response()->json([
+            'message' => __('Equipamento criado com sucesso.'),
+            'equipment' => new EquipmentResource($equipment),
+        ], 201);
     }
 
-    public function update(UpdateEquipmentRequest $request, int $id): JsonResponse
+    /**
+     * Atualiza os dados de um equipamento existente.
+     */
+    public function update(UpdateEquipmentRequest $request, Equipment $equipment): JsonResponse
     {
-        $user = $this->authenticatedUser($request);
-        $this->requireRole($user, [User::ROLE_ADMIN]);
+        // 1. Autorização via Policy
+        $this->authorize('update', $equipment);
 
-        $equipment = $this->equipmentRepository->findById($id);
-        if (! $equipment) {
-            return response()->json(['message' => 'Equipamento não encontrado'], 404);
-        }
-
+        // 2. Executa DTO e Action para atualizar
         $data = UpdateEquipmentData::fromRequest($request->validated());
-        $equipment = $this->updateEquipmentAction->execute($equipment, $data);
+        $updatedEquipment = $this->updateEquipmentAction->execute($equipment, $data);
 
-        return response()->json(['message' => 'Equipamento atualizado', 'equipment' => $equipment]);
+        $updatedEquipment->loadMissing('room');
+
+        return response()->json([
+            'message' => __('Equipamento atualizado com sucesso.'),
+            'equipment' => new EquipmentResource($updatedEquipment),
+        ]);
     }
 
-    public function destroy(Request $request, int $id): JsonResponse
+    /**
+     * Elimina um equipamento do sistema.
+     */
+    public function destroy(Request $request, Equipment $equipment): JsonResponse
     {
-        $user = $this->authenticatedUser($request);
-        $this->requireRole($user, [User::ROLE_ADMIN]);
+        // 1. Autorização via Policy
+        $this->authorize('delete', $equipment);
 
-        $equipment = $this->equipmentRepository->findById($id);
-        if (! $equipment) {
-            return response()->json(['message' => 'Equipamento não encontrado'], 404);
-        }
-
+        // 2. Executa a remoção via Repositório
         $this->equipmentRepository->delete($equipment);
 
-        return response()->json(['message' => 'Equipamento eliminado']);
+        return response()->json([
+            'message' => __('Equipamento eliminado com sucesso.'),
+        ]);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Tests\Unit\Actions;
 
+
+use App\Enums\UserRoleEnum;
 use App\Actions\CreatePreventiveTicketAction;
 use App\Enums\TicketPriorityEnum;
 use App\Models\Ticket;
@@ -31,9 +33,9 @@ class CreatePreventiveTicketActionTest extends DatabaseTestCase
 
     private function seedUserProfiles(): void
     {
-        UserProfile::firstOrCreate(['name' => User::ROLE_ADMIN]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::Admin->value]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
     }
 
     private function seedTicketStatuses(): void
@@ -43,15 +45,15 @@ class CreatePreventiveTicketActionTest extends DatabaseTestCase
         TicketStatus::firstOrCreate(['name' => 'em curso'], ['description' => 'Em Curso']);
         TicketStatus::firstOrCreate(['name' => 'fechada'], ['description' => 'Fechada']);
         TicketStatus::firstOrCreate(['name' => 'cancelada'], ['description' => 'Cancelada']);
-        TicketStatus::firstOrCreate(['name' => 'pendente orçamento'], ['description' => 'Pendente Orçamento']);
+        TicketStatus::firstOrCreate(['name' => 'pendente orÃ§amento'], ['description' => 'Pendente OrÃ§amento']);
         TicketStatus::firstOrCreate(['name' => 'recusada'], ['description' => 'Recusada']);
     }
 
     #[Test]
     public function it_creates_preventive_ticket_successfully(): void
     {
-        $admin = User::factory()->create(['profile_id' => UserProfile::where('name', User::ROLE_ADMIN)->first()->id]);
-        $technician = User::factory()->create(['profile_id' => UserProfile::where('name', User::ROLE_TECHNICIAN)->first()->id]);
+        $admin = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::Admin->value)->first()->id]);
+        $technician = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::Technician->value)->first()->id]);
 
         $result = $this->action->execute(
             $admin,
@@ -74,7 +76,7 @@ class CreatePreventiveTicketActionTest extends DatabaseTestCase
     #[Test]
     public function it_creates_preventive_ticket_without_technician(): void
     {
-        $admin = User::factory()->create(['profile_id' => UserProfile::where('name', User::ROLE_ADMIN)->first()->id]);
+        $admin = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::Admin->value)->first()->id]);
 
         $result = $this->action->execute(
             $admin,
@@ -86,14 +88,14 @@ class CreatePreventiveTicketActionTest extends DatabaseTestCase
 
         $this->assertInstanceOf(Ticket::class, $result);
         $this->assertNull($result->assigned_to);
-        $this->assertEquals('Manutenção preventiva agendada.', $result->description);
+        $this->assertEquals('ManutenÃ§Ã£o preventiva agendada.', $result->description);
     }
 
     #[Test]
     public function it_ignores_non_technician_assignment(): void
     {
-        $admin = User::factory()->create(['profile_id' => UserProfile::where('name', User::ROLE_ADMIN)->first()->id]);
-        $regularUser = User::factory()->create(['profile_id' => UserProfile::where('name', User::ROLE_USER)->first()->id]);
+        $admin = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::Admin->value)->first()->id]);
+        $regularUser = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->first()->id]);
 
         $result = $this->action->execute(
             $admin,
@@ -109,7 +111,7 @@ class CreatePreventiveTicketActionTest extends DatabaseTestCase
     #[Test]
     public function it_sets_default_description_when_null(): void
     {
-        $admin = User::factory()->create(['profile_id' => UserProfile::where('name', User::ROLE_ADMIN)->first()->id]);
+        $admin = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::Admin->value)->first()->id]);
 
         $result = $this->action->execute(
             $admin,
@@ -119,13 +121,13 @@ class CreatePreventiveTicketActionTest extends DatabaseTestCase
             now()->addDays(7)->toDateTimeString()
         );
 
-        $this->assertEquals('Manutenção preventiva agendada.', $result->description);
+        $this->assertEquals('ManutenÃ§Ã£o preventiva agendada.', $result->description);
     }
 
     #[Test]
     public function it_sets_medium_priority_by_default(): void
     {
-        $admin = User::factory()->create(['profile_id' => UserProfile::where('name', User::ROLE_ADMIN)->first()->id]);
+        $admin = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::Admin->value)->first()->id]);
 
         $result = $this->action->execute(
             $admin,

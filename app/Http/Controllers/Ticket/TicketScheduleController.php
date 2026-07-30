@@ -4,26 +4,34 @@ namespace App\Http\Controllers\Ticket;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ScheduleTicketRequest;
+use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
 use Illuminate\Http\JsonResponse;
 
 final class TicketScheduleController extends Controller
 {
-    public function __invoke(ScheduleTicketRequest $request, int $id): JsonResponse
+    /**
+     * Agenda a janela de intervenção para um determinado ticket.
+     */
+    public function __invoke(ScheduleTicketRequest $request, Ticket $ticket): JsonResponse
     {
-        $user = $this->authenticatedUser($request);
-        $ticket = Ticket::findOrFail($id);
+        // 1. Autorização centralizada via Policy do Laravel
+        $this->authorize('schedule', $ticket);
 
-        if ($user->isCommon() && (int) $ticket->user_id !== (int) $user->id) {
-            return response()->json(['message' => 'Acesso negado'], 403);
-        }
-
+        // 2. Atualiza as datas de agendamento usando instâncias de Data/Hora
         $ticket->update([
-            'scheduled_at' => $request->validated('scheduled_at'),
-            'scheduled_end' => $request->validated('scheduled_end'),
+            'scheduled_at' => $request->date('scheduled_at'),
+            'scheduled_end' => $request->date('scheduled_end'),
             'scheduled' => true,
         ]);
 
-        return response()->json(['ticket' => $ticket]);
+        // 3. Carrega as relações necessárias para a resposta
+        $ticket->loadMissing(['equipment', 'room', 'technician', 'status']);
+
+        // 4. Resposta JSON padronizada via API Resource
+        return response()->json([
+            'message' => __('Intervenção agendada com sucesso.'),
+            'ticket' => new TicketResource($ticket),
+        ]);
     }
 }

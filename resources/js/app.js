@@ -2,6 +2,7 @@ import './api-client';
 import './analytics';
 import { initTheme } from './core/theme';
 import { initSidebar } from './core/sidebar';
+import { renderAuthBox } from './core/auth-box';
 import { initLogin as initAuthLogin } from './auth/login';
 import { bootPageModules } from './bootstrap/page-registry';
 import { initImagePreview } from './components/upload/image-preview';
@@ -55,6 +56,7 @@ function initAnimations(root = document) {
 function initApp() {
     initTheme();
     initSidebar();
+    renderAuthBox();
     initAuthLogin();
     initDropdowns();
     initTooltips(document);

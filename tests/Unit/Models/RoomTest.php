@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+
+use App\Enums\UserRoleEnum;
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
 use App\Models\Equipment;
@@ -29,7 +31,7 @@ class RoomTest extends TestCase
         TicketType::firstOrCreate(['name' => 'avaria', 'description' => 'Avaria']);
         $typeId = TicketType::where('name', 'avaria')->first()->id;
         TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Open->value, 'description' => 'Aberto', 'type_id' => $typeId]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
     }
 
     #[Test]
@@ -37,13 +39,13 @@ class RoomTest extends TestCase
     {
         $room = Room::create([
             'name' => 'Sala Principal',
-            'location' => 'Piso 2, Edifício A',
+            'location' => 'Piso 2, EdifÃ­cio A',
             'active' => true,
         ]);
 
         $this->assertNotNull($room->id);
         $this->assertEquals('Sala Principal', $room->name);
-        $this->assertEquals('Piso 2, Edifício A', $room->location);
+        $this->assertEquals('Piso 2, EdifÃ­cio A', $room->location);
         $this->assertTrue($room->active);
     }
 

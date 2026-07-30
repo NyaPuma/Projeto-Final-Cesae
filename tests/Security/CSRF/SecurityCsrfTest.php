@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,14 +19,14 @@ class SecurityCsrfTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::create(['name' => User::ROLE_USER]);
-        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::create(['name' => User::ROLE_ADMIN]);
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
+        UserProfile::create(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::create(['name' => UserRoleEnum::Admin->value]);
     }
 
     public function test_login_does_not_require_csrf_token(): void
     {
-        $profileId = UserProfile::where('name', User::ROLE_USER)->value('id');
+        $profileId = UserProfile::where('name', UserRoleEnum::User->value)->value('id');
         User::factory()->create([
             'email' => 'nocsrf@example.com',
             'password' => Hash::make('Password123!'),
@@ -44,7 +46,7 @@ class SecurityCsrfTest extends TestCase
 
     public function test_api_routes_do_not_require_csrf_token(): void
     {
-        $profileId = UserProfile::where('name', User::ROLE_USER)->value('id');
+        $profileId = UserProfile::where('name', UserRoleEnum::User->value)->value('id');
         $user = User::factory()->create([
             'profile_id' => $profileId,
             'api_token' => Str::random(60),

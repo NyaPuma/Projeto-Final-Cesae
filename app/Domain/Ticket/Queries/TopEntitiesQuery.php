@@ -16,41 +16,50 @@ final readonly class TopEntitiesQuery
     {
         return (clone $this->baseQuery)
             ->join('equipments', 'tickets.equipment_id', '=', 'equipments.id')
-            ->select('equipments.name', DB::raw('COUNT(*) as total'))
+            ->select('equipments.id', 'equipments.name', DB::raw('COUNT(*) as total'))
             ->whereNotNull('tickets.equipment_id')
-            ->groupBy('equipments.name')
+            ->groupBy('equipments.id', 'equipments.name')
             ->orderByDesc('total')
             ->limit(5)
-            ->pluck('total', 'name')
-            ->map(fn (int|string $total, string $name) => ['name' => $name, 'total' => (int) $total, 'subtitle' => 'intervenções'])
-            ->values();
+            ->get()
+            ->map(fn ($row) => [
+                'name' => $row->name,
+                'total' => (int) $row->total,
+                'subtitle' => 'intervenções',
+            ]);
     }
 
     public function getTopRooms(): Collection
     {
         return (clone $this->baseQuery)
             ->join('rooms', 'tickets.room_id', '=', 'rooms.id')
-            ->select('rooms.name', DB::raw('COUNT(*) as total'))
+            ->select('rooms.id', 'rooms.name', DB::raw('COUNT(*) as total'))
             ->whereNotNull('tickets.room_id')
-            ->groupBy('rooms.name')
+            ->groupBy('rooms.id', 'rooms.name')
             ->orderByDesc('total')
             ->limit(5)
-            ->pluck('total', 'name')
-            ->map(fn (int|string $total, string $name) => ['name' => $name, 'total' => (int) $total, 'subtitle' => 'tickets'])
-            ->values();
+            ->get()
+            ->map(fn ($row) => [
+                'name' => $row->name,
+                'total' => (int) $row->total,
+                'subtitle' => 'tickets',
+            ]);
     }
 
     public function getTopTechnicians(): Collection
     {
         return (clone $this->baseQuery)
             ->join('users', 'tickets.assigned_to', '=', 'users.id')
-            ->select('users.name', DB::raw('COUNT(*) as total'))
+            ->select('users.id', 'users.name', DB::raw('COUNT(*) as total'))
             ->whereNotNull('tickets.assigned_to')
-            ->groupBy('users.name')
+            ->groupBy('users.id', 'users.name')
             ->orderByDesc('total')
             ->limit(5)
-            ->pluck('total', 'name')
-            ->map(fn (int|string $total, string $name) => ['name' => $name, 'total' => (int) $total, 'subtitle' => 'ações'])
-            ->values();
+            ->get()
+            ->map(fn ($row) => [
+                'name' => $row->name,
+                'total' => (int) $row->total,
+                'subtitle' => 'ações',
+            ]);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+
+use App\Enums\UserRoleEnum;
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
 use App\Models\Equipment;
@@ -29,7 +31,7 @@ class EquipmentTest extends TestCase
         TicketType::firstOrCreate(['name' => 'avaria', 'description' => 'Avaria']);
         $typeId = TicketType::where('name', 'avaria')->first()->id;
         TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Open->value, 'description' => 'Aberto', 'type_id' => $typeId]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
     }
 
     #[Test]
@@ -55,7 +57,7 @@ class EquipmentTest extends TestCase
     #[Test]
     public function it_belongs_to_a_category(): void
     {
-        $category = EquipmentCategory::factory()->create(['name' => 'Elétrica']);
+        $category = EquipmentCategory::factory()->create(['name' => 'ElÃ©trica']);
         $room = Room::factory()->create();
 
         $equipment = Equipment::factory()->create([
@@ -64,7 +66,7 @@ class EquipmentTest extends TestCase
         ]);
 
         $this->assertInstanceOf(EquipmentCategory::class, $equipment->category);
-        $this->assertEquals('Elétrica', $equipment->category->name);
+        $this->assertEquals('ElÃ©trica', $equipment->category->name);
     }
 
     #[Test]

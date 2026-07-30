@@ -1,36 +1,41 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Listeners;
 
 use App\Events\TicketCreatedBroadcast;
 use App\Events\TicketStatusUpdatedBroadcast;
-use App\Models\TicketStatus;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
+use Throwable;
 
-class BroadcastTicketUpdate
+final class BroadcastTicketUpdate implements ShouldQueue
 {
+    use InteractsWithQueue;
+
+    /**
+     * O número de vezes que o listener pode ser tentado na fila.
+     */
+    public int $tries = 3;
+
     public function handle(TicketCreatedBroadcast $event): void
     {
-        try {
-            $ticket = $event->ticket;
+        // A notificação ao técnico atribuído é agora feita diretamente
+        // pelo TicketCreatedBroadcast::broadcastOn().
+        // Este listener mantém-se para garantir compatibilidade com o
+        // EventServiceProvider e para futuras extensões.
+    }
 
-            if (! $ticket->assigned_to) {
-                return;
-            }
-
-            $status = TicketStatus::find($ticket->status_id);
-            $statusName = $status->name ?? 'unknown';
-
-            broadcast(new TicketStatusUpdatedBroadcast(
-                $ticket,
-                $statusName,
-                $statusName,
-            ));
-        } catch (\Throwable $e) {
-            Log::warning('Failed to broadcast ticket creation to assigned technician', [
-                'ticket_id' => $event->ticket->id,
-                'error' => $e->getMessage(),
-            ]);
-        }
+    /**
+     * Trata o insucesso do Listener caso o serviço de WebSockets/Broadcast esteja indisponível.
+     */
+    public function failed(TicketCreatedBroadcast $event, Throwable $exception): void
+    {
+        Log::warning('Failed to broadcast ticket creation to assigned technician', [
+            'ticket_id' => $event->ticket->id,
+            'error' => $exception->getMessage(),
+        ]);
     }
 }

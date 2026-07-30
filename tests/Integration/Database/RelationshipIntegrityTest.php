@@ -2,6 +2,8 @@
 
 namespace Tests\Integration\Database;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\Equipment;
 use App\Models\EquipmentCategory;
 use App\Models\Room;
@@ -65,7 +67,7 @@ class RelationshipIntegrityTest extends FeatureTestCase
         $response = $this->postJson('/tickets', [
             'title' => 'Status Rel Test',
             'description' => 'Test',
-            'priority' => 'média',
+            'priority' => 'mÃ©dia',
         ]);
         $ticketId = $response->json('ticket.id');
 
@@ -116,7 +118,7 @@ class RelationshipIntegrityTest extends FeatureTestCase
         $admin->load('profile');
 
         $this->assertNotNull($admin->profile);
-        $this->assertEquals(User::ROLE_ADMIN, $admin->profile->name);
+        $this->assertEquals(UserRoleEnum::Admin->value, $admin->profile->name);
     }
 
     #[Test]

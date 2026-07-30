@@ -2,6 +2,8 @@
 
 namespace Tests\Database\Constraints;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\Equipment;
 use App\Models\EquipmentCategory;
 use App\Models\Room;
@@ -29,13 +31,13 @@ class ModelLifecycleTest extends TestCase
         TicketStatus::firstOrCreate(['name' => 'em curso'], ['description' => 'Em curso']);
         TicketStatus::firstOrCreate(['name' => 'fechada'], ['description' => 'Fechada']);
         TicketStatus::firstOrCreate(['name' => 'cancelada'], ['description' => 'Cancelada']);
-        TicketStatus::firstOrCreate(['name' => 'pendente orçamento'], ['description' => 'Pendente']);
+        TicketStatus::firstOrCreate(['name' => 'pendente orÃ§amento'], ['description' => 'Pendente']);
         TicketStatus::firstOrCreate(['name' => 'recusada'], ['description' => 'Recusada']);
     }
 
     protected function createAdmin(): User
     {
-        $profile = UserProfile::firstOrCreate(['name' => User::ROLE_ADMIN]);
+        $profile = UserProfile::firstOrCreate(['name' => UserRoleEnum::Admin->value]);
         $token = 'admin-persist-token-'.uniqid();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
@@ -48,7 +50,7 @@ class ModelLifecycleTest extends TestCase
 
     protected function createTechnician(): User
     {
-        $profile = UserProfile::firstOrCreate(['name' => User::ROLE_TECHNICIAN]);
+        $profile = UserProfile::firstOrCreate(['name' => UserRoleEnum::Technician->value]);
         $token = 'tech-persist-token-'.uniqid();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
@@ -61,7 +63,7 @@ class ModelLifecycleTest extends TestCase
 
     protected function createCommonUser(): User
     {
-        $profile = UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
+        $profile = UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
         $token = 'user-persist-token-'.uniqid();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
@@ -87,14 +89,14 @@ class ModelLifecycleTest extends TestCase
         $admin = $this->createAdmin();
         $this->asUserWithToken($admin);
 
-        $profile = UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
+        $profile = UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
 
         $response = $this->postJson('/admin/users', [
             'name' => 'CRUD Test User',
             'email' => 'crud.test.'.uniqid().'@example.invalid',
             'password' => 'Password123!',
             'password_confirmation' => 'Password123!',
-            'role' => User::ROLE_USER,
+            'role' => UserRoleEnum::User->value,
             'profile_id' => $profile->id,
         ]);
         $response->assertStatus(201);
@@ -175,7 +177,7 @@ class ModelLifecycleTest extends TestCase
         $response = $this->postJson('/tickets', [
             'title' => 'Persistence Test Ticket',
             'description' => 'Full lifecycle test',
-            'priority' => 'média',
+            'priority' => 'mÃ©dia',
         ]);
         $response->assertStatus(201);
         $ticketId = $response->json('ticket.id');
@@ -267,13 +269,13 @@ class ModelLifecycleTest extends TestCase
         $admin = $this->createAdmin();
         $this->asUserWithToken($admin);
 
-        $profile = UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
+        $profile = UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
         $response = $this->postJson('/admin/users', [
             'name' => 'Mass Test',
             'email' => 'mass.'.uniqid().'@example.invalid',
             'password' => 'Password123!',
             'password_confirmation' => 'Password123!',
-            'role' => User::ROLE_USER,
+            'role' => UserRoleEnum::User->value,
             'profile_id' => $profile->id,
         ]);
         $response->assertStatus(201);
@@ -293,7 +295,7 @@ class ModelLifecycleTest extends TestCase
 
         $this->expectException(QueryException::class);
 
-        $profile = UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
+        $profile = UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
         $existingUser = User::first();
         User::create([
             'name' => 'Dup Email',

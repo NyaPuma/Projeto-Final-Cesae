@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+
+use App\Enums\UserRoleEnum;
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
@@ -22,7 +24,7 @@ class TicketStatusTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
     }
 
     #[Test]
@@ -35,7 +37,7 @@ class TicketStatusTest extends TestCase
 
         $status = TicketStatus::create([
             'name' => TicketStatusEnum::Open->value,
-            'description' => 'Ticket aberto aguardando atribuição',
+            'description' => 'Ticket aberto aguardando atribuiÃ§Ã£o',
             'type_id' => $type->id,
         ]);
 
@@ -49,12 +51,12 @@ class TicketStatusTest extends TestCase
     {
         $type = TicketType::create([
             'name' => 'preventiva',
-            'description' => 'Manutenção Preventiva',
+            'description' => 'ManutenÃ§Ã£o Preventiva',
         ]);
 
         $status = TicketStatus::create([
             'name' => TicketStatusEnum::InProgress->value,
-            'description' => 'Em execução',
+            'description' => 'Em execuÃ§Ã£o',
             'type_id' => $type->id,
         ]);
 

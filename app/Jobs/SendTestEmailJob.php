@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs;
 
 use App\Mail\TestMail;
@@ -10,13 +12,31 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Throwable;
 
-class SendTestEmailJob implements ShouldQueue
+final class SendTestEmailJob implements ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;
     use Queueable;
     use SerializesModels;
+
+    /**
+     * Número máximo de tentativas de envio.
+     */
+    public int $tries = 3;
+
+    /**
+     * Intervalo de espera (em segundos) entre as tentativas.
+     *
+     * @var array<int, int>
+     */
+    public array $backoff = [5, 15, 30];
+
+    /**
+     * Tempo máximo de execução do Job em segundos.
+     */
+    public int $timeout = 30;
 
     public function __construct(
         public readonly string $email,
@@ -25,8 +45,27 @@ class SendTestEmailJob implements ShouldQueue
 
     public function handle(): void
     {
-        $mailer = config('services.custom.notification.mailer');
-        Mail::mailer($mailer)->to($this->email)->send(new TestMail($this->name));
-        Log::info('Test email dispatched via queue', ['email' => $this->email]);
+        /** @var string|null $mailer */
+        $mailerConfig = config('services.custom.notification.mailer');
+
+        $mailClient = $mailerConfig ? Mail::mailer($mailerConfig) : Mail::mailer();
+
+        $mailClient->to($this->email)->send(new TestMail($this->name));
+
+        Log::info('Test email sent successfully via queue', [
+            'email' => $this->email,
+            'mailer' => $mailerConfig ?? config('mail.default'),
+        ]);
+    }
+
+    /**
+     * Regista o insucesso no log caso o envio falhe em todas as tentativas.
+     */
+    public function failed(?Throwable $exception): void
+    {
+        Log::error('Failed to send test email via queue', [
+            'email' => $this->email,
+            'exception' => $exception?->getMessage(),
+        ]);
     }
 }

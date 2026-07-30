@@ -6,13 +6,26 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class SecurityHeaders
+final class SecurityHeaders
 {
+    /**
+     * Handle an incoming request and attach standard security headers to the response.
+     */
     public function handle(Request $request, Closure $next): Response
     {
         /** @var Response $response */
         $response = $next($request);
 
+        $this->addSecurityHeaders($response, $request);
+
+        return $response;
+    }
+
+    /**
+     * Adiciona os cabeçalhos de segurança HTTP recomendados à resposta.
+     */
+    private function addSecurityHeaders(Response $response, Request $request): void
+    {
         $response->headers->set('X-Frame-Options', 'DENY');
         $response->headers->set('X-Content-Type-Options', 'nosniff');
         $response->headers->set('X-XSS-Protection', '1; mode=block');
@@ -27,10 +40,11 @@ class SecurityHeaders
         if (! $response->headers->has('Content-Security-Policy')) {
             $response->headers->set('Content-Security-Policy', $this->buildCsp($request));
         }
-
-        return $response;
     }
 
+    /**
+     * Constrói a Content Security Policy (CSP) adequada ao ambiente da aplicação.
+     */
     private function buildCsp(Request $request): string
     {
         $isDev = app()->environment('local') || config('app.debug', false);

@@ -2,6 +2,8 @@
 
 namespace Tests\Security\Tokens;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Support\Facades\Hash;
@@ -15,7 +17,7 @@ class TokenSecurityTest extends FeatureTestCase
     public function it_verifies_token_is_60_characters_long(): void
     {
         $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->value('id'),
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->value('id'),
             'api_token' => Str::random(60),
         ]);
 
@@ -25,7 +27,7 @@ class TokenSecurityTest extends FeatureTestCase
     #[Test]
     public function it_verifies_token_is_unique_across_users(): void
     {
-        $profileId = UserProfile::where('name', User::ROLE_USER)->value('id');
+        $profileId = UserProfile::where('name', UserRoleEnum::User->value)->value('id');
         $token1 = Str::random(60);
         $token2 = Str::random(60);
 
@@ -41,7 +43,7 @@ class TokenSecurityTest extends FeatureTestCase
     #[Test]
     public function it_regenerates_token_on_password_change(): void
     {
-        $profileId = UserProfile::where('name', User::ROLE_USER)->value('id');
+        $profileId = UserProfile::where('name', UserRoleEnum::User->value)->value('id');
         $oldToken = Str::random(60);
 
         $user = User::factory()->create([
@@ -65,7 +67,7 @@ class TokenSecurityTest extends FeatureTestCase
     #[Test]
     public function it_allows_api_access_after_password_change(): void
     {
-        $profileId = UserProfile::where('name', User::ROLE_USER)->value('id');
+        $profileId = UserProfile::where('name', UserRoleEnum::User->value)->value('id');
         $oldToken = Str::random(60);
 
         $user = User::factory()->create([

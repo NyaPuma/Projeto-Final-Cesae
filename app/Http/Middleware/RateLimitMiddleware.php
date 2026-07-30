@@ -7,62 +7,64 @@ use Illuminate\Cache\RateLimiter;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class RateLimitMiddleware
+final class RateLimitMiddleware
 {
-    /**
-     * The rate limiter instance.
-     */
-    protected $limiter;
-
     /**
      * Create a new middleware instance.
      */
-    public function __construct(RateLimiter $limiter)
-    {
-        $this->limiter = $limiter;
-    }
+    public function __construct(
+        private readonly RateLimiter $limiter
+    ) {}
 
     /**
      * Handle an incoming request.
-     *
-     * @return mixed
      */
-    public function handle(Request $request, Closure $next, string $maxAttempts = '60', int $decayMinutes = 1)
-    {
-        $maxAttempts = (int) $maxAttempts;
+    public function handle(
+        Request $request,
+        Closure $next,
+        string $maxAttempts = '60',
+        int $decayMinutes = 1
+    ): Response {
+        $maxAttemptsInt = (int) $maxAttempts;
         $key = $this->resolveRequestSignature($request);
 
-        if (! $this->limiter->tooManyAttempts($key, $maxAttempts)) {
-            return $this->addHeaders(
-                $next($request),
-                $maxAttempts,
-                $this->calculateRemainingAttempts($key, $maxAttempts)
-            );
+        if ($this->limiter->tooManyAttempts($key, $maxAttemptsInt)) {
+            return $this->buildResponse($key, $maxAttemptsInt, $decayMinutes);
         }
 
-        return $this->buildResponse($key, $maxAttempts, $decayMinutes);
+        // Regista a tentativa atual no limitador de taxa
+        $this->limiter->hit($key, $decayMinutes * 60);
+
+        $response = $next($request);
+
+        return $this->addHeaders(
+            $response,
+            $maxAttemptsInt,
+            $this->calculateRemainingAttempts($key, $maxAttemptsInt)
+        );
     }
 
     /**
-     * Resolve request signature.
+     * Resolve a assinatura única do pedido para efeitos de limite de taxa.
      */
     protected function resolveRequestSignature(Request $request): string
     {
         // Para endpoints de autenticação, usar IP + email (se fornecido)
-        if ($request->is('login') || $request->is('register')) {
-            $email = $request->input('email', '');
+        if ($request->is('login', 'register')) {
+            $email = (string) $request->input('email', '');
 
-            return sha1($request->ip().'|'.$email);
+            return sha1($request->ip() . '|' . $email);
         }
 
-        // Para outros endpoints, usar IP + user_id (se autenticado) ou apenas IP
-        $userId = $request->user() ? $request->user()->id : 'guest';
+        // Para outros endpoints, usar IP + user_id (se autenticado) ou 'guest'
+        $user = $request->user();
+        $userId = $user ? (string) $user->id : 'guest';
 
-        return sha1($request->ip().'|'.$userId.'|'.$request->path());
+        return sha1($request->ip() . '|' . $userId . '|' . $request->path());
     }
 
     /**
-     * Add the limit header information to the response.
+     * Adiciona os cabeçalhos informativos de limite de taxa à resposta.
      */
     protected function addHeaders(Response $response, int $maxAttempts, int $remainingAttempts): Response
     {
@@ -75,7 +77,7 @@ class RateLimitMiddleware
     }
 
     /**
-     * Calculate the number of remaining attempts.
+     * Calcula o número de tentativas restantes permitidas.
      */
     protected function calculateRemainingAttempts(string $key, int $maxAttempts): int
     {
@@ -83,15 +85,17 @@ class RateLimitMiddleware
     }
 
     /**
-     * Build the response when rate limit is exceeded.
+     * Constrói a resposta a retornar quando o limite de taxa é excedido.
      */
     protected function buildResponse(string $key, int $maxAttempts, int $decayMinutes): Response
     {
         $retryAfter = $this->limiter->availableIn($key);
 
-        return response()->json([
-            'message' => 'Too Many Attempts.',
+        $response = response()->json([
+            'message' => __('Demasiadas tentativas. Tente novamente mais tarde.'),
             'retry_after' => $retryAfter,
         ], 429);
+
+        return $this->addHeaders($response, $maxAttempts, 0);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use App\Models\TicketStatus;
@@ -19,15 +21,15 @@ class TicketAuditLogTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_ADMIN]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_TECHNICIAN]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::Admin->value]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::Technician->value]);
         $this->artisan('db:seed', ['--class' => 'TicketLookupSeeder', '--force' => true]);
     }
 
     public function test_ticket_updates_create_an_audit_entry(): void
     {
-        $userProfile = UserProfile::where('name', User::ROLE_USER)->first();
+        $userProfile = UserProfile::where('name', UserRoleEnum::User->value)->first();
 
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,
@@ -56,8 +58,8 @@ class TicketAuditLogTest extends TestCase
 
     public function test_admin_can_list_ticket_audit_entries(): void
     {
-        $userProfile = UserProfile::where('name', User::ROLE_USER)->firstOrFail();
-        $adminProfile = UserProfile::where('name', User::ROLE_ADMIN)->firstOrFail();
+        $userProfile = UserProfile::where('name', UserRoleEnum::User->value)->firstOrFail();
+        $adminProfile = UserProfile::where('name', UserRoleEnum::Admin->value)->firstOrFail();
 
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,

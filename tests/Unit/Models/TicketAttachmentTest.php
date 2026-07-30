@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+
+use App\Enums\UserRoleEnum;
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
@@ -25,7 +27,7 @@ class TicketAttachmentTest extends TestCase
         TicketType::firstOrCreate(['name' => 'avaria', 'description' => 'Avaria']);
         $typeId = TicketType::where('name', 'avaria')->first()->id;
         TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Open->value, 'description' => 'Aberto', 'type_id' => $typeId]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
     }
 
     #[Test]

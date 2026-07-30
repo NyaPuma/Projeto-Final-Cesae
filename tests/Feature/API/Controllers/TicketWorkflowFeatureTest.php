@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
@@ -21,9 +23,9 @@ class TicketWorkflowFeatureTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::create(['name' => User::ROLE_USER]);
-        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::create(['name' => User::ROLE_ADMIN]);
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
+        UserProfile::create(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::create(['name' => UserRoleEnum::Admin->value]);
         $this->artisan('db:seed', ['--class' => 'TicketLookupSeeder', '--force' => true]);
 
         // Flush the status cache to ensure fresh data for each test
@@ -57,8 +59,8 @@ class TicketWorkflowFeatureTest extends TestCase
 
     public function test_technician_can_start_ticket(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
-        $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
         $ticket = $this->createTicket($user);
 
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
@@ -77,7 +79,7 @@ class TicketWorkflowFeatureTest extends TestCase
 
     public function test_non_technician_cannot_start_ticket(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
         $ticket = $this->createTicket($user);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
@@ -88,8 +90,8 @@ class TicketWorkflowFeatureTest extends TestCase
 
     public function test_cannot_start_non_open_ticket(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
-        $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
         $inProgressId = TicketStatus::where('name', TicketStatusEnum::InProgress->value)->value('id');
         $ticket = $this->createTicket($user, ['status_id' => $inProgressId]);
 
@@ -101,8 +103,8 @@ class TicketWorkflowFeatureTest extends TestCase
 
     public function test_technician_can_close_ticket(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
-        $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
         $inProgressId = TicketStatus::where('name', TicketStatusEnum::InProgress->value)->value('id');
         $ticket = $this->createTicket($user, [
             'status_id' => $inProgressId,
@@ -131,8 +133,8 @@ class TicketWorkflowFeatureTest extends TestCase
 
     public function test_cannot_close_non_in_progress_ticket(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
-        $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
         $ticket = $this->createTicket($user);
 
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
@@ -143,8 +145,8 @@ class TicketWorkflowFeatureTest extends TestCase
 
     public function test_technician_can_reopen_closed_ticket(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
-        $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
         $closedId = TicketStatus::where('name', TicketStatusEnum::Closed->value)->value('id');
         $ticket = $this->createTicket($user, [
             'status_id' => $closedId,
@@ -164,8 +166,8 @@ class TicketWorkflowFeatureTest extends TestCase
 
     public function test_cannot_reopen_non_closed_ticket(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
-        $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
         $ticket = $this->createTicket($user);
 
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
@@ -176,7 +178,7 @@ class TicketWorkflowFeatureTest extends TestCase
 
     public function test_user_can_cancel_own_ticket(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
         $ticket = $this->createTicket($user);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
@@ -190,8 +192,8 @@ class TicketWorkflowFeatureTest extends TestCase
 
     public function test_user_cannot_cancel_another_users_ticket(): void
     {
-        $user1 = $this->createUserWithToken(User::ROLE_USER);
-        $user2 = $this->createUserWithToken(User::ROLE_USER);
+        $user1 = $this->createUserWithToken(UserRoleEnum::User->value);
+        $user2 = $this->createUserWithToken(UserRoleEnum::User->value);
         $ticket = $this->createTicket($user1);
 
         $response = $this->withHeader('X-Auth-Token', $user2->api_token)

@@ -17,7 +17,7 @@ window.requireAuthOnLoad = true;
         </x-ui.page-actions.group>
     </x-slot:actions>
     <div class="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm">
-        <form id="editUserForm" class="space-y-6" enctype="multipart/form-data">
+        <form id="editUserForm" class="space-y-6" enctype="multipart/form-data" data-user-mode="edit" data-user-id="{{ $targetUser->id }}" data-profile-id="{{ $targetUser->profile_id }}">
             
             {{-- Secção Visual do Avatar / Fotografia de Perfil --}}
             <div class="flex flex-col sm:flex-row items-center gap-6 p-4 bg-[var(--surface-2)] rounded-2xl border border-[var(--border)]">
@@ -36,7 +36,7 @@ window.requireAuthOnLoad = true;
                         <label for="avatarInput" class="cursor-pointer px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary font-bold text-xs rounded-xl border border-primary/30 transition shadow-sm inline-flex items-center gap-1.5">
                             &#128247; {{ __('Escolher Fotografia') }}
                         </label>
-                        <input type="file" id="avatarInput" name="avatar" accept="image/*" class="hidden" onchange="previewUserAvatar(this)">
+                        <input type="file" id="avatarInput" name="avatar" accept="image/*" class="hidden">
                         <span id="avatarFileName" class="text-xs text-[var(--text-soft)] truncate max-w-[180px]">{{ __('Nenhum ficheiro selecionado') }}</span>
                     </div>
                 </div>
@@ -81,123 +81,4 @@ window.requireAuthOnLoad = true;
 </x-ui.partials.page-card>
 @endsection
 
-@push('scripts')
-<script>
-const targetUserId = "{{ $targetUser->id }}";
-const targetProfileId = "{{ $targetUser->profile_id }}";
 
-// Função de cabeçalhos sem Content-Type fixo (crucial para FormData)
-function authHeader() {
-    const token = localStorage.getItem('api_token');
-    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-    const headers = { 'Accept': 'application/json' };
-    if (token) headers['X-Auth-Token'] = token;
-    if (csrfToken) headers['X-CSRF-TOKEN'] = csrfToken;
-    return headers;
-}
-
-// Pré-visualização instantânea da fotografia
-function previewUserAvatar(input) {
-    if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            document.getElementById('avatarPreview').src = e.target.result;
-        }
-        reader.readAsDataURL(input.files[0]);
-        document.getElementById('avatarFileName').innerText = input.files[0].name;
-    }
-}
-
-async function loadProfiles() {
-    const select = document.getElementById('userProfileId');
-    try {
-        const res = await fetch('/admin/profiles', { headers: authHeader() });
-        if (!res.ok) throw new Error('Não foi possível carregar os perfis.');
-
-        const data = await res.json();
-        const profiles = data.profiles || [];
-
-        select.innerHTML = '<option value="">Selecione um perfil...</option>';
-        select.removeAttribute('disabled');
-
-        profiles.forEach(p => {
-            const opt = document.createElement('option');
-            opt.value = p.id;
-
-            let label = p.name;
-            if (p.name === 'admin') label = 'Administrador';
-            else if (p.name === 'technician') label = 'Técnico de Manutenção';
-            else if (p.name === 'user') label = 'Utilizador Comum';
-
-            opt.textContent = label;
-
-            if (String(p.id) === String(targetProfileId)) {
-                opt.selected = true;
-            }
-
-            select.appendChild(opt);
-        });
-    } catch (e) {
-        select.innerHTML = '<option value="">Erro ao carregar perfis de acesso</option>';
-    }
-}
-
-// Submissão do Formulário usando FormData
-document.getElementById('editUserForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const message = document.getElementById('formMessage');
-    const submitBtn = document.getElementById('submitBtn');
-
-    const formData = new FormData();
-    // Spoofing de método para garantir compatibilidade
-    formData.append('_method', 'PATCH');
-
-    formData.append('name', document.getElementById('userName').value.trim());
-    formData.append('email', document.getElementById('userEmail').value.trim());
-    formData.append('profile_id', document.getElementById('userProfileId').value);
-    formData.append('active', document.getElementById('userActive').checked ? '1' : '0');
-
-    const password = document.getElementById('userPassword').value;
-    if (password) {
-        formData.append('password', password);
-    }
-
-    const avatarInput = document.getElementById('avatarInput');
-    if (avatarInput && avatarInput.files && avatarInput.files[0]) {
-        formData.append('avatar', avatarInput.files[0]);
-    }
-
-    message.textContent = 'A guardar alterações...';
-    message.className = 'min-h-6 text-sm font-medium text-[var(--text-soft)]';
-    submitBtn.disabled = true;
-
-    try {
-        const res = await fetch(`/admin/users/${targetUserId}`, {
-            method: 'POST',
-            headers: authHeader(),
-            body: formData
-        });
-
-        const data = await res.json().catch(() => ({}));
-
-        if (!res.ok) {
-            let errorText = data.message || 'Erro ao editar utilizador.';
-            if (data.errors) {
-                errorText = Object.values(data.errors).flat().join(' ');
-            }
-            throw new Error(errorText);
-        }
-
-        message.textContent = 'Utilizador atualizado com sucesso! A redirecionar...';
-        message.className = 'min-h-6 text-sm font-medium text-emerald-600 dark:text-emerald-400';
-        setTimeout(() => { window.location.href = '/ui/users'; }, 1500);
-    } catch (err) {
-        message.textContent = err.message;
-        message.className = 'min-h-6 text-sm font-medium text-red-600 dark:text-red-400';
-        submitBtn.disabled = false;
-    }
-});
-
-window.addEventListener('load', loadProfiles);
-</script>
-@endpush

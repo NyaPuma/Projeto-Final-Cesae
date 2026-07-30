@@ -2,6 +2,8 @@
 
 namespace Tests\Concerns;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Support\Facades\Hash;
@@ -35,25 +37,25 @@ trait CreatesUsers
 
     protected function createAdmin(array $attributes = []): User
     {
-        return $this->createUserWithToken(User::ROLE_ADMIN, $attributes);
+        return $this->createUserWithToken(UserRoleEnum::Admin->value, $attributes);
     }
 
     protected function createTechnician(array $attributes = []): User
     {
-        return $this->createUserWithToken(User::ROLE_TECHNICIAN, $attributes);
+        return $this->createUserWithToken(UserRoleEnum::Technician->value, $attributes);
     }
 
     protected function createRegularUser(array $attributes = []): User
     {
-        return $this->createUserWithToken(User::ROLE_USER, $attributes);
+        return $this->createUserWithToken(UserRoleEnum::User->value, $attributes);
     }
 
-    protected function createInactiveUser(string $profileName = User::ROLE_USER): User
+    protected function createInactiveUser(string $profileName = UserRoleEnum::User->value): User
     {
         return $this->createUserWithToken($profileName, ['active' => false]);
     }
 
-    protected function createUsers(int $count, string $profileName = User::ROLE_USER): array
+    protected function createUsers(int $count, string $profileName = UserRoleEnum::User->value): array
     {
         $users = [];
         for ($i = 0; $i < $count; $i++) {
@@ -65,8 +67,8 @@ trait CreatesUsers
 
     protected function ensureUserProfilesExist(): void
     {
-        UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_ADMIN]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::Admin->value]);
     }
 }

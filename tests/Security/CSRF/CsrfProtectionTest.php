@@ -2,6 +2,8 @@
 
 namespace Tests\Security\CSRF;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Support\Facades\Hash;
@@ -14,7 +16,7 @@ class CsrfProtectionTest extends FeatureTestCase
     #[Test]
     public function it_allows_login_without_csrf_token(): void
     {
-        $profileId = UserProfile::where('name', User::ROLE_USER)->value('id');
+        $profileId = UserProfile::where('name', UserRoleEnum::User->value)->value('id');
         User::factory()->create([
             'email' => 'nocsrf@example.com',
             'password' => Hash::make('Password123!'),
@@ -35,7 +37,7 @@ class CsrfProtectionTest extends FeatureTestCase
     #[Test]
     public function it_skips_csrf_for_api_routes(): void
     {
-        $profileId = UserProfile::where('name', User::ROLE_USER)->value('id');
+        $profileId = UserProfile::where('name', UserRoleEnum::User->value)->value('id');
         $user = User::factory()->create([
             'profile_id' => $profileId,
             'api_token' => Str::random(60),

@@ -4,16 +4,19 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Process;
+use RuntimeException;
+use Throwable;
 
 class DatabaseBackup extends Command
 {
     protected $signature = 'db:backup
-                    {--connection= : The database connection to use}
-                    {--path= : Custom output path}
-                    {--no-compress : Skip gzip compression}
-                    {--clean : Remove backups older than retention period}';
+                    {--connection= : A conexão da base de dados a utilizar}
+                    {--path= : Caminho personalizado para os backups}
+                    {--no-compress : Ignorar compressão gzip}
+                    {--clean : Remover backups mais antigos que o período de retenção}';
 
-    protected $description = 'Create a database backup using native tools (mysqldump/sqlite3)';
+    protected $description = 'Cria um backup da base de dados utilizando ferramentas nativas (mysqldump/sqlite3)';
 
     public function handle(): int
     {
@@ -21,7 +24,7 @@ class DatabaseBackup extends Command
         $config = config("database.connections.{$connection}");
 
         if (! $config) {
-            $this->error("Connection '{$connection}' not found in config/database.php");
+            $this->error("A conexão '{$connection}' não foi encontrada em config/database.php");
 
             return self::FAILURE;
         }
@@ -31,23 +34,23 @@ class DatabaseBackup extends Command
 
         $timestamp = now()->format('Y-m-d_His');
         $filename = "backup_{$timestamp}.sql";
-        $filepath = rtrim($backupDir, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.$filename;
+        $filepath = rtrim($backupDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $filename;
 
-        $this->info("Backing up connection: {$connection}");
+        $this->info("A iniciar backup da conexão: {$connection}");
         $this->info("Driver: {$config['driver']}");
 
         try {
             match ($config['driver']) {
                 'mysql' => $this->backupMysql($config, $filepath),
                 'sqlite' => $this->backupSqlite($config, $filepath),
-                default => throw new \RuntimeException("Unsupported driver: {$config['driver']}"),
+                default => throw new RuntimeException("Driver não suportado: {$config['driver']}"),
             };
 
-            $this->info("Backup created: {$filepath}");
-            $this->info('Size: '.number_format(File::size($filepath)).' bytes');
+            $this->info("Backup criado com sucesso: {$filepath}");
+            $this->info('Tamanho original: ' . number_format(File::size($filepath)) . ' bytes');
 
             if (! $this->option('no-compress') && config('backup.database.compression', true)) {
-                $this->compressBackup($filepath);
+                $filepath = $this->compressBackup($filepath);
             }
 
             if ($this->option('clean')) {
@@ -55,8 +58,13 @@ class DatabaseBackup extends Command
             }
 
             return self::SUCCESS;
-        } catch (\Exception $e) {
-            $this->error("Backup failed: {$e->getMessage()}");
+        } catch (Throwable $e) {
+            $this->error("Falha ao efetuar o backup: {$e->getMessage()}");
+
+            // Remove o ficheiro incompleto se o processo tiver falhado
+            if (File::exists($filepath)) {
+                File::delete($filepath);
+            }
 
             return self::FAILURE;
         }
@@ -76,55 +84,76 @@ class DatabaseBackup extends Command
             ? implode(' ', array_map('escapeshellarg', array_map(fn ($t) => "--ignore-table={$database}.{$t}", $excludeTables)))
             : '';
 
+        // Não passamos a password via CLI para evitar exposição na tabela de processos
         $cmd = sprintf(
-            'mysqldump -h %s -P %d -u %s %s %s %s --routines --triggers --single-transaction --result-file=%s 2>&1',
+            'mysqldump -h %s -P %d -u %s %s %s --routines --triggers --single-transaction --result-file=%s',
             escapeshellarg($host),
             (int) $port,
             escapeshellarg($username),
-            $password ? '-p'.escapeshellarg($password) : '',
             escapeshellarg($database),
             $ignoreArgs,
-            escapeshellarg($filepath),
+            escapeshellarg($filepath)
         );
 
-        exec($cmd, $output, $exitCode);
+        // Injeta a password com segurança via variável de ambiente MYSQL_PWD
+        $result = Process::env(['MYSQL_PWD' => $password])
+            ->timeout(600) // Timeout de 10 minutos para bases de dados maiores
+            ->run($cmd);
 
-        if ($exitCode !== 0) {
-            throw new \RuntimeException('mysqldump failed: '.implode("\n", $output));
+        if ($result->failed()) {
+            throw new RuntimeException('mysqldump falhou: ' . $result->errorOutput());
         }
     }
 
     private function backupSqlite(array $config, string $filepath): void
     {
-        $database = $config['database'] ?? $config['sqlite'] ?? database_path('database.sqlite');
+        $database = $config['database'] ?? database_path('database.sqlite');
 
-        if (! file_exists($database)) {
-            throw new \RuntimeException("SQLite database file not found: {$database}");
+        if (! File::exists($database)) {
+            throw new RuntimeException("Ficheiro da base de dados SQLite não encontrado: {$database}");
         }
 
         $cmd = sprintf(
-            'sqlite3 %s .dump > %s 2>&1',
+            'sqlite3 %s .dump > %s',
             escapeshellarg($database),
-            escapeshellarg($filepath),
+            escapeshellarg($filepath)
         );
 
-        exec($cmd, $output, $exitCode);
+        $result = Process::timeout(600)->run($cmd);
 
-        if ($exitCode !== 0) {
-            throw new \RuntimeException('sqlite3 dump failed: '.implode("\n", $output));
+        if ($result->failed()) {
+            throw new RuntimeException('sqlite3 dump falhou: ' . $result->errorOutput());
         }
     }
 
-    private function compressBackup(string $filepath): void
+    /**
+     * Comprime o ficheiro de backup utilizando a extensão zlib nativa do PHP.
+     */
+    private function compressBackup(string $filepath): string
     {
-        $gzFile = $filepath.'.gz';
+        $gzFile = $filepath . '.gz';
 
-        exec('gzip -c '.escapeshellarg($filepath).' > '.escapeshellarg($gzFile), $output, $exitCode);
+        $fpOut = gzopen($gzFile, 'wb9');
+        $fpIn = fopen($filepath, 'rb');
 
-        if ($exitCode === 0 && file_exists($gzFile)) {
-            unlink($filepath);
-            $this->info("Compressed: {$gzFile} (".number_format(File::size($gzFile)).' bytes)');
+        if (! $fpOut || ! $fpIn) {
+            throw new RuntimeException('Não foi possível inicializar os streams de compressão Gzip.');
         }
+
+        while (! feof($fpIn)) {
+            gzwrite($fpOut, fread($fpIn, 524288)); // Leitura em blocos de 512KB
+        }
+
+        fclose($fpIn);
+        gzclose($fpOut);
+
+        if (File::exists($gzFile)) {
+            File::delete($filepath);
+            $this->info("Comprimido com sucesso: {$gzFile} (" . number_format(File::size($gzFile)) . ' bytes)');
+            return $gzFile;
+        }
+
+        return $filepath;
     }
 
     private function cleanOldBackups(string $backupDir): void
@@ -132,7 +161,7 @@ class DatabaseBackup extends Command
         $retentionDays = config('backup.retention.days', 30);
         $cutoff = now()->subDays($retentionDays);
 
-        $files = File::glob($backupDir.DIRECTORY_SEPARATOR.'backup_*');
+        $files = File::glob($backupDir . DIRECTORY_SEPARATOR . 'backup_*');
         $removed = 0;
 
         foreach ($files as $file) {
@@ -142,6 +171,6 @@ class DatabaseBackup extends Command
             }
         }
 
-        $this->info("Removed {$removed} backups older than {$retentionDays} days");
+        $this->info("Removidos {$removed} backups com idade superior a {$retentionDays} dias.");
     }
 }

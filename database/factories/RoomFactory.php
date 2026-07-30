@@ -16,6 +16,7 @@ class RoomFactory extends Factory
     {
         return [
             'name' => $this->faker->unique()->word().' '.$this->faker->randomNumber(2),
+            'code' => 'RM-' . strtoupper($this->faker->unique()->bothify('??###')),
             'location' => $this->faker->sentence(2),
             'active' => true,
         ];

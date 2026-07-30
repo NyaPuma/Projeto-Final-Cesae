@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\Userprofile as UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -18,15 +20,15 @@ class AuthenticationTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::create(['name' => User::ROLE_USER]);
-        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::create(['name' => User::ROLE_ADMIN]);
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
+        UserProfile::create(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::create(['name' => UserRoleEnum::Admin->value]);
     }
 
     #[Test]
     public function login_with_valid_credentials_returns_token(): void
     {
-        $profile = UserProfile::where('name', User::ROLE_USER)->first();
+        $profile = UserProfile::where('name', UserRoleEnum::User->value)->first();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
             'password' => Hash::make('Password123!'),
@@ -50,7 +52,7 @@ class AuthenticationTest extends TestCase
     #[Test]
     public function login_with_invalid_password_returns_401(): void
     {
-        $profile = UserProfile::where('name', User::ROLE_USER)->first();
+        $profile = UserProfile::where('name', UserRoleEnum::User->value)->first();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
             'password' => Hash::make('Password123!'),
@@ -79,7 +81,7 @@ class AuthenticationTest extends TestCase
     #[Test]
     public function login_with_inactive_user_returns_401(): void
     {
-        $profile = UserProfile::where('name', User::ROLE_USER)->first();
+        $profile = UserProfile::where('name', UserRoleEnum::User->value)->first();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
             'password' => Hash::make('Password123!'),
@@ -106,7 +108,7 @@ class AuthenticationTest extends TestCase
     #[Test]
     public function login_rotates_token_and_invalidates_old(): void
     {
-        $profile = UserProfile::where('name', User::ROLE_USER)->first();
+        $profile = UserProfile::where('name', UserRoleEnum::User->value)->first();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
             'password' => Hash::make('Password123!'),
@@ -133,7 +135,7 @@ class AuthenticationTest extends TestCase
     #[Test]
     public function logout_clears_token_in_database(): void
     {
-        $profile = UserProfile::where('name', User::ROLE_USER)->first();
+        $profile = UserProfile::where('name', UserRoleEnum::User->value)->first();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
             'api_token' => Str::random(60),
@@ -162,7 +164,7 @@ class AuthenticationTest extends TestCase
     #[Test]
     public function login_stores_hashed_token_in_database(): void
     {
-        $profile = UserProfile::where('name', User::ROLE_USER)->first();
+        $profile = UserProfile::where('name', UserRoleEnum::User->value)->first();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
             'password' => Hash::make('Password123!'),
@@ -186,14 +188,14 @@ class AuthenticationTest extends TestCase
     #[Test]
     public function registration_creates_user_with_token(): void
     {
-        $adminProfile = UserProfile::where('name', User::ROLE_ADMIN)->first();
+        $adminProfile = UserProfile::where('name', UserRoleEnum::Admin->value)->first();
         $admin = User::factory()->create([
             'profile_id' => $adminProfile->id,
             'api_token' => Str::random(60),
             'active' => true,
         ]);
 
-        $userProfile = UserProfile::where('name', User::ROLE_USER)->first();
+        $userProfile = UserProfile::where('name', UserRoleEnum::User->value)->first();
 
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)
             ->postJson('/api/admin/users', [
@@ -202,20 +204,20 @@ class AuthenticationTest extends TestCase
                 'password' => 'Password123!',
                 'password_confirmation' => 'Password123!',
                 'profile_id' => $userProfile->id,
-                'role' => User::ROLE_USER,
+                'role' => UserRoleEnum::User->value,
             ]);
 
         $response->assertCreated();
 
         $createdUser = User::where('email', 'newuser@example.com')->first();
         $this->assertNotNull($createdUser);
-        $this->assertEquals(User::ROLE_USER, $createdUser->profile->name);
+        $this->assertEquals(UserRoleEnum::User->value, $createdUser->profile->name);
     }
 
     #[Test]
     public function registration_rejects_duplicate_email(): void
     {
-        $adminProfile = UserProfile::where('name', User::ROLE_ADMIN)->first();
+        $adminProfile = UserProfile::where('name', UserRoleEnum::Admin->value)->first();
         $admin = User::factory()->create([
             'profile_id' => $adminProfile->id,
             'api_token' => Str::random(60),
@@ -226,7 +228,7 @@ class AuthenticationTest extends TestCase
             'email' => 'existing@example.com',
         ]);
 
-        $userProfile = UserProfile::where('name', User::ROLE_USER)->first();
+        $userProfile = UserProfile::where('name', UserRoleEnum::User->value)->first();
 
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)
             ->postJson('/api/admin/users', [
@@ -243,7 +245,7 @@ class AuthenticationTest extends TestCase
     #[Test]
     public function change_password_with_correct_current_password_succeeds(): void
     {
-        $profile = UserProfile::where('name', User::ROLE_USER)->first();
+        $profile = UserProfile::where('name', UserRoleEnum::User->value)->first();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
             'api_token' => Str::random(60),
@@ -263,7 +265,7 @@ class AuthenticationTest extends TestCase
     #[Test]
     public function change_password_with_wrong_current_password_returns_403(): void
     {
-        $profile = UserProfile::where('name', User::ROLE_USER)->first();
+        $profile = UserProfile::where('name', UserRoleEnum::User->value)->first();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
             'api_token' => Str::random(60),

@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use App\Models\TicketStatus;
@@ -21,10 +23,10 @@ class TicketPhotoUploadTest extends TestCase
     {
         parent::setUp();
 
-        // Criar perfis necessários para os testes
-        UserProfile::create(['name' => User::ROLE_USER]);
-        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::create(['name' => User::ROLE_ADMIN]);
+        // Criar perfis necessÃ¡rios para os testes
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
+        UserProfile::create(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::create(['name' => UserRoleEnum::Admin->value]);
 
         // Criar estados de ticket
         $this->artisan('db:seed', ['--class' => 'TicketLookupSeeder', '--force' => true]);
@@ -44,14 +46,14 @@ class TicketPhotoUploadTest extends TestCase
     {
         Storage::fake('public');
 
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $openStatusId = TicketStatus::where('name', TicketStatusEnum::Open->value)->value('id');
 
         $ticket = Ticket::create([
             'user_id' => $user->id,
             'title' => 'Avaria teste',
-            'description' => 'Descrição da avaria',
+            'description' => 'DescriÃ§Ã£o da avaria',
             'status_id' => $openStatusId,
             'opened_at' => now(),
         ]);
@@ -74,13 +76,13 @@ class TicketPhotoUploadTest extends TestCase
     {
         Storage::fake('public');
 
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
         $openStatusId = TicketStatus::where('name', TicketStatusEnum::Open->value)->value('id');
 
         $ticket = Ticket::create([
             'user_id' => $user->id,
             'title' => 'Avaria teste',
-            'description' => 'Descrição da avaria',
+            'description' => 'DescriÃ§Ã£o da avaria',
             'status_id' => $openStatusId,
             'opened_at' => now(),
         ]);
@@ -98,13 +100,13 @@ class TicketPhotoUploadTest extends TestCase
     {
         Storage::fake('public');
 
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
         $openStatusId = TicketStatus::where('name', TicketStatusEnum::Open->value)->value('id');
 
         $ticket = Ticket::create([
             'user_id' => $user->id,
             'title' => 'Avaria teste',
-            'description' => 'Descrição da avaria',
+            'description' => 'DescriÃ§Ã£o da avaria',
             'status_id' => $openStatusId,
             'opened_at' => now(),
         ]);
@@ -122,7 +124,7 @@ class TicketPhotoUploadTest extends TestCase
     {
         Storage::fake('public');
 
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/tickets/999999/photos', [

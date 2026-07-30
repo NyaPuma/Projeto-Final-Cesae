@@ -2,6 +2,8 @@
 
 namespace Tests\Security\Authentication;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Support\Facades\Auth;
@@ -68,7 +70,7 @@ class AuthenticationSecurityTest extends FeatureTestCase
     {
         $this->createProtectedRoute();
 
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $response = $this->withHeader('X-Auth-Token-Wrong', $user->api_token)
             ->getJson('/api/test-security');
@@ -83,7 +85,7 @@ class AuthenticationSecurityTest extends FeatureTestCase
             return response()->json(['user' => auth()->user()]);
         });
 
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->getJson('/api/test-user-json');
@@ -95,7 +97,7 @@ class AuthenticationSecurityTest extends FeatureTestCase
     #[Test]
     public function it_verifies_token_is_60_characters(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $this->assertEquals(60, strlen($user->api_token));
     }
@@ -103,8 +105,8 @@ class AuthenticationSecurityTest extends FeatureTestCase
     #[Test]
     public function it_verifies_token_is_unique_per_user(): void
     {
-        $user1 = $this->createUserWithToken(User::ROLE_USER);
-        $user2 = $this->createUserWithToken(User::ROLE_USER);
+        $user1 = $this->createUserWithToken(UserRoleEnum::User->value);
+        $user2 = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $this->assertNotEquals($user1->api_token, $user2->api_token);
     }
@@ -113,7 +115,7 @@ class AuthenticationSecurityTest extends FeatureTestCase
     public function it_invalidates_previous_token_on_login(): void
     {
         $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->value('id'),
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->value('id'),
             'password' => Hash::make('Password123!'),
             'active' => true,
         ]);
@@ -137,7 +139,7 @@ class AuthenticationSecurityTest extends FeatureTestCase
     #[Test]
     public function it_invalidates_token_on_logout(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/logout');
@@ -208,7 +210,7 @@ class AuthenticationSecurityTest extends FeatureTestCase
             return response()->json(['user_id' => Auth::id()]);
         });
 
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->getJson('/api/test-guard');
@@ -245,7 +247,7 @@ class AuthenticationSecurityTest extends FeatureTestCase
         }
 
         if (! empty($missing)) {
-            \Log::warning('T2 — Missing security headers on /ui/login', ['missing' => $missing]);
+            \Log::warning('T2 â€” Missing security headers on /ui/login', ['missing' => $missing]);
         }
 
         $this->assertEmpty($missing, 'Missing security headers: '.implode(', ', $missing));
@@ -261,7 +263,7 @@ class AuthenticationSecurityTest extends FeatureTestCase
             $status = $response->status();
 
             if ($status === 200) {
-                \Log::critical("T6 — EXPOSED: {$path} accessible (HTTP 200)", [
+                \Log::critical("T6 â€” EXPOSED: {$path} accessible (HTTP 200)", [
                     'content_preview' => substr($response->content(), 0, 200),
                 ]);
             }
@@ -284,7 +286,7 @@ class AuthenticationSecurityTest extends FeatureTestCase
             $status = $response->status();
 
             if ($status === 200) {
-                \Log::critical("T6 — EXPOSED: {$path} accessible (HTTP 200)", []);
+                \Log::critical("T6 â€” EXPOSED: {$path} accessible (HTTP 200)", []);
             }
 
             $this->assertNotEquals(200, $status,

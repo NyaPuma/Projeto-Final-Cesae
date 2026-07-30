@@ -2,82 +2,84 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\View\View;
 
 /**
- * Controller para p├íginas est├íticas e utilit├írias
+ * Controller para páginas estáticas e utilitárias
  * que anteriormente usavam closures nas rotas.
  *
  * Consolidar aqui permite que php artisan route:cache funcione.
  */
-class PageController extends Controller
+final class PageController extends Controller
 {
     /**
-     * P├ígina inicial (landing page).
+     * Página inicial (landing page).
      */
-    public function home()
+    public function home(): View
     {
         return view('main');
     }
 
     /**
-     * Alternar idioma da aplica├º├úo (pt / en).
+     * Alternar idioma da aplicação (pt / en).
      *
-     * Se o utilizador j├í estiver autenticado (token presente no cookie),
-     * redireciona para o painel em vez da p├ígina de login.
+     * Se o utilizador já estiver autenticado (token presente no cookie),
+     * redireciona para o painel em vez da página de login.
      */
-    public function switchLang(Request $request, string $locale)
+    public function switchLang(Request $request, string $locale): RedirectResponse
     {
-        if (! in_array($locale, ['en', 'pt'])) {
+        if (! in_array($locale, ['en', 'pt'], true)) {
             $locale = 'pt';
         }
 
-        // Store the locale in session and set a permanent cookie
+        // Armazena o idioma na sessão e define um cookie permanente
         session(['locale' => $locale]);
         $cookie = cookie()->forever('locale', $locale);
 
-        // Check if user is authenticated by looking for the auth_token cookie
+        // Verifica se o utilizador está autenticado através dos cookies de sessão
         $authToken = $request->cookie('api_token') ?: $request->cookie('auth_token');
 
         if ($authToken) {
-            // User appears to be logged in ÔÇö redirect to dashboard
+            // Utilizador autenticado — redireciona para o dashboard
             return redirect()->route('ui.index')->withCookie($cookie);
         }
 
-        // Not authenticated ÔÇö redirect to login page
+        // Não autenticado — redireciona para a página de login
         return redirect()->route('ui.login')->withCookie($cookie);
     }
 
     /**
-     * Vista de login (formul├írio de autentica├º├úo).
+     * Vista de login (formulário de autenticação).
      */
-    public function login()
+    public function login(): View
     {
         return view('ui.auth');
     }
 
     /**
-     * Rota de teste de e-mail (apenas em ambientes n├úo-produ├º├úo).
+     * Rota de teste de e-mail (apenas em ambientes não-produção).
      */
-    public function testEmail()
+    public function testEmail(): string
     {
         if (app()->environment('production')) {
             abort(404);
         }
 
-        Mail::raw('Teste de comunica├º├úo com Mailtrap!', function ($message) {
+        Mail::raw('Teste de comunicação com Mailtrap!', function ($message) {
             $message->to('teste@exemplo.com')
                 ->subject('Teste do Sistema de Avarias');
         });
 
-        return 'E-mail enviado com sucesso!';
+        return __('E-mail enviado com sucesso!');
     }
 
     /**
-     * Formul├írio de reset de password (API).
+     * Formulário de reset de password (API).
      */
-    public function passwordResetForm(string $token)
+    public function passwordResetForm(string $token): View
     {
         return view('ui.auth-reset', ['token' => $token]);
     }

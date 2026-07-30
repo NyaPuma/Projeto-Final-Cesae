@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
 
     /*
@@ -29,7 +31,7 @@ return [
         'username' => env('SENDGRID_USERNAME', 'apikey'),
         'password' => env('SENDGRID_PASSWORD'),
         'host' => env('SENDGRID_HOST', 'smtp.sendgrid.net'),
-        'port' => env('SENDGRID_PORT', 587),
+        'port' => (int) env('SENDGRID_PORT', 587),
         'scheme' => env('SENDGRID_SCHEME', 'tls'),
     ],
 
@@ -70,7 +72,7 @@ return [
             'max_photo_width' => (int) env('UPLOAD_MAX_PHOTO_WIDTH', 4096),
             'max_photo_height' => (int) env('UPLOAD_MAX_PHOTO_HEIGHT', 4096),
             'allowed_photo_mimes' => array_filter(
-                explode(',', env('UPLOAD_ALLOWED_PHOTO_MIMES', 'jpeg,png,jpg,gif,webp')),
+                explode(',', (string) env('UPLOAD_ALLOWED_PHOTO_MIMES', 'jpeg,png,jpg,gif,webp')),
                 fn ($v) => trim($v) !== ''
             ),
         ],
@@ -78,7 +80,7 @@ return [
             'per_page' => (int) env('PAGINATION_PER_PAGE', 15),
         ],
         'database' => [
-            'slow_query_log' => env('DB_SLOW_QUERY_LOG', false),
+            'slow_query_log' => (bool) env('DB_SLOW_QUERY_LOG', false),
             'slow_query_threshold' => (float) env('DB_SLOW_QUERY_THRESHOLD', 2.0),
         ],
     ],

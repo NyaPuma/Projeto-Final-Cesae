@@ -135,7 +135,17 @@ function handleEditSubmit(e) {
     });
 }
 
+function initAvatarPreview() {
+    const input = document.getElementById('avatarInput');
+    const label = document.getElementById('avatarFileName');
+    if (!input || !label) return;
+    input.addEventListener('change', () => {
+        label.textContent = input.files?.[0]?.name || 'Nenhum ficheiro selecionado';
+    });
+}
+
 function init() {
+    initAvatarPreview();
     const container = document.querySelector('[data-user-mode]');
     if (container) {
         const mode = container.dataset.userMode;

@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+
+use App\Enums\UserRoleEnum;
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
 use App\Models\EquipmentCategory;
@@ -37,9 +39,9 @@ class AIServiceTest extends TestCase
         TicketStatus::firstOrCreate(['name' => TicketStatusEnum::InProgress->value, 'description' => 'Em Curso', 'type_id' => $typeId]);
         TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Closed->value, 'description' => 'Fechado', 'type_id' => $typeId]);
         TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Cancelled->value, 'description' => 'Cancelado', 'type_id' => $typeId]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_ADMIN]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::Admin->value]);
     }
 
     #[Test]
@@ -62,13 +64,13 @@ class AIServiceTest extends TestCase
         $result = $this->aiService->recomendarTecnico($ticket);
 
         $this->assertNull($result['tecnico_id']);
-        $this->assertStringContainsString('não existem técnicos', $result['justificacao']);
+        $this->assertStringContainsString('nÃ£o existem tÃ©cnicos', $result['justificacao']);
     }
 
     #[Test]
     public function it_returns_fallback_when_ai_unavailable(): void
     {
-        $technicianProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
+        $technicianProfile = UserProfile::where('name', UserRoleEnum::Technician->value)->first();
         $technician = User::factory()->create([
             'profile_id' => $technicianProfile->id,
             'active' => true,
@@ -91,13 +93,13 @@ class AIServiceTest extends TestCase
         $result = $this->aiService->recomendarTecnico($ticket);
 
         $this->assertNull($result['tecnico_id']);
-        $this->assertStringContainsString('indisponível', $result['justificacao']);
+        $this->assertStringContainsString('indisponÃ­vel', $result['justificacao']);
     }
 
     #[Test]
     public function it_ignores_inactive_technicians(): void
     {
-        $technicianProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
+        $technicianProfile = UserProfile::where('name', UserRoleEnum::Technician->value)->first();
 
         User::factory()->create([
             'profile_id' => $technicianProfile->id,
@@ -121,13 +123,13 @@ class AIServiceTest extends TestCase
         $result = $this->aiService->recomendarTecnico($ticket);
 
         $this->assertNull($result['tecnico_id']);
-        $this->assertStringContainsString('não existem técnicos', $result['justificacao']);
+        $this->assertStringContainsString('nÃ£o existem tÃ©cnicos', $result['justificacao']);
     }
 
     #[Test]
     public function it_handles_ticket_without_equipment(): void
     {
-        $technicianProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
+        $technicianProfile = UserProfile::where('name', UserRoleEnum::Technician->value)->first();
         User::factory()->create([
             'profile_id' => $technicianProfile->id,
             'active' => true,
@@ -150,7 +152,7 @@ class AIServiceTest extends TestCase
         $result = $this->aiService->recomendarTecnico($ticket);
 
         $this->assertNull($result['tecnico_id']);
-        $this->assertStringContainsString('indisponível', $result['justificacao']);
+        $this->assertStringContainsString('indisponÃ­vel', $result['justificacao']);
     }
 
     #[Test]

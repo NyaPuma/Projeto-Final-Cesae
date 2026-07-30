@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\Userprofile as UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -20,9 +22,9 @@ class SecurityAuthTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::create(['name' => User::ROLE_USER]);
-        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::create(['name' => User::ROLE_ADMIN]);
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
+        UserProfile::create(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::create(['name' => UserRoleEnum::Admin->value]);
     }
 
     private function createProtectedRoute(): void
@@ -81,7 +83,7 @@ class SecurityAuthTest extends TestCase
     {
         $this->createProtectedRoute();
 
-        $profile = UserProfile::where('name', User::ROLE_USER)->first();
+        $profile = UserProfile::where('name', UserRoleEnum::User->value)->first();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
             'api_token' => Str::random(60),
@@ -101,7 +103,7 @@ class SecurityAuthTest extends TestCase
             return response()->json(['user' => auth()->user()]);
         });
 
-        $profile = UserProfile::where('name', User::ROLE_USER)->first();
+        $profile = UserProfile::where('name', UserRoleEnum::User->value)->first();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
             'api_token' => Str::random(60),
@@ -118,7 +120,7 @@ class SecurityAuthTest extends TestCase
     #[Test]
     public function token_is_60_characters(): void
     {
-        $profile = UserProfile::where('name', User::ROLE_USER)->first();
+        $profile = UserProfile::where('name', UserRoleEnum::User->value)->first();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
             'api_token' => Str::random(60),
@@ -131,7 +133,7 @@ class SecurityAuthTest extends TestCase
     #[Test]
     public function token_is_unique_per_user(): void
     {
-        $profile = UserProfile::where('name', User::ROLE_USER)->first();
+        $profile = UserProfile::where('name', UserRoleEnum::User->value)->first();
         $user1 = User::factory()->create([
             'profile_id' => $profile->id,
             'api_token' => Str::random(60),
@@ -149,7 +151,7 @@ class SecurityAuthTest extends TestCase
     #[Test]
     public function login_invalidates_previous_token(): void
     {
-        $profile = UserProfile::where('name', User::ROLE_USER)->first();
+        $profile = UserProfile::where('name', UserRoleEnum::User->value)->first();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
             'password' => Hash::make('Password123!'),
@@ -175,7 +177,7 @@ class SecurityAuthTest extends TestCase
     #[Test]
     public function logout_invalidates_token(): void
     {
-        $profile = UserProfile::where('name', User::ROLE_USER)->first();
+        $profile = UserProfile::where('name', UserRoleEnum::User->value)->first();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
             'api_token' => Str::random(60),
@@ -253,7 +255,7 @@ class SecurityAuthTest extends TestCase
             ]);
         });
 
-        $profile = UserProfile::where('name', User::ROLE_USER)->first();
+        $profile = UserProfile::where('name', UserRoleEnum::User->value)->first();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
             'api_token' => Str::random(60),

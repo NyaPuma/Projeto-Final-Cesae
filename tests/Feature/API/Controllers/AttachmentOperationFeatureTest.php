@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
@@ -23,9 +25,9 @@ class AttachmentOperationFeatureTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::create(['name' => User::ROLE_USER]);
-        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::create(['name' => User::ROLE_ADMIN]);
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
+        UserProfile::create(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::create(['name' => UserRoleEnum::Admin->value]);
         $this->artisan('db:seed', ['--class' => 'TicketLookupSeeder', '--force' => true]);
     }
 
@@ -44,8 +46,8 @@ class AttachmentOperationFeatureTest extends TestCase
     {
         Storage::fake('public');
 
-        $user = $this->createUserWithToken(User::ROLE_USER);
-        $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
         $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
@@ -81,7 +83,7 @@ class AttachmentOperationFeatureTest extends TestCase
     {
         Storage::fake('public');
 
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
         $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
@@ -116,8 +118,8 @@ class AttachmentOperationFeatureTest extends TestCase
     {
         Storage::fake('public');
 
-        $user1 = $this->createUserWithToken(User::ROLE_USER);
-        $user2 = $this->createUserWithToken(User::ROLE_USER);
+        $user1 = $this->createUserWithToken(UserRoleEnum::User->value);
+        $user2 = $this->createUserWithToken(UserRoleEnum::User->value);
         $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
@@ -149,7 +151,7 @@ class AttachmentOperationFeatureTest extends TestCase
 
     public function test_delete_nonexistent_photo_returns_404(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
         $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
@@ -171,7 +173,7 @@ class AttachmentOperationFeatureTest extends TestCase
     {
         Storage::fake('public');
 
-        $user = $this->createUserWithToken(User::ROLE_TECHNICIAN);
+        $user = $this->createUserWithToken(UserRoleEnum::Technician->value);
         $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([

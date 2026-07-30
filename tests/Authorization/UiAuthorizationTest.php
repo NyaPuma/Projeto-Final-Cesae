@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\Userprofile as UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,9 +18,9 @@ class UiAuthorizationTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::create(['name' => User::ROLE_USER]);
-        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::create(['name' => User::ROLE_ADMIN]);
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
+        UserProfile::create(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::create(['name' => UserRoleEnum::Admin->value]);
         $this->artisan('db:seed', ['--class' => 'TicketLookupSeeder', '--force' => true]);
     }
 
@@ -35,7 +37,7 @@ class UiAuthorizationTest extends TestCase
 
     public function test_common_user_is_blocked_from_analytics_and_admin_ui(): void
     {
-        $userProfile = UserProfile::where('name', User::ROLE_USER)->firstOrFail();
+        $userProfile = UserProfile::where('name', UserRoleEnum::User->value)->firstOrFail();
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,
             'api_token' => Str::random(60),
@@ -64,7 +66,7 @@ class UiAuthorizationTest extends TestCase
 
     public function test_technician_can_access_shared_ui_but_not_admin_backoffice(): void
     {
-        $techProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->firstOrFail();
+        $techProfile = UserProfile::where('name', UserRoleEnum::Technician->value)->firstOrFail();
         $technician = User::factory()->create([
             'profile_id' => $techProfile->id,
             'api_token' => Str::random(60),
@@ -109,7 +111,7 @@ class UiAuthorizationTest extends TestCase
 
     public function test_common_user_can_access_general_ui_pages_but_not_shared_backoffice_pages(): void
     {
-        $userProfile = UserProfile::where('name', User::ROLE_USER)->firstOrFail();
+        $userProfile = UserProfile::where('name', UserRoleEnum::User->value)->firstOrFail();
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,
             'api_token' => Str::random(60),

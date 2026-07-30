@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,14 +19,14 @@ class SecurityPasswordPolicyTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::create(['name' => User::ROLE_USER]);
-        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::create(['name' => User::ROLE_ADMIN]);
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
+        UserProfile::create(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::create(['name' => UserRoleEnum::Admin->value]);
     }
 
     public function test_password_minimum_8_characters_required_on_register(): void
     {
-        $adminProfile = UserProfile::where('name', User::ROLE_ADMIN)->firstOrFail();
+        $adminProfile = UserProfile::where('name', UserRoleEnum::Admin->value)->firstOrFail();
         $admin = User::factory()->create([
             'profile_id' => $adminProfile->id,
             'api_token' => Str::random(60),
@@ -44,7 +46,7 @@ class SecurityPasswordPolicyTest extends TestCase
 
     public function test_password_confirmation_mismatch_rejected(): void
     {
-        $adminProfile = UserProfile::where('name', User::ROLE_ADMIN)->firstOrFail();
+        $adminProfile = UserProfile::where('name', UserRoleEnum::Admin->value)->firstOrFail();
         $admin = User::factory()->create([
             'profile_id' => $adminProfile->id,
             'api_token' => Str::random(60),
@@ -64,7 +66,7 @@ class SecurityPasswordPolicyTest extends TestCase
 
     public function test_password_change_requires_minimum_8_characters(): void
     {
-        $profileId = UserProfile::where('name', User::ROLE_USER)->value('id');
+        $profileId = UserProfile::where('name', UserRoleEnum::User->value)->value('id');
         $user = User::factory()->create([
             'profile_id' => $profileId,
             'password' => Hash::make('current-password'),
@@ -83,7 +85,7 @@ class SecurityPasswordPolicyTest extends TestCase
 
     public function test_password_is_stored_hashed(): void
     {
-        $profileId = UserProfile::where('name', User::ROLE_USER)->value('id');
+        $profileId = UserProfile::where('name', UserRoleEnum::User->value)->value('id');
         $user = User::create([
             'name' => 'Hash Test User',
             'email' => 'hashtest@example.com',

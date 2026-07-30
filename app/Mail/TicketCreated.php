@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Mail;
 
 use App\Models\Ticket;
@@ -11,38 +13,27 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class TicketCreated extends Mailable implements ShouldQueue
+final class TicketCreated extends Mailable implements ShouldQueue
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
-    public $ticket;
-
-    /**
-     * Create a new message instance.
-     */
-    public function __construct(Ticket $ticket)
-    {
-        $this->ticket = $ticket;
-    }
-
-    public function build()
-    {
-        return $this->subject('Nova avaria registada')
-            ->view('emails.ticketCreated');
-    }
+    public function __construct(
+        public readonly Ticket $ticket,
+    ) {}
 
     /**
-     * Get the message envelope.
+     * Define o envelope e assunto da mensagem.
      */
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Nova avaria registada'
+            subject: "Nova avaria registada [#{$this->ticket->id}]",
         );
     }
 
     /**
-     * Get the message content definition.
+     * Define o conteúdo e a template da mensagem.
      */
     public function content(): Content
     {
@@ -52,7 +43,7 @@ class TicketCreated extends Mailable implements ShouldQueue
     }
 
     /**
-     * Get the attachments for the message.
+     * Anexos para a mensagem.
      *
      * @return array<int, Attachment>
      */

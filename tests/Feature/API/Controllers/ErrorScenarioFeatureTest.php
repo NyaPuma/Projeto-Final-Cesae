@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
@@ -21,9 +23,9 @@ class ErrorScenarioFeatureTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::create(['name' => User::ROLE_USER]);
-        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::create(['name' => User::ROLE_ADMIN]);
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
+        UserProfile::create(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::create(['name' => UserRoleEnum::Admin->value]);
         $this->artisan('db:seed', ['--class' => 'TicketLookupSeeder', '--force' => true]);
     }
 
@@ -40,7 +42,7 @@ class ErrorScenarioFeatureTest extends TestCase
 
     public function test_api_returns_404_for_nonexistent_ticket(): void
     {
-        $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
 
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
             ->getJson('/tickets/99999');
@@ -65,7 +67,7 @@ class ErrorScenarioFeatureTest extends TestCase
 
     public function test_api_returns_422_for_method_not_allowed(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->putJson('/tickets/search');
@@ -75,7 +77,7 @@ class ErrorScenarioFeatureTest extends TestCase
 
     public function test_technician_cannot_start_nonexistent_ticket(): void
     {
-        $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
 
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
             ->putJson('/technician/tickets/99999/start');
@@ -85,7 +87,7 @@ class ErrorScenarioFeatureTest extends TestCase
 
     public function test_technician_cannot_close_nonexistent_ticket(): void
     {
-        $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
 
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
             ->putJson('/technician/tickets/99999/close');
@@ -95,7 +97,7 @@ class ErrorScenarioFeatureTest extends TestCase
 
     public function test_inactive_user_receives_401(): void
     {
-        $inactiveProfile = UserProfile::where('name', User::ROLE_USER)->firstOrFail();
+        $inactiveProfile = UserProfile::where('name', UserRoleEnum::User->value)->firstOrFail();
         $inactiveUser = User::factory()->create([
             'profile_id' => $inactiveProfile->id,
             'api_token' => Str::random(60),
@@ -114,8 +116,8 @@ class ErrorScenarioFeatureTest extends TestCase
 
     public function test_assign_nonexistent_technician_returns_404(): void
     {
-        $admin = $this->createUserWithToken(User::ROLE_ADMIN);
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $admin = $this->createUserWithToken(UserRoleEnum::Admin->value);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
         $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
@@ -137,7 +139,7 @@ class ErrorScenarioFeatureTest extends TestCase
 
     public function test_comment_on_nonexistent_ticket_returns_404(): void
     {
-        $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
 
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
             ->postJson('/tickets/99999/comments', [
@@ -149,7 +151,7 @@ class ErrorScenarioFeatureTest extends TestCase
 
     public function test_upload_photo_on_nonexistent_ticket_returns_404(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/tickets/99999/photos', [

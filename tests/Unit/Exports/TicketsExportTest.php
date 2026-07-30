@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+
+use App\Enums\UserRoleEnum;
 use App\Enums\BudgetStatusEnum;
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
@@ -30,7 +32,7 @@ class TicketsExportTest extends TestCase
         TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Open->value, 'description' => 'Aberto', 'type_id' => $typeId]);
         TicketStatus::firstOrCreate(['name' => TicketStatusEnum::InProgress->value, 'description' => 'Em Curso', 'type_id' => $typeId]);
         TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Closed->value, 'description' => 'Fechado', 'type_id' => $typeId]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
     }
 
     #[Test]
@@ -41,16 +43,16 @@ class TicketsExportTest extends TestCase
 
         $expectedHeadings = [
             'ID',
-            'Título',
+            'TÃ­tulo',
             'Estado',
             'Prioridade',
             'Aberto em',
             'Em Progresso em',
             'Fechado em',
             'Minutos Gastos',
-            'Custo (€)',
-            'Estado Orçamento',
-            'Montante Orçamento (€)',
+            'Custo (â‚¬)',
+            'Estado OrÃ§amento',
+            'Montante OrÃ§amento (â‚¬)',
         ];
 
         $this->assertEquals($expectedHeadings, $headings);
@@ -60,7 +62,7 @@ class TicketsExportTest extends TestCase
     public function it_returns_correct_title(): void
     {
         $export = new TicketsExport;
-        $this->assertEquals('Relatório de Tickets', $export->title());
+        $this->assertEquals('RelatÃ³rio de Tickets', $export->title());
     }
 
     #[Test]

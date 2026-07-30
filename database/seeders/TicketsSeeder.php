@@ -64,8 +64,9 @@ class TicketsSeeder extends Seeder
             ],
         ];
 
-        foreach ($baseTickets as $ticket) {
+        foreach ($baseTickets as $i => $ticket) {
             DB::table('tickets')->insert([
+                'reference' => 'TKT-' . now()->format('YmdHis') . '-' . ($i + 1),
                 'user_id' => $ticket['user_id'],
                 'assigned_to' => $ticket['assigned_to'],
                 'room_id' => $ticket['room_id'],
@@ -78,7 +79,7 @@ class TicketsSeeder extends Seeder
                 'in_progress_at' => $ticket['in_progress_at'] ?? null,
                 'closed_at' => $ticket['closed_at'] ?? null,
                 'minutes_spent' => $ticket['minutes_spent'] ?? null,
-                'cost' => $ticket['cost'] ?? null,
+                'estimated_cost' => $ticket['cost'] ?? null,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
@@ -93,6 +94,7 @@ class TicketsSeeder extends Seeder
             $priority = ['baixa', 'média', 'alta'][array_rand(['baixa', 'média', 'alta'])];
 
             DB::table('tickets')->insert([
+                'reference' => 'TKT-SYNTH-' . now()->format('YmdHis') . '-' . str_pad($index, 4, '0', STR_PAD_LEFT),
                 'user_id' => $userIds[array_rand($userIds)],
                 'assigned_to' => $technicianIds[array_rand($technicianIds)],
                 'room_id' => $roomIds[array_rand($roomIds)],
@@ -105,7 +107,7 @@ class TicketsSeeder extends Seeder
                 'in_progress_at' => rand(0, 1) ? now()->subDays(rand(1, 20)) : null,
                 'closed_at' => rand(0, 1) ? now()->subDays(rand(1, 10)) : null,
                 'minutes_spent' => rand(20, 240),
-                'cost' => round(rand(100, 5000) / 10, 2),
+                'estimated_cost' => round(rand(100, 5000) / 10, 2),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

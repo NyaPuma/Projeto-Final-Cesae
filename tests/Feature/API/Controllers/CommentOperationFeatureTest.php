@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
@@ -21,9 +23,9 @@ class CommentOperationFeatureTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::create(['name' => User::ROLE_USER]);
-        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::create(['name' => User::ROLE_ADMIN]);
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
+        UserProfile::create(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::create(['name' => UserRoleEnum::Admin->value]);
         $this->artisan('db:seed', ['--class' => 'TicketLookupSeeder', '--force' => true]);
     }
 
@@ -40,8 +42,8 @@ class CommentOperationFeatureTest extends TestCase
 
     public function test_technician_can_comment_on_any_ticket(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
-        $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
         $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
@@ -70,8 +72,8 @@ class CommentOperationFeatureTest extends TestCase
 
     public function test_comment_requires_text(): void
     {
-        $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
         $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
@@ -92,8 +94,8 @@ class CommentOperationFeatureTest extends TestCase
 
     public function test_list_comments_returns_all_comments(): void
     {
-        $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
         $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([

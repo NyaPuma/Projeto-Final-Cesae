@@ -5,53 +5,78 @@ namespace App\Http\Controllers;
 use App\Exports\TicketsExport;
 use App\Jobs\ExportCsvJob;
 use App\Jobs\ExportPdfJob;
-use App\Models\User;
+use App\Models\Ticket;
 use App\Services\AnalyticsService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-class AnalyticsController extends Controller
+final class AnalyticsController extends Controller
 {
     public function __construct(
         private readonly AnalyticsService $analyticsService,
     ) {}
 
+    /**
+     * Retorna os dados analíticos e métricas do dashboard.
+     */
     public function stats(Request $request): JsonResponse
     {
-        $user = $this->authenticatedUser($request);
-        $this->requireRole($user, [User::ROLE_TECHNICIAN, User::ROLE_ADMIN]);
+        // 1. Autorização via Policy
+        $this->authorize('viewAnalytics', Ticket::class);
 
-        return response()->json($this->analyticsService->getDashboardPayload());
+        return response()->json(
+            $this->analyticsService->getDashboardPayload()
+        );
     }
 
-    public function exportCsv(Request $request)
+    /**
+     * Dispara o processamento assíncrono para exportação em CSV.
+     */
+    public function exportCsv(Request $request): JsonResponse
     {
-        $user = $this->authenticatedUser($request);
-        $this->requireRole($user, [User::ROLE_TECHNICIAN, User::ROLE_ADMIN]);
+        // 1. Autorização via Policy
+        $this->authorize('exportAnalytics', Ticket::class);
 
-        ExportCsvJob::dispatch($user->id);
+        $user = $request->user();
 
-        return response()->json(['message' => 'Exporta├º├úo CSV em processamento. Receber├í uma notifica├º├úo quando estiver pronta.']);
+        // 2. Dispara o job assíncrono em background
+        ExportCsvJob::dispatch($user);
+
+        return response()->json([
+            'message' => __('Exportação CSV em processamento. Receberá uma notificação quando estiver pronta.'),
+        ]);
     }
 
-    public function exportPdf(Request $request)
+    /**
+     * Dispara o processamento assíncrono para exportação em PDF.
+     */
+    public function exportPdf(Request $request): JsonResponse
     {
-        $user = $this->authenticatedUser($request);
-        $this->requireRole($user, [User::ROLE_TECHNICIAN, User::ROLE_ADMIN]);
+        // 1. Autorização via Policy
+        $this->authorize('exportAnalytics', Ticket::class);
 
-        ExportPdfJob::dispatch($user->id);
+        $user = $request->user();
 
-        return response()->json(['message' => 'Exporta├º├úo PDF em processamento. Receber├í uma notifica├º├úo quando estiver pronta.']);
+        // 2. Dispara o job assíncrono em background
+        ExportPdfJob::dispatch($user);
+
+        return response()->json([
+            'message' => __('Exportação PDF em processamento. Receberá uma notificação quando estiver pronta.'),
+        ]);
     }
 
-    public function exportExcel(Request $request)
+    /**
+     * Gera e transfere de imediato o ficheiro Excel com o relatório de tickets.
+     */
+    public function exportExcel(Request $request): BinaryFileResponse
     {
-        $user = $this->authenticatedUser($request);
-        $this->requireRole($user, [User::ROLE_TECHNICIAN, User::ROLE_ADMIN]);
+        // 1. Autorização via Policy
+        $this->authorize('exportAnalytics', Ticket::class);
 
-        $filename = 'tickets_report_'.now()->format('Ymd_His').'.xlsx';
+        $filename = 'tickets_report_' . now()->format('Ymd_His') . '.xlsx';
 
-        return Excel::download(new TicketsExport, $filename);
+        return Excel::download(new TicketsExport(), $filename);
     }
 }

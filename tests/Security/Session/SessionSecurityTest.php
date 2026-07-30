@@ -2,6 +2,8 @@
 
 namespace Tests\Security\Session;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Support\Facades\Hash;
@@ -14,7 +16,7 @@ class SessionSecurityTest extends FeatureTestCase
     #[Test]
     public function it_clears_session_token_on_logout(): void
     {
-        $profileId = UserProfile::where('name', User::ROLE_USER)->value('id');
+        $profileId = UserProfile::where('name', UserRoleEnum::User->value)->value('id');
         $token = Str::random(60);
         $user = User::factory()->create([
             'profile_id' => $profileId,
@@ -37,7 +39,7 @@ class SessionSecurityTest extends FeatureTestCase
     #[Test]
     public function it_nullifies_api_token_in_database_on_logout(): void
     {
-        $profileId = UserProfile::where('name', User::ROLE_USER)->value('id');
+        $profileId = UserProfile::where('name', UserRoleEnum::User->value)->value('id');
         $token = Str::random(60);
         $user = User::factory()->create([
             'profile_id' => $profileId,
@@ -57,7 +59,7 @@ class SessionSecurityTest extends FeatureTestCase
     #[Test]
     public function it_generates_different_token_on_new_login(): void
     {
-        $profileId = UserProfile::where('name', User::ROLE_USER)->value('id');
+        $profileId = UserProfile::where('name', UserRoleEnum::User->value)->value('id');
         $oldToken = Str::random(60);
         User::factory()->create([
             'email' => 'newlogintoken@example.com',

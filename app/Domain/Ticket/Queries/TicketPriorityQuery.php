@@ -13,7 +13,8 @@ final readonly class TicketPriorityQuery
 
     public function execute(): array
     {
-        $row = $this->baseQuery
+        // clone para evitar mutação indesejada da $baseQuery original
+        $row = (clone $this->baseQuery)
             ->selectRaw('
                 SUM(CASE WHEN priority = ? THEN 1 ELSE 0 END) as low,
                 SUM(CASE WHEN priority = ? THEN 1 ELSE 0 END) as medium,

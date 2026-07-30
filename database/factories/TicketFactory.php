@@ -23,6 +23,7 @@ class TicketFactory extends Factory
             'room_id' => null,
             'equipment_id' => null,
             'status_id' => TicketStatus::query()->inRandomOrder()->value('id'),
+            'reference' => 'TKT-' . now()->format('YmdHis') . '-' . fake()->unique()->randomNumber(5),
             'title' => fake()->sentence(4),
             'description' => fake()->paragraph(),
             'priority' => fake()->randomElement([
@@ -38,7 +39,7 @@ class TicketFactory extends Factory
             'scheduled_end' => null,
             'scheduled' => false,
             'minutes_spent' => fake()->numberBetween(15, 240),
-            'cost' => fake()->randomFloat(2, 0, 250),
+            'estimated_cost' => fake()->randomFloat(2, 0, 250),
             'budget_requested' => false,
             'budget_status' => null,
             'budget_amount' => null,

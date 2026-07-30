@@ -2,6 +2,8 @@
 
 namespace Tests\Performance\DatabasePerformance;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserProfile;
@@ -18,9 +20,9 @@ class QueryCountTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::firstOrCreate(['name' => User::ROLE_ADMIN]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::Admin->value]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
     }
 
     #[Test]

@@ -2,6 +2,8 @@
 
 namespace Tests\Performance;
 
+
+use App\Enums\UserRoleEnum;
 use App\Enums\TicketPriorityEnum;
 use App\Models\Equipment;
 use App\Models\EquipmentCategory;
@@ -38,15 +40,15 @@ abstract class PerformanceTestCase extends TestCase
         TicketStatus::firstOrCreate(['name' => 'em curso'], ['description' => 'Em curso']);
         TicketStatus::firstOrCreate(['name' => 'fechada'], ['description' => 'Fechada']);
         TicketStatus::firstOrCreate(['name' => 'cancelada'], ['description' => 'Cancelada']);
-        TicketStatus::firstOrCreate(['name' => 'pendente orçamento'], ['description' => 'Pendente']);
+        TicketStatus::firstOrCreate(['name' => 'pendente orÃ§amento'], ['description' => 'Pendente']);
         TicketStatus::firstOrCreate(['name' => 'recusada'], ['description' => 'Recusada']);
     }
 
     protected function createTestUsers(): void
     {
-        $adminProfile = UserProfile::firstOrCreate(['name' => User::ROLE_ADMIN]);
-        $techProfile = UserProfile::firstOrCreate(['name' => User::ROLE_TECHNICIAN]);
-        $userProfile = UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
+        $adminProfile = UserProfile::firstOrCreate(['name' => UserRoleEnum::Admin->value]);
+        $techProfile = UserProfile::firstOrCreate(['name' => UserRoleEnum::Technician->value]);
+        $userProfile = UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
 
         $this->admin = User::factory()->create(['profile_id' => $adminProfile->id, 'api_token' => 'admin-test-token-perf']);
         $this->technician = User::factory()->create(['profile_id' => $techProfile->id, 'api_token' => 'tech-test-token-perf']);

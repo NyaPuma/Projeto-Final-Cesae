@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,7 +19,7 @@ class SecurityBruteForceTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::create(['name' => User::ROLE_USER]);
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
     }
 
     public function test_multiple_failed_logins_return_401_not_200(): void
@@ -25,7 +27,7 @@ class SecurityBruteForceTest extends TestCase
         User::factory()->create([
             'email' => 'bruteforce@example.com',
             'password' => Hash::make('Password123!'),
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->value('id'),
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->value('id'),
             'active' => true,
             'api_token' => Str::random(60),
         ]);
@@ -44,7 +46,7 @@ class SecurityBruteForceTest extends TestCase
         User::factory()->create([
             'email' => 'rapid@example.com',
             'password' => Hash::make('Password123!'),
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->value('id'),
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->value('id'),
             'active' => true,
             'api_token' => Str::random(60),
         ]);
@@ -67,7 +69,7 @@ class SecurityBruteForceTest extends TestCase
         User::factory()->create([
             'email' => 'resetcounter@example.com',
             'password' => Hash::make('Password123!'),
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->value('id'),
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->value('id'),
             'active' => true,
             'api_token' => Str::random(60),
         ]);

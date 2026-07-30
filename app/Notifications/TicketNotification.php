@@ -1,37 +1,60 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Notification;
 
-class TicketNotification extends Notification implements ShouldBroadcast
+final class TicketNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public $title;
+    public function __construct(
+        public readonly string $title,
+        public readonly string $message,
+        public readonly string $type = 'info',
+        public readonly ?string $link = null,
+    ) {}
 
-    public $message;
-
-    public function __construct($title, $message)
+    /**
+     * Define os canais de envio (Broadcast via WebSockets e Base de Dados).
+     *
+     * @return array<int, string>
+     */
+    public function via(object $notifiable): array
     {
-        $this->title = $title;
-        $this->message = $message;
+        return ['broadcast', 'database'];
     }
 
-    // Define que será via Broadcast (Pusher)
-    public function via($notifiable)
-    {
-        return ['broadcast', 'database']; // Também guarda na base de dados
-    }
-
-    public function toBroadcast($notifiable)
+    /**
+     * Payload transmitido em tempo real via WebSockets (Reverb / Pusher).
+     */
+    public function toBroadcast(object $notifiable): BroadcastMessage
     {
         return new BroadcastMessage([
-            'title' => $this->title,
+            'title'   => $this->title,
             'message' => $this->message,
+            'type'    => $this->type,
+            'link'    => $this->link,
         ]);
+    }
+
+    /**
+     * Payload gravado na tabela 'notifications' da base de dados.
+     *
+     * @return array<string, mixed>
+     */
+    public function toArray(object $notifiable): array
+    {
+        return [
+            'title'   => $this->title,
+            'message' => $this->message,
+            'type'    => $this->type,
+            'link'    => $this->link,
+        ];
     }
 }

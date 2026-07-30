@@ -9,11 +9,18 @@ use App\Services\TechnicianAssignmentService;
 final readonly class AssignTechnicianAction
 {
     public function __construct(
-        private readonly TechnicianAssignmentService $assignmentService,
+        private TechnicianAssignmentService $assignmentService,
     ) {}
 
-    public function execute(Ticket $ticket, ?int $technicianId): ?User
+    /**
+     * Atribui (ou remove) um técnico a um ticket e devolve o modelo atualizado.
+     */
+    public function execute(Ticket $ticket, User|int|null $technician): Ticket
     {
-        return $this->assignmentService->assignToTicket($ticket, $technicianId);
+        $technicianId = $technician instanceof User ? $technician->id : $technician;
+
+        $this->assignmentService->assignToTicket($ticket, $technicianId);
+
+        return $ticket->load('technician');
     }
 }

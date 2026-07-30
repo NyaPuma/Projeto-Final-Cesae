@@ -2,6 +2,8 @@
 
 namespace Tests\Security\APITokens;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 use Illuminate\Support\Str;
 use PHPUnit\Framework\Attributes\Test;
@@ -32,7 +34,7 @@ class APITokenSecurityTest extends FeatureTestCase
     #[Test]
     public function it_rejects_requests_with_expired_token(): void
     {
-        $user = $this->createInactiveUser(User::ROLE_USER);
+        $user = $this->createInactiveUser(UserRoleEnum::User->value);
 
         $response = $this->asApiUser($user->api_token)
             ->getJson('/api/tickets');
@@ -54,7 +56,7 @@ class APITokenSecurityTest extends FeatureTestCase
     #[Test]
     public function it_rotates_token_on_login(): void
     {
-        $user = $this->createUserWithPassword(User::ROLE_USER, 'login-test@example.com', 'password', ['api_token' => 'old-token']);
+        $user = $this->createUserWithPassword(UserRoleEnum::User->value, 'login-test@example.com', 'password', ['api_token' => 'old-token']);
 
         $response = $this->post('/login', [
             'email' => $user->email,
@@ -71,7 +73,7 @@ class APITokenSecurityTest extends FeatureTestCase
     #[Test]
     public function it_clears_token_on_logout(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER, ['api_token' => 'logout-token']);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value, ['api_token' => 'logout-token']);
 
         $response = $this->asApiUser('logout-token')
             ->post('/logout');
@@ -85,7 +87,7 @@ class APITokenSecurityTest extends FeatureTestCase
     #[Test]
     public function it_prevents_token_reuse_after_logout(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER, ['api_token' => 'reused-token']);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value, ['api_token' => 'reused-token']);
 
         $this->asApiUser('reused-token')
             ->post('/logout')
@@ -112,7 +114,7 @@ class APITokenSecurityTest extends FeatureTestCase
     #[Test]
     public function it_hashes_tokens_in_database(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $this->assertEquals(60, strlen($user->api_token));
     }

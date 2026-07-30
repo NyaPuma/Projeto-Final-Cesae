@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\Userprofile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -13,10 +15,10 @@ class UserProfileTest extends TestCase
 
     public function test_user_profile_belongs_to_user()
     {
-        $profile = Userprofile::create(['name' => User::ROLE_USER]);
+        $profile = Userprofile::create(['name' => UserRoleEnum::User->value]);
         $user = User::factory()->create(['profile_id' => $profile->id]);
 
         $this->assertEquals($profile->id, $user->profile->id);
-        $this->assertEquals(User::ROLE_USER, $user->profile->name);
+        $this->assertEquals(UserRoleEnum::User->value, $user->profile->name);
     }
 }

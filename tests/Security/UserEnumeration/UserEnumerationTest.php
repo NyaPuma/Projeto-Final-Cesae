@@ -2,6 +2,8 @@
 
 namespace Tests\Security\UserEnumeration;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -58,7 +60,7 @@ class UserEnumerationTest extends FeatureTestCase
     public function it_does_not_enumerate_users_in_api_list(): void
     {
         $admin = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_ADMIN)->first()->id,
+            'profile_id' => UserProfile::where('name', UserRoleEnum::Admin->value)->first()->id,
             'api_token' => 'admin-token',
             'active' => true,
         ]);

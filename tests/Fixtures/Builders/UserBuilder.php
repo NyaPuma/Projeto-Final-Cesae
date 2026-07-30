@@ -2,6 +2,8 @@
 
 namespace Tests\Fixtures\Builders;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Support\Facades\Hash;
@@ -58,17 +60,17 @@ class UserBuilder
 
     public function asAdmin(): self
     {
-        return $this->withProfile(User::ROLE_ADMIN);
+        return $this->withProfile(UserRoleEnum::Admin->value);
     }
 
     public function asTechnician(): self
     {
-        return $this->withProfile(User::ROLE_TECHNICIAN);
+        return $this->withProfile(UserRoleEnum::Technician->value);
     }
 
     public function asUser(): self
     {
-        return $this->withProfile(User::ROLE_USER);
+        return $this->withProfile(UserRoleEnum::User->value);
     }
 
     public function withToken(string $token): self

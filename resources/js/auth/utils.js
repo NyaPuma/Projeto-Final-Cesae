@@ -104,9 +104,22 @@ export const get = (url) => request(url, { method: 'GET' });
 |--------------------------------------------------------------------------
 */
 
-export const saveToken = (token) => token && localStorage.setItem(`${STORAGE_PREFIX}api_token`, token);
-export const getToken = () => localStorage.getItem(`${STORAGE_PREFIX}api_token`);
-export const removeToken = () => localStorage.removeItem(`${STORAGE_PREFIX}api_token`);
+export const saveToken = (token, user = null) => {
+    if (!token) return;
+    localStorage.setItem(`${STORAGE_PREFIX}api_token`, token);
+    localStorage.setItem(`${STORAGE_PREFIX}auth_token`, token);
+    document.cookie = `api_token=${token}; path=/; max-age=2592000; SameSite=Lax`;
+    document.cookie = `auth_token=${token}; path=/; max-age=2592000; SameSite=Lax`;
+    if (user) {
+        localStorage.setItem(`${STORAGE_PREFIX}user_name`, user.name || 'Utilizador');
+        localStorage.setItem(`${STORAGE_PREFIX}user_role`, user.profile?.name || 'user');
+    }
+};
+export const getToken = () => localStorage.getItem(`${STORAGE_PREFIX}api_token`) || localStorage.getItem(`${STORAGE_PREFIX}auth_token`);
+export const removeToken = () => {
+    localStorage.removeItem(`${STORAGE_PREFIX}api_token`);
+    localStorage.removeItem(`${STORAGE_PREFIX}auth_token`);
+};
 
 /*
 |--------------------------------------------------------------------------

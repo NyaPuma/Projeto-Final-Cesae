@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
 
     /*
@@ -20,11 +22,11 @@ return [
 
             'path' => storage_path('app/backups'),
 
-            'filename' => 'backup_'.date('Y-m-d_His').'.sql',
+            'filename' => 'backup_' . date('Y-m-d_His') . '.sql',
 
         ],
 
-        'compression' => env('DB_BACKUP_COMPRESSION', true),
+        'compression' => (bool) env('DB_BACKUP_COMPRESSION', true),
 
         'exclude_tables' => [
             'failed_jobs',

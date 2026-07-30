@@ -2,6 +2,8 @@
 
 namespace Tests\Unit\Models;
 
+
+use App\Enums\UserRoleEnum;
 use App\Enums\BudgetStatusEnum;
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
@@ -28,19 +30,19 @@ class TicketAttributesTest extends TestCase
     private function seedLookupData(): void
     {
         TicketType::firstOrCreate(['name' => 'avaria', 'description' => 'Avaria']);
-        TicketType::firstOrCreate(['name' => 'preventiva', 'description' => 'Manutenção Preventiva']);
+        TicketType::firstOrCreate(['name' => 'preventiva', 'description' => 'ManutenÃ§Ã£o Preventiva']);
 
         $typeId = TicketType::where('name', 'avaria')->first()->id;
         TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Open->value, 'description' => 'Aberto', 'type_id' => $typeId]);
         TicketStatus::firstOrCreate(['name' => TicketStatusEnum::InProgress->value, 'description' => 'Em Curso', 'type_id' => $typeId]);
         TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Closed->value, 'description' => 'Fechado', 'type_id' => $typeId]);
         TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Cancelled->value, 'description' => 'Cancelado', 'type_id' => $typeId]);
-        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::PendingBudget->value, 'description' => 'Pendente Orçamento', 'type_id' => $typeId]);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::PendingBudget->value, 'description' => 'Pendente OrÃ§amento', 'type_id' => $typeId]);
         TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Rejected->value, 'description' => 'Recusada', 'type_id' => $typeId]);
 
-        UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::firstOrCreate(['name' => User::ROLE_ADMIN]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::firstOrCreate(['name' => UserRoleEnum::Admin->value]);
     }
 
     #[Test]
@@ -50,7 +52,7 @@ class TicketAttributesTest extends TestCase
         $this->assertEquals('em curso', TicketStatusEnum::InProgress->value);
         $this->assertEquals('fechada', TicketStatusEnum::Closed->value);
         $this->assertEquals('cancelada', TicketStatusEnum::Cancelled->value);
-        $this->assertEquals('pendente orçamento', TicketStatusEnum::PendingBudget->value);
+        $this->assertEquals('pendente orÃ§amento', TicketStatusEnum::PendingBudget->value);
         $this->assertEquals('recusada', TicketStatusEnum::Rejected->value);
     }
 
@@ -58,7 +60,7 @@ class TicketAttributesTest extends TestCase
     public function it_has_correct_priority_constants(): void
     {
         $this->assertEquals('baixa', TicketPriorityEnum::Low->value);
-        $this->assertEquals('média', TicketPriorityEnum::Medium->value);
+        $this->assertEquals('mÃ©dia', TicketPriorityEnum::Medium->value);
         $this->assertEquals('alta', TicketPriorityEnum::High->value);
     }
 

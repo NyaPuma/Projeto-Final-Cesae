@@ -2,6 +2,8 @@
 
 namespace Tests\Security\Password;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use PHPUnit\Framework\Attributes\Test;
@@ -46,7 +48,7 @@ class PasswordSecurityTest extends FeatureTestCase
     #[Test]
     public function it_rejects_short_password_on_change(): void
     {
-        $user = $this->createUserWithPassword(User::ROLE_USER, 'shortpwchange@example.com', 'current-password');
+        $user = $this->createUserWithPassword(UserRoleEnum::User->value, 'shortpwchange@example.com', 'current-password');
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/password/change', [
@@ -61,7 +63,7 @@ class PasswordSecurityTest extends FeatureTestCase
     #[Test]
     public function it_stores_password_hashed_in_database(): void
     {
-        $user = $this->createUserWithPassword(User::ROLE_USER, 'hashtest@example.com', 'plain-text-password');
+        $user = $this->createUserWithPassword(UserRoleEnum::User->value, 'hashtest@example.com', 'plain-text-password');
 
         $this->assertNotEquals('plain-text-password', $user->password);
         $this->assertTrue(Hash::check('plain-text-password', $user->password));

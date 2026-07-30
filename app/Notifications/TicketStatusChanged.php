@@ -1,28 +1,39 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Notifications;
 
 use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class TicketStatusChanged extends Notification
+final class TicketStatusChanged extends Notification implements ShouldQueue
 {
     use Queueable;
 
     public function __construct(
-        protected Ticket $ticket,
-        protected string $oldStatus,
-        protected string $newStatus
+        public readonly Ticket $ticket,
+        public readonly string $oldStatus,
+        public readonly string $newStatus,
     ) {}
 
+    /**
+     * Define os canais de envio (E-mail e Painel/BD).
+     *
+     * @return array<int, string>
+     */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
+    /**
+     * Representação da notificação por E-mail.
+     */
     public function toMail(object $notifiable): MailMessage
     {
         $oldLabel = $this->resolveStatusLabel($this->oldStatus);
@@ -38,24 +49,43 @@ class TicketStatusChanged extends Notification
             ->line("**Estado anterior:** {$oldLabel}")
             ->line("**Novo estado:** {$newLabel}")
             ->action('Ver Ticket', url("/ui/tickets/{$this->ticket->id}"))
-            ->line('Obrigado por usar o sistema de gestão de avarias.');
+            ->line('Obrigado por utilizar o sistema de gestão de avarias.');
     }
 
+    /**
+     * Representação da notificação na Base de Dados (Painel do Utilizador).
+     *
+     * @return array<string, mixed>
+     */
     public function toArray(object $notifiable): array
     {
+        $newLabel = $this->resolveStatusLabel($this->newStatus);
+
         return [
-            'ticket_id' => $this->ticket->id,
-            'title' => $this->ticket->title,
+            'ticket_id'  => $this->ticket->id,
+            'title'      => "Estado do ticket #{$this->ticket->id} alterado",
+            'message'    => "O ticket \"{$this->ticket->title}\" mudou para {$newLabel}.",
+            'type'       => 'info',
+            'link'       => "/ui/tickets/{$this->ticket->id}",
             'old_status' => $this->oldStatus,
             'new_status' => $this->newStatus,
         ];
     }
 
+    /**
+     * Resolve o rótulo amigável do estado a partir da string ou Enum.
+     */
     private function resolveStatusLabel(string $status): string
     {
-        foreach (TicketStatusEnum::cases() as $enum) {
-            if ($enum->value === $status || $enum->label() === $status) {
-                return $enum->label();
+        $enum = TicketStatusEnum::tryFrom($status);
+
+        if ($enum && method_exists($enum, 'label')) {
+            return $enum->label();
+        }
+
+        foreach (TicketStatusEnum::cases() as $case) {
+            if (method_exists($case, 'label') && $case->label() === $status) {
+                return $case->label();
             }
         }
 

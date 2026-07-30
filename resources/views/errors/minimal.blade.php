@@ -1,4 +1,5 @@
 @extends('ui.layout')
+@section('page_key', 'error')
 
 @section('content')
 <div class="min-h-screen bg-[var(--bg)] text-[var(--text)] antialiased flex flex-col justify-center">
@@ -48,25 +49,4 @@
     </div>
 </div>
 
-{{-- Script de Alinhamento com o Motor de Autentica├º├úo --}}
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Deteta o token utilizando exatamente a mesma estrat├®gia do teu app.js
-        const hasToken = localStorage.getItem('api_token') || document.cookie.split('; ').reduce((acc, cookie) => {
-            const [key, value] = cookie.split('=');
-            return key === 'api_token' ? value : acc;
-        }, null);
-
-        // Se o utilizador possuir o token guardado, reconfigura o bot├úo para o Dashboard
-        if (hasToken) {
-            const recoveryBtn = document.getElementById('error-recovery-btn');
-            const recoveryText = document.getElementById('error-recovery-text');
-
-            if (recoveryBtn && recoveryText) {
-                recoveryBtn.href = "{{ url('/ui') }}";
-                recoveryText.innerText = "{{ __('Voltar ao Dashboard') }}";
-            }
-        }
-    });
-</script>
 @endsection

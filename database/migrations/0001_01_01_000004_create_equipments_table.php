@@ -8,23 +8,156 @@ return new class extends Migration
 {
     public function up(): void
     {
-        // Tabela CategoriasEquipamento do DER
+        /*
+        |--------------------------------------------------------------------------
+        | Categorias de Equipamento
+        |--------------------------------------------------------------------------
+        */
+
         Schema::create('equipment_categories', function (Blueprint $table) {
-            $table->id(); // CategoriaId
-            $table->string('name', 191)->unique(); // NomeCategoria
-            $table->boolean('active')->default(true); // Estado
+            $table->id();
+
+            $table->string('name', 100)
+                ->unique();
+
+            $table->boolean('active')
+                ->default(true);
+
             $table->timestamps();
+
+            $table->softDeletes();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Índices
+            |--------------------------------------------------------------------------
+            */
+
+            $table->index([
+                'active',
+                'deleted_at',
+            ]);
         });
 
-        // Tabela Equipamentos do DER
+        /*
+        |--------------------------------------------------------------------------
+        | Equipamentos
+        |--------------------------------------------------------------------------
+        */
+
         Schema::create('equipments', function (Blueprint $table) {
-            $table->id(); // EquipamentoId
-            $table->string('name'); // Nome
-            $table->string('serial', 191)->unique(); // NumeroSerie
-            $table->foreignId('room_id')->nullable()->constrained('rooms')->nullOnDelete(); // SalaId FK
-            $table->foreignId('category_id')->nullable()->constrained('equipment_categories')->nullOnDelete(); // CategoriaId FK
-            $table->boolean('active')->default(true); // Estado
+            $table->id();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Relações
+            |--------------------------------------------------------------------------
+            */
+
+            $table->foreignId('room_id')
+                ->nullable()
+                ->constrained('rooms')
+                ->nullOnDelete();
+
+            $table->foreignId('category_id')
+                ->nullable()
+                ->constrained('equipment_categories')
+                ->nullOnDelete();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Identificação
+            |--------------------------------------------------------------------------
+            */
+
+            $table->string('name', 150);
+
+            $table->string('asset_tag', 100)
+                ->nullable()
+                ->unique();
+
+            $table->string('serial', 100)
+                ->unique();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Informação técnica
+            |--------------------------------------------------------------------------
+            */
+
+            $table->string('brand', 100)
+                ->nullable();
+
+            $table->string('model', 100)
+                ->nullable();
+
+            $table->string('manufacturer', 100)
+                ->nullable();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Gestão
+            |--------------------------------------------------------------------------
+            */
+
+            $table->date('purchase_date')
+                ->nullable();
+
+            $table->date('warranty_until')
+                ->nullable();
+
+            $table->enum('status', [
+                'operacional',
+                'manutenção',
+                'avariado',
+                'abatido',
+            ])->default('operacional');
+
+            $table->boolean('active')
+                ->default(true);
+
+            $table->text('notes')
+                ->nullable();
+
             $table->timestamps();
+
+            $table->softDeletes();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Índices
+            |--------------------------------------------------------------------------
+            */
+
+            $table->index([
+                'room_id',
+                'active',
+            ]);
+
+            $table->index([
+                'category_id',
+                'active',
+            ]);
+
+            $table->index([
+                'room_id',
+                'status',
+            ]);
+
+            $table->index([
+                'category_id',
+                'status',
+            ]);
+
+            $table->index([
+                'status',
+                'active',
+            ]);
+
+            $table->index([
+                'active',
+                'deleted_at',
+            ]);
         });
     }
 

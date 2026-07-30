@@ -1,27 +1,38 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
+ * @property int $id
  * @property string $name
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  */
-class UserProfile extends Model
+final class UserProfile extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
-    // Define explicitamente o nome da tabela caso o plural do Laravel falhe
     protected $table = 'user_profiles';
 
     protected $fillable = [
         'name',
+        'description',
+        'active',
     ];
 
+    // --- RELAÇÕES ---
+
     /**
-     * Relação: Um perfil pertence a muitos utilizadores.
+     * Utilizadores associados a este perfil.
+     * Manteve-se 'profile_id' explicitamente para coincidir com a coluna da tabela 'users'.
      */
     public function users(): HasMany
     {

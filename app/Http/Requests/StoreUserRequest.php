@@ -1,8 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
+use App\Models\User;
+use App\Models\UserProfile;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 
 final class StoreUserRequest extends FormRequest
 {
@@ -11,28 +17,59 @@ final class StoreUserRequest extends FormRequest
         return true;
     }
 
+    /**
+     * Limpa espaços extras e normaliza o email antes da validação.
+     */
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'name' => $this->filled('name') ? trim((string) $this->name) : $this->name,
+            'email' => $this->filled('email') ? strtolower(trim((string) $this->email)) : $this->email,
+        ]);
+    }
+
     public function rules(): array
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', ...RegisterRequest::passwordRules()],
-            'profile_id' => ['required', 'integer', 'exists:user_profiles,id'],
+            'email' => [
+                'required',
+                'string',
+                'lowercase',
+                'email',
+                'max:255',
+                Rule::unique(User::class, 'email'),
+            ],
+            'password' => [
+                'required',
+                'string',
+                Password::min(8)
+                    ->letters()
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols()
+                    ->uncompromised(),
+            ],
+            'profile_id' => [
+                'required',
+                'integer',
+                Rule::exists(UserProfile::class, 'id'),
+            ],
             'active' => ['sometimes', 'boolean'],
         ];
     }
 
-    public function messages(): array
+    /**
+     * Mapeia os nomes dos atributos para as mensagens de erro do Laravel.
+     */
+    public function attributes(): array
     {
         return [
-            'name.required' => 'O nome é obrigatório.',
-            'name.max' => 'O nome não pode exceder 255 caracteres.',
-            'email.required' => 'O email é obrigatório.',
-            'email.email' => 'O email deve ser válido.',
-            'email.unique' => 'Este email já está em uso.',
-            'password.required' => 'A palavra-passe é obrigatória.',
-            'profile_id.required' => 'O perfil é obrigatório.',
-            'profile_id.exists' => 'O perfil selecionado não existe.',
+            'name' => 'nome',
+            'email' => 'email',
+            'password' => 'palavra-passe',
+            'profile_id' => 'perfil',
+            'active' => 'status ativo',
         ];
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Tests\Security\XSS;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserProfile;
@@ -17,7 +19,7 @@ class XSSProtectionTest extends FeatureTestCase
     public function it_escapes_xss_in_ticket_title(): void
     {
         $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->first()->id,
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->first()->id,
             'api_token' => 'test-token',
             'active' => true,
         ]);
@@ -39,7 +41,7 @@ class XSSProtectionTest extends FeatureTestCase
     public function it_escapes_xss_in_ticket_description(): void
     {
         $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->first()->id,
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->first()->id,
             'api_token' => 'test-token',
             'active' => true,
         ]);
@@ -61,7 +63,7 @@ class XSSProtectionTest extends FeatureTestCase
     public function it_escapes_xss_in_comment_content(): void
     {
         $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->first()->id,
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->first()->id,
             'api_token' => 'test-token',
             'active' => true,
         ]);
@@ -82,7 +84,7 @@ class XSSProtectionTest extends FeatureTestCase
     public function it_sanitizes_html_entities_in_user_input(): void
     {
         $admin = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_ADMIN)->first()->id,
+            'profile_id' => UserProfile::where('name', UserRoleEnum::Admin->value)->first()->id,
             'api_token' => 'admin-token',
             'active' => true,
         ]);
@@ -95,8 +97,8 @@ class XSSProtectionTest extends FeatureTestCase
                 'email' => 'test@example.com',
                 'password' => 'Password123!',
                 'password_confirmation' => 'Password123!',
-                'role' => User::ROLE_USER,
-                'profile_id' => UserProfile::where('name', User::ROLE_USER)->first()->id,
+                'role' => UserRoleEnum::User->value,
+                'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->first()->id,
             ]);
 
         $response->assertCreated();
@@ -107,7 +109,7 @@ class XSSProtectionTest extends FeatureTestCase
     public function it_prevents_javascript_protocol_in_urls(): void
     {
         $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->first()->id,
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->first()->id,
             'api_token' => 'test-token',
             'active' => true,
         ]);

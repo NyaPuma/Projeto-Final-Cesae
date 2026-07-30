@@ -1,28 +1,39 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Enums\TicketStatusEnum;
+use App\Enums\UserRoleEnum;
 use App\Models\Ticket;
 use App\Models\User;
+use Exception;
 use OpenAI\Laravel\Facades\OpenAI;
 
-class AIService
+final class AIService
 {
+    /**
+     * @param TicketStatusService $statusService
+     */
     public function __construct(
         private readonly TicketStatusService $statusService,
     ) {}
 
+    /**
+     * Recomenda o técnico mais qualificado com base em IA para resolver o ticket.
+     *
+     * @param Ticket $ticket
+     * @return array{tecnico_id: int|null, justificacao: string}
+     */
     public function recomendarTecnico(Ticket $ticket): array
     {
-        $tecnicos = User::whereHas('profile', fn ($q) => $q->where('name', User::ROLE_TECHNICIAN))
+        $tecnicos = User::whereHas('profile', fn ($q) =>$q->where('name', UserRoleEnum::Technician->value))
             ->where('active', true)
-            ->withCount(['assignedTickets as tickets_ativos' => function ($query) {
-                $closedStatusId = $this->statusService->getByName(TicketStatusEnum::Closed);
-                $cancelledStatusId = $this->statusService->getByName(TicketStatusEnum::Cancelled);
-                $statusIds = array_filter([$closedStatusId, $cancelledStatusId]);
+            ->withCount(['assignedTickets as tickets_ativos' => function ($query) {$closedStatusId = $this->statusService->getByName(TicketStatusEnum::Closed);$cancelledStatusId = $this->statusService->getByName(TicketStatusEnum::Cancelled);$statusIds = array_filter([$closedStatusId,$cancelledStatusId]);
+
                 if (! empty($statusIds)) {
-                    $query->whereNotIn('status_id', $statusIds);
+                    $query->whereNotIn('status_id',$statusIds);
                 }
             }])
             ->get(['id', 'name']);
@@ -42,21 +53,18 @@ class AIService
             3 => 'Sistemas e Redes Informáticas',
         ];
 
-        // 2. Engenharia de Prompt focada no Perfil de Decisão do Administrador
+        // Engenharia de Prompt focada no Perfil de Decisão do Administrador
         $prompt = "Atuas como Consultor de Engenharia de Manutenção Industrial para o Administrador do sistema.\n";
         $prompt .= "O teu papel único é analisar o ticket de avaria e sugerir o técnico mais qualificado.\n\n";
 
         $prompt .= "--- TICKET SOB ANÁLISE ---\n";
-        $prompt .= '- Descrição do Problema: '.$ticket->description."\n";
-        $prompt .= '- Equipamento: '.($ticket->equipment->name ?? 'Não Especificado')."\n";
-
-        // Uso do operador null-safe (?->) para evitar quebras se o equipamento ou categoria não existirem
-        $prompt .= '- Categoria Técnica: '.($ticket->equipment->category->name ?? 'Geral')."\n\n";
+        $prompt .= '- Descrição do Problema: ' . $ticket->description . "\n";
+        $prompt .= '- Equipamento: ' . ($ticket->equipment->name ?? 'Não Especificado') . "\n";
+        $prompt .= '- Categoria Técnica: ' . ($ticket->equipment->category->name ?? 'Geral') . "\n\n";
 
         $prompt .= "--- RECURSOS HUMANOS DISPONÍVEIS ---\n";
-        foreach ($tecnicos as $tecnico) {
-            $esp = $especialidades[($tecnico->id % 3) + 1];
-            $prompt .= "- ID: {$tecnico->id} | Nome: {$tecnico->name} | Especialidade: {$esp} | Carga de Trabalho Atual: {$tecnico->tickets_ativos} tickets\n";
+        foreach ($tecnicos as$tecnico) {
+            $esp = $especialidades[($tecnico->id % 3) + 1];$prompt .= "- ID: {$tecnico->id} | Nome: {$tecnico->name} | Especialidade: {$esp} | Carga de Trabalho Atual: {$tecnico->tickets_ativos} tickets\n";
         }
 
         $prompt .= "\n--- CRITÉRIOS DE SELEÇÃO ---\n";
@@ -66,8 +74,8 @@ class AIService
 
         $prompt .= "--- FORMATO OBRIGATÓRIO DE RESPOSTA ---\n";
         $prompt .= "{\n";
-        $prompt .= "  \"tecnico_id\": <inserir_apenas_o_id_numerico>,\n";
-        $prompt .= "  \"justificacao\": \"<uma frase curta e profissional em português validando a escolha para o Diretor de Operações>\"\n";
+        $prompt .= '  "tecnico_id": <inserir_apenas_o_id_numerico>,' . "\n";
+        $prompt .= '  "justificacao": "<uma frase curta e profissional em português validando a escolha para o Diretor de Operações>"' . "\n";
         $prompt .= '}';
 
         try {
@@ -76,17 +84,26 @@ class AIService
                 'messages' => [
                     ['role' => 'user', 'content' => $prompt],
                 ],
-                'temperature' => config('services.custom.ai.temperature'),
+                'temperature' => (float) config('services.custom.ai.temperature', 0.2),
             ]);
 
-            $resultado = json_decode(trim($response->choices[0]->message->content), true);
+            $content = trim($response->choices[0]->message->content ?? '');
 
-            if (isset($resultado['tecnico_id'])) {
-                return $resultado;
+            // Limpeza defensiva caso a IA adicione blocos de markdown à resposta JSON
+            $content = preg_replace('/^```json\s*([\s\S]*?)\s*```$/i', '$1', $content);
+            $content = preg_replace('/^```\s*([\s\S]*?)\s*```$/i', '$1', $content);
+
+            $resultado = json_decode(trim($content), true);
+
+            if (is_array($resultado) && isset($resultado['tecnico_id'])) {
+                return [
+                    'tecnico_id' => $resultado['tecnico_id'] !== null ? (int) $resultado['tecnico_id'] : null,
+                    'justificacao' => (string) ($resultado['justificacao'] ?? 'Atribuição recomendada pelo assistente de IA.'),
+                ];
             }
 
-            throw new \Exception('JSON Malformado');
-        } catch (\Exception $e) {
+            throw new Exception('JSON Malformado ou estrutura inválida.');
+        } catch (Exception $e) {
             return [
                 'tecnico_id' => null,
                 'justificacao' => 'Assistente de IA indisponível. Por favor, selecione um técnico manualmente através do Painel de Atribuição.',

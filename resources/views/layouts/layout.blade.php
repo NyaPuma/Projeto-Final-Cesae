@@ -11,11 +11,19 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800" rel="stylesheet">
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite([
+        'resources/css/app.css',
+        'resources/js/theme-init.js',
+        'resources/js/app.js'
+    ])
     @stack('styles')
 </head>
 
-<body class="min-h-screen bg-[var(--bg)] text-[var(--text)] overflow-x-hidden antialiased">
+<body data-page="@yield('page_key')"
+      data-login-url="{{ route('ui.login') }}"
+      data-logout-url="{{ route('auth.logout') }}"
+      data-profile-url="{{ route('ui.profile') }}"
+      class="min-h-screen overflow-x-hidden bg-[var(--bg)] text-[var(--text)] antialiased">
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-xl focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[var(--on-primary)]">
         {{ __('Ir para o conteúdo') }}
     </a>

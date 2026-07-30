@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Enums\TicketPriorityEnum;
 use App\Models\Room;
 use App\Models\Ticket;
@@ -19,9 +21,9 @@ class ValidationEdgeCaseTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::create(['name' => User::ROLE_USER]);
-        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::create(['name' => User::ROLE_ADMIN]);
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
+        UserProfile::create(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::create(['name' => UserRoleEnum::Admin->value]);
         $this->artisan('db:seed', ['--class' => 'TicketLookupSeeder', '--force' => true]);
     }
 
@@ -38,24 +40,24 @@ class ValidationEdgeCaseTest extends TestCase
 
     public function test_ticket_title_with_special_characters(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/tickets', [
-                'title' => 'Teste com acentos: çãõéíóú & símbolos: @#$% 123',
-                'description' => 'Descrição com caracteres especiais: áéíóúçñ',
+                'title' => 'Teste com acentos: Ã§Ã£ÃµÃ©Ã­Ã³Ãº & sÃ­mbolos: @#$% 123',
+                'description' => 'DescriÃ§Ã£o com caracteres especiais: Ã¡Ã©Ã­Ã³ÃºÃ§Ã±',
                 'priority' => TicketPriorityEnum::Medium->value,
             ]);
 
         $response->assertStatus(201);
         $this->assertDatabaseHas('tickets', [
-            'title' => 'Teste com acentos: çãõéíóú & símbolos: @#$% 123',
+            'title' => 'Teste com acentos: Ã§Ã£ÃµÃ©Ã­Ã³Ãº & sÃ­mbolos: @#$% 123',
         ]);
     }
 
     public function test_ticket_title_maximum_length_boundary(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/tickets', [
@@ -69,7 +71,7 @@ class ValidationEdgeCaseTest extends TestCase
 
     public function test_ticket_title_exactly_255_characters(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $title = str_repeat('A', 255);
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
@@ -85,7 +87,7 @@ class ValidationEdgeCaseTest extends TestCase
 
     public function test_ticket_with_empty_description(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/tickets', [
@@ -99,7 +101,7 @@ class ValidationEdgeCaseTest extends TestCase
 
     public function test_ticket_with_invalid_priority_value(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/tickets', [
@@ -113,7 +115,7 @@ class ValidationEdgeCaseTest extends TestCase
 
     public function test_duplicate_equipment_serial_rejected(): void
     {
-        $admin = $this->createUserWithToken(User::ROLE_ADMIN);
+        $admin = $this->createUserWithToken(UserRoleEnum::Admin->value);
 
         $room = Room::factory()->create();
 
@@ -137,7 +139,7 @@ class ValidationEdgeCaseTest extends TestCase
 
     public function test_ticket_with_nonexistent_room_reference(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/tickets', [
@@ -152,24 +154,24 @@ class ValidationEdgeCaseTest extends TestCase
 
     public function test_unicode_ticket_title_and_description(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/tickets', [
-                'title' => '🌍 Teste Unicode: 你好世界 Olá Mundo 🎉',
-                'description' => 'Emoji test: 🔧⚙️🛠️ and Japanese: メンテナンス',
+                'title' => 'ðŸŒ Teste Unicode: ä½ å¥½ä¸–ç•Œ OlÃ¡ Mundo ðŸŽ‰',
+                'description' => 'Emoji test: ðŸ”§âš™ï¸ðŸ› ï¸ and Japanese: ãƒ¡ãƒ³ãƒ†ãƒŠãƒ³ã‚¹',
                 'priority' => TicketPriorityEnum::High->value,
             ]);
 
         $response->assertStatus(201);
         $this->assertDatabaseHas('tickets', [
-            'title' => '🌍 Teste Unicode: 你好世界 Olá Mundo 🎉',
+            'title' => 'ðŸŒ Teste Unicode: ä½ å¥½ä¸–ç•Œ OlÃ¡ Mundo ðŸŽ‰',
         ]);
     }
 
     public function test_sql_injection_variants_in_fields(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $payloads = [
             '1; DROP TABLE tickets; --',

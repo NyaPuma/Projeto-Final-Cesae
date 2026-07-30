@@ -31,6 +31,6 @@ export function getFormData() {
         title: document.getElementById('ticketTitle')?.value.trim() || '',
         description: document.getElementById('ticketDescription')?.value.trim() || '',
         priority: getPriorityInput()?.value || 'media',
-        equipmentId: document.getElementById('equipmentId')?.value.trim() || '',
+        equipmentId: document.getElementById('selectedEquipmentId')?.value.trim() || '',
     };
 }

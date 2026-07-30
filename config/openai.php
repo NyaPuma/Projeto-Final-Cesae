@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
 
     /*
@@ -45,5 +47,5 @@ return [
     | for a response. By default, the client will time out after 30 seconds.
     */
 
-    'request_timeout' => env('OPENAI_REQUEST_TIMEOUT', 30),
+    'request_timeout' => (int) env('OPENAI_REQUEST_TIMEOUT', 30),
 ];

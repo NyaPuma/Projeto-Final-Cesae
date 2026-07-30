@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,15 +19,15 @@ class AuthEdgeCasesTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::create(['name' => User::ROLE_USER]);
-        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::create(['name' => User::ROLE_ADMIN]);
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
+        UserProfile::create(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::create(['name' => UserRoleEnum::Admin->value]);
     }
 
     public function test_register_rejects_duplicate_email(): void
     {
-        $adminProfile = UserProfile::where('name', User::ROLE_ADMIN)->firstOrFail();
-        $userProfile = UserProfile::where('name', User::ROLE_USER)->firstOrFail();
+        $adminProfile = UserProfile::where('name', UserRoleEnum::Admin->value)->firstOrFail();
+        $userProfile = UserProfile::where('name', UserRoleEnum::User->value)->firstOrFail();
 
         $admin = User::factory()->create([
             'profile_id' => $adminProfile->id,
@@ -56,7 +58,7 @@ class AuthEdgeCasesTest extends TestCase
     public function test_login_rejects_inactive_user(): void
     {
         $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->firstOrFail()->id,
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->firstOrFail()->id,
             'api_token' => Str::random(60),
             'active' => false,
             'password' => Hash::make('Password123!'),
@@ -74,7 +76,7 @@ class AuthEdgeCasesTest extends TestCase
     public function test_login_replaces_api_token_and_invalidates_old_token(): void
     {
         $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->firstOrFail()->id,
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->firstOrFail()->id,
             'active' => true,
             'password' => Hash::make('Password123!'),
             'api_token' => Str::random(60),
@@ -98,7 +100,7 @@ class AuthEdgeCasesTest extends TestCase
     public function test_password_change_rejects_wrong_current_password(): void
     {
         $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->firstOrFail()->id,
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->firstOrFail()->id,
             'active' => true,
             'password' => Hash::make('Password123!'),
             'api_token' => Str::random(60),
@@ -121,7 +123,7 @@ class AuthEdgeCasesTest extends TestCase
     public function test_password_change_requires_new_password_min_8(): void
     {
         $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->firstOrFail()->id,
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->firstOrFail()->id,
             'active' => true,
             'password' => Hash::make('Password123!'),
             'api_token' => Str::random(60),
@@ -140,7 +142,7 @@ class AuthEdgeCasesTest extends TestCase
     public function test_logout_clears_api_token_in_database(): void
     {
         $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->firstOrFail()->id,
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->firstOrFail()->id,
             'active' => true,
             'password' => Hash::make('Password123!'),
             'api_token' => Str::random(60),

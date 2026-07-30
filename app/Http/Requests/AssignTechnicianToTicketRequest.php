@@ -1,20 +1,51 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 final class AssignTechnicianToTicketRequest extends FormRequest
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     */
     public function authorize(): bool
     {
         return true;
     }
 
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
     public function rules(): array
     {
         return [
-            'tecnico_id' => ['required', 'exists:users,id'],
+            'technician_id' => [
+                'required',
+                'integer',
+                Rule::exists('users', 'id'),
+            ],
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'technician_id' => __('técnico'),
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'technician_id.required' => __('O campo técnico é obrigatório.'),
+            'technician_id.integer' => __('O identificador do técnico deve ser um número inteiro.'),
+            'technician_id.exists' => __('O técnico selecionado é inválido.'),
         ];
     }
 }

@@ -16,11 +16,14 @@ class TicketAttachmentFactory extends Factory
 
     public function definition(): array
     {
+        $fileName = $this->faker->fileName();
+
         return [
             'ticket_id' => Ticket::factory(),
             'user_id' => User::factory(),
-            'file_name' => $this->faker->fileName(),
-            'path' => 'ticket_photos/'.$this->faker->fileName(),
+            'original_name' => $fileName . '.jpg',
+            'file_name' => $fileName,
+            'path' => 'ticket_photos/' . $fileName . '.jpg',
             'mime_type' => 'image/jpeg',
             'size' => $this->faker->numberBetween(1024, 1024 * 500),
         ];

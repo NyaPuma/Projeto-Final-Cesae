@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
@@ -20,9 +22,9 @@ class SecurityInputValidationTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::create(['name' => User::ROLE_USER]);
-        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::create(['name' => User::ROLE_ADMIN]);
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
+        UserProfile::create(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::create(['name' => UserRoleEnum::Admin->value]);
         $this->artisan('db:seed', ['--class' => 'TicketLookupSeeder', '--force' => true]);
     }
 
@@ -39,7 +41,7 @@ class SecurityInputValidationTest extends TestCase
 
     public function test_sql_injection_in_ticket_title_is_sanitized(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
         $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
@@ -61,7 +63,7 @@ class SecurityInputValidationTest extends TestCase
 
     public function test_xss_payload_in_description_is_stored_safely(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
         $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $xssPayload = '<script>alert("XSS")</script>';
@@ -84,8 +86,8 @@ class SecurityInputValidationTest extends TestCase
 
     public function test_html_injection_in_comment_is_stored_safely(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
-        $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
         $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
@@ -115,7 +117,7 @@ class SecurityInputValidationTest extends TestCase
 
     public function test_mass_assignment_protection_on_ticket_creation(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
         $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
@@ -145,7 +147,7 @@ class SecurityInputValidationTest extends TestCase
 
     public function test_unexpected_fields_are_ignored(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
         $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
@@ -164,7 +166,7 @@ class SecurityInputValidationTest extends TestCase
 
     public function test_very_long_input_is_rejected(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
         $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UploadPhotoRequest;
+use App\Http\Resources\TicketAttachmentResource;
 use App\Models\Ticket;
 use App\Models\TicketAttachment;
 use Illuminate\Http\JsonResponse;
@@ -10,33 +11,37 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class TicketAttachmentController extends Controller
+final class TicketAttachmentController extends Controller
 {
     private const ALLOWED_MIMES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
 
-    public function store(UploadPhotoRequest $request, int $id): JsonResponse
+    /**
+     * Faz o upload e associa uma nova fotografia a um ticket.
+     */
+    public function store(UploadPhotoRequest $request, Ticket $ticket): JsonResponse
     {
-        $user = $this->authenticatedUser($request);
-        $ticket = Ticket::findOrFail($id);
-
-        if (! $user->can('view', $ticket)) {
-            return response()->json(['message' => 'Acesso negado'], 403);
-        }
+        // 1. Autorização via Policy
+        $this->authorize('update', $ticket);
 
         $file = $request->file('photo');
         $realMime = $file->getMimeType();
 
+        // 2. Validação adicional de segurança do Mime Type real
         if (! in_array($realMime, self::ALLOWED_MIMES, true)) {
-            return response()->json(['message' => 'Tipo de ficheiro não permitido'], 422);
+            return response()->json([
+                'message' => __('Tipo de ficheiro não permitido.'),
+            ], 422);
         }
 
-        $path = $file->store('ticket_photos', 'public');
+        // 3. Processamento seguro do nome do ficheiro e gravação no storage
         $extension = $file->getClientOriginalExtension();
-        $safeFilename = Str::uuid().'.'.$extension;
+        $safeFilename = Str::uuid() . '.' . $extension;
+        $path = $file->storeAs('ticket_photos', $safeFilename, 'public');
 
+        // 4. Registo do anexo na base de dados
         $attachment = TicketAttachment::create([
             'ticket_id' => $ticket->id,
-            'user_id' => $user->id,
+            'user_id' => $request->user()->id,
             'file_name' => $safeFilename,
             'path' => $path,
             'mime_type' => $realMime,
@@ -44,39 +49,51 @@ class TicketAttachmentController extends Controller
         ]);
 
         return response()->json([
-            'attachment' => $attachment,
-            'url' => asset("storage/{$path}"),
+            'message' => __('Fotografia carregada com sucesso.'),
+            'attachment' => new TicketAttachmentResource($attachment),
         ], 201);
     }
 
-    public function index(Request $request, int $id): JsonResponse
+    /**
+     * Lista todos os anexos associados a um ticket.
+     */
+    public function index(Request $request, Ticket $ticket): JsonResponse
     {
-        $user = $this->authenticatedUser($request);
-        $ticket = Ticket::with('attachments')->findOrFail($id);
+        // 1. Autorização via Policy
+        $this->authorize('view', $ticket);
 
-        if (! $user->can('view', $ticket)) {
-            return response()->json(['message' => 'Acesso negado'], 403);
-        }
+        $ticket->loadMissing('attachments');
 
-        return response()->json(['attachments' => $ticket->attachments]);
+        return response()->json([
+            'attachments' => TicketAttachmentResource::collection($ticket->attachments),
+        ]);
     }
 
-    public function destroy(Request $request, int $id, int $photoId): JsonResponse
+    /**
+     * Remove um anexo específico de um ticket.
+     */
+    public function destroy(Request $request, Ticket $ticket, TicketAttachment $attachment): JsonResponse
     {
-        $user = $this->authenticatedUser($request);
-        $ticket = Ticket::findOrFail($id);
-        $attachment = TicketAttachment::where('ticket_id', $ticket->id)->findOrFail($photoId);
+        // 1. Autorização via Policy específica para eliminação de fotos
+        $this->authorize('deletePhoto', $ticket);
 
-        if ($user->cannot('deletePhoto', $ticket)) {
-            return response()->json(['message' => 'Acesso negado'], 403);
+        // 2. Garante integridade relacional entre o anexo e o ticket
+        if ($attachment->ticket_id !== $ticket->id) {
+            return response()->json([
+                'message' => __('Anexo não encontrado para este ticket.'),
+            ], 404);
         }
 
+        // 3. Remove o ficheiro físico do storage se existir
         if (Storage::disk('public')->exists($attachment->path)) {
             Storage::disk('public')->delete($attachment->path);
         }
 
+        // 4. Elimina o registo da base de dados
         $attachment->delete();
 
-        return response()->json(['message' => 'Fotografia removida com sucesso.']);
+        return response()->json([
+            'message' => __('Fotografia removida com sucesso.'),
+        ]);
     }
 }

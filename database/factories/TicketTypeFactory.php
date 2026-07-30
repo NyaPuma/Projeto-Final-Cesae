@@ -20,6 +20,7 @@ class TicketTypeFactory extends Factory
                 'Software',
                 'Rede / Internet',
             ]),
+            'code' => 'TYPE-' . strtoupper($this->faker->unique()->lexify('????')),
             'description' => $this->faker->sentence(12),
         ];
     }

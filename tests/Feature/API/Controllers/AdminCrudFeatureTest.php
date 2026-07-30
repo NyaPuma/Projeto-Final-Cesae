@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\Equipment;
 use App\Models\Room;
 use App\Models\User;
@@ -18,9 +20,9 @@ class AdminCrudFeatureTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::create(['name' => User::ROLE_USER]);
-        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::create(['name' => User::ROLE_ADMIN]);
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
+        UserProfile::create(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::create(['name' => UserRoleEnum::Admin->value]);
         $this->artisan('db:seed', ['--class' => 'TicketLookupSeeder', '--force' => true]);
     }
 
@@ -35,12 +37,12 @@ class AdminCrudFeatureTest extends TestCase
         ]);
     }
 
-    // ─── User CRUD ───────────────────────────────────────────────────────
+    // â”€â”€â”€ User CRUD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     public function test_admin_can_create_user(): void
     {
-        $admin = $this->createUserWithToken(User::ROLE_ADMIN);
-        $userProfile = UserProfile::where('name', User::ROLE_USER)->first();
+        $admin = $this->createUserWithToken(UserRoleEnum::Admin->value);
+        $userProfile = UserProfile::where('name', UserRoleEnum::User->value)->first();
 
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)
             ->postJson('/admin/users', [
@@ -48,7 +50,7 @@ class AdminCrudFeatureTest extends TestCase
                 'email' => 'newuser@example.com',
                 'password' => 'Password123!',
                 'password_confirmation' => 'Password123!',
-                'role' => User::ROLE_USER,
+                'role' => UserRoleEnum::User->value,
                 'profile_id' => $userProfile->id,
             ]);
 
@@ -61,7 +63,7 @@ class AdminCrudFeatureTest extends TestCase
 
     public function test_non_admin_cannot_create_user(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/admin/users', [
@@ -77,8 +79,8 @@ class AdminCrudFeatureTest extends TestCase
 
     public function test_admin_can_update_user(): void
     {
-        $admin = $this->createUserWithToken(User::ROLE_ADMIN);
-        $targetUser = $this->createUserWithToken(User::ROLE_USER);
+        $admin = $this->createUserWithToken(UserRoleEnum::Admin->value);
+        $targetUser = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)
             ->patchJson("/admin/users/{$targetUser->id}", [
@@ -94,8 +96,8 @@ class AdminCrudFeatureTest extends TestCase
 
     public function test_admin_can_inactivate_user(): void
     {
-        $admin = $this->createUserWithToken(User::ROLE_ADMIN);
-        $targetUser = $this->createUserWithToken(User::ROLE_USER);
+        $admin = $this->createUserWithToken(UserRoleEnum::Admin->value);
+        $targetUser = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)
             ->patchJson("/admin/users/{$targetUser->id}/inactive");
@@ -107,11 +109,11 @@ class AdminCrudFeatureTest extends TestCase
         ]);
     }
 
-    // ─── Equipment CRUD ──────────────────────────────────────────────────
+    // â”€â”€â”€ Equipment CRUD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     public function test_admin_can_create_equipment(): void
     {
-        $admin = $this->createUserWithToken(User::ROLE_ADMIN);
+        $admin = $this->createUserWithToken(UserRoleEnum::Admin->value);
         $room = Room::create(['name' => 'Server Room', 'location' => 'Floor 2', 'active' => true]);
 
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)
@@ -131,7 +133,7 @@ class AdminCrudFeatureTest extends TestCase
 
     public function test_admin_can_update_equipment(): void
     {
-        $admin = $this->createUserWithToken(User::ROLE_ADMIN);
+        $admin = $this->createUserWithToken(UserRoleEnum::Admin->value);
         $room = Room::create(['name' => 'Workshop A', 'location' => 'Ground Floor', 'active' => true]);
         $equipment = Equipment::create([
             'name' => 'Old Drill',
@@ -156,7 +158,7 @@ class AdminCrudFeatureTest extends TestCase
 
     public function test_admin_can_delete_equipment(): void
     {
-        $admin = $this->createUserWithToken(User::ROLE_ADMIN);
+        $admin = $this->createUserWithToken(UserRoleEnum::Admin->value);
         $room = Room::create(['name' => 'Storage', 'location' => 'Basement', 'active' => true]);
         $equipment = Equipment::create([
             'name' => 'Old Machine',
@@ -172,11 +174,11 @@ class AdminCrudFeatureTest extends TestCase
         $this->assertSoftDeleted('equipments', ['id' => $equipment->id]);
     }
 
-    // ─── Room CRUD ───────────────────────────────────────────────────────
+    // â”€â”€â”€ Room CRUD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     public function test_admin_can_create_room(): void
     {
-        $admin = $this->createUserWithToken(User::ROLE_ADMIN);
+        $admin = $this->createUserWithToken(UserRoleEnum::Admin->value);
 
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)
             ->postJson('/admin/rooms', [
@@ -193,7 +195,7 @@ class AdminCrudFeatureTest extends TestCase
 
     public function test_admin_can_update_room(): void
     {
-        $admin = $this->createUserWithToken(User::ROLE_ADMIN);
+        $admin = $this->createUserWithToken(UserRoleEnum::Admin->value);
         $room = Room::create(['name' => 'Old Lab', 'location' => 'Floor 1', 'active' => true]);
 
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)
@@ -210,7 +212,7 @@ class AdminCrudFeatureTest extends TestCase
 
     public function test_admin_can_inactivate_room(): void
     {
-        $admin = $this->createUserWithToken(User::ROLE_ADMIN);
+        $admin = $this->createUserWithToken(UserRoleEnum::Admin->value);
         $room = Room::create(['name' => 'Decommissioned Room', 'location' => 'Floor 5', 'active' => true]);
 
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)

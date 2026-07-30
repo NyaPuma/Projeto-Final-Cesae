@@ -119,6 +119,10 @@
             color: #a1a09a;
             text-align: center;
         }
+        .footer-text {
+            margin: 0;
+            text-transform: uppercase;
+        }
     </style>
 </head>
 <body>
@@ -155,7 +159,7 @@
 
                 {{-- Rodapé Sistémico --}}
                 <div class="footer">
-                    <p style="margin: 0; text-transform: uppercase;">Esta é uma notificação compulsória de segurança • Não responda</p>
+                    <p class="footer-text">Esta é uma notificação compulsória de segurança • Não responda</p>
                 </div>
             </td>
         </tr>

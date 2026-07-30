@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Enums\UserRoleEnum;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -16,9 +19,10 @@ use Illuminate\Notifications\Notifiable;
  */
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, SoftDeletes;
+    use HasFactory;
+    use Notifiable;
+    use SoftDeletes;
 
-    /** @var string */
     protected $table = 'users';
 
     /** @var list<string> */
@@ -31,6 +35,14 @@ class User extends Authenticatable
         'api_token',
         'token_created_at',
         'remember_token',
+        'avatar_path',
+        'avatar_disk',
+        'email_verified_at',
+        'password_changed_at',
+        'last_login_at',
+        'last_login_ip',
+        'login_attempts',
+        'locked_until',
     ];
 
     /** @var list<string> */
@@ -40,42 +52,30 @@ class User extends Authenticatable
         'api_token',
     ];
 
-    /** @var array<string, string> */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'token_created_at' => 'datetime',
-        'active' => 'boolean',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'token_created_at' => 'datetime',
+            'password_changed_at' => 'datetime',
+            'last_login_at' => 'datetime',
+            'locked_until' => 'datetime',
+            'active' => 'boolean',
+            'login_attempts' => 'integer',
+            'password' => 'hashed',
+        ];
+    }
 
-    public const ROLE_USER = UserRoleEnum::User->value;
-
-    public const ROLE_TECHNICIAN = UserRoleEnum::Technician->value;
-
-    public const ROLE_ADMIN = UserRoleEnum::Admin->value;
+    // --- MÉTODOS DE ROLES / PERFIS ---
 
     public static function getAvailableRoles(): array
     {
-        return [self::ROLE_USER, self::ROLE_TECHNICIAN, self::ROLE_ADMIN];
+        return array_column(UserRoleEnum::cases(), 'value');
     }
 
     public static function isValidProfile(string $name): bool
     {
-        return in_array($name, self::getAvailableRoles(), true);
-    }
-
-    public function tickets(): HasMany
-    {
-        return $this->hasMany(Ticket::class, 'user_id');
-    }
-
-    public function assignedTickets(): HasMany
-    {
-        return $this->hasMany(Ticket::class, 'assigned_to');
-    }
-
-    public function profile(): BelongsTo
-    {
-        return $this->belongsTo(UserProfile::class, 'profile_id');
+        return UserRoleEnum::tryFrom($name) !== null;
     }
 
     public function isAdmin(): bool
@@ -93,13 +93,55 @@ class User extends Authenticatable
         return $this->profile?->name === UserRoleEnum::User->value;
     }
 
-    public function isCommon(): bool
+
+
+    // --- RELAÇÕES ---
+
+    /**
+     * Chamados/Tickets criados pelo utilizador.
+     */
+    public function tickets(): HasMany
     {
-        return $this->isCommonUser();
+        return $this->hasMany(Ticket::class, 'user_id');
     }
 
+    /**
+     * Chamados/Tickets atribuídos ao utilizador (técnico).
+     */
+    public function assignedTickets(): HasMany
+    {
+        return $this->hasMany(Ticket::class, 'assigned_to');
+    }
+
+    /**
+     * Perfil / Função do utilizador (Admin, Técnico, Utilizador).
+     */
+    public function profile(): BelongsTo
+    {
+        return $this->belongsTo(UserProfile::class, 'profile_id');
+    }
+
+    // --- SCOPES ---
+
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->where('active', true);
+    }
+
+    public function scopeTechnicians(Builder $query): Builder
+    {
+        return $query->whereHas('profile', static function (Builder $q): void {
+            $q->where('name', UserRoleEnum::Technician->value);
+        });
+    }
+
+    // --- HELPERS DA APLICAÇÃO ---
+
+    /**
+     * Gera uma hash HMAC SHA256 do token com a chave da aplicação.
+     */
     public static function hashToken(string $token): string
     {
-        return hash_hmac('sha256', $token, config('app.key'));
+        return hash_hmac('sha256', $token, (string) config('app.key'));
     }
 }

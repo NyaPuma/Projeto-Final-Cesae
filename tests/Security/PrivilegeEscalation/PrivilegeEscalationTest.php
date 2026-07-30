@@ -2,6 +2,8 @@
 
 namespace Tests\Security\PrivilegeEscalation;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserProfile;
@@ -17,12 +19,12 @@ class PrivilegeEscalationTest extends FeatureTestCase
     public function user_cannot_create_admin_account(): void
     {
         $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->first()->id,
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->first()->id,
             'api_token' => 'user-token',
             'active' => true,
         ]);
 
-        $adminProfile = UserProfile::where('name', User::ROLE_ADMIN)->first();
+        $adminProfile = UserProfile::where('name', UserRoleEnum::Admin->value)->first();
 
         $response = $this->withApiUser('user-token')
             ->postJson('/api/admin/users', [
@@ -40,12 +42,12 @@ class PrivilegeEscalationTest extends FeatureTestCase
     public function user_cannot_modify_their_profile_to_admin(): void
     {
         $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->first()->id,
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->first()->id,
             'api_token' => 'user-token',
             'active' => true,
         ]);
 
-        $adminProfile = UserProfile::where('name', User::ROLE_ADMIN)->first();
+        $adminProfile = UserProfile::where('name', UserRoleEnum::Admin->value)->first();
 
         $response = $this->withApiUser('user-token')
             ->patchJson('/api/admin/users/'.$user->id, [
@@ -59,12 +61,12 @@ class PrivilegeEscalationTest extends FeatureTestCase
     public function technician_cannot_promote_to_admin(): void
     {
         $technician = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_TECHNICIAN)->first()->id,
+            'profile_id' => UserProfile::where('name', UserRoleEnum::Technician->value)->first()->id,
             'api_token' => 'tech-token',
             'active' => true,
         ]);
 
-        $adminProfile = UserProfile::where('name', User::ROLE_ADMIN)->first();
+        $adminProfile = UserProfile::where('name', UserRoleEnum::Admin->value)->first();
 
         $response = $this->withApiUser('tech-token')
             ->postJson('/api/admin/users', [
@@ -82,7 +84,7 @@ class PrivilegeEscalationTest extends FeatureTestCase
     public function user_cannot_access_admin_endpoints(): void
     {
         $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->first()->id,
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->first()->id,
             'api_token' => 'user-token',
             'active' => true,
         ]);
@@ -97,7 +99,7 @@ class PrivilegeEscalationTest extends FeatureTestCase
     public function technician_cannot_access_admin_endpoints(): void
     {
         $technician = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_TECHNICIAN)->first()->id,
+            'profile_id' => UserProfile::where('name', UserRoleEnum::Technician->value)->first()->id,
             'api_token' => 'tech-token',
             'active' => true,
         ]);
@@ -112,7 +114,7 @@ class PrivilegeEscalationTest extends FeatureTestCase
     public function user_cannot_approve_budget(): void
     {
         $user = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->first()->id,
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->first()->id,
             'api_token' => 'user-token',
             'active' => true,
         ]);
@@ -132,7 +134,7 @@ class PrivilegeEscalationTest extends FeatureTestCase
     public function technician_cannot_approve_budget(): void
     {
         $technician = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_TECHNICIAN)->first()->id,
+            'profile_id' => UserProfile::where('name', UserRoleEnum::Technician->value)->first()->id,
             'api_token' => 'tech-token',
             'active' => true,
         ]);
@@ -152,7 +154,7 @@ class PrivilegeEscalationTest extends FeatureTestCase
     public function admin_can_approve_budget(): void
     {
         $admin = User::factory()->create([
-            'profile_id' => UserProfile::where('name', User::ROLE_ADMIN)->first()->id,
+            'profile_id' => UserProfile::where('name', UserRoleEnum::Admin->value)->first()->id,
             'api_token' => 'admin-token',
             'active' => true,
         ]);

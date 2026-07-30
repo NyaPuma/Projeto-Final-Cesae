@@ -40,11 +40,11 @@ final readonly class TicketKpiQuery
             SUM(CASE WHEN budget_status = ? THEN 1 ELSE 0 END) as budget_pending_tickets,
             SUM(CASE WHEN status_id = ? AND opened_at IS NOT NULL AND closed_at IS NOT NULL THEN 1 ELSE 0 END) as closed_tickets,
             AVG(CASE WHEN status_id = ? AND opened_at IS NOT NULL AND closed_at IS NOT NULL
-                THEN CAST((julianday(closed_at) - julianday(opened_at)) * 1440 AS INTEGER) END) as avg_resolution,
+                THEN TIMESTAMPDIFF(MINUTE, opened_at, closed_at) END) as avg_resolution,
             AVG(CASE WHEN status_id != ? AND opened_at IS NOT NULL
-                THEN CAST((julianday(datetime(\'now\')) - julianday(opened_at)) * 1440 AS INTEGER) END) as avg_waiting,
+                THEN TIMESTAMPDIFF(MINUTE, opened_at, NOW()) END) as avg_waiting,
             SUM(CASE WHEN status_id = ? AND opened_at IS NOT NULL AND closed_at IS NOT NULL
-                AND (julianday(closed_at) - julianday(opened_at)) * 1440 <= ? THEN 1 ELSE 0 END) as sla_met
+                AND TIMESTAMPDIFF(MINUTE, opened_at, closed_at) <= ? THEN 1 ELSE 0 END) as sla_met
         ', [
             $this->openStatusId,
             $this->inProgressStatusId,

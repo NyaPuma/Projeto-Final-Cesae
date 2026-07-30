@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repositories;
 
 use App\Models\Room;
@@ -8,16 +10,25 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 final class RoomRepository implements RoomRepositoryInterface
 {
+    /**
+     * {@inheritDoc}
+     */
     public function findById(int $id): ?Room
     {
         return Room::find($id);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getAll(array $relations = []): LengthAwarePaginator
     {
         return Room::with($relations)->latest()->paginate(15);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getActive(): array
     {
         return Room::where('active', true)
@@ -27,16 +38,25 @@ final class RoomRepository implements RoomRepositoryInterface
             ->toArray();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function create(array $data): Room
     {
         return Room::create($data);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function update(Room $room, array $data): bool
     {
         return $room->update($data);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function inactivate(Room $room): bool
     {
         return $room->update(['active' => false]);

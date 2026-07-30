@@ -2,6 +2,8 @@
 
 namespace Tests\Security\RateLimiting;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Support\Facades\Hash;
@@ -17,7 +19,7 @@ class RateLimitingTest extends FeatureTestCase
         User::factory()->create([
             'email' => 'bruteforce@example.com',
             'password' => Hash::make('Password123!'),
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->value('id'),
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->value('id'),
             'active' => true,
             'api_token' => Str::random(60),
         ]);
@@ -37,7 +39,7 @@ class RateLimitingTest extends FeatureTestCase
         User::factory()->create([
             'email' => 'rapid@example.com',
             'password' => Hash::make('Password123!'),
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->value('id'),
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->value('id'),
             'active' => true,
             'api_token' => Str::random(60),
         ]);
@@ -61,7 +63,7 @@ class RateLimitingTest extends FeatureTestCase
         User::factory()->create([
             'email' => 'resetcounter@example.com',
             'password' => Hash::make('Password123!'),
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->value('id'),
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->value('id'),
             'active' => true,
             'api_token' => Str::random(60),
         ]);
@@ -93,7 +95,7 @@ class RateLimitingTest extends FeatureTestCase
         User::factory()->create([
             'email' => 'ratelimit@example.com',
             'password' => Hash::make('Password123!'),
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->value('id'),
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->value('id'),
             'active' => true,
         ]);
 
@@ -122,7 +124,7 @@ class RateLimitingTest extends FeatureTestCase
         User::factory()->create([
             'email' => 'headers@example.com',
             'password' => Hash::make('Password123!'),
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->value('id'),
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->value('id'),
             'active' => true,
         ]);
 
@@ -144,7 +146,7 @@ class RateLimitingTest extends FeatureTestCase
         User::factory()->create([
             'email' => 'multiip@example.com',
             'password' => Hash::make('Password123!'),
-            'profile_id' => UserProfile::where('name', User::ROLE_USER)->value('id'),
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->value('id'),
             'active' => true,
         ]);
 

@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserProfile;
@@ -21,7 +23,7 @@ class SecurityVulnerabilitiesTest extends TestCase
 
     public function test_sql_injection_attempt_in_search_query_is_safely_escaped()
     {
-        $adminProfile = UserProfile::firstOrCreate(['name' => User::ROLE_ADMIN]);
+        $adminProfile = UserProfile::firstOrCreate(['name' => UserRoleEnum::Admin->value]);
         $user = User::factory()->create([
             'profile_id' => $adminProfile->id,
             'api_token' => Str::random(60),
@@ -43,7 +45,7 @@ class SecurityVulnerabilitiesTest extends TestCase
 
     public function test_xss_payload_in_ticket_description_does_not_execute_raw_script()
     {
-        $userProfile = UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
+        $userProfile = UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
         $operator = User::factory()->create([
             'profile_id' => $userProfile->id,
             'api_token' => Str::random(60),
@@ -56,7 +58,7 @@ class SecurityVulnerabilitiesTest extends TestCase
             ->postJson('/api/tickets', [
                 'title' => 'Avaria XSS Test',
                 'description' => $xssPayload,
-                'priority' => 'média',
+                'priority' => 'mÃ©dia',
             ]);
 
         $response->assertStatus(201);
@@ -67,7 +69,7 @@ class SecurityVulnerabilitiesTest extends TestCase
 
     public function test_broken_access_control_operator_cannot_create_users()
     {
-        $userProfile = UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
+        $userProfile = UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
         $operator = User::factory()->create([
             'profile_id' => $userProfile->id,
             'api_token' => Str::random(60),
@@ -81,7 +83,7 @@ class SecurityVulnerabilitiesTest extends TestCase
                 'email' => 'hacker@empresa.pt',
                 'password' => 'Password123!',
                 'password_confirmation' => 'Password123!',
-                'role' => User::ROLE_ADMIN,
+                'role' => UserRoleEnum::Admin->value,
                 'profile_id' => $userProfile->id,
             ]);
 

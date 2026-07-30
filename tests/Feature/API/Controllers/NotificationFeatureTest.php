@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Enums\BudgetStatusEnum;
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
@@ -23,9 +25,9 @@ class NotificationFeatureTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::create(['name' => User::ROLE_USER]);
-        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::create(['name' => User::ROLE_ADMIN]);
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
+        UserProfile::create(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::create(['name' => UserRoleEnum::Admin->value]);
         $this->artisan('db:seed', ['--class' => 'TicketLookupSeeder', '--force' => true]);
     }
 
@@ -44,8 +46,8 @@ class NotificationFeatureTest extends TestCase
     {
         Notification::fake();
 
-        $user = $this->createUserWithToken(User::ROLE_USER);
-        $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
         $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
@@ -77,8 +79,8 @@ class NotificationFeatureTest extends TestCase
     {
         Notification::fake();
 
-        $user = $this->createUserWithToken(User::ROLE_USER);
-        $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
         $inProgressId = app(TicketStatusService::class)->getByName(TicketStatusEnum::InProgress);
 
         $ticket = Ticket::create([
@@ -113,9 +115,9 @@ class NotificationFeatureTest extends TestCase
     {
         Notification::fake();
 
-        $admin = $this->createUserWithToken(User::ROLE_ADMIN);
-        $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $admin = $this->createUserWithToken(UserRoleEnum::Admin->value);
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
         $pendingId = app(TicketStatusService::class)->getByName(TicketStatusEnum::PendingBudget);
 
         $ticket = Ticket::create([

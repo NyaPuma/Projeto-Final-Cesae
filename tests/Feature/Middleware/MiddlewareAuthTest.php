@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\Userprofile as UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -18,9 +20,9 @@ class MiddlewareAuthTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::create(['name' => User::ROLE_USER]);
-        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::create(['name' => User::ROLE_ADMIN]);
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
+        UserProfile::create(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::create(['name' => UserRoleEnum::Admin->value]);
     }
 
     #[Test]
@@ -42,7 +44,7 @@ class MiddlewareAuthTest extends TestCase
             return response()->json(['message' => 'allowed']);
         });
 
-        $profile = UserProfile::where('name', User::ROLE_USER)->first();
+        $profile = UserProfile::where('name', UserRoleEnum::User->value)->first();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
             'api_token' => Str::random(60),
@@ -63,7 +65,7 @@ class MiddlewareAuthTest extends TestCase
             return response()->json(['message' => 'should not reach']);
         });
 
-        $profile = UserProfile::where('name', User::ROLE_USER)->first();
+        $profile = UserProfile::where('name', UserRoleEnum::User->value)->first();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
             'api_token' => Str::random(60),
@@ -103,7 +105,7 @@ class MiddlewareAuthTest extends TestCase
             return response()->json(['message' => 'admin access']);
         });
 
-        $adminProfile = UserProfile::where('name', User::ROLE_ADMIN)->first();
+        $adminProfile = UserProfile::where('name', UserRoleEnum::Admin->value)->first();
         $admin = User::factory()->create([
             'profile_id' => $adminProfile->id,
             'api_token' => Str::random(60),
@@ -124,7 +126,7 @@ class MiddlewareAuthTest extends TestCase
             return response()->json(['message' => 'should not reach']);
         });
 
-        $userProfile = UserProfile::where('name', User::ROLE_USER)->first();
+        $userProfile = UserProfile::where('name', UserRoleEnum::User->value)->first();
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,
             'api_token' => Str::random(60),
@@ -156,7 +158,7 @@ class MiddlewareAuthTest extends TestCase
             return response()->json(['message' => 'tech access']);
         });
 
-        $techProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
+        $techProfile = UserProfile::where('name', UserRoleEnum::Technician->value)->first();
         $tech = User::factory()->create([
             'profile_id' => $techProfile->id,
             'api_token' => Str::random(60),
@@ -177,7 +179,7 @@ class MiddlewareAuthTest extends TestCase
             return response()->json(['message' => 'admin ok']);
         });
 
-        $adminProfile = UserProfile::where('name', User::ROLE_ADMIN)->first();
+        $adminProfile = UserProfile::where('name', UserRoleEnum::Admin->value)->first();
         $admin = User::factory()->create([
             'profile_id' => $adminProfile->id,
             'api_token' => Str::random(60),

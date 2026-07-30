@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\Equipment;
 use App\Models\Room;
 use App\Models\User;
@@ -16,7 +18,7 @@ class EquipmentAndRoomCrudFeatureTest extends TestCase
 
     public function test_admin_can_perform_full_crud_on_rooms()
     {
-        $adminProfile = UserProfile::firstOrCreate(['name' => User::ROLE_ADMIN]);
+        $adminProfile = UserProfile::firstOrCreate(['name' => UserRoleEnum::Admin->value]);
         $admin = User::factory()->create([
             'profile_id' => $adminProfile->id,
             'api_token' => Str::random(60),
@@ -58,7 +60,7 @@ class EquipmentAndRoomCrudFeatureTest extends TestCase
 
     public function test_admin_can_perform_crud_on_equipment()
     {
-        $adminProfile = UserProfile::firstOrCreate(['name' => User::ROLE_ADMIN]);
+        $adminProfile = UserProfile::firstOrCreate(['name' => UserRoleEnum::Admin->value]);
         $admin = User::factory()->create([
             'profile_id' => $adminProfile->id,
             'api_token' => Str::random(60),
@@ -69,13 +71,13 @@ class EquipmentAndRoomCrudFeatureTest extends TestCase
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)
             ->actingAs($admin)
             ->postJson('/api/admin/equipment', [
-                'name' => 'Torno Mecânico X1',
+                'name' => 'Torno MecÃ¢nico X1',
                 'serial' => 'SN-99887766',
                 'room_id' => $room->id,
             ]);
 
         $response->assertStatus(201)
-            ->assertJsonPath('equipment.name', 'Torno Mecânico X1')
+            ->assertJsonPath('equipment.name', 'Torno MecÃ¢nico X1')
             ->assertJsonPath('equipment.room_id', $room->id);
 
         $equipId = $response->json('equipment.id');

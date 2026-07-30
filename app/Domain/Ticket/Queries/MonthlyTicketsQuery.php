@@ -39,17 +39,17 @@ final readonly class MonthlyTicketsQuery
         $endMonth = $this->now->copy()->endOfMonth()->toDateTimeString();
 
         return Ticket::query()
-            ->selectRaw('
-                strftime(\'%Y-%m\', opened_at) as month,
+            ->selectRaw("
+                DATE_FORMAT(opened_at, '%Y-%m') as month,
                 SUM(CASE WHEN status_id = ? THEN 1 ELSE 0 END) as open_count,
                 SUM(CASE WHEN status_id = ? THEN 1 ELSE 0 END) as in_progress_count,
                 SUM(CASE WHEN status_id = ? THEN 1 ELSE 0 END) as closed_count,
                 SUM(CASE WHEN status_id = ? AND closed_at IS NOT NULL AND cost IS NOT NULL THEN cost ELSE 0 END) as total_cost
-            ', [$this->openStatusId, $this->inProgressStatusId, $this->closedStatusId, $this->closedStatusId])
+            ", [$this->openStatusId, $this->inProgressStatusId, $this->closedStatusId, $this->closedStatusId])
             ->whereNull('tickets.deleted_at')
             ->whereNotNull('opened_at')
             ->whereBetween('opened_at', [$startMonth, $endMonth])
-            ->groupByRaw('strftime(\'%Y-%m\', opened_at)')
+            ->groupByRaw("DATE_FORMAT(opened_at, '%Y-%m')")
             ->get();
     }
 

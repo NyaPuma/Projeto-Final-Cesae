@@ -7,129 +7,190 @@ use App\Models\User;
 use App\Services\EquipmentService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
-class UiController extends Controller
+final class UiController extends Controller
 {
     public function __construct(
         private readonly EquipmentService $equipmentService,
     ) {}
 
-    public function index(Request $request)
+    /**
+     * Renderiza a página principal (dashboard) da aplicação.
+     */
+    public function index(Request $request): View
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user();
 
         return view('ui.index', ['user' => $user]);
     }
 
-    public function tickets(Request $request)
+    /**
+     * Renderiza a vista de gestão de tickets.
+     */
+    public function tickets(Request $request): View
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user();
 
         return view('ui.tickets', ['user' => $user]);
     }
 
-    public function ticketCreate(Request $request)
+    /**
+     * Renderiza o formulário de criação de tickets.
+     */
+    public function ticketCreate(Request $request): View
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user();
 
         return view('ui.ticket-create', ['user' => $user]);
     }
 
-    public function equipments(Request $request)
+    /**
+     * Renderiza a vista de gestão de equipamentos.
+     */
+    public function equipments(Request $request): View
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user();
 
         return view('ui.equipments', ['user' => $user]);
     }
 
-    public function users(Request $request)
+    /**
+     * Renderiza a vista de gestão de utilizadores.
+     */
+    public function users(Request $request): View
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user();
 
         return view('ui.users', ['user' => $user]);
     }
 
-    public function userCreate(Request $request)
+    /**
+     * Renderiza o formulário de criação de utilizadores.
+     */
+    public function userCreate(Request $request): View
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user();
 
         return view('ui.users-create', ['user' => $user]);
     }
 
-    public function userEdit(Request $request, int $id)
+    /**
+     * Renderiza o formulário de edição de um utilizador específico.
+     */
+    public function userEdit(Request $request, User $targetUser): View
     {
-        $user = $this->authenticatedUser($request);
-        $targetUser = User::with('profile')->findOrFail($id);
+        $user = $request->user();
+        $targetUser->loadMissing('profile');
 
-        return view('ui.users-edit', ['user' => $user, 'targetUser' => $targetUser]);
+        return view('ui.users-edit', [
+            'user' => $user,
+            'targetUser' => $targetUser,
+        ]);
     }
 
-    public function rooms(Request $request)
+    /**
+     * Renderiza a vista de gestão de salas.
+     */
+    public function rooms(Request $request): View
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user();
 
         return view('ui.rooms', ['user' => $user]);
     }
 
-    public function roomCreate(Request $request)
+    /**
+     * Renderiza o formulário de criação de salas.
+     */
+    public function roomCreate(Request $request): View
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user();
 
         return view('ui.rooms.create', ['user' => $user]);
     }
 
-    public function roomDetail(Request $request, int $id)
+    /**
+     * Renderiza o detalhe de uma sala específica.
+     */
+    public function roomDetail(Request $request, Room $room): View
     {
-        $user = $this->authenticatedUser($request);
-        $room = Room::findOrFail($id);
+        $user = $request->user();
 
-        return view('ui.rooms.show', ['room' => $room, 'user' => $user]);
+        return view('ui.rooms.show', [
+            'room' => $room,
+            'user' => $user,
+        ]);
     }
 
-    public function roomEdit(Request $request, int $id)
+    /**
+     * Renderiza o formulário de edição de uma sala específica.
+     */
+    public function roomEdit(Request $request, Room $room): View
     {
-        $user = $this->authenticatedUser($request);
-        $room = Room::findOrFail($id);
+        $user = $request->user();
 
-        return view('ui.rooms.edit', ['room' => $room, 'user' => $user]);
+        return view('ui.rooms.edit', [
+            'room' => $room,
+            'user' => $user,
+        ]);
     }
 
-    public function audits(Request $request)
+    /**
+     * Renderiza a vista de registos de auditoria do sistema.
+     */
+    public function audits(Request $request): View
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user();
 
         return view('ui.audits', ['user' => $user]);
     }
 
-    public function ticketDetail(Request $request, int $id)
+    /**
+     * Renderiza a vista de detalhe de um ticket específico.
+     */
+    public function ticketDetail(Request $request, int $id): View
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user();
 
-        return view('ui.ticket-detail', ['ticketId' => $id, 'user' => $user]);
+        return view('ui.ticket-detail', [
+            'ticketId' => $id,
+            'user' => $user,
+        ]);
     }
 
+    /**
+     * Endpoint JSON auxiliar para listagem paginada de equipamentos na interface.
+     */
     public function getEquipments(Request $request): JsonResponse
     {
-        $this->authenticatedUser($request);
+        $request->user();
 
         $equipments = $this->equipmentService->listPaginated(
             $request->query('q'),
             $request->query('status'),
         );
 
-        return response()->json(['equipments' => $equipments]);
+        return response()->json([
+            'equipments' => $equipments,
+        ]);
     }
 
-    public function analytics(Request $request)
+    /**
+     * Renderiza a vista de relatórios e análises estatísticas.
+     */
+    public function analytics(Request $request): View
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user();
 
         return view('ui.analytics', ['user' => $user]);
     }
 
-    public function profile(Request $request)
+    /**
+     * Renderiza a vista de perfil do utilizador autenticado.
+     */
+    public function profile(Request $request): View
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user();
 
         return view('ui.profile', ['user' => $user]);
     }

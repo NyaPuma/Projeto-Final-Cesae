@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\Equipment;
 use App\Models\Room;
 use App\Models\Ticket;
@@ -17,7 +19,7 @@ class PerformanceAndNPlusOneTest extends TestCase
 
     public function test_tickets_listing_uses_eager_loading_without_n_plus_one_queries()
     {
-        $techProfile = UserProfile::firstOrCreate(['name' => User::ROLE_TECHNICIAN]);
+        $techProfile = UserProfile::firstOrCreate(['name' => UserRoleEnum::Technician->value]);
         $technician = User::factory()->create(['profile_id' => $techProfile->id]);
         $room = Room::factory()->create();
         $equipment = Equipment::factory()->create(['room_id' => $room->id]);

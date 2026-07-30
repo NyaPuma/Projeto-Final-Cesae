@@ -2,6 +2,8 @@
 
 namespace Tests\Security\Authorization;
 
+
+use App\Enums\UserRoleEnum;
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
@@ -16,14 +18,14 @@ class AuthorizationSecurityTest extends FeatureTestCase
     #[Test]
     public function it_prevents_user_a_from_viewing_user_b_ticket(): void
     {
-        $userA = $this->createUserWithToken(User::ROLE_USER);
-        $userB = $this->createUserWithToken(User::ROLE_USER);
+        $userA = $this->createUserWithToken(UserRoleEnum::User->value);
+        $userB = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $openStatusId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
             'title' => 'Ticket do User B - confidencial',
-            'description' => 'Dados industriais sensíveis do User B',
+            'description' => 'Dados industriais sensÃ­veis do User B',
             'priority' => TicketPriorityEnum::High->value,
             'user_id' => $userB->id,
             'status_id' => $openStatusId,
@@ -39,7 +41,7 @@ class AuthorizationSecurityTest extends FeatureTestCase
         );
 
         if ($status === 200) {
-            \Log::critical('T3 — IDOR CONFIRMED: User A can view User B ticket via API', [
+            \Log::critical('T3 â€” IDOR CONFIRMED: User A can view User B ticket via API', [
                 'user_a' => $userA->id,
                 'user_b' => $userB->id,
                 'ticket_id' => $ticket->id,
@@ -50,13 +52,13 @@ class AuthorizationSecurityTest extends FeatureTestCase
     #[Test]
     public function it_prevents_user_a_from_listing_user_b_ticket_photos(): void
     {
-        $userA = $this->createUserWithToken(User::ROLE_USER);
-        $userB = $this->createUserWithToken(User::ROLE_USER);
+        $userA = $this->createUserWithToken(UserRoleEnum::User->value);
+        $userB = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $openStatusId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([
-            'title' => 'Ticket com fotos sensíveis',
+            'title' => 'Ticket com fotos sensÃ­veis',
             'description' => 'Fotos de equipamento industrial',
             'priority' => TicketPriorityEnum::Low->value,
             'user_id' => $userB->id,
@@ -74,7 +76,7 @@ class AuthorizationSecurityTest extends FeatureTestCase
         );
 
         if ($status === 200) {
-            \Log::critical('T3 — IDOR CONFIRMED: User A can list photos of User B ticket', [
+            \Log::critical('T3 â€” IDOR CONFIRMED: User A can list photos of User B ticket', [
                 'user_a' => $userA->id,
                 'ticket_id' => $ticket->id,
             ]);
@@ -86,9 +88,9 @@ class AuthorizationSecurityTest extends FeatureTestCase
     #[Test]
     public function it_prevents_privilege_escalation_via_profile_id(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
         $originalProfileId = $user->profile_id;
-        $adminProfile = UserProfile::firstOrCreate(['name' => User::ROLE_ADMIN]);
+        $adminProfile = UserProfile::firstOrCreate(['name' => UserRoleEnum::Admin->value]);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/api/profile/update', [
@@ -113,7 +115,7 @@ class AuthorizationSecurityTest extends FeatureTestCase
         }
 
         if ($user->profile_id == $adminProfile->id) {
-            \Log::critical('T4 — PRIVILEGE ESCALATION CONFIRMED', [
+            \Log::critical('T4 â€” PRIVILEGE ESCALATION CONFIRMED', [
                 'user_id' => $user->id,
                 'old_profile_id' => $originalProfileId,
                 'new_profile_id' => $user->profile_id,
@@ -129,7 +131,7 @@ class AuthorizationSecurityTest extends FeatureTestCase
     #[Test]
     public function it_prevents_operator_from_creating_users(): void
     {
-        $operator = $this->createUserWithToken(User::ROLE_USER);
+        $operator = $this->createUserWithToken(UserRoleEnum::User->value);
 
         $response = $this->withHeader('X-Auth-Token', $operator->api_token)
             ->actingAs($operator)
@@ -138,8 +140,8 @@ class AuthorizationSecurityTest extends FeatureTestCase
                 'email' => 'hacker@empresa.pt',
                 'password' => 'Password123!',
                 'password_confirmation' => 'Password123!',
-                'role' => User::ROLE_ADMIN,
-                'profile_id' => UserProfile::where('name', User::ROLE_USER)->value('id'),
+                'role' => UserRoleEnum::Admin->value,
+                'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->value('id'),
             ]);
 
         $response->assertStatus(403);

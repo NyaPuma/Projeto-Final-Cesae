@@ -2,6 +2,8 @@
 
 namespace Tests\Security\SQLInjection;
 
+
+use App\Enums\UserRoleEnum;
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
@@ -42,7 +44,7 @@ class SqlInjectionTest extends FeatureTestCase
             ->postJson('/api/tickets', [
                 'title' => 'Avaria XSS Test',
                 'description' => $xssPayload,
-                'priority' => 'média',
+                'priority' => 'mÃ©dia',
             ]);
 
         $response->assertStatus(201);
@@ -54,7 +56,7 @@ class SqlInjectionTest extends FeatureTestCase
     #[Test]
     public function it_sanitizes_sql_injection_in_ticket_title(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
         $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
@@ -77,7 +79,7 @@ class SqlInjectionTest extends FeatureTestCase
     #[Test]
     public function it_stores_xss_payload_in_description_safely(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
         $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $xssPayload = '<script>alert("XSS")</script>';
@@ -101,8 +103,8 @@ class SqlInjectionTest extends FeatureTestCase
     #[Test]
     public function it_stores_html_injection_in_comment_safely(): void
     {
-        $user = $this->createUserWithToken(User::ROLE_USER);
-        $technician = $this->createUserWithToken(User::ROLE_TECHNICIAN);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
         $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
 
         $ticket = Ticket::create([

@@ -4,79 +4,120 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
+use Throwable;
 
 class PartitionAudits extends Command
 {
     protected $signature = 'audit:partition
-                            {--months=12 : Number of months to keep partitions}
-                            {--dry-run : Show what would be done without making changes}';
+                            {--months=12 : Número de meses para reter partições antigas}
+                            {--months-ahead=3 : Número de meses futuros a criar antecipadamente}
+                            {--dry-run : Exibe as operações SQL sem as executar}';
 
-    protected $description = 'Create monthly partitions for the audits table to improve query performance on large datasets';
+    protected $description = 'Cria e remove partições de dados reais (ALTER TABLE) na tabela de audits';
 
     public function handle(): int
     {
-        $monthsAhead = 3;
+        $driver = DB::connection()->getDriverName();
+
+        if ($driver !== 'mysql') {
+            $this->warn("O particionamento nativo por RANGE nesta implementação suporta apenas MySQL/MariaDB. Driver atual: {$driver}");
+
+            return self::FAILURE;
+        }
+
+        $monthsAhead = (int) $this->option('months-ahead');
         $monthsToKeep = (int) $this->option('months');
-        $dryRun = $this->option('dry-run');
+        $dryRun = (bool) $this->option('dry-run');
 
-        if (! config('database.connections.mysql.slow_query_log', false) && ! $dryRun) {
-            // This command is primarily for MySQL with large audit tables.
-            // It creates timestamp-based partition markers in a reference table.
+        $this->info('A verificar partições da tabela audits...');
+
+        try {
+            $this->createFuturePartitions($monthsAhead, $dryRun);
+            $this->dropOldPartitions($monthsToKeep, $dryRun);
+
+            $this->info('Gestão de partições concluída com sucesso.');
+
+            return self::SUCCESS;
+        } catch (Throwable $e) {
+            $this->error("Erro ao gerir partições: {$e->getMessage()}");
+
+            return self::FAILURE;
         }
+    }
 
-        $this->info('Auditing partition management');
+    private function createFuturePartitions(int $monthsAhead, bool $dryRun): void
+    {
+        $existingPartitions = $this->getExistingPartitions();
 
-        if (! Schema::hasTable('audit_partitions')) {
-            Schema::create('audit_partitions', function ($table) {
-                $table->id();
-                $table->string('partition_name');
-                $table->date('starts_at');
-                $table->date('ends_at');
-                $table->integer('row_count')->default(0);
-                $table->timestamps();
-            });
-            $this->info('Created audit_partitions tracking table.');
-        }
+        for ($i = 0; $i <= $monthsAhead; $i++) {
+            // Garante o início exato do mês para evitar bugs com meses de 28/30/31 dias
+            $date = now()->startOfMonth()->addMonths($i);
+            $partitionName = 'p_' . $date->format('Y_m');
 
-        $existingPartitions = DB::table('audit_partitions')->pluck('partition_name')->toArray();
-
-        for ($i = 0; $i < $monthsAhead; $i++) {
-            $start = now()->addMonths($i)->startOfMonth();
-            $end = $start->copy()->endOfMonth();
-            $name = 'audits_'.$start->format('Y_m');
-
-            if (in_array($name, $existingPartitions, true)) {
+            if (in_array($partitionName, $existingPartitions, true)) {
                 continue;
             }
 
+            // O limite LESS THAN deve ser o primeiro dia do MÊS SEGUINTE às 00:00:00
+            $upperBound = $date->copy()->addMonth()->startOfMonth()->format('Y-m-d H:i:s');
+
+            $sql = sprintf(
+                "ALTER TABLE audits REORGANIZE PARTITION p_future INTO (
+                    PARTITION %s VALUES LESS THAN ('%s'),
+                    PARTITION p_future VALUES LESS THAN (MAXVALUE)
+                );",
+                $partitionName,
+                $upperBound
+            );
+
             if ($dryRun) {
-                $this->info("[DRY-RUN] Would create partition: {$name} ({$start->toDateString()} to {$end->toDateString()})");
+                $this->info("[DRY-RUN] Executaria SQL: {$sql}");
             } else {
-                DB::table('audit_partitions')->insert([
-                    'partition_name' => $name,
-                    'starts_at' => $start->toDateString(),
-                    'ends_at' => $end->toDateString(),
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
-                $this->info("Registered partition: {$name}");
+                DB::statement($sql);
+                $this->info("Partição criada no MySQL: {$partitionName} (dados < '{$upperBound}')");
             }
         }
+    }
 
-        if (! $dryRun) {
-            $cutoff = now()->subMonths($monthsToKeep)->startOfMonth();
-            $deleted = DB::table('audit_partitions')
-                ->where('starts_at', '<', $cutoff)
-                ->delete();
+    private function dropOldPartitions(int $monthsToKeep, bool $dryRun): void
+    {
+        $cutoffDate = now()->startOfMonth()->subMonths($monthsToKeep);
+        $cutoffPartitionName = 'p_' . $cutoffDate->format('Y_m');
 
-            if ($deleted > 0) {
-                $this->info("Removed {$deleted} partition(s) older than {$monthsToKeep} months.");
+        $existingPartitions = $this->getExistingPartitions();
+
+        foreach ($existingPartitions as $partition) {
+            // Filtra partições que seguem o padrão de nome (p_YYYY_MM)
+            if (! preg_match('/^p_(\d{4})_(\d{2})$/', $partition, $matches)) {
+                continue;
+            }
+
+            // Se o nome da partição for estritamente menor que a partição do limite de retenção
+            if ($partition < $cutoffPartitionName) {
+                $sql = "ALTER TABLE audits DROP PARTITION {$partition};";
+
+                if ($dryRun) {
+                    $this->info("[DRY-RUN] Executaria SQL para apagar: {$sql}");
+                } else {
+                    DB::statement($sql);
+                    $this->warn("Partição antiga eliminada com sucesso (DROP PARTITION): {$partition}");
+                }
             }
         }
+    }
 
-        $this->info('Partition management complete.');
+    /**
+     * Obtém as partições ativas diretamente do repositório do MySQL.
+     */
+    private function getExistingPartitions(): array
+    {
+        $databaseName = DB::connection()->getDatabaseName();
 
-        return Command::SUCCESS;
+        return DB::table('information_schema.partitions')
+            ->where('table_schema', $databaseName)
+            ->where('table_name', 'audits')
+            ->whereNotNull('partition_name')
+            ->pluck('partition_name')
+            ->toArray();
     }
 }

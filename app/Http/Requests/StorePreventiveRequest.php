@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 final class StorePreventiveRequest extends FormRequest
 {
@@ -11,13 +15,46 @@ final class StorePreventiveRequest extends FormRequest
         return true;
     }
 
+    /**
+     * Remove espaços extras dos campos de texto antes da validação.
+     */
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'title' => $this->filled('title') ? trim((string) $this->title) : $this->title,
+            'description' => $this->filled('description') ? trim((string) $this->description) : $this->description,
+        ]);
+    }
+
     public function rules(): array
     {
         return [
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
-            'scheduled_at' => ['required', 'date'],
-            'technician_id' => ['nullable', 'integer', 'exists:users,id'],
+            'scheduled_at' => [
+                'required',
+                'date',
+                'date_format:Y-m-d\TH:i,Y-m-d H:i:s,Y-m-d',
+                'after_or_equal:today',
+            ],
+            'technician_id' => [
+                'nullable',
+                'integer',
+                Rule::exists(User::class, 'id'),
+            ],
+        ];
+    }
+
+    /**
+     * Nomes amigáveis dos atributos para as mensagens de erro.
+     */
+    public function attributes(): array
+    {
+        return [
+            'title' => 'título da preventiva',
+            'description' => 'descrição',
+            'scheduled_at' => 'data de agendamento',
+            'technician_id' => 'técnico responsável',
         ];
     }
 }

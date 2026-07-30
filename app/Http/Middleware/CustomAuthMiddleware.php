@@ -9,9 +9,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
-class CustomAuthMiddleware
+final class CustomAuthMiddleware
 {
-
+    /**
+     * Handle an incoming request.
+     */
     public function handle(Request $request, Closure $next): Response
     {
         $candidates = $this->collectTokenCandidates($request);
@@ -24,7 +26,10 @@ class CustomAuthMiddleware
         [$user, $token] = $this->findUserByTokens($tokensToTry);
 
         if (! $user) {
-            return $this->invalidTokenResponse($request, $request->cookies->has('api_token') || $request->cookies->has('auth_token'));
+            return $this->invalidTokenResponse(
+                $request,
+                $request->cookies->has('api_token') || $request->cookies->has('auth_token')
+            );
         }
 
         if ($this->hasInvalidProfile($user)) {
@@ -41,6 +46,9 @@ class CustomAuthMiddleware
         return $next($request);
     }
 
+    /**
+     * Recolhe todos os candidatos a token de autenticação do pedido.
+     */
     private function collectTokenCandidates(Request $request): array
     {
         $sessionToken = null;
@@ -59,6 +67,9 @@ class CustomAuthMiddleware
         ], fn ($v) => is_string($v) && $v !== '');
     }
 
+    /**
+     * Resolve quais os tokens a tentar validar com base na precedência do pedido.
+     */
     private function resolveTokensToTry(Request $request, array $candidates): array
     {
         $explicitToken = reset($candidates);
@@ -68,14 +79,25 @@ class CustomAuthMiddleware
             : $candidates;
     }
 
+    /**
+     * Procura um utilizador válido através dos tokens candidatos.
+     */
     private function findUserByTokens(array $tokens): array
     {
         foreach ($tokens as $candidate) {
             $tokenHash = User::hashToken($candidate);
-            $found = User::with('profile')->where('api_token', $tokenHash)->where('active', true)->whereNull('deleted_at')->first();
+            $found = User::with('profile')
+                ->where('api_token', $tokenHash)
+                ->where('active', true)
+                ->whereNull('deleted_at')
+                ->first();
 
             if (! $found && app()->environment('testing')) {
-                $found = User::with('profile')->where('api_token', $candidate)->where('active', true)->whereNull('deleted_at')->first();
+                $found = User::with('profile')
+                    ->where('api_token', $candidate)
+                    ->where('active', true)
+                    ->whereNull('deleted_at')
+                    ->first();
             }
 
             if ($found) {
@@ -86,11 +108,17 @@ class CustomAuthMiddleware
         return [null, null];
     }
 
+    /**
+     * Verifica se o utilizador possui um perfil inválido ou inexistente.
+     */
     private function hasInvalidProfile(User $user): bool
     {
         return ! $user->profile_id || ! $user->profile?->name;
     }
 
+    /**
+     * Verifica se o token de acesso do utilizador expirou.
+     */
     private function isTokenExpired(User $user): bool
     {
         if (app()->environment('testing')) {
@@ -107,11 +135,14 @@ class CustomAuthMiddleware
         return true;
     }
 
+    /**
+     * Retorna a resposta para pedidos não autenticados.
+     */
     private function unauthenticatedResponse(Request $request): Response
     {
         if ($request->expectsJson() || $request->wantsJson()) {
             return response()->json([
-                'message' => 'Autentica├º├úo necess├íria. Envie X-Auth-Token no cabe├ºalho.',
+                'message' => __('Autenticação necessária. Envie X-Auth-Token no cabeçalho.'),
                 'error_code' => 401,
             ], 401);
         }
@@ -119,19 +150,20 @@ class CustomAuthMiddleware
         return redirect('/ui/login');
     }
 
+    /**
+     * Retorna a resposta para tokens inválidos ou utilizador inativo.
+     */
     private function invalidTokenResponse(Request $request, bool $hasCookie): Response
     {
         if ($request->expectsJson() || $request->wantsJson()) {
             $response = response()->json([
-                'message' => 'Token inv├ílido ou utilizador inativo.',
+                'message' => __('Token inválido ou utilizador inativo.'),
                 'error_code' => 401,
                 'errors' => ['api_token' => ['Invalid or user is inactive.']],
             ], 401);
 
             return $hasCookie
-                ? $response
-                    ->withCookie(cookie()->forget('api_token'))
-                    ->withCookie(cookie()->forget('auth_token'))
+                ? $response->withCookie(cookie()->forget('api_token'))->withCookie(cookie()->forget('auth_token'))
                 : $response;
         }
 
@@ -144,11 +176,14 @@ class CustomAuthMiddleware
         return redirect('/ui/login');
     }
 
+    /**
+     * Retorna a resposta para perfis inválidos.
+     */
     private function invalidProfileResponse(Request $request): Response
     {
         if ($request->expectsJson() || $request->wantsJson()) {
             return response()->json([
-                'message' => 'Perfil inv├ílido.',
+                'message' => __('Perfil inválido.'),
                 'error_code' => 403,
                 'errors' => ['profile_id' => ['User must have a valid profile assigned.']],
             ], 403);
@@ -157,11 +192,14 @@ class CustomAuthMiddleware
         return redirect('/ui/login');
     }
 
+    /**
+     * Retorna a resposta para tokens expirados.
+     */
     private function expiredTokenResponse(Request $request): Response
     {
         if ($request->expectsJson() || $request->wantsJson()) {
             return response()->json([
-                'message' => 'Token expirado. Fa├ºa login novamente.',
+                'message' => __('Token expirado. Faça login novamente.'),
                 'error_code' => 401,
             ], 401);
         }

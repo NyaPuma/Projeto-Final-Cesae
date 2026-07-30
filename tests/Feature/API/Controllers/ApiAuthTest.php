@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\Userprofile as UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -19,9 +21,9 @@ class ApiAuthTest extends TestCase
     {
         parent::setUp();
 
-        UserProfile::create(['name' => User::ROLE_USER]);
-        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::create(['name' => User::ROLE_ADMIN]);
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
+        UserProfile::create(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::create(['name' => UserRoleEnum::Admin->value]);
     }
 
     private function createAuthenticatedRoute(): void
@@ -36,7 +38,7 @@ class ApiAuthTest extends TestCase
     {
         $this->createAuthenticatedRoute();
 
-        $profile = UserProfile::where('name', User::ROLE_USER)->first();
+        $profile = UserProfile::where('name', UserRoleEnum::User->value)->first();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
             'api_token' => Str::random(60),
@@ -98,7 +100,7 @@ class ApiAuthTest extends TestCase
     {
         $this->createAuthenticatedRoute();
 
-        $profile = UserProfile::where('name', User::ROLE_USER)->first();
+        $profile = UserProfile::where('name', UserRoleEnum::User->value)->first();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
             'api_token' => Str::random(60),
@@ -127,7 +129,7 @@ class ApiAuthTest extends TestCase
     {
         $this->createAuthenticatedRoute();
 
-        $profile = UserProfile::where('name', User::ROLE_USER)->first();
+        $profile = UserProfile::where('name', UserRoleEnum::User->value)->first();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
             'api_token' => Str::random(60),
@@ -145,7 +147,7 @@ class ApiAuthTest extends TestCase
     {
         $this->createAuthenticatedRoute();
 
-        $profile = UserProfile::where('name', User::ROLE_USER)->first();
+        $profile = UserProfile::where('name', UserRoleEnum::User->value)->first();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
             'api_token' => Str::random(60),
@@ -164,7 +166,7 @@ class ApiAuthTest extends TestCase
     #[Test]
     public function token_is_not_leaked_in_user_response(): void
     {
-        $profile = UserProfile::where('name', User::ROLE_USER)->first();
+        $profile = UserProfile::where('name', UserRoleEnum::User->value)->first();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
             'api_token' => Str::random(60),
@@ -203,7 +205,7 @@ class ApiAuthTest extends TestCase
     #[Test]
     public function concurrent_logins_only_last_token_works(): void
     {
-        $profile = UserProfile::where('name', User::ROLE_USER)->first();
+        $profile = UserProfile::where('name', UserRoleEnum::User->value)->first();
         $user = User::factory()->create([
             'profile_id' => $profile->id,
             'password' => Hash::make('Password123!'),

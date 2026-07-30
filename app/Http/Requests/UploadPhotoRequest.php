@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\File;
 
 final class UploadPhotoRequest extends FormRequest
 {
@@ -13,31 +17,37 @@ final class UploadPhotoRequest extends FormRequest
 
     public function rules(): array
     {
-        $allowedMimes = config('services.upload.allowed_photo_mimes');
-        $allowedMimes = is_array($allowedMimes) && $allowedMimes !== []
-            ? $allowedMimes
-            : ['jpeg', 'jpg', 'png', 'gif', 'webp'];
+        /** @var array<int, string> $allowedMimes */
+        $allowedMimes = config('services.upload.allowed_photo_mimes', ['jpeg', 'jpg', 'png', 'gif', 'webp']);
+        if (! is_array($allowedMimes) || $allowedMimes === []) {
+            $allowedMimes = ['jpeg', 'jpg', 'png', 'gif', 'webp'];
+        }
 
+        /** @var int $maxPhotoSizeKb */
         $maxPhotoSizeKb = (int) config('services.upload.max_photo_size_kb', 2048);
+
         return [
             'photo' => [
                 'required',
-                'file',
-                'image',
-                'mimes:'.implode(',', $allowedMimes),
-                'max:'.$maxPhotoSizeKb,
+                File::image()
+                    ->types($allowedMimes)
+                    ->max($maxPhotoSizeKb)
+                    ->dimensions(
+                        Rule::dimensions()
+                            ->maxWidth(4096)
+                            ->maxHeight(4096)
+                    ),
             ],
         ];
     }
 
-    public function messages(): array
+    /**
+     * Nomes amigáveis dos atributos para as mensagens de erro do Laravel.
+     */
+    public function attributes(): array
     {
         return [
-            'photo.required' => 'É necessário enviar uma fotografia.',
-            'photo.image' => 'O ficheiro deve ser uma imagem válida.',
-            'photo.mimes' => 'A imagem deve ser do tipo JPEG, PNG, JPG, GIF ou WebP.',
-            'photo.max' => 'A imagem não pode exceder 2MB.',
-            'photo.dimensions' => 'A imagem não pode exceder 4096x4096 pixels.',
+            'photo' => 'fotografia',
         ];
     }
 }

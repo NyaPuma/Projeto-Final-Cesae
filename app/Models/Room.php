@@ -1,40 +1,63 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Traits\Auditable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Room extends Model
+final class Room extends Model
 {
     use Auditable;
     use HasFactory;
     use SoftDeletes;
 
-    protected $table = 'rooms';
-
     protected $fillable = [
         'name',
         'code',
-        'location',
         'building',
+        'floor',
+        'location',
+        'capacity',
+        'description',
+        'notes',
         'active',
     ];
 
-    protected $casts = [
-        'active' => 'boolean',
-    ];
-
-    public function equipments(): HasMany
+    protected function casts(): array
     {
-        return $this->hasMany(Equipment::class, 'room_id', 'id');
+        return [
+            'active' => 'boolean',
+            'capacity' => 'integer',
+        ];
     }
 
+    /**
+     * Equipamentos alocados nesta sala.
+     */
+    public function equipments(): HasMany
+    {
+        return $this->hasMany(Equipment::class);
+    }
+
+    /**
+     * Chamados/Tickets associados a esta sala.
+     */
     public function tickets(): HasMany
     {
-        return $this->hasMany(Ticket::class, 'room_id', 'id');
+        return $this->hasMany(Ticket::class);
+    }
+
+    /**
+     * Scope para filtrar apenas salas ativas.
+     */
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->where('active', true);
     }
 }

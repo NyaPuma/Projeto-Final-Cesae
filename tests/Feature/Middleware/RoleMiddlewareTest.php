@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\Userprofile as UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -19,9 +21,9 @@ class RoleMiddlewareTest extends TestCase
         parent::setUp();
 
         // Create necessary profiles for tests
-        UserProfile::create(['name' => User::ROLE_USER]);
-        UserProfile::create(['name' => User::ROLE_TECHNICIAN]);
-        UserProfile::create(['name' => User::ROLE_ADMIN]);
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
+        UserProfile::create(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::create(['name' => UserRoleEnum::Admin->value]);
 
         // Seed ticket statuses if not already done
         $this->artisan('db:seed', ['--class' => 'TicketLookupSeeder', '--force' => true]);
@@ -31,7 +33,7 @@ class RoleMiddlewareTest extends TestCase
     public function it_allows_access_when_user_has_valid_token_and_correct_role()
     {
         // Create user with technician profile and API token
-        $userProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
+        $userProfile = UserProfile::where('name', UserRoleEnum::Technician->value)->first();
 
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,
@@ -57,7 +59,7 @@ class RoleMiddlewareTest extends TestCase
     public function it_denies_access_when_user_has_invalid_role()
     {
         // Create user with admin profile but route requires only technician role
-        $userProfile = UserProfile::where('name', User::ROLE_ADMIN)->first();
+        $userProfile = UserProfile::where('name', UserRoleEnum::Admin->value)->first();
 
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,
@@ -97,7 +99,7 @@ class RoleMiddlewareTest extends TestCase
 
         $response->assertStatus(401);
         $response->assertJson([
-            'message' => 'Token inválido ou utilizador inativo.',
+            'message' => 'Token invÃ¡lido ou utilizador inativo.',
         ]);
     }
 
@@ -105,7 +107,7 @@ class RoleMiddlewareTest extends TestCase
     public function it_denies_access_when_user_is_not_active()
     {
         // Create user with technician profile but inactive status
-        $userProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
+        $userProfile = UserProfile::where('name', UserRoleEnum::Technician->value)->first();
 
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,
@@ -126,7 +128,7 @@ class RoleMiddlewareTest extends TestCase
 
         $response->assertStatus(401);
         $response->assertJson([
-            'message' => 'Token inválido ou utilizador inativo.',
+            'message' => 'Token invÃ¡lido ou utilizador inativo.',
         ]);
     }
 
@@ -152,7 +154,7 @@ class RoleMiddlewareTest extends TestCase
 
         $response->assertStatus(403);
         $response->assertJson([
-            'message' => 'Perfil inválido.',
+            'message' => 'Perfil invÃ¡lido.',
         ]);
     }
 
@@ -160,7 +162,7 @@ class RoleMiddlewareTest extends TestCase
     public function it_allows_access_when_user_has_multiple_roles()
     {
         // Create user with technician profile and API token
-        $userProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
+        $userProfile = UserProfile::where('name', UserRoleEnum::Technician->value)->first();
 
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,
@@ -185,7 +187,7 @@ class RoleMiddlewareTest extends TestCase
     public function it_allows_access_when_user_has_admin_role()
     {
         // Create user with admin profile and API token
-        $userProfile = UserProfile::where('name', User::ROLE_ADMIN)->first();
+        $userProfile = UserProfile::where('name', UserRoleEnum::Admin->value)->first();
 
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,
@@ -210,7 +212,7 @@ class RoleMiddlewareTest extends TestCase
     public function it_allows_access_when_user_has_no_role()
     {
         // Create user with technician profile and API token
-        $userProfile = UserProfile::where('name', User::ROLE_TECHNICIAN)->first();
+        $userProfile = UserProfile::where('name', UserRoleEnum::Technician->value)->first();
 
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,
