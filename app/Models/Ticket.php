@@ -52,13 +52,13 @@ class Ticket extends Model
         'reopened_at' => 'datetime',
         'scheduled_at' => 'datetime',
         'scheduled_end' => 'datetime',
-        'budget_requested_at' => 'datetime', // 🟢 CORRIGIDO: Garante uso de objetos Carbon/DateTime para o SLA
-        'budget_decided_at' => 'datetime', // 🟢 CORRIGIDO: Garante uso de objetos Carbon/DateTime para o SLA
+        'budget_requested_at' => 'datetime',
+        'budget_decided_at' => 'datetime',
         'scheduled' => 'boolean',
         'budget_requested' => 'boolean',
         'cost' => 'decimal:2',
         'budget_amount' => 'decimal:2',
-        'budget_details' => 'json', // Orçamento detalhado (array de itens)
+        'budget_details' => 'json',
     ];
 
     // --- RELACIONAMENTOS ELOQUENT ---
@@ -96,6 +96,11 @@ class Ticket extends Model
      * @return BelongsTo<User, $this>
      */
     public function technician(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'assigned_to');
+    }
+
+    public function assignedTo(): BelongsTo
     {
         return $this->belongsTo(User::class, 'assigned_to');
     }
@@ -180,7 +185,6 @@ class Ticket extends Model
 
     /**
      * Solicitado pelo Técnico quando avalia que o custo estimado supera o limiar da empresa.
-     * Congela/Regista o timestamp para permitir a pausa do SLA nos relatórios de Analytics.
      */
     public function requestBudgetAuthorization(float $estimatedBudget, float $threshold): bool
     {
@@ -188,7 +192,7 @@ class Ticket extends Model
             $this->budget_requested = true;
             $this->budget_status = self::BUDGET_PENDING;
             $this->budget_amount = $estimatedBudget;
-            $this->budget_requested_at = now(); // Regista início do congelamento do SLA
+            $this->budget_requested_at = now();
 
             $pendingStatusId = self::getStatusIdByName(self::STATUS_PENDING_BUDGET);
             if ($pendingStatusId) {
@@ -211,7 +215,7 @@ class Ticket extends Model
         }
 
         $this->budget_approved_by = $admin->id;
-        $this->budget_decided_at = now(); // Regista fim da pausa do SLA
+        $this->budget_decided_at = now();
 
         if ($decision === 'reject') {
             $this->budget_status = self::BUDGET_REJECTED;
@@ -253,35 +257,21 @@ class Ticket extends Model
 
     // --- CAMPOS DE MÃO DE OBRA ---
 
-    /**
-     * Calcula o custo total de materiais a partir do budget_details (JSON).
-     * Material: quantity × unit_price
-     */
     public function getTotalMaterialCostAttribute(): float
     {
         return $this->calculateBudgetTotalByType('material');
     }
 
-    /**
-     * Calcula o custo total de mão de obra a partir do budget_details (JSON).
-     * Labor: hours × hourly_rate
-     */
     public function getTotalLaborCostAttribute(): float
     {
         return $this->calculateBudgetTotalByType('labor');
     }
 
-    /**
-     * Calcula o custo total do orçamento (materiais + mão de obra).
-     */
     public function getBudgetTotalAttribute(): float
     {
         return $this->total_material_cost + $this->total_labor_cost;
     }
 
-    /**
-     * Retorna um array com breakdown material vs labor.
-     */
     public function getBudgetBreakdownAttribute(): array
     {
         $materialItems = [];
@@ -308,9 +298,6 @@ class Ticket extends Model
         ];
     }
 
-    /**
-     * Método privado auxiliar para calcular total por tipo.
-     */
     private function calculateBudgetTotalByType(string $type): float
     {
         $details = $this->budget_details ?? [];
@@ -330,19 +317,13 @@ class Ticket extends Model
         return $total;
     }
 
-    // --- MÉTODOS UTILITÁRIOS E AUXILIARES  ---
+    // --- MÉTODOS UTILITÁRIOS E AUXILIARES ---
 
-    /**
-     * Obtém o ID do status pelo nome na tabela `ticket_statuses`.
-     */
     public static function getStatusIdByName(string $statusName): ?int
     {
         return TicketStatus::where('name', $statusName)->value('id');
     }
 
-    /**
-     * Verifica se o ticket está num determinado estado pelo nome.
-     */
     public function hasStatus(string $statusName): bool
     {
         if (! $this->status_id) {
@@ -354,9 +335,6 @@ class Ticket extends Model
         return $this->status_id === $statusId;
     }
 
-    /**
-     * Obtém o técnico com menos tickets atribuídos no momento.
-     */
     public static function getLeastBusyTechnician(): ?User
     {
         $inProgressStatusId = self::getStatusIdByName(self::STATUS_IN_PROGRESS);
@@ -372,9 +350,6 @@ class Ticket extends Model
             ->first();
     }
 
-    /**
-     * Atalho de segurança para recolher eventos agendados para o FullCalendar.
-     */
     public static function getScheduledEvents()
     {
         return self::whereNotNull('scheduled_at')->get()->map(function ($ticket) {
@@ -385,10 +360,5 @@ class Ticket extends Model
                 'end' => $ticket->scheduled_end ? $ticket->scheduled_end->toIso8601String() : null,
             ];
         });
-    }
-
-    public function assignedTo()
-    {
-        return $this->belongsTo(User::class, 'assigned_to');
     }
 }
