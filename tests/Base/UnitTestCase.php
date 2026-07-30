@@ -1,15 +1,28 @@
 <?php
 
-namespace Tests;
+namespace Tests\Base;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
-abstract class TestCase extends BaseTestCase
+abstract class UnitTestCase extends BaseTestCase
 {
+    // Unit tests typically don't need RefreshDatabase
+    // They should be isolated and not hit the database
+
     protected function setUp(): void
     {
         parent::setUp();
+        $this->createViteManifest();
+    }
 
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        \Mockery::close();
+    }
+
+    private function createViteManifest(): void
+    {
         $buildDir = public_path('build');
         $manifest = $buildDir.'/manifest.json';
 

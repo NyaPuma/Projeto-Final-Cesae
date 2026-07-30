@@ -1,15 +1,88 @@
 <?php
 
-namespace Tests;
+namespace Tests\Base;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Foundation\Testing\WithFaker;
 
-abstract class TestCase extends BaseTestCase
+abstract class DatabaseTestCase extends BaseTestCase
 {
+    use RefreshDatabase;
+    use WithFaker;
+
     protected function setUp(): void
     {
         parent::setUp();
+        $this->createViteManifest();
+    }
 
+    protected function assertDatabaseHasTable(string $table): void
+    {
+        $this->assertTrue(
+            \Schema::hasTable($table),
+            "Database table '{$table}' does not exist."
+        );
+    }
+
+    protected function assertDatabaseMissingTable(string $table): void
+    {
+        $this->assertFalse(
+            \Schema::hasTable($table),
+            "Database table '{$table}' exists but should not."
+        );
+    }
+
+    protected function assertDatabaseHasColumn(string $table, string $column): void
+    {
+        $this->assertTrue(
+            \Schema::hasColumn($table, $column),
+            "Database table '{$table}' does not have column '{$column}'."
+        );
+    }
+
+    protected function assertDatabaseMissingColumn(string $table, string $column): void
+    {
+        $this->assertFalse(
+            \Schema::hasColumn($table, $column),
+            "Database table '{$table}' has column '{$column}' but should not."
+        );
+    }
+
+    protected function assertDatabaseHasIndex(string $table, string $index): void
+    {
+        $this->assertTrue(
+            \Schema::hasIndex($table, $index),
+            "Database table '{$table}' does not have index '{$index}'."
+        );
+    }
+
+    protected function assertDatabaseMissingIndex(string $table, string $index): void
+    {
+        $this->assertFalse(
+            \Schema::hasIndex($table, $index),
+            "Database table '{$table}' has index '{$index}' but should not."
+        );
+    }
+
+    protected function assertDatabaseHasForeignKey(string $table, string $foreign): void
+    {
+        $this->assertTrue(
+            \Schema::hasForeignKey($table, $foreign),
+            "Database table '{$table}' does not have foreign key '{$foreign}'."
+        );
+    }
+
+    protected function assertDatabaseMissingForeignKey(string $table, string $foreign): void
+    {
+        $this->assertFalse(
+            \Schema::hasForeignKey($table, $foreign),
+            "Database table '{$table}' has foreign key '{$foreign}' but should not."
+        );
+    }
+
+    private function createViteManifest(): void
+    {
         $buildDir = public_path('build');
         $manifest = $buildDir.'/manifest.json';
 
