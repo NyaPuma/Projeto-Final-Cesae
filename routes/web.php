@@ -184,7 +184,6 @@ Route::middleware(['custom.auth'])->group(function () {
             Route::get('/admin/users', [AdminController::class, 'users']);
             Route::post('/admin/users', [AdminController::class, 'storeUser']);
 
-
             // 💡 Rota flexibilizada para aceitar POST, PATCH e PUT para uploads de imagem de utilizador
             Route::match(['post', 'patch', 'put'], '/admin/users/{id}', [AdminController::class, 'updateUser']);
 
