@@ -57,11 +57,15 @@
             placeholder="{{ $placeholder }}"
             autocomplete="tel"
             @class(['ui-tel__input'])
-            @if($mask) data-mask="phone" @endif
+            @if($mask)
+                data-mask="phone"
+            @endif
             @required($required)
             @disabled($disabled)
             @readonly($readonly)
-            aria-describedby="{{ $hasError ? $errorId : ($hint ? $hintId : '') }}"
+            @if($hasError || $hint)
+                aria-describedby="{{ $hasError ? $errorId : $hintId }}"
+            @endif
             {{ $attributes->except(['id', 'name', 'type', 'value', 'placeholder', 'class']) }}
         />
     </div>

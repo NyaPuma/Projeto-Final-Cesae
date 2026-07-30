@@ -24,19 +24,6 @@
         @yield('content')
     </main>
 
-    <script>
-        (() => {
-            const saved = localStorage.getItem('theme');
-            if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-                document.documentElement.setAttribute('data-theme', 'dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-                document.documentElement.removeAttribute('data-theme');
-            }
-        })();
-    </script>
-
     @stack('scripts')
 </body>
 

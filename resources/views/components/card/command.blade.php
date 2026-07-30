@@ -47,6 +47,9 @@
         $customAttributes['role'] = 'button';
         $customAttributes['tabindex'] = '0';
     }
+    if ($disabled && $resolvedTag !== 'button') {
+        $customAttributes['aria-disabled'] = 'true';
+    }
 @endphp
 
 <{{ $resolvedTag }}
@@ -56,7 +59,6 @@
         'ui-card-command--interactive' => $isInteractive,
         'ui-card-command--disabled' => $disabled,
     ]) }}
-    @if($disabled && $resolvedTag !== 'button') aria-disabled="true" @endif
 >
     {{-- Contentor do Ícone --}}
     @if($icon)

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ __('Gestão de Avarias') }}</title>
+    <title>{{ __('Gest├úo de Avarias') }}</title>
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800" rel="stylesheet">
@@ -26,14 +26,14 @@
                         <div>
                             <div class="inline-flex items-center gap-3 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.24em] text-primary">
                                 <span class="h-2 w-2 rounded-full bg-primary"></span>
-                                {{ __('Área segura') }}
+                                {{ __('├ürea segura') }}
                             </div>
 
                             <h1 class="mt-8 text-3xl font-black tracking-tight text-[var(--text)] sm:text-4xl">
-                                {{ __('Gestão de Avarias') }}
+                                {{ __('Gest├úo de Avarias') }}
                             </h1>
                             <p class="mt-4 max-w-md text-sm leading-7 text-[var(--text-soft)] sm:text-[15px]">
-                                {{ __('Aceda ao painel de operação com um ambiente profissional, simples e focado na autenticação.') }}
+                                {{ __('Aceda ao painel de opera├º├úo com um ambiente profissional, simples e focado na autentica├º├úo.') }}
                             </p>
                         </div>
 
@@ -43,8 +43,8 @@
                                 <p class="mt-2 text-sm leading-7 text-[var(--text-soft)]">{{ __('Utilize as suas credenciais para entrar no painel principal.') }}</p>
                             </div>
                             <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4">
-                                <p class="text-sm font-semibold text-[var(--text)]">{{ __('Sessão protegida') }}</p>
-                                <p class="mt-2 text-sm leading-7 text-[var(--text-soft)]">{{ __('A autenticação é processada de forma segura e imediata.') }}</p>
+                                <p class="text-sm font-semibold text-[var(--text)]">{{ __('Sess├úo protegida') }}</p>
+                                <p class="mt-2 text-sm leading-7 text-[var(--text-soft)]">{{ __('A autentica├º├úo ├® processada de forma segura e imediata.') }}</p>
                             </div>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                     <div class="flex items-center justify-center p-6 sm:p-8 lg:p-10">
                         <div class="w-full max-w-md">
                             <div class="mb-8">
-                                <p class="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--text-soft)]">{{ __('Iniciar sessão') }}</p>
+                                <p class="text-sm font-semibold uppercase tracking-[0.24em] text-[var(--text-soft)]">{{ __('Iniciar sess├úo') }}</p>
                                 <h2 class="mt-3 text-3xl font-black tracking-tight text-[var(--text)]">{{ __('Bem-vindo de volta') }}</h2>
                                 <p class="mt-3 text-sm leading-7 text-[var(--text-soft)]">{{ __('Introduza o seu email e palavra-passe para continuar.') }}</p>
                             </div>
@@ -69,7 +69,7 @@
                                 <div>
                                     <label for="loginPassword" class="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">{{ __('Palavra-passe') }}</label>
                                     <div class="relative">
-                                        <input id="loginPassword" name="password" type="password" autocomplete="current-password" required placeholder="••••••••"
+                                        <input id="loginPassword" name="password" type="password" autocomplete="current-password" required placeholder="ÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇó"
                                             class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3.5 pr-12 text-sm text-[var(--text)] outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/15">
                                         <button type="button" id="togglePassword" class="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-primary transition hover:opacity-70">{{ __('Mostrar') }}</button>
                                     </div>
@@ -151,7 +151,7 @@
                 const j = await res.json().catch(() => ({}));
 
                 if (res.status !== 200) {
-                    setMsg(j.message || "{{ __('Credenciais inválidas.') }}", 'error');
+                    setMsg(j.message || "{{ __('Credenciais inv├ílidas.') }}", 'error');
                     setLoading(false);
                     return;
                 }
@@ -165,11 +165,11 @@
                     } catch (e) {}
                 }
 
-                setMsg("{{ __('Autenticação bem-sucedida! A redirecionar...') }}", 'success');
+                setMsg("{{ __('Autentica├º├úo bem-sucedida! A redirecionar...') }}", 'success');
                 setLoading(false);
                 setTimeout(() => { window.location.href = '/ui'; }, 500);
             } catch (err) {
-                setMsg("{{ __('Falha crítica na comunicação com o servidor.') }}", 'error');
+                setMsg("{{ __('Falha cr├¡tica na comunica├º├úo com o servidor.') }}", 'error');
                 setLoading(false);
             }
         });

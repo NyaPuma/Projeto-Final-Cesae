@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Models\UserProfile.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Models\UserProfile
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-d645ee75aeda6cb2e70c6d14a1064ba6448746009db2d3d89fff88db7689bc4f',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-c78095089c35d79d044a292d4ac26a0b9280813a74ac8cd1a6ffe3922a11559d',
    'data' => 
   array (
     'locatedSource' => 
@@ -23,13 +23,14 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'isBackedEnum' => false,
     'modifiers' => 0,
     'docComment' => '/**
+ * @property int $id
  * @property string $name
  */',
     'attributes' => 
     array (
     ),
-    'startLine' => 12,
-    'endLine' => 30,
+    'startLine' => 13,
+    'endLine' => 31,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'Illuminate\\Database\\Eloquent\\Model',
@@ -57,20 +58,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'user_profiles\'',
           'attributes' => 
           array (
-            'startLine' => 17,
-            'endLine' => 17,
+            'startLine' => 18,
+            'endLine' => 18,
             'startTokenPos' => 47,
-            'startFilePos' => 367,
+            'startFilePos' => 388,
             'endTokenPos' => 47,
-            'endFilePos' => 381,
+            'endFilePos' => 402,
           ),
         ),
         'docComment' => NULL,
         'attributes' => 
         array (
         ),
-        'startLine' => 17,
-        'endLine' => 17,
+        'startLine' => 18,
+        'endLine' => 18,
         'startColumn' => 5,
         'endColumn' => 39,
         'isPromoted' => false,
@@ -92,20 +93,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '[\'name\']',
           'attributes' => 
           array (
-            'startLine' => 19,
-            'endLine' => 21,
+            'startLine' => 20,
+            'endLine' => 22,
             'startTokenPos' => 56,
-            'startFilePos' => 411,
+            'startFilePos' => 432,
             'endTokenPos' => 61,
-            'endFilePos' => 433,
+            'endFilePos' => 454,
           ),
         ),
         'docComment' => NULL,
         'attributes' => 
         array (
         ),
-        'startLine' => 19,
-        'endLine' => 21,
+        'startLine' => 20,
+        'endLine' => 22,
         'startColumn' => 5,
         'endColumn' => 6,
         'isPromoted' => false,
@@ -140,8 +141,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Relação: Um perfil pertence a muitos utilizadores.
  */',
-        'startLine' => 26,
-        'endLine' => 29,
+        'startLine' => 27,
+        'endLine' => 30,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

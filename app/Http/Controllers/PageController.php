@@ -1,0 +1,84 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+
+/**
+ * Controller para p├íginas est├íticas e utilit├írias
+ * que anteriormente usavam closures nas rotas.
+ *
+ * Consolidar aqui permite que php artisan route:cache funcione.
+ */
+class PageController extends Controller
+{
+    /**
+     * P├ígina inicial (landing page).
+     */
+    public function home()
+    {
+        return view('main');
+    }
+
+    /**
+     * Alternar idioma da aplica├º├úo (pt / en).
+     *
+     * Se o utilizador j├í estiver autenticado (token presente no cookie),
+     * redireciona para o painel em vez da p├ígina de login.
+     */
+    public function switchLang(Request $request, string $locale)
+    {
+        if (! in_array($locale, ['en', 'pt'])) {
+            $locale = 'pt';
+        }
+
+        // Store the locale in session and set a permanent cookie
+        session(['locale' => $locale]);
+        $cookie = cookie()->forever('locale', $locale);
+
+        // Check if user is authenticated by looking for the auth_token cookie
+        $authToken = $request->cookie('api_token') ?: $request->cookie('auth_token');
+
+        if ($authToken) {
+            // User appears to be logged in ÔÇö redirect to dashboard
+            return redirect()->route('ui.index')->withCookie($cookie);
+        }
+
+        // Not authenticated ÔÇö redirect to login page
+        return redirect()->route('ui.login')->withCookie($cookie);
+    }
+
+    /**
+     * Vista de login (formul├írio de autentica├º├úo).
+     */
+    public function login()
+    {
+        return view('ui.auth');
+    }
+
+    /**
+     * Rota de teste de e-mail (apenas em ambientes n├úo-produ├º├úo).
+     */
+    public function testEmail()
+    {
+        if (app()->environment('production')) {
+            abort(404);
+        }
+
+        Mail::raw('Teste de comunica├º├úo com Mailtrap!', function ($message) {
+            $message->to('teste@exemplo.com')
+                ->subject('Teste do Sistema de Avarias');
+        });
+
+        return 'E-mail enviado com sucesso!';
+    }
+
+    /**
+     * Formul├írio de reset de password (API).
+     */
+    public function passwordResetForm(string $token)
+    {
+        return view('ui.auth-reset', ['token' => $token]);
+    }
+}

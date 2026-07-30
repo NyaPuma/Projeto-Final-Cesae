@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\TicketPriorityEnum;
 use App\Models\Ticket;
 use App\Models\TicketStatus;
 use App\Models\User;
@@ -25,9 +26,9 @@ class TicketFactory extends Factory
             'title' => fake()->sentence(4),
             'description' => fake()->paragraph(),
             'priority' => fake()->randomElement([
-                Ticket::PRIORITY_LOW,
-                Ticket::PRIORITY_MEDIUM,
-                Ticket::PRIORITY_HIGH,
+                TicketPriorityEnum::Low->value,
+                TicketPriorityEnum::Medium->value,
+                TicketPriorityEnum::High->value,
             ]),
             'opened_at' => now()->subHours(2),
             'in_progress_at' => null,

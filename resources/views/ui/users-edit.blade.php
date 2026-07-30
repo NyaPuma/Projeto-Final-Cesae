@@ -1,15 +1,21 @@
 @extends('ui.layout')
 
+@section('page_key', 'users-edit')
+
 @section('content')
 <script>
 window.requireAuthOnLoad = true;
 </script>
 
-@component('ui.partials.page-card', [
-    'title' => __('Editar Utilizador'),
-    'subtitle' => __('Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.'),
-    'actions' => '<a href="/ui/users" class="inline-flex items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">← Voltar</a>'
-])
+<x-ui.partials.page-card
+    :title="__('Editar Utilizador')"
+    :subtitle="__('Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.')"
+>
+    <x-slot:actions>
+        <x-ui.page-actions.group>
+            <x-ui.page-actions.back-button :href="route('ui.users')" :label="__('Voltar')" />
+        </x-ui.page-actions.group>
+    </x-slot:actions>
     <div class="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm">
         <form id="editUserForm" class="space-y-6" enctype="multipart/form-data">
             
@@ -28,7 +34,7 @@ window.requireAuthOnLoad = true;
                     
                     <div class="flex flex-wrap items-center justify-center sm:justify-start gap-3 pt-1">
                         <label for="avatarInput" class="cursor-pointer px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary font-bold text-xs rounded-xl border border-primary/30 transition shadow-sm inline-flex items-center gap-1.5">
-                            📷 {{ __('Escolher Fotografia') }}
+                            &#128247; {{ __('Escolher Fotografia') }}
                         </label>
                         <input type="file" id="avatarInput" name="avatar" accept="image/*" class="hidden" onchange="previewUserAvatar(this)">
                         <span id="avatarFileName" class="text-xs text-[var(--text-soft)] truncate max-w-[180px]">{{ __('Nenhum ficheiro selecionado') }}</span>
@@ -72,7 +78,7 @@ window.requireAuthOnLoad = true;
             </div>
         </form>
     </div>
-@endcomponent
+</x-ui.partials.page-card>
 @endsection
 
 @push('scripts')

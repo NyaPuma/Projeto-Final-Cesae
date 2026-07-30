@@ -39,11 +39,11 @@
                 </div>
 
                 <h1 class="text-4xl font-extrabold tracking-tight text-[var(--text)]">
-                    Gestão de Avarias
+                    Gest├úo de Avarias
                 </h1>
 
                 <p class="mt-3 text-[var(--text-soft)] max-w-sm mx-auto leading-relaxed">
-                    Plataforma central para gestão, manutenção e acompanhamento de equipamentos.
+                    Plataforma central para gest├úo, manuten├º├úo e acompanhamento de equipamentos.
                 </p>
 
             </div>
@@ -58,7 +58,7 @@
                     <div class="mb-8">
 
                         <span class="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary mb-4">
-                            Autenticação
+                            Autentica├º├úo
                         </span>
 
                         <h2 class="text-3xl font-bold text-[var(--text)]">
@@ -110,7 +110,7 @@
                                 type="password"
                                 autocomplete="current-password"
                                 required
-                                placeholder="••••••••"
+                                placeholder="ÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇó"
                                 class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-5 py-3.5 text-sm text-[var(--text)] outline-none transition-all duration-200 focus:border-primary focus:ring-4 focus:ring-primary/15">
 
                         </div>
@@ -151,15 +151,15 @@
 
             </div>
 
-            {{-- Rodapé --}}
+            {{-- Rodap├® --}}
             <div class="mt-8 text-center">
 
                 <p class="text-xs text-[var(--text-soft)]">
-                    © {{ date('Y') }} Sistema de Gestão de Avarias
+                    ┬® {{ date('Y') }} Sistema de Gest├úo de Avarias
                 </p>
 
                 <p class="mt-1 text-xs text-[var(--text-soft)] opacity-70">
-                    Desenvolvido em Laravel • Interface Responsiva • Light & Dark Mode
+                    Desenvolvido em Laravel ÔÇó Interface Responsiva ÔÇó Light & Dark Mode
                 </p>
 
             </div>
@@ -209,7 +209,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 
         const j = await res.json();
         
-        // Armazenamento duplo para compatibilidade total com todos os módulos
+        // Armazenamento duplo para compatibilidade total com todos os m├│dulos
         localStorage.setItem('auth_token', j.token);
         localStorage.setItem('api_token', j.token);
         if (j.user) {
@@ -217,12 +217,12 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
             localStorage.setItem('user_role', j.user.profile?.name || 'user');
         }
 
-        // Definir cookies de sessão
+        // Definir cookies de sess├úo
         document.cookie = `auth_token=${j.token}; path=/; max-age=86400; SameSite=Lax`;
         document.cookie = `api_token=${j.token}; path=/; max-age=86400; SameSite=Lax`;
 
         msgEl.className = 'mt-4 text-center text-xs font-bold text-emerald-600 dark:text-emerald-400 p-3 bg-emerald-500/5 rounded-xl border border-emerald-500/10 animate-[fadeIn_0.2s_ease-out]';
-        msgEl.innerText = 'Autenticação bem-sucedida! A redirecionar...';
+        msgEl.innerText = 'Autentica├º├úo bem-sucedida! A redirecionar...';
 
         setTimeout(() => {
             window.location = '/ui';
@@ -230,7 +230,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 
     } catch (err) {
         msgEl.className = 'mt-4 text-center text-xs font-bold text-red-600 dark:text-red-400 p-3 bg-red-500/5 rounded-xl border border-red-500/10';
-        msgEl.innerText = 'Falha crítica na comunicação com o servidor.';
+        msgEl.innerText = 'Falha cr├¡tica na comunica├º├úo com o servidor.';
     }
 });
 </script>

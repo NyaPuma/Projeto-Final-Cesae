@@ -1,20 +1,22 @@
 @extends('ui.layout')
 
+@section('page_key', 'rooms')
+
 @section('content')
 <script>
 window.requireAuthOnLoad = true;
 </script>
 
-@component('ui.partials.page-card', [
-    'title' => __('Salas'),
-    'subtitle' => __('Consulte e organize as salas, equipamentos associados e estado de avarias em tempo real.'),
-    'actions' => '<div class="flex items-center gap-2">'
-        . '<a href="/ui" class="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-slate-300 bg-slate-800/60 hover:bg-slate-700/80 border border-slate-700/80 rounded-full transition-all">'
-            . '<span>←</span> ' . __('Voltar ao painel')
-        . '</a>'
-        . '<button id="btnAddRoom" onclick="openNewRoomModal()" class="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-orange-500 hover:bg-orange-600 rounded-full shadow-sm transition-all cursor-pointer">+ ' . __('Nova sala') . '</button>'
-        . '</div>'
-])
+<x-ui.partials.page-card
+    :title="__('Salas')"
+    :subtitle="__('Consulte e organize as salas, equipamentos associados e estado de avarias em tempo real.')"
+>
+    <x-slot:actions>
+        <x-ui.page-actions.group>
+            <x-ui.page-actions.back-button href="/ui" :label="__('Voltar ao painel')" />
+            <x-ui.page-actions.action-button id="btnAddRoom" onclick="openNewRoomModal()" :label="__('Nova sala')" />
+        </x-ui.page-actions.group>
+    </x-slot:actions>
 
     {{-- Painel de Filtros de Pesquisa --}}
     <div class="mb-6 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
@@ -24,15 +26,15 @@ window.requireAuthOnLoad = true;
                 <label for="filter_q" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">
                     {{ __('Termo de Pesquisa') }}
                 </label>
-                <input id="filter_q" type="text" placeholder="{{ __('Pesquise por nome ou código da sala...') }}"
+                <input id="filter_q" type="text" placeholder="{{ __('Pesquise por nome ou c├│digo da sala...') }}"
                     class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-2.5 text-xs text-[var(--text)] placeholder-[var(--text-soft)] outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all">
             </div>
 
             <div>
                 <label for="filter_building" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">
-                    {{ __('Edifício') }}
+                    {{ __('Edif├¡cio') }}
                 </label>
-                <input id="filter_building" type="text" placeholder="{{ __('Filtrar por edifício...') }}"
+                <input id="filter_building" type="text" placeholder="{{ __('Filtrar por edif├¡cio...') }}"
                     class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-2.5 text-xs text-[var(--text)] placeholder-[var(--text-soft)] outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all">
             </div>
 
@@ -60,10 +62,10 @@ window.requireAuthOnLoad = true;
                 <thead class="bg-[var(--surface-2)] text-[var(--text-soft)] uppercase tracking-wider font-bold text-[10px]">
                     <tr>
                         <th class="px-5 py-3.5 font-bold">{{ __('Nome da Sala') }}</th>
-                        <th class="px-5 py-3.5 font-bold">{{ __('Edifício') }}</th>
+                        <th class="px-5 py-3.5 font-bold">{{ __('Edif├¡cio') }}</th>
                         <th class="px-5 py-3.5 font-bold">{{ __('Equipamentos') }}</th>
-                        <th class="px-5 py-3.5 font-bold">{{ __('Estado / Ocorrências') }}</th>
-                        <th class="px-5 py-3.5 font-bold text-right">{{ __('Ações') }}</th>
+                        <th class="px-5 py-3.5 font-bold">{{ __('Estado / Ocorr├¬ncias') }}</th>
+                        <th class="px-5 py-3.5 font-bold text-right">{{ __('A├º├Áes') }}</th>
                     </tr>
                 </thead>
                 <tbody id="roomsTableContentBody" class="divide-y divide-[var(--border)] text-[var(--text)]">
@@ -80,10 +82,10 @@ window.requireAuthOnLoad = true;
         </div>
     </div>
 
-    {{-- Paginação --}}
+    {{-- Pagina├º├úo --}}
     <div id="pagination" class="mt-5 flex items-center justify-between text-xs text-[var(--text-soft)] px-1"></div>
 
-@endcomponent
+</x-ui.partials.page-card>
 
 {{-- Modal para Criar / Editar Sala --}}
 <div id="roomModal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/60 backdrop-blur-sm p-4 overflow-y-auto">
@@ -93,13 +95,13 @@ window.requireAuthOnLoad = true;
             <input type="hidden" id="roomId" name="id">
 
             <div>
-                <label for="roomName" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Nome / Código da Sala') }}</label>
+                <label for="roomName" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Nome / C├│digo da Sala') }}</label>
                 <input id="roomName" name="name" type="text" required
                     class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2.5 text-xs text-[var(--text)] outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all">
             </div>
 
             <div>
-                <label for="roomBuilding" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Edifício') }}</label>
+                <label for="roomBuilding" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Edif├¡cio') }}</label>
                 <input id="roomBuilding" name="building" type="text" required
                     class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2.5 text-xs text-[var(--text)] outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all">
             </div>
@@ -161,7 +163,7 @@ async function fetchIsolatedRooms(page = 1) {
 
     if (!resData) {
         document.getElementById('resultsCount').textContent = "Erro ao ligar ao servidor";
-        if (tbody) tbody.innerHTML = '<tr><td colspan="5" class="px-5 py-12 text-center text-xs text-red-400">Não foi possível obter dados das salas.</td></tr>';
+        if (tbody) tbody.innerHTML = '<tr><td colspan="5" class="px-5 py-12 text-center text-xs text-red-400">N├úo foi poss├¡vel obter dados das salas.</td></tr>';
         return;
     }
 
@@ -184,8 +186,8 @@ async function fetchIsolatedRooms(page = 1) {
         // Indicador em tempo real de Avarias
         const openTickets = r.active_tickets_count ?? r.open_tickets_count ?? r.tickets_count ?? 0;
         const statusBadge = openTickets > 0
-            ? `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-rose-500/10 text-rose-500 border border-rose-500/20 uppercase tracking-wider">🔴 ${openTickets} ${openTickets === 1 ? 'Avaria Aberta' : 'Avarias Abertas'}</span>`
-            : `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 uppercase tracking-wider">🟢 Sem Avarias</span>`;
+            ? `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-rose-500/10 text-rose-500 border border-rose-500/20 uppercase tracking-wider">­ƒö┤ ${openTickets} ${openTickets === 1 ? 'Avaria Aberta' : 'Avarias Abertas'}</span>`
+            : `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 uppercase tracking-wider">­ƒƒó Sem Avarias</span>`;
 
         return `<tr class="hover:bg-[var(--surface-2)]/50 transition-colors duration-150">
             <td class="px-5 py-4 font-bold text-xs text-[var(--text)]">${r.name}</td>
@@ -218,10 +220,10 @@ async function fetchIsolatedRooms(page = 1) {
 
     pagEl.innerHTML = `
         <button onclick="fetchIsolatedRooms(${currPage - 1})" ${currPage <= 1 ? 'disabled' : ''}
-            class="px-3.5 py-2 text-xs font-semibold text-[var(--text)] bg-[var(--surface-2)] border border-[var(--border)] rounded-xl hover:bg-[var(--border)] transition-all disabled:opacity-40 disabled:cursor-not-allowed">← Anterior</button>
-        <span class="font-bold text-[var(--text-soft)]">Página ${currPage} de ${lastPage}</span>
+            class="px-3.5 py-2 text-xs font-semibold text-[var(--text)] bg-[var(--surface-2)] border border-[var(--border)] rounded-xl hover:bg-[var(--border)] transition-all disabled:opacity-40 disabled:cursor-not-allowed">ÔåÉ Anterior</button>
+        <span class="font-bold text-[var(--text-soft)]">P├ígina ${currPage} de ${lastPage}</span>
         <button onclick="fetchIsolatedRooms(${currPage + 1})" ${currPage >= lastPage ? 'disabled' : ''}
-            class="px-3.5 py-2 text-xs font-semibold text-[var(--text)] bg-[var(--surface-2)] border border-[var(--border)] rounded-xl hover:bg-[var(--border)] transition-all disabled:opacity-40 disabled:cursor-not-allowed">Próxima →</button>
+            class="px-3.5 py-2 text-xs font-semibold text-[var(--text)] bg-[var(--surface-2)] border border-[var(--border)] rounded-xl hover:bg-[var(--border)] transition-all disabled:opacity-40 disabled:cursor-not-allowed">Pr├│xima ÔåÆ</button>
     `;
 }
 
@@ -295,7 +297,8 @@ async function saveRoom(e) {
     }
 }
 
-// Inicialização imediata
+// Inicializa├º├úo imediata
 fetchIsolatedRooms(1);
 </script>
 @endsection
+

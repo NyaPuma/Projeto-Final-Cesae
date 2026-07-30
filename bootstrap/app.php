@@ -32,6 +32,11 @@ return Application::configure(basePath: dirname(__DIR__))
             'login',
             'register',
         ]);
+
+        $middleware->encryptCookies(except: [
+            'api_token',
+            'auth_token',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

@@ -15,3 +15,8 @@ body {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
+
+.ui-topbar-notification-badge {
+  font-size: 9px;
+  line-height: 1;
+}

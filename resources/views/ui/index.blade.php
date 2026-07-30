@@ -1,5 +1,7 @@
 @extends('ui.layout')
 
+@section('page_key', 'dashboard')
+
 @section('content')
 <script>
 // Marcar que esta página requer autenticação obrigatória
@@ -17,11 +19,10 @@ window.requireAuthOnLoad = true;
     };
 @endphp
 
-@component('ui.partials.page-card', [
-    'title' => __('Painel Operacional'),
-    'subtitle' => __('Selecione uma dimensão do sistema para monitorização e gestão de ativos.'),
-    'actions' => ''
-])
+<x-ui.partials.page-card
+    :title="__('Painel Operacional')"
+    :subtitle="__('Selecione uma dimensão do sistema para monitorização e gestão de ativos.')"
+>
     {{-- Banner de Sessão Ativa --}}
     <div class="mb-6 rounded-2xl border border-[var(--border)] bg-[var(--surface-2)]/70 p-5 shadow-[0_10px_30px_rgba(15,23,42,0.04)]">
         <div class="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
@@ -117,7 +118,7 @@ window.requireAuthOnLoad = true;
 
     </div>
 
-@endcomponent
+</x-ui.partials.page-card>
 @endsection
 
 @push('scripts')

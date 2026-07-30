@@ -3,54 +3,37 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Support\Facades\Auth;
 
 abstract class Controller
 {
-    /**
-     * Resolve e valida o utilizador atualmente autenticado com base no token fornecido.
-     * Procura o token prioritariamente no cabeçalho customizado 'X-Auth-Token'
-     * ou, em alternativa, no cabeçalho padrão 'Authorization' (Bearer Token).
-     *
-     * * @throws HttpException
-     */
     protected function authenticatedUser(Request $request): User
     {
-        // Obtém o token a partir do cabeçalho customizado, Bearer Token ou cookie
-        $token = $request->header('X-Auth-Token')
-                ?: $request->bearerToken()
-                ?: ($request->hasCookie('api_token') ? $request->cookie('api_token') : null)
-                ?: ($request->session()->has('api_token') ? $request->session()->get('api_token') : null);
+        $user = Auth::guard('api')->user() ?? $request->user();
 
-        // Valida se o token foi enviado e se é uma string válida
-        if (! is_string($token) || $token === '') {
-            abort(401, 'Autenticação necessária. Envie X-Auth-Token no cabeçalho.');
-        }
-
-        // Procura na base de dados pelo utilizador que possui o respetivo token e se encontra ativo
-        // Com eager loading do perfil para evitar N+1 queries
-        $user = User::with('profile')->where('api_token', $token)->where('active', true)->first();
-
-        // Se o utilizador não for encontrado ou estiver inativo, interrompe o pedido
         if (! $user) {
-            abort(401, 'Token inválido ou utilizador inativo.');
+            abort(401, 'Autentica├º├úo necess├íria. Envie X-Auth-Token no cabe├ºalho.');
         }
 
         return $user;
     }
 
-    /**
-     * Garante programaticamente que o utilizador possui um dos perfis/papéis permitidos.
-     * Caso o perfil não corresponda, lança uma exceção HTTP 403 (Acesso Proibido).
-     *
-     * @throws HttpException
-     */
     protected function requireRole(User $user, array $roles): void
     {
-        // Verifica de forma estrita se o perfil do utilizador consta no grupo de permissões aceites
         if (! $user->profile || ! in_array($user->profile->name, $roles, true)) {
             abort(403, 'Acesso proibido para o seu perfil.');
         }
+    }
+
+    protected function jsonNotFound(string $message = 'N├úo encontrado'): JsonResponse
+    {
+        return response()->json(['message' => $message], 404);
+    }
+
+    protected function jsonValidationError($errors): JsonResponse
+    {
+        return response()->json(['errors' => $errors], 422);
     }
 }

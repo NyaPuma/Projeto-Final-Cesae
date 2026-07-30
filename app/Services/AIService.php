@@ -2,25 +2,28 @@
 
 namespace App\Services;
 
+use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use App\Models\User;
 use OpenAI\Laravel\Facades\OpenAI;
 
 class AIService
 {
-    /**
-     * Motor de IA exclusivo para apoiar o Administrador na alocação de recursos.
-     */
-    public function recomendarTecnico(Ticket $ticket)
+    public function __construct(
+        private readonly TicketStatusService $statusService,
+    ) {}
+
+    public function recomendarTecnico(Ticket $ticket): array
     {
-        // 1. Procurar técnicos ativos no sistema e calcular dinamicamente a sua carga de trabalho
-        $tecnicos = User::whereHas('profile', function ($query) {
-            $query->where('name', User::ROLE_TECHNICIAN);
-        })
+        $tecnicos = User::whereHas('profile', fn ($q) => $q->where('name', User::ROLE_TECHNICIAN))
             ->where('active', true)
             ->withCount(['assignedTickets as tickets_ativos' => function ($query) {
-                // Conta apenas os tickets em aberto ou progresso (IDs de estados não concluídos)
-                $query->whereNotIn('status_id', [3, 4]); // Ex: 3 = Fechado, 4 = Cancelado
+                $closedStatusId = $this->statusService->getByName(TicketStatusEnum::Closed);
+                $cancelledStatusId = $this->statusService->getByName(TicketStatusEnum::Cancelled);
+                $statusIds = array_filter([$closedStatusId, $cancelledStatusId]);
+                if (! empty($statusIds)) {
+                    $query->whereNotIn('status_id', $statusIds);
+                }
             }])
             ->get(['id', 'name']);
 
@@ -69,11 +72,11 @@ class AIService
 
         try {
             $response = OpenAI::chat()->create([
-                'model' => 'gpt-4o-mini',
+                'model' => config('services.custom.ai.model'),
                 'messages' => [
                     ['role' => 'user', 'content' => $prompt],
                 ],
-                'temperature' => 0.1, // Manter previsível e lógico
+                'temperature' => config('services.custom.ai.temperature'),
             ]);
 
             $resultado = json_decode(trim($response->choices[0]->message->content), true);

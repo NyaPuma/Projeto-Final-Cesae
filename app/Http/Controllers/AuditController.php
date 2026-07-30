@@ -26,7 +26,7 @@ class AuditController extends Controller
         // A paginação protege a performance quando o histórico começar a crescer bastante.
         $audits = Audit::with('user')
             ->orderBy('created_at', 'desc')
-            ->paginate(50); // O frontend recebe metadados úteis para navegação entre páginas.
+            ->paginate(config('services.custom.pagination.admin_per_page'));
 
         return response()->json(['audits' => $audits]);
     }

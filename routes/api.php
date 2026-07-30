@@ -1,39 +1,55 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminEquipmentController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\Ticket\TicketAssignmentController;
+use App\Http\Controllers\Ticket\TicketCloseController;
+use App\Http\Controllers\Ticket\TicketLifecycleController;
+use App\Http\Controllers\Ticket\TicketScheduleController;
+use App\Http\Controllers\Ticket\TicketStartController;
+use App\Http\Controllers\TicketAttachmentController;
+use App\Http\Controllers\TicketBudgetController;
+use App\Http\Controllers\TicketCommentController;
 use App\Http\Controllers\TicketController;
-use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+/*
+|--------------------------------------------------------------------------
+| Rotas P├║blicas da API (Acesso Aberto)
+|--------------------------------------------------------------------------
+*/
+
 Route::get('/user', function (Request $request) {
     return $request->user();
-})->middleware('auth:sanctum');
+})->middleware('custom.auth')->name('api.user');
 
-// Documentação da API
-Route::redirect('/docs/openapi', '/api/documentation');
-
-// Endpoints Públicos de Autenticação (Guest)
 Route::post('/login', [AuthController::class, 'login'])
-    ->middleware(['rate.limit:5,1'])
-    ->withoutMiddleware([VerifyCsrfToken::class]);
+    ->name('api.login')
+    ->middleware(['rate.limit:5,1']);
+
+Route::post('/password/email', [PasswordResetController::class, 'sendResetLink'])
+    ->name('api.password.email')
+    ->middleware(['rate.limit:3,1']);
 
 Route::get('/password/reset/{token}', function ($token) {
     return view('ui.auth-reset', ['token' => $token]);
-})->name('password.reset');
+})->name('api.password.reset.form');
 
-Route::post('/password/reset', [AuthController::class, 'resetPassword'])
-    ->name('password.update')
-    ->withoutMiddleware([VerifyCsrfToken::class]);
+Route::post('/password/reset', [PasswordResetController::class, 'resetPassword'])
+    ->name('api.password.reset')
+    ->middleware(['rate.limit:5,1']);
 
 /*
 |--------------------------------------------------------------------------
-| Rotas Protegidas da API (Autenticadas via Sanctum / X-Auth-Token)
+| Rotas Protegidas da API (Autenticadas via X-Auth-Token)
 |--------------------------------------------------------------------------
 */
 Route::middleware(['custom.auth'])->group(function () {

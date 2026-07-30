@@ -12,9 +12,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Console\\Commands',
          'uses' => 
         array (
+          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
+          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
           'equipment' => 'App\\Models\\Equipment',
           'ticket' => 'App\\Models\\Ticket',
           'user' => 'App\\Models\\User',
+          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'command' => 'Illuminate\\Console\\Command',
           'arr' => 'Illuminate\\Support\\Arr',
         ),
@@ -39,9 +42,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
          'namespace' => 'App\\Console\\Commands',
          'uses' => 
         array (
+          'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
+          'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
           'equipment' => 'App\\Models\\Equipment',
           'ticket' => 'App\\Models\\Ticket',
           'user' => 'App\\Models\\User',
+          'ticketstatusservice' => 'App\\Services\\TicketStatusService',
           'command' => 'Illuminate\\Console\\Command',
           'arr' => 'Illuminate\\Support\\Arr',
         ),
@@ -55,9 +61,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
            'namespace' => 'App\\Console\\Commands',
            'uses' => 
           array (
+            'ticketpriorityenum' => 'App\\Enums\\TicketPriorityEnum',
+            'ticketstatusenum' => 'App\\Enums\\TicketStatusEnum',
             'equipment' => 'App\\Models\\Equipment',
             'ticket' => 'App\\Models\\Ticket',
             'user' => 'App\\Models\\User',
+            'ticketstatusservice' => 'App\\Services\\TicketStatusService',
             'command' => 'Illuminate\\Console\\Command',
             'arr' => 'Illuminate\\Support\\Arr',
           ),
@@ -90,7 +99,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     1 => 
     array (
-      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Console\\Commands\\SimulateTelemetry.php' => '814071fd3569dc29aa6c2be2887fc6d0817f1dc18ba6542b1e748a2773e2ccd8',
+      'C:\\laravel\\Projeto Final Cesae\\Projeto-Final-Cesae\\app\\Console\\Commands\\SimulateTelemetry.php' => 'eecc1bc5071d7f4a6c6903b3e02440443a02e5b3d72ccb1e54a4041abb7214d9',
     ),
   ),
 ));

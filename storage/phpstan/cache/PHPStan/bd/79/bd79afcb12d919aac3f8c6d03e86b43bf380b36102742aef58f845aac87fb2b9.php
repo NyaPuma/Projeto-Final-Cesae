@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Services\AIService.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Services\AIService
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-d25df3a51daa77ba12d81713cca0d12b1f22ccc84a9fe69421f063be1c7c55c6',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-2116ca0ceb7f6b141b6eb4da9e55e09361c477097afb1cfff7d6f26f7f4c6e9f',
    'data' => 
   array (
     'locatedSource' => 
@@ -26,8 +26,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'attributes' => 
     array (
     ),
-    'startLine' => 9,
-    'endLine' => 93,
+    'startLine' => 10,
+    'endLine' => 96,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => NULL,
@@ -42,9 +42,93 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'immediateProperties' => 
     array (
+      'statusService' => 
+      array (
+        'declaringClassName' => 'App\\Services\\AIService',
+        'implementingClassName' => 'App\\Services\\AIService',
+        'name' => 'statusService',
+        'modifiers' => 132,
+        'type' => 
+        array (
+          'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+          'data' => 
+          array (
+            'name' => 'App\\Services\\TicketStatusService',
+            'isIdentifier' => false,
+          ),
+        ),
+        'default' => NULL,
+        'docComment' => NULL,
+        'attributes' => 
+        array (
+        ),
+        'startLine' => 13,
+        'endLine' => 13,
+        'startColumn' => 9,
+        'endColumn' => 59,
+        'isPromoted' => true,
+        'declaredAtCompileTime' => true,
+        'immediateVirtual' => false,
+        'immediateHooks' => 
+        array (
+        ),
+      ),
     ),
     'immediateMethods' => 
     array (
+      '__construct' => 
+      array (
+        'name' => '__construct',
+        'parameters' => 
+        array (
+          'statusService' => 
+          array (
+            'name' => 'statusService',
+            'default' => NULL,
+            'type' => 
+            array (
+              'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+              'data' => 
+              array (
+                'name' => 'App\\Services\\TicketStatusService',
+                'isIdentifier' => false,
+              ),
+            ),
+            'isVariadic' => false,
+            'byRef' => false,
+            'isPromoted' => true,
+            'attributes' => 
+            array (
+            ),
+            'startLine' => 13,
+            'endLine' => 13,
+            'startColumn' => 9,
+            'endColumn' => 59,
+            'parameterIndex' => 0,
+            'isOptional' => false,
+          ),
+        ),
+        'returnsReference' => false,
+        'returnType' => NULL,
+        'attributes' => 
+        array (
+        ),
+        'docComment' => NULL,
+        'startLine' => 12,
+        'endLine' => 14,
+        'startColumn' => 5,
+        'endColumn' => 8,
+        'couldThrow' => false,
+        'isClosure' => false,
+        'isGenerator' => false,
+        'isVariadic' => false,
+        'modifiers' => 1,
+        'namespace' => 'App\\Services',
+        'declaringClassName' => 'App\\Services\\AIService',
+        'implementingClassName' => 'App\\Services\\AIService',
+        'currentClassName' => 'App\\Services\\AIService',
+        'aliasName' => NULL,
+      ),
       'recomendarTecnico' => 
       array (
         'name' => 'recomendarTecnico',
@@ -69,8 +153,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 14,
-            'endLine' => 14,
+            'startLine' => 16,
+            'endLine' => 16,
             'startColumn' => 39,
             'endColumn' => 52,
             'parameterIndex' => 0,
@@ -78,15 +162,21 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           ),
         ),
         'returnsReference' => false,
-        'returnType' => NULL,
+        'returnType' => 
+        array (
+          'class' => 'PHPStan\\BetterReflection\\Reflection\\ReflectionNamedType',
+          'data' => 
+          array (
+            'name' => 'array',
+            'isIdentifier' => true,
+          ),
+        ),
         'attributes' => 
         array (
         ),
-        'docComment' => '/**
- * Motor de IA exclusivo para apoiar o Administrador na alocação de recursos.
- */',
-        'startLine' => 14,
-        'endLine' => 92,
+        'docComment' => NULL,
+        'startLine' => 16,
+        'endLine' => 95,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => true,

@@ -1,0 +1,51 @@
+/* Page Grid System */
+
+.page-grid {
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: repeat(var(--grid-cols, 1), minmax(0, 1fr));
+}
+
+.page-grid-2 { --grid-cols: 2; }
+.page-grid-3 { --grid-cols: 3; }
+.page-grid-4 { --grid-cols: 4; }
+
+.page-grid-auto {
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.page-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+.page-inline {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+}
+
+.page-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.page-space-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+@media (max-width: 992px) {
+    .page-grid { --grid-cols: 1 !important; }
+}
+
+@media (max-width: 768px) {
+    .page-grid-auto { grid-template-columns: 1fr; }
+}

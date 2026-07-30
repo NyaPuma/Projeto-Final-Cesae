@@ -1,0 +1,55 @@
+/*
+|--------------------------------------------------------------------------
+| Audits Page Styles
+|--------------------------------------------------------------------------
+|
+| Page-specific styles for audit log listing and filtering.
+|
+*/
+
+/* Event Badge Colors */
+.event-badge--create {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 uppercase tracking-tight;
+}
+
+.event-badge--update {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-amber-500/10 text-amber-800 dark:text-amber-400 border border-amber-500/20 uppercase tracking-tight;
+}
+
+.event-badge--delete {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-red-500/10 text-red-700 dark:text-red-400 border border-red-500/20 uppercase tracking-tight;
+}
+
+.event-badge--default {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold uppercase tracking-tight;
+    background-color: var(--surface-2);
+    color: var(--text-soft);
+    border: 1px solid var(--border);
+}
+
+/* Audit Table Row Hover */
+.audit-row {
+    @apply transition-colors duration-150;
+}
+
+.audit-row:hover {
+    background-color: color-mix(in srgb, var(--surface-2) 50%, transparent);
+}
+
+/* State Data Display */
+.state-data {
+    @apply text-[10px] font-mono max-w-xs max-h-40 overflow-auto p-2 rounded-xl leading-relaxed;
+    background-color: var(--surface-2);
+    color: var(--text-soft);
+    border: 1px solid var(--border);
+}
+
+.state-data--empty {
+    @apply font-mono;
+    color: var(--text-soft);
+}
+
+.state-data--text {
+    @apply text-xs font-mono break-all line-clamp-2;
+    color: var(--text-soft);
+}

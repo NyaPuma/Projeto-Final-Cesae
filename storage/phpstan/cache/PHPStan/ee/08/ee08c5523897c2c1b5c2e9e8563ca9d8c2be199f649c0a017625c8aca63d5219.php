@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Console\Commands\SimulateTelemetry.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Console\Commands\SimulateTelemetry
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-814071fd3569dc29aa6c2be2887fc6d0817f1dc18ba6542b1e748a2773e2ccd8',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-eecc1bc5071d7f4a6c6903b3e02440443a02e5b3d72ccb1e54a4041abb7214d9',
    'data' => 
   array (
     'locatedSource' => 
@@ -32,8 +32,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'attributes' => 
     array (
     ),
-    'startLine' => 18,
-    'endLine' => 146,
+    'startLine' => 21,
+    'endLine' => 142,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'Illuminate\\Console\\Command',
@@ -62,12 +62,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                             {--probability=30 : Percentagem de probabilidade de anomalia (0-100)}\'',
           'attributes' => 
           array (
-            'startLine' => 23,
-            'endLine' => 25,
-            'startTokenPos' => 52,
-            'startFilePos' => 595,
-            'endTokenPos' => 52,
-            'endFilePos' => 818,
+            'startLine' => 26,
+            'endLine' => 28,
+            'startTokenPos' => 67,
+            'startFilePos' => 699,
+            'endTokenPos' => 67,
+            'endFilePos' => 922,
           ),
         ),
         'docComment' => '/**
@@ -76,8 +76,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'attributes' => 
         array (
         ),
-        'startLine' => 23,
-        'endLine' => 25,
+        'startLine' => 26,
+        'endLine' => 28,
         'startColumn' => 5,
         'endColumn' => 99,
         'isPromoted' => false,
@@ -99,20 +99,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
           'code' => '\'Simula telemetria de equipamentos e gera tickets de manutenção preventiva automaticamente quando são detetadas anomalias.\'',
           'attributes' => 
           array (
-            'startLine' => 27,
-            'endLine' => 27,
-            'startTokenPos' => 61,
-            'startFilePos' => 851,
-            'endTokenPos' => 61,
-            'endFilePos' => 976,
+            'startLine' => 30,
+            'endLine' => 30,
+            'startTokenPos' => 76,
+            'startFilePos' => 955,
+            'endTokenPos' => 76,
+            'endFilePos' => 1080,
           ),
         ),
         'docComment' => NULL,
         'attributes' => 
         array (
         ),
-        'startLine' => 27,
-        'endLine' => 27,
+        'startLine' => 30,
+        'endLine' => 30,
         'startColumn' => 5,
         'endColumn' => 156,
         'isPromoted' => false,
@@ -139,15 +139,15 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         ),
         'default' => 
         array (
-          'code' => '[[\'title\' => \'Temperatura acima do limite operacional\', \'description\' => \'O sensor de temperatura do equipamento registou valores acima dos 85°C durante um período prolongado. Recomenda-se inspeção do sistema de arrefecimento.\', \'priority\' => \\App\\Models\\Ticket::PRIORITY_HIGH], [\'title\' => \'Vibração anormal detetada\', \'description\' => \'O acelerómetro registou padrões de vibração fora dos parâmetros normais. Poderá indicar desgaste em rolamentos ou desalinhamento mecânico.\', \'priority\' => \\App\\Models\\Ticket::PRIORITY_MEDIUM], [\'title\' => \'Consumo energético elevado\', \'description\' => \'O sistema de monitorização registou consumo elétrico 40% acima do esperado nas últimas 6 horas. Possível avaria no motor ou sobreaquecimento.\', \'priority\' => \\App\\Models\\Ticket::PRIORITY_MEDIUM], [\'title\' => \'Pressão fora dos limites de segurança\', \'description\' => \'O sensor de pressão reportou valores anómalos. É necessária verificação imediata para evitar riscos operacionais.\', \'priority\' => \\App\\Models\\Ticket::PRIORITY_HIGH], [\'title\' => \'Alerta de manutenção preventiva programada\', \'description\' => \'O equipamento atingiu o intervalo de manutenção preventiva recomendado pelo fabricante (500 horas de operação). Realizar inspeção de rotina.\', \'priority\' => \\App\\Models\\Ticket::PRIORITY_LOW]]',
+          'code' => '[[\'title\' => \'Temperatura acima do limite operacional\', \'description\' => \'O sensor de temperatura do equipamento registou valores acima dos 85°C durante um período prolongado. Recomenda-se inspeção do sistema de arrefecimento.\', \'priority\' => \\App\\Enums\\TicketPriorityEnum::High->value], [\'title\' => \'Vibração anormal detetada\', \'description\' => \'O acelerómetro registou padrões de vibração fora dos parâmetros normais. Poderá indicar desgaste em rolamentos ou desalinhamento mecânico.\', \'priority\' => \\App\\Enums\\TicketPriorityEnum::Medium->value], [\'title\' => \'Consumo energético elevado\', \'description\' => \'O sistema de monitorização registou consumo elétrico 40% acima do esperado nas últimas 6 horas. Possível avaria no motor ou sobreaquecimento.\', \'priority\' => \\App\\Enums\\TicketPriorityEnum::Medium->value], [\'title\' => \'Pressão fora dos limites de segurança\', \'description\' => \'O sensor de pressão reportou valores anómalos. É necessária verificação imediata para evitar riscos operacionais.\', \'priority\' => \\App\\Enums\\TicketPriorityEnum::High->value], [\'title\' => \'Alerta de manutenção preventiva programada\', \'description\' => \'O equipamento atingiu o intervalo de manutenção preventiva recomendado pelo fabricante (500 horas de operação). Realizar inspeção de rotina.\', \'priority\' => \\App\\Enums\\TicketPriorityEnum::Low->value]]',
           'attributes' => 
           array (
-            'startLine' => 32,
-            'endLine' => 58,
-            'startTokenPos' => 74,
-            'startFilePos' => 1120,
-            'endTokenPos' => 216,
-            'endFilePos' => 2667,
+            'startLine' => 35,
+            'endLine' => 61,
+            'startTokenPos' => 89,
+            'startFilePos' => 1224,
+            'endTokenPos' => 241,
+            'endFilePos' => 2821,
           ),
         ),
         'docComment' => '/**
@@ -156,8 +156,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'attributes' => 
         array (
         ),
-        'startLine' => 32,
-        'endLine' => 58,
+        'startLine' => 35,
+        'endLine' => 61,
         'startColumn' => 5,
         'endColumn' => 6,
         'isPromoted' => false,
@@ -192,8 +192,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         'docComment' => '/**
  * Execução principal do comando de simulação.
  */',
-        'startLine' => 63,
-        'endLine' => 145,
+        'startLine' => 66,
+        'endLine' => 141,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

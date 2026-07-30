@@ -2,241 +2,71 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
 use App\Models\User;
-use App\Models\UserProfile;
+use App\Services\UserService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
-use OpenApi\Attributes as OA;
 
 class AuthController extends Controller
 {
-    #[OA\Post(
-        path: '/register',
-        tags: ['Auth'],
-        summary: 'Registar utilizador',
-        requestBody: new OA\RequestBody(
-            required: true,
-            content: new OA\JsonContent(
-                type: 'object',
-                required: ['name', 'email', 'password', 'password_confirmation'],
-                properties: [
-                    new OA\Property(property: 'name', type: 'string', example: 'João Silva'),
-                    new OA\Property(property: 'email', type: 'string', format: 'email', example: 'joao@example.com'),
-                    new OA\Property(property: 'password', type: 'string', format: 'password', example: 'password123'),
-                    new OA\Property(property: 'password_confirmation', type: 'string', format: 'password', example: 'password123'),
-                    new OA\Property(property: 'profile_id', type: 'integer', nullable: true, example: 1),
-                ]
-            )
-        ),
-        responses: [
-            new OA\Response(
-                response: 201,
-                description: 'Utilizador criado',
-                content: new OA\JsonContent(
-                    type: 'object',
-                    properties: [
-                        new OA\Property(property: 'token', type: 'string', example: 'abc123'),
-                        new OA\Property(property: 'user', type: 'object'),
-                    ]
-                )
-            ),
-            new OA\Response(response: 422, description: 'Erro de validação'),
-        ]
-    )]
-    public function register(Request $request)
+    public function __construct(
+        private readonly UserService $userService,
+    ) {}
+
+    public function login(LoginRequest $request): JsonResponse
     {
-        // Trabalhamos apenas com os campos previstos para evitar efeitos colaterais no request.
-        $data = $request->only(['name', 'email', 'password', 'password_confirmation', 'profile_id']);
+        $email = strtolower($request->email);
+        $rateLimitKey = "login_attempts:{$email}";
+        $maxAttempts = config('services.custom.auth.max_attempts');
+        $lockoutMinutes = config('services.custom.auth.lockout_minutes');
 
-        $validator = Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'profile_id' => ['nullable', 'integer', 'exists:user_profiles,id'],
-        ]);
-
-        // Qualquer falha de validação devolve a lista completa de erros para o frontend.
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
+        $attempts = Cache::get($rateLimitKey, 0);
+        if ($attempts >= $maxAttempts) {
+            return response()->json([
+                'message' => __('Conta temporariamente bloqueada. Tente novamente mais tarde.'),
+            ], 429)->header('Retry-After', (string) ($lockoutMinutes * 60));
         }
 
-        $profile = isset($data['profile_id'])
-            ? UserProfile::find($data['profile_id'])
-            : UserProfile::where('name', User::ROLE_USER)->first();
+        $user = User::where('email', $email)->where('active', true)->first();
 
-        if (! $profile) {
-            $profile = UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
+        $valid = false;
+        if ($user) {
+            try {
+                $valid = Hash::check($request->password, $user->password);
+            } catch (\RuntimeException) {
+                $valid = password_verify($request->password, $user->password);
+            }
         }
 
-        $profileId = $profile->id;
+        if (! $valid) {
+            Cache::put($rateLimitKey, $attempts + 1, now()->addMinutes($lockoutMinutes));
 
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'profile_id' => $profileId,
-            'active' => true,
-            'api_token' => Str::random(60),
-        ]);
+            return response()->json(['message' => __('Credenciais inv├ílidas.')], 401);
+        }
 
-        $request->session()->put('api_token', $user->api_token);
+        Cache::forget($rateLimitKey);
 
-        $user->load('profile');
+        if (Hash::needsRehash($user->password)) {
+            $user->password = Hash::make($request->password);
+            $user->save();
+        }
 
-        return response()->json(['user' => $user, 'token' => $user->api_token], 201)
-            ->cookie('api_token', $user->api_token, 60 * 24 * 30, '/', null, false, false);
+        $this->userService->ensureDefaultProfile($user);
+        $plainToken = $this->userService->createToken($user, $request);
+
+        return $this->userService->buildAuthResponse($user, $plainToken, $request);
     }
 
-    #[OA\Post(
-        path: '/login',
-        tags: ['Auth'],
-        summary: 'Autenticar utilizador',
-        requestBody: new OA\RequestBody(
-            required: true,
-            content: new OA\JsonContent(
-                type: 'object',
-                required: ['email', 'password'],
-                properties: [
-                    new OA\Property(property: 'email', type: 'string', format: 'email', example: 'joao@example.com'),
-                    new OA\Property(property: 'password', type: 'string', format: 'password', example: 'password123'),
-                ]
-            )
-        ),
-        responses: [
-            new OA\Response(
-                response: 200,
-                description: 'Autenticado com sucesso',
-                content: new OA\JsonContent(
-                    type: 'object',
-                    properties: [
-                        new OA\Property(property: 'token', type: 'string', example: 'abc123'),
-                        new OA\Property(property: 'user', type: 'object'),
-                    ]
-                )
-            ),
-            new OA\Response(response: 401, description: 'Credenciais inválidas'),
-        ]
-    )]
-    public function login(Request $request)
+    public function logout(Request $request): JsonResponse
     {
-        // O login só aceita os campos essenciais.
-        $data = $request->only(['email', 'password']);
-
-        $validator = Validator::make($data, [
-            'email' => ['required', 'email'],
-            'password' => ['required', 'string'],
-        ]);
-
-        // Rejeita logo pedidos incompletos ou mal estruturados.
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        // Só utilizadores ativos podem autenticar-se.
-        $user = User::where('email', $data['email'])->where('active', true)->first();
-
-        // Não distinguimos email inexistente de password errada por segurança.
-        if (! $user || ! Hash::check($data['password'], $user->password)) {
-            return response()->json(['message' => __('Credenciais inválidas.')], 401);
-        }
-
-        // Garante que, se o registo ficou sem perfil, o acesso volta a usar o perfil base.
-        if (! $user->profile_id) {
-            $defaultProfile = UserProfile::firstOrCreate(['name' => User::ROLE_USER]);
-            $user->profile_id = $defaultProfile->id;
-        }
-
-        // Renovar o token invalida acessos antigos e simplifica a gestão da sessão.
-        $user->api_token = Str::random(60);
-        $user->save();
-
-        $request->session()->put('api_token', $user->api_token);
-
-        $user->load('profile');
-
-        return response()->json(['user' => $user, 'token' => $user->api_token])
-            ->cookie('api_token', $user->api_token, 60 * 24 * 30, '/', null, false, false);
-    }
-
-    public function logout(Request $request)
-    {
-        // O logout limpa token persistido e cookie para fechar a sessão em todos os canais.
         $user = $this->authenticatedUser($request);
         $user->api_token = null;
         $user->setRememberToken('');
         $user->save();
 
-        $cookie = cookie('api_token', null, -1, '/', null, false, false, false, 'Lax');
-
-        return response()->json(['message' => __('Sessão terminada com sucesso.')])->withCookie($cookie);
-    }
-
-    public function changePassword(Request $request)
-    {
-        $user = $this->authenticatedUser($request);
-
-        // Mudamos apenas a password, mantendo o resto do perfil intacto.
-        $data = $request->only(['current_password', 'new_password']);
-
-        $validator = Validator::make($data, [
-            'current_password' => ['required', 'string'],
-            'new_password' => ['required', 'string', 'min:8'],
-        ]);
-
-        // Erros de validação são devolvidos para o frontend poder corrigir o formulário.
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        // Confirmamos a password antiga antes de autorizar a alteração.
-        if (! Hash::check($data['current_password'], $user->password)) {
-            return response()->json(['message' => __('Password atual incorreta')], 403);
-        }
-
-        // Guardamos sempre a nova password com hash.
-        $user->password = Hash::make($data['new_password']);
-        $user->save();
-
-        return response()->json(['message' => __('Password alterada com sucesso.')]);
-    }
-
-    public function updateProfile(Request $request)
-    {
-        $user = $this->authenticatedUser($request);
-
-        $data = $request->only(['name', 'current_password', 'new_password']);
-
-        $validator = Validator::make($data, [
-            'name' => ['nullable', 'string', 'max:255'],
-            'current_password' => ['nullable', 'string'],
-            'new_password' => ['nullable', 'string', 'min:8'],
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        if (! empty($data['new_password'])) {
-            if (empty($data['current_password'])) {
-                return response()->json(['message' => __('A palavra-passe atual é obrigatória para alterar a password.')], 422);
-            }
-
-            if (! Hash::check($data['current_password'], $user->password)) {
-                return response()->json(['message' => __('Password atual incorreta')], 403);
-            }
-
-            $user->password = Hash::make($data['new_password']);
-        }
-
-        if (! empty($data['name'])) {
-            $user->name = $data['name'];
-        }
-
-        $user->save();
-        $user->load('profile');
-
-        return response()->json(['message' => __('Perfil atualizado com sucesso.'), 'user' => $user]);
+        return $this->userService->buildLogoutResponse($request);
     }
 }

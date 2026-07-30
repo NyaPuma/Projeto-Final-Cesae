@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\TicketStatusUpdatedBroadcast;
-use App\Models\Notification;
-use App\Models\Ticket;
-use App\Models\TicketAttachment;
-use App\Models\TicketComment;
+use App\Actions\CreateTicketAction;
+use App\DTOs\CreateTicketData;
+use App\DTOs\TicketFilters;
+use App\Enums\TicketPriorityEnum;
+use App\Http\Requests\StoreTicketRequest;
 use App\Models\User;
-use App\Notifications\TicketStatusChanged;
+use App\Repositories\Contracts\TicketRepositoryInterface;
 use App\Services\AIService;
-use App\Traits\ControllerHelpers;
+use App\Services\TechnicianAssignmentService;
+use App\Services\TicketSearchService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
@@ -20,16 +22,14 @@ use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
 {
-    use ControllerHelpers;
-
     public function __construct(
-        protected AIService $aiService
+        private readonly TicketRepositoryInterface $ticketRepository,
+        private readonly CreateTicketAction $createTicketAction,
+        private readonly TechnicianAssignmentService $technicianService,
+        private readonly TicketSearchService $searchService,
     ) {}
 
-    /**
-     * Lista os tickets na view index
-     */
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         $query = Ticket::with(['equipment', 'room', 'technician', 'status']);
 
@@ -37,58 +37,15 @@ class TicketController extends Controller
             $query->where('title', 'like', '%' . $request->q . '%');
         }
 
-        return response()->json([
-            'tickets' => Ticket::with(['equipment', 'room', 'user'])->latest()->paginate(15),
-        ]);
+        return response()->json(['tickets' => $tickets]);
     }
 
-    /**
-     * Armazena um novo ticket (criação de avaria)
-     */
-    public function store(Request $request)
+    public function store(StoreTicketRequest $request): JsonResponse
     {
         $user = $this->authenticatedUser($request);
+        $data = CreateTicketData::fromRequest($request->validated());
 
-        $data = $request->only(['title', 'description', 'priority', 'equipment_id', 'room_id']);
-
-        // Normalizar a prioridade recebida para minúsculas antes da validação
-        if (isset($data['priority'])) {
-            $data['priority'] = mb_strtolower(trim($data['priority']));
-            if ($data['priority'] === 'media') {
-                $data['priority'] = 'média';
-            } elseif ($data['priority'] === 'critica') {
-                $data['priority'] = 'crítica';
-            }
-        }
-
-        $validator = Validator::make($data, [
-            'title'        => ['required', 'string', 'max:255'],
-            'description'  => ['required', 'string', 'max:5000'],
-            'priority'     => ['required', 'string', 'in:baixa,média,alta,crítica'],
-            'equipment_id' => ['nullable', 'integer', 'exists:equipments,id'],
-            'room_id'      => ['nullable', 'integer', 'exists:rooms,id'],
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Erro de validação nos campos do ticket.',
-                'errors'  => $validator->errors()
-            ], 422);
-        }
-
-        $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
-
-        $ticket = Ticket::create([
-            'title'        => $data['title'],
-            'description'  => $data['description'],
-            'priority'     => $data['priority'],
-            'user_id'      => $user->id,
-            'equipment_id' => $data['equipment_id'] ?? null,
-            'room_id'      => $data['room_id'] ?? null,
-            'status_id'    => $openStatusId,
-            'opened_at'    => now(),
-        ]);
-
+        $ticket = $this->createTicketAction->execute($user, $data);
         $ticket->load(['equipment', 'room', 'user', 'status']);
 
         return response()->json(['ticket' => $ticket], 201);
@@ -485,111 +442,25 @@ class TicketController extends Controller
 
         if ($higherPriorityTickets > 0 && ! $force) {
             return response()->json([
-                'warning'              => true,
-                'message'              => "⚠️ Existem {$higherPriorityTickets} ticket(s) de prioridade mais alta por atender. Recomenda-se resolver os mais urgentes primeiro.",
-                'urgent_tickets_count' => $higherPriorityTickets,
-                'current_priority'     => $ticket->priority,
-                'can_force'            => true,
-            ], 409);
+                'message' => 'Prioridade inv├ílida. Valores v├ílidos: baixa, m├®dia, alta, cr├¡tica.',
+            ], 422);
         }
 
-        $inProgressStatusId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
-
-        $ticket->update([
-            'assigned_to'    => $user->id,
-            'status_id'      => $inProgressStatusId,
-            'in_progress_at' => now(),
-        ]);
-
-        if ($force && $higherPriorityTickets > 0) {
-            try {
-                $admins = User::whereHas('profile', function ($q) {
-                    $q->where('name', User::ROLE_ADMIN);
-                })->get();
-
-                foreach ($admins as $admin) {
-                    Notification::create([
-                        'user_id' => $admin->id,
-                        'title'   => "⚠️ Ticket Não Prioritário Iniciado - #{$ticket->id}",
-                        'message' => "O técnico {$user->name} iniciou o ticket #{$ticket->id} ({$ticket->title}) com prioridade '{$ticket->priority}', ignorando {$higherPriorityTickets} ticket(s) mais urgente(s) pendentes.",
-                        'type'    => 'priority_override',
-                        'link'    => "/ui/tickets/{$ticket->id}",
-                    ]);
-                }
-            } catch (\Exception $e) {
-                // Silencia falhas
-            }
-        }
-
-        try {
-            event(new TicketStatusUpdatedBroadcast($ticket, $oldStatus, Ticket::STATUS_IN_PROGRESS));
-            if ($ticket->user && $ticket->user->email) {
-                $ticket->user->notify(new TicketStatusChanged($ticket, $oldStatus, Ticket::STATUS_IN_PROGRESS));
-            }
-        } catch (\Exception $e) {
-            // Silencia falhas
-        }
+        $filters = TicketFilters::fromRequest($request->all());
 
         return response()->json([
-            'ticket'    => $ticket,
-            'overridden' => $force && $currentPriority < 3,
+            'tickets' => $this->searchService->search($filters),
         ]);
     }
 
-    /**
-     * Conclui de forma definitiva um ticket em curso.
-     */
-    public function closeTicket(Request $request, int $id)
+    public function show(Request $request, int $id): JsonResponse|View
     {
         $user = $this->authenticatedUser($request);
-        $this->requireRole($user, [
-            User::ROLE_TECHNICIAN,
-            User::ROLE_ADMIN,
-        ]);
+        $ticket = $this->ticketRepository->findWithRelations($id, ['equipment.category', 'room', 'user', 'technician', 'status']);
 
-        $ticket = Ticket::findOrFail($id);
-        $oldStatus = $ticket->status->name ?? '';
-
-        if (! $ticket->hasStatus(Ticket::STATUS_IN_PROGRESS)) {
-            return response()->json(['message' => 'Apenas tickets em "Em Curso" podem ser fechados.'], 422);
+        if (! $ticket) {
+            return response()->json(['message' => 'Ticket n├úo encontrado'], 404);
         }
-
-        $request->validate([
-            'minutes_spent'    => ['nullable', 'integer', 'min:0'],
-            'cost'             => ['nullable', 'numeric', 'min:0'],
-            'technical_report' => ['nullable', 'string', 'max:5000'],
-        ]);
-
-        $closedStatusId = Ticket::getStatusIdByName(Ticket::STATUS_CLOSED);
-
-        $ticket->update([
-            'status_id'        => $closedStatusId,
-            'closed_at'        => now(),
-            'minutes_spent'    => $request->minutes_spent,
-            'cost'             => $request->cost,
-            'technical_report' => $request->technical_report,
-        ]);
-
-        try {
-            event(new TicketStatusUpdatedBroadcast($ticket, $oldStatus, Ticket::STATUS_CLOSED));
-            if ($ticket->user && $ticket->user->email) {
-                $ticket->user->notify(new TicketStatusChanged($ticket, $oldStatus, Ticket::STATUS_CLOSED));
-            }
-        } catch (\Exception $e) {
-            // Silencia falhas
-        }
-
-        return response()->json(['ticket' => $ticket]);
-    }
-
-    /**
-     * Agenda um ticket para uma data futura.
-     */
-    public function scheduleTicket(Request $request, int $id)
-    {
-        $user = $this->authenticatedUser($request);
-
-        $ticket = Ticket::findOrFail($id);
 
         if ($user->isCommon() && (int) $ticket->user_id !== (int) $user->id) {
             return response()->json(['message' => 'Acesso negado'], 403);
@@ -869,30 +740,17 @@ class TicketController extends Controller
             ]);
         }
 
-        $inProgressId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
-        if ($inProgressId) {
-            $ticket->status_id = $inProgressId;
-        }
-        $ticket->save();
+        $recomendacaoIA = app(AIService::class)->recomendarTecnico($ticket);
 
-        return response()->json([
-            'message' => __('Custo dentro do limiar. Intervenção autorizada automaticamente.'),
-            'ticket'  => $ticket->load(['equipment', 'room', 'technician', 'status']),
-        ]);
+        return view('ui.ticket-detail', compact('ticket', 'recomendacaoIA'));
     }
 
-    /**
-     * Finaliza o ticket com custo final e relatório técnico.
-     */
-    public function closeTicketFinal(Request $request, int $id)
+    public function openTickets(Request $request): JsonResponse
     {
         $user = $this->authenticatedUser($request);
         $this->requireRole($user, [User::ROLE_TECHNICIAN, User::ROLE_ADMIN]);
 
-        $request->validate([
-            'actual_cost' => 'required|numeric|min:0',
-            'report'      => 'nullable|string|max:5000',
-        ]);
+        $tickets = $this->ticketRepository->getOpenTickets();
 
         $ticket = Ticket::findOrFail($id);
 
@@ -919,33 +777,21 @@ class TicketController extends Controller
         ]);
     }
 
-    /**
-     * Permite que um técnico devolva/liberte uma ocorrência previamente assumida.
-     */
-    public function releaseTicket(Request $request, int $id)
+    public function getMostUrgentOpenTicket(Request $request): JsonResponse
     {
-        $ticket = Ticket::findOrFail($id);
+        $this->authenticatedUser($request);
+        $excludeId = (int) $request->input('exclude', 0);
 
-        $ticket->assigned_to = null;
-        if (Schema::hasColumn('tickets', 'technician_id')) {
-            $ticket->technician_id = null;
-        }
-        if (Schema::hasColumn('tickets', 'tecnico_id')) {
-            $ticket->tecnico_id = null;
-        }
+        $ticket = $this->technicianService->findMostUrgentOpenTicket($excludeId > 0 ? $excludeId : null);
 
-        $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
-        if ($openStatusId) {
-            $ticket->status_id = $openStatusId;
+        if (! $ticket) {
+            return response()->json(['ticket_id' => null, 'message' => __('N├úo existem tickets abertos priorit├írios.')], 404);
         }
-
-        $ticket->budget_requested = false;
-        $ticket->budget_status = null;
-        $ticket->save();
 
         return response()->json([
-            'message' => 'Ocorrência libertada com sucesso.',
-            'ticket'  => $ticket
+            'ticket_id' => $ticket->id,
+            'title' => $ticket->title,
+            'priority' => $ticket->priority,
         ]);
     }
 

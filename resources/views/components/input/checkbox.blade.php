@@ -51,7 +51,9 @@
             @checked($checked)
             @disabled($disabled)
             @required($required)
-            @if($describedBy) aria-describedby="{{ implode(' ', $describedBy) }}" @endif
+            @if($describedBy)
+                aria-describedby="{{ implode(' ', $describedBy) }}"
+            @endif
         >
 
         <span class="ui-checkbox__control" aria-hidden="true">

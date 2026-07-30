@@ -1,20 +1,23 @@
 @extends('ui.layout')
 
+@section('page_key', 'equipments')
+
 @section('content')
 <script>
 window.requireAuthOnLoad = true;
 </script>
 
-@component('ui.partials.page-card', [
-    'title' => __('Equipamentos'),
-    'subtitle' => __('Inventário centralizado de equipamentos, localizações e estado operacional.'),
-    'actions' => '<div class="flex items-center gap-2">'
-        . '<a href="/ui" class="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-slate-300 bg-slate-800/60 hover:bg-slate-700/80 border border-slate-700/80 rounded-full transition-all">'
-            . '<span>←</span> ' . __('Voltar ao painel')
-        . '</a>'
-        . '<button id="btnAddEquipment" onclick="openNewEquipmentModal()" class="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-orange-500 hover:bg-orange-600 rounded-full shadow-sm transition-all cursor-pointer">+ ' . __('Novo equipamento') . '</button>'
-        . '</div>'
-])
+<x-ui.partials.page-card
+    :title="__('Equipamentos')"
+    :subtitle="__('Inventário centralizado de equipamentos, localizações e estado operacional.')"
+    badge="Dashboard"
+>
+    <x-slot:actions>
+        <x-ui.page-actions.group>
+            <x-ui.page-actions.back-button :href="route('ui.index')" :label="__('Voltar ao painel')" />
+            <x-ui.buttons.button type="button" id="btnAddEquipment" onclick="openNewEquipmentModal()" variant="primary" size="sm">{{ __('Novo equipamento') }}</x-ui.buttons.button>
+        </x-ui.page-actions.group>
+    </x-slot:actions>
 
     {{-- Painel de Pesquisa Avançada --}}
     <div class="mb-6 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
@@ -79,7 +82,7 @@ window.requireAuthOnLoad = true;
     {{-- Paginação --}}
     <div id="pagination" class="mt-5 flex items-center justify-between text-xs text-[var(--text-soft)] px-1"></div>
 
-@endcomponent
+</x-ui.partials.page-card>
 
 {{-- Modal para Adicionar / Editar Equipamento --}}
 <div id="equipmentModal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/60 backdrop-blur-sm p-4 overflow-y-auto">

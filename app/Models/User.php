@@ -2,21 +2,21 @@
 
 namespace App\Models;
 
+use App\Enums\UserRoleEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Storage;
 
 /**
  * @property-read UserProfile|null $profile
  * @property-read int $tickets_ativos
- * @property-read string $avatar_url
  */
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     /** @var string */
     protected $table = 'users';
@@ -27,9 +27,9 @@ class User extends Authenticatable
         'email',
         'password',
         'profile_id',
-        'avatar', // <-- Adicionado para permitir o armazenamento da imagem
         'active',
         'api_token',
+        'token_created_at',
         'remember_token',
     ];
 
@@ -38,144 +38,68 @@ class User extends Authenticatable
         'password',
         'remember_token',
         'api_token',
-        '_tokens',
-        '_password_hash',
     ];
 
     /** @var array<string, string> */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'token_created_at' => 'datetime',
         'active' => 'boolean',
     ];
 
-    /**
-     * Inclui automaticamente o atributo 'avatar_url' nas respostas JSON
-     *
-     * @var list<string>
-     */
-    protected $appends = [
-        'avatar_url',
-    ];
+    public const ROLE_USER = UserRoleEnum::User->value;
 
-    // Constantes de Roles - mapeadas para os nomes dos perfis
-    public const ROLE_USER = 'user';
+    public const ROLE_TECHNICIAN = UserRoleEnum::Technician->value;
 
-    public const ROLE_TECHNICIAN = 'technician';
+    public const ROLE_ADMIN = UserRoleEnum::Admin->value;
 
-    public const ROLE_ADMIN = 'admin';
-
-    /**
-     * Retorna a URL completa da foto do utilizador ou gera um avatar com as iniciais.
-     */
-    public function getAvatarUrlAttribute(): string
-    {
-        if ($this->avatar && Storage::disk('public')->exists($this->avatar)) {
-            return asset('storage/' . $this->avatar);
-        }
-
-        // Caso não tenha foto personalizada, gera um avatar dinâmico apelativo com o nome
-        return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=f97316&color=ffffff&bold=true';
-    }
-
-    /**
-     * Tickets criados pelo utilizador.
-     */
-    public function tickets(): HasMany
-    {
-        return $this->hasMany(Ticket::class, 'user_id');
-    }
-
-    /**
-     * Tickets atribuídos ao utilizador (caso seja técnico).
-     */
-    public function assignedTickets(): HasMany
-    {
-        return $this->hasMany(Ticket::class, 'assigned_to');
-    }
-
-    /**
-     * Perfil associado ao utilizador.
-     */
-    public function profile(): BelongsTo
-    {
-        return $this->belongsTo(UserProfile::class, 'profile_id');
-    }
-
-    /**
-     * Verifica se o utilizador é Administrador.
-     */
-    public function isAdmin(): bool
-    {
-        return $this->profile?->name === self::ROLE_ADMIN;
-    }
-
-    /**
-     * Verifica se o utilizador é Técnico.
-     */
-    public function isTechnician(): bool
-    {
-        return $this->profile?->name === self::ROLE_TECHNICIAN;
-    }
-
-    /**
-     * Verifica se o utilizador é Utilizador Comum.
-     */
-    public function isCommonUser(): bool
-    {
-        return $this->profile?->name === self::ROLE_USER;
-    }
-
-    /**
-     * Alias de isCommonUser() – utilizado nos controllers.
-     */
-    public function isCommon(): bool
-    {
-        return $this->isCommonUser();
-    }
-
-    /**
-     * Obtém todas as constantes de roles disponíveis.
-     */
     public static function getAvailableRoles(): array
     {
         return [self::ROLE_USER, self::ROLE_TECHNICIAN, self::ROLE_ADMIN];
     }
 
-    /**
-     * Verifica se um nome de perfil pertence às roles válidas do sistema.
-     */
-    public static function isValidProfile(string $profileName): bool
+    public static function isValidProfile(string $name): bool
     {
-        return in_array($profileName, self::getAvailableRoles(), true);
+        return in_array($name, self::getAvailableRoles(), true);
     }
 
-    /**
-     * Registo dos Model Events do Laravel.
-     */
-    protected static function booted(): void
+    public function tickets(): HasMany
     {
-        static::creating(function (User $user) {
-            self::ensureValidProfile($user);
-        });
-
-        static::updating(function (User $user) {
-            self::ensureValidProfile($user);
-        });
+        return $this->hasMany(Ticket::class, 'user_id');
     }
 
-    /**
-     * Garante centralizadamente que o utilizador possui um perfil válido antes de salvar.
-     */
-    private static function ensureValidProfile(User $user): void
+    public function assignedTickets(): HasMany
     {
-        $profileName = $user->profile->name ?? '';
+        return $this->hasMany(Ticket::class, 'assigned_to');
+    }
 
-        if (! $user->profile_id || ! self::isValidProfile($profileName)) {
-            $defaultRole = self::ROLE_USER;
+    public function profile(): BelongsTo
+    {
+        return $this->belongsTo(UserProfile::class, 'profile_id');
+    }
 
-            $existingProfile = UserProfile::firstOrCreate(['name' => $defaultRole]);
+    public function isAdmin(): bool
+    {
+        return $this->profile?->name === UserRoleEnum::Admin->value;
+    }
 
-            $user->profile_id = $existingProfile->id;
-        }
+    public function isTechnician(): bool
+    {
+        return $this->profile?->name === UserRoleEnum::Technician->value;
+    }
+
+    public function isCommonUser(): bool
+    {
+        return $this->profile?->name === UserRoleEnum::User->value;
+    }
+
+    public function isCommon(): bool
+    {
+        return $this->isCommonUser();
+    }
+
+    public static function hashToken(string $token): string
+    {
+        return hash_hmac('sha256', $token, config('app.key'));
     }
 }

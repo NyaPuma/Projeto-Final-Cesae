@@ -1,0 +1,112 @@
+/* Input Base & Field Component */
+
+.ui-input-field {
+  --ui-input-height: 2.75rem;
+  --ui-input-padding-x: var(--space-md, 1rem);
+  --ui-input-bg: var(--surface, #ffffff);
+  --ui-input-color: var(--text-primary, #111827);
+  --ui-input-font-size: var(--text-sm, 0.875rem);
+  --ui-input-radius: var(--radius-md, 8px);
+
+  --ui-input-icon-size: 1.25rem;
+  --ui-input-icon-width: 2.75rem;
+
+  --ui-input-border-color: var(--border-color, #d1d5db);
+  --ui-input-border-hover: var(--border-hover, #71717a);
+  --ui-input-primary: var(--primary, #2563eb);
+  --ui-input-focus-ring: var(--primary-light, rgba(37, 99, 235, 0.15));
+
+  --ui-input-transition-duration: 0.2s;
+  --ui-input-transition-timing: cubic-bezier(0.16, 1, 0.3, 1);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm, 0.5rem);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.ui-input-field:has(.ui-input:disabled) {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.ui-input-field__label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs, 0.25rem);
+  font-size: var(--text-sm, 0.875rem);
+  font-weight: 600;
+  color: var(--text-primary, #111827);
+  user-select: none;
+  transition: color var(--ui-input-transition-duration) ease;
+}
+
+.ui-input-field__label span { color: var(--danger, #dc2626); }
+
+.ui-input-field:focus-within:not(:has(.ui-input:disabled)) .ui-input-field__label {
+  color: var(--ui-input-primary);
+}
+
+.ui-input__wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+
+  --ui-input-pad-start: var(--ui-input-padding-x);
+  --ui-input-pad-end: var(--ui-input-padding-x);
+}
+
+.ui-input__wrapper:has(.ui-input__prefix) { --ui-input-pad-start: var(--ui-input-icon-width); }
+.ui-input__wrapper:has(.ui-input__icon)   { --ui-input-pad-start: var(--ui-input-icon-width); }
+.ui-input__wrapper:has(.ui-input__suffix) { --ui-input-pad-end: var(--ui-input-icon-width); }
+.ui-input__wrapper:has(.ui-input__loader) { --ui-input-pad-end: var(--ui-input-icon-width); }
+
+.ui-input {
+  width: 100%;
+  min-height: var(--ui-input-height);
+  padding-inline-start: var(--ui-input-pad-start);
+  padding-inline-end: var(--ui-input-pad-end);
+
+  border: 1px solid var(--ui-input-border-color);
+  border-radius: var(--ui-input-radius);
+  background-color: var(--ui-input-bg);
+  color: var(--ui-input-color);
+  font-size: var(--ui-input-font-size);
+  font-family: inherit;
+  box-sizing: border-box;
+
+  transition:
+    border-color var(--ui-input-transition-duration) var(--ui-input-transition-timing),
+    background-color var(--ui-input-transition-duration) var(--ui-input-transition-timing),
+    box-shadow var(--ui-input-transition-duration) var(--ui-input-transition-timing),
+    color var(--ui-input-transition-duration) var(--ui-input-transition-timing);
+}
+
+.ui-input::placeholder { color: var(--text-muted, #6b7280); opacity: 1; transition: opacity var(--ui-input-transition-duration) ease; }
+.ui-input:focus::placeholder { opacity: 0.5; }
+
+.ui-input--sm {
+  --ui-input-height: 2.25rem;
+  --ui-input-font-size: var(--text-xs, 0.75rem);
+  --ui-input-padding-x: var(--space-sm, 0.75rem);
+  --ui-input-icon-size: 1rem;
+  --ui-input-icon-width: 2.25rem;
+}
+
+.ui-input--md {
+  --ui-input-height: 2.75rem;
+  --ui-input-font-size: var(--text-sm, 0.875rem);
+  --ui-input-icon-size: 1.25rem;
+  --ui-input-icon-width: 2.75rem;
+}
+
+.ui-input--lg {
+  --ui-input-height: 3.25rem;
+  --ui-input-font-size: var(--text-md, 1rem);
+  --ui-input-padding-x: var(--space-lg, 1.25rem);
+  --ui-input-icon-size: 1.5rem;
+  --ui-input-icon-width: 3.25rem;
+}

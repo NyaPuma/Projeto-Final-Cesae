@@ -1,15 +1,21 @@
 @extends('ui.layout')
 
+@section('page_key', 'users-create')
+
 @section('content')
 <script>
 window.requireAuthOnLoad = true;
 </script>
 
-@component('ui.partials.page-card', [
-    'title' => __('Criar Utilizador'),
-    'subtitle' => __('Crie um novo perfil de utilizador e defina as suas credenciais e permissões de acesso.'),
-'actions' => '<a href="/ui/users" class="inline-flex items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">← ' . __('Voltar') . '</a>'
-])
+<x-ui.partials.page-card
+    :title="__('Criar Utilizador')"
+    :subtitle="__('Crie um novo perfil de utilizador e defina as suas credenciais e permissões de acesso.')"
+>
+    <x-slot:actions>
+        <x-ui.page-actions.group>
+            <x-ui.page-actions.back-button :href="route('ui.users')" :label="__('Voltar')" />
+        </x-ui.page-actions.group>
+    </x-slot:actions>
     <div class="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm">
         <form id="createUserForm" class="space-y-6">
             <div class="grid gap-6 lg:grid-cols-2">
@@ -48,7 +54,7 @@ window.requireAuthOnLoad = true;
             </div>
         </form>
     </div>
-@endcomponent
+</x-ui.partials.page-card>
 @endsection
 
 @push('scripts')

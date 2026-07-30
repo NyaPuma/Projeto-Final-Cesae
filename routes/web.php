@@ -1,59 +1,49 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminEquipmentController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\EquipmentController;
+use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\Ticket\TicketAssignmentController;
+use App\Http\Controllers\Ticket\TicketCloseController;
+use App\Http\Controllers\Ticket\TicketLifecycleController;
+use App\Http\Controllers\Ticket\TicketScheduleController;
+use App\Http\Controllers\Ticket\TicketStartController;
+use App\Http\Controllers\TicketAttachmentController;
+use App\Http\Controllers\TicketBudgetController;
+use App\Http\Controllers\TicketCommentController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UiController;
-use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Rotas Públicas (Acesso Aberto)
+| Rotas P├║blicas (Acesso Aberto)
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', function () {
-    return view('main');
-});
+Route::get('/', [PageController::class, 'home'])->name('home');
+Route::get('/lang/{locale}', [PageController::class, 'switchLang'])->name('lang.switch');
+Route::get('/ui/login', [PageController::class, 'login'])->name('ui.login');
+Route::get('/test-email', [PageController::class, 'testEmail'])->name('test.email');
 
-Route::get('/lang/{locale}', function ($locale) {
-    if (in_array($locale, ['en', 'pt'])) {
-        session(['locale' => $locale]);
-
-        return redirect()->back()->withCookie(cookie()->forever('locale', $locale));
-    }
-
-    return redirect()->back();
-})->name('lang.switch');
-
-Route::get('/ui/login', function () {
-    return view('ui.auth');
-})->name('ui.login');
-
-Route::get('/test-email', function () {
-    Mail::raw('Teste de comunicação com Mailtrap!', function ($message) {
-        $message->to('teste@exemplo.com')
-            ->subject('Teste do Sistema de Avarias');
-    });
-
-    return 'E-mail enviado com sucesso!';
-});
-
-// Endpoint público de Login
 Route::post('/login', [AuthController::class, 'login'])
+    ->name('login')
     ->middleware(['rate.limit:5,1'])
-    ->withoutMiddleware([VerifyCsrfToken::class]);
+    ->withoutMiddleware([ValidateCsrfToken::class]);
 
 /*
 |--------------------------------------------------------------------------
-| Rotas Protegidas (Exigem Token de Autenticação Válido via custom.auth)
+| Rotas Protegidas (Exigem Token de Autentica├º├úo V├ílido via custom.auth)
 |--------------------------------------------------------------------------
 */
 Route::middleware(['custom.auth'])->group(function () {

@@ -2,14 +2,22 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class UsersSeeder extends Seeder
 {
     public function run(): void
     {
+        if (app()->environment('production')) {
+            $this->command->error('ABORTADO: Este seeder n├úo deve ser executado em produ├º├úo!');
+
+            return;
+        }
+
         $profileIds = DB::table('user_profiles')->pluck('id', 'name');
 
         $defaultUsers = [
@@ -17,22 +25,22 @@ class UsersSeeder extends Seeder
                 'name' => 'Administrador',
                 'email' => 'admin@example.com',
                 'profile_name' => 'admin',
-                'password' => bcrypt('admin123'),
-                'api_token' => 'admin-token-'.Str::random(40),
+                'password' => Hash::make('Password123!'),
+                'api_token' => User::hashToken(Str::random(60)),
             ],
             [
-                'name' => 'Técnico',
+                'name' => 'T├®cnico',
                 'email' => 'tech@example.com',
                 'profile_name' => 'technician',
-                'password' => bcrypt('tech123'),
-                'api_token' => 'tech-token-'.Str::random(40),
+                'password' => Hash::make('Password123!'),
+                'api_token' => User::hashToken(Str::random(60)),
             ],
             [
                 'name' => 'Utilizador',
                 'email' => 'user@example.com',
                 'profile_name' => 'user',
-                'password' => bcrypt('user123'),
-                'api_token' => 'user-token-'.Str::random(40),
+                'password' => Hash::make('Password123!'),
+                'api_token' => User::hashToken(Str::random(60)),
             ],
         ];
 
@@ -59,19 +67,21 @@ class UsersSeeder extends Seeder
 
         for ($i = 1; $i <= $targetCount - $currentCount; $i++) {
             $index = $i + $currentCount;
-            $profileName = $index % 3 === 0 ? 'technician' : ($index % 2 === 0 ? 'user' : 'admin');
+            // Distribui├º├úo realista: ~10% admin, ~15% t├®cnico, ~75% utilizador comum
+            $roll = $index % 10;
+            $profileName = $roll === 0 ? 'admin' : ($roll <= 2 ? 'technician' : 'user');
             $email = sprintf('synthetic-%03d@example.invalid', $index);
 
             DB::table('users')->updateOrInsert(
                 ['email' => $email],
                 [
-                    'name' => 'Utilizador Sintético '.str_pad((string) $index, 3, '0', STR_PAD_LEFT),
+                    'name' => 'Utilizador Sint├®tico '.str_pad((string) $index, 3, '0', STR_PAD_LEFT),
                     'email' => $email,
                     'email_verified_at' => now(),
-                    'password' => bcrypt('Password123!'),
+                    'password' => Hash::make('password'),
                     'profile_id' => $profileIds[$profileName] ?? $profileIds['user'],
                     'active' => true,
-                    'api_token' => 'synthetic-'.Str::random(40),
+                    'api_token' => User::hashToken(Str::random(60)),
                     'remember_token' => Str::random(10),
                     'created_at' => now(),
                     'updated_at' => now(),

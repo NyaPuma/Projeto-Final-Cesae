@@ -1,15 +1,26 @@
 @extends('ui.layout')
 
+@section('page_key', 'audits')
+
 @section('content')
 <script>
 window.requireAuthOnLoad = true;
 </script>
 
-@component('ui.partials.page-card', [
-    'title' => __('Auditoria do Sistema'),
-    'subtitle' => __('Rastreabilidade, histórico de ações e registo de alterações efetuadas pelos utilizadores.'),
-    'actions' => '<div class="flex flex-wrap gap-2"><a href="/ui" class="inline-flex items-center justify-center px-3.5 py-2 bg-[var(--surface)] text-xs font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all"><svg class="w-3.5 h-3.5 mr-1.5 text-[var(--text-soft)]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path></svg> ' . __('Voltar ao painel') . '</a></div>'
-])
+<x-ui.partials.page-card
+    :title="__('Auditoria do Sistema')"
+    :subtitle="__('Rastreabilidade, hist├│rico de a├º├Áes e registo de altera├º├Áes efetuadas pelos utilizadores.')"
+>
+    <x-slot:actions>
+        <div class="flex flex-wrap gap-2">
+            <a href="/ui" class="inline-flex items-center justify-center px-3.5 py-2 bg-[var(--surface)] text-xs font-semibold text-[var(--text)] border border-[var(--border)] rounded-xl shadow-sm hover:bg-[var(--surface-2)] transition-all">
+                <svg class="w-3.5 h-3.5 mr-1.5 text-[var(--text-soft)]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path>
+                </svg>
+                {{ __('Voltar ao painel') }}
+            </a>
+        </div>
+    </x-slot:actions>
 
     {{-- Painel de Filtros --}}
     <div class="mb-6 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
@@ -21,9 +32,9 @@ window.requireAuthOnLoad = true;
             </div>
 
             <div>
-                <label for="filter_event" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Ação / Evento') }}</label>
+                <label for="filter_event" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('A├º├úo / Evento') }}</label>
                 <select id="filter_event" class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2.5 text-xs text-[var(--text)] outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all">
-                    <option value="">{{ __('Todas as Ações') }}</option>
+                    <option value="">{{ __('Todas as A├º├Áes') }}</option>
                 </select>
             </div>
         </div>
@@ -50,10 +61,10 @@ window.requireAuthOnLoad = true;
                         <th class="px-5 py-4 font-bold">{{ __('Log ID') }}</th>
                         <th class="px-5 py-4 font-bold">{{ __('Utilizador / Operador') }}</th>
                         <th class="px-5 py-4 font-bold">{{ __('Elemento Afetado') }}</th>
-                        <th class="px-5 py-4 font-bold">{{ __('Tipo de Ação') }}</th>
+                        <th class="px-5 py-4 font-bold">{{ __('Tipo de A├º├úo') }}</th>
                         <th class="px-5 py-4 font-bold">{{ __('Campos Modificados') }}</th>
                         <th class="px-5 py-4 font-bold">{{ __('Data e Hora') }}</th>
-                        <th class="px-5 py-4 text-right font-bold">{{ __('Ações') }}</th>
+                        <th class="px-5 py-4 text-right font-bold">{{ __('A├º├Áes') }}</th>
                     </tr>
                 </thead>
                 <tbody id="auditsTableContentBody" class="divide-y divide-[var(--border)] text-[var(--text)]">
@@ -61,7 +72,7 @@ window.requireAuthOnLoad = true;
                         <td colspan="7" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]">
                             <div class="flex items-center justify-center gap-2">
                                 <span class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
-                                A carregar histórico de auditoria...
+                                A carregar hist├│rico de auditoria...
                             </div>
                         </td>
                     </tr>
@@ -70,12 +81,12 @@ window.requireAuthOnLoad = true;
         </div>
     </div>
 
-    {{-- Paginação --}}
+    {{-- Pagina├º├úo --}}
     <div id="pagination" class="mt-5 flex items-center justify-between text-xs text-[var(--text-soft)] px-1"></div>
 
-@endcomponent
+</x-ui.partials.page-card>
 
-{{-- Modal de Comparação e Inspeção do Log --}}
+{{-- Modal de Compara├º├úo e Inspe├º├úo do Log --}}
 <div id="auditDetailModal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/60 backdrop-blur-sm p-4 overflow-y-auto">
     <div class="relative w-full max-w-3xl rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-2xl transition-all my-auto">
         
@@ -87,15 +98,15 @@ window.requireAuthOnLoad = true;
             <button onclick="closeModal('auditDetailModal')" class="text-[var(--text-soft)] hover:text-[var(--text)] font-bold text-lg cursor-pointer">&times;</button>
         </div>
 
-        {{-- Cabeçalho Informativo --}}
+        {{-- Cabe├ºalho Informativo --}}
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-[var(--surface-2)] p-3.5 rounded-xl border border-[var(--border)] text-xs mb-5">
             <div><span class="text-[10px] uppercase font-bold text-[var(--text-soft)] block">Operador</span><strong id="modalUser" class="text-[var(--text)]"></strong></div>
             <div><span class="text-[10px] uppercase font-bold text-[var(--text-soft)] block">Data / Hora</span><strong id="modalDate" class="text-[var(--text)]"></strong></div>
             <div><span class="text-[10px] uppercase font-bold text-[var(--text-soft)] block">Elemento</span><strong id="modalEntity" class="text-[var(--text)]"></strong></div>
-            <div><span class="text-[10px] uppercase font-bold text-[var(--text-soft)] block">Ação</span><div id="modalBadge" class="mt-0.5"></div></div>
+            <div><span class="text-[10px] uppercase font-bold text-[var(--text-soft)] block">A├º├úo</span><div id="modalBadge" class="mt-0.5"></div></div>
         </div>
 
-        {{-- Tabela de Comparação Visual (Antes vs Depois) --}}
+        {{-- Tabela de Compara├º├úo Visual (Antes vs Depois) --}}
         <div class="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]">
             <table class="w-full text-left text-xs divide-y divide-[var(--border)]">
                 <thead class="bg-[var(--surface-2)] text-[10px] uppercase font-bold text-[var(--text-soft)]">
@@ -125,21 +136,21 @@ let filteredAudits = [];
 let currentPage = 1;
 const itemsPerPage = 10;
 
-// Mapeamento amigável de campos de base de dados para Português
+// Mapeamento amig├ível de campos de base de dados para Portugu├¬s
 const fieldTranslations = {
-    'title': 'Título',
-    'description': 'Descrição',
+    'title': 'T├¡tulo',
+    'description': 'Descri├º├úo',
     'status': 'Estado Operacional',
     'priority': 'Prioridade',
     'name': 'Nome',
-    'serial': 'Número de Série',
-    'is_preventive': 'Manutenção Preventiva',
+    'serial': 'N├║mero de S├®rie',
+    'is_preventive': 'Manuten├º├úo Preventiva',
     'room_id': 'ID da Sala',
     'user_id': 'ID do Utilizador',
-    'technician_id': 'Técnico Atribuído',
+    'technician_id': 'T├®cnico Atribu├¡do',
     'active': 'Ativo/Operacional',
-    'building': 'Edifício / Bloco',
-    'location': 'Localização'
+    'building': 'Edif├¡cio / Bloco',
+    'location': 'Localiza├º├úo'
 };
 
 function getAuthHeader() {
@@ -175,13 +186,13 @@ function getEventBadge(event) {
     const value = String(event || "").toLowerCase().trim();
 
     if (value.includes('create') || value.includes('criar') || value.includes('insert')) {
-        return `<span class="inline-flex items-center px-2.5 py-1 rounded-lg text-[10px] font-bold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 uppercase tracking-wider">Criação</span>`;
+        return `<span class="inline-flex items-center px-2.5 py-1 rounded-lg text-[10px] font-bold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 uppercase tracking-wider">Cria├º├úo</span>`;
     }
     if (value.includes('update') || value.includes('editar') || value.includes('atualizar')) {
-        return `<span class="inline-flex items-center px-2.5 py-1 rounded-lg text-[10px] font-bold bg-amber-500/10 text-amber-500 border border-amber-500/20 uppercase tracking-wider">Edição</span>`;
+        return `<span class="inline-flex items-center px-2.5 py-1 rounded-lg text-[10px] font-bold bg-amber-500/10 text-amber-500 border border-amber-500/20 uppercase tracking-wider">Edi├º├úo</span>`;
     }
     if (value.includes('delete') || value.includes('eliminar') || value.includes('remover')) {
-        return `<span class="inline-flex items-center px-2.5 py-1 rounded-lg text-[10px] font-bold bg-rose-500/10 text-rose-500 border border-rose-500/20 uppercase tracking-wider">Remoção</span>`;
+        return `<span class="inline-flex items-center px-2.5 py-1 rounded-lg text-[10px] font-bold bg-rose-500/10 text-rose-500 border border-rose-500/20 uppercase tracking-wider">Remo├º├úo</span>`;
     }
 
     return `<span class="inline-flex items-center px-2.5 py-1 rounded-lg text-[10px] font-bold bg-slate-800 text-slate-300 border border-slate-700/80 uppercase tracking-wider">${event.toUpperCase()}</span>`;
@@ -212,10 +223,10 @@ function renderSummaryChanges(audit) {
         .filter(k => !['updated_at', 'created_at', 'id'].includes(k))
         .map(k => fieldTranslations[k] || k);
 
-    if (fieldsChanged.length === 0) return '<span class="text-[var(--text-soft)] italic">Sem alterações registadas</span>';
+    if (fieldsChanged.length === 0) return '<span class="text-[var(--text-soft)] italic">Sem altera├º├Áes registadas</span>';
 
     return `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-slate-800/80 text-slate-300 border border-slate-700/80">
-        📝 ${fieldsChanged.slice(0, 2).join(', ')}${fieldsChanged.length > 2 ? ' +' + (fieldsChanged.length - 2) : ''}
+        ­ƒôØ ${fieldsChanged.slice(0, 2).join(', ')}${fieldsChanged.length > 2 ? ' +' + (fieldsChanged.length - 2) : ''}
     </span>`;
 }
 
@@ -235,7 +246,7 @@ async function fetchAudits() {
     }
 
     if (!resData) {
-        if (tbody) tbody.innerHTML = '<tr><td colspan="7" class="px-5 py-12 text-center text-xs text-red-400">Não foi possível carregar os registos de auditoria.</td></tr>';
+        if (tbody) tbody.innerHTML = '<tr><td colspan="7" class="px-5 py-12 text-center text-xs text-red-400">N├úo foi poss├¡vel carregar os registos de auditoria.</td></tr>';
         return;
     }
 
@@ -252,7 +263,7 @@ function populateEventFilter(audits) {
 
     const uniqueEvents = [...new Set(audits.map(item => String(item.event || '').trim()))].filter(Boolean);
 
-    eventSelect.innerHTML = '<option value="">Todas as Ações</option>';
+    eventSelect.innerHTML = '<option value="">Todas as A├º├Áes</option>';
     uniqueEvents.forEach(ev => {
         const option = document.createElement('option');
         option.value = ev.toLowerCase();
@@ -281,7 +292,7 @@ function applyFiltersAndRender(page = 1) {
     tbody.innerHTML = paginatedAudits.map((audit, index) => {
         const globalIndex = startIndex + index;
         const logId = audit.id ? `#${audit.id}` : '-';
-        const user = audit.user?.name || audit.user || audit.username || audit.operator || 'Sistema Automático';
+        const user = audit.user?.name || audit.user || audit.username || audit.operator || 'Sistema Autom├ítico';
         const entityFormatted = formatEntityName(audit.auditable_type || audit.entity, audit.auditable_id || audit.reference);
         const badge = getEventBadge(audit.event);
         const summary = renderSummaryChanges(audit);
@@ -319,17 +330,17 @@ function renderPagination(totalItems, currPage) {
 
     pagEl.innerHTML = `
         <button onclick="applyFiltersAndRender(${currPage - 1})" ${currPage <= 1 ? 'disabled' : ''}
-            class="px-3.5 py-2 text-xs font-semibold text-[var(--text)] bg-[var(--surface-2)] border border-[var(--border)] rounded-xl hover:bg-[var(--border)] transition-all disabled:opacity-40 disabled:cursor-not-allowed">← Anterior</button>
-        <span class="font-bold text-[var(--text-soft)]">Página ${currPage} de ${lastPage}</span>
+            class="px-3.5 py-2 text-xs font-semibold text-[var(--text)] bg-[var(--surface-2)] border border-[var(--border)] rounded-xl hover:bg-[var(--border)] transition-all disabled:opacity-40 disabled:cursor-not-allowed">ÔåÉ Anterior</button>
+        <span class="font-bold text-[var(--text-soft)]">P├ígina ${currPage} de ${lastPage}</span>
         <button onclick="applyFiltersAndRender(${currPage + 1})" ${currPage >= lastPage ? 'disabled' : ''}
-            class="px-3.5 py-2 text-xs font-semibold text-[var(--text)] bg-[var(--surface-2)] border border-[var(--border)] rounded-xl hover:bg-[var(--border)] transition-all disabled:opacity-40 disabled:cursor-not-allowed">Próxima →</button>
+            class="px-3.5 py-2 text-xs font-semibold text-[var(--text)] bg-[var(--surface-2)] border border-[var(--border)] rounded-xl hover:bg-[var(--border)] transition-all disabled:opacity-40 disabled:cursor-not-allowed">Pr├│xima ÔåÆ</button>
     `;
 }
 
 function formatDisplayValue(val) {
     if (val === null || val === undefined || val === '') return '<em class="text-[var(--text-soft)]">Vazio / Nulo</em>';
     if (val === true || val === 1 || val === '1') return '<span class="text-emerald-400 font-bold">Sim / Ativo</span>';
-    if (val === false || val === 0 || val === '0') return '<span class="text-rose-400 font-bold">Não / Inativo</span>';
+    if (val === false || val === 0 || val === '0') return '<span class="text-rose-400 font-bold">N├úo / Inativo</span>';
     return String(val);
 }
 
@@ -339,7 +350,7 @@ function openAuditModal(index) {
 
     document.getElementById('modalLogIdHeader').textContent = `REGISTO #${audit.id || ''}`;
     document.getElementById('modalAuditTitle').textContent = `Auditoria: ${formatEntityName(audit.auditable_type || audit.entity, audit.auditable_id || audit.reference)}`;
-    document.getElementById('modalUser').textContent = audit.user?.name || audit.user || audit.username || 'Sistema Automático';
+    document.getElementById('modalUser').textContent = audit.user?.name || audit.user || audit.username || 'Sistema Autom├ítico';
     document.getElementById('modalDate').textContent = audit.created_at ? new Date(audit.created_at).toLocaleString('pt-PT') : '-';
     document.getElementById('modalEntity').textContent = formatEntityName(audit.auditable_type || audit.entity, audit.auditable_id || audit.reference);
     document.getElementById('modalBadge').innerHTML = getEventBadge(audit.event);
@@ -356,7 +367,7 @@ function openAuditModal(index) {
     const tableBody = document.getElementById('modalDiffTableBody');
 
     if (keysToDisplay.length === 0) {
-        tableBody.innerHTML = '<tr><td colspan="3" class="px-4 py-8 text-center text-[var(--text-soft)]">Sem alterações diretas de propriedades para exibir.</td></tr>';
+        tableBody.innerHTML = '<tr><td colspan="3" class="px-4 py-8 text-center text-[var(--text-soft)]">Sem altera├º├Áes diretas de propriedades para exibir.</td></tr>';
     } else {
         tableBody.innerHTML = keysToDisplay.map(key => {
             const fieldLabel = fieldTranslations[key] || key;
@@ -426,3 +437,4 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 @endsection
+

@@ -2,7 +2,7 @@
 
 // odsl-C:\laravel\Projeto Final Cesae\Projeto-Final-Cesae\app\Http\Controllers\NotificationController.php-PHPStan\BetterReflection\Reflection\ReflectionClass-App\Http\Controllers\NotificationController
 return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v2-6.70.0.3-8.2.12-ee76d58b58f98084ee4e51e61950fe39f3c2d189874f3323b86cf5fade837358',
+   'variableKey' => 'v2-6.70.0.3-8.2.12-f8a3e71f32de4f913525b17f0e2e71d98faa170facb2c087f0082846a2159b54',
    'data' => 
   array (
     'locatedSource' => 
@@ -26,8 +26,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     'attributes' => 
     array (
     ),
-    'startLine' => 12,
-    'endLine' => 88,
+    'startLine' => 11,
+    'endLine' => 90,
     'startColumn' => 1,
     'endColumn' => 1,
     'parentClassName' => 'App\\Http\\Controllers\\Controller',
@@ -69,8 +69,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 23,
-            'endLine' => 23,
+            'startLine' => 22,
+            'endLine' => 22,
             'startColumn' => 27,
             'endColumn' => 42,
             'parameterIndex' => 0,
@@ -92,12 +92,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'/notifications\'',
                 'attributes' => 
                 array (
-                  'startLine' => 15,
-                  'endLine' => 15,
-                  'startTokenPos' => 58,
-                  'startFilePos' => 303,
-                  'endTokenPos' => 58,
-                  'endFilePos' => 318,
+                  'startLine' => 14,
+                  'endLine' => 14,
+                  'startTokenPos' => 53,
+                  'startFilePos' => 274,
+                  'endTokenPos' => 53,
+                  'endFilePos' => 289,
                 ),
               ),
               'tags' => 
@@ -105,12 +105,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[\'Notifications\']',
                 'attributes' => 
                 array (
-                  'startLine' => 16,
-                  'endLine' => 16,
-                  'startTokenPos' => 64,
-                  'startFilePos' => 335,
-                  'endTokenPos' => 66,
-                  'endFilePos' => 351,
+                  'startLine' => 15,
+                  'endLine' => 15,
+                  'startTokenPos' => 59,
+                  'startFilePos' => 306,
+                  'endTokenPos' => 61,
+                  'endFilePos' => 322,
                 ),
               ),
               'summary' => 
@@ -118,12 +118,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'Listar notificações do utilizador\'',
                 'attributes' => 
                 array (
-                  'startLine' => 17,
-                  'endLine' => 17,
-                  'startTokenPos' => 72,
-                  'startFilePos' => 371,
-                  'endTokenPos' => 72,
-                  'endFilePos' => 407,
+                  'startLine' => 16,
+                  'endLine' => 16,
+                  'startTokenPos' => 67,
+                  'startFilePos' => 342,
+                  'endTokenPos' => 67,
+                  'endFilePos' => 378,
                 ),
               ),
               'security' => 
@@ -131,12 +131,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[[\'X-Auth-Token\' => []], [\'BearerAuth\' => []]]',
                 'attributes' => 
                 array (
-                  'startLine' => 18,
-                  'endLine' => 18,
-                  'startTokenPos' => 78,
-                  'startFilePos' => 428,
-                  'endTokenPos' => 97,
-                  'endFilePos' => 473,
+                  'startLine' => 17,
+                  'endLine' => 17,
+                  'startTokenPos' => 73,
+                  'startFilePos' => 399,
+                  'endTokenPos' => 92,
+                  'endFilePos' => 444,
                 ),
               ),
               'responses' => 
@@ -144,20 +144,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[new \\OpenApi\\Attributes\\Response(response: 200, description: \'Lista paginada de notificações\')]',
                 'attributes' => 
                 array (
-                  'startLine' => 19,
-                  'endLine' => 21,
-                  'startTokenPos' => 103,
-                  'startFilePos' => 495,
-                  'endTokenPos' => 122,
-                  'endFilePos' => 598,
+                  'startLine' => 18,
+                  'endLine' => 20,
+                  'startTokenPos' => 98,
+                  'startFilePos' => 466,
+                  'endTokenPos' => 117,
+                  'endFilePos' => 569,
                 ),
               ),
             ),
           ),
         ),
         'docComment' => NULL,
-        'startLine' => 14,
-        'endLine' => 35,
+        'startLine' => 13,
+        'endLine' => 39,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -195,8 +195,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 50,
-            'endLine' => 50,
+            'startLine' => 54,
+            'endLine' => 54,
             'startColumn' => 32,
             'endColumn' => 47,
             'parameterIndex' => 0,
@@ -221,8 +221,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 50,
-            'endLine' => 50,
+            'startLine' => 54,
+            'endLine' => 54,
             'startColumn' => 50,
             'endColumn' => 56,
             'parameterIndex' => 1,
@@ -244,12 +244,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'/notifications/{id}\'',
                 'attributes' => 
                 array (
-                  'startLine' => 38,
-                  'endLine' => 38,
-                  'startTokenPos' => 217,
-                  'startFilePos' => 1152,
-                  'endTokenPos' => 217,
-                  'endFilePos' => 1172,
+                  'startLine' => 42,
+                  'endLine' => 42,
+                  'startTokenPos' => 277,
+                  'startFilePos' => 1248,
+                  'endTokenPos' => 277,
+                  'endFilePos' => 1268,
                 ),
               ),
               'tags' => 
@@ -257,12 +257,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[\'Notifications\']',
                 'attributes' => 
                 array (
-                  'startLine' => 39,
-                  'endLine' => 39,
-                  'startTokenPos' => 223,
-                  'startFilePos' => 1189,
-                  'endTokenPos' => 225,
-                  'endFilePos' => 1205,
+                  'startLine' => 43,
+                  'endLine' => 43,
+                  'startTokenPos' => 283,
+                  'startFilePos' => 1285,
+                  'endTokenPos' => 285,
+                  'endFilePos' => 1301,
                 ),
               ),
               'summary' => 
@@ -270,12 +270,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'Marcar notificação como lida\'',
                 'attributes' => 
                 array (
-                  'startLine' => 40,
-                  'endLine' => 40,
-                  'startTokenPos' => 231,
-                  'startFilePos' => 1225,
-                  'endTokenPos' => 231,
-                  'endFilePos' => 1256,
+                  'startLine' => 44,
+                  'endLine' => 44,
+                  'startTokenPos' => 291,
+                  'startFilePos' => 1321,
+                  'endTokenPos' => 291,
+                  'endFilePos' => 1352,
                 ),
               ),
               'security' => 
@@ -283,12 +283,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[[\'X-Auth-Token\' => []], [\'BearerAuth\' => []]]',
                 'attributes' => 
                 array (
-                  'startLine' => 41,
-                  'endLine' => 41,
-                  'startTokenPos' => 237,
-                  'startFilePos' => 1277,
-                  'endTokenPos' => 256,
-                  'endFilePos' => 1322,
+                  'startLine' => 45,
+                  'endLine' => 45,
+                  'startTokenPos' => 297,
+                  'startFilePos' => 1373,
+                  'endTokenPos' => 316,
+                  'endFilePos' => 1418,
                 ),
               ),
               'parameters' => 
@@ -296,12 +296,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[new \\OpenApi\\Attributes\\Parameter(name: \'id\', in: \'path\', required: true, schema: new \\OpenApi\\Attributes\\Schema(type: \'integer\'))]',
                 'attributes' => 
                 array (
-                  'startLine' => 42,
-                  'endLine' => 44,
-                  'startTokenPos' => 262,
-                  'startFilePos' => 1345,
-                  'endTokenPos' => 301,
-                  'endFilePos' => 1465,
+                  'startLine' => 46,
+                  'endLine' => 48,
+                  'startTokenPos' => 322,
+                  'startFilePos' => 1441,
+                  'endTokenPos' => 361,
+                  'endFilePos' => 1561,
                 ),
               ),
               'responses' => 
@@ -309,20 +309,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[new \\OpenApi\\Attributes\\Response(response: 200, description: \'Notificação atualizada\'), new \\OpenApi\\Attributes\\Response(response: 404, description: \'Notificação não encontrada\')]',
                 'attributes' => 
                 array (
-                  'startLine' => 45,
-                  'endLine' => 48,
-                  'startTokenPos' => 307,
-                  'startFilePos' => 1487,
-                  'endTokenPos' => 343,
-                  'endFilePos' => 1672,
+                  'startLine' => 49,
+                  'endLine' => 52,
+                  'startTokenPos' => 367,
+                  'startFilePos' => 1583,
+                  'endTokenPos' => 403,
+                  'endFilePos' => 1768,
                 ),
               ),
             ),
           ),
         ),
         'docComment' => NULL,
-        'startLine' => 37,
-        'endLine' => 64,
+        'startLine' => 41,
+        'endLine' => 68,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,
@@ -360,8 +360,8 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
             'attributes' => 
             array (
             ),
-            'startLine' => 75,
-            'endLine' => 75,
+            'startLine' => 79,
+            'endLine' => 79,
             'startColumn' => 35,
             'endColumn' => 50,
             'parameterIndex' => 0,
@@ -383,12 +383,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'/notifications/test-email\'',
                 'attributes' => 
                 array (
-                  'startLine' => 67,
-                  'endLine' => 67,
-                  'startTokenPos' => 478,
-                  'startFilePos' => 2273,
-                  'endTokenPos' => 478,
-                  'endFilePos' => 2299,
+                  'startLine' => 71,
+                  'endLine' => 71,
+                  'startTokenPos' => 538,
+                  'startFilePos' => 2369,
+                  'endTokenPos' => 538,
+                  'endFilePos' => 2395,
                 ),
               ),
               'tags' => 
@@ -396,12 +396,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[\'Notifications\']',
                 'attributes' => 
                 array (
-                  'startLine' => 68,
-                  'endLine' => 68,
-                  'startTokenPos' => 484,
-                  'startFilePos' => 2316,
-                  'endTokenPos' => 486,
-                  'endFilePos' => 2332,
+                  'startLine' => 72,
+                  'endLine' => 72,
+                  'startTokenPos' => 544,
+                  'startFilePos' => 2412,
+                  'endTokenPos' => 546,
+                  'endFilePos' => 2428,
                 ),
               ),
               'summary' => 
@@ -409,12 +409,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '\'Enviar email de teste via Mailgun\'',
                 'attributes' => 
                 array (
-                  'startLine' => 69,
-                  'endLine' => 69,
-                  'startTokenPos' => 492,
-                  'startFilePos' => 2352,
-                  'endTokenPos' => 492,
-                  'endFilePos' => 2386,
+                  'startLine' => 73,
+                  'endLine' => 73,
+                  'startTokenPos' => 552,
+                  'startFilePos' => 2448,
+                  'endTokenPos' => 552,
+                  'endFilePos' => 2482,
                 ),
               ),
               'security' => 
@@ -422,12 +422,12 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[[\'X-Auth-Token\' => []], [\'BearerAuth\' => []]]',
                 'attributes' => 
                 array (
-                  'startLine' => 70,
-                  'endLine' => 70,
-                  'startTokenPos' => 498,
-                  'startFilePos' => 2407,
-                  'endTokenPos' => 517,
-                  'endFilePos' => 2452,
+                  'startLine' => 74,
+                  'endLine' => 74,
+                  'startTokenPos' => 558,
+                  'startFilePos' => 2503,
+                  'endTokenPos' => 577,
+                  'endFilePos' => 2548,
                 ),
               ),
               'responses' => 
@@ -435,20 +435,20 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
                 'code' => '[new \\OpenApi\\Attributes\\Response(response: 200, description: \'Email de teste enviado\')]',
                 'attributes' => 
                 array (
-                  'startLine' => 71,
-                  'endLine' => 73,
-                  'startTokenPos' => 523,
-                  'startFilePos' => 2474,
-                  'endTokenPos' => 542,
-                  'endFilePos' => 2567,
+                  'startLine' => 75,
+                  'endLine' => 77,
+                  'startTokenPos' => 583,
+                  'startFilePos' => 2570,
+                  'endTokenPos' => 602,
+                  'endFilePos' => 2663,
                 ),
               ),
             ),
           ),
         ),
         'docComment' => NULL,
-        'startLine' => 66,
-        'endLine' => 87,
+        'startLine' => 70,
+        'endLine' => 89,
         'startColumn' => 5,
         'endColumn' => 5,
         'couldThrow' => false,

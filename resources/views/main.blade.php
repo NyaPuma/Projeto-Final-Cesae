@@ -4,9 +4,9 @@
 <div class="min-h-screen bg-[var(--bg)] text-[var(--text)] antialiased flex flex-col justify-center">
     <div class="mx-auto max-w-3xl px-6 py-12 lg:px-8 text-center animate-[fadeIn_0.3s_ease-out]">
 
-        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-primary/20 bg-primary/10 text-xs font-bold uppercase tracking-[0.2em] text-primary mb-6">
+        <x-ui.text.pill tone="primary" size="sm" class="mb-6 gap-1.5 font-bold">
             {{ __('Bem-vindo ao Sistema') }}
-        </span>
+        </x-ui.text.pill>
 
         <h1 class="text-4xl font-black tracking-tight text-[var(--text)] sm:text-5xl">
             {{ __('Gestão de Avarias') }}

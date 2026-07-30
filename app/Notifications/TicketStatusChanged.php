@@ -2,15 +2,12 @@
 
 namespace App\Notifications;
 
+use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-/**
- * Notificação enviada ao criador do ticket quando o estado da avaria muda.
- * Suporta canal de email. Pode ser estendida com canais adicionais (database, broadcast).
- */
 class TicketStatusChanged extends Notification
 {
     use Queueable;
@@ -21,27 +18,15 @@ class TicketStatusChanged extends Notification
         protected string $newStatus
     ) {}
 
-    /**
-     * Define os canais de entrega desta notificação.
-     */
     public function via(object $notifiable): array
     {
         return ['mail'];
     }
 
-    /**
-     * Constrói a mensagem de email a enviar ao utilizador.
-     */
     public function toMail(object $notifiable): MailMessage
     {
-        $statusLabels = [
-            'aberta' => 'Aberta',
-            'em curso' => 'Em Curso',
-            'fechada' => 'Fechada',
-        ];
-
-        $oldLabel = $statusLabels[$this->oldStatus] ?? $this->oldStatus;
-        $newLabel = $statusLabels[$this->newStatus] ?? $this->newStatus;
+        $oldLabel = $this->resolveStatusLabel($this->oldStatus);
+        $newLabel = $this->resolveStatusLabel($this->newStatus);
 
         $subject = "Ticket #{$this->ticket->id} - Estado atualizado para {$newLabel}";
 
@@ -56,9 +41,6 @@ class TicketStatusChanged extends Notification
             ->line('Obrigado por usar o sistema de gestão de avarias.');
     }
 
-    /**
-     * Representação em array (para canais database/broadcast futuros).
-     */
     public function toArray(object $notifiable): array
     {
         return [
@@ -67,5 +49,16 @@ class TicketStatusChanged extends Notification
             'old_status' => $this->oldStatus,
             'new_status' => $this->newStatus,
         ];
+    }
+
+    private function resolveStatusLabel(string $status): string
+    {
+        foreach (TicketStatusEnum::cases() as $enum) {
+            if ($enum->value === $status || $enum->label() === $status) {
+                return $enum->label();
+            }
+        }
+
+        return $status;
     }
 }

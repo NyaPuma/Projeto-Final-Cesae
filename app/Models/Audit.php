@@ -23,4 +23,20 @@ class Audit extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Audit records are append-only: UPDATE is forbidden at the Eloquent level.
+     */
+    public function update(array $attributes = [], array $options = []): bool
+    {
+        throw new \LogicException('Audit records are immutable and cannot be updated.');
+    }
+
+    /**
+     * Audit records are append-only: DELETE is forbidden at the Eloquent level.
+     */
+    public function delete(): bool
+    {
+        throw new \LogicException('Audit records are immutable and cannot be deleted.');
+    }
 }

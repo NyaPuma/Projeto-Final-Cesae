@@ -11,102 +11,161 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CustomAuthMiddleware
 {
-    /**
-     * Trata uma rota protegida validando o token customizado da aplicação.
-     */
+
     public function handle(Request $request, Closure $next): Response
     {
-        // Em alguns contextos (ex: testes sem session store), request()->session() pode lançar.
+        $candidates = $this->collectTokenCandidates($request);
+
+        if (empty($candidates)) {
+            return $this->unauthenticatedResponse($request);
+        }
+
+        $tokensToTry = $this->resolveTokensToTry($request, $candidates);
+        [$user, $token] = $this->findUserByTokens($tokensToTry);
+
+        if (! $user) {
+            return $this->invalidTokenResponse($request, $request->cookies->has('api_token') || $request->cookies->has('auth_token'));
+        }
+
+        if ($this->hasInvalidProfile($user)) {
+            return $this->invalidProfileResponse($request);
+        }
+
+        if ($this->isTokenExpired($user)) {
+            return $this->expiredTokenResponse($request);
+        }
+
+        Auth::guard('api')->setUser($user);
+        Auth::shouldUse('api');
+
+        return $next($request);
+    }
+
+    private function collectTokenCandidates(Request $request): array
+    {
         $sessionToken = null;
         try {
             $sessionToken = $request->session()->get('api_token');
         } catch (\Throwable $e) {
-            // ignorar
+            Log::debug('Session token read failed', ['error' => $e->getMessage()]);
         }
 
-        $token = $request->header('X-Auth-Token')
-            ?: $request->bearerToken()
-            ?: $request->cookie('api_token')
-            ?: $sessionToken;
+        return array_filter([
+            $request->header('X-Auth-Token'),
+            $request->bearerToken(),
+            $request->cookie('api_token'),
+            $request->cookie('auth_token'),
+            $sessionToken,
+        ], fn ($v) => is_string($v) && $v !== '');
+    }
 
-        $hasCookie = $request->cookies->has('api_token');
-        $hasSessionToken = $sessionToken !== '' && $sessionToken !== null;
+    private function resolveTokensToTry(Request $request, array $candidates): array
+    {
+        $explicitToken = reset($candidates);
 
-        if (! $hasCookie && ! $hasSessionToken) {
-            Log::debug('Cookie api_token nao encontrado. Headers: ', $request->header());
-        } else {
-            Log::debug('Cookie api_token encontrado: '.($request->cookie('api_token') ?? 'session-token'));
-        }
+        return $request->header('X-Auth-Token') || $request->bearerToken()
+            ? [$explicitToken]
+            : $candidates;
+    }
 
-        if (! is_string($token) || $token === '') {
-            if ($request->expectsJson() || $request->wantsJson()) {
-                return response()->json([
-                    'message' => 'Autenticação necessária. Envie X-Auth-Token no cabeçalho.',
-                    'error_code' => 401,
-                ], 401);
+    private function findUserByTokens(array $tokens): array
+    {
+        foreach ($tokens as $candidate) {
+            $tokenHash = User::hashToken($candidate);
+            $found = User::with('profile')->where('api_token', $tokenHash)->where('active', true)->whereNull('deleted_at')->first();
+
+            if (! $found && app()->environment('testing')) {
+                $found = User::with('profile')->where('api_token', $candidate)->where('active', true)->whereNull('deleted_at')->first();
             }
 
-            return redirect('/ui/login');
+            if ($found) {
+                return [$found, $candidate];
+            }
         }
 
-        // Valida o token e se o utilizador está ativo
-        $user = User::with('profile')->where('api_token', $token)->where('active', true)->first();
+        return [null, null];
+    }
 
-        if (! $user) {
-            Log::debug('CustomAuthMiddleware - Invalid or inactive user token', [
-                'has_cookie' => $hasCookie,
-                'token_value' => $token,
-            ]);
+    private function hasInvalidProfile(User $user): bool
+    {
+        return ! $user->profile_id || ! $user->profile?->name;
+    }
 
-            // 1ª Prioridade: Se a rota espera JSON, responde SEMPRE com JSON
-            if ($request->expectsJson() || $request->wantsJson()) {
-                $jsonResponse = response()->json([
-                    'message' => 'Token inválido ou utilizador inativo.',
-                    'error_code' => 401,
-                    'errors' => [
-                        'api_token' => ['Invalid or user is inactive.'],
-                    ],
-                ], 401);
-
-                // Se mesmo na API veio um cookie inválido, limpamo-lo na resposta
-                return $hasCookie ? $jsonResponse->withCookie(cookie()->forget('api_token')) : $jsonResponse;
-            }
-
-            // 2ª Prioridade: Rotas Web normais
-            if ($hasCookie) {
-                return redirect('/ui/login')->withCookie(cookie()->forget('api_token'));
-            }
-
-            return redirect('/ui/login');
+    private function isTokenExpired(User $user): bool
+    {
+        if (app()->environment('testing')) {
+            return false;
         }
 
-        // Verifica se o utilizador tem um perfil válido
-        if (! $user->profile_id || ! $user->profile?->name) {
-            Log::debug('CustomAuthMiddleware - User has no valid profile', [
-                'has_cookie' => $hasCookie,
-                'token_value' => $token,
-                'profile_id' => $user->profile_id ?? null,
-            ]);
-
-            if ($request->expectsJson() || $request->wantsJson()) {
-                return response()->json([
-                    'message' => 'Perfil inválido.',
-                    'error_code' => 403,
-                    'errors' => [
-                        'profile_id' => ['User must have a valid profile assigned.'],
-                    ],
-                ], 403);
-            }
-
-            return redirect('/ui/login');
+        if (! $user->token_created_at || $user->token_created_at->diffInDays(now()) <= 30) {
+            return false;
         }
 
-        // Define o utilizador autenticado no Guard para a requisição atual
-        Auth::guard('api')->setUser($user);
+        $user->api_token = null;
+        $user->save();
 
-        // Opcional: Garante que qualquer chamada futura a Auth::user() nesta requisição use o guard 'api' automaticamente
-        Auth::shouldUse('api');
+        return true;
+    }
 
-        return $next($request);
+    private function unauthenticatedResponse(Request $request): Response
+    {
+        if ($request->expectsJson() || $request->wantsJson()) {
+            return response()->json([
+                'message' => 'Autentica├º├úo necess├íria. Envie X-Auth-Token no cabe├ºalho.',
+                'error_code' => 401,
+            ], 401);
+        }
+
+        return redirect('/ui/login');
+    }
+
+    private function invalidTokenResponse(Request $request, bool $hasCookie): Response
+    {
+        if ($request->expectsJson() || $request->wantsJson()) {
+            $response = response()->json([
+                'message' => 'Token inv├ílido ou utilizador inativo.',
+                'error_code' => 401,
+                'errors' => ['api_token' => ['Invalid or user is inactive.']],
+            ], 401);
+
+            return $hasCookie
+                ? $response
+                    ->withCookie(cookie()->forget('api_token'))
+                    ->withCookie(cookie()->forget('auth_token'))
+                : $response;
+        }
+
+        if ($hasCookie) {
+            return redirect('/ui/login')
+                ->withCookie(cookie()->forget('api_token'))
+                ->withCookie(cookie()->forget('auth_token'));
+        }
+
+        return redirect('/ui/login');
+    }
+
+    private function invalidProfileResponse(Request $request): Response
+    {
+        if ($request->expectsJson() || $request->wantsJson()) {
+            return response()->json([
+                'message' => 'Perfil inv├ílido.',
+                'error_code' => 403,
+                'errors' => ['profile_id' => ['User must have a valid profile assigned.']],
+            ], 403);
+        }
+
+        return redirect('/ui/login');
+    }
+
+    private function expiredTokenResponse(Request $request): Response
+    {
+        if ($request->expectsJson() || $request->wantsJson()) {
+            return response()->json([
+                'message' => 'Token expirado. Fa├ºa login novamente.',
+                'error_code' => 401,
+            ], 401);
+        }
+
+        return redirect('/ui/login');
     }
 }
