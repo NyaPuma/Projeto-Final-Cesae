@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 
 class TicketController extends Controller
@@ -422,7 +423,7 @@ class TicketController extends Controller
             return response()->json(['message' => 'Ticket não encontrado'], 404);
         }
 
-        $user = auth()->user() ?? $this->authenticatedUser($request);
+        $user = $request->user() ?? Auth::user();
 
         if (Schema::hasColumn('tickets', 'assigned_to')) {
             $ticket->assigned_to = $user->id;
