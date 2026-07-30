@@ -41,6 +41,7 @@ Route::middleware(['custom.auth'])->group(function () {
     // API de Tickets
     Route::get('/tickets', [TicketController::class, 'index']);
     Route::post('/tickets', [TicketController::class, 'store']);
+    Route::get('/tickets/my', [TicketController::class, 'myTickets']);
     Route::get('/tickets/{id}', [TicketController::class, 'show']);
     Route::post('/tickets/{id}/comments', [TicketController::class, 'addComment']);
     Route::get('/tickets/{id}/comments', [TicketController::class, 'listComments']);

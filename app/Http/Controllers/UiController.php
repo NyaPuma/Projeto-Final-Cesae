@@ -187,4 +187,9 @@ class UiController extends Controller
 
         return view('ui.profile', ['user' => $user]);
     }
+
+    public function myTickets()
+    {
+        return view('ui.tickets.my-tickets');
+    }
 }
