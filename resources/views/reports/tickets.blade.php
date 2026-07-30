@@ -90,6 +90,25 @@
             color: #a1a09a;
         }
 
+        /* Estilização Dupla para Tempos (Dias/Horas em cima, Minutos em baixo) */
+        .time-stack {
+            display: block;
+            text-align: right;
+        }
+        .time-main {
+            font-size: 10px;
+            font-weight: 700;
+            color: #1b1b18;
+            display: block;
+        }
+        .time-sub {
+            font-size: 8.5px;
+            color: #706f6c;
+            font-family: 'DejaVu Sans Mono', monospace;
+            display: block;
+            margin-top: 1px;
+        }
+
         /* Classes Extraídas para Limpeza do Loop */
         .status-text {
             text-transform: uppercase;
@@ -110,6 +129,33 @@
     </style>
 </head>
 <body>
+
+    @php
+        // Helper Blade local para montar o formato estruturado em duas linhas
+        $formatMinutesDouble = function($minutes) {
+            $mins = floatval($minutes);
+            if ($mins <= 0) {
+                return [
+                    'main' => '0h 0m',
+                    'sub' => '(0m)'
+                ];
+            }
+
+            $days = floor($mins / 1440);
+            $hours = floor(($mins % 1440) / 60);
+            $remainingMins = round($mins % 60);
+
+            $parts = [];
+            if ($days > 0) $parts[] = "{$days}d";
+            if ($hours > 0 || $days > 0) $parts[] = "{$hours}h";
+            $parts[] = "{$remainingMins}m";
+
+            return [
+                'main' => implode(' ', $parts),
+                'sub' => '(' . round($mins) . 'm)'
+            ];
+        };
+    @endphp
 
     {{-- Layout de Cabeçalho via Tabela Clássica para Compatibilidade Estrita com PDF --}}
     <table class="report-header">
@@ -138,7 +184,7 @@
                 <th style="width: 95px;">Abertura</th>
                 <th style="width: 95px;">Em Curso</th>
                 <th style="width: 95px;">Fecho</th>
-                <th class="text-right" style="width: 55px;">Duração</th>
+                <th class="text-right" style="width: 85px;">Duração</th>
                 <th class="text-right" style="width: 65px;">Custo</th>
                 <th style="width: 75px;">Orçam. Est.</th>
                 <th class="text-right" style="width: 75px;">Orçam. Valor</th>
@@ -158,10 +204,14 @@
                     <td class="font-mono">{{ $t->in_progress_at?->toDateTimeString() ?? '—' }}</td>
                     <td class="font-mono">{{ $t->closed_at?->toDateTimeString() ?? '—' }}</td>
 
-                    {{-- Alinhamento Numérico / Temporal --}}
-                    <td class="text-right font-mono">
+                    {{-- Duração com Dias/Horas em cima ligeiramente maior e Minutos em baixo --}}
+                    <td class="text-right">
                         @if($t->minutes_spent)
-                            {{ number_format($t->minutes_spent) }} <span class="text-muted">m</span>
+                            @php $timeFormatted = $formatMinutesDouble($t->minutes_spent); @endphp
+                            <div class="time-stack">
+                                <span class="time-main">{{ $timeFormatted['main'] }}</span>
+                                <span class="time-sub">{{ $timeFormatted['sub'] }}</span>
+                            </div>
                         @else
                             <span class="text-muted">—</span>
                         @endif
@@ -204,8 +254,12 @@
                     <td colspan="6" class="font-bold" style="text-transform: uppercase; letter-spacing: 0.05em;">
                         Total Consolidado
                     </td>
-                    <td class="text-right font-mono">
-                        {{ number_format($tickets->sum('minutes_spent')) }} <span class="text-muted">m</span>
+                    <td class="text-right">
+                        @php $totalTimeFormatted = $formatMinutesDouble($tickets->sum('minutes_spent')); @endphp
+                        <div class="time-stack">
+                            <span class="time-main">{{ $totalTimeFormatted['main'] }}</span>
+                            <span class="time-sub">{{ $totalTimeFormatted['sub'] }}</span>
+                        </div>
                     </td>
                     <td class="text-right font-mono">
                         {{ number_format($tickets->sum('cost'), 2, ',', '.') }} €

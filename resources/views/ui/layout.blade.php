@@ -18,25 +18,27 @@
 <body class="min-h-screen bg-[var(--bg)] text-[var(--text)] overflow-x-hidden antialiased">
 
     @php
-        // Tenta obter o utilizador atual
+        // Tenta obter o utilizador atual de forma segura
         $currentUser = auth()->user() ?? ($user ?? null);
 
-        // Garante que o perfil está carregado
+        // Garante que o perfil está carregado sem lançar exceções no PHP 8
         if ($currentUser && !$currentUser->relationLoaded('profile')) {
-            $currentUser->load('profile');
+            try {
+                $currentUser->load('profile');
+            } catch (\Throwable $e) {}
         }
 
-        // Obtém o nome da role/perfil em minúsculas
-        $userRole = strtolower($currentUser->profile->name ?? '');
+        // Obtém o nome do perfil/role em minúsculas
+        $userRole = strtolower($currentUser?->profile?->name ?? $currentUser?->role ?? '');
 
-        // 1. Menu base
+        // 1. Menu Base
         $navItems = [
             ['href' => '/ui', 'active' => 'ui', 'label' => 'Dashboard', 'icon' => '📊', 'exact' => true],
             ['href' => '/ui/tickets', 'active' => 'ui/tickets*', 'label' => 'Tickets', 'icon' => '🎫', 'exact' => false],
         ];
 
-        // 2. "Meus Tickets" APENAS para Técnico
-        if ($userRole === 'technician' || $userRole === 'tecnico') {
+        // 2. "Meus Tickets" exclusivo para Perfil Técnico
+        if (in_array($userRole, ['technician', 'tecnico', 'técnico'])) {
             $navItems[] = [
                 'href' => '/ui/my-tickets',
                 'active' => 'ui/my-tickets*',
@@ -46,21 +48,24 @@
             ];
         }
 
-        // 3. Restantes itens comuns
+        // 3. Módulos Operacionais Gerais
         $navItems = array_merge($navItems, [
             ['href' => '/ui/equipments', 'active' => 'ui/equipments*', 'label' => 'Equipamentos', 'icon' => '🖥️', 'exact' => false],
             ['href' => '/ui/rooms', 'active' => 'ui/rooms*', 'label' => 'Salas', 'icon' => '🚪', 'exact' => false],
             ['href' => '/calendar', 'active' => 'calendar*', 'label' => 'Agenda', 'icon' => '📅', 'exact' => false],
         ]);
 
-        // 4. Admin
-        if ($userRole === 'admin') {
+        // 4. Módulos Exclusivos de Administração
+        if (in_array($userRole, ['admin', 'administrador', 'administrator'])) {
             $navItems = array_merge($navItems, [
                 ['href' => '/ui/users', 'active' => 'ui/users*', 'label' => 'Utilizadores', 'icon' => '👥', 'exact' => false],
+                ['href' => '/ui/audits', 'active' => 'ui/audits*', 'label' => 'Auditoria', 'icon' => '📝', 'exact' => false],
                 ['href' => '/ui/reports', 'active' => 'ui/reports*', 'label' => 'Relatórios', 'icon' => '📈', 'exact' => false],
-                ['href' => '/ui/settings', 'active' => 'ui/settings*', 'label' => 'Configurações', 'icon' => '⚙️', 'exact' => false],
+                ['href' => '/docs/openapi', 'active' => 'docs/openapi*', 'label' => 'Swagger', 'icon' => '📚', 'exact' => false],
+                ['href' => '/ui/budgets', 'active' => 'ui/budgets*', 'label' => 'Orçamentos', 'icon' => '💰', 'exact' => false],
             ]);
         }
+        
     @endphp
 
     <a href="#main-content"
@@ -180,38 +185,65 @@
             {{-- Topbar --}}
             <header class="sticky top-0 z-20 h-20 border-b border-[var(--border)] bg-[var(--topbar)] backdrop-blur-xl">
                 <div class="h-full px-8 flex items-center justify-between">
-                    {{-- Espaçador para manter o botão mobile livre sem sobrepor conteúdo --}}
                     <div class="pl-14 lg:pl-0"></div>
 
                     {{-- Ações de Perfil, Idioma e Tema --}}
                     <div class="flex items-center gap-3">
-                        {{-- Language Selector Dropdown --}}
+                        
+                        {{-- Seletor de Idioma com SVGs Vetoriais (Sem dependência de emojis do SO) --}}
                         <div class="relative inline-block text-left" id="langSelectorDropdown">
                             <button type="button" onclick="toggleLangDropdown()"
-                                class="inline-flex h-10 px-3 items-center justify-center gap-1.5 rounded-xl border border-[var(--border)] bg-[var(--surface)] text-sm text-[var(--text)] shadow-sm transition-all hover:bg-[var(--surface-2)] cursor-pointer"
+                                class="inline-flex h-10 px-3 items-center justify-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface)] text-sm text-[var(--text)] shadow-sm transition-all hover:bg-[var(--surface-2)] cursor-pointer"
                                 aria-label="{{ __('Alterar Idioma') }}" aria-haspopup="true" aria-expanded="false"
                                 id="langDropdownBtn">
-                                🌐
+                                @if(app()->getLocale() === 'pt')
+                                    <svg class="w-4 h-3 rounded-xs overflow-hidden flex-shrink-0 shadow-xs" viewBox="0 0 600 400">
+                                        <rect width="600" height="400" fill="#ff0000"/>
+                                        <rect width="240" height="400" fill="#006600"/>
+                                        <circle cx="240" cy="200" r="80" fill="#ffff00" stroke="#000" stroke-width="3"/>
+                                    </svg>
+                                @else
+                                    <svg class="w-4 h-3 rounded-xs overflow-hidden flex-shrink-0 shadow-xs" viewBox="0 0 600 400">
+                                        <rect width="600" height="400" fill="#00247d"/>
+                                        <path d="M0,0 L600,400 M600,0 L0,400" stroke="#fff" stroke-width="60"/>
+                                        <path d="M0,0 L600,400 M600,0 L0,400" stroke="#cf142b" stroke-width="40"/>
+                                        <path d="M300,0 V400 M0,200 H600" stroke="#fff" stroke-width="100"/>
+                                        <path d="M300,0 V400 M0,200 H600" stroke="#cf142b" stroke-width="60"/>
+                                    </svg>
+                                @endif
                                 <span class="font-semibold text-xs uppercase text-[var(--text)]">{{ app()->getLocale() }}</span>
                                 <svg class="h-3.5 w-3.5 text-[var(--text-soft)]" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor" stroke-width="2.5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                                 </svg>
                             </button>
+                            
                             <div id="langDropdown"
                                 class="hidden absolute right-0 mt-2 w-36 rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-lg py-1.5 z-50 animate-[fadeIn_0.15s_ease-out]">
                                 <a href="/lang/pt"
-                                    class="flex items-center px-4 py-2.5 text-xs font-semibold text-[var(--text)] hover:bg-[var(--surface-2)] {{ app()->getLocale() === 'pt' ? 'bg-primary/10 text-primary' : '' }}">
-                                    🇵🇹 Português
+                                    class="flex items-center gap-2.5 px-4 py-2.5 text-xs font-semibold text-[var(--text)] hover:bg-[var(--surface-2)] {{ app()->getLocale() === 'pt' ? 'bg-primary/10 text-primary' : '' }}">
+                                    <svg class="w-4 h-3 rounded-xs flex-shrink-0 shadow-xs" viewBox="0 0 600 400">
+                                        <rect width="600" height="400" fill="#ff0000"/>
+                                        <rect width="240" height="400" fill="#006600"/>
+                                        <circle cx="240" cy="200" r="80" fill="#ffff00" stroke="#000" stroke-width="3"/>
+                                    </svg>
+                                    Português
                                 </a>
                                 <a href="/lang/en"
-                                    class="flex items-center px-4 py-2.5 text-xs font-semibold text-[var(--text)] hover:bg-[var(--surface-2)] {{ app()->getLocale() === 'en' ? 'bg-primary/10 text-primary' : '' }}">
-                                    🇬🇧 English
+                                    class="flex items-center gap-2.5 px-4 py-2.5 text-xs font-semibold text-[var(--text)] hover:bg-[var(--surface-2)] {{ app()->getLocale() === 'en' ? 'bg-primary/10 text-primary' : '' }}">
+                                    <svg class="w-4 h-3 rounded-xs flex-shrink-0 shadow-xs" viewBox="0 0 600 400">
+                                        <rect width="600" height="400" fill="#00247d"/>
+                                        <path d="M0,0 L600,400 M600,0 L0,400" stroke="#fff" stroke-width="60"/>
+                                        <path d="M0,0 L600,400 M600,0 L0,400" stroke="#cf142b" stroke-width="40"/>
+                                        <path d="M300,0 V400 M0,200 H600" stroke="#fff" stroke-width="100"/>
+                                        <path d="M300,0 V400 M0,200 H600" stroke="#cf142b" stroke-width="60"/>
+                                    </svg>
+                                    English
                                 </a>
                             </div>
                         </div>
 
-                        {{-- 🔔 Notificações - Sino com contador --}}
+                        {{-- 🔔 Notificações - Sino com Contador --}}
                         <div class="relative" id="notificationBellContainer">
                             <button type="button" onclick="toggleNotifications()"
                                 class="relative inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] text-sm shadow-sm transition-all hover:bg-[var(--surface-2)] cursor-pointer"
@@ -223,6 +255,7 @@
                                     0
                                 </span>
                             </button>
+                            
                             {{-- Dropdown de Notificações --}}
                             <div id="notificationDropdown"
                                 class="hidden absolute right-0 mt-2 w-96 rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-2xl py-2 z-50 animate-[fadeIn_0.15s_ease-out] max-h-[420px] flex flex-col">
@@ -276,11 +309,12 @@
             const headers = {
                 'Accept': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''
             };
 
             if (token) {
                 headers['X-Auth-Token'] = token;
+                headers['Authorization'] = 'Bearer ' + token;
             }
             return headers;
         }
@@ -317,7 +351,7 @@
             localStorage.setItem('sidebar_collapsed', isCollapsed ? 'true' : 'false');
         }
 
-        // Gestão dinâmica da navegação móvel via classes Tailwind
+        // Gestão dinâmica da navegação móvel
         function toggleMobileNav() {
             const overlay = document.getElementById('mobileNavOverlay');
             const drawer = document.getElementById('mobileNav');
@@ -330,7 +364,7 @@
                 closeMobileNav();
             } else {
                 overlay.classList.remove('hidden');
-                void overlay.offsetWidth; // Força reflow para animação perfeita
+                void overlay.offsetWidth;
                 overlay.classList.remove('opacity-0');
                 overlay.classList.add('opacity-100');
 
@@ -365,10 +399,10 @@
             const isHidden = dropdown.classList.contains('hidden');
             if (isHidden) {
                 dropdown.classList.remove('hidden');
-                btn.setAttribute('aria-expanded', 'true');
+                btn?.setAttribute('aria-expanded', 'true');
             } else {
                 dropdown.classList.add('hidden');
-                btn.setAttribute('aria-expanded', 'false');
+                btn?.setAttribute('aria-expanded', 'false');
             }
         }
 

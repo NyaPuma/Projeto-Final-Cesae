@@ -172,8 +172,8 @@ Route::middleware(['custom.auth'])->group(function () {
             Route::get('/analytics/export/excel', [AnalyticsController::class, 'exportExcel']);
             Route::get('/ui/analytics', [UiController::class, 'analytics']);
             // Suporte/Alias para a rota /ui/reports
-Route::get('/ui/reports', [UiController::class, 'analytics']);
-Route::get('/reports', [UiController::class, 'analytics']);
+            Route::get('/ui/reports', [UiController::class, 'analytics']);
+            Route::get('/reports', [UiController::class, 'analytics']);
 
             Route::post('/admin/users/register', [AuthController::class, 'register'])
                 ->name('admin.users.register')
@@ -210,10 +210,22 @@ Route::get('/reports', [UiController::class, 'analytics']);
             Route::post('/admin/rooms', [RoomController::class, 'storeRoom']);
             Route::patch('/admin/rooms/{id}', [RoomController::class, 'updateRoom']);
             Route::patch('/admin/rooms/{id}/inactive', [RoomController::class, 'inactivateRoom']);
+
+            Route::post('/admin/tickets/{id}/override-priority-assignment', [AdminController::class, 'overridePriorityAndAssignment']);
+
+            Route::middleware(['role:admin'])->group(function () {
+                // Vista do Painel de Orçamentos
+                Route::get('/ui/budgets', [AdminController::class, 'budgetsView'])->name('ui.budgets');
+
+                // API para popular a tabela e filtros
+                Route::get('/admin/budgets/data', [AdminController::class, 'budgetsList']);
+
+                // Rota de Decisão Orçamental (Aprovar / Rejeitar pelo Admin)
+                Route::post('/admin/tickets/{id}/budget-decision', [AdminController::class, 'approveBudget']);
+            });
         });
     });
 
     // Rota de Agendamento Preventivo
     Route::post('/admin/maintenance/schedule', [AdminController::class, 'scheduleMaintenance']);
 });
-

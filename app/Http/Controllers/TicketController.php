@@ -12,11 +12,11 @@ use App\Notifications\TicketStatusChanged;
 use App\Services\AIService;
 use App\Traits\ControllerHelpers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
-
 
 class TicketController extends Controller
 {
@@ -43,7 +43,7 @@ class TicketController extends Controller
     }
 
     /**
-     * Armazena um novo ticket (criação de avaria)
+     * Armazena um novo ticket (criação de avaria) com atribuição automática para prioridade Crítica
      */
     public function store(Request $request)
     {
@@ -77,19 +77,60 @@ class TicketController extends Controller
         }
 
         $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
+        $inProgressStatusId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
+
+        $assignedTechId = null;
+        $finalStatusId = $openStatusId;
+        $inProgressAt = null;
+
+        // Regra de Negócio: Se for Prioridade Crítica, aloca automaticamente o próximo técnico livre
+        if ($data['priority'] === 'crítica') {
+            $techProfileId = DB::table('user_profiles')->where('name', 'technician')->value('id') ?? 2;
+
+            $freeTech = User::where('profile_id', $techProfileId)
+                ->where('active', true)
+                ->withCount(['assignedTickets' => function ($q) use ($openStatusId) {
+                    $q->whereNull('closed_at');
+                }])
+                ->orderBy('assigned_tickets_count', 'asc')
+                ->first();
+
+            if ($freeTech) {
+                $assignedTechId = $freeTech->id;
+                $finalStatusId = $inProgressStatusId ?? $openStatusId;
+                $inProgressAt = now();
+            }
+        }
 
         $ticket = Ticket::create([
-            'title'        => $data['title'],
-            'description'  => $data['description'],
-            'priority'     => $data['priority'],
-            'user_id'      => $user->id,
-            'equipment_id' => $data['equipment_id'] ?? null,
-            'room_id'      => $data['room_id'] ?? null,
-            'status_id'    => $openStatusId,
-            'opened_at'    => now(),
+            'title'          => $data['title'],
+            'description'    => $data['description'],
+            'priority'       => $data['priority'],
+            'user_id'        => $user->id,
+            'equipment_id'   => $data['equipment_id'] ?? null,
+            'room_id'        => $data['room_id'] ?? null,
+            'status_id'      => $finalStatusId,
+            'assigned_to'    => $assignedTechId,
+            'opened_at'      => now(),
+            'in_progress_at' => $inProgressAt,
         ]);
 
-        $ticket->load(['equipment', 'room', 'user', 'status']);
+        // Processamento de foto enviada na criação do ticket
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $path = $file->store('ticket_photos', 'public');
+
+            TicketAttachment::create([
+                'ticket_id' => $ticket->id,
+                'user_id'   => $user->id,
+                'file_name' => $file->getClientOriginalName(),
+                'path'      => $path,
+                'mime_type' => $file->getClientMimeType(),
+                'size'      => $file->getSize(),
+            ]);
+        }
+
+        $ticket->load(['equipment', 'room', 'user', 'status', 'technician', 'attachments']);
 
         return response()->json(['ticket' => $ticket], 201);
     }
@@ -155,7 +196,7 @@ class TicketController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $ticket = Ticket::with(['equipment.category', 'room', 'user', 'technician', 'status'])->findOrFail($id);
+        $ticket = Ticket::with(['equipment.category', 'room', 'user', 'technician', 'status', 'attachments'])->findOrFail($id);
 
         if ($request->wantsJson() || $request->ajax()) {
             return response()->json(['ticket' => $ticket]);
@@ -191,7 +232,7 @@ class TicketController extends Controller
             }
             event(new TicketStatusUpdatedBroadcast($ticket, $oldStatus, Ticket::STATUS_IN_PROGRESS));
         } catch (\Exception $e) {
-            // Silencia falhas de envio de mail em ambiente local
+            // Silencia falhas
         }
 
         return response()->json(['ticket' => $ticket]);
@@ -339,7 +380,7 @@ class TicketController extends Controller
     }
 
     /**
-     * Faz o upload de um anexo fotográfico para o ticket.
+     * Faz o upload de um anexo fotográfico para o ticket e persiste na BD
      */
     public function uploadPhoto(Request $request, int $id)
     {
@@ -351,7 +392,7 @@ class TicketController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'photo' => ['required', 'file', 'image', 'max:2048'],
+            'photo' => ['required', 'file', 'image', 'max:10240'],
         ]);
 
         if ($validator->fails()) {
@@ -531,7 +572,7 @@ class TicketController extends Controller
         }
 
         return response()->json([
-            'ticket'    => $ticket,
+            'ticket'     => $ticket,
             'overridden' => $force && $currentPriority < 3,
         ]);
     }
@@ -921,10 +962,18 @@ class TicketController extends Controller
 
     /**
      * Permite que um técnico devolva/liberte uma ocorrência previamente assumida.
+     * Bloqueia a libertação voluntária se a prioridade for Crítica.
      */
     public function releaseTicket(Request $request, int $id)
     {
         $ticket = Ticket::findOrFail($id);
+
+        // Bloqueio de negócio: Tickets Críticos não podem ser libertados voluntariamente
+        if (mb_strtolower($ticket->priority) === 'crítica') {
+            return response()->json([
+                'message' => __('Ocorrências de prioridade Crítica não podem ser libertadas voluntariamente.')
+            ], 422);
+        }
 
         $ticket->assigned_to = null;
         if (Schema::hasColumn('tickets', 'technician_id')) {
@@ -949,27 +998,21 @@ class TicketController extends Controller
         ]);
     }
 
-
-
     public function myTickets(Request $request)
     {
-        // Obtém o utilizador autenticado
         $user = $request->user();
 
         if (!$user) {
             return response()->json(['message' => 'Utilizador não autenticado.'], 401);
         }
 
-        // Inicia a query para filtrar os tickets do utilizador
         $query = Ticket::with(['equipment', 'room', 'status']);
 
-        // Se for técnico ou utilizador comum, filtra pelos criados por ele OU atribuídos a ele
         $query->where(function ($q) use ($user) {
-            $q->where('user_id', $user->id)           // Criados pelo utilizador/técnico
-                ->orWhere('assigned_to', $user->id);  // Atribuídos ao técnico
+            $q->where('user_id', $user->id)
+                ->orWhere('assigned_to', $user->id);
         });
 
-        // Filtro por termo de pesquisa ('q')
         if ($request->filled('q')) {
             $searchTerm = $request->input('q');
             $query->where(function ($q) use ($searchTerm) {
@@ -978,17 +1021,14 @@ class TicketController extends Controller
             });
         }
 
-        // Filtro por estado
         if ($request->filled('status')) {
             $query->where('status', $request->input('status'));
         }
 
-        // Filtro por prioridade
         if ($request->filled('priority')) {
             $query->where('priority', $request->input('priority'));
         }
 
-        // Filtro por datas
         if ($request->filled('date_from')) {
             $query->whereDate('created_at', '>=', $request->input('date_from'));
         }
@@ -996,11 +1036,8 @@ class TicketController extends Controller
             $query->whereDate('created_at', '<=', $request->input('date_to'));
         }
 
-        // Ordenação e paginação
         $tickets = $query->orderBy('created_at', 'desc')->paginate(10);
 
         return response()->json($tickets);
     }
-
-
 }

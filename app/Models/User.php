@@ -178,4 +178,25 @@ class User extends Authenticatable
             $user->profile_id = $existingProfile->id;
         }
     }
+   
+public function getRoleTranslatedAttribute(): string
+{
+    $locale = app()->getLocale();
+    $roleName = strtolower($this->profile->name ?? $this->role ?? 'user');
+
+    $map = [
+        'pt' => [
+            'admin' => 'Administrador',
+            'technician' => 'Técnico',
+            'user' => 'Utilizador',
+        ],
+        'en' => [
+            'admin' => 'Administrator',
+            'technician' => 'Technician',
+            'user' => 'User',
+        ]
+    ];
+
+    return $map[$locale][$roleName] ?? ucfirst($roleName);
+}
 }

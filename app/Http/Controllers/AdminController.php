@@ -137,7 +137,7 @@ class AdminController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name'       => ['sometimes', 'string', 'max:255'],
-            'email'      => ['sometimes', 'email', 'max:255', 'unique:users,email,'.$id],
+            'email'      => ['sometimes', 'email', 'max:255', 'unique:users,email,' . $id],
             'password'   => ['nullable', 'string', 'min:8'],
             'profile_id' => ['sometimes', 'integer', 'exists:user_profiles,id'],
             'active'     => ['sometimes', 'boolean'],
@@ -255,7 +255,7 @@ class AdminController extends Controller
         $data = $request->only(['name', 'serial', 'room_id', 'active']);
         $validator = Validator::make($data, [
             'name'    => ['sometimes', 'string', 'max:255'],
-            'serial'  => ['sometimes', 'string', 'max:255', 'unique:equipments,serial,'.$id],
+            'serial'  => ['sometimes', 'string', 'max:255', 'unique:equipments,serial,' . $id],
             'room_id' => ['nullable', 'integer', 'exists:rooms,id'],
             'active'  => ['sometimes', 'boolean'],
         ]);
@@ -362,9 +362,9 @@ class AdminController extends Controller
         }
 
         // Tenta obter a decisão a partir de vários nomes comuns de parâmetros
-        $decision = $request->input('decision') 
-            ?? $request->input('action') 
-            ?? $request->input('status') 
+        $decision = $request->input('decision')
+            ?? $request->input('action')
+            ?? $request->input('status')
             ?? 'approve';
 
         // Normalizar a decisão (ex: 'validar' / 'approve' / 'accept' => 'approve')
@@ -415,7 +415,8 @@ class AdminController extends Controller
                     'link'    => "/ui/tickets/{$ticket->id}",
                 ]);
             }
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
 
         return response()->json([
             'message' => $decision === 'approve'
@@ -464,5 +465,47 @@ class AdminController extends Controller
             'message' => 'Manutenção preventiva agendada com sucesso!',
             'ticket'  => $ticket
         ], 201);
+    }
+    public function overridePriorityAndAssignment(Request $request, $id)
+    {
+        $ticket = Ticket::findOrFail($id);
+        if ($request->has('priority')) {
+            $ticket->priority = $request->priority;
+        }
+        if ($request->has('assigned_to')) {
+            $ticket->assigned_to = $request->assigned_to;
+            $ticket->status_id = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
+        }
+        $ticket->save();
+
+        return response()->json(['message' => __('Prioridade/Atribuição alterada pelo Administrador com sucesso.')]);
+    }
+    public function budgetsView()
+    {
+        return view('ui.budgets');
+    }
+
+    public function budgetsList(Request $request)
+    {
+        $status = $request->query('status'); // 'pending', 'approved', 'rejected'
+
+        $query = Ticket::whereNotNull('budget_amount')
+            ->with(['equipment', 'room', 'technician', 'user']);
+
+        if ($status) {
+            $query->where('budget_status', $status);
+        }
+
+        $tickets = $query->latest()->get();
+
+        return response()->json([
+            'tickets' => $tickets,
+            'totals' => [
+                'all'      => Ticket::whereNotNull('budget_amount')->sum('budget_amount'),
+                'pending'  => Ticket::where('budget_status', 'pending')->sum('budget_amount'),
+                'approved' => Ticket::where('budget_status', 'approved')->sum('budget_amount'),
+                'rejected' => Ticket::where('budget_status', 'rejected')->sum('budget_amount'),
+            ]
+        ]);
     }
 }

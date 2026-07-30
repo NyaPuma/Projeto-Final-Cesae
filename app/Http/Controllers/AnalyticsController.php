@@ -51,7 +51,7 @@ class AnalyticsController extends Controller
     }
 
     /**
-     * Helper privado para converter minutos brutos em formato humano legível (ex: "6d 16h").
+     * Helper privado para converter minutos brutos no formato limpo (ex: "1d 2h 15m").
      */
     private function formatMinutesToHuman(float $minutes): string
     {
@@ -63,15 +63,16 @@ class AnalyticsController extends Controller
         $hours = floor(($minutes % 1440) / 60);
         $remainingMinutes = round($minutes % 60);
 
+        $parts = [];
         if ($days > 0) {
-            return "{$days}d {$hours}h";
+            $parts[] = "{$days}d";
         }
-
-        if ($hours > 0) {
-            return "{$hours}h {$remainingMinutes}m";
+        if ($hours > 0 || $days > 0) {
+            $parts[] = "{$hours}h";
         }
+        $parts[] = "{$remainingMinutes}m";
 
-        return "{$remainingMinutes}m";
+        return implode(' ', $parts);
     }
 
     private function buildPayload(): array
@@ -126,9 +127,10 @@ class AnalyticsController extends Controller
         ]);
 
         $priorityBreakdown = collect([
-            ['label' => 'Baixa', 'value' => $tickets->filter(fn ($t) => strtolower($t->priority ?? '') === 'low' || $t->priority == '1')->count()],
-            ['label' => 'Média', 'value' => $tickets->filter(fn ($t) => strtolower($t->priority ?? '') === 'medium' || $t->priority == '2')->count()],
-            ['label' => 'Alta', 'value' => $tickets->filter(fn ($t) => strtolower($t->priority ?? '') === 'high' || $t->priority == '3')->count()],
+            ['label' => 'Baixa', 'value' => $tickets->filter(fn ($t) => strtolower($t->priority ?? '') === 'low' || $t->priority == '1' || $t->priority === 'baixa')->count()],
+            ['label' => 'Média', 'value' => $tickets->filter(fn ($t) => strtolower($t->priority ?? '') === 'medium' || $t->priority == '2' || $t->priority === 'média' || $t->priority === 'media')->count()],
+            ['label' => 'Alta', 'value' => $tickets->filter(fn ($t) => strtolower($t->priority ?? '') === 'high' || $t->priority == '3' || $t->priority === 'alta')->count()],
+            ['label' => 'Crítica', 'value' => $tickets->filter(fn ($t) => strtolower($t->priority ?? '') === 'critical' || $t->priority == '4' || $t->priority === 'crítica' || $t->priority === 'critica')->count()],
         ]);
 
         $monthlyBuckets = $this->buildMonthlySeries($tickets, $openStatusId, $inProgressStatusId, $closedStatusId);
@@ -301,7 +303,7 @@ class AnalyticsController extends Controller
 
         $callback = function () {
             $handle = fopen('php://output', 'w');
-            fputcsv($handle, ['id', 'title', 'status_id', 'opened_at', 'in_progress_at', 'closed_at', 'minutes_spent', 'cost', 'budget_status', 'budget_amount']);
+            fputcsv($handle, ['id', 'title', 'status_id', 'opened_at', 'in_progress_at', 'closed_at', 'minutes_spent', 'time_formatted', 'cost', 'budget_status', 'budget_amount']);
 
             foreach (Ticket::cursor() as $ticket) {
                 fputcsv($handle, [
@@ -312,6 +314,7 @@ class AnalyticsController extends Controller
                     optional($ticket->in_progress_at)->toDateTimeString(),
                     optional($ticket->closed_at)->toDateTimeString(),
                     $ticket->minutes_spent,
+                    $this->formatMinutesToHuman((float)($ticket->minutes_spent ?? 0)),
                     $ticket->cost,
                     $ticket->budget_status,
                     $ticket->budget_amount,
