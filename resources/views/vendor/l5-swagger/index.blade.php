@@ -19,11 +19,6 @@
         <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     @endif
 
-    {{-- 3) Bundle de estilos customizados do Swagger --}}
-    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-        @vite('resources/css/swagger/swagger.css')
-    @endif
-
     <link rel="icon" type="image/png" href="{{ l5_swagger_asset($documentation, 'favicon-32x32.png') }}" sizes="32x32" />
     <link rel="icon" type="image/png" href="{{ l5_swagger_asset($documentation, 'favicon-16x16.png') }}" sizes="16x16" />
 
@@ -38,70 +33,14 @@
             'resources/js/swagger/scrollspy.js',
             'resources/js/swagger/toolbar.js',
             'resources/js/swagger/sidebar.js',
-            'resources/js/swagger/init.js',
         ])
     @endif
 
-    <script>
-        (() => {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-                document.documentElement.setAttribute('data-theme', 'dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-                document.documentElement.removeAttribute('data-theme');
-            }
-        })();
-    </script>
+    {{-- 3) Bundle de estilos customizados do Swagger - carregado no FINAL para sobrepor estilos nativos --}}
+    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
+        @vite(['resources/css/swagger/swagger-theme.css', 'resources/js/swagger/swagger-init.js'])
+    @endif
 
-    <style>
-        /* Otimizações de layout amplo para Swagger UI */
-        .swagger-ui .wrapper {
-            max-width: 100% !important;
-            padding: 0 !important;
-        }
-
-        /* Estrutura Flexbox no Cabeçalho do Card da Tag/Módulo */
-        .swagger-ui .opblock-tag {
-            display: flex !important;
-            align-items: center !important;
-            justify-content: space-between !important;
-            width: 100% !important;
-            font-weight: 700 !important;
-            font-size: 1.15rem !important;
-            padding: 1rem 1.25rem !important;
-        }
-
-        /* Título do Módulo mantido no Lado Esquerdo */
-        .swagger-ui .opblock-tag > a,
-        .swagger-ui .opblock-tag > span:first-child {
-            margin-right: auto !important;
-            display: flex !important;
-            align-items: center !important;
-            gap: 0.75rem !important;
-        }
-
-        /* EMPURRAR O BLOCO CENTRAL PARA A EXTREMA DIREITA (Seta Vermelha) */
-        .swagger-ui .opblock-tag small,
-        .swagger-ui .opblock-tag p,
-        .swagger-ui .opblock-tag .tag-description,
-        .swagger-ui .opblock-tag div:not(:first-child) {
-            margin-left: auto !important;
-            margin-right: 1rem !important; /* Espaçamento junto à seta de expandir */
-            display: flex !important;
-            flex-direction: column !important;
-            align-items: flex-end !important; /* Alinha o texto e a badge à direita */
-            text-align: right !important;
-        }
-
-        /* Ajuste do botão/seta de expandir (Chevron) na extrema direita */
-        .swagger-ui .opblock-tag button,
-        .swagger-ui .opblock-tag svg {
-            margin-left: 0 !important;
-            flex-shrink: 0 !important;
-        }
-    </style>
 </head>
 
 <body class="bg-[var(--bg)] text-[var(--text)] min-h-screen flex flex-col antialiased overflow-x-hidden">
@@ -167,7 +106,23 @@
         </div>
 
         {{-- Contentor Principal do Swagger UI --}}
-        <div id="swagger-ui" class="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm"></div>
+        <div 
+            id="swagger-ui" 
+            class="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm"
+            data-url="{{ $urlsToDocs[$documentationTitle] ?? (is_array($urlsToDocs) ? reset($urlsToDocs) : '') }}"
+            data-csrf="{{ csrf_token() }}"
+            data-urls="{{ json_encode(collect($urlsToDocs)->map(fn($url, $title) => ['url' => $url, 'name' => $title])->values()) }}"
+            data-primary-name="{{ $documentationTitle }}"
+            data-operations-sorter="{{ isset($operationsSorter) ? $operationsSorter : '' }}"
+            data-config-url="{{ isset($configUrl) ? $configUrl : '' }}"
+            data-validator-url="{{ isset($validatorUrl) ? $validatorUrl : '' }}"
+            data-oauth2-redirect-url="{{ route('l5-swagger.' . $documentation . '.oauth2_callback', [], $useAbsolutePath) }}"
+            data-doc-expansion="{{ config('l5-swagger.defaults.ui.display.doc_expansion', 'none') }}"
+            data-filter="{{ config('l5-swagger.defaults.ui.display.filter') ? 'true' : 'false' }}"
+            data-persist-authorization="{{ config('l5-swagger.defaults.ui.authorization.persist_authorization') ? 'true' : 'false' }}"
+            data-has-oauth2-init="{{ in_array('oauth2', array_column(config('l5-swagger.defaults.securityDefinitions.securitySchemes'), 'type')) ? 'true' : 'false' }}"
+            data-use-pkce="{{ (bool) config('l5-swagger.defaults.ui.authorization.oauth2.use_pkce_with_authorization_code_grant') ? 'true' : 'false' }}"
+        ></div>
     </main>
 
     <button id="scrollTop" class="fixed bottom-6 right-6 h-10 w-10 rounded-xl bg-orange-500 text-white font-bold shadow-lg flex items-center justify-center hover:bg-orange-600 transition cursor-pointer">
@@ -176,28 +131,39 @@
 
     <script src="{{ l5_swagger_asset($documentation, 'swagger-ui-bundle.js') }}"></script>
     <script src="{{ l5_swagger_asset($documentation, 'swagger-ui-standalone-preset.js') }}"></script>
+
+    {{-- Native L5-Swagger initialization script --}}
     <script>
-        window.SWAGGER_L5_URLS = [
-            @foreach ($urlsToDocs as $title => $url)
-                { name: "{{ $title }}", url: "{{ $url }}" },
-            @endforeach
-        ];
+        window.onload = function() {
+            const url = "{!! $urlsToDocs[$documentationTitle] ?? (is_array($urlsToDocs) ? reset($urlsToDocs) : '') !!}";
+            const urls = @json(collect($urlsToDocs)->map(fn($url, $title) => ['url' => $url, 'name' => $title])->values());
+            const primaryName = "{!! $documentationTitle !!}";
 
-        window.SWAGGER_L5_PRIMARY_NAME = "{{ $documentationTitle }}";
-        window.SWAGGER_L5_OPERATIONS_SORTER = {!! isset($operationsSorter) ? ('"' . $operationsSorter . '"') : 'null' !!};
-        window.SWAGGER_L5_CONFIG_URL = {!! isset($configUrl) ? ('"' . $configUrl . '"') : 'null' !!};
-        window.SWAGGER_L5_VALIDATOR_URL = {!! isset($validatorUrl) ? ('"' . $validatorUrl . '"') : 'null' !!};
+            const ui = SwaggerUIBundle({
+                url: url,
+                urls: urls.length > 0 ? urls : undefined,
+                "urls.primaryName": primaryName,
+                dom_id: '#swagger-ui',
+                deepLinking: true,
+                presets: [
+                    SwaggerUIBundle.presets.apis,
+                    SwaggerUIStandalonePreset
+                ],
+                plugins: [
+                    SwaggerUIBundle.plugins.DownloadUrl
+                ],
+                layout: "StandaloneLayout",
+                docExpansion: "{!! config('l5-swagger.defaults.ui.display.doc_expansion', 'none') !!}",
+                filter: {!! config('l5-swagger.defaults.ui.display.filter') ? 'true' : 'false' !!},
+                persistAuthorization: {!! config('l5-swagger.defaults.ui.authorization.persist_authorization') ? 'true' : 'false' !!},
+                requestInterceptor: function(request) {
+                    request.headers['X-CSRF-TOKEN'] = "{!! csrf_token() !!}";
+                    return request;
+                }
+            });
 
-        window.SWAGGER_L5_OAUTH2_REDIRECT_URL = "{{ route('l5-swagger.' . $documentation . '.oauth2_callback', [], $useAbsolutePath) }}";
-        window.SWAGGER_L5_CSRF_TOKEN = "{{ csrf_token() }}";
-
-        window.SWAGGER_L5_DOC_EXPANSION = "{!! config('l5-swagger.defaults.ui.display.doc_expansion', 'none') !!}";
-        window.SWAGGER_L5_FILTER = {!! config('l5-swagger.defaults.ui.display.filter') ? 'true' : 'false' !!};
-        window.SWAGGER_L5_PERSIST_AUTH = "{!! config('l5-swagger.defaults.ui.authorization.persist_authorization') ? 'true' : 'false' !!}";
-
-        window.SWAGGER_L5_HAS_OAUTH2_INIT = {!! in_array('oauth2', array_column(config('l5-swagger.defaults.securityDefinitions.securitySchemes'), 'type')) ? 'true' : 'false' !!};
-
-        window.SWAGGER_L5_USE_PKCE = "{!! (bool) config('l5-swagger.defaults.ui.authorization.oauth2.use_pkce_with_authorization_code_grant') !!}";
+            window.ui = ui;
+        };
     </script>
 
 </body>
