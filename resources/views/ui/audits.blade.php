@@ -5,7 +5,7 @@
 @section('content')
 <x-ui.partials.page-card
     :title="__('Auditoria do Sistema')"
-    :subtitle="__('Rastreabilidade, hist├│rico de a├º├Áes e registo de altera├º├Áes efetuadas pelos utilizadores.')"
+    :subtitle="__('Rastreabilidade, histórico de ações e registo de alterações efetuadas pelos utilizadores.')"
 >
     <x-slot:actions>
         <div class="flex flex-wrap gap-2">
@@ -28,9 +28,9 @@
             </div>
 
             <div>
-                <label for="filter_event" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('A├º├úo / Evento') }}</label>
+                <label for="filter_event" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Ação / Evento') }}</label>
                 <select id="filter_event" class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2.5 text-xs text-[var(--text)] outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all">
-                    <option value="">{{ __('Todas as A├º├Áes') }}</option>
+                    <option value="">{{ __('Todas as Ações') }}</option>
                 </select>
             </div>
         </div>
@@ -69,7 +69,7 @@
                         <td colspan="8" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]">
                             <div class="flex items-center justify-center gap-2">
                                 <span class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
-                                A carregar hist├│rico de auditoria...
+                                A carregar histórico de auditoria...
                             </div>
                         </td>
                     </tr>
@@ -78,7 +78,7 @@
         </div>
     </div>
 
-    {{-- Pagina├º├úo --}}
+    {{-- Paginação --}}
     <div id="pagination" class="mt-5 flex items-center justify-between text-xs text-[var(--text-soft)] px-1"></div>
 
 

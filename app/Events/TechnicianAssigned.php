@@ -11,7 +11,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-final readonly class TechnicianAssigned implements ShouldBroadcast
+final class TechnicianAssigned implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 

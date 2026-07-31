@@ -13,7 +13,7 @@ class UsersSeeder extends Seeder
     public function run(): void
     {
         if (app()->environment('production')) {
-            $this->command->error('ABORTADO: Este seeder n├úo deve ser executado em produ├º├úo!');
+            $this->command->error('ABORTADO: Este seeder não deve ser executado em produção!');
 
             return;
         }
@@ -29,7 +29,7 @@ class UsersSeeder extends Seeder
                 'api_token' => User::hashToken(Str::random(60)),
             ],
             [
-                'name' => 'T├®cnico',
+                'name' => 'Técnico',
                 'email' => 'tech@example.com',
                 'profile_name' => 'technician',
                 'password' => Hash::make('Password123!'),
@@ -67,7 +67,7 @@ class UsersSeeder extends Seeder
 
         for ($i = 1; $i <= $targetCount - $currentCount; $i++) {
             $index = $i + $currentCount;
-            // Distribui├º├úo realista: ~10% admin, ~15% t├®cnico, ~75% utilizador comum
+            // Distribuição realista: ~10% admin, ~15% técnico, ~75% utilizador comum
             $roll = $index % 10;
             $profileName = $roll === 0 ? 'admin' : ($roll <= 2 ? 'technician' : 'user');
             $email = sprintf('synthetic-%03d@example.invalid', $index);
@@ -75,7 +75,7 @@ class UsersSeeder extends Seeder
             DB::table('users')->updateOrInsert(
                 ['email' => $email],
                 [
-                    'name' => 'Utilizador Sint├®tico '.str_pad((string) $index, 3, '0', STR_PAD_LEFT),
+                    'name' => 'Utilizador Sintético '.str_pad((string) $index, 3, '0', STR_PAD_LEFT),
                     'email' => $email,
                     'email_verified_at' => now(),
                     'password' => Hash::make('password'),

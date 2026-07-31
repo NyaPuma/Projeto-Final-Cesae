@@ -36,11 +36,11 @@
                 </div>
 
                 <h1 class="text-4xl font-extrabold tracking-tight text-[var(--text)]">
-                    Gest├úo de Avarias
+                    Gestão de Avarias
                 </h1>
 
                 <p class="mt-3 text-[var(--text-soft)] max-w-sm mx-auto leading-relaxed">
-                    Plataforma central para gest├úo, manuten├º├úo e acompanhamento de equipamentos.
+                    Plataforma central para gestão, manutenção e acompanhamento de equipamentos.
                 </p>
 
             </div>
@@ -55,7 +55,7 @@
                     <div class="mb-8">
 
                         <span class="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary mb-4">
-                            Autentica├º├úo
+                            Autenticação
                         </span>
 
                         <h2 class="text-3xl font-bold text-[var(--text)]">
@@ -149,11 +149,11 @@
 
             </div>
 
-            {{-- Rodap├® --}}
+            {{-- Rodapé --}}
             <div class="mt-8 text-center">
 
                 <p class="text-xs text-[var(--text-soft)]">
-                    ┬® {{ date('Y') }} Sistema de Gest├úo de Avarias
+                    © {{ date('Y') }} Sistema de Gestão de Avarias
                 </p>
 
                 <p class="mt-1 text-xs text-[var(--text-soft)] opacity-70">

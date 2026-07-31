@@ -1,467 +1,42 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Gest├úo de Avarias API",
-        "description": "Documenta├º├úo OpenAPI da aplica├º├úo de gest├úo de tickets, equipamentos, auditoria e relat├│rios.",
+        "title": "Gestão de Avarias API",
+        "description": "Documentação OpenAPI da aplicação de gestão de tickets, equipamentos, auditoria e relatórios.",
+        "contact": {
+            "name": "Departamento de Manutenção e TI",
+            "email": "suporte@manutencao.local"
+        },
         "version": "1.0.0"
     },
     "servers": [
         {
-            "url": "/"
+            "url": "/api",
+            "description": "Servidor Principal da API"
         }
     ],
     "paths": {
-        "/admin/users": {
-            "get": {
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Listar utilizadores",
-                "description": "Retorna todos os utilizadores (Apenas para Administradores).",
-                "operationId": "7a629ec3ab4a321032bfa425c844d09d",
-                "responses": {
-                    "200": {
-                        "description": "Lista de utilizadores"
-                    }
-                },
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/admin/users/{id}/inactive": {
-            "patch": {
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Inativar utilizador",
-                "description": "Inativa um utilizador do sistema.",
-                "operationId": "7b6493e78a4c4a9f7bc8e3779329484b",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Utilizador inativado"
-                    },
-                    "404": {
-                        "description": "Utilizador n├úo encontrado"
-                    },
-                    "422": {
-                        "description": "Opera├º├úo inv├ílida"
-                    }
-                },
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/admin/equipment": {
-            "get": {
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Listar equipamentos",
-                "description": "Lista equipamentos com a respetiva sala associada.",
-                "operationId": "87341b2fc0e90e9b75d9ca3e79d1d8be",
-                "responses": {
-                    "200": {
-                        "description": "Lista de equipamentos"
-                    }
-                },
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ]
-            },
-            "post": {
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Criar equipamento",
-                "description": "Regista um novo equipamento no sistema.",
-                "operationId": "8ffa9ef4e838724e4f4d3219db2bc867",
-                "responses": {
-                    "201": {
-                        "description": "Equipamento criado"
-                    },
-                    "422": {
-                        "description": "Erro de valida├º├úo"
-                    }
-                },
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/admin/equipment/{id}": {
-            "delete": {
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Eliminar equipamento",
-                "description": "Remove fisicamente um equipamento do sistema.",
-                "operationId": "cee3a5b031a31fee9e4e0f467310957d",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Equipamento eliminado"
-                    },
-                    "404": {
-                        "description": "Equipamento n├úo encontrado"
-                    }
-                },
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ]
-            },
-            "patch": {
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Atualizar equipamento",
-                "description": "Atualiza os dados de um equipamento existente.",
-                "operationId": "1cff2f6cda1a8b435b6bd0704a7ce77e",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Equipamento atualizado"
-                    },
-                    "404": {
-                        "description": "Equipamento n├úo encontrado"
-                    },
-                    "422": {
-                        "description": "Erro de valida├º├úo"
-                    }
-                },
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/admin/tickets/{id}/approve-budget": {
-            "patch": {
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Aprovar or├ºamento",
-                "description": "Aprova um pedido de or├ºamento associado a um ticket de avaria.",
-                "operationId": "38116d9bfe19425825216fbcd939666d",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Or├ºamento aprovado"
-                    },
-                    "422": {
-                        "description": "Pedido inv├ílido"
-                    }
-                },
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/admin/preventive": {
-            "post": {
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Criar manuten├º├úo preventiva",
-                "operationId": "42c254c0854aa9b960b70776a024b1dd",
-                "responses": {
-                    "201": {
-                        "description": "Manuten├º├úo preventiva criada"
-                    },
-                    "422": {
-                        "description": "Erro de valida├º├úo"
-                    }
-                },
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/analytics/stats": {
-            "get": {
-                "tags": [
-                    "Analytics"
-                ],
-                "summary": "M├®tricas gerais",
-                "description": "Obt├®m o payload completo do dashboard anal├¡tico para a interface web.",
-                "operationId": "da050905766d97acc67747e316888442",
-                "responses": {
-                    "200": {
-                        "description": "KPIs agregados"
-                    }
-                },
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/analytics/export/csv": {
-            "get": {
-                "tags": [
-                    "Analytics"
-                ],
-                "summary": "Exportar CSV",
-                "description": "Exporta o relat├│rio de todos os tickets em formato de fluxo CSV (Streaming).",
-                "operationId": "dcecb6ea9412e3415e95274597687a02",
-                "responses": {
-                    "200": {
-                        "description": "Ficheiro CSV descarregado"
-                    }
-                },
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/analytics/export/pdf": {
-            "get": {
-                "tags": [
-                    "Analytics"
-                ],
-                "summary": "Exportar PDF",
-                "description": "Exporta o relat├│rio de tickets em formato PDF via DOMPDF.",
-                "operationId": "e811405e32f1aa3a802356b7c46b474f",
-                "responses": {
-                    "200": {
-                        "description": "Ficheiro PDF descarregado"
-                    }
-                },
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/analytics/export/excel": {
-            "get": {
-                "tags": [
-                    "Analytics"
-                ],
-                "summary": "Exportar Excel",
-                "description": "Exporta o relat├│rio de tickets em formato Excel (.xlsx).",
-                "operationId": "73d76b642b24a8e91eeaeada37e024e9",
-                "responses": {
-                    "200": {
-                        "description": "Ficheiro XLSX descarregado"
-                    }
-                },
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ]
-            }
-        },
         "/admin/audits": {
             "get": {
                 "tags": [
                     "Admin"
                 ],
                 "summary": "Listar auditoria",
-                "description": "Lista os registos de auditoria do sistema.\nProtegido globalmente via web.php com os middlewares custom.auth e role:admin.",
+                "description": "Lista os registos de auditoria do sistema.\nProtegido globalmente via middleware e verificado via Policy.",
                 "operationId": "395c570d8f9419ab32f3da4f449e7613",
                 "responses": {
                     "200": {
-                        "description": "Lista de auditoria"
+                        "description": "Lista paginada de registos de auditoria"
                     }
                 },
                 "security": [
                     {
+                        "X-Auth-Token": []
+                    },
+                    {
                         "BearerAuth": []
                     }
                 ]
-            }
-        },
-        "/register": {
-            "post": {
-                "tags": [
-                    "Auth"
-                ],
-                "summary": "Registar utilizador",
-                "operationId": "0903f2e0df1a8857bee538fc055417f0",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "name",
-                                    "email",
-                                    "password",
-                                    "password_confirmation"
-                                ],
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "Jo├úo Silva"
-                                    },
-                                    "email": {
-                                        "type": "string",
-                                        "format": "email",
-                                        "example": "joao@example.com"
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "format": "password",
-                                        "example": "password123"
-                                    },
-                                    "password_confirmation": {
-                                        "type": "string",
-                                        "format": "password",
-                                        "example": "password123"
-                                    },
-                                    "profile_id": {
-                                        "type": "integer",
-                                        "example": 1,
-                                        "nullable": true
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Utilizador criado",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "token": {
-                                            "type": "string",
-                                            "example": "abc123"
-                                        },
-                                        "user": {
-                                            "type": "object"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Erro de valida├º├úo"
-                    }
-                }
-            }
-        },
-        "/login": {
-            "post": {
-                "tags": [
-                    "Auth"
-                ],
-                "summary": "Autenticar utilizador",
-                "operationId": "2dd578ff7aba2721293dac66833b27d1",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "email",
-                                    "password"
-                                ],
-                                "properties": {
-                                    "email": {
-                                        "type": "string",
-                                        "format": "email",
-                                        "example": "joao@example.com"
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "format": "password",
-                                        "example": "password123"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Autenticado com sucesso",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "token": {
-                                            "type": "string",
-                                            "example": "abc123"
-                                        },
-                                        "user": {
-                                            "type": "object"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Credenciais inv├ílidas"
-                    }
-                }
             }
         },
         "/notifications": {
@@ -469,14 +44,18 @@
                 "tags": [
                     "Notifications"
                 ],
-                "summary": "Listar notifica├º├Áes do utilizador",
+                "summary": "Listar notificações do utilizador",
+                "description": "Lista de forma paginada as notificações do utilizador autenticado.",
                 "operationId": "0f031f66cd8c52bf73e89fb2d050ad83",
                 "responses": {
                     "200": {
-                        "description": "Lista paginada de notifica├º├Áes"
+                        "description": "Lista paginada de notificações"
                     }
                 },
                 "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
                     {
                         "BearerAuth": []
                     }
@@ -488,7 +67,8 @@
                 "tags": [
                     "Notifications"
                 ],
-                "summary": "Marcar notifica├º├úo como lida",
+                "summary": "Marcar notificação como lida",
+                "description": "Marca uma notificação específica como lida.",
                 "operationId": "58fb6750c2d309a0bc5028c22b02f9f8",
                 "parameters": [
                     {
@@ -502,13 +82,16 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Notifica├º├úo atualizada"
+                        "description": "Notificação atualizada"
                     },
                     "404": {
-                        "description": "Notifica├º├úo n├úo encontrada"
+                        "description": "Notificação não encontrada"
                     }
                 },
                 "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
                     {
                         "BearerAuth": []
                     }
@@ -521,6 +104,7 @@
                     "Notifications"
                 ],
                 "summary": "Enviar email de teste via Mailgun",
+                "description": "Dispara o envio de um email de teste em background via fila.",
                 "operationId": "c9f9ddcef1df2e8861c2e75c356531d1",
                 "responses": {
                     "200": {
@@ -529,115 +113,8 @@
                 },
                 "security": [
                     {
-                        "BearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/admin/rooms": {
-            "get": {
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Listar salas",
-                "description": "Lista todas as salas registadas.",
-                "operationId": "e314a74e53273536a378fc5bfb2c3666",
-                "responses": {
-                    "200": {
-                        "description": "Lista de salas"
-                    }
-                },
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ]
-            },
-            "post": {
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Criar sala",
-                "description": "Cria uma nova sala de trabalho.",
-                "operationId": "ce2c4c7bfbc0091348ab12f6047b06ff",
-                "responses": {
-                    "201": {
-                        "description": "Sala criada"
+                        "X-Auth-Token": []
                     },
-                    "422": {
-                        "description": "Erro de valida├º├úo"
-                    }
-                },
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/admin/rooms/{id}": {
-            "patch": {
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Atualizar sala",
-                "description": "Atualiza os detalhes de uma sala.",
-                "operationId": "70f7ed947701e0f65b56da349ef910b5",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Sala atualizada"
-                    },
-                    "404": {
-                        "description": "Sala n├úo encontrada"
-                    },
-                    "422": {
-                        "description": "Erro de valida├º├úo"
-                    }
-                },
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/admin/rooms/{id}/inactive": {
-            "patch": {
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Inativar sala",
-                "description": "Inativa uma sala (Gest├úo l├│gica / Soft management).",
-                "operationId": "49645ae257ed61ab928f8473f1f530a6",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Sala inativada"
-                    },
-                    "404": {
-                        "description": "Sala n├úo encontrada"
-                    }
-                },
-                "security": [
                     {
                         "BearerAuth": []
                     }
@@ -649,11 +126,13 @@
         "securitySchemes": {
             "X-Auth-Token": {
                 "type": "apiKey",
-                "in": "header",
-                "name": "X-Auth-Token"
+                "description": "Token de autenticação personalizado baseado em cabeçalho",
+                "name": "X-Auth-Token",
+                "in": "header"
             },
             "BearerAuth": {
                 "type": "http",
+                "description": "Autenticação baseada em Token JWT",
                 "bearerFormat": "JWT",
                 "scheme": "bearer"
             }
@@ -663,14 +142,6 @@
         {
             "name": "Admin",
             "description": "Admin"
-        },
-        {
-            "name": "Analytics",
-            "description": "Analytics"
-        },
-        {
-            "name": "Auth",
-            "description": "Auth"
         },
         {
             "name": "Notifications",
