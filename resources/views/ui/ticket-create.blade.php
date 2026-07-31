@@ -27,7 +27,7 @@ window.requireAuthOnLoad = true;
             <p class="text-xs text-[var(--text-soft)] mt-0.5">{{ __('Descreva a situação de forma objetiva para que a equipa técnica possa agir rapidamente.') }}</p>
         </div>
 
-        <form id="createTicketForm" class="space-y-6">
+        <form id="createTicketForm" class="space-y-6" enctype="multipart/form-data">
 
             {{-- Título do Pedido --}}
             <div>
@@ -63,7 +63,7 @@ window.requireAuthOnLoad = true;
                         <p class="text-[11px] leading-relaxed text-[var(--text-soft)]">{{ __('Manutenção Ligeira. Anomalia menor sem risco imediato.') }}</p>
                     </div>
 
-                    {{-- Card Média (Selecionado por defeito) --}}
+                    {{-- Card Média --}}
                     <div type="button" data-priority="média" onclick="selectPriority('média')"
                         class="priority-card cursor-pointer rounded-2xl border-2 border-amber-500 bg-[var(--surface-2)] p-4 transition-all shadow-sm">
                         <div class="flex items-center justify-between mb-2">
@@ -101,7 +101,7 @@ window.requireAuthOnLoad = true;
                 </div>
             </div>
 
-            {{-- Equipamento (Autocomplete) & Imagem --}}
+            {{-- Equipamento & Imagem --}}
             <div class="grid gap-6 lg:grid-cols-2">
                 {{-- AUTOCOMPLETAR EQUIPAMENTO --}}
                 <div class="relative">
@@ -114,10 +114,8 @@ window.requireAuthOnLoad = true;
                             class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-xs text-[var(--text)] outline-none focus:border-primary transition-all">
                     </div>
 
-                    {{-- ID escondido para submissão --}}
                     <input type="hidden" id="selectedEquipmentId" name="equipment_id" required>
 
-                    {{-- Caixa de Sugestões / Dropdown de Autocomplete --}}
                     <div id="equipmentSuggestions" class="hidden absolute z-50 mt-1 w-full max-h-52 overflow-y-auto rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-2xl divide-y divide-[var(--border)]/50">
                     </div>
                 </div>
@@ -129,7 +127,7 @@ window.requireAuthOnLoad = true;
                         <label for="ticketImage" class="cursor-pointer rounded-xl bg-[var(--surface)] border border-[var(--border)] px-3 py-1.5 text-xs font-semibold text-[var(--text)] hover:bg-[var(--surface-2)] transition">
                             {{ __('Escolher ficheiro') }}
                         </label>
-                        <input type="file" id="ticketImage" accept="image/*" class="hidden" onchange="updateFileName(this)">
+                        <input type="file" id="ticketImage" name="photo" accept="image/*" class="hidden" onchange="updateFileName(this)">
                         <span id="fileName" class="text-xs text-[var(--text-soft)] truncate">{{ __('Nenhum ficheiro selecionado') }}</span>
                     </div>
                 </div>
@@ -318,10 +316,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 formData.append('description', description);
                 formData.append('priority', priority);
                 formData.append('equipment_id', equipment_id);
+                
+                // Anexar sob ambas as chaves ('photo' e 'image') para garantir compatibilidade com o TicketController
+                formData.append('photo', imageInput.files[0]);
                 formData.append('image', imageInput.files[0]);
 
                 const headers = authHeader();
-                delete headers['Content-Type'];
+                delete headers['Content-Type']; // O navegador define automaticamente multipart/form-data com o boundary
 
                 res = await fetch('/tickets', {
                     method: 'POST',

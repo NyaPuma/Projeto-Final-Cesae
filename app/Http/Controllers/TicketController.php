@@ -31,19 +31,19 @@ class TicketController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Ticket::with(['equipment', 'room', 'technician', 'status']);
+        $query = Ticket::with(['equipment', 'room', 'technician', 'status', 'attachments']);
 
         if ($request->has('q') && ! empty($request->q)) {
             $query->where('title', 'like', '%' . $request->q . '%');
         }
 
         return response()->json([
-            'tickets' => Ticket::with(['equipment', 'room', 'user'])->latest()->paginate(15),
+            'tickets' => $query->latest()->paginate(15),
         ]);
     }
 
     /**
-     * Armazena um novo ticket (criação de avaria) com atribuição automática para prioridade Crítica
+     * Armazena um novo ticket (criação de avaria) com atribuição automática para prioridade Crítica e suporte robusto a fotografias
      */
     public function store(Request $request)
     {
@@ -102,7 +102,7 @@ class TicketController extends Controller
             }
         }
 
-        $ticket = Ticket::create([
+        $ticketData = [
             'title'          => $data['title'],
             'description'    => $data['description'],
             'priority'       => $data['priority'],
@@ -113,18 +113,31 @@ class TicketController extends Controller
             'assigned_to'    => $assignedTechId,
             'opened_at'      => now(),
             'in_progress_at' => $inProgressAt,
-        ]);
+        ];
 
-        // Processamento de foto enviada na criação do ticket
-        if ($request->hasFile('photo')) {
-            $file = $request->file('photo');
-            $path = $file->store('ticket_photos', 'public');
+        // Processamento flexível da fotografia (suporta campos 'photo' ou 'image')
+        $file = $request->file('photo') ?? $request->file('image');
+        $photoPath = null;
 
+        if ($file) {
+            $photoPath = $file->store('ticket_photos', 'public');
+            
+            if (Schema::hasColumn('tickets', 'photo_path')) {
+                $ticketData['photo_path'] = $photoPath;
+            } elseif (Schema::hasColumn('tickets', 'image_path')) {
+                $ticketData['image_path'] = $photoPath;
+            }
+        }
+
+        $ticket = Ticket::create($ticketData);
+
+        // Se existia um ficheiro, cria também o registo de anexo detalhado
+        if ($file && $photoPath) {
             TicketAttachment::create([
                 'ticket_id' => $ticket->id,
                 'user_id'   => $user->id,
                 'file_name' => $file->getClientOriginalName(),
-                'path'      => $path,
+                'path'      => $photoPath,
                 'mime_type' => $file->getClientMimeType(),
                 'size'      => $file->getSize(),
             ]);
@@ -142,7 +155,7 @@ class TicketController extends Controller
     {
         $user = $this->authenticatedUser($request);
 
-        $query = Ticket::with(['equipment', 'room', 'user', 'status', 'technician']);
+        $query = Ticket::with(['equipment', 'room', 'user', 'status', 'technician', 'attachments']);
 
         if ($request->filled('q')) {
             $q = $request->q;
@@ -235,7 +248,7 @@ class TicketController extends Controller
             // Silencia falhas
         }
 
-        return response()->json(['ticket' => $ticket]);
+        return response()->json(['ticket' => $ticket->load(['equipment', 'room', 'technician', 'status', 'attachments'])]);
     }
 
     /**
@@ -274,7 +287,7 @@ class TicketController extends Controller
         $ticket->assigned_to = $technician->id;
         $ticket->save();
 
-        return response()->json(['ticket' => $ticket]);
+        return response()->json(['ticket' => $ticket->load(['equipment', 'room', 'technician', 'status', 'attachments'])]);
     }
 
     /**
@@ -294,7 +307,7 @@ class TicketController extends Controller
             return response()->json(['message' => 'Só é possível reabrir tickets fechados'], 422);
         }
 
-        return response()->json(['ticket' => $ticket]);
+        return response()->json(['ticket' => $ticket->load(['equipment', 'room', 'technician', 'status', 'attachments'])]);
     }
 
     /**
@@ -323,7 +336,7 @@ class TicketController extends Controller
         $ticket->closed_at = now();
         $ticket->save();
 
-        return response()->json(['ticket' => $ticket]);
+        return response()->json(['ticket' => $ticket->load(['equipment', 'room', 'technician', 'status', 'attachments'])]);
     }
 
     /**
@@ -391,7 +404,13 @@ class TicketController extends Controller
             return response()->json(['message' => 'Acesso negado'], 403);
         }
 
-        $validator = Validator::make($request->all(), [
+        $file = $request->file('photo') ?? $request->file('image');
+
+        if (!$file) {
+            return response()->json(['message' => 'Nenhuma imagem foi enviada.'], 422);
+        }
+
+        $validator = Validator::make(['photo' => $file], [
             'photo' => ['required', 'file', 'image', 'max:10240'],
         ]);
 
@@ -399,9 +418,17 @@ class TicketController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $file = $request->file('photo');
         $path = $file->store('ticket_photos', 'public');
         $url = asset("storage/{$path}");
+
+        // Atualizar o campo na própria tabela de tickets
+        if (Schema::hasColumn('tickets', 'photo_path')) {
+            $ticket->photo_path = $path;
+            $ticket->save();
+        } elseif (Schema::hasColumn('tickets', 'image_path')) {
+            $ticket->image_path = $path;
+            $ticket->save();
+        }
 
         $attachment = TicketAttachment::create([
             'ticket_id' => $ticket->id,
@@ -415,6 +442,7 @@ class TicketController extends Controller
         return response()->json([
             'attachment' => $attachment,
             'url'        => $url,
+            'ticket'     => $ticket->load(['equipment', 'room', 'technician', 'status', 'attachments'])
         ], 201);
     }
 
@@ -486,7 +514,7 @@ class TicketController extends Controller
 
         return response()->json([
             'message' => 'Ticket assumido com sucesso',
-            'ticket'  => $ticket->load(['equipment', 'room', 'technician', 'status'])
+            'ticket'  => $ticket->load(['equipment', 'room', 'technician', 'status', 'attachments'])
         ]);
     }
 
@@ -572,7 +600,7 @@ class TicketController extends Controller
         }
 
         return response()->json([
-            'ticket'     => $ticket,
+            'ticket'     => $ticket->load(['equipment', 'room', 'technician', 'status', 'attachments']),
             'overridden' => $force && $currentPriority < 3,
         ]);
     }
@@ -620,7 +648,7 @@ class TicketController extends Controller
             // Silencia falhas
         }
 
-        return response()->json(['ticket' => $ticket]);
+        return response()->json(['ticket' => $ticket->load(['equipment', 'room', 'technician', 'status', 'attachments'])]);
     }
 
     /**
@@ -651,7 +679,7 @@ class TicketController extends Controller
             'scheduled'     => true,
         ]);
 
-        return response()->json(['ticket' => $ticket]);
+        return response()->json(['ticket' => $ticket->load(['equipment', 'room', 'technician', 'status', 'attachments'])]);
     }
 
     /**
@@ -667,7 +695,7 @@ class TicketController extends Controller
 
         $openStatusId = Ticket::getStatusIdByName(Ticket::STATUS_OPEN);
 
-        $tickets = Ticket::with(['equipment', 'room', 'user', 'status'])
+        $tickets = Ticket::with(['equipment', 'room', 'user', 'status', 'attachments'])
             ->where('status_id', $openStatusId)
             ->latest()
             ->paginate(15);
@@ -835,7 +863,7 @@ class TicketController extends Controller
 
                 return response()->json([
                     'message' => __('Orçamento enviado com sucesso. Aguarda aprovação do Administrador.'),
-                    'ticket'  => $ticket->load(['equipment', 'room', 'technician', 'status']),
+                    'ticket'  => $ticket->load(['equipment', 'room', 'technician', 'status', 'attachments']),
                 ]);
             }
 
@@ -857,7 +885,7 @@ class TicketController extends Controller
 
             return response()->json([
                 'message' => __('Orçamento aprovado automaticamente. Pode prosseguir com a intervenção.'),
-                'ticket'  => $ticket->load(['equipment', 'room', 'technician', 'status']),
+                'ticket'  => $ticket->load(['equipment', 'room', 'technician', 'status', 'attachments']),
             ]);
         } catch (\Illuminate\Validation\ValidationException $ve) {
             return response()->json(['message' => 'Por favor verifique os campos do orçamento.', 'errors' => $ve->errors()], 422);
@@ -906,7 +934,7 @@ class TicketController extends Controller
 
             return response()->json([
                 'message' => __('Pedido de orçamento submetido com detalhes. Aguarde aprovação.'),
-                'ticket'  => $ticket->load(['equipment', 'room', 'technician', 'status']),
+                'ticket'  => $ticket->load(['equipment', 'room', 'technician', 'status', 'attachments']),
             ]);
         }
 
@@ -918,7 +946,7 @@ class TicketController extends Controller
 
         return response()->json([
             'message' => __('Custo dentro do limiar. Intervenção autorizada automaticamente.'),
-            'ticket'  => $ticket->load(['equipment', 'room', 'technician', 'status']),
+            'ticket'  => $ticket->load(['equipment', 'room', 'technician', 'status', 'attachments']),
         ]);
     }
 
@@ -956,7 +984,7 @@ class TicketController extends Controller
 
         return response()->json([
             'message' => __('Intervenção concluída e ticket fechado com sucesso.'),
-            'ticket'  => $ticket->load(['equipment', 'room', 'technician', 'status']),
+            'ticket'  => $ticket->load(['equipment', 'room', 'technician', 'status', 'attachments']),
         ]);
     }
 
@@ -994,7 +1022,7 @@ class TicketController extends Controller
 
         return response()->json([
             'message' => 'Ocorrência libertada com sucesso.',
-            'ticket'  => $ticket
+            'ticket'  => $ticket->load(['equipment', 'room', 'technician', 'status', 'attachments'])
         ]);
     }
 
@@ -1006,7 +1034,7 @@ class TicketController extends Controller
             return response()->json(['message' => 'Utilizador não autenticado.'], 401);
         }
 
-        $query = Ticket::with(['equipment', 'room', 'status']);
+        $query = Ticket::with(['equipment', 'room', 'status', 'attachments']);
 
         $query->where(function ($q) use ($user) {
             $q->where('user_id', $user->id)
