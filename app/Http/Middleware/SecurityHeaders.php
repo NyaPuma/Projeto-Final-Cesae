@@ -50,7 +50,7 @@ final class SecurityHeaders
         $isDev = app()->environment('local') || config('app.debug', false);
 
         if ($isDev) {
-            return "default-src 'self'; script-src 'self' 'unsafe-inline' http://localhost:5173 http://[::1]:5173; style-src 'self' 'unsafe-inline' http://localhost:5173 http://[::1]:5173 https://fonts.bunny.net; img-src 'self' data:; font-src 'self' data: https://fonts.bunny.net; connect-src 'self' ws://localhost:5173 ws://[::1]:5173 http://localhost:5173 http://[::1]:5173; frame-ancestors 'none'";
+            return "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' http://localhost:5173 http://127.0.0.1:5173 blob:; worker-src 'self' http://localhost:5173 http://127.0.0.1:5173 blob:; style-src 'self' 'unsafe-inline' http://localhost:5173 http://127.0.0.1:5173 https://fonts.bunny.net; img-src 'self' data:; font-src 'self' data: https://fonts.bunny.net; connect-src 'self' ws://localhost:5173 ws://127.0.0.1:5173 http://localhost:5173 http://127.0.0.1:5173; frame-ancestors 'none'";
         }
 
         return "default-src 'self'; script-src 'self' 'sha256-yUJBAWN3tbQhmB6geMpw+PgJT0sHuIV6UyRTt6U8Lyc=' 'sha256-984T+3bISjZF+mcKmtZUkLmqv4c0vAokOJaZPqGd7N0='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none'";

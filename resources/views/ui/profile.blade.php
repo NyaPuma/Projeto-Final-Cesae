@@ -12,6 +12,20 @@
 @endphp
 
 @section('content')
+<nav aria-label="{{ __('Breadcrumb') }}" class="mb-4">
+    <ol class="flex flex-wrap items-center gap-1.5 text-sm">
+        <li>
+            <a href="{{ route('ui.index') }}" class="font-medium text-[var(--text-soft)] transition-colors hover:text-[var(--text)]">
+                {{ __('Painel') }}
+            </a>
+        </li>
+        <li aria-hidden="true" class="select-none text-[var(--text-soft)]">/</li>
+        <li aria-current="page" class="font-semibold text-[var(--text)]">
+            {{ __('Perfil do Utilizador') }}
+        </li>
+    </ol>
+</nav>
+
 <x-ui.partials.page-card
     :title="__('Perfil')"
     :subtitle="__('Consulte e atualize os seus dados pessoais e preferências de acesso.')"
@@ -20,9 +34,16 @@
         <x-ui.page-actions.back-button href="/ui" :label="__('Voltar ao painel')" />
     </x-slot:actions>
 
-    <div class="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
-        <x-ui.profile.summary-card :user="$user" :translatedProfile="$translatedProfile" />
-        <x-ui.profile.form-card :user="$user" />
+    <div class="grid gap-6 xl:grid-cols-2 items-start">
+        <div class="space-y-6">
+            <x-ui.profile.information-card :user="$user" />
+            <x-ui.profile.security-card />
+        </div>
+
+        <div class="space-y-6">
+            <x-ui.profile.summary-card :user="$user" :translatedProfile="$translatedProfile" />
+            <x-ui.profile.delete-account-card />
+        </div>
     </div>
 </x-ui.partials.page-card>
 @endsection

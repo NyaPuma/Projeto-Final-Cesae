@@ -38,7 +38,7 @@ final class ProfileController extends Controller
     {
         $user = $request->user();
 
-        $newPassword = $request->input('new_password');
+        $newPassword = $request->input('password');
 
         if (! empty($newPassword)) {
             $currentPassword = $request->input('current_password');

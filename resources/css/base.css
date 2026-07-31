@@ -2,6 +2,10 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-y: scroll;
+}
+
 body {
   margin: 0;
   font-family: system-ui, sans-serif;
@@ -19,4 +23,8 @@ body {
 .ui-topbar-notification-badge {
   font-size: 9px;
   line-height: 1;
+}
+
+[x-cloak] {
+  display: none !important;
 }

@@ -31,12 +31,12 @@ final class UpdateProfileRequest extends FormRequest
         return [
             'name' => ['sometimes', 'string', 'max:255'],
             'current_password' => [
-                'required_with:new_password',
+                'required_with:password',
                 'nullable',
                 'string',
                 'current_password',
             ],
-            'new_password' => [
+            'password' => [
                 'nullable',
                 'string',
                 (static function () {
@@ -63,8 +63,8 @@ final class UpdateProfileRequest extends FormRequest
         return [
             'name' => 'nome',
             'current_password' => 'palavra-passe atual',
-            'new_password' => 'nova palavra-passe',
-            'new_password_confirmation' => 'confirmação da nova palavra-passe',
+            'password' => 'nova palavra-passe',
+            'password_confirmation' => 'confirmação da nova palavra-passe',
         ];
     }
 }

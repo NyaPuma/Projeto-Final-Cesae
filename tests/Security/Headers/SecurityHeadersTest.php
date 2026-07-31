@@ -35,6 +35,15 @@ class SecurityHeadersTest extends TestCase
         $this->assertStringContainsString('ws://localhost:5173', $csp,
             'CSP should contain Vite WebSocket URL for HMR connections');
 
+        $this->assertStringContainsString("'unsafe-eval'", $csp,
+            'CSP should allow Alpine expression compilation in development');
+
+        $this->assertStringContainsString('worker-src', $csp,
+            'CSP should define worker-src for Vite worker scripts');
+
+        $this->assertStringNotContainsString('[::1]', $csp,
+            'CSP should not contain bracketed IPv6 hosts');
+
         $this->assertStringContainsString('https://fonts.bunny.net', $csp,
             'CSP should contain fonts.bunny.net for font loading');
     }
@@ -60,6 +69,12 @@ class SecurityHeadersTest extends TestCase
             'CSP should allow Vite WebSocket when APP_DEBUG=true');
         $this->assertStringContainsString('https://fonts.bunny.net', $csp,
             'CSP should allow fonts.bunny.net when APP_DEBUG=true');
+        $this->assertStringContainsString("'unsafe-eval'", $csp,
+            'CSP should allow Alpine expression compilation when APP_DEBUG=true');
+        $this->assertStringContainsString('worker-src', $csp,
+            'CSP should define worker-src for Vite workers when APP_DEBUG=true');
+        $this->assertStringNotContainsString('[::1]', $csp,
+            'CSP should not contain bracketed IPv6 hosts when APP_DEBUG=true');
     }
 
     #[Test]
