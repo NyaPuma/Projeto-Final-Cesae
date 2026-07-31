@@ -1,0 +1,245 @@
+/*
+|--------------------------------------------------------------------------
+| Split Button Component
+|--------------------------------------------------------------------------
+*/
+
+.ui-split-button {
+    /* Variáveis Globais do Componente (Facilita a criação de variantes) */
+    --split-bg: var(--primary);
+    --split-hover-bg: var(--primary-hover);
+    --split-color: var(--on-primary);
+    --split-border: var(--primary);
+    --split-divider: rgba(255, 255, 255, 0.2);
+    --split-radius: var(--radius-md);
+    --split-focus-ring: var(--primary-light);
+
+    position: relative;
+    display: inline-flex;
+    align-items: stretch;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Shared Button Styles (Ação & Toggle)
+|--------------------------------------------------------------------------
+*/
+
+.ui-split-button__action,
+.ui-split-button__toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    border: 1px solid var(--split-border);
+    background: var(--split-bg);
+    color: var(--split-color);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+
+    /* Hardware acceleration para transições ultra-suaves */
+    will-change: transform, background, border-color, box-shadow;
+    transition:
+        background .2s cubic-bezier(0.4, 0, 0.2, 1),
+        border-color .2s cubic-bezier(0.4, 0, 0.2, 1),
+        color .2s ease,
+        box-shadow .15s ease,
+        transform .1s ease;
+}
+
+.ui-split-button__action:hover,
+.ui-split-button__toggle:hover {
+    background: var(--split-hover-bg);
+    border-color: var(--split-hover-bg);
+}
+
+/* Evita que o feedback visual (como anéis de foco) seja cortado pela sobreposição */
+.ui-split-button__action:focus-visible,
+.ui-split-button__toggle:focus-visible,
+.ui-split-button__action:hover,
+.ui-split-button__toggle:hover {
+    position: relative;
+    z-index: 1;
+}
+
+.ui-split-button__action:focus-visible,
+.ui-split-button__toggle:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--split-focus-ring);
+}
+
+/* Feedback tátil ao clicar */
+.ui-split-button__action:active,
+.ui-split-button__toggle:active {
+    transform: translateY(0.5px);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Main Action Button (Logical Border Radius para RTL)
+|--------------------------------------------------------------------------
+*/
+
+.ui-split-button__action {
+    flex: 1;
+    padding-inline: var(--space-lg);
+    border-start-start-radius: var(--split-radius);
+    border-end-start-radius: var(--split-radius);
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Toggle Button (Logical Borders & Radius)
+|--------------------------------------------------------------------------
+*/
+
+.ui-split-button__toggle {
+    width: 44px; /* Ajustado ligeiramente para proporção áurea */
+    padding: 0;
+    border-inline-start: 1px solid var(--split-divider);
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+    border-start-end-radius: var(--split-radius);
+    border-end-end-radius: var(--split-radius);
+}
+
+.ui-split-button__toggle svg {
+    width: 1.25em;
+    height: 1.25em;
+    fill: currentColor;
+    transition: transform .2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* A seta roda apenas quando o toggle é focado/ativo,
+  ou quando o split-button está marcado com a classe de estado ativo (JS)
+*/
+.ui-split-button__toggle:focus-visible svg,
+.ui-split-button.is-open .ui-split-button__toggle svg,
+.ui-split-button:focus-within .ui-split-button__toggle svg {
+    transform: rotate(180deg);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Dropdown Menu (Logical placement)
+|--------------------------------------------------------------------------
+*/
+
+.ui-split-button__menu {
+    position: absolute;
+    top: calc(100% + var(--space-xs));
+    inset-inline-end: 0; /* Suporta RTL perfeitamente */
+    min-width: 220px;
+    padding: var(--space-xs);
+    background: var(--surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    will-change: transform, opacity;
+    transition:
+        opacity .2s cubic-bezier(0.4, 0, 0.2, 1),
+        visibility .2s cubic-bezier(0.4, 0, 0.2, 1),
+        transform .2s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 100;
+}
+
+/* Mostra o menu quando focado, hover global (fallback CSS) ou via classe JS */
+.ui-split-button:hover .ui-split-button__menu,
+.ui-split-button:focus-within .ui-split-button__menu,
+.ui-split-button.is-open .ui-split-button__menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Menu Items
+|--------------------------------------------------------------------------
+*/
+
+.ui-split-button__menu > * {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--space-sm);
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap; /* Evita que o texto quebre linhas */
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: background .15s ease, color .15s ease;
+}
+
+.ui-split-button__menu > *:hover {
+    background: var(--surface-hover);
+    color: var(--text-primary);
+}
+
+.ui-split-button__menu > *:focus-visible {
+    outline: none;
+    background: var(--surface-hover);
+    box-shadow: inset 0 0 0 2px var(--primary-light);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Variants (A magia das Custom Properties simplificando o código)
+|--------------------------------------------------------------------------
+*/
+
+/* Secondary Variant */
+.ui-split-button--secondary {
+    --split-bg: var(--surface-secondary);
+    --split-hover-bg: var(--surface-hover);
+    --split-color: var(--text-primary);
+    --split-border: var(--border-color);
+    --split-divider: var(--border-color);
+    --split-focus-ring: var(--border-color);
+}
+
+/* Outline Variant */
+.ui-split-button--outline {
+    --split-bg: transparent;
+    --split-hover-bg: var(--primary-light);
+    --split-color: var(--primary);
+    --split-border: var(--primary);
+    --split-divider: var(--primary);
+    --split-focus-ring: var(--primary-light);
+}
+
+/* Danger Variant */
+.ui-split-button--danger {
+    --split-bg: var(--danger);
+    --split-hover-bg: var(--danger-hover, #b32424);
+    --split-color: #fff;
+    --split-border: var(--danger);
+    --split-divider: rgba(255, 255, 255, 0.2);
+    --split-focus-ring: rgba(var(--danger-rgb, 198, 40, 40), 0.4);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Disabled State
+|--------------------------------------------------------------------------
+*/
+
+.ui-split-button--disabled {
+    opacity: .5;
+    pointer-events: none;
+    box-shadow: none !important;
+}

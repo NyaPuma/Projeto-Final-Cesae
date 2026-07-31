@@ -1,5 +1,6 @@
 /* Button Color & Theme Variants */
 
+@layer components {
 .ui-button--primary {
     --button-bg: var(--primary);
     --button-border: var(--primary);
@@ -14,9 +15,9 @@
     --button-border: var(--border-color);
     --button-color: var(--text-primary);
     --button-hover-bg: var(--surface-hover);
-    --button-hover-border: var(--border-color);
+    --button-hover-border: var(--border-hover);
     --button-hover-color: var(--text-primary);
-    --button-focus-ring: var(--border-color);
+    --button-focus-ring: var(--border-hover);
 }
 
 .ui-button--outline {
@@ -48,3 +49,4 @@
 
 .ui-button--success:hover, .ui-button--warning:hover, .ui-button--danger:hover { filter: brightness(1.08); }
 .ui-button--success:active, .ui-button--warning:active, .ui-button--danger:active { filter: brightness(0.93); }
+}

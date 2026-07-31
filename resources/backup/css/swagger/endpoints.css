@@ -1,0 +1,202 @@
+/* ==========================================================
+   ENDPOINTS PREMIUM
+   - Cartões de endpoint com design elegante
+   - Cores distintas por método HTTP
+   - Transições suaves e feedback visual
+========================================================== */
+
+:root {
+  /* Cores dos métodos HTTP */
+  --method-get: 59, 130, 246;
+  --method-post: 34, 197, 94;
+  --method-put: 249, 115, 22;
+  --method-delete: 239, 68, 68;
+  --method-patch: 139, 92, 246;
+  --method-head: 14, 165, 233;
+  --method-options: 100, 116, 139;
+}
+
+/* ==========================================================
+   CONTAINER PRINCIPAL
+========================================================== */
+.swagger-ui .opblock {
+  margin: 0 0 22px;
+  border: none;
+  border-radius: 22px;
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.04);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+  position: relative;
+}
+
+.dark .swagger-ui .opblock {
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.35);
+}
+
+.swagger-ui .opblock:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 22px 48px rgba(15, 23, 42, 0.08);
+}
+
+/* ==========================================================
+   CABEÇALHO DO ENDPOINT
+========================================================== */
+.swagger-ui .opblock .opblock-summary {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 22px 26px;
+  border: none;
+  background: transparent;
+}
+
+/* ==========================================================
+   MÉTODO HTTP (PILL)
+========================================================== */
+.swagger-ui .opblock-summary-method {
+  width: 92px;
+  min-width: 92px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: white;
+  box-shadow: inset 0 -2px 0 rgba(255, 255, 255, 0.12);
+}
+
+/* ==========================================================
+   PATH DO ENDPOINT
+========================================================== */
+.swagger-ui .opblock-summary-path {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  flex: 1;
+}
+
+/* ==========================================================
+   DESCRIÇÃO DO ENDPOINT
+========================================================== */
+.swagger-ui .opblock-summary-description {
+  font-size: 14px;
+  color: var(--text-soft);
+  font-weight: 500;
+}
+
+/* ==========================================================
+   BOTÃO DE EXPANDIR
+========================================================== */
+.swagger-ui .expand-operation {
+  transition: transform 0.25s ease;
+}
+
+.swagger-ui .is-open .expand-operation {
+  transform: rotate(90deg);
+}
+
+/* ==========================================================
+   CORPO DO ENDPOINT
+========================================================== */
+.swagger-ui .opblock-body {
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  padding: 12px 18px 24px;
+}
+
+/* ==========================================================
+   CORES POR MÉTODO HTTP
+   - Border-left + background do pill
+========================================================== */
+/* GET */
+.swagger-ui .opblock-get {
+  border-left: 6px solid rgb(var(--method-get));
+}
+.swagger-ui .opblock-get .opblock-summary-method {
+  background: rgb(var(--method-get));
+}
+.swagger-ui .opblock-get:hover {
+  box-shadow: 0 18px 40px rgba(var(--method-get), 0.18);
+}
+
+/* POST */
+.swagger-ui .opblock-post {
+  border-left: 6px solid rgb(var(--method-post));
+}
+.swagger-ui .opblock-post .opblock-summary-method {
+  background: rgb(var(--method-post));
+}
+.swagger-ui .opblock-post:hover {
+  box-shadow: 0 18px 40px rgba(var(--method-post), 0.18);
+}
+
+/* PUT */
+.swagger-ui .opblock-put {
+  border-left: 6px solid rgb(var(--method-put));
+}
+.swagger-ui .opblock-put .opblock-summary-method {
+  background: rgb(var(--method-put));
+}
+.swagger-ui .opblock-put:hover {
+  box-shadow: 0 18px 40px rgba(var(--method-put), 0.18);
+}
+
+/* DELETE */
+.swagger-ui .opblock-delete {
+  border-left: 6px solid rgb(var(--method-delete));
+}
+.swagger-ui .opblock-delete .opblock-summary-method {
+  background: rgb(var(--method-delete));
+}
+.swagger-ui .opblock-delete:hover {
+  box-shadow: 0 18px 40px rgba(var(--method-delete), 0.18);
+}
+
+/* PATCH */
+.swagger-ui .opblock-patch {
+  border-left: 6px solid rgb(var(--method-patch));
+}
+.swagger-ui .opblock-patch .opblock-summary-method {
+  background: rgb(var(--method-patch));
+}
+.swagger-ui .opblock-patch:hover {
+  box-shadow: 0 18px 40px rgba(var(--method-patch), 0.18);
+}
+
+/* HEAD */
+.swagger-ui .opblock-head {
+  border-left: 6px solid rgb(var(--method-head));
+}
+.swagger-ui .opblock-head .opblock-summary-method {
+  background: rgb(var(--method-head));
+}
+.swagger-ui .opblock-head:hover {
+  box-shadow: 0 18px 40px rgba(var(--method-head), 0.18);
+}
+
+/* OPTIONS */
+.swagger-ui .opblock-options {
+  border-left: 6px solid rgb(var(--method-options));
+}
+.swagger-ui .opblock-options .opblock-summary-method {
+  background: rgb(var(--method-options));
+}
+.swagger-ui .opblock-options:hover {
+  box-shadow: 0 18px 40px rgba(var(--method-options), 0.18);
+}
+
+/* ==========================================================
+   CABEÇALHO DAS RESPOSTAS
+========================================================== */
+.swagger-ui .responses-inner h4 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+}

@@ -1,0 +1,244 @@
+/*
+|--------------------------------------------------------------------------
+| Card Menu Component
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-menu {
+    --menu-width: 180px;            /* Largura padrão (md) */
+    --menu-offset: 8px;             /* Distância entre o trigger e o menu */
+    --menu-transition-time: 0.18s;  /* Velocidade da animação */
+
+    position: relative;
+    display: inline-block;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Trigger (Suporta botões nativos de forma limpa)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-menu__trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    padding: var(--space-xs, 4px);
+    border-radius: var(--radius-sm, 4px);
+    color: var(--text-secondary, #6c757d);
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.ui-card-menu__trigger:hover,
+.ui-card-menu.is-open .ui-card-menu__trigger {
+    background-color: var(--surface-hover, #f8f9fa);
+    color: var(--text-primary, #212529);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Content Container (Menu Dropdown com Animação)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-menu__content {
+    position: absolute;
+    z-index: 50;
+    min-width: var(--menu-width);
+    width: max-content;
+    max-width: 280px;
+    padding: var(--space-xs, 4px);
+
+    background-color: var(--surface, #ffffff);
+    border: 1px solid var(--border-color, #e9ecef);
+    border-radius: var(--radius-md, 8px);
+    box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05));
+
+    /* Estados de Animação Otimizados (Escondido por padrão) */
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.95);
+    pointer-events: none;
+
+    /* Ponto de origem da animação (Padrão: Top Right) */
+    transform-origin: top right;
+
+    transition:
+        opacity var(--menu-transition-time) cubic-bezier(0.16, 1, 0.3, 1),
+        transform var(--menu-transition-time) cubic-bezier(0.16, 1, 0.3, 1),
+        visibility var(--menu-transition-time);
+}
+
+/* A PONTE INVISÍVEL: Preenche o vazio (gap) para evitar que o menu feche ao mover o rato */
+.ui-card-menu__content::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    /* Estende a área de colisão do rato na direção do trigger */
+    inset: calc(-1 * var(--menu-offset) - 2px) 0;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Show States (Suporta Hover, Classes Ativas ou Atributos ARIA)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-menu:hover .ui-card-menu__content,
+.ui-card-menu.is-open .ui-card-menu__content,
+.ui-card-menu__trigger[aria-expanded="true"] + .ui-card-menu__content {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+    pointer-events: auto;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Positions (Configurações Dinâmicas)
+|--------------------------------------------------------------------------
+*/
+
+/* Direita (Padrão) - Alinha à direita do card */
+.ui-card-menu--right .ui-card-menu__content {
+    right: 0;
+    left: auto;
+    top: calc(100% + var(--menu-offset));
+    transform-origin: top right;
+}
+
+/* Esquerda - Alinha à esquerda do card */
+.ui-card-menu--left .ui-card-menu__content {
+    left: 0;
+    right: auto;
+    top: calc(100% + var(--menu-offset));
+    transform-origin: top left;
+}
+
+/* Topo - Abre para cima */
+.ui-card-menu--top .ui-card-menu__content {
+    bottom: calc(100% + var(--menu-offset));
+    right: 0;
+    left: auto;
+    transform-origin: bottom right;
+}
+
+/* Topo Esquerda - Abre para cima alinhado à esquerda */
+.ui-card-menu--top.ui-card-menu--left .ui-card-menu__content {
+    bottom: calc(100% + var(--menu-offset));
+    left: 0;
+    right: auto;
+    transform-origin: bottom left;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Width Sizes (DRY - Apenas altera variáveis customizadas)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-menu--sm { --menu-width: 130px; }
+.ui-card-menu--md { --menu-width: 180px; }
+.ui-card-menu--lg { --menu-width: 260px; }
+
+/*
+|--------------------------------------------------------------------------
+| Menu Items & Reset Semântico (Suporta Links, Botões e Divs)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-menu__item,
+.ui-card-menu__content > *:not(.ui-card-menu__divider):not(hr) {
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm, 8px);
+    padding: 8px 12px;
+    border-radius: var(--radius-sm, 4px);
+
+    /* Tipografia e Cores */
+    font-size: var(--text-sm, 14px);
+    font-weight: 500;
+    color: var(--text-primary, #212529);
+    text-decoration: none;
+
+    /* Resets nativos para tag <button> */
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+
+    transition:
+        background-color 0.15s ease,
+        color 0.15s ease;
+}
+
+/* Estados Interativos */
+.ui-card-menu__item:hover,
+.ui-card-menu__content > *:not(.ui-card-menu__divider):not(hr):hover {
+    background-color: var(--surface-hover, #f8f9fa);
+    color: var(--text-primary, #212529);
+}
+
+.ui-card-menu__item:focus-visible,
+.ui-card-menu__content > *:not(.ui-card-menu__divider):not(hr):focus-visible {
+    outline: 2px solid var(--primary, #007bff);
+    outline-offset: -2px;
+    background-color: var(--surface-hover, #f8f9fa);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Design Value-Adds (Divisores e Danger Zone)
+|--------------------------------------------------------------------------
+*/
+
+/* Divisores elegantes dentro do menu */
+.ui-card-menu__divider,
+.ui-card-menu__content > hr {
+    height: 1px;
+    border: 0;
+    background-color: var(--border-color, #e9ecef);
+    margin: 4px 0;
+    padding: 0;
+    width: auto;
+}
+
+/* Ações destrutivas (Ex: Eliminar, Cancelar) */
+.ui-card-menu__item--danger {
+    color: var(--danger, #dc3545) !important;
+}
+
+.ui-card-menu__item--danger:hover {
+    background-color: var(--danger-light, #fff5f5) !important;
+    color: var(--danger-dark, #c92a2a) !important;
+}
+
+/* Ícone de suporte dentro do menu (se necessário) */
+.ui-card-menu__item svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    opacity: 0.7;
+    transition: opacity 0.15s ease;
+}
+
+.ui-card-menu__item:hover svg {
+    opacity: 1;
+}
+
+/* Respeito pela acessibilidade de movimento do utilizador */
+@media (prefers-reduced-motion: reduce) {
+    .ui-card-menu__content {
+        transition: opacity var(--menu-transition-time) ease;
+        transform: none !important;
+    }
+}

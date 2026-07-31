@@ -3,10 +3,6 @@
 @section('page_key', 'audits')
 
 @section('content')
-<script>
-window.requireAuthOnLoad = true;
-</script>
-
 <x-ui.partials.page-card
     :title="__('Auditoria do Sistema')"
     :subtitle="__('Rastreabilidade, hist├│rico de a├º├Áes e registo de altera├º├Áes efetuadas pelos utilizadores.')"

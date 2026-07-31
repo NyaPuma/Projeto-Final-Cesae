@@ -74,7 +74,7 @@ async function submitLogin(event) {
             saveToken(response.data.token, response.data.user);
         }
 
-        updateMsg('Autentica\u00e7\u00e3o bem-sucedida! A redirecionar...', 'success');
+        updateMsg('Autenticação bem-sucedida! A redirecionar...', 'success');
         setButtonLoading(button, false);
 
         setTimeout(() => {
@@ -82,7 +82,7 @@ async function submitLogin(event) {
         }, 500);
 
     } catch (error) {
-        updateMsg('Falha cr\u00edtica na comunica\u00e7\u00e3o com o servidor.', 'error');
+        updateMsg('Falha crítica na comunicação com o servidor.', 'error');
         setButtonLoading(button, false);
     }
 }

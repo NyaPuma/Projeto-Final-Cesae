@@ -1,0 +1,169 @@
+/* ==========================================================
+   L5-SWAGGER DESIGN SYSTEM
+   Variáveis Globais CSS
+   - Tokens EXCLUSIVOS do Swagger (métodos HTTP, status, módulos)
+   - Cores base (--bg, --surface, --text, --border, --shadow-*,
+     --primary, --success, --warning, --danger, --info) e tema
+     escuro NÃO são redefinidos aqui: já existem no design
+     system principal da app (app.css / typography.css) e são
+     herdados. Redefini-los aqui duplicava tokens com valores
+     ligeiramente diferentes e causava inconsistência entre
+     a app principal e esta página.
+========================================================== */
+
+/* ==========================================================
+   🏷️ CORES DE STATUS HTTP
+   Para respostas API
+========================================================== */
+:root {
+    --status-2xx: 34, 197, 94;    /* Verde */
+    --status-4xx: 249, 115, 22;   /* Laranja */
+    --status-5xx: 239, 68, 68;    /* Vermelho */
+    --status-undocumented: 100, 116, 139; /* Cinza */
+}
+
+/* ==========================================================
+   🔧 CORES DE MÉTODOS HTTP
+   Para badges de métodos
+========================================================== */
+:root {
+    --method-get: 59, 130, 246;
+    --method-post: 34, 197, 94;
+    --method-put: 249, 115, 22;
+    --method-delete: 239, 68, 68;
+    --method-patch: 139, 92, 246;
+    --method-head: 14, 165, 233;
+    --method-options: 100, 116, 139;
+}
+
+/* ==========================================================
+   ⚡ ANIMAÇÕES
+   Tokens de timing e easing
+========================================================== */
+:root {
+    --anim-fast: 0.18s;
+    --anim-normal: 0.2s;
+    --anim-slow: 0.45s;
+    --anim-ease: ease;
+    --anim-ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ==========================================================
+   📏 ESPAÇAMENTO
+   Sistema de spacing consistente
+========================================================== */
+:root {
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 12px;
+    --space-lg: 16px;
+    --space-xl: 20px;
+    --space-2xl: 24px;
+    --space-3xl: 28px;
+    --space-4xl: 32px;
+    --space-5xl: 36px;
+    --space-6xl: 42px;
+}
+
+/* ==========================================================
+   🔵 Z-INDEX
+   Camadas de profundidade
+========================================================== */
+:root {
+    --z-dropdown: 10;
+    --z-sticky: 20;
+    --z-toolbar: 30;
+    --z-fixed: 100;
+    --z-modal-backdrop: 100;
+    --z-modal: 101;
+    --z-popover: 200;
+    --z-tooltip: 300;
+    --z-scroll-btn: 200;
+}
+
+/* ==========================================================
+   🎨 BORDAS
+   Raio de borda consistente
+========================================================== */
+:root {
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 14px;
+    --radius-xl: 16px;
+    --radius-2xl: 18px;
+    --radius-3xl: 22px;
+    --radius-4xl: 24px;
+    --radius-full: 999px;
+}
+
+/* ==========================================================
+   📄 TIPOGRAFIA
+   Herdada do typography.css principal (--font-sans, --text-xs
+   a --text-5xl em clamp(), --font-normal a --font-black,
+   --leading-*). Não redefinir aqui — ver typography.css.
+========================================================== */
+
+/* ==========================================================
+   💡 GRADIENTES
+   Gradientes reutilizáveis
+========================================================== */
+:root {
+    --gradient-primary: linear-gradient(180deg, #fb923c, #f97316);
+    --gradient-surface: linear-gradient(135deg,
+        rgba(249, 115, 22, 0.08),
+        rgba(249, 115, 22, 0.02));
+    --gradient-hero: linear-gradient(135deg,
+        rgba(249, 115, 22, 0.08),
+        rgba(249, 115, 22, 0.02));
+    --gradient-avarias: linear-gradient(135deg,
+        rgba(239, 68, 68, 0.07),
+        rgba(249, 115, 22, 0.02));
+}
+
+/* ==========================================================
+   🎯 FOCUS & SELEÇÃO
+   Estados de interação
+========================================================== */
+:root {
+    --focus-ring: 0 0 0 4px rgba(249, 115, 22, 0.15);
+    --focus-ring-strong: 0 0 0 4px rgba(249, 115, 22, 0.25);
+    --selection-bg: rgba(249, 115, 22, 0.25);
+    --selection-color: inherit;
+}
+
+/* ==========================================================
+   🎨 CORES DE COMPONENTES ESPECÍFICOS
+   Variáveis para elementos únicos
+========================================================== */
+:root {
+    /* Código */
+    --code-bg: 11, 17, 32;
+    --code-bg-dark: 5, 9, 19;
+    --code-text: 219, 234, 254;
+    --code-border: rgba(255, 255, 255, 0.04);
+
+    /* Avarias */
+    --avarias-primary: 239, 68, 68;
+    --avarias-border: rgba(239, 68, 68, 0.10);
+    --avarias-text: #ef4444;
+
+    /* Tag padrão */
+    --tag-gradient: linear-gradient(180deg, var(--surface), var(--surface-2));
+
+    /* Sombras de botões */
+    --btn-shadow: 0 10px 22px rgba(249, 115, 22, 0.25);
+    --btn-shadow-hover: 0 18px 34px rgba(249, 115, 22, 0.35);
+    --scroll-btn-shadow: 0 12px 28px rgba(249, 115, 22, 0.25);
+}
+
+/* ==========================================================
+   ♿ ACESSIBILIDADE
+   Variáveis para reduzir movimento
+========================================================== */
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --anim-fast: 0.01ms;
+        --anim-normal: 0.01ms;
+        --anim-slow: 0.01ms;
+    }
+}

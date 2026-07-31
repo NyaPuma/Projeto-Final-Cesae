@@ -1,0 +1,329 @@
+/*
+|--------------------------------------------------------------------------
+| Checkbox Component
+|--------------------------------------------------------------------------
+| Design System
+| • Light / Dark Mode Friendly
+| • Focus Visible (WCAG 2.2 compliant)
+| • Accessibility-first markup protection
+| • Support for Indeterminate state
+|--------------------------------------------------------------------------
+*/
+
+.ui-checkbox {
+    /* Design Tokens Locais (Centraliza a parametrização e evita conflito de especificidade) */
+    --checkbox-size: 1.25rem; /* 20px padrão */
+    --checkbox-line-height: 1.5rem; /* Alinhamento com a altura da linha do texto */
+
+    --checkbox-color-primary: var(--color-primary, #3b82f6);
+    --checkbox-color-primary-disabled: var(--color-primary-disabled, #93c5fd);
+    --checkbox-color-surface: var(--color-surface, #ffffff);
+    --checkbox-color-border: var(--color-border, #d1d5db);
+    --checkbox-color-border-hover: var(--color-primary, #3b82f6);
+    --checkbox-color-text: var(--color-text, #111827);
+    --checkbox-color-text-muted: var(--color-text-muted, #6b7280);
+    --checkbox-focus-ring: var(--color-primary, #3b82f6);
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2, 8px);
+    box-sizing: border-box;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Modificadores de Tamanho (Escalabilidade Dinâmica)
+|--------------------------------------------------------------------------
+*/
+
+/* Pequeno (Small) */
+.ui-checkbox--sm {
+    --checkbox-size: 1rem; /* 16px */
+    --checkbox-line-height: 1.25rem; /* 20px */
+    --font-size-sm: var(--font-size-xs, 12px);
+}
+
+/* Grande (Large) */
+.ui-checkbox--lg {
+    --checkbox-size: 1.5rem; /* 24px */
+    --checkbox-line-height: 1.75rem; /* 28px */
+    --font-size-sm: var(--font-size-md, 16px);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Wrapper (Área de clique otimizada)
+|--------------------------------------------------------------------------
+*/
+
+.ui-checkbox__wrapper {
+    display: inline-flex;
+    align-items: flex-start; /* Mantém alinhado ao topo caso a label tenha múltiplas linhas */
+    gap: var(--space-3, 12px);
+    cursor: pointer;
+    user-select: none;
+    color: var(--checkbox-color-text);
+    position: relative;
+}
+
+/* Previne que eventos do rato disparem hover ou cliques se estiver disabled */
+.ui-checkbox__wrapper:has(.ui-checkbox__input:disabled),
+.ui-checkbox__wrapper--disabled {
+    cursor: not-allowed;
+    color: var(--color-text-disabled, #9ca3af);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Native Input (Visually Hidden para máxima acessibilidade)
+|--------------------------------------------------------------------------
+*/
+
+.ui-checkbox__input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0); /* Fallback para navegadores antigos */
+    clip-path: inset(50%); /* Padrão moderno e sem depreciação */
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Control (A Caixinha Visual)
+|--------------------------------------------------------------------------
+*/
+
+.ui-checkbox__control {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    width: var(--checkbox-size);
+    height: var(--checkbox-size);
+
+    /* Alinhamento vertical preciso com a primeira linha de texto do label */
+    margin-top: calc((var(--checkbox-line-height) - var(--checkbox-size)) / 2);
+
+    border: 1px solid var(--checkbox-color-border);
+    border-radius: var(--radius-sm, 4px);
+    background-color: var(--checkbox-color-surface);
+    color: #ffffff; /* Cor padrão do ícone interno */
+    box-sizing: border-box;
+
+    transition:
+        background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+        border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.15s ease,
+        transform 0.1s ease;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Icon (Ícone interno - Seta ou Traço)
+|--------------------------------------------------------------------------
+*/
+
+.ui-checkbox__icon {
+    /* Dimensão proporcional ao tamanho da caixa */
+    width: calc(var(--checkbox-size) * 0.7);
+    height: calc(var(--checkbox-size) * 0.7);
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 3; /* Traço espesso melhora a visibilidade WCAG */
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    opacity: 0;
+    transform: scale(0.5);
+    transition:
+        opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+}
+
+/* Suporte inteligente para quando existem dois SVGs separados no HTML (check e dash) */
+.ui-checkbox__control .ui-checkbox__icon--dash {
+    display: none;
+}
+
+.ui-checkbox__input:indeterminate + .ui-checkbox__control .ui-checkbox__icon--check {
+    display: none;
+}
+
+.ui-checkbox__input:indeterminate + .ui-checkbox__control .ui-checkbox__icon--dash {
+    display: inline-block;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Label
+|--------------------------------------------------------------------------
+*/
+
+.ui-checkbox__label {
+    display: inline-flex;
+    flex-direction: column; /* Permite colocar uma descrição abaixo do título */
+    min-height: var(--checkbox-line-height);
+    font-size: var(--font-size-sm, 14px);
+    line-height: calc(var(--checkbox-line-height) / var(--font-size-sm, 14px)); /* Mantém a proporção do line-height */
+}
+
+/* Elementos tipográficos adicionados para consistência de design */
+.ui-checkbox__label-title {
+    font-weight: 500;
+}
+
+.ui-checkbox__label-description {
+    font-size: var(--font-size-xs, 12px);
+    color: var(--checkbox-color-text-muted);
+    margin-top: 2px;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Interactive States (Hover & Active)
+|--------------------------------------------------------------------------
+*/
+
+/* Hover seguro: Apenas se NÃO estiver desativado */
+.ui-checkbox__wrapper:not(:has(.ui-checkbox__input:disabled)):not(.ui-checkbox__wrapper--disabled):hover .ui-checkbox__control {
+    border-color: var(--checkbox-color-border-hover);
+}
+
+/* Escala suave ao clicar (Active state) */
+.ui-checkbox__wrapper:not(:has(.ui-checkbox__input:disabled)):not(.ui-checkbox__wrapper--disabled):active .ui-checkbox__control {
+    transform: scale(0.92);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Focus States (Focus Visible para navegação por teclado)
+|--------------------------------------------------------------------------
+*/
+
+.ui-checkbox__input:focus-visible + .ui-checkbox__control {
+    outline: 2px solid transparent; /* Reset nativo */
+    /* Anel de foco duplo para alto contraste em qualquer background */
+    box-shadow:
+        0 0 0 2px var(--checkbox-color-surface),
+        0 0 0 4px var(--checkbox-focus-ring);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Checked & Indeterminate (Estados ativos)
+|--------------------------------------------------------------------------
+*/
+
+/* Checked (Selecionado) e Indeterminate (Estado Intermédio) */
+.ui-checkbox__input:checked + .ui-checkbox__control,
+.ui-checkbox__input:indeterminate + .ui-checkbox__control {
+    background-color: var(--checkbox-color-primary);
+    border-color: var(--checkbox-color-primary);
+}
+
+.ui-checkbox__input:checked + .ui-checkbox__control .ui-checkbox__icon,
+.ui-checkbox__input:indeterminate + .ui-checkbox__control .ui-checkbox__icon {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Disabled
+|--------------------------------------------------------------------------
+*/
+
+.ui-checkbox__input:disabled + .ui-checkbox__control {
+    opacity: 0.5;
+    background-color: var(--color-surface-disabled, #f3f4f6);
+    border-color: var(--color-border-disabled, #e5e7eb);
+    color: var(--color-text-disabled, #9ca3af);
+    pointer-events: none;
+}
+
+/* Correção de Legibilidade: Garante contraste adequado no checkmark quando disabled mas selecionado */
+.ui-checkbox__input:disabled:checked + .ui-checkbox__control,
+.ui-checkbox__input:disabled:indeterminate + .ui-checkbox__control {
+    background-color: var(--checkbox-color-primary-disabled);
+    border-color: var(--checkbox-color-primary-disabled);
+    opacity: 0.6;
+}
+
+.ui-checkbox__input:disabled ~ .ui-checkbox__label {
+    opacity: 0.55;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Validation States (Invalid & Success) - Baseado em overrides limpos
+|--------------------------------------------------------------------------
+*/
+
+/* Inválido (Erro) */
+.ui-checkbox--invalid {
+    --checkbox-color-primary: var(--color-danger, #ef4444);
+    --checkbox-color-border: var(--color-danger, #ef4444);
+    --checkbox-color-border-hover: color-mix(in srgb, var(--color-danger, #ef4444) 85%, #000);
+    --checkbox-focus-ring: var(--color-danger, #ef4444);
+}
+
+/* Sucesso */
+.ui-checkbox--success {
+    --checkbox-color-primary: var(--color-success, #10b981);
+    --checkbox-color-border: var(--color-success, #10b981);
+    --checkbox-color-border-hover: color-mix(in srgb, var(--color-success, #10b981) 85%, #000);
+    --checkbox-focus-ring: var(--color-success, #10b981);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Suporte para Modo de Alto Contraste (WCAG AAA / Windows Forced Colors)
+|--------------------------------------------------------------------------
+*/
+
+@media (forced-colors: active) {
+    .ui-checkbox__input:checked + .ui-checkbox__control,
+    .ui-checkbox__input:indeterminate + .ui-checkbox__control {
+        background-color: Highlight !important;
+        border-color: Highlight !important;
+    }
+
+    .ui-checkbox__input:checked + .ui-checkbox__control .ui-checkbox__icon,
+    .ui-checkbox__input:indeterminate + .ui-checkbox__control .ui-checkbox__icon {
+        stroke: HighlightText !important;
+    }
+
+    .ui-checkbox__input:disabled + .ui-checkbox__control {
+        border-color: GrayText !important;
+        background-color: Canvas !important;
+    }
+
+    .ui-checkbox__input:disabled ~ .ui-checkbox__label {
+        color: GrayText !important;
+        opacity: 1; /* Reset da opacidade para o SO tratar o contraste */
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Reduced Motion
+|--------------------------------------------------------------------------
+*/
+
+@media (prefers-reduced-motion: reduce) {
+    .ui-checkbox__control,
+    .ui-checkbox__icon {
+        transition: none !important;
+        transform: none !important;
+    }
+
+    .ui-checkbox__wrapper:not(:has(.ui-checkbox__input:disabled)):not(.ui-checkbox__wrapper--disabled):active .ui-checkbox__control {
+        transform: none !important;
+    }
+}

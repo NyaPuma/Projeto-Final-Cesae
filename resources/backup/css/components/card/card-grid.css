@@ -1,0 +1,97 @@
+/*
+|--------------------------------------------------------------------------
+| Card Grid Component
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-grid {
+    /* Variáveis padrão de controlo */
+    --grid-cols: 1;
+    --grid-gap: var(--space-md, 16px);
+    --grid-item-min-width: 280px; /* Largura mínima sugerida para a variante Autofit */
+
+    display: grid;
+    width: 100%;
+    box-sizing: border-box;
+
+    /* Aplicação dinâmica das variáveis */
+    gap: var(--grid-gap);
+    grid-template-columns: repeat(var(--grid-cols), minmax(0, 1fr));
+
+    /* Garante que todos os cards na mesma linha esticam para ter alturas iguais */
+    align-items: stretch;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Columns (Refatorado: Apenas redefinição de variáveis)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-grid--columns-1 { --grid-cols: 1; }
+.ui-card-grid--columns-2 { --grid-cols: 2; }
+.ui-card-grid--columns-3 { --grid-cols: 3; }
+.ui-card-grid--columns-4 { --grid-cols: 4; }
+.ui-card-grid--columns-5 { --grid-cols: 5; }
+.ui-card-grid--columns-6 { --grid-cols: 6; }
+
+/*
+|--------------------------------------------------------------------------
+| Gap / Espaçamento (Refatorado: Apenas redefinição de variáveis)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-grid--gap-xs { --grid-gap: var(--space-xs, 4px); }
+.ui-card-grid--gap-sm { --grid-gap: var(--space-sm, 8px); }
+.ui-card-grid--gap-md { --grid-gap: var(--space-md, 16px); }
+.ui-card-grid--gap-lg { --grid-gap: var(--space-lg, 24px); }
+.ui-card-grid--gap-xl { --grid-gap: var(--space-xl, 32px); }
+
+/*
+|--------------------------------------------------------------------------
+| Design Value-Add: Autofit Grid (Sem necessidade de Media Queries)
+|--------------------------------------------------------------------------
+*/
+
+/* Esta classe substitui as colunas fixas. Os cartões vão preencher a linha
+   e quebrar automaticamente de forma fluída conforme o espaço do ecrã.
+*/
+.ui-card-grid--autofit {
+    grid-template-columns: repeat(
+        auto-fill,
+        minmax(var(--grid-item-min-width), 1fr)
+    );
+}
+
+/*
+|--------------------------------------------------------------------------
+| Responsive (Ajuste fluído com variáveis para evitar snaps bruscos)
+|--------------------------------------------------------------------------
+*/
+
+@media (max-width: 1200px) {
+    /* Se o ecrã for médio e o grid tiver mais de 2 colunas,
+       força um limite máximo de 3 colunas, e depois 2 colunas.
+    */
+    .ui-card-grid--responsive {
+        --grid-cols: 3;
+    }
+
+    /* Garante que grids pequenos não escalam para cima involuntariamente */
+    .ui-card-grid--responsive.ui-card-grid--columns-2 {
+        --grid-cols: 2;
+    }
+}
+
+@media (max-width: 900px) {
+    .ui-card-grid--responsive {
+        --grid-cols: 2;
+    }
+}
+
+@media (max-width: 600px) {
+    /* Mobile standard: tudo passa a 1 coluna */
+    .ui-card-grid--responsive {
+        --grid-cols: 1;
+    }
+}

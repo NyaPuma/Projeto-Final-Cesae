@@ -1,10 +1,6 @@
 @extends('ui.layout')
 @section('page_key', 'users')
 @section('content')
-<script>
-window.requireAuthOnLoad = true;
-</script>
-
 <x-ui.partials.page-card
     :title="__('Utilizadores')"
     :subtitle="__('Consulte as contas dos utilizadores e os respetivos perfis de acesso ao sistema.')"

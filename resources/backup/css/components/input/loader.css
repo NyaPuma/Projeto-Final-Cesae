@@ -1,0 +1,177 @@
+/*
+|--------------------------------------------------------------------------
+| Input Loader Component (Otimizado)
+|--------------------------------------------------------------------------
+| • RTL-ready (Logical Properties)
+| • CSS Variables-driven (Dry Scale & State Architecture)
+| • WCAG / Accessibility-first (Forced Colors & Reduced Motion support)
+| • Fixed SVG Rotation & Scale bugs (Safari-friendly)
+| • Non-blocking absolute positioning
+|--------------------------------------------------------------------------
+*/
+
+.ui-input-loader {
+  /* Design Tokens Locais */
+  --ui-loader-size: 1.25rem; /* ~20px Padrão (md) */
+  --ui-loader-stroke: var(--loader-stroke, 2px);
+  --ui-loader-color: var(--primary, #2563eb); /* Contraste WCAG 2.2 ajustado */
+  --ui-loader-track-color: var(--border-color, #d1d5db);
+  --ui-loader-track-opacity: 0.25;
+  --ui-loader-speed: 0.7s;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  width: var(--ui-loader-size);
+  height: var(--ui-loader-size);
+  color: var(--ui-loader-color);
+  box-sizing: border-box;
+}
+
+/* Garante que qualquer SVG interno herda as definições do componente */
+.ui-input-loader svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: none; /* Evita preenchimentos acidentais de cor */
+  stroke-width: var(--ui-loader-stroke);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Spinner & Inner SVG Elements
+|--------------------------------------------------------------------------
+*/
+.ui-input-loader__spinner {
+  /* Correção crucial para rotação excêntrica no Safari/Webkit */
+  transform-origin: center center;
+  will-change: transform; /* Ativa aceleração por hardware GPU */
+  animation: ui-input-loader-spin var(--ui-loader-speed) linear infinite;
+}
+
+.ui-input-loader__track {
+  stroke: var(--ui-loader-track-color);
+  opacity: var(--ui-loader-track-opacity);
+  transition: stroke 0.2s ease, opacity 0.2s ease;
+}
+
+.ui-input-loader__indicator {
+  stroke: currentColor;
+  stroke-linecap: round; /* Pontas arredondadas e profissionais */
+  transition: stroke 0.2s ease;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Sizes (Escala Dinâmica via Variáveis CSS)
+|--------------------------------------------------------------------------
+*/
+.ui-input-loader--sm {
+  --ui-loader-size: 1rem;       /* ~16px */
+  --ui-loader-stroke: var(--loader-stroke-sm, 1.5px);
+}
+
+.ui-input-loader--md {
+  --ui-loader-size: 1.25rem;    /* ~20px */
+  --ui-loader-stroke: var(--loader-stroke-md, 2px);
+}
+
+.ui-input-loader--lg {
+  --ui-loader-size: 1.5rem;     /* ~24px */
+  --ui-loader-stroke: var(--loader-stroke-lg, 2.5px);
+}
+
+.ui-input-loader--xl {
+  --ui-loader-size: 2rem;       /* ~32px */
+  --ui-loader-stroke: var(--loader-stroke-xl, 3px);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Variants (Contraste de Acessibilidade Calibrado)
+|--------------------------------------------------------------------------
+*/
+.ui-input-loader--primary {
+  --ui-loader-color: var(--primary, #2563eb);
+}
+
+.ui-input-loader--success {
+  --ui-loader-color: var(--success, #059669);
+}
+
+.ui-input-loader--warning {
+  --ui-loader-color: var(--warning, #d97706);
+}
+
+.ui-input-loader--danger {
+  --ui-loader-color: var(--danger, #dc2626);
+}
+
+.ui-input-loader--muted {
+  --ui-loader-color: var(--text-muted, #6b7280);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Position Helpers (Correções de Layout Estáveis)
+|--------------------------------------------------------------------------
+*/
+.ui-input-loader--absolute {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin-block: auto; /* Centra verticalmente sem usar transform, evitando bugs de rendering */
+
+  /* Suporte nativo para RTL e LTR sem código extra */
+  inset-inline-end: var(--space-md, 1rem);
+  z-index: 2;
+
+  /* Impede que o loader interseta os cliques destinados a focar o input por trás */
+  pointer-events: none;
+}
+
+.ui-input-loader--center {
+  display: flex;
+  margin-inline: auto; /* Centra horizontalmente sem forçar width: 100% (evita deformação) */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Animation
+|--------------------------------------------------------------------------
+*/
+@keyframes ui-input-loader-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Acessibilidade: Modo de Cores Forçadas (High Contrast)
+|--------------------------------------------------------------------------
+*/
+@media (forced-colors: active) {
+  .ui-input-loader {
+    --ui-loader-color: CanvasText;
+    --ui-loader-track-color: ButtonBorder;
+    --ui-loader-track-opacity: 1; /* Força contraste estrito no WHCM */
+  }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Acessibilidade: Movimento Reduzido (Reduced Motion)
+|--------------------------------------------------------------------------
+*/
+@media (prefers-reduced-motion: reduce) {
+  .ui-input-loader__spinner {
+    animation: none; /* Trava a animação rotativa para evitar cinetose */
+    transform: rotate(45deg); /* Mantém uma inclinação para evidenciar que é um arco quebrado */
+  }
+}

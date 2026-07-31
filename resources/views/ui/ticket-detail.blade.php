@@ -2,10 +2,6 @@
 @section('page_key', 'ticket-detail')
 
 @section('content')
-<script>
-window.requireAuthOnLoad = true;
-</script>
-
 <x-ui.partials.page-card
     :title="__('Detalhes do Ticket')"
     data-ticket-id="{{ $ticketId ?? $ticket->id ?? '' }}"

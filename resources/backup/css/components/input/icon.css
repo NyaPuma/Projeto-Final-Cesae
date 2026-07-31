@@ -1,0 +1,219 @@
+/*
+|--------------------------------------------------------------------------
+| Input Icon Component (Otimizado)
+|--------------------------------------------------------------------------
+| • RTL-ready (Logical Properties)
+| • Modern Zero-Transform Vertical Centering (Safari Friendly)
+| • WCAG 2.2 compliant interactive targets with breathable hovers
+| • Active touch-feedback micro-interactions
+|--------------------------------------------------------------------------
+*/
+
+.ui-input-icon {
+  /* Design Tokens Locais */
+  --ui-icon-size: 1.25rem; /* Padrão (md ~20px) */
+  --ui-icon-color: var(--text-secondary, #6b7280);
+  --ui-icon-transition: 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin-block: auto; /* Centra verticalmente de forma nativa e limpa, libertando o transform */
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: var(--ui-icon-size);
+  height: var(--ui-icon-size);
+  color: var(--ui-icon-color);
+  pointer-events: none;
+  box-sizing: border-box;
+  z-index: 2;
+
+  will-change: transform;
+  transition:
+    color var(--ui-icon-transition),
+    opacity var(--ui-icon-transition),
+    transform var(--ui-icon-transition),
+    background-color var(--ui-icon-transition),
+    box-shadow var(--ui-icon-transition);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Positions (Logical Properties - RTL Support)
+|--------------------------------------------------------------------------
+*/
+.ui-input-icon--start {
+  inset-inline-start: var(--space-md, 1rem);
+}
+
+.ui-input-icon--end {
+  inset-inline-end: var(--space-md, 1rem);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Sizes (Escala Dinâmica Centralizada)
+|--------------------------------------------------------------------------
+*/
+.ui-input-icon--xs { --ui-icon-size: var(--ui-icon-size-xs, 0.875rem); } /* ~14px */
+.ui-input-icon--sm { --ui-icon-size: var(--ui-icon-size-sm, 1rem); }     /* ~16px */
+.ui-input-icon--md { --ui-icon-size: var(--ui-icon-size-md, 1.25rem); }  /* ~20px */
+.ui-input-icon--lg { --ui-icon-size: var(--ui-icon-size-lg, 1.5rem); }   /* ~24px */
+.ui-input-icon--xl { --ui-icon-size: var(--ui-icon-size-xl, 1.75rem); }  /* ~28px */
+
+/*
+|--------------------------------------------------------------------------
+| SVG (Adaptive containment)
+|--------------------------------------------------------------------------
+*/
+.ui-input-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+/* Garante suporte automático a ícones baseados em contorno (outline) */
+.ui-input-icon svg[stroke] {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: var(--ui-icon-stroke-width, 2);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Variants (Cores Semânticas Dinâmicas)
+|--------------------------------------------------------------------------
+*/
+.ui-input-icon--default { --ui-icon-color: var(--text-secondary, #6b7280); }
+.ui-input-icon--primary { --ui-icon-color: var(--primary, #2563eb); }
+.ui-input-icon--success { --ui-icon-color: var(--success, #059669); } /* WCAG 2.2 AA */
+.ui-input-icon--warning { --ui-icon-color: var(--warning, #d97706); } /* WCAG 2.2 AA */
+.ui-input-icon--danger  { --ui-icon-color: var(--danger, #dc2626); }  /* WCAG 2.2 AA */
+.ui-input-icon--muted   { --ui-icon-color: var(--text-muted, #9ca3af); }
+
+/*
+|--------------------------------------------------------------------------
+| Interactive (Botoes & Links de Ação)
+|--------------------------------------------------------------------------
+*/
+button.ui-input-icon,
+a.ui-input-icon {
+  /* Reset nativo */
+  appearance: none;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+
+  pointer-events: auto;
+  cursor: pointer;
+  border-radius: var(--radius-sm, 4px);
+
+  /* Engenharia de Alinhamento: compensa o padding do hover circular sem desalinhar o SVG */
+  --ui-icon-size-offset: 0.5rem; /* ~8px de área extra respirável para o hover */
+  width: calc(var(--ui-icon-size) + var(--ui-icon-size-offset));
+  height: calc(var(--ui-icon-size) + var(--ui-icon-size-offset));
+  padding: calc(var(--ui-icon-size-offset) / 2);
+
+  /* Ajusta as laterais de forma lógica para neutralizar o padding do botão */
+  margin-inline: calc(var(--ui-icon-size-offset) / -2);
+}
+
+button.ui-input-icon:hover,
+a.ui-input-icon:hover {
+  --ui-icon-color: var(--primary-hover, #1d4ed8);
+  background-color: var(--surface-hover, rgba(0, 0, 0, 0.05));
+  transform: scale(1.08); /* Seguro contra quebras de centralização vertical */
+}
+
+/* Micro-interação tátil instantânea ao clicar */
+button.ui-input-icon:active,
+a.ui-input-icon:active {
+  transform: scale(0.92);
+}
+
+/* Área de toque invisível expandida (WCAG 2.2 - Mínimo de 44px) */
+button.ui-input-icon::after,
+a.ui-input-icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100%, 44px);
+  height: max(100%, 44px);
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+}
+
+/* Anel de Foco WCAG com Halo de Segurança */
+button.ui-input-icon:focus-visible,
+a.ui-input-icon:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--ui-input-bg, #ffffff),
+    0 0 0 4px var(--primary, #2563eb);
+  z-index: 3;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Estados Herdados do Input Vizinho
+|--------------------------------------------------------------------------
+*/
+
+/* Esmaecimento suave quando o input está desativado */
+:is(input, textarea, select):disabled ~ .ui-input-icon,
+[class*="__input"]:disabled ~ .ui-input-icon {
+  opacity: var(--ui-icon-disabled-opacity, 0.45);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Transição de cor para a cor principal de foco, exceto variantes semânticas explícitas */
+:is(input, textarea, select):focus ~ .ui-input-icon:not([class*="--primary"]):not([class*="--success"]):not([class*="--warning"]):not([class*="--danger"]):not([class*="--muted"]) {
+  --ui-icon-color: var(--primary, #2563eb);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Suporte para Alto Contraste (Forced Colors Mode)
+|--------------------------------------------------------------------------
+*/
+@media (forced-colors: active) {
+  :is(input, textarea, select):disabled ~ .ui-input-icon,
+  [class*="__input"]:disabled ~ .ui-input-icon {
+    color: GrayText !important;
+  }
+
+  button.ui-input-icon:focus-visible,
+  a.ui-input-icon:focus-visible {
+    outline: 2px solid SelectedItem;
+  }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Suporte para Movimento Reduzido (Reduced Motion)
+|--------------------------------------------------------------------------
+*/
+@media (prefers-reduced-motion: reduce) {
+  .ui-input-icon,
+  button.ui-input-icon,
+  a.ui-input-icon {
+    transition: none !important;
+  }
+
+  button.ui-input-icon:hover,
+  a.ui-input-icon:hover,
+  button.ui-input-icon:active,
+  a.ui-input-icon:active {
+    transform: none !important; /* Desativa escalas para evitar desconforto visual */
+  }
+}

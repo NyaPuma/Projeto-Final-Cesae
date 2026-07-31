@@ -1,0 +1,75 @@
+/*
+|--------------------------------------------------------------------------
+| Design System: Semantic Tokens
+|--------------------------------------------------------------------------
+| Regra: Estes tokens representam a intenção do componente.
+| Nunca utilize valores absolutos (ex: 44px) nos componentes.
+| Utilize sempre estas variáveis.
+*/
+
+:root {
+    /* ---------------------------------------------------------------------
+       BUTTONS
+    --------------------------------------------------------------------- */
+    --button-height: 44px;
+    --button-height-lg: 52px;
+    --button-height-sm: 36px;
+    --button-radius: var(--radius-md);
+    --button-padding-x: var(--space-5);
+    --button-padding-y: var(--space-3);
+    --button-gap: var(--space-2);
+    --button-shadow: var(--shadow-sm);
+    --button-transition: var(--transition);
+
+    /* ---------------------------------------------------------------------
+       CARDS
+    --------------------------------------------------------------------- */
+    --card-padding: var(--space-6);
+    --card-padding-lg: var(--space-7);
+    --card-padding-sm: var(--space-4);
+    --card-radius: var(--radius-xl);
+    --card-shadow: var(--shadow-md);
+    --card-border: 1px solid var(--border);
+
+    /* ---------------------------------------------------------------------
+       FORMS (Inputs)
+    --------------------------------------------------------------------- */
+    --input-height: 48px;
+    --input-radius: var(--radius-md);
+    --input-padding-x: var(--space-4);
+    --input-padding-y: var(--space-3);
+    --input-border: 1px solid var(--border);
+    --input-shadow: var(--shadow-none);
+    --input-focus-shadow: var(--shadow-focus);
+
+    /* ---------------------------------------------------------------------
+       LAYOUT (Sidebar & Navbar)
+    --------------------------------------------------------------------- */
+    --sidebar-width: 280px;
+    --sidebar-padding: var(--space-5);
+    --navbar-height: 72px;
+    --navbar-padding: var(--space-5);
+
+    /* ---------------------------------------------------------------------
+       MODAL & OVERLAYS
+    --------------------------------------------------------------------- */
+    --modal-radius: var(--radius-2xl);
+    --modal-padding: var(--space-7);
+    --modal-shadow: var(--shadow-xl);
+    --modal-width: 640px;
+
+    /* ---------------------------------------------------------------------
+       FEEDBACK & DATA
+    --------------------------------------------------------------------- */
+    --toast-radius: var(--radius-lg);
+    --toast-padding: var(--space-4);
+    --toast-shadow: var(--shadow-lg);
+
+    --table-row-height: 56px;
+    --table-cell-padding: var(--space-4);
+    --table-radius: var(--radius-lg);
+
+    --chart-height: 320px;
+    --chart-padding: var(--space-5);
+    --chart-radius: var(--radius-xl);
+}

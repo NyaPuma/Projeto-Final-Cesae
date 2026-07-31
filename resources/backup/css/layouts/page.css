@@ -1,0 +1,389 @@
+/*
+|--------------------------------------------------------------------------
+| Page Layout
+|--------------------------------------------------------------------------
+|
+| Layout base reutilizado por todas as páginas internas.
+| Não define componentes, apenas organização da página.
+|
+*/
+
+/* ==========================================================
+   Página
+========================================================== */
+
+.page {
+    --page-padding: var(--space-6); /* Token local para fácil gestão responsiva */
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+
+    width: 100%;
+    max-width: 1600px;
+    min-height: 100dvh; /* Garante que a página ocupa a altura total do ecrã */
+    margin-inline: auto;
+    padding: var(--page-padding);
+}
+
+/* ==========================================================
+   Container
+========================================================== */
+
+.page-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    width: 100%;
+}
+
+/* ==========================================================
+   Secções
+========================================================== */
+
+.page-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+/* ==========================================================
+   Header
+========================================================== */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-6);
+    flex-wrap: wrap;
+}
+
+.page-header-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3, 0.75rem);
+    min-width: 0;
+}
+
+.page-overline {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--primary);
+}
+
+.page-title {
+    margin: 0;
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--text);
+}
+
+.page-subtitle {
+    margin: 0;
+    max-width: 760px;
+    line-height: 1.8;
+    color: var(--text-soft);
+}
+
+/* ==========================================================
+   Actions
+========================================================== */
+
+.page-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3, 0.75rem);
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+/* ==========================================================
+   Content
+========================================================== */
+
+.page-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    width: 100%;
+}
+
+.page-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+/* ==========================================================
+   Toolbar
+========================================================== */
+
+.page-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+}
+
+.page-toolbar-start {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+}
+
+.page-toolbar-end {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+}
+
+/* ==========================================================
+   Grid System (Otimizado)
+========================================================== */
+
+.page-grid {
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: repeat(var(--grid-cols, 1), minmax(0, 1fr));
+}
+
+.page-grid-2 { --grid-cols: 2; }
+.page-grid-3 { --grid-cols: 3; }
+.page-grid-4 { --grid-cols: 4; }
+
+.page-grid-auto {
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+/* ==========================================================
+   Sidebar Layout
+========================================================== */
+
+.page-layout {
+    --sidebar-width: 320px; /* Custom Property para fácil customização se necessário */
+
+    display: grid;
+    grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+    gap: var(--space-8);
+    align-items: start;
+}
+
+.page-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+.page-main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    min-width: 0;
+}
+
+/* ==========================================================
+   Empty State
+========================================================== */
+
+.page-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: var(--space-4);
+    padding: var(--space-16, 5rem) var(--space-6, 2rem);
+}
+
+.page-empty-icon {
+    font-size: 4rem;
+    opacity: 0.7;
+    flex-shrink: 0;
+}
+
+.page-empty-title {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.page-empty-description {
+    max-width: 520px;
+    margin: 0;
+    color: var(--text-soft);
+    line-height: 1.8;
+}
+
+/* ==========================================================
+   Breadcrumb
+========================================================== */
+
+.page-breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-2, 0.5rem);
+    font-size: 0.875rem;
+    color: var(--text-soft);
+}
+
+.page-breadcrumb a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--transition, 0.2s ease);
+}
+
+.page-breadcrumb a:hover {
+    color: var(--primary);
+}
+
+.page-breadcrumb a:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 4px;
+    border-radius: var(--radius-sm, 4px);
+    color: var(--primary);
+}
+
+.page-breadcrumb-separator {
+    opacity: 0.5;
+    user-select: none; /* Evita seleção acidental do separador */
+}
+
+/* ==========================================================
+   Divider
+========================================================== */
+
+.page-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    border: 0;
+}
+
+/* ==========================================================
+   Footer
+========================================================== */
+
+.page-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+    margin-top: auto; /* Empurra o footer para o fundo em páginas curtas */
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--border);
+    color: var(--text-soft);
+    font-size: 0.875rem;
+}
+
+/* ==========================================================
+   Helpers
+========================================================== */
+
+.page-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+.page-inline {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+}
+
+.page-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.page-space-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+/* ==========================================================
+   Responsive
+========================================================== */
+
+@media (max-width: 1200px) {
+    .page-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 992px) {
+    /* Força todas as grids utilitárias a passarem para 1 coluna através da variável */
+    .page-grid {
+        --grid-cols: 1 !important;
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .page-actions {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .page-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .page-toolbar-start,
+    .page-toolbar-end {
+        width: 100%;
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 768px) {
+    .page {
+        --page-padding: var(--space-4);
+    }
+
+    .page-grid-auto {
+        grid-template-columns: 1fr;
+    }
+
+    .page-footer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .page-title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .page {
+        --page-padding: var(--space-3);
+    }
+
+    .page-title {
+        font-size: 1.75rem;
+    }
+
+    .page-empty {
+        padding: var(--space-12, 3rem) var(--space-4, 1rem);
+    }
+}

@@ -1,0 +1,652 @@
+/*
+|--------------------------------------------------------------------------
+| Dashboard Layout
+|--------------------------------------------------------------------------
+|
+| Layout principal utilizado pelas páginas do painel de controlo.
+| Trabalha em conjunto com os componentes ui-card, ui-button,
+| ui-card-badge, tabelas e restantes elementos do Design System.
+|
+*/
+
+/* ==========================================================
+   Página
+========================================================== */
+
+.dashboard-page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    width: 100%;
+}
+
+/* ==========================================================
+   Secções
+========================================================== */
+
+.dashboard-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+/* ==========================================================
+   Cabeçalho
+========================================================== */
+
+.dashboard-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-6);
+    padding: var(--space-6);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+}
+
+.dashboard-header-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    min-width: 0;
+}
+
+.dashboard-header-title {
+    margin: 0;
+    font-size: clamp(2rem, 3vw, 2.75rem);
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--text);
+}
+
+.dashboard-header-subtitle {
+    margin: 0;
+    max-width: 720px;
+    line-height: 1.7;
+    color: var(--text-soft);
+}
+
+.dashboard-header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+/* ==========================================================
+   Hero
+========================================================== */
+
+.dashboard-hero {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    padding: var(--space-10, 2.5rem);
+}
+
+/* ==========================================================
+   Grid (Modernizada com Variáveis CSS)
+========================================================== */
+
+.dashboard-grid {
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: repeat(var(--grid-cols, 1), minmax(0, 1fr));
+}
+
+.dashboard-grid-2 { --grid-cols: 2; }
+.dashboard-grid-3 { --grid-cols: 3; }
+.dashboard-grid-4 { --grid-cols: 4; }
+
+.dashboard-grid-auto {
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* ==========================================================
+   KPI Cards
+========================================================== */
+
+.dashboard-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-6);
+}
+
+.dashboard-kpi {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-6);
+    min-height: 11rem; /* Responsivo ao zoom do texto */
+}
+
+.dashboard-kpi-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-4);
+}
+
+.dashboard-kpi-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-soft);
+}
+
+.dashboard-kpi-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: var(--radius-lg);
+    background: var(--surface-2);
+    font-size: 1.35rem;
+    flex-shrink: 0;
+}
+
+.dashboard-kpi-value {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    line-height: 1;
+    color: var(--text);
+}
+
+.dashboard-kpi-description {
+    color: var(--text-soft);
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.dashboard-kpi-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+/* ==========================================================
+   Trend Indicators
+========================================================== */
+
+.dashboard-trend {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2, 0.35rem);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.dashboard-trend--success { color: var(--success); }
+.dashboard-trend--warning { color: var(--warning); }
+.dashboard-trend--danger { color: var(--danger); }
+.dashboard-trend--neutral { color: var(--text-soft); }
+
+/* ==========================================================
+   Module Cards
+========================================================== */
+
+.dashboard-module-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-6);
+}
+
+.dashboard-module {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    text-decoration: none;
+    color: inherit;
+    min-height: 16rem; /* Responsivo ao zoom do texto */
+    transition: transform var(--transition, 0.2s ease), box-shadow var(--transition, 0.2s ease), border-color var(--transition, 0.2s ease);
+}
+
+.dashboard-module:hover {
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.05));
+}
+
+.dashboard-module:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 4px;
+    border-radius: var(--radius-xl);
+}
+
+.dashboard-module-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-4);
+}
+
+.dashboard-module-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    border-radius: var(--radius-xl);
+    background: var(--surface-2);
+    font-size: 1.8rem;
+    flex-shrink: 0;
+}
+
+.dashboard-module-arrow {
+    font-size: 1.5rem;
+    color: var(--text-soft);
+    transition: transform var(--transition, 0.2s ease);
+}
+
+.dashboard-module:hover .dashboard-module-arrow {
+    transform: translateX(6px);
+}
+
+.dashboard-module-title {
+    margin: 0;
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.dashboard-module-description {
+    color: var(--text-soft);
+    line-height: 1.8;
+    flex: 1;
+}
+
+/* ==========================================================
+   Dashboard Widget
+========================================================== */
+
+.dashboard-widget {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+.dashboard-widget-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+}
+
+.dashboard-widget-title {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.dashboard-widget-subtitle {
+    margin-top: var(--space-2);
+    color: var(--text-soft);
+    font-size: 0.95rem;
+}
+
+/* ==========================================================
+   System Status
+========================================================== */
+
+.dashboard-status {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--space-8);
+    align-items: stretch;
+}
+
+.dashboard-status-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+}
+
+.dashboard-status-title {
+    margin: 0;
+    font-size: clamp(2rem, 3vw, 2.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.dashboard-status-description {
+    margin: 0;
+    max-width: 760px;
+    color: var(--text-soft);
+    line-height: 1.8;
+}
+
+/* ==========================================================
+   Progress Bars
+========================================================== */
+
+.dashboard-progress-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+.dashboard-progress {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.dashboard-progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.dashboard-progress-label {
+    color: var(--text);
+}
+
+.dashboard-progress-value {
+    color: var(--text-soft);
+}
+
+.dashboard-progress-track {
+    width: 100%;
+    height: 0.65rem;
+    overflow: hidden;
+    border-radius: var(--radius-full, 999px);
+    background: var(--surface-3);
+}
+
+.dashboard-progress-fill {
+    height: 100%;
+    border-radius: inherit;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Curva de animação mais fluida */
+}
+
+.dashboard-progress-fill--success { background: var(--success); }
+.dashboard-progress-fill--warning { background: var(--warning); }
+.dashboard-progress-fill--danger  { background: var(--danger); }
+.dashboard-progress-fill--info    { background: var(--info); }
+
+/* ==========================================================
+   Monitor Grid
+========================================================== */
+
+.dashboard-monitor-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+    height: 100%;
+}
+
+.dashboard-monitor {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-3);
+    min-height: 10rem;
+}
+
+.dashboard-monitor-value {
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 800;
+    line-height: 1;
+}
+
+.dashboard-monitor-label {
+    color: var(--text-soft);
+    font-size: 0.95rem;
+}
+
+/* ==========================================================
+   Status Indicators
+========================================================== */
+
+.dashboard-status-dot {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.dashboard-status-dot--success { background: var(--success); }
+.dashboard-status-dot--warning { background: var(--warning); }
+.dashboard-status-dot--danger  { background: var(--danger); }
+
+.dashboard-status-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--text);
+    font-weight: 500;
+}
+
+/* ==========================================================
+   Widget Lists
+========================================================== */
+
+.dashboard-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.dashboard-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--border);
+}
+
+.dashboard-list-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+/* ==========================================================
+   Dashboard Footer
+========================================================== */
+
+.dashboard-footer {
+    margin-top: var(--space-8);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--border);
+}
+
+.dashboard-footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-10, 4rem);
+}
+
+.dashboard-footer-brand {
+    max-width: 520px;
+}
+
+.dashboard-footer-title {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.dashboard-footer-description {
+    margin-top: var(--space-4);
+    line-height: 1.8;
+    color: var(--text-soft);
+}
+
+.dashboard-footer-links {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-8, 2rem);
+}
+
+.dashboard-footer-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.dashboard-footer-heading {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.dashboard-footer-link {
+    color: var(--text-soft);
+    text-decoration: none;
+    transition: color var(--transition, 0.2s ease);
+}
+
+.dashboard-footer-link:hover {
+    color: var(--primary);
+}
+
+.dashboard-footer-link:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm, 4px);
+}
+
+.dashboard-footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-8, 2rem);
+    margin-top: var(--space-8);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--border);
+    color: var(--text-soft);
+    font-size: 0.9rem;
+}
+
+/* ==========================================================
+   Helpers
+========================================================== */
+
+.dashboard-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+.dashboard-inline {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+.dashboard-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dashboard-space-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+/* ==========================================================
+   Responsive
+========================================================== */
+
+@media (max-width: 1200px) {
+    .dashboard-status {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-footer-top {
+        flex-direction: column;
+    }
+
+    .dashboard-footer-links {
+        grid-template-columns: repeat(2, 1fr);
+        width: 100%;
+    }
+}
+
+@media (max-width: 992px) {
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .dashboard-header-actions {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    /* Reduz todas as colunas de grid de utilitário com apenas 1 variável */
+    .dashboard-grid {
+        --grid-cols: 1 !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-kpi-grid,
+    .dashboard-module-grid,
+    .dashboard-grid-auto {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-monitor-grid {
+        grid-template-columns: 1fr;
+        height: auto; /* Evita que os cartões estiquem desnecessariamente quando empilhados */
+    }
+
+    .dashboard-footer-links {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .dashboard-header {
+        padding: var(--space-4);
+    }
+
+    .dashboard-hero {
+        padding: var(--space-6);
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard-kpi-value {
+        font-size: 2rem;
+    }
+
+    .dashboard-status-title {
+        font-size: 1.8rem;
+    }
+
+    .dashboard-module-icon {
+        width: 3.25rem;
+        height: 3.25rem;
+        font-size: 1.5rem;
+    }
+
+    .dashboard-kpi-icon {
+        width: 2.75rem;
+        height: 2.75rem;
+        font-size: 1.15rem;
+    }
+}

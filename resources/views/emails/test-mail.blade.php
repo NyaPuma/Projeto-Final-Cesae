@@ -108,7 +108,7 @@
                 <h1 class="title">Ligação Estabelecida com Sucesso</h1>
 
                 <p class="text-body">Olá, {{ $recipientName ?? 'Utilizador' }}.</p>
-                <p class="text-body text-body--no-margin">Este é um disparo de validação estrutural enviado para confirmar a correta integra\u00e7\u00e3o, credencia\u00e7\u00e3o e entrega de mensagens na plataforma.</p>
+                <p class="text-body text-body--no-margin">Este é um disparo de validação estrutural enviado para confirmar a correta integração, credenciação e entrega de mensagens na plataforma.</p>
 
                 {{-- Metadados de Diagnóstico do Sistema --}}
                 <div class="telemetry-box">

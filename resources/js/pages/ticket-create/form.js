@@ -22,7 +22,7 @@ async function submitForm(event) {
     const { title, description, priority, equipmentId } = getFormData();
 
     if (!equipmentId) {
-        setFormMessage('Por favor, selecione um equipamento v\u00e1lido a partir da lista de sugest\u00f5es.', 'error');
+        setFormMessage('Por favor, selecione um equipamento válido a partir da lista de sugestões.', 'error');
         document.getElementById('equipmentSearchInput')?.focus();
         return;
     }

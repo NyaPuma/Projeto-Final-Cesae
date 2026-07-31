@@ -1,5 +1,6 @@
 /* Button Base Component & States */
 
+@layer components {
 .ui-button {
     --button-height: 44px;
     --button-padding-x: var(--space-lg);
@@ -115,3 +116,4 @@
 .ui-button.is-loading { pointer-events: none; }
 .ui-button.is-loading .ui-button__icon, .ui-button.is-loading .ui-button__label { opacity: 0; transform: scale(0.8); }
 .ui-button.is-loading .ui-button__spinner { opacity: 1; transform: scale(1); animation: ui-button-spin .7s linear infinite; }
+}

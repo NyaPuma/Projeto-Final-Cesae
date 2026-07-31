@@ -1,0 +1,234 @@
+/*
+|--------------------------------------------------------------------------
+| Email Input Component
+|--------------------------------------------------------------------------
+*/
+
+.ui-email {
+    /* Design Tokens Locais com Fallbacks Seguros */
+    --email-primary: var(--primary, #3b82f6);
+    --email-primary-light: var(--primary-light, rgba(59, 130, 246, 0.15));
+    --email-danger: var(--danger, #ef4444);
+    --email-danger-light: var(--danger-light, rgba(239, 68, 68, 0.15));
+    --email-border: var(--border-color, #d1d5db);
+    --email-border-hover: var(--border-hover, #9ca3af);
+    --email-surface: var(--surface, #ffffff);
+    --email-surface-disabled: var(--surface-disabled, #f3f4f6);
+
+    --email-text-primary: var(--text-primary, #111827);
+    --email-text-secondary: var(--text-secondary, #4b5563);
+    --email-text-muted: var(--text-muted, #9ca3af);
+
+    --email-space-xs: var(--space-xs, 4px);
+    --email-space-sm: var(--space-sm, 8px);
+    --email-space-md: var(--space-md, 12px);
+    --email-radius-md: var(--radius-md, 8px);
+    --email-transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--email-space-sm);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Label
+|--------------------------------------------------------------------------
+*/
+
+.ui-email__label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--email-space-xs);
+    font-size: var(--text-sm, 14px);
+    font-weight: 600;
+    color: var(--email-text-primary);
+    user-select: none;
+}
+
+/* Marcador de campo obrigatório (Asterisco) */
+.ui-email__label span {
+    color: var(--email-danger);
+    font-weight: 700;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Wrapper
+|--------------------------------------------------------------------------
+*/
+
+.ui-email__wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Icon
+|--------------------------------------------------------------------------
+*/
+
+.ui-email__icon {
+    position: absolute;
+    /* Suporte nativo para RTL (Right-to-Left) */
+    inset-inline-start: var(--email-space-md);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--email-text-secondary);
+    pointer-events: none;
+
+    transition: color var(--email-transition);
+}
+
+.ui-email__icon svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Input
+|--------------------------------------------------------------------------
+*/
+
+.ui-email__input {
+    width: 100%;
+    min-height: 44px;
+    box-sizing: border-box;
+
+    /* Paddings utilizando propriedades lógicas */
+    padding-block: 0;
+    padding-inline-start: 2.75rem; /* Abre espaço seguro para acomodar o ícone */
+    padding-inline-end: var(--email-space-md);
+
+    border: 1px solid var(--email-border);
+    border-radius: var(--email-radius-md);
+    background: var(--email-surface);
+    color: var(--email-text-primary);
+    font-size: var(--text-sm, 14px);
+    font-family: inherit;
+
+    transition:
+        border-color var(--email-transition),
+        box-shadow var(--email-transition),
+        background-color var(--email-transition);
+}
+
+.ui-email__input::placeholder {
+    color: var(--email-text-muted);
+    opacity: 1; /* Garante consistência de opacidade no Firefox */
+}
+
+.ui-email__input:hover:not(:disabled) {
+    border-color: var(--email-border-hover);
+}
+
+/* Foco interativo (Double Ring Focus para Acessibilidade) */
+.ui-email__input:focus {
+    outline: none;
+    border-color: var(--email-primary);
+    box-shadow:
+        0 0 0 2px var(--email-surface),
+        0 0 0 4px var(--email-primary-light);
+}
+
+/* | Feedback Visual do Ícone:
+| Altera a cor do ícone do envelope quando o input está em foco
+*/
+.ui-email__wrapper:focus-within .ui-email__icon {
+    color: var(--email-primary);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Error State
+|--------------------------------------------------------------------------
+*/
+
+.ui-email__input--error {
+    border-color: var(--email-danger);
+}
+
+.ui-email__input--error:focus {
+    border-color: var(--email-danger);
+    box-shadow:
+        0 0 0 2px var(--email-surface),
+        0 0 0 4px var(--email-danger-light);
+}
+
+/* Se o input tiver erro, o ícone herda o tom destrutivo de forma automática */
+.ui-email:has(.ui-email__input--error) .ui-email__icon {
+    color: var(--email-danger);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Disabled (Propagação Inteligente)
+|--------------------------------------------------------------------------
+*/
+
+/* Esmaece o componente de forma geral (label, ícone e texto de suporte) se o input for desativado */
+.ui-email:has(.ui-email__input:disabled) {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.ui-email__input:disabled {
+    background: var(--email-surface-disabled);
+    cursor: not-allowed;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Hint / Error
+|--------------------------------------------------------------------------
+*/
+
+.ui-email__hint,
+.ui-email__error {
+    margin: 0;
+    font-size: var(--text-xs, 12px);
+    line-height: 1.4;
+}
+
+.ui-email__hint {
+    color: var(--email-text-secondary);
+}
+
+.ui-email__error {
+    color: var(--email-danger);
+    font-weight: 500; /* Ligeiro ganho de contraste no texto de erro */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Reduced Motion
+|--------------------------------------------------------------------------
+*/
+
+@media (prefers-reduced-motion: reduce) {
+    .ui-email__input,
+    .ui-email__icon {
+        transition: none !important;
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Forced Colors Mode (Suporte Windows High Contrast)
+|--------------------------------------------------------------------------
+*/
+
+@media (forced-colors: active) {
+    .ui-email__input:focus {
+        outline: 2px dashed Highlight !important;
+    }
+}

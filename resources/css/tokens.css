@@ -7,11 +7,13 @@
   
   --color-surface: #ffffff;
   --color-surface-2: #f8fafc;
+  --color-surface-hover: #f1f5f9;    /* Slate 100 */
   --color-surface-disabled: #e2e8f0;
   
   --color-text: #0f172a;             /* Slate 900 */
   --color-text-soft: #475569;        /* Slate 600 */
-  --color-border: #e2e8f0;
+  --color-border: #cbd5e1;           /* Slate 300 */
+  --color-border-hover: #94a3b8;     /* Slate 400 */
   
   --color-success: #15803d;          /* Green 700 */
   --color-success-light: rgba(21, 128, 61, 0.1);
@@ -30,13 +32,15 @@
   --color-primary-light: rgba(249, 115, 22, 0.15);
   --color-on-primary: #ffffff;       /* White text on orange background */
   
-  --color-surface: #0b0f19;          /* Slate 950 variant */
+  --color-surface: #1e293b;          /* Slate 800 */
   --color-surface-2: #161e2e;        /* Slate 900 variant */
+  --color-surface-hover: #334155;    /* Slate 700 */
   --color-surface-disabled: #1e293b;
   
   --color-text: #f8fafc;             /* Slate 50 */
   --color-text-soft: #cbd5e1;        /* Slate 300 */
-  --color-border: #2d3748;
+  --color-border: #475569;           /* Slate 600 */
+  --color-border-hover: #64748b;     /* Slate 500 */
   
   --color-success: #4ade80;          /* Green 400 */
   --color-success-light: rgba(74, 222, 128, 0.1);

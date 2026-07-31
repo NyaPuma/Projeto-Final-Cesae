@@ -1,0 +1,193 @@
+/*
+|--------------------------------------------------------------------------
+| Input Group Component (Otimizado)
+|--------------------------------------------------------------------------
+| • Light / Dark Mode Friendly
+| • Clean CSS Nesting (No specificity leaks)
+| • Pure Media Query Split (Zero !important declarations)
+| • Dynamic Single-Child Defense & Custom Addons
+|--------------------------------------------------------------------------
+*/
+
+.ui-input-group {
+  /* Design Tokens Locais */
+  --ui-group-gap-sm: var(--space-xs, 4px);
+  --ui-group-gap-md: var(--space-sm, 8px);
+  --ui-group-gap-lg: var(--space-md, 16px);
+  --ui-group-radius: var(--radius-md, 6px);
+  --ui-group-transition: 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  gap: var(--ui-group-gap-md);
+  box-sizing: border-box;
+
+  /* Comportamento Base dos Filhos */
+  & > * {
+    position: relative;
+    flex: 0 0 auto;
+    transition:
+      z-index var(--ui-group-transition),
+      border-color var(--ui-group-transition),
+      box-shadow var(--ui-group-transition);
+  }
+
+  /* Elementos Flexíveis (Inputs principais expandem para ocupar o espaço) */
+  & > :is(
+    input,
+    select,
+    textarea,
+    [class*="__input"],
+    .ui-input,
+    .ui-email,
+    .ui-password,
+    .ui-search,
+    .ui-number
+  ) {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Addons (Melhoria de Design para Prefixo/Sufixo Estático)
+|--------------------------------------------------------------------------
+*/
+.ui-input-group__addon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: var(--space-md, 12px);
+  background-color: var(--surface-secondary, #f3f4f6);
+  color: var(--text-secondary, #4b5563);
+  border: 1px solid var(--border-color, #d1d5db);
+  font-size: var(--text-sm, 0.875rem);
+  white-space: nowrap;
+  user-select: none;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Attached (União de Elementos - Apenas em Desktop para evitar conflitos)
+|--------------------------------------------------------------------------
+*/
+@media (min-width: 641px) {
+  .ui-input-group--attached:not(.ui-input-group--vertical) {
+    gap: 0;
+
+    & > * {
+      border-radius: 0;
+      margin-inline-start: -1px; /* Evita bordas duplas */
+
+      &:hover {
+        z-index: 1;
+      }
+
+      &:is(:focus, :focus-within, :focus-visible) {
+        z-index: 2; /* Foco sempre no topo */
+      }
+    }
+
+    /* Caso dinâmico de apenas um filho renderizado */
+    & > *:only-child {
+      margin-inline-start: 0;
+      border-radius: var(--ui-group-radius);
+    }
+
+    /* Extremidades do grupo */
+    & > *:first-child:not(:only-child) {
+      margin-inline-start: 0;
+      border-start-start-radius: var(--ui-group-radius);
+      border-end-start-radius: var(--ui-group-radius);
+    }
+
+    & > *:last-child:not(:only-child) {
+      border-start-end-radius: var(--ui-group-radius);
+      border-end-end-radius: var(--ui-group-radius);
+    }
+  }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Vertical Layout (Disposição em Pilha)
+|--------------------------------------------------------------------------
+*/
+.ui-input-group--vertical {
+  flex-direction: column;
+
+  &.ui-input-group--attached {
+    gap: 0;
+
+    & > * {
+      margin-inline-start: 0;
+      margin-block-start: -1px; /* Margem lógica superior para colar elementos */
+      border-radius: 0;
+
+      &:hover { z-index: 1; }
+      &:is(:focus, :focus-within, :focus-visible) { z-index: 2; }
+    }
+
+    /* Caso de elemento único na vertical */
+    & > *:only-child {
+      margin-block-start: 0;
+      border-radius: var(--ui-group-radius);
+    }
+
+    /* Extremidades verticais */
+    & > *:first-child:not(:only-child) {
+      margin-block-start: 0;
+      border-start-start-radius: var(--ui-group-radius);
+      border-start-end-radius: var(--ui-group-radius);
+    }
+
+    & > *:last-child:not(:only-child) {
+      border-end-start-radius: var(--ui-group-radius);
+      border-end-end-radius: var(--ui-group-radius);
+    }
+  }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Sizes (Variações de Espaçamento)
+|--------------------------------------------------------------------------
+*/
+.ui-input-group--sm { gap: var(--ui-group-gap-sm); }
+.ui-input-group--md { gap: var(--ui-group-gap-md); }
+.ui-input-group--lg { gap: var(--ui-group-gap-lg); }
+
+/*
+|--------------------------------------------------------------------------
+| Responsive (Adaptação Fluida para Mobile)
+|--------------------------------------------------------------------------
+*/
+@media (max-width: 640px) {
+  .ui-input-group:not(.ui-input-group--vertical) {
+    flex-wrap: wrap;
+
+    /* Transforma os elementos unidos em blocos independentes e limpos */
+    &.ui-input-group--attached {
+      gap: var(--ui-group-gap-sm);
+
+      & > * {
+        /* Fluidez natural sem qualquer necessidade de !important */
+        flex: 1 1 100%;
+        border-radius: var(--ui-group-radius);
+      }
+    }
+  }
+}
+
+/*
+|--------------------------------------------------------------------------
+| High Contrast Support (Acessibilidade WCAG AAA)
+|--------------------------------------------------------------------------
+*/
+@media (forced-colors: active) {
+  .ui-input-group--attached > *:is(:focus, :focus-visible) {
+    outline: 2px solid SelectedItem;
+  }
+}

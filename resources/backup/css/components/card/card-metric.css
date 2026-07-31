@@ -1,0 +1,181 @@
+/*
+|--------------------------------------------------------------------------
+| Card Metric Component
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-metric {
+    /* Variável de destaque central (Default: Neutro/Secondary) */
+    --metric-accent: var(--text-secondary, #6c757d);
+
+    /* Configurações internas do indicador de tendência */
+    --trend-bg: var(--surface-hover, #f8f9fa);
+    --trend-color: var(--text-secondary, #6c757d);
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md, 16px);
+    padding: var(--space-lg, 24px);
+    background-color: var(--surface, #ffffff);
+    box-sizing: border-box;
+
+    /* Aplica a borda de destaque respeitando as curvas do card pai */
+    border-left: 4px solid var(--metric-accent);
+    border-top-left-radius: inherit;
+    border-bottom-left-radius: inherit;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Header Section
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-metric__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm, 12px);
+}
+
+.ui-card-metric__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md, 8px);
+
+    /* Cor de fundo inteligente baseada em 10% da cor de destaque */
+    background-color: color-mix(in srgb, var(--metric-accent) 10%, transparent);
+    color: var(--metric-accent);
+
+    transition: transform 0.2s ease;
+}
+
+.ui-card-metric__icon svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+}
+
+.ui-card-metric__title {
+    font-size: var(--text-sm, 14px);
+    font-weight: 600;
+    color: var(--text-secondary, #6c757d);
+    margin: 0;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Design Value-Add: Body Layout (Agrupamento por Proximidade Visual)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-metric__body {
+    display: flex;
+    align-items: baseline; /* Alinha o valor e a percentagem pela base do texto */
+    gap: var(--space-sm, 12px);
+    flex-wrap: wrap; /* Não quebra o layout em ecrãs muito pequenos */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Value Style
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-metric__value {
+    font-size: var(--text-3xl, 32px);
+    font-weight: 800; /* Peso normalizado para compatibilidade cross-browser */
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--text-primary, #111827);
+    margin: 0;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Change Trend (Transformado num Badge de alta legibilidade)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-metric__change {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: var(--radius-full, 999px);
+
+    font-size: var(--text-xs, 12px);
+    font-weight: 600; /* Peso normalizado */
+    line-height: 1.5;
+
+    background-color: var(--trend-bg);
+    color: var(--trend-color);
+}
+
+.ui-card-metric__change svg {
+    width: 12px;
+    height: 12px;
+    stroke-width: 2.5;
+}
+
+/* Sub-variantes de Tendência */
+.ui-card-metric__change--up {
+    --trend-bg: color-mix(in srgb, var(--success, #22c55e) 12%, transparent);
+    --trend-color: var(--success-dark, #15803d);
+}
+
+.ui-card-metric__change--down {
+    --trend-bg: color-mix(in srgb, var(--danger, #ef4444) 12%, transparent);
+    --trend-color: var(--danger-dark, #b91c1c);
+}
+
+.ui-card-metric__change--neutral {
+    --trend-bg: var(--surface-hover, #f3f4f6);
+    --trend-color: var(--text-secondary, #4b5563);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Description Text
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-metric__description {
+    margin: 0;
+    font-size: var(--text-xs, 12px);
+    color: var(--text-muted, #9ca3af);
+    line-height: 1.4;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Variants (Apenas atualizam a variável master --metric-accent)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-metric--primary {
+    --metric-accent: var(--primary, #3b82f6);
+}
+
+.ui-card-metric--success {
+    --metric-accent: var(--success, #22c55e);
+}
+
+.ui-card-metric--warning {
+    --metric-accent: var(--warning, #f59e0b);
+}
+
+.ui-card-metric--danger {
+    --metric-accent: var(--danger, #ef4444);
+}
+
+/* Micro-interação: Feedback ao passar o rato no card métrico */
+.ui-card-metric:hover .ui-card-metric__icon {
+    transform: scale(1.05);
+}

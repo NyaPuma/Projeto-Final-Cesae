@@ -1,0 +1,245 @@
+/*
+|--------------------------------------------------------------------------
+| Combobox Component
+|--------------------------------------------------------------------------
+|
+| Extensão visual do Autocomplete.
+| Requer autocomplete.css.
+|--------------------------------------------------------------------------
+*/
+
+.ui-combobox {
+    /* Design Tokens Locais com Fallbacks Seguros */
+    --combobox-primary: var(--primary, #3b82f6);
+    --combobox-primary-light: var(--primary-light, rgba(59, 130, 246, 0.15));
+    --combobox-border: var(--border-color, #d1d5db);
+    --combobox-border-hover: var(--primary, #3b82f6);
+    --combobox-surface: var(--surface, #ffffff);
+    --combobox-surface-hover: var(--surface-hover, #f3f4f6);
+    --combobox-surface-selected: var(--surface-selected, #eff6ff);
+    --combobox-text-primary: var(--text-primary, #111827);
+    --combobox-text-secondary: var(--text-secondary, #6b7280);
+
+    --combobox-radius: var(--radius-md, 8px);
+    --combobox-radius-sm: var(--radius-sm, 6px);
+    --combobox-space-sm: var(--space-sm, 8px);
+    --combobox-space-md: var(--space-md, 12px);
+    --combobox-transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Wrapper
+|--------------------------------------------------------------------------
+*/
+
+.ui-combobox__wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+/* | Prevenção contra sobreposição de texto: o input deve acomodar o botão absoluto
+*/
+.ui-combobox__input {
+    width: 100%;
+    padding-right: 3rem !important; /* Espaço de segurança para o botão */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Toggle Button
+|--------------------------------------------------------------------------
+*/
+
+.ui-combobox__toggle {
+    position: absolute;
+    top: 50%;
+    right: 0.5rem; /* Ajustado para melhor equilíbrio visual */
+    transform: translateY(-50%);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+
+    border: none;
+    border-radius: var(--combobox-radius-sm);
+    background: transparent;
+    color: var(--combobox-text-secondary);
+
+    cursor: pointer;
+    outline: none;
+    box-sizing: border-box;
+
+    transition:
+        background-color var(--combobox-transition),
+        color var(--combobox-transition),
+        box-shadow var(--combobox-transition),
+        transform var(--combobox-transition);
+}
+
+/* Estados Interativos do Botão */
+.ui-combobox__toggle:hover:not(:disabled) {
+    background: var(--combobox-surface-hover);
+    color: var(--combobox-text-primary);
+}
+
+.ui-combobox__toggle:active:not(:disabled) {
+    /* Mantém o centramento vertical de forma segura enquanto faz a micro-escala */
+    transform: translateY(-50%) scale(0.94);
+}
+
+/* Focus Ring de Alto Contraste (Acessibilidade WCAG) */
+.ui-combobox__toggle:focus-visible {
+    box-shadow:
+        0 0 0 2px var(--combobox-surface),
+        0 0 0 4px var(--combobox-primary-light);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Icon
+|--------------------------------------------------------------------------
+*/
+
+.ui-combobox__toggle svg {
+    width: 1rem;
+    height: 1rem;
+    transition: transform var(--combobox-transition);
+    pointer-events: none; /* Facilita a gestão de eventos de clique em JS */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Open State
+|--------------------------------------------------------------------------
+*/
+
+.ui-combobox.is-open .ui-combobox__toggle svg {
+    transform: rotate(180deg);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Menu Dropdown List (Opcional/Sugerido para robustez do design)
+|--------------------------------------------------------------------------
+*/
+
+.ui-combobox__menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: var(--z-index-dropdown, 1000);
+    width: 100%;
+    margin-top: 4px;
+    padding: var(--combobox-space-sm);
+    background: var(--combobox-surface);
+    border: 1px solid var(--combobox-border);
+    border-radius: var(--combobox-radius);
+    box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1));
+    list-style: none;
+    box-sizing: border-box;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Options & Selected States
+|--------------------------------------------------------------------------
+*/
+
+.ui-combobox__option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    color: var(--combobox-text-primary);
+    font-size: var(--text-sm, 14px);
+    border-radius: var(--combobox-radius-sm);
+    cursor: pointer;
+    transition:
+        background-color var(--combobox-transition),
+        color var(--combobox-transition);
+    user-select: none;
+}
+
+/* Hover ou Navegação via Teclado */
+.ui-combobox__option.is-active {
+    background: var(--combobox-surface-hover);
+    color: var(--combobox-text-primary);
+}
+
+/* Apenas Selecionado */
+.ui-combobox__option.is-selected {
+    font-weight: 600;
+    color: var(--combobox-primary);
+    background: var(--combobox-surface-selected);
+}
+
+/* Ativo + Selecionado (Foco do Teclado sobre o item selecionado) */
+.ui-combobox__option.is-active.is-selected {
+    background: var(--combobox-primary-light);
+    color: var(--combobox-primary);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Disabled State (Propagação Inteligente)
+|--------------------------------------------------------------------------
+*/
+
+/* Bloqueia e altera a opacidade de forma global se algum input interno estiver disabled */
+.ui-combobox:has(.ui-combobox__input:disabled),
+.ui-combobox:has(.ui-combobox__toggle:disabled),
+.ui-combobox--disabled {
+    opacity: 0.55;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+.ui-combobox__toggle:disabled {
+    cursor: not-allowed;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Reduced Motion (Acessibilidade de Movimento)
+|--------------------------------------------------------------------------
+*/
+
+@media (prefers-reduced-motion: reduce) {
+    .ui-combobox__toggle,
+    .ui-combobox__toggle svg,
+    .ui-combobox__option {
+        transition: none !important;
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Forced Colors Mode (Suporte Windows High Contrast - WCAG AAA)
+|--------------------------------------------------------------------------
+*/
+
+@media (forced-colors: active) {
+    .ui-combobox__toggle:focus-visible {
+        outline: 2px dashed Highlight !important;
+    }
+
+    .ui-combobox__option.is-selected {
+        outline: 1px solid Highlight;
+        background: Highlight !important;
+        color: HighlightText !important;
+    }
+
+    .ui-combobox__option.is-active {
+        border: 1px dashed ButtonText;
+    }
+}

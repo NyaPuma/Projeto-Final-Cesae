@@ -1,0 +1,189 @@
+/*
+|--------------------------------------------------------------------------
+| Card Command Component
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-command {
+    /* Variáveis padrão (Tema Primary por defeito) */
+    --command-bg: var(--surface, #ffffff);
+    --command-border: var(--border-color, #e9ecef);
+    --command-text-title: var(--text-primary, #212529);
+    --command-text-desc: var(--text-secondary, #495057);
+
+    --command-hover-bg: var(--surface-hover, #f8f9fa);
+    --command-hover-border: var(--primary, #007bff);
+    --command-hover-shadow: 0 12px 24px -10px rgba(0, 123, 255, 0.15);
+
+    --command-icon-bg: var(--primary-light, #e7f5ff);
+    --command-icon-color: var(--primary, #007bff);
+    --command-icon-size: 48px;
+
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid var(--command-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--command-bg);
+    outline: none; /* Remove o contorno padrão do browser para usar a sombra customizada */
+
+    /* will-change avisa o browser para otimizar a animação de transform */
+    will-change: transform, box-shadow;
+
+    transition:
+        transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Hover & Focus & Active States (UX Premium)
+|--------------------------------------------------------------------------
+*/
+
+/* Hover */
+.ui-card-command:not(.ui-card-command--disabled):hover {
+    transform: translateY(-4px); /* Levantamento ligeiramente mais elegante */
+    border-color: var(--command-hover-border);
+    background-color: var(--command-hover-bg);
+    box-shadow: var(--command-hover-shadow);
+}
+
+/* Acessibilidade por Teclado (Foco) */
+.ui-card-command:not(.ui-card-command--disabled):focus-visible {
+    border-color: var(--command-hover-border);
+    box-shadow: 0 0 0 4px var(--command-icon-bg);
+    transform: translateY(-2px);
+}
+
+/* Estado Ativo (Micro-interação de clique físico) */
+.ui-card-command:not(.ui-card-command--disabled):active {
+    transform: translateY(-1px) scale(0.99);
+    box-shadow: 0 6px 12px -8px rgba(0, 0, 0, 0.12);
+    transition: transform 0.05s ease; /* Transição ultrarrápida no clique */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Icon Container
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-command__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: var(--command-icon-size);
+    height: var(--command-icon-size);
+    border-radius: var(--radius-lg);
+    background-color: var(--command-icon-bg);
+    color: var(--command-icon-color);
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.ui-card-command__icon svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    fill: currentColor;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Content Text
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-command__content {
+    flex: 1;
+}
+
+.ui-card-command__title {
+    margin: 0;
+    font-size: var(--text-md);
+    font-weight: 700;
+    color: var(--command-text-title);
+    line-height: 1.4;
+}
+
+.ui-card-command__description {
+    margin: var(--space-xs) 0 0;
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    color: var(--command-text-desc);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Arrow Indicator
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-command__arrow {
+    display: inline-flex;
+    font-size: var(--text-xl);
+    color: var(--text-secondary);
+    will-change: transform, color;
+
+    transition:
+        transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+        color 0.2s ease;
+}
+
+/* Faz com que a seta ganhe destaque na cor do tema em hover */
+.ui-card-command:not(.ui-card-command--disabled):hover .ui-card-command__arrow {
+    transform: translateX(6px);
+    color: var(--command-hover-border);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Variants (Apenas redefinem variáveis - Limpo e Minimalista!)
+|--------------------------------------------------------------------------
+*/
+
+/* Success */
+.ui-card-command--success {
+    --command-hover-border: var(--success, #28a745);
+    --command-hover-shadow: 0 12px 24px -10px rgba(40, 167, 69, 0.2);
+    --command-icon-bg: var(--success-light, #ebfbee);
+    --command-icon-color: var(--success, #28a745);
+}
+
+/* Warning */
+.ui-card-command--warning {
+    --command-hover-border: var(--warning, #ffc107);
+    /* Sombra mais escura para o amarelo manter contraste visual */
+    --command-hover-shadow: 0 12px 24px -10px rgba(133, 100, 4, 0.15);
+    --command-icon-bg: var(--warning-light, #fff9db);
+    --command-icon-color: var(--warning-dark, #856404);
+}
+
+/* Danger */
+.ui-card-command--danger {
+    --command-hover-border: var(--danger, #dc3545);
+    --command-hover-shadow: 0 12px 24px -10px rgba(220, 53, 69, 0.2);
+    --command-icon-bg: var(--danger-light, #fff5f5);
+    --command-icon-color: var(--danger, #dc3545);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Disabled State
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-command--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none; /* Previne clicks, hovers e foco via rato */
+    user-select: none;
+}

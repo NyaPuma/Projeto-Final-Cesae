@@ -50,7 +50,7 @@ export function renderAuthBox(profileUrl, loginUrl) {
 
         if (topbarUser) {
             topbarUser.innerHTML = `
-                <a href="${profileUrl}" class="flex items-center gap-3 rounded-xl border border-(--border) bg-(--surface) px-3 py-2 transition hover:bg-(--surface-2)">
+                <a href="${profileUrl}" class="flex items-center gap-3 rounded-xl border border-solid border-[var(--border)] bg-(--surface) px-3 py-2 transition shadow-xs hover:border-[var(--border-hover)] hover:bg-(--surface-hover)">
                     <div class="flex h-9 w-9 items-center justify-center rounded-full bg-primary font-bold text-xs text-(--on-primary) shadow-sm">
                         ${name.charAt(0).toUpperCase()}
                     </div>

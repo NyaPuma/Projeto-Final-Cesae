@@ -1,0 +1,135 @@
+/*
+|--------------------------------------------------------------------------
+| Button Group Component
+|--------------------------------------------------------------------------
+*/
+
+.ui-button-group {
+    --button-group-gap: var(--space-sm); /* Valor padrão */
+
+    display: inline-flex;
+    align-items: stretch;
+    gap: var(--button-group-gap);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Direction
+|--------------------------------------------------------------------------
+*/
+
+.ui-button-group--horizontal {
+    flex-direction: row;
+}
+
+.ui-button-group--vertical {
+    flex-direction: column;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Full Width (Block)
+|--------------------------------------------------------------------------
+*/
+
+.ui-button-group--block {
+    display: flex;
+    width: 100%;
+}
+
+/* Aplica flex-grow a qualquer elemento filho para máxima flexibilidade */
+.ui-button-group--block > * {
+    flex: 1 1 0%;
+    min-width: 0; /* Evita quebras de container com textos longos */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Attached Buttons (Horizontal) - Com Logical Properties para RTL
+|--------------------------------------------------------------------------
+*/
+
+.ui-button-group--attached {
+    --button-group-gap: 0px !important; /* Força gap zero quando colados */
+}
+
+.ui-button-group--attached.ui-button-group--horizontal > * {
+    margin-inline-start: -1px;
+}
+
+.ui-button-group--attached.ui-button-group--horizontal > *:first-child {
+    margin-inline-start: 0;
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+}
+
+.ui-button-group--attached.ui-button-group--horizontal > *:not(:first-child):not(:last-child) {
+    border-radius: 0;
+}
+
+.ui-button-group--attached.ui-button-group--horizontal > *:last-child {
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Vertical Attached - Com Logical Properties
+|--------------------------------------------------------------------------
+*/
+
+.ui-button-group--attached.ui-button-group--vertical > * {
+    margin-block-start: -1px;
+}
+
+.ui-button-group--attached.ui-button-group--vertical > *:first-child {
+    margin-block-start: 0;
+    border-end-start-radius: 0;
+    border-end-end-radius: 0;
+}
+
+.ui-button-group--attached.ui-button-group--vertical > *:not(:first-child):not(:last-child) {
+    border-radius: 0;
+}
+
+.ui-button-group--attached.ui-button-group--vertical > *:last-child {
+    border-start-start-radius: 0;
+    border-start-end-radius: 0;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Depth & Border Fix para Elementos Ativos / Focados
+|--------------------------------------------------------------------------
+*/
+
+/* Garante que as bordas do botão ativo/focado não fiquem cortadas pelas margens negativas */
+.ui-button-group--attached > *:hover,
+.ui-button-group--attached > *:focus-visible,
+.ui-button-group--attached > *:active,
+.ui-button-group--attached > .is-active {
+    position: relative;
+    z-index: 1;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Sizes (Agora funcionam perfeitamente sem conflitos de especificidade!)
+|--------------------------------------------------------------------------
+*/
+
+.ui-button-group--xs {
+    --button-group-gap: var(--space-xs);
+}
+
+.ui-button-group--sm {
+    --button-group-gap: var(--space-sm);
+}
+
+.ui-button-group--md {
+    --button-group-gap: var(--space-md);
+}
+
+.ui-button-group--lg {
+    --button-group-gap: var(--space-lg);
+}

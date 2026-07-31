@@ -1,0 +1,157 @@
+/*
+|--------------------------------------------------------------------------
+| Card Media Component
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-media {
+    /* Variáveis padrão de controlo */
+    --media-aspect-ratio: 16 / 9; /* Proporção padrão segura */
+    --media-scale-hover: 1.05;    /* Escala do zoom no hover */
+    --media-overlay-bg: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0) 50%,
+        rgba(0, 0, 0, 0.65) 100__percent__
+    );
+
+    position: relative;
+    width: 100%;
+    aspect-ratio: var(--media-aspect-ratio);
+    overflow: hidden;
+    box-sizing: border-box;
+    display: block; /* Garante excelente renderização em layouts flex/grid */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Positions (Alinhamento Flexbox dentro do .ui-card principal)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-media--top {
+    order: -1;
+    /* Se estiver no topo, garante que herda as bordas arredondadas superiores do card */
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+}
+
+.ui-card-media--bottom {
+    order: 1;
+    /* Se estiver na base, garante que herda as bordas arredondadas inferiores do card */
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Media Content (Image & Video) - Altamente Performante
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-media__image,
+.ui-card-media__video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    /* Configurações para animações fluidas a 60 FPS (Aceleração por Hardware) */
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: transform;
+    backface-visibility: hidden;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Aspect Ratios (Refatorado: Apenas redefine variáveis)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-media--aspect-square { --media-aspect-ratio: 1 / 1; }
+.ui-card-media--aspect-video  { --media-aspect-ratio: 16 / 9; }
+.ui-card-media--aspect-wide   { --media-aspect-ratio: 21 / 9; }
+
+/* Caso precises que a imagem preserve a sua altura nativa original */
+.ui-card-media--aspect-auto {
+    aspect-ratio: auto;
+}
+.ui-card-media--aspect-auto .ui-card-media__image,
+.ui-card-media--aspect-auto .ui-card-media__video {
+    height: auto;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Hover Effects (Vinculado ao elemento pai .ui-card)
+|--------------------------------------------------------------------------
+*/
+
+/* Faz o zoom suave de forma segura quando o utilizador passa o rato no Card */
+.ui-card:hover .ui-card-media__image,
+.ui-card:hover .ui-card-media__video,
+.ui-card-media:hover .ui-card-media__image,
+.ui-card-media:hover .ui-card-media__video {
+    transform: scale(var(--media-scale-hover));
+}
+
+/*
+|--------------------------------------------------------------------------
+| Overlay (Gradiente dinâmico na base para contraste de texto)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-media--overlay::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: var(--media-overlay-bg);
+    pointer-events: none;
+
+    transition: opacity 0.3s ease;
+}
+
+/* Melhora o contraste no hover escurecendo o gradiente de fundo de forma suave */
+.ui-card:hover .ui-card-media--overlay::after,
+.ui-card-media:hover.ui-card-media--overlay::after {
+    opacity: 1.15; /* Satura ligeiramente o gradiente */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Design Value-Add: Overlay Content (Badges, Categorias ou Títulos)
+|--------------------------------------------------------------------------
+*/
+
+/* Usa esta div lá dentro se precisares de meter texto ou botões em cima da imagem.
+   Impede que cliques no overlay bloqueiem a navegação do card. */
+.ui-card-media__overlay-content {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    padding: var(--space-md, 16px);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Badges no topo, títulos/metadados na base */
+    pointer-events: none; /* Ignora cliques perdidos para que o card principal seja clicável */
+}
+
+/* Garante que elementos interativos específicos lá dentro (como um botão de salvar)
+   voltem a receber cliques normalmente */
+.ui-card-media__overlay-content > * {
+    pointer-events: auto;
+}
+
+/* Exemplo de uso rápido para um badge de topo no overlay */
+.ui-card-media__badge {
+    align-self: flex-start;
+    padding: 4px 8px;
+    font-size: var(--text-xs, 12px);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #ffffff;
+    background-color: var(--primary, #007bff);
+    border-radius: var(--radius-sm, 4px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}

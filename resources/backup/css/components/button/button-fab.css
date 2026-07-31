@@ -1,0 +1,198 @@
+/*
+|--------------------------------------------------------------------------
+| Floating Action Button (FAB)
+|--------------------------------------------------------------------------
+*/
+
+.ui-fab {
+    --fab-size: 56px;
+    --fab-icon-size: 24px; /* Ícone agora responde ao tamanho do FAB */
+
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    width: var(--fab-size);
+    height: var(--fab-size);
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: var(--primary);
+    color: var(--on-primary);
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+
+    /* Hardware acceleration para animações ultra-suaves */
+    will-change: transform;
+    transition:
+        transform .2s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow .2s cubic-bezier(0.4, 0, 0.2, 1),
+        background .2s ease,
+        filter .2s ease;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Hover & Active States (Micro-interações)
+|--------------------------------------------------------------------------
+*/
+
+.ui-fab:hover {
+    transform: translateY(-4px); /* Um pouco mais de elevação para impacto visual */
+    box-shadow: var(--shadow-xl);
+    filter: brightness(1.08); /* Clareia dinamicamente qualquer variante de cor */
+}
+
+.ui-fab:active {
+    transform: translateY(-1px); /* Feedback tátil ao clicar/tocar */
+    box-shadow: var(--shadow-md);
+    filter: brightness(0.95); /* Escurece ligeiramente no clique */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Focus (Acessibilidade)
+|--------------------------------------------------------------------------
+*/
+
+.ui-fab:focus-visible {
+    outline: none;
+    box-shadow:
+        0 0 0 4px var(--primary-light),
+        var(--shadow-xl);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Sizes (Escala Perfeita baseada na grelha de 8px)
+|--------------------------------------------------------------------------
+*/
+
+.ui-fab--sm {
+    --fab-size: 40px;
+    --fab-icon-size: 18px;
+}
+
+.ui-fab--md {
+    --fab-size: 56px;
+    --fab-icon-size: 24px;
+}
+
+.ui-fab--lg {
+    --fab-size: 72px;
+    --fab-icon-size: 28px;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Extended FAB (Melhoria de robustez de texto)
+|--------------------------------------------------------------------------
+*/
+
+.ui-fab--extended {
+    width: auto;
+    min-width: var(--fab-size);
+    padding-inline: var(--space-lg);
+    border-radius: 999px;
+    white-space: nowrap; /* Impede quebras de texto indesejadas */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Icon
+|--------------------------------------------------------------------------
+*/
+
+.ui-fab__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0; /* Garante que o ícone nunca deforma no modo Extended */
+}
+
+.ui-fab__icon svg {
+    width: var(--fab-icon-size);
+    height: var(--fab-icon-size);
+    fill: currentColor;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Label
+|--------------------------------------------------------------------------
+*/
+
+.ui-fab__label {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    line-height: 1; /* Alinhamento vertical perfeito com o ícone */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Fixed Positions (Logical Properties para total suporte RTL/LTR)
+|--------------------------------------------------------------------------
+*/
+
+.ui-fab--fixed {
+    position: fixed;
+    z-index: 1000;
+}
+
+.ui-fab--bottom-right {
+    inset-inline-end: var(--space-xl);
+    inset-block-end: var(--space-xl);
+}
+
+.ui-fab--bottom-left {
+    inset-inline-start: var(--space-xl);
+    inset-block-end: var(--space-xl);
+}
+
+.ui-fab--top-right {
+    inset-inline-end: var(--space-xl);
+    inset-block-start: var(--space-xl);
+}
+
+.ui-fab--top-left {
+    inset-inline-start: var(--space-xl);
+    inset-block-start: var(--space-xl);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Variants (Simplificadas graças ao filtro de brilho do hover global)
+|--------------------------------------------------------------------------
+*/
+
+.ui-fab--success {
+    background: var(--success);
+    color: var(--on-success, #fff);
+}
+
+.ui-fab--warning {
+    background: var(--warning);
+    color: var(--on-warning, #000);
+}
+
+.ui-fab--danger {
+    background: var(--danger);
+    color: var(--on-danger, #fff);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Disabled State
+|--------------------------------------------------------------------------
+*/
+
+.ui-fab--disabled,
+.ui-fab:disabled {
+    opacity: .5;
+    pointer-events: none;
+    box-shadow: none; /* FAB desativado não deve "flutuar" visualmente */
+    transform: none !important;
+    filter: grayscale(1); /* Opcional: dá um tom neutro de desativado automaticamente */
+}

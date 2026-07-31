@@ -1,0 +1,220 @@
+/*
+|--------------------------------------------------------------------------
+| Card Chip Component
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-chip {
+    /* Variáveis locais de controlo (Custom Properties) */
+    --chip-bg: var(--surface-hover, #e9ecef);
+    --chip-color: var(--text-secondary, #495057);
+    --chip-border: transparent;
+    --chip-padding-y: 0.35em;
+    --chip-padding-x: 0.85em;
+    --chip-gap: 0.4em;
+    --chip-remove-hover: rgba(0, 0, 0, 0.08);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--chip-gap);
+    width: fit-content;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    border-radius: var(--radius-full, 9999px);
+
+    /* Aplicação de estilos */
+    padding: var(--chip-padding-y) var(--chip-padding-x);
+    background-color: var(--chip-bg);
+    color: var(--chip-color);
+    border: 1px solid var(--chip-border);
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Sizes (Definidos em 'em' para escalarem em perfeita harmonia)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-chip--sm {
+    font-size: var(--text-xs, 0.75rem);
+    --chip-padding-y: 0.25em;
+    --chip-padding-x: 0.75em;
+}
+
+.ui-card-chip--md {
+    font-size: var(--text-sm, 0.875rem);
+    --chip-padding-y: 0.35em;
+    --chip-padding-x: 0.9em;
+}
+
+.ui-card-chip--lg {
+    font-size: var(--text-md, 1rem);
+    --chip-padding-y: 0.45em;
+    --chip-padding-x: 1.1em;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Visual Balance (Ajuste ótico inteligente usando :has)
+|--------------------------------------------------------------------------
+*/
+
+/* Reduz o padding esquerdo se começar com um ícone */
+.ui-card-chip:has(.ui-card-chip__icon:first-child) {
+    padding-inline-start: calc(var(--chip-padding-x) * 0.7);
+}
+
+/* Reduz o padding direito se terminar com o botão de remover */
+.ui-card-chip:has(.ui-card-chip__remove:last-child) {
+    padding-inline-end: calc(var(--chip-padding-x) * 0.5);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Icon Container (Perfeitamente alinhado e escalável)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-chip__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 1.15em;
+    height: 1.15em;
+    color: inherit;
+}
+
+.ui-card-chip__icon svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Remove Button (UX & Acessibilidade melhorada)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-chip__remove {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    /* Tamanho relativo à fonte do chip */
+    width: 1.35em;
+    height: 1.35em;
+    padding: 0;
+    margin: 0;
+
+    border: none;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    border-radius: 50%;
+    opacity: 0.75;
+    outline: none;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        opacity 0.2s ease,
+        box-shadow 0.15s ease;
+}
+
+.ui-card-chip__remove:hover {
+    background-color: var(--chip-remove-hover);
+    opacity: 1;
+}
+
+.ui-card-chip__remove:focus-visible {
+    opacity: 1;
+    box-shadow: 0 0 0 1.5px currentColor;
+}
+
+.ui-card-chip__remove svg {
+    width: 0.8em;
+    height: 0.8em;
+    fill: currentColor;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Soft Variants (Otimizadas para contraste)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-chip--default {
+    --chip-bg: var(--surface-hover, #f1f3f5);
+    --chip-color: var(--text-secondary, #495057);
+}
+
+.ui-card-chip--primary {
+    --chip-bg: var(--primary-light, #e7f5ff);
+    --chip-color: var(--primary, #228be6);
+    --chip-remove-hover: rgba(34, 139, 230, 0.12);
+}
+
+.ui-card-chip--success {
+    --chip-bg: var(--success-light, #ebfbee);
+    --chip-color: var(--success, #40c057);
+    --chip-remove-hover: rgba(64, 192, 87, 0.12);
+}
+
+.ui-card-chip--warning {
+    --chip-bg: var(--warning-light, #fff9db);
+    --chip-color: var(--warning-dark, #f08c00); /* Escurecido para acessibilidade WCAG */
+    --chip-remove-hover: rgba(240, 140, 0, 0.12);
+}
+
+.ui-card-chip--danger {
+    --chip-bg: var(--danger-light, #fff5f5);
+    --chip-color: var(--danger, #fa5252);
+    --chip-remove-hover: rgba(250, 82, 82, 0.12);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Design Value-Add: Clickable State (Perfeito para filtros)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-chip--clickable {
+    cursor: pointer;
+    user-select: none;
+}
+
+.ui-card-chip--clickable:hover {
+    filter: brightness(0.96); /* Escurece ligeiramente o fundo no hover */
+}
+
+.ui-card-chip--clickable:active {
+    transform: scale(0.97); /* Micro-feedback físico ao pressionar */
+}
+
+.ui-card-chip--clickable:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--chip-color);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Design Value-Add: Outline Variant
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-chip--outline {
+    --chip-bg: transparent;
+    --chip-border: currentColor;
+}

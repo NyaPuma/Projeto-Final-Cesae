@@ -15,7 +15,7 @@
     @if($label)
         <x-ui.text.eyebrow
             as="label"
-            @if($for) for="{{ $for }}" @endif
+            :for="$for"
             size="xs"
             tracking="wider"
             class="mb-1.5 block font-bold"

@@ -1,0 +1,153 @@
+/*
+|--------------------------------------------------------------------------
+| Card Badge Component
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-badge {
+    /* Variáveis locais para fácil customização e herança */
+    --badge-bg: var(--surface-hover, #e9ecef);
+    --badge-color: var(--text-secondary, #495057);
+    --badge-border: transparent;
+    --badge-padding-y: 0.25em;
+    --badge-padding-x: 0.75em;
+    --badge-dot-gap: 0.4em;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--badge-dot-gap);
+    width: fit-content;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    border-radius: var(--radius-full, 9999px);
+
+    /* Aplicação dinâmica de estilos */
+    padding: var(--badge-padding-y) var(--badge-padding-x);
+    background-color: var(--badge-bg);
+    color: var(--badge-color);
+    border: 1px solid var(--badge-border);
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Sizes (Escalamento proporcional baseado em 'em')
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-badge--sm {
+    font-size: var(--text-xs, 0.75rem);
+    --badge-padding-y: 0.2em;
+    --badge-padding-x: 0.6em;
+    --badge-dot-size: 6px;
+}
+
+.ui-card-badge--md {
+    font-size: var(--text-sm, 0.875rem);
+    --badge-padding-y: 0.3em;
+    --badge-padding-x: 0.8em;
+    --badge-dot-size: 8px;
+}
+
+.ui-card-badge--lg {
+    font-size: var(--text-md, 1rem);
+    --badge-padding-y: 0.35em;
+    --badge-padding-x: 1em;
+    --badge-dot-size: 10px;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Variants (Soft / Default - Otimizadas para contraste)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-badge--default {
+    --badge-bg: var(--surface-hover, #f1f3f5);
+    --badge-color: var(--text-secondary, #495057);
+}
+
+.ui-card-badge--primary {
+    --badge-bg: var(--primary-light, #e7f5ff);
+    --badge-color: var(--primary, #228be6);
+}
+
+.ui-card-badge--success {
+    --badge-bg: var(--success-light, #ebfbee);
+    --badge-color: var(--success, #40c057);
+}
+
+.ui-card-badge--warning {
+    --badge-bg: var(--warning-light, #fff9db);
+    --badge-color: var(--warning-dark, #f08c00); /* Escurecido para melhor legibilidade */
+}
+
+.ui-card-badge--danger {
+    --badge-bg: var(--danger-light, #fff5f5);
+    --badge-color: var(--danger, #fa5252);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Design Value-Add: Outline Variant (Contorno minimalista)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-badge--outline {
+    --badge-bg: transparent;
+    --badge-border: currentColor; /* Usa a mesma cor definida no texto */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Design Value-Add: Solid Variant (Alto impacto visual)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-badge--solid.ui-card-badge--primary {
+    --badge-bg: var(--primary, #228be6);
+    --badge-color: #ffffff;
+}
+
+.ui-card-badge--solid.ui-card-badge--success {
+    --badge-bg: var(--success, #40c057);
+    --badge-color: #ffffff;
+}
+
+.ui-card-badge--solid.ui-card-badge--warning {
+    --badge-bg: var(--warning, #fab005);
+    --badge-color: #212529; /* Escuro para contraste ideal */
+}
+
+.ui-card-badge--solid.ui-card-badge--danger {
+    --badge-bg: var(--danger, #fa5252);
+    --badge-color: #ffffff;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Dot Indicator (Ajustado para Internacionalização e Responsividade)
+|--------------------------------------------------------------------------
+*/
+
+/* Classe a aplicar no elemento pai <span class="ui-card-badge ui-card-badge--has-dot"> */
+.ui-card-badge--has-dot {
+    /* Reduz levemente o espaçamento do lado do ponto para compensar o peso visual */
+    padding-inline-start: calc(var(--badge-padding-x) * 0.7);
+}
+
+.ui-card-badge__dot {
+    width: var(--badge-dot-size, 8px);
+    height: var(--badge-dot-size, 8px);
+    border-radius: 50%;
+    background-color: currentColor; /* herda a cor exata do texto da variante */
+    flex-shrink: 0;
+
+    transition: background-color 0.2s ease;
+}

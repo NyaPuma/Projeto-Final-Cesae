@@ -2,10 +2,10 @@ import { getPriorityCards, getPriorityInput } from './dom.js';
 
 const priorityBorders = {
     baixa: 'border-emerald-500',
-    m\u00e9dia: 'border-amber-500',
+    média: 'border-amber-500',
     media: 'border-amber-500',
     alta: 'border-orange-500',
-    cr\u00edtica: 'border-rose-500',
+    crítica: 'border-rose-500',
     critica: 'border-rose-500',
 };
 

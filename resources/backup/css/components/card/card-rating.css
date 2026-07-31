@@ -1,0 +1,136 @@
+/*
+|--------------------------------------------------------------------------
+| Card Rating Component
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-rating {
+    /* Variáveis locais para fácil customização */
+    --star-size: var(--text-base, 16px);
+    --star-active-color: var(--warning, #f59e0b);
+    --star-inactive-color: var(--border-color, #e5e7eb);
+    --star-glow: rgba(245, 158, 11, 0.35);
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs, 4px);
+    box-sizing: border-box;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Sizes (Apenas altera a variável de tamanho herdada pelos filhos)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-rating--sm { --star-size: var(--text-sm, 14px); }
+.ui-card-rating--md { --star-size: var(--text-lg, 18px); }
+.ui-card-rating--lg { --star-size: var(--text-2xl, 24px); }
+
+/*
+|--------------------------------------------------------------------------
+| Stars (Estilos Base)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-rating__star {
+    /* Resets essenciais caso se utilizem <button> para interatividade */
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: default;
+    outline: none;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Configuração de tamanho responsivo ao font-size */
+    width: var(--star-size);
+    height: var(--star-size);
+    font-size: var(--star-size);
+    line-height: 1;
+    color: var(--star-inactive-color);
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+        filter 0.2s ease;
+}
+
+/* Garante que SVGs internos herdem e obedeçam sempre ao tamanho definido */
+.ui-card-rating__star svg {
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+    pointer-events: none; /* Evita interferências no disparo de eventos JS */
+}
+
+/*
+|--------------------------------------------------------------------------
+| Active and Semi-Active States
+|--------------------------------------------------------------------------
+*/
+
+/* Estrela Ativa (Totalmente preenchida) */
+.ui-card-rating__star--active {
+    color: var(--star-active-color);
+    /* Efeito de brilho premium */
+    filter: drop-shadow(0 1px 2px var(--star-glow));
+}
+
+/* Design Value-Add: Estrela Parcial (Metade)
+   Pinta 50% da estrela usando um gradiente linear limpo e moderno.
+*/
+.ui-card-rating__star--half {
+    color: var(--star-active-color);
+    background: linear-gradient(
+        90deg,
+        var(--star-active-color) 50%,
+        var(--star-inactive-color) 50%
+    );
+    /* Aplica o gradiente diretamente no ícone SVG */
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Interactive Variant (Apenas para ratings onde o utilizador pode votar)
+|--------------------------------------------------------------------------
+*/
+
+.ui-card-rating--interactive .ui-card-rating__star {
+    cursor: pointer;
+}
+
+/* Efeito de escala e cor focado na estrela onde o rato está por cima */
+.ui-card-rating--interactive .ui-card-rating__star:hover {
+    transform: scale(1.25);
+    color: var(--star-active-color);
+    filter: drop-shadow(0 2px 4px var(--star-glow));
+}
+
+/* Efeito tátil de pressão ao clicar */
+.ui-card-rating--interactive .ui-card-rating__star:active {
+    transform: scale(0.9);
+}
+
+/* Acessibilidade: Navegação por Teclado */
+.ui-card-rating--interactive .ui-card-rating__star:focus-visible {
+    outline: 2px solid var(--primary, #3b82f6);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm, 4px);
+}
+
+/* Otimização de Animação em Dispositivos de Baixa Performance */
+@media (prefers-reduced-motion: reduce) {
+    .ui-card-rating__star {
+        transition: none;
+    }
+    .ui-card-rating--interactive .ui-card-rating__star:hover {
+        transform: none;
+    }
+}

@@ -1,11 +1,12 @@
 import Alpine from 'alpinejs';
 import otpComponent from './components/input/otp';
+import comboboxComponent from './components/input/combobox';
+import autocompleteComponent from './components/input/autocomplete';
 
-// Registo do componente
 Alpine.data('otpComponent', otpComponent);
+Alpine.data('comboboxComponent', comboboxComponent);
+Alpine.data('autocompleteComponent', autocompleteComponent);
 
-// Expor para Debugging no Browser
 window.Alpine = Alpine;
 
-// Iniciar Alpine
 Alpine.start();

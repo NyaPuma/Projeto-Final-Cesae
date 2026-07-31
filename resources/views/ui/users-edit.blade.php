@@ -3,10 +3,6 @@
 @section('page_key', 'users-edit')
 
 @section('content')
-<script>
-window.requireAuthOnLoad = true;
-</script>
-
 <x-ui.partials.page-card
     :title="__('Editar Utilizador')"
     :subtitle="__('Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.')"

@@ -4,10 +4,10 @@ let allEquipments = [];
 
 const FALLBACK_EQUIPMENTS = [
     { id: 1, name: "Torno CNC KUKA KR210", serial: "SN-KUKA-096", room: { name: "Sala 096" } },
-    { id: 2, name: "Empilhador El\u00e9trico Toyota", serial: "SN-TOY-881", room: { name: "Armaz\u00e9m Sul" } },
-    { id: 3, name: "Sistema de Climatiza\u00e7\u00e3o / AC", serial: "AC-IND-045", room: { name: "Sala 045" } },
+    { id: 2, name: "Empilhador Elétrico Toyota", serial: "SN-TOY-881", room: { name: "Armazém Sul" } },
+    { id: 3, name: "Sistema de Climatização / AC", serial: "AC-IND-045", room: { name: "Sala 045" } },
     { id: 4, name: "Compressor de Ar Industrial", serial: "CMP-9002", room: { name: "Oficina B" } },
-    { id: 5, name: "Impressora Industrial HP", serial: "HP-3D-90", room: { name: "Escrit\u00f3rio Central" } },
+    { id: 5, name: "Impressora Industrial HP", serial: "HP-3D-90", room: { name: "Escritório Central" } },
 ];
 
 async function fetchEquipments() {
@@ -38,7 +38,7 @@ function renderSuggestions(matches, suggestionsBox, searchInput, hiddenIdInput) 
                      data-id="${eq.id}" data-name="${eq.name}">
                     <div>
                         <span class="font-bold text-[var(--text)] block">${eq.name}</span>
-                        <span class="text-[10px] text-[var(--text-soft)]">${eq.serial ? ' \u2022 ' + eq.serial : ''}${eq.room?.name ? ' \u2022 ' + eq.room.name : ''}</span>
+                        <span class="text-[10px] text-[var(--text-soft)]">${eq.serial ? ' • ' + eq.serial : ''}${eq.room?.name ? ' • ' + eq.room.name : ''}</span>
                     </div>
                     <span class="text-[10px] font-mono font-bold text-primary">#${eq.id}</span>
                 </div>

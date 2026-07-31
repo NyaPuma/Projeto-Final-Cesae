@@ -1,0 +1,72 @@
+/**
+ * Sidebar Component Styles
+ * Estilos do menu lateral (desktop/mobile)
+ */
+
+/* Desktop Sidebar Animations */
+#desktopSidebar.collapsed {
+    width: 5rem !important;
+}
+
+#desktopSidebar.collapsed .sidebar-text {
+    display: none !important;
+}
+
+#desktopSidebar.collapsed nav {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+}
+
+#desktopSidebar.collapsed nav a {
+    justify-content: center !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    gap: 0 !important;
+}
+
+#desktopSidebar.collapsed #desktopBranding {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    justify-content: center !important;
+}
+
+#desktopSidebar.collapsed #authBoxContainer {
+    display: none !important;
+}
+
+/* Pre-collapsed state for FOUC prevention */
+.pre-collapsed #desktopSidebar {
+    width: 5rem !important;
+}
+
+.pre-collapsed #desktopSidebar .sidebar-text,
+.pre-collapsed #desktopSidebar #authBoxContainer {
+    display: none !important;
+}
+
+.pre-collapsed #desktopSidebar nav {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+}
+
+.pre-collapsed #desktopSidebar nav a {
+    justify-content: center !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    gap: 0 !important;
+}
+
+.pre-collapsed #desktopSidebar #desktopBranding {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    justify-content: center !important;
+}
+
+/* Mobile Sidebar */
+#mobileSidebar {
+    transition: transform 0.3s ease-in-out !important;
+}
+
+#sidebarOverlay {
+    transition: opacity 0.3s ease-in-out !important;
+}

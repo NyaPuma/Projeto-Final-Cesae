@@ -16,12 +16,12 @@
 
     <x-ui.listing.filter-panel>
         <x-ui.listing.filter-field for="filter_q" :label="__('Termo de Pesquisa')">
-            <input id="filter_q" type="text" placeholder="{{ __('Pesquise por nome ou c\u00f3digo da sala...') }}"
+            <input id="filter_q" type="text" placeholder="{{ __('Pesquise por nome ou código da sala...') }}"
                 class="w-full rounded-xl border border-(--border) bg-(--surface-2) px-4 py-2.5 text-xs text-(--text) placeholder-(--text-soft) outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all">
         </x-ui.listing.filter-field>
 
-        <x-ui.listing.filter-field for="filter_location" :label="__('Localiza\u00e7\u00e3o')">
-            <input id="filter_location" type="text" placeholder="{{ __('Filtrar por localiza\u00e7\u00e3o...') }}"
+        <x-ui.listing.filter-field for="filter_location" :label="__('Localização')">
+            <input id="filter_location" type="text" placeholder="{{ __('Filtrar por localização...') }}"
                 class="w-full rounded-xl border border-(--border) bg-(--surface-2) px-4 py-2.5 text-xs text-(--text) placeholder-(--text-soft) outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all">
         </x-ui.listing.filter-field>
     </x-ui.listing.filter-panel>
@@ -36,9 +36,9 @@
         <x-slot:head>
             <tr>
                 <th class="px-5 py-3.5 font-bold">{{ __('Nome da Sala') }}</th>
-                <th class="px-5 py-3.5 font-bold">{{ __('Localiza\u00e7\u00e3o') }}</th>
+                <th class="px-5 py-3.5 font-bold">{{ __('Localização') }}</th>
                 <th class="px-5 py-3.5 font-bold">{{ __('Equipamentos') }}</th>
-                <th class="px-5 py-3.5 font-bold text-right">{{ __('A\u00e7\u00f5es') }}</th>
+                <th class="px-5 py-3.5 font-bold text-right">{{ __('Ações') }}</th>
             </tr>
         </x-slot:head>
     </x-ui.listing.table-card>

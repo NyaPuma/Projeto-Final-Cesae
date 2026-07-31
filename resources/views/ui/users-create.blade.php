@@ -3,10 +3,6 @@
 @section('page_key', 'users-create')
 
 @section('content')
-<script>
-window.requireAuthOnLoad = true;
-</script>
-
 <x-ui.partials.page-card
     :title="__('Criar Utilizador')"
     :subtitle="__('Crie um novo perfil de utilizador e defina as suas credenciais e permissões de acesso.')"

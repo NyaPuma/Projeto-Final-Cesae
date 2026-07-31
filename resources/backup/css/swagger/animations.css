@@ -1,0 +1,234 @@
+/* ==========================================================
+   ANIMAÇÕES • POLIMENTO • UX
+   - Animações suaves e intencionais
+   - Feedback visual consistente
+   - Acessibilidade (reduced motion)
+   - Design tokens para animações
+========================================================== */
+
+:root {
+    /* Tokens de animação */
+    --anim-fast: 0.18s;
+    --anim-normal: 0.2s;
+    --anim-slow: 0.45s;
+    --anim-ease: ease;
+    --anim-ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    /* Cores de animação (primary em RGB) */
+    --primary-rgb: 249, 115, 22;
+    --primary-shadow: rgba(var(--primary-rgb), 0.18);
+}
+
+/* ==========================================================
+   🎬 KEYFRAMES
+========================================================== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes expand {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes shine {
+    0% {
+        left: -120%;
+    }
+    100% {
+        left: 120%;
+    }
+}
+
+/* ==========================================================
+   ✨ ANIMAÇÕES DE ENTRADA
+========================================================== */
+.swagger-ui .information-container,
+.swagger-ui .scheme-container,
+.swagger-ui .opblock-tag,
+.swagger-ui .opblock,
+.swagger-ui section.models {
+    animation: fadeIn var(--anim-slow) var(--anim-ease);
+}
+
+/* Expansão suave do corpo do endpoint */
+.swagger-ui .opblock-body {
+    animation: expand var(--anim-normal) var(--anim-ease);
+}
+
+/* ==========================================================
+   🖱️ TRANSIÇÕES & HOVER
+========================================================== */
+/* Links */
+.swagger-ui a {
+    transition:
+        color var(--anim-fast) var(--anim-ease),
+        opacity var(--anim-fast) var(--anim-ease);
+}
+.swagger-ui a:hover {
+    opacity: 0.85;
+}
+
+/* Inputs e textarea */
+.swagger-ui input,
+.swagger-ui textarea,
+.swagger-ui select {
+    transition:
+        transform var(--anim-fast) var(--anim-ease),
+        border-color var(--anim-fast) var(--anim-ease),
+        box-shadow var(--anim-fast) var(--anim-ease);
+}
+.swagger-ui input:focus,
+.swagger-ui textarea:focus,
+.swagger-ui select:focus {
+    transform: translateY(-1px);
+}
+
+/* Código */
+.swagger-ui pre {
+    transition: box-shadow var(--anim-normal) var(--anim-ease);
+}
+.swagger-ui pre:hover {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+}
+
+/* Model container */
+.swagger-ui .model-container {
+    transition:
+        transform var(--anim-normal) var(--anim-ease),
+        box-shadow var(--anim-normal) var(--anim-ease);
+}
+.swagger-ui .model-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 36px rgba(15, 23, 42, 0.10);
+}
+
+/* Linhas da tabela */
+.swagger-ui table tbody tr {
+    transition:
+        transform var(--anim-normal) var(--anim-ease),
+        box-shadow var(--anim-normal) var(--anim-ease);
+}
+.swagger-ui table tbody tr:hover {
+    transform: translateY(-1px);
+}
+
+/* ==========================================================
+   🎨 EFEITOS ESPECIAIS
+========================================================== */
+/* Backdrop blur para cartões */
+.swagger-ui .opblock,
+.swagger-ui .opblock-tag,
+.swagger-ui .information-container,
+.swagger-ui .scheme-container,
+.swagger-ui section.models {
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+/* Brilho nos badges HTTP */
+.swagger-ui .opblock-summary-method {
+    position: relative;
+    overflow: hidden;
+}
+.swagger-ui .opblock-summary-method::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.15), transparent 45%);
+    pointer-events: none;
+}
+
+/* Shine effect nos botões */
+.swagger-ui .btn {
+    position: relative;
+    overflow: hidden;
+}
+.swagger-ui .btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+    transition: left 0.45s var(--anim-ease);
+}
+.swagger-ui .btn:hover::before {
+    left: 120%;
+}
+
+/* ==========================================================
+   🎯 FOCUS & SELEÇÃO
+========================================================== */
+/* Focus visível */
+.swagger-ui *:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px var(--primary-shadow);
+    border-radius: 10px;
+}
+
+/* Seleção de texto */
+::selection {
+    background: rgba(var(--primary-rgb), 0.25);
+    color: inherit;
+}
+
+/* ==========================================================
+   📜 SCROLLBAR CUSTOMIZADO
+========================================================== */
+/* WebKit (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 11px;
+    height: 11px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: #94a3b8;
+    border-radius: 999px;
+    border: 3px solid transparent;
+    background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+    background-clip: padding-box;
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #94a3b8 transparent;
+}
+
+/* Scroll suave */
+html {
+    scroll-behavior: smooth;
+}
+
+/* ==========================================================
+   ♿ ACESSIBILIDADE
+========================================================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+}
