@@ -170,7 +170,6 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-xs font-semibold uppercase tracking-[0.18em] text-soft">{{ __('MTTR') }}</p>
-                                {{-- ALTERADO de text-3xl para text-lg/xl para acomodar o texto duplo --}}
                                 <h3 id="metricMttr" class="mt-4 text-lg font-black truncate">--</h3>
                             </div>
                             <div
@@ -184,21 +183,7 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-xs font-semibold uppercase tracking-[0.18em] text-soft">{{ __('Espera') }}</p>
-                                {{-- ALTERADO de text-3xl para text-lg/xl --}}
                                 <h3 id="metricWaiting" class="mt-4 text-lg font-black truncate">--</h3>
-                            </div>
-                            <div
-                                class="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/10 text-blue-500 font-bold">
-                                ⏳</div>
-                        </div>
-                        <p class="mt-4 text-xs text-soft">{{ __('Tempo médio em fila de espera.') }}</p>
-                    </article>
-
-                    <article class="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-7">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-xs font-semibold uppercase tracking-[0.18em] text-soft">{{ __('Espera') }}</p>
-                                <h3 id="metricWaiting" class="mt-4 text-2xl font-black">--</h3>
                             </div>
                             <div
                                 class="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/10 text-blue-500 font-bold">
@@ -292,23 +277,6 @@
         <script>
             let charts = {};
 
-            // Função Helper limpa: Retorna apenas formato amigável (Dias, Horas e Minutos) sem o total entre parênteses
-            function formatMinutesToHumanClean(rawMinutes) {
-                const minutes = parseFloat(rawMinutes) || 0;
-                if (minutes <= 0) return '0h 0m';
-
-                const days = Math.floor(minutes / 1440);
-                const hours = Math.floor((minutes % 1440) / 60);
-                const mins = Math.round(minutes % 60);
-
-                let human = '';
-                if (days > 0) human += `${days}d `;
-                if (hours > 0 || days > 0) human += `${hours}h `;
-                human += `${mins}m`;
-
-                return human.trim();
-            }
-
             async function loadAnalytics() {
                 try {
                     const response = await fetch('/analytics', {
@@ -319,50 +287,46 @@
 
                     const data = await response.json();
 
-                    // 1. Renderizar KPIs Resumo
+                    // 1. Renderizar KPIs Resumo com strings traduzíveis via função __(...)
                     document.getElementById('kpiPanel').innerHTML = `
             <article class="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-6">
-                <p class="text-xs font-semibold uppercase tracking-wider text-soft">${'Abertos'}</p>
+                <p class="text-xs font-semibold uppercase tracking-wider text-soft">${__( 'Abertos' )}</p>
                 <h3 class="mt-3 text-3xl font-black text-amber-500">${data.open_tickets || 0}</h3>
-                <p class="mt-2 text-xs text-soft">${'Ocorrências pendentes'}</p>
+                <p class="mt-2 text-xs text-soft">${__( 'Ocorrências pendentes' )}</p>
             </article>
             <article class="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-6">
-                <p class="text-xs font-semibold uppercase tracking-wider text-soft">${'Em Curso'}</p>
+                <p class="text-xs font-semibold uppercase tracking-wider text-soft">${__( 'Em Curso' )}</p>
                 <h3 class="mt-3 text-3xl font-black text-blue-500">${data.in_progress_tickets || 0}</h3>
-                <p class="mt-2 text-xs text-soft">${'Em resolução'}</p>
+                <p class="mt-2 text-xs text-soft">${__( 'Em resolução' )}</p>
             </article>
             <article class="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-6">
-                <p class="text-xs font-semibold uppercase tracking-wider text-soft">${'Pendente Orçamento'}</p>
+                <p class="text-xs font-semibold uppercase tracking-wider text-soft">${__( 'Pendente Orçamento' )}</p>
                 <h3 class="mt-3 text-3xl font-black text-purple-500">${data.waiting_budget_tickets || 0}</h3>
-                <p class="mt-2 text-xs text-soft">${'Aguardam aprovação'}</p>
+                <p class="mt-2 text-xs text-soft">${__( 'Aguardam aprovação' )}</p>
             </article>
             <article class="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-6">
-                <p class="text-xs font-semibold uppercase tracking-wider text-soft">${'Concluídos'}</p>
+                <p class="text-xs font-semibold uppercase tracking-wider text-soft">${__( 'Concluídos' )}</p>
                 <h3 class="mt-3 text-3xl font-black text-emerald-500">${data.closed_tickets || 0}</h3>
-                <p class="mt-2 text-xs text-soft">${'Intervenções finalizadas'}</p>
+                <p class="mt-2 text-xs text-soft">${__( 'Intervenções finalizadas' )}</p>
             </article>
         `;
 
-                    // 2. Preencher Cartões Métricos diretamente com o valor do Back-End
-                    const mttrValue = data.average_resolution_human || '0h 0m';
-                    const waitingValue = data.average_waiting_human || '0h 0m';
-
-                    document.getElementById('metricMttr').innerText = mttrValue;
-                    document.getElementById('metricWaiting').innerText = waitingValue;
+                    document.getElementById('metricMttr').innerText = data.average_resolution_human || '0h 0m';
+                    document.getElementById('metricWaiting').innerText = data.average_waiting_human || '0h 0m';
                     document.getElementById('metricSla').innerText = (data.sla_success || 100) + '%';
 
                     if (data.system_availability) {
                         document.getElementById('metricAvailability').innerText = data.system_availability + '%';
                     }
 
-                    // 3. Renderizar Gráfico de Estados (Barras)
+                    // 3. Renderizar Gráfico de Estados
                     if (charts.status) charts.status.destroy();
                     charts.status = new Chart(document.getElementById('statusChart'), {
                         type: 'bar',
                         data: {
                             labels: data.ticket_status_breakdown.labels,
                             datasets: [{
-                                label: 'Quantidade',
+                                label: __( 'Quantidade' ),
                                 data: data.ticket_status_breakdown.data,
                                 backgroundColor: ['#f59e0b', '#3b82f6', '#a855f7', '#10b981'],
                                 borderRadius: 12
@@ -374,7 +338,7 @@
                         }
                     });
 
-                    // 4. Renderizar Gráfico de Prioridades (Donut)
+                    // 4. Renderizar Gráfico de Prioridades
                     if (charts.priority) charts.priority.destroy();
                     charts.priority = new Chart(document.getElementById('equipmentChart'), {
                         type: 'doughnut',
@@ -393,26 +357,26 @@
                         }
                     });
 
-                    // 5. Renderizar Gráfico de Evolução (Linhas)
+                    // 5. Renderizar Gráfico de Evolução
                     if (charts.trend) charts.trend.destroy();
                     charts.trend = new Chart(document.getElementById('trendChart'), {
                         type: 'line',
                         data: {
                             labels: data.monthly_tickets.labels,
                             datasets: [{
-                                    label: 'Abertos',
+                                    label: __( 'Abertos' ),
                                     data: data.monthly_tickets.open,
                                     borderColor: '#f59e0b',
                                     tension: 0.3
                                 },
                                 {
-                                    label: 'Em Curso',
+                                    label: __( 'Em Curso' ),
                                     data: data.monthly_tickets.in_progress,
                                     borderColor: '#3b82f6',
                                     tension: 0.3
                                 },
                                 {
-                                    label: 'Fechados',
+                                    label: __( 'Fechados' ),
                                     data: data.monthly_tickets.closed,
                                     borderColor: '#10b981',
                                     tension: 0.3
@@ -432,7 +396,7 @@
                         data: {
                             labels: data.monthly_cost.labels,
                             datasets: [{
-                                label: 'Custo (€)',
+                                label: __( 'Custo (€)' ),
                                 data: data.monthly_cost.data,
                                 backgroundColor: '#ea580c',
                                 borderRadius: 8
@@ -459,21 +423,20 @@
                             <h4 class="text-xs font-bold">${act.title}</h4>
                             <span class="text-[10px] text-soft">${act.time}</span>
                         </div>
-                        <p class="mt-1 text-xs text-soft">${act.description}</p>
+                        <p class="mt-1 text-xs text-soft">${__( act.description )}</p>
                     </div>
                 </div>
             `).join('');
                     } else {
                         document.getElementById('activityTimeline').innerHTML =
-                            `<p class="p-6 text-xs text-soft italic">Sem atividade recente registada.</p>`;
+                            `<p class="p-6 text-xs text-soft italic">${__( 'Sem atividade recente registada.' )}</p>`;
                     }
 
                 } catch (error) {
                     console.error('Erro ao carregar Analytics:', error);
                     const msg = document.getElementById('analyticsMessage');
                     if (msg) {
-                        msg.innerText =
-                            'Não foi possível carregar o relatório de analytics. Verifique a ligação ou privilégios.';
+                        msg.innerText = __( 'Não foi possível carregar o relatório de analytics. Verifique a ligação ou privilégios.' );
                         msg.className =
                             'rounded-2xl border border-red-500/20 bg-red-500/10 text-red-600 px-5 py-4 text-sm font-medium';
                         msg.classList.remove('hidden');
@@ -486,7 +449,7 @@
                 if (!container) return;
 
                 if (!items || items.length === 0) {
-                    container.innerHTML = `<p class="p-6 text-xs text-soft italic">Sem dados disponíveis.</p>`;
+                    container.innerHTML = `<p class="p-6 text-xs text-soft italic">${__( 'Sem dados disponíveis.' )}</p>`;
                     return;
                 }
 
@@ -496,7 +459,7 @@
                 <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--surface-2)] text-xs font-bold">${idx + 1}</span>
                 <div>
                     <p class="text-xs font-bold">${item.name}</p>
-                    <p class="text-[10px] text-soft">${item.subtitle || ''}</p>
+                    <p class="text-[10px] text-soft">${__( item.subtitle || '' )}</p>
                 </div>
             </div>
             <span class="text-xs font-black text-primary">${item.total}</span>

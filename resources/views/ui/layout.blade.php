@@ -13,59 +13,141 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
+
+    <script>
+        window.currentLocale = "{{ app()->getLocale() }}";
+
+        // Dicionário Global para traduções dinâmicas de JavaScript / APIs
+        window.appTranslations = {
+            // Títulos e Métricas do Dashboard
+            "Tempo Médio Resolução": "Average Resolution Time",
+            "Tempo Médio Espera": "Average Waiting Time",
+            "Tickets em Aberto": "Open Tickets",
+            "Tickets Fechados": "Closed Tickets",
+            "Recent Activity": "Recent Activity",
+            "Atividade Recente": "Recent Activity",
+            "Últimas Ocorrências Registadas": "Latest Recorded Incidents",
+            "Operações": "Operations",
+            "Active Technical Team": "Active Technical Team",
+            "Piquete Técnico Ativo": "Active Technical Team",
+            "Gerir Equipas & Piquetes": "Manage Teams & On-Call",
+            "Manage Teams & On-Call": "Manage Teams & On-Call",
+            "View all →": "View all →",
+            "Ver todos →": "View all →",
+
+            // Cabeçalhos de Tabelas
+            "ID": "ID",
+            "Título": "Title",
+            "Prioridade": "Priority",
+            "Ação": "Action",
+            "Ver": "View",
+
+            // Prioridades (Maiúsculas, minúsculas e capitalizadas)
+            "baixa": "Low",
+            "média": "Medium",
+            "alta": "High",
+            "crítica": "Critical",
+            "Baixa": "Low",
+            "Média": "Medium",
+            "Alta": "High",
+            "Crítica": "Critical",
+            "BAIXA": "LOW",
+            "MÉDIA": "MEDIUM",
+            "ALTA": "HIGH",
+            "CRÍTICA": "CRITICAL",
+
+            // Estados Operacionais e Piquete
+            "Off-line": "Offline",
+            "in progress": "in progress",
+            "Em curso": "In progress",
+            "em curso": "in progress",
+            "Aberto": "Open",
+            "Em Curso": "In Progress",
+            "Fechado": "Closed",
+            "Pendente": "Pending",
+            "Aprovado": "Approved",
+            "Não Aprovado": "Not Approved",
+
+            // Unidades e Subtítulos
+            "intervenções": "interventions",
+            "tickets": "tickets",
+            "ações": "actions",
+            "Quantidade": "Quantity",
+            "Custo (€)": "Cost (€)",
+
+            // Carregamento de Tabelas / Modais
+            "A carregar listagem de tickets...": "Loading ticket list...",
+            "Nenhum ticket encontrado com os filtros aplicados.": "No ticket found with applied filters.",
+            "A carregar inventário de equipamentos...": "Loading equipment inventory...",
+            "Nenhum equipamento encontrado com os filtros aplicados.": "No equipment found with the applied filters.",
+            "A carregar salas...": "Loading rooms...",
+            "Nenhuma sala encontrada com os filtros aplicados.": "No rooms found with the applied filters.",
+            "Sem atividade recente registada.": "No recent activity recorded.",
+            "Sem dados disponíveis.": "No data available."
+        };
+
+        // Helper de Tradução Front-End
+        function __(text) {
+            if (text === null || text === undefined) return '';
+            const locale = window.currentLocale || "{{ app()->getLocale() }}";
+            if (locale === 'en') {
+                const str = String(text).trim();
+                if (window.appTranslations[str]) {
+                    return window.appTranslations[str];
+                }
+                if (window.appTranslations[str.toLowerCase()]) {
+                    return window.appTranslations[str.toLowerCase()];
+                }
+            }
+            return text;
+        }
+    </script>
 </head>
 
 <body class="min-h-screen bg-[var(--bg)] text-[var(--text)] overflow-x-hidden antialiased">
 
     @php
-        // Tenta obter o utilizador atual de forma segura
         $currentUser = auth()->user() ?? ($user ?? null);
 
-        // Garante que o perfil está carregado sem lançar exceções no PHP 8
         if ($currentUser && !$currentUser->relationLoaded('profile')) {
             try {
                 $currentUser->load('profile');
             } catch (\Throwable $e) {}
         }
 
-        // Obtém o nome do perfil/role em minúsculas
         $userRole = strtolower($currentUser?->profile?->name ?? $currentUser?->role ?? '');
 
-        // 1. Menu Base
+        // Links de Navegação com função __()
         $navItems = [
-            ['href' => '/ui', 'active' => 'ui', 'label' => 'Dashboard', 'icon' => '📊', 'exact' => true],
-            ['href' => '/ui/tickets', 'active' => 'ui/tickets*', 'label' => 'Tickets', 'icon' => '🎫', 'exact' => false],
+            ['href' => '/ui', 'active' => 'ui', 'label' => __('Dashboard'), 'icon' => '📊', 'exact' => true],
+            ['href' => '/ui/tickets', 'active' => 'ui/tickets*', 'label' => __('Tickets'), 'icon' => '🎫', 'exact' => false],
         ];
 
-        // 2. "Meus Tickets" exclusivo para Perfil Técnico
         if (in_array($userRole, ['technician', 'tecnico', 'técnico'])) {
             $navItems[] = [
                 'href' => '/ui/my-tickets',
                 'active' => 'ui/my-tickets*',
-                'label' => 'Meus Tickets',
+                'label' => __('Meus Tickets'),
                 'icon' => '📋',
                 'exact' => false,
             ];
         }
 
-        // 3. Módulos Operacionais Gerais
         $navItems = array_merge($navItems, [
-            ['href' => '/ui/equipments', 'active' => 'ui/equipments*', 'label' => 'Equipamentos', 'icon' => '🖥️', 'exact' => false],
-            ['href' => '/ui/rooms', 'active' => 'ui/rooms*', 'label' => 'Salas', 'icon' => '🚪', 'exact' => false],
-            ['href' => '/calendar', 'active' => 'calendar*', 'label' => 'Agenda', 'icon' => '📅', 'exact' => false],
+            ['href' => '/ui/equipments', 'active' => 'ui/equipments*', 'label' => __('Equipamentos'), 'icon' => '🖥️', 'exact' => false],
+            ['href' => '/ui/rooms', 'active' => 'ui/rooms*', 'label' => __('Salas'), 'icon' => '🚪', 'exact' => false],
+            ['href' => '/calendar', 'active' => 'calendar*', 'label' => __('Agenda'), 'icon' => '📅', 'exact' => false],
         ]);
 
-        // 4. Módulos Exclusivos de Administração
         if (in_array($userRole, ['admin', 'administrador', 'administrator'])) {
             $navItems = array_merge($navItems, [
-                ['href' => '/ui/users', 'active' => 'ui/users*', 'label' => 'Utilizadores', 'icon' => '👥', 'exact' => false],
-                ['href' => '/ui/audits', 'active' => 'ui/audits*', 'label' => 'Auditoria', 'icon' => '📝', 'exact' => false],
-                ['href' => '/ui/reports', 'active' => 'ui/reports*', 'label' => 'Relatórios', 'icon' => '📈', 'exact' => false],
-                ['href' => '/docs/openapi', 'active' => 'docs/openapi*', 'label' => 'Swagger', 'icon' => '📚', 'exact' => false],
-                ['href' => '/ui/budgets', 'active' => 'ui/budgets*', 'label' => 'Orçamentos', 'icon' => '💰', 'exact' => false],
+                ['href' => '/ui/users', 'active' => 'ui/users*', 'label' => __('Utilizadores'), 'icon' => '👥', 'exact' => false],
+                ['href' => '/ui/audits', 'active' => 'ui/audits*', 'label' => __('Auditoria'), 'icon' => '📝', 'exact' => false],
+                ['href' => '/ui/reports', 'active' => 'ui/reports*', 'label' => __('Relatórios'), 'icon' => '📈', 'exact' => false],
+                ['href' => '/docs/openapi', 'active' => 'docs/openapi*', 'label' => __('Swagger'), 'icon' => '📚', 'exact' => false],
+                ['href' => '/ui/budgets', 'active' => 'ui/budgets*', 'label' => __('Orçamentos'), 'icon' => '💰', 'exact' => false],
             ]);
         }
-        
     @endphp
 
     <a href="#main-content"
@@ -73,7 +155,7 @@
         {{ __('Ir para o conteúdo') }}
     </a>
 
-    {{-- Efeitos de Gradiente e Brilho de Fundo (Glow Blobs) --}}
+    {{-- Efeitos Visuais de Fundo --}}
     <div class="fixed inset-0 -z-50 pointer-events-none" aria-hidden="true">
         <div class="absolute inset-0 bg-[var(--bg)]"></div>
         <div class="absolute -top-60 left-1/2 -translate-x-1/2 h-[900px] w-[900px] rounded-full bg-primary/10 blur-[180px]"></div>
@@ -81,14 +163,13 @@
         <div class="absolute top-40 left-0 h-[450px] w-[450px] rounded-full bg-orange-500/10 blur-[140px]"></div>
     </div>
 
-    {{-- Overlay Escuro para Mobile --}}
+    {{-- Overlay Escuro Mobile --}}
     <div id="mobileNavOverlay" class="fixed inset-0 bg-black/60 hidden opacity-0 transition-opacity duration-300 z-40"
         onclick="closeMobileNav()"></div>
 
     {{-- Drawer / Menu Lateral Móvel --}}
     <aside id="mobileNav"
         class="fixed inset-y-0 left-0 w-72 -translate-x-full transition-transform duration-300 ease-in-out bg-[var(--sidebar)] border-r border-[var(--border)] backdrop-blur-xl z-50 flex flex-col shadow-2xl lg:hidden">
-        {{-- Branding Mobile --}}
         <div class="h-20 px-8 flex items-center border-b border-[var(--border)]">
             <div class="flex items-center gap-4">
                 <button type="button" onclick="closeMobileNav()"
@@ -99,7 +180,6 @@
             </div>
         </div>
 
-        {{-- Links Mobile --}}
         <nav class="flex-1 overflow-y-auto px-4 py-6 space-y-1" aria-label="{{ __('Navegação principal mobile') }}">
             @foreach ($navItems as $item)
                 @php
@@ -114,12 +194,11 @@
                     <span class="text-lg filter {{ $isActive ? 'none' : 'grayscale opacity-80' }}">
                         {{ $item['icon'] }}
                     </span>
-                    <span>{{ __($item['label']) }}</span>
+                    <span>{{ $item['label'] }}</span>
                 </a>
             @endforeach
         </nav>
 
-        {{-- Auth Box Mobile --}}
         <div class="border-t border-[var(--border)] p-4 bg-[var(--surface-2)]/50">
             <div id="authBoxMobile"></div>
         </div>
@@ -130,7 +209,6 @@
         {{-- Sidebar Desktop --}}
         <aside id="desktopSidebar"
             class="hidden lg:flex fixed left-0 top-0 h-screen w-72 flex-col border-r border-[var(--border)] bg-[var(--sidebar)] backdrop-blur-xl transition-all duration-300 ease-in-out z-30">
-            {{-- Branding Desktop --}}
             <div id="desktopBranding"
                 class="h-20 px-8 flex items-center border-b border-[var(--border)] transition-all duration-300">
                 <div class="flex items-center gap-4">
@@ -142,7 +220,6 @@
                 </div>
             </div>
 
-            {{-- Links de Navegação Desktop --}}
             <nav class="flex-1 overflow-y-auto px-4 py-6 space-y-1 transition-all duration-300"
                 aria-label="{{ __('Navegação principal') }}">
                 @foreach ($navItems as $item)
@@ -158,12 +235,11 @@
                         <span class="text-lg filter {{ $isActive ? 'none' : 'grayscale opacity-80' }} flex-shrink-0">
                             {{ $item['icon'] }}
                         </span>
-                        <span class="sidebar-text transition-all duration-300">{{ __($item['label']) }}</span>
+                        <span class="sidebar-text transition-all duration-300">{{ $item['label'] }}</span>
                     </a>
                 @endforeach
             </nav>
 
-            {{-- Caixa de Autenticação Desktop --}}
             <div id="authBoxContainer"
                 class="border-t border-[var(--border)] p-4 bg-[var(--surface-2)]/50 transition-all duration-300">
                 <div id="authBox"></div>
@@ -187,10 +263,9 @@
                 <div class="h-full px-8 flex items-center justify-between">
                     <div class="pl-14 lg:pl-0"></div>
 
-                    {{-- Ações de Perfil, Idioma e Tema --}}
                     <div class="flex items-center gap-3">
                         
-                        {{-- Seletor de Idioma com SVGs Vetoriais (Sem dependência de emojis do SO) --}}
+                        {{-- Seletor de Idioma --}}
                         <div class="relative inline-block text-left" id="langSelectorDropdown">
                             <button type="button" onclick="toggleLangDropdown()"
                                 class="inline-flex h-10 px-3 items-center justify-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface)] text-sm text-[var(--text)] shadow-sm transition-all hover:bg-[var(--surface-2)] cursor-pointer"
@@ -243,7 +318,7 @@
                             </div>
                         </div>
 
-                        {{-- 🔔 Notificações - Sino com Contador --}}
+                        {{-- Notificações --}}
                         <div class="relative" id="notificationBellContainer">
                             <button type="button" onclick="toggleNotifications()"
                                 class="relative inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] text-sm shadow-sm transition-all hover:bg-[var(--surface-2)] cursor-pointer"
@@ -256,7 +331,6 @@
                                 </span>
                             </button>
                             
-                            {{-- Dropdown de Notificações --}}
                             <div id="notificationDropdown"
                                 class="hidden absolute right-0 mt-2 w-96 rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-2xl py-2 z-50 animate-[fadeIn_0.15s_ease-out] max-h-[420px] flex flex-col">
                                 <div class="px-4 pb-2 border-b border-[var(--border)] flex items-center justify-between">
@@ -294,7 +368,7 @@
                 </div>
             </header>
 
-            {{-- Viewport Injetada --}}
+            {{-- Conteúdo Injetado --}}
             <main id="main-content" role="main" tabindex="-1"
                 class="flex-1 px-8 py-8 max-w-7xl w-full mx-auto outline-none">
                 @yield('content')
@@ -302,7 +376,7 @@
         </div>
     </div>
 
-    {{-- Core Auth & Engine Scripts --}}
+    {{-- Core Auth & Layout Scripts --}}
     <script>
         function authHeader() {
             const token = localStorage.getItem('api_token');
@@ -331,7 +405,6 @@
             return true;
         }
 
-        // Toggle para recolher Sidebar em Desktop
         function toggleDesktopSidebar() {
             const sidebar = document.getElementById('desktopSidebar');
             const wrapper = document.getElementById('mainWrapper');
@@ -351,7 +424,6 @@
             localStorage.setItem('sidebar_collapsed', isCollapsed ? 'true' : 'false');
         }
 
-        // Gestão dinâmica da navegação móvel
         function toggleMobileNav() {
             const overlay = document.getElementById('mobileNavOverlay');
             const drawer = document.getElementById('mobileNav');
@@ -406,7 +478,6 @@
             }
         }
 
-        // Fechar dropdowns ao clicar fora
         document.addEventListener('click', (e) => {
             const dropdown = document.getElementById('langDropdown');
             const container = document.getElementById('langSelectorDropdown');
@@ -453,7 +524,7 @@
                             </div>
                             <div class="hidden md:block">
                                 <div class="text-sm font-semibold text-[var(--text)] leading-none">${userName}</div>
-                                <div class="mt-1.5 text-[9px] font-bold uppercase tracking-wider text-[var(--text-soft)]">${userRole}</div>
+                                <div class="mt-1.5 text-[9px] font-bold uppercase tracking-wider text-[var(--text-soft)]">${__(userRole)}</div>
                             </div>
                         </a>
                     `;
@@ -536,7 +607,7 @@
         });
     </script>
 
-    {{-- 🔔 Notificações - Lógica JS --}}
+    {{-- Notificações --}}
     <script>
         let notificationCount = 0;
         let notificationsVisible = false;

@@ -228,4 +228,13 @@ Route::middleware(['custom.auth'])->group(function () {
 
     // Rota de Agendamento Preventivo
     Route::post('/admin/maintenance/schedule', [AdminController::class, 'scheduleMaintenance']);
+
+
+    Route::get('/lang/{locale}', function ($locale) {
+        if (in_array($locale, ['pt', 'en'])) {
+            session(['locale' => $locale]);
+            app()->setLocale($locale);
+        }
+        return redirect()->back();
+    });
 });

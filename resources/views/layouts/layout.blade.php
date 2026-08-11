@@ -13,6 +13,37 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
+
+    <script>
+        window.currentLocale = "{{ app()->getLocale() }}";
+
+        // Dicionário global de tradução para elementos dinâmicos em JavaScript
+        window.appTranslations = {
+            "A carregar listagem de tickets...": "Loading ticket list...",
+            "Nenhum ticket encontrado com os filtros aplicados.": "No ticket found with applied filters.",
+            "A carregar inventário de equipamentos...": "Loading equipment inventory...",
+            "Nenhum equipamento encontrado com os filtros aplicados.": "No equipment found with the applied filters.",
+            "A carregar salas...": "Loading rooms...",
+            "Nenhuma sala encontrada com os filtros aplicados.": "No rooms found with the applied filters.",
+            "Ativo": "Active",
+            "Inativo": "Inactive",
+            "Pendente": "Pending",
+            "Em Curso": "In Progress",
+            "Fechado": "Closed",
+            "Baixa": "Low",
+            "Média": "Medium",
+            "Alta": "High",
+            "Crítica": "Critical"
+        };
+
+        function __(text) {
+            const locale = window.currentLocale || "{{ app()->getLocale() }}";
+            if (locale === 'en' && window.appTranslations[text]) {
+                return window.appTranslations[text];
+            }
+            return text;
+        }
+    </script>
 </head>
 
 <body class="min-h-screen bg-[var(--bg)] text-[var(--text)] overflow-x-hidden antialiased">

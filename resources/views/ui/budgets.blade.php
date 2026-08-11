@@ -86,7 +86,6 @@ async function loadBudgets() {
         const data = await res.json();
         cachedBudgets = data.tickets || [];
 
-        // Atualizar Totais
         document.getElementById('totalAll').innerText = formatCurrency(data.totals.all);
         document.getElementById('totalPending').innerText = formatCurrency(data.totals.pending);
         document.getElementById('totalApproved').innerText = formatCurrency(data.totals.approved);
@@ -94,29 +93,29 @@ async function loadBudgets() {
 
         const tbody = document.getElementById('budgetsBody');
         if (!cachedBudgets.length) {
-            tbody.innerHTML = `<tr><td colspan="6" class="px-5 py-12 text-center text-xs text-soft italic">${'Nenhum orçamento encontrado.'}</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="6" class="px-5 py-12 text-center text-xs text-soft italic">${__( 'Nenhum orçamento encontrado.' )}</td></tr>`;
             return;
         }
 
         tbody.innerHTML = cachedBudgets.map(t => {
             let badge = '';
             const status = t.budget_status;
-            if (status === 'approved') badge = '<span class="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-emerald-500/10 text-emerald-600 uppercase">Aprovado</span>';
-            else if (status === 'rejected') badge = '<span class="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-rose-500/10 text-rose-600 uppercase">Não Aprovado</span>';
-            else badge = '<span class="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-amber-500/10 text-amber-600 uppercase">Pendente</span>';
+            if (status === 'approved') badge = `<span class="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-emerald-500/10 text-emerald-600 uppercase">${__( 'Aprovado' )}</span>`;
+            else if (status === 'rejected') badge = `<span class="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-rose-500/10 text-rose-600 uppercase">${__( 'Não Aprovado' )}</span>`;
+            else badge = `<span class="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-amber-500/10 text-amber-600 uppercase">${__( 'Pendente' )}</span>`;
 
             return `
                 <tr class="hover:bg-[var(--surface-2)]/50 transition-colors">
                     <td class="px-5 py-4 font-mono font-bold">#${t.id}</td>
                     <td class="px-5 py-4 font-semibold">
                         <div>${t.title}</div>
-                        <div class="text-[10px] text-soft">${t.equipment?.name || 'Sem equipamento'}</div>
+                        <div class="text-[10px] text-soft">${t.equipment?.name || __( 'Sem equipamento' )}</div>
                     </td>
-                    <td class="px-5 py-4 text-soft">${t.technician?.name || 'Não atribuído'}</td>
+                    <td class="px-5 py-4 text-soft">${t.technician?.name || __( 'Não atribuído' )}</td>
                     <td class="px-5 py-4 font-black">${formatCurrency(t.budget_amount)}</td>
                     <td class="px-5 py-4">${badge}</td>
                     <td class="px-5 py-4 text-right space-x-2">
-                        <a href="/ui/tickets/${t.id}" class="px-3 py-1.5 bg-[var(--surface-2)] hover:bg-[var(--border)] text-xs font-bold rounded-lg border border-[var(--border)]">Ver</a>
+                        <a href="/ui/tickets/${t.id}" class="px-3 py-1.5 bg-[var(--surface-2)] hover:bg-[var(--border)] text-xs font-bold rounded-lg border border-[var(--border)]">${__( 'Ver' )}</a>
                     </td>
                 </tr>
             `;
@@ -140,11 +139,12 @@ function filterStatus(status) {
 }
 
 function formatCurrency(val) {
-    return new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(val || 0);
+    const locale = window.currentLocale === 'en' ? 'en-US' : 'pt-PT';
+    return new Intl.NumberFormat(locale, { style: 'currency', currency: 'EUR' }).format(val || 0);
 }
 
 function exportBudgetsCsv() {
-    if (!cachedBudgets.length) return alert('Sem dados para exportar.');
+    if (!cachedBudgets.length) return alert(__( 'Sem dados para exportar.' ));
     let csv = 'ID;Titulo;Equipamento;Tecnico;ValorOrcado;Estado\n';
     cachedBudgets.forEach(t => {
         csv += `${t.id};"${t.title}";"${t.equipment?.name || ''}";"${t.technician?.name || ''}";${t.budget_amount};${t.budget_status}\n`;
