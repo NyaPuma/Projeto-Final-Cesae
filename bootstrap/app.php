@@ -7,9 +7,12 @@ use App\Http\Middleware\RateLimitMiddleware;
 use App\Http\Middleware\RoleMiddleware;
 use App\Http\Middleware\SecurityHeaders;
 use App\Http\Middleware\SetLocaleMiddleware;
+use App\Http\Middleware\SetUserPreferencesMiddleware;
+use App\Jobs\CheckLowStockJob;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Console\Scheduling\Schedule;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -21,6 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web(append: [
             SetLocaleMiddleware::class,
+            SetUserPreferencesMiddleware::class,
             SecurityHeaders::class,
         ]);
 
@@ -36,8 +40,17 @@ return Application::configure(basePath: dirname(__DIR__))
             'auth_token',
         ]);
     })
+    ->withSchedule(function (Schedule $schedule): void {
+        $schedule->job(new CheckLowStockJob())->dailyAt('06:00');
+    })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(function (\InvalidArgumentException $e) {
             return response()->json(['message' => $e->getMessage()], 422);
+        });
+
+        // Garante o locale (sessão/cookie/browser) também nas páginas de erro,
+        // onde o middleware do grupo web já não corre.
+        $exceptions->render(function (\Throwable $e, \Illuminate\Http\Request $request) {
+            app()->setLocale(SetLocaleMiddleware::resolveFromRequest($request));
         });
     })->create();

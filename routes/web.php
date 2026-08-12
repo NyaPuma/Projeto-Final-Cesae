@@ -10,8 +10,20 @@ use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PublicTicketController;
+use App\Http\Controllers\QrCodeController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\StockDashboardController;
+use App\Http\Controllers\StockMovementController;
+use App\Http\Controllers\StockReportController;
+use App\Http\Controllers\StockUiController;
+use App\Http\Controllers\SystemSettingsController;
+use App\Http\Controllers\TaxRateController;
+use App\Http\Controllers\PartCategoryController;
+use App\Http\Controllers\MaintenancePlanController;
+use App\Http\Controllers\PartController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\Ticket\TicketAssignmentController;
 use App\Http\Controllers\Ticket\TicketCloseController;
 use App\Http\Controllers\Ticket\TicketLifecycleController;
@@ -21,7 +33,9 @@ use App\Http\Controllers\TicketAttachmentController;
 use App\Http\Controllers\TicketBudgetController;
 use App\Http\Controllers\TicketCommentController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\UiController;
+use App\Http\Controllers\LocaleController;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Support\Facades\Route;
 
@@ -33,13 +47,29 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/lang/{locale}', [PageController::class, 'switchLang'])->name('lang.switch');
+Route::post('/locale', [LocaleController::class, 'switch'])->name('locale.switch');
 Route::get('/ui/login', [PageController::class, 'login'])->name('ui.login');
+Route::get('/theme/custom.css', [ThemeController::class, 'customCss'])->name('theme.custom');
 Route::get('/test-email', [PageController::class, 'testEmail'])->name('test.email');
 
 Route::post('/login', [AuthController::class, 'login'])
     ->name('login')
     ->middleware(['rate.limit:5,1'])
     ->withoutMiddleware([ValidateCsrfToken::class]);
+
+/*
+|--------------------------------------------------------------------------
+| Rotas Públicas de Reporte (via QR Code)
+|--------------------------------------------------------------------------
+*/
+Route::get('/ticket/new', [PublicTicketController::class, 'create'])
+    ->name('ticket.public.create');
+Route::post('/ticket/store', [PublicTicketController::class, 'store'])
+    ->name('ticket.public.store')
+    ->middleware(['rate.limit:5,1']);
+Route::get('/ticket/success/{ticket}', [PublicTicketController::class, 'success'])
+    ->name('ticket.public.success')
+    ->where('ticket', '[0-9]+');
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +87,22 @@ Route::middleware(['custom.auth'])->group(function () {
     Route::post('/profile/update', [ProfileController::class, 'updateProfile'])
         ->name('auth.profile.update');
 
+    // --- Preferências do Utilizador (Língua, Moeda, Formato de Data) ---
+    Route::get('/preferences', [\App\Http\Controllers\PreferenciasController::class, 'edit'])
+        ->name('preferences.edit');
+    Route::post('/preferences/language', [\App\Http\Controllers\PreferenciasController::class, 'updateLanguage'])
+        ->name('preferences.update_language')
+        ->withoutMiddleware([ValidateCsrfToken::class]);
+    Route::post('/preferences/currency', [\App\Http\Controllers\PreferenciasController::class, 'updateCurrency'])
+        ->name('preferences.update_currency')
+        ->withoutMiddleware([ValidateCsrfToken::class]);
+    Route::post('/preferences/date-format', [\App\Http\Controllers\PreferenciasController::class, 'updateDateFormat'])
+        ->name('preferences.update_date_format')
+        ->withoutMiddleware([ValidateCsrfToken::class]);
+    Route::post('/preferences', [\App\Http\Controllers\PreferenciasController::class, 'updateAll'])
+        ->name('preferences.update_all')
+        ->withoutMiddleware([ValidateCsrfToken::class]);
+
     // --- Notificações ---
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
     Route::patch('/notifications/{id}', [NotificationController::class, 'markAsRead'])
@@ -64,7 +110,8 @@ Route::middleware(['custom.auth'])->group(function () {
         ->withoutMiddleware([ValidateCsrfToken::class]);
     Route::post('/notifications/test-email', [NotificationController::class, 'sendTestEmail'])
         ->name('notifications.test-email')
-        ->withoutMiddleware([ValidateCsrfToken::class]);
+        ->withoutMiddleware([ValidateCsrfToken::class])
+        ->middleware('rate.limit:5,1');
 
     // --- Interface Web (UI) ---
     Route::get('/ui', [UiController::class, 'index'])->name('ui.index');
@@ -77,9 +124,54 @@ Route::middleware(['custom.auth'])->group(function () {
     Route::get('/ui/equipments', [UiController::class, 'equipments'])->name('ui.equipments');
     Route::get('/equipments', [UiController::class, 'getEquipments'])->name('equipments.list');
 
+    // --- Equipamentos: páginas de criação, detalhe e edição ---
+    Route::get('/ui/equipments/create', [UiController::class, 'equipmentCreate'])
+        ->name('ui.equipments.create')
+        ->middleware('role:admin');
+    Route::get('/ui/equipments/{equipment}', [UiController::class, 'equipmentDetail'])
+        ->name('ui.equipments.show')
+        ->where('equipment', '[0-9]+');
+    Route::get('/ui/equipments/{equipment}/edit', [UiController::class, 'equipmentEdit'])
+        ->name('ui.equipments.edit')
+        ->middleware('role:admin');
+
     // --- Salas ---
     Route::get('/ui/rooms', [UiController::class, 'rooms'])->name('ui.rooms');
-    Route::get('/ui/rooms/{id}', [UiController::class, 'roomDetail'])->name('ui.rooms.show');
+    Route::get('/ui/rooms/{room}', [UiController::class, 'roomDetail'])
+        ->name('ui.rooms.show')
+        ->where('room', '[0-9]+');
+
+    // --- Stock: Interface Web ---
+    Route::get('/ui/stock', [StockUiController::class, 'dashboard'])->name('ui.stock.dashboard');
+    Route::get('/ui/stock/parts', [StockUiController::class, 'parts'])->name('ui.stock.parts');
+    Route::get('/ui/stock/parts/create', [StockUiController::class, 'partCreate'])
+        ->name('ui.stock.parts.create')
+        ->middleware('role:admin');
+    Route::get('/ui/stock/parts/{part}', [StockUiController::class, 'partShow'])
+        ->name('ui.stock.parts.show')
+        ->where('part', '[0-9]+');
+    Route::get('/ui/stock/parts/{part}/edit', [StockUiController::class, 'partEdit'])
+        ->name('ui.stock.parts.edit')
+        ->middleware('role:admin')
+        ->where('part', '[0-9]+');
+    Route::get('/ui/stock/suppliers', [StockUiController::class, 'suppliers'])->name('ui.stock.suppliers');
+    Route::get('/ui/stock/suppliers/create', [StockUiController::class, 'supplierCreate'])
+        ->name('ui.stock.suppliers.create')
+        ->middleware('role:admin');
+    Route::get('/ui/stock/suppliers/{supplier}/edit', [StockUiController::class, 'supplierEdit'])
+        ->name('ui.stock.suppliers.edit')
+        ->middleware('role:admin')
+        ->where('supplier', '[0-9]+');
+    Route::get('/ui/stock/movements', [StockUiController::class, 'movements'])->name('ui.stock.movements');
+    Route::get('/ui/stock/tax-rates', [StockUiController::class, 'taxRates'])
+        ->name('ui.stock.tax-rates')
+        ->middleware('role:admin');
+    Route::get('/ui/stock/categories', [StockUiController::class, 'categories'])
+        ->name('ui.stock.categories')
+        ->middleware('role:admin');
+    Route::get('/ui/stock/plans', [StockUiController::class, 'plans'])
+        ->name('ui.stock.plans')
+        ->middleware('role:admin');
 
     // --- API de Salas ---
     Route::get('/api/rooms', [RoomController::class, 'indexRoom'])->name('rooms.index');
@@ -139,6 +231,7 @@ Route::middleware(['custom.auth'])->group(function () {
     // --- Calendário ---
     Route::get('/calendar/events', [CalendarController::class, 'events'])->name('calendar.events');
     Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.view');
+    Route::patch('/calendar/events/{ticket}', [CalendarController::class, 'reschedule'])->name('calendar.events.reschedule');
 
     // --- Área do Técnico ---
     Route::middleware(['role:technician'])->group(function () {
@@ -153,6 +246,24 @@ Route::middleware(['custom.auth'])->group(function () {
             ->withoutMiddleware([ValidateCsrfToken::class]);
     });
 
+    // --- Stock: leitura e registo de movimentos (admins e técnicos) ---
+    Route::middleware(['role:admin,technician'])->group(function () {
+        Route::get('/stock/parts', [PartController::class, 'index'])->name('stock.parts.index');
+        Route::get('/stock/parts/{part}', [PartController::class, 'show'])->name('stock.parts.show');
+        Route::get('/stock/suppliers', [SupplierController::class, 'index'])->name('stock.suppliers.index');
+        Route::get('/stock/suppliers/{supplier}', [SupplierController::class, 'show'])->name('stock.suppliers.show');
+        Route::get('/stock/movements', [StockMovementController::class, 'index'])->name('stock.movements.index');
+        Route::post('/stock/movements', [StockMovementController::class, 'store'])
+            ->name('stock.movements.store')
+            ->withoutMiddleware([ValidateCsrfToken::class]);
+        Route::get('/stock/dashboard/summary', [StockDashboardController::class, 'summary'])->name('stock.dashboard.summary');
+        Route::get('/stock/dashboard/top-consumed', [StockDashboardController::class, 'topConsumed'])->name('stock.dashboard.top-consumed');
+        Route::get('/stock/dashboard/slow-moving', [StockDashboardController::class, 'slowMoving'])->name('stock.dashboard.slow-moving');
+        Route::get('/stock/dashboard/runout-forecast', [StockDashboardController::class, 'runoutForecast'])->name('stock.dashboard.runout-forecast');
+        Route::get('/stock/dashboard/cost-by-equipment', [StockDashboardController::class, 'costByEquipment'])->name('stock.dashboard.cost-by-equipment');
+        Route::get('/stock/dashboard/cost-by-ticket', [StockDashboardController::class, 'costByTicket'])->name('stock.dashboard.cost-by-ticket');
+    });
+
     // --- Área de Administração ---
     Route::middleware(['role:admin'])->group(function () {
 
@@ -164,6 +275,12 @@ Route::middleware(['custom.auth'])->group(function () {
         Route::get('/ui/rooms/create', [UiController::class, 'roomCreate'])->name('ui.rooms.create');
         Route::get('/ui/rooms/{room}/edit', [UiController::class, 'roomEdit'])->name('ui.rooms.edit');
         Route::get('/ui/analytics', [UiController::class, 'analytics'])->name('ui.analytics');
+        Route::get('/ui/definicoes/aparencia', [UiController::class, 'themeAppearance'])->name('ui.definicoes.aparencia');
+        Route::post('/ui/definicoes/aparencia', [UiController::class, 'themeAppearanceUpdate'])->name('ui.definicoes.aparencia.update');
+        Route::get('/ui/definicoes/sistema', [SystemSettingsController::class, 'index'])->name('ui.definicoes.sistema');
+        Route::post('/ui/definicoes/sistema', [SystemSettingsController::class, 'update'])->name('ui.definicoes.sistema.update');
+        Route::post('/calendar/maintenance', [CalendarController::class, 'scheduleMaintenance'])->name('calendar.maintenance');
+        Route::post('/theme/switch', [ThemeController::class, 'switchTheme'])->name('theme.switch');
 
         // Tickets abertos
         Route::get('/technician/tickets/open', [TicketController::class, 'openTickets'])->name('technician.tickets.open');
@@ -196,6 +313,7 @@ Route::middleware(['custom.auth'])->group(function () {
         Route::post('/admin/users', [AdminUserController::class, 'store'])->name('admin.users.store');
         Route::patch('/admin/users/{targetUser}', [AdminUserController::class, 'update'])->name('admin.users.update');
         Route::patch('/admin/users/{targetUser}/inactive', [AdminUserController::class, 'inactivate'])->name('admin.users.inactivate');
+        Route::delete('/admin/users/{targetUser}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
         Route::get('/admin/profiles', [AdminUserController::class, 'profiles'])->name('admin.profiles.index');
 
         // Gestão de Equipamentos
@@ -203,6 +321,16 @@ Route::middleware(['custom.auth'])->group(function () {
         Route::post('/admin/equipment', [AdminEquipmentController::class, 'store'])->name('admin.equipment.store');
         Route::patch('/admin/equipment/{equipment}', [AdminEquipmentController::class, 'update'])->name('admin.equipment.update');
         Route::delete('/admin/equipment/{equipment}', [AdminEquipmentController::class, 'destroy'])->name('admin.equipment.destroy');
+
+        // QR Codes de Equipamentos
+        Route::get('/ui/equipments/{equipment}/qr', [QrCodeController::class, 'show'])
+            ->name('ui.equipments.qr')
+            ->where('equipment', '[0-9]+');
+        Route::get('/ui/equipments/{equipment}/qr/download', [QrCodeController::class, 'download'])
+            ->name('ui.equipments.qr.download')
+            ->where('equipment', '[0-9]+');
+        Route::get('/ui/equipments/qr/export', [QrCodeController::class, 'exportPdf'])
+            ->name('ui.equipments.qr.export');
 
         // Gestão de Salas
         Route::get('/admin/rooms', [RoomController::class, 'indexRoom'])->name('admin.rooms.index');
@@ -215,5 +343,33 @@ Route::middleware(['custom.auth'])->group(function () {
         Route::patch('/admin/tickets/{ticket}/approve-budget', [AdminController::class, 'approveBudget'])
             ->name('admin.tickets.approve-budget')
             ->withoutMiddleware([ValidateCsrfToken::class]);
+
+        // --- Stock: Gestão (admin) ---
+        Route::post('/admin/parts', [PartController::class, 'store'])->name('admin.stock.parts.store');
+        Route::patch('/admin/parts/{part}', [PartController::class, 'update'])->name('admin.stock.parts.update');
+        Route::delete('/admin/parts/{part}', [PartController::class, 'destroy'])->name('admin.stock.parts.destroy');
+
+        Route::post('/admin/suppliers', [SupplierController::class, 'store'])->name('admin.stock.suppliers.store');
+        Route::patch('/admin/suppliers/{supplier}', [SupplierController::class, 'update'])->name('admin.stock.suppliers.update');
+        Route::delete('/admin/suppliers/{supplier}', [SupplierController::class, 'destroy'])->name('admin.stock.suppliers.destroy');
+
+        Route::post('/admin/tax-rates', [TaxRateController::class, 'store'])->name('admin.stock.tax-rates.store');
+        Route::patch('/admin/tax-rates/{taxRate}', [TaxRateController::class, 'update'])->name('admin.stock.tax-rates.update');
+        Route::delete('/admin/tax-rates/{taxRate}', [TaxRateController::class, 'destroy'])->name('admin.stock.tax-rates.destroy');
+
+        Route::post('/admin/part-categories', [PartCategoryController::class, 'store'])->name('admin.stock.categories.store');
+        Route::patch('/admin/part-categories/{category}', [PartCategoryController::class, 'update'])->name('admin.stock.categories.update');
+        Route::delete('/admin/part-categories/{category}', [PartCategoryController::class, 'destroy'])->name('admin.stock.categories.destroy');
+
+        Route::get('/admin/maintenance-plans', [MaintenancePlanController::class, 'index'])->name('admin.stock.plans.index');
+        Route::post('/admin/maintenance-plans', [MaintenancePlanController::class, 'store'])->name('admin.stock.plans.store');
+        Route::patch('/admin/maintenance-plans/{plan}', [MaintenancePlanController::class, 'update'])->name('admin.stock.plans.update');
+        Route::delete('/admin/maintenance-plans/{plan}', [MaintenancePlanController::class, 'destroy'])->name('admin.stock.plans.destroy');
+        Route::get('/admin/maintenance-plans/{plan}', [MaintenancePlanController::class, 'show'])->name('admin.stock.plans.show');
+
+        // --- Stock: Relatórios e Exportações ---
+        Route::get('/stock/reports/low-stock.csv', [StockReportController::class, 'lowStockCsv'])->name('stock.reports.low-stock.csv');
+        Route::get('/stock/reports/inventory.csv', [StockReportController::class, 'inventoryCsv'])->name('stock.reports.inventory.csv');
+        Route::get('/stock/reports/costs-by-equipment.pdf', [StockReportController::class, 'costsByEquipmentPdf'])->name('stock.reports.costs-by-equipment.pdf');
     });
 });
