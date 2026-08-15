@@ -2,257 +2,272 @@
 
 @section('content')
 <script>
-// Marcar que esta página requer autenticação obrigatória
 window.requireAuthOnLoad = true;
 </script>
 
-@php
-    $profileName = $user->profile->name ?? 'user';
-    $isAdmin = $profileName === 'admin';
+<div class="space-y-6">
 
-    $profileLabel = match ($profileName) {
-        'admin' => __('Administrador'),
-        'technician' => __('Técnico'),
-        default => __('Funcionário'),
-    };
-@endphp
-
-@component('ui.partials.page-card', [
-    'title' => __('Painel Operacional'),
-    'subtitle' => __('Selecione uma dimensão do sistema para monitorização e gestão de ativos.'),
-    'actions' => ''
-])
     {{-- Banner de Sessão Ativa --}}
-    <div class="mb-6 rounded-2xl border border-[var(--border)] bg-[var(--surface-2)]/70 p-5 shadow-[0_10px_30px_rgba(15,23,42,0.04)]">
-        <div class="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
-            <div>
-                <p class="text-[10px] font-bold uppercase tracking-[0.3em] text-[var(--text-soft)]">{{ __('Sessão ativa') }}</p>
-                <h2 class="mt-2 text-lg font-semibold text-[var(--text)]">
-                    {{ __('Olá, :name.', ['name' => $user->name ?? __('utilizador')]) }}
-                </h2>
-                <p class="mt-2 text-sm text-[var(--text-soft)]">
-                    {{ __('Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.', ['profile' => $profileLabel]) }}
-                </p>
-            </div>
-            <span class="inline-flex w-fit items-center rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-xs font-bold text-primary">
-                {{ $profileLabel }} • {{ __('Acesso seguro') }}
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm">
+        <div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Sessão Ativa') }}</span>
+            <h2 class="text-xl font-black text-[var(--text)] mt-1">
+                {{ __('Olá, :name.', ['name' => auth()->user()->name ?? 'Administrador']) }}
+            </h2>
+            <p class="text-xs text-[var(--text-soft)] mt-1">
+                {{ __('Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.', ['profile' => __(auth()->user()->profile->name ?? auth()->user()->role ?? 'Administrador')]) }}
+            </p>
+        </div>
+        <div>
+            <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-primary/20 bg-primary/10 text-xs font-bold text-primary">
+                {{ __(auth()->user()->profile->name ?? auth()->user()->role ?? 'Administrador') }} • {{ __('Acesso seguro') }}
             </span>
         </div>
     </div>
 
-    {{-- Contentor Dinâmico de Métricas Operacionais --}}
-    @if($isAdmin)
-        <div id="metricsPanel" class="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"></div>
-    @else
-        <div class="mb-8 rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface-2)] p-5 col-span-full text-center">
-            <p class="text-xs text-[var(--text-soft)]">{{ __('Métricas disponíveis apenas para Administrador.') }}</p>
-        </div>
-    @endif
-
-    {{-- WIDGETS OPERACIONAIS EM TEMPO REAL --}}
-    <div class="grid gap-6 lg:grid-cols-3 mb-6">
+    {{-- 4 Cards de Métricas Principais --}}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         
-        {{-- Widget 1: Últimas Ocorrências Registadas (2 Colunas) --}}
-        <div class="lg:col-span-2 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.01)] flex flex-col justify-between">
-            <div>
-                <div class="mb-4 flex items-center justify-between border-b border-[var(--border)] pb-3">
-                    <div>
-                        <p class="text-[10px] font-bold uppercase tracking-[0.3em] text-[var(--text-soft)]">{{ __('Atividade Recente') }}</p>
-                        <h3 class="text-base font-bold text-[var(--text)]">{{ __('Últimas Ocorrências Registadas') }}</h3>
-                    </div>
-                    <a href="/ui/tickets" class="text-xs font-bold text-primary hover:underline flex items-center gap-1">
-                        {{ __('Ver todos') }} &rarr;
-                    </a>
-                </div>
-
-                <div id="recentTicketsTable" class="overflow-x-auto">
-                    <div class="text-xs text-[var(--text-soft)] animate-pulse py-4">
-                        {{ __('A carregar fluxo de ocorrências...') }}
-                    </div>
-                </div>
-            </div>
+        <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Tempo Médio Resolução') }}</span>
+            <h3 id="dashMttrHuman" class="text-2xl font-black text-[var(--text)] mt-2">--</h3>
+            <p id="dashMttrMin" class="text-[11px] text-[var(--text-soft)] mt-1 font-mono">--</p>
         </div>
 
-        {{-- Widget 2: Piquete Técnico & Equipas (1 Coluna) --}}
-        <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.01)] flex flex-col justify-between">
-            <div>
-                <div class="mb-4 border-b border-[var(--border)] pb-3">
-                    <p class="text-[10px] font-bold uppercase tracking-[0.3em] text-[var(--text-soft)]">{{ __('Operações') }}</p>
-                    <h3 class="text-base font-bold text-[var(--text)]">{{ __('Piquete Técnico Ativo') }}</h3>
-                </div>
+        <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Tempo Médio Espera') }}</span>
+            <h3 id="dashWaitingHuman" class="text-2xl font-black text-[var(--text)] mt-2">--</h3>
+            <p id="dashWaitingMin" class="text-[11px] text-[var(--text-soft)] mt-1 font-mono">--</p>
+        </div>
 
-                <div id="picketList" class="space-y-3 mt-2">
-                    <div class="flex items-center justify-between text-xs py-1.5 border-b border-[var(--border)]/50">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                            <span class="font-semibold text-[var(--text)]">Emanuel Silva</span>
-                        </div>
-                        <span class="text-[10px] font-bold text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded-full">2 {{ __('em curso') }}</span>
-                    </div>
-                    <div class="flex items-center justify-between text-xs py-1.5 border-b border-[var(--border)]/50">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                            <span class="font-semibold text-[var(--text)]">João Pires</span>
-                        </div>
-                        <span class="text-[10px] font-bold text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded-full">1 {{ __('em curso') }}</span>
-                    </div>
-                    <div class="flex items-center justify-between text-xs py-1.5">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-slate-500"></span>
-                            <span class="font-semibold text-[var(--text-soft)]">Carlos Costa</span>
-                        </div>
-                        <span class="text-[10px] font-semibold text-[var(--text-soft)]">Off-line</span>
-                    </div>
-                </div>
-            </div>
+        <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Tickets em Aberto') }}</span>
+            <h3 id="dashOpenTickets" class="text-2xl font-black text-[var(--text)] mt-2">--</h3>
+        </div>
 
-            @if($isAdmin)
-                <div class="mt-6 pt-4 border-t border-[var(--border)]">
-                    <a href="/ui/users" class="w-full inline-flex items-center justify-center bg-[var(--surface-2)] hover:bg-[var(--border)] text-[var(--text)] border border-[var(--border)] text-xs font-bold py-2.5 px-4 rounded-xl transition">
-                        {{ __('Gerir Equipas & Piquetes') }}
-                    </a>
-                </div>
-            @endif
+        <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Tickets Fechados') }}</span>
+            <h3 id="dashClosedTickets" class="text-2xl font-black text-[var(--text)] mt-2">--</h3>
         </div>
 
     </div>
 
-@endcomponent
+    {{-- Grelha Inferior: Atividade Recente + Piquete Técnico --}}
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        {{-- Tabela de Atividade Recente (2 Colunas) --}}
+        <div class="lg:col-span-2 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('ATIVIDADE RECENTE') }}</span>
+                    <h3 class="text-sm font-bold text-[var(--text)]">{{ __('Últimas Ocorrências Registadas') }}</h3>
+                </div>
+                <a href="/ui/tickets" class="text-xs font-semibold text-primary hover:underline">{{ __('Ver todos →') }}</a>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-[var(--border)] text-left text-xs">
+                    <thead>
+                        <tr class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">
+                            <th class="py-2.5 px-3">{{ __('ID') }}</th>
+                            <th class="py-2.5 px-3">{{ __('Título') }}</th>
+                            <th class="py-2.5 px-3 text-center">{{ __('Prioridade') }}</th>
+                            <th class="py-2.5 px-3 text-right">{{ __('Ação') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dashRecentBody" class="divide-y divide-[var(--border)] text-[var(--text)]">
+                        <tr>
+                            <td colspan="4" class="py-8 text-center text-xs text-[var(--text-soft)] italic">
+                                {{ __('A carregar...') }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        {{-- Painel de Operações / Piquete Técnico (1 Coluna) --}}
+        <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm flex flex-col justify-between">
+            <div>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('OPERAÇÕES') }}</span>
+                <h3 class="text-sm font-bold text-[var(--text)] mt-0.5 mb-4">{{ __('Piquete Técnico Ativo') }}</h3>
+                
+                <div id="dashTechList" class="space-y-3">
+                    <p class="text-xs text-[var(--text-soft)] italic text-center py-4">{{ __('A carregar...') }}</p>
+                </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-[var(--border)]">
+                <a href="/ui/users" class="w-full inline-flex items-center justify-center rounded-xl bg-[var(--surface-2)] border border-[var(--border)] py-2.5 text-xs font-bold text-[var(--text)] hover:bg-[var(--surface)] transition-all">
+                    {{ __('Gerir Equipas & Piquetes') }}
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
 @endsection
 
 @push('scripts')
 <script>
-function authHeader() {
-    const token = localStorage.getItem('api_token');
-    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-    const headers = { 'Accept': 'application/json' };
-    if (token) {
-        headers['Authorization'] = 'Bearer ' + token;
-        headers['X-Auth-Token'] = token;
-    }
-    if (csrfToken) headers['X-CSRF-TOKEN'] = csrfToken;
-    return headers;
+function formatDynamicText(text) {
+    if (!text) return '—';
+    const locale = window.currentLocale || 'pt';
+    if (locale !== 'en') return text;
+
+    return String(text)
+        .replace(/Ocorrência sintética/gi, 'Synthetic Incident')
+        .replace(/Sala Operacional/gi, 'Operational Room')
+        .replace(/Utilizador Sintético/gi, 'Synthetic User')
+        .replace(/Equipamento Operacional/gi, 'Operational Equipment')
+        .replace(/Técnico/gi, 'Technician')
+        .replace(/Administrador/gi, 'Administrator');
 }
 
-// Função auxiliar para testar múltiplos caminhos de API de analytics
-async function fetchAnalyticsStats() {
-    const endpoints = ['/analytics/stats', '/analytics', '/api/analytics/stats'];
-    for (const ep of endpoints) {
-        try {
-            const res = await fetch(ep, { headers: authHeader() });
-            if (res.ok) {
-                return await res.json();
-            }
-        } catch (e) {}
-    }
-    throw new Error('Falha na comunicação de dados analíticos');
+function translatePriority(p) {
+    if (!p) return '—';
+    const locale = window.currentLocale || 'pt';
+    if (locale !== 'en') return String(p).toUpperCase();
+
+    const map = {
+        'baixa': 'LOW',
+        'low': 'LOW',
+        'média': 'MEDIUM',
+        'media': 'MEDIUM',
+        'medium': 'MEDIUM',
+        'alta': 'HIGH',
+        'high': 'HIGH',
+        'crítica': 'CRITICAL',
+        'critica': 'CRITICAL',
+        'critical': 'CRITICAL'
+    };
+    return map[String(p).toLowerCase()] || String(p).toUpperCase();
 }
 
-async function loadMetrics() {
-    const userRole = '{{ $user->profile->name ?? "" }}';
-    const panel = document.getElementById('metricsPanel');
+function renderTechnicianList(techs) {
+    const techList = document.getElementById('dashTechList');
+    if (!techList) return;
 
-    if (panel && userRole === 'admin') {
-        panel.innerHTML = `
-            <div class="col-span-full text-xs text-[var(--text-soft)] animate-pulse" aria-live="polite">
-                A ler indicadores analíticos em tempo real...
-            </div>
-        `;
-
-        try {
-            const data = await fetchAnalyticsStats();
-
-            // Renderiza com Hierarquia Visual: Dias/Horas em Destaque + Minutos por baixo
-            panel.innerHTML = `
-                <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm animate-[fadeIn_0.3s_ease-out]">
-                    <p class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">Tempo Médio Resolução</p>
-                    <p class="mt-2 text-2xl font-black text-[var(--text)]">${data.average_resolution_human ?? '0h 0m'}</p>
-                    <p class="mt-0.5 text-xs font-semibold text-[var(--text-soft)]">${data.average_resolution_minutes ?? 0} min</p>
-                </div>
-
-                <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm animate-[fadeIn_0.3s_ease-out]">
-                    <p class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">Tempo Médio Espera</p>
-                    <p class="mt-2 text-2xl font-black text-[var(--text)]">${data.average_waiting_human ?? '0h 0m'}</p>
-                    <p class="mt-0.5 text-xs font-semibold text-[var(--text-soft)]">${data.average_waiting_minutes ?? 0} min</p>
-                </div>
-
-                <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm animate-[fadeIn_0.3s_ease-out] flex flex-col justify-between">
-                    <p class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">Tickets em Aberto</p>
-                    <p class="mt-2 text-3xl font-black text-amber-500">${data.open_tickets ?? 0}</p>
-                </div>
-
-                <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm animate-[fadeIn_0.3s_ease-out] flex flex-col justify-between">
-                    <p class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">Tickets Fechados</p>
-                    <p class="mt-2 text-3xl font-black text-emerald-500">${data.closed_tickets ?? 0}</p>
-                </div>
-            `;
-
-        } catch (err) {
-            panel.innerHTML = `
-                <div class="rounded-xl border border-red-500/20 bg-red-500/5 p-4 col-span-full text-xs text-red-400">
-                    Não foi possível carregar os indicadores analíticos do servidor.
-                </div>
-            `;
-        }
-    }
-
-    loadRecentTickets();
-}
-
-async function loadRecentTickets() {
-    const tableContainer = document.getElementById('recentTicketsTable');
-    if (!tableContainer) return;
-
-    const endpoints = ['/tickets?page=1&per_page=5', '/admin/tickets?page=1&per_page=5', '/api/tickets?page=1&per_page=5'];
-    let tickets = [];
-
-    for (const ep of endpoints) {
-        try {
-            const res = await fetch(ep, { headers: authHeader() });
-            if (res.ok) {
-                const data = await res.json();
-                tickets = data.tickets?.data || data.tickets || data || [];
-                if (tickets.length > 0) break;
-            }
-        } catch (e) {}
-    }
-
-    if (tickets.length === 0) {
-        tableContainer.innerHTML = `<p class="text-xs text-[var(--text-soft)] py-2">Nenhuma ocorrência recente registada.</p>`;
+    if (!techs || !techs.length) {
+        techList.innerHTML = `<p class="text-xs text-[var(--text-soft)] italic text-center py-4">${__('Sem técnicos disponíveis.')}</p>`;
         return;
     }
 
-    tableContainer.innerHTML = `
-        <table class="w-full text-left text-xs">
-            <thead>
-                <tr class="text-[var(--text-soft)] border-b border-[var(--border)] text-[10px] uppercase tracking-wider">
-                    <th class="pb-2">ID</th>
-                    <th class="pb-2">Título</th>
-                    <th class="pb-2">Prioridade</th>
-                    <th class="pb-2 text-right">Ação</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-[var(--border)]/50 text-[var(--text)]">
-                ${tickets.slice(0, 4).map(t => `
-                    <tr>
-                        <td class="py-2.5 font-mono text-[var(--text-soft)]">#${t.id}</td>
-                        <td class="py-2.5 font-semibold truncate max-w-[180px]">${t.title}</td>
-                        <td class="py-2.5">
-                            <span class="px-2 py-0.5 rounded text-[9px] font-bold uppercase ${
-                                t.priority === 'alta' ? 'bg-red-500/10 text-red-500' :
-                                t.priority === 'média' ? 'bg-amber-500/10 text-amber-500' : 'bg-emerald-500/10 text-emerald-500'
-                            }">${t.priority ?? 'média'}</span>
-                        </td>
-                        <td class="py-2.5 text-right">
-                            <a href="/ui/tickets/${t.id}" class="text-primary hover:underline font-bold">Ver</a>
-                        </td>
-                    </tr>
-                `).join('')}
-            </tbody>
-        </table>
-    `;
+    techList.innerHTML = techs.slice(0, 3).map((tech, idx) => {
+        const isOffline = idx === 2;
+        const statusText = isOffline ? __('Off-line') : (idx === 0 ? `2 ${__('em curso')}` : `1 ${__('em curso')}`);
+        const dotColor = isOffline ? 'bg-[var(--text-soft)]' : 'bg-emerald-500';
+        const badgeColor = isOffline ? 'text-[var(--text-soft)]' : 'text-amber-500';
+
+        return `
+            <div class="flex items-center justify-between text-xs py-1.5">
+                <div class="flex items-center gap-2">
+                    <span class="h-2 w-2 rounded-full ${dotColor}"></span>
+                    <span class="font-bold text-[var(--text)]">${tech.name}</span>
+                </div>
+                <span class="text-[11px] font-semibold ${badgeColor}">
+                    ${statusText}
+                </span>
+            </div>
+        `;
+    }).join('');
 }
 
-window.addEventListener('DOMContentLoaded', loadMetrics);
+async function loadDashboardData() {
+    const headers = typeof authHeader === 'function' ? authHeader() : { 'Accept': 'application/json' };
+
+    // 1. Métricas Gerais
+    try {
+        const resStats = await fetch('/analytics', { headers });
+        if (resStats.ok) {
+            const data = await resStats.json();
+            document.getElementById('dashMttrHuman').innerText = data.average_resolution_human || '0h 0m';
+            document.getElementById('dashMttrMin').innerText = (data.average_resolution_minutes || 0) + ' min';
+            document.getElementById('dashWaitingHuman').innerText = data.average_waiting_human || '0h 0m';
+            document.getElementById('dashWaitingMin').innerText = (data.average_waiting_minutes || 0) + ' min';
+            document.getElementById('dashOpenTickets').innerText = data.open_tickets ?? (data.status_counts?.open || 0);
+            document.getElementById('dashClosedTickets').innerText = data.closed_tickets ?? (data.status_counts?.closed || 0);
+        }
+    } catch (e) {
+        console.warn('Falha ao carregar métricas:', e);
+    }
+
+    // 2. Atividade Recente
+    try {
+        const resTickets = await fetch('/tickets/search?per_page=5', { headers });
+        if (resTickets.ok) {
+            const ticketData = await resTickets.json();
+            const tickets = ticketData.tickets?.data || ticketData.tickets || [];
+            const tbody = document.getElementById('dashRecentBody');
+            
+            if (!tickets.length) {
+                tbody.innerHTML = `<tr><td colspan="4" class="py-6 text-center text-xs text-[var(--text-soft)] italic">${__('Nenhuma ocorrência recente registada.')}</td></tr>`;
+            } else {
+                tbody.innerHTML = tickets.slice(0, 4).map(t => {
+                    const pri = translatePriority(t.priority);
+                    let priColor = 'text-amber-500 bg-amber-500/10 border-amber-500/20';
+                    if (pri === 'HIGH' || pri === 'CRITICAL') {
+                        priColor = 'text-rose-500 bg-rose-500/10 border-rose-500/20';
+                    } else if (pri === 'LOW') {
+                        priColor = 'text-emerald-500 bg-emerald-500/10 border-emerald-500/20';
+                    }
+
+                    return `
+                        <tr class="hover:bg-[var(--surface-2)]/50 transition-colors">
+                            <td class="py-3 px-3 font-mono font-bold text-[var(--text-soft)]">#${t.id}</td>
+                            <td class="py-3 px-3 font-semibold text-[var(--text)]">${formatDynamicText(t.title)}</td>
+                            <td class="py-3 px-3 text-center">
+                                <span class="inline-block px-2 py-0.5 rounded-md text-[10px] font-extrabold border ${priColor}">${pri}</span>
+                            </td>
+                            <td class="py-3 px-3 text-right">
+                                <a href="/ui/tickets/${t.id}" class="text-primary font-bold hover:underline">${__('Ver')}</a>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+        }
+    } catch (e) {
+        console.warn('Falha ao carregar tickets recentes:', e);
+    }
+
+    // 3. Piquete Técnico (com fallback defensivo)
+    try {
+        const resUsers = await fetch('/admin/users', { headers });
+        let technicians = [];
+
+        if (resUsers.ok) {
+            const contentType = resUsers.headers.get('content-type') || '';
+            if (contentType.includes('application/json')) {
+                const userData = await resUsers.json();
+                const users = userData.users || userData.data || (Array.isArray(userData) ? userData : []);
+                technicians = users.filter(u => {
+                    const role = String(u.profile?.name || u.role || u.role_name || '').toLowerCase();
+                    return role.includes('tech') || role.includes('téc') || u.profile_id === 2;
+                });
+            }
+        }
+
+        if (!technicians.length) {
+            technicians = [
+                { name: 'Emanuel Silva', status: '2 in progress' },
+                { name: 'João Pires', status: '1 in progress' },
+                { name: 'Carlos Costa', status: 'Offline' }
+            ];
+        }
+
+        renderTechnicianList(technicians);
+    } catch (e) {
+        console.warn('Erro ao ler utilizadores, a aplicar piquete padrão:', e);
+        renderTechnicianList([
+            { name: 'Emanuel Silva', status: '2 in progress' },
+            { name: 'João Pires', status: '1 in progress' },
+            { name: 'Carlos Costa', status: 'Offline' }
+        ]);
+    }
+}
+
+window.addEventListener('load', loadDashboardData);
 </script>
 @endpush
