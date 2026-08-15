@@ -9,25 +9,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SetLocaleMiddleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  Closure(Request): (Response)  $next
-     */
     public function handle(Request $request, Closure $next): Response
     {
-        // Try to get locale from cookie first, then session
-        $locale = $request->cookie('locale') ?: ($request->hasSession() ? $request->session()->get('locale') : null);
+        $locale = session('locale', $request->cookie('locale', config('app.locale', 'pt')));
 
-        // Fallback to browser preference or 'pt'
-        if (! $locale) {
-            $locale = $request->getPreferredLanguage(['en', 'pt']) ?: 'pt';
-        }
-
-        if (in_array($locale, ['en', 'pt'])) {
+        if (in_array($locale, ['pt', 'en'])) {
             App::setLocale($locale);
-        } else {
-            App::setLocale('pt');
         }
 
         return $next($request);

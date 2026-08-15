@@ -16,8 +16,6 @@
 
     <script>
         window.currentLocale = "{{ app()->getLocale() }}";
-
-        // Dicionário global de tradução para elementos dinâmicos em JavaScript
         window.appTranslations = {
             "A carregar listagem de tickets...": "Loading ticket list...",
             "Nenhum ticket encontrado com os filtros aplicados.": "No ticket found with applied filters.",
@@ -33,7 +31,11 @@
             "Baixa": "Low",
             "Média": "Medium",
             "Alta": "High",
-            "Crítica": "Critical"
+            "Crítica": "Critical",
+            "baixa": "Low",
+            "média": "Medium",
+            "alta": "High",
+            "crítica": "Critical"
         };
 
         function __(text) {
@@ -43,15 +45,74 @@
             }
             return text;
         }
+
+        function togglePublicLangDropdown() {
+            const dropdown = document.getElementById('publicLangDropdown');
+            if (dropdown) dropdown.classList.toggle('hidden');
+        }
+
+        document.addEventListener('click', (e) => {
+            const dropdown = document.getElementById('publicLangDropdown');
+            const container = document.getElementById('publicLangContainer');
+            if (dropdown && container && !container.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
     </script>
 </head>
 
-<body class="min-h-screen bg-[var(--bg)] text-[var(--text)] overflow-x-hidden antialiased">
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-xl focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[var(--on-primary)]">
-        {{ __('Ir para o conteúdo') }}
-    </a>
+<body class="min-h-screen bg-[var(--bg)] text-[var(--text)] overflow-x-hidden antialiased flex flex-col justify-between">
+    
+    {{-- Barra Superior Pública com Seletor de Idioma --}}
+    <header class="w-full flex justify-end p-6 relative z-50">
+        <div class="relative inline-block text-left" id="publicLangContainer">
+            <button type="button" onclick="togglePublicLangDropdown()"
+                class="inline-flex h-10 px-3.5 items-center justify-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface)] text-sm text-[var(--text)] shadow-sm transition-all hover:bg-[var(--surface-2)] cursor-pointer">
+                @if(app()->getLocale() === 'pt')
+                    <svg class="w-4 h-3 rounded-xs overflow-hidden flex-shrink-0 shadow-xs" viewBox="0 0 600 400">
+                        <rect width="600" height="400" fill="#ff0000"/>
+                        <rect width="240" height="400" fill="#006600"/>
+                        <circle cx="240" cy="200" r="80" fill="#ffff00" stroke="#000" stroke-width="3"/>
+                    </svg>
+                @else
+                    <svg class="w-4 h-3 rounded-xs overflow-hidden flex-shrink-0 shadow-xs" viewBox="0 0 600 400">
+                        <rect width="600" height="400" fill="#00247d"/>
+                        <path d="M0,0 L600,400 M600,0 L0,400" stroke="#fff" stroke-width="60"/>
+                        <path d="M0,0 L600,400 M600,0 L0,400" stroke="#cf142b" stroke-width="40"/>
+                        <path d="M300,0 V400 M0,200 H600" stroke="#fff" stroke-width="100"/>
+                        <path d="M300,0 V400 M0,200 H600" stroke="#cf142b" stroke-width="60"/>
+                    </svg>
+                @endif
+                <span class="font-semibold text-xs uppercase text-[var(--text)]">{{ app()->getLocale() }}</span>
+                <svg class="h-3.5 w-3.5 text-[var(--text-soft)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+            </button>
+            
+            <div id="publicLangDropdown" class="hidden absolute right-0 mt-2 w-36 rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-lg py-1.5 z-50">
+                <a href="/lang/pt" class="flex items-center gap-2.5 px-4 py-2.5 text-xs font-semibold text-[var(--text)] hover:bg-[var(--surface-2)] {{ app()->getLocale() === 'pt' ? 'bg-primary/10 text-primary' : '' }}">
+                    <svg class="w-4 h-3 rounded-xs flex-shrink-0 shadow-xs" viewBox="0 0 600 400">
+                        <rect width="600" height="400" fill="#ff0000"/>
+                        <rect width="240" height="400" fill="#006600"/>
+                        <circle cx="240" cy="200" r="80" fill="#ffff00" stroke="#000" stroke-width="3"/>
+                    </svg>
+                    Português
+                </a>
+                <a href="/lang/en" class="flex items-center gap-2.5 px-4 py-2.5 text-xs font-semibold text-[var(--text)] hover:bg-[var(--surface-2)] {{ app()->getLocale() === 'en' ? 'bg-primary/10 text-primary' : '' }}">
+                    <svg class="w-4 h-3 rounded-xs flex-shrink-0 shadow-xs" viewBox="0 0 600 400">
+                        <rect width="600" height="400" fill="#00247d"/>
+                        <path d="M0,0 L600,400 M600,0 L0,400" stroke="#fff" stroke-width="60"/>
+                        <path d="M0,0 L600,400 M600,0 L0,400" stroke="#cf142b" stroke-width="40"/>
+                        <path d="M300,0 V400 M0,200 H600" stroke="#fff" stroke-width="100"/>
+                        <path d="M300,0 V400 M0,200 H600" stroke="#cf142b" stroke-width="60"/>
+                    </svg>
+                    English
+                </a>
+            </div>
+        </div>
+    </header>
 
-    <main id="main-content" role="main" tabindex="-1" class="min-h-screen">
+    <main id="main-content" role="main" tabindex="-1" class="flex-1">
         @yield('content')
     </main>
 

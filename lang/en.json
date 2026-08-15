@@ -187,5 +187,24 @@
   "Ver todos os tickets": "View all tickets",
   "Sem notificações": "No notifications",
   "Alterar Idioma": "Change Language",
-  "Alternar Tema": "Toggle Theme"
+  "Alternar Tema": "Toggle Theme",
+
+  "Area segura": "Secure Area",
+  "Bem-vindo de volta": "Welcome Back",
+  "Introduza o seu email e palavra-passe para continuar.": "Enter your email and password to continue.",
+  "Email": "Email",
+  "Palavra-passe": "Password",
+  "Mostrar": "Show",
+  "Ocultar": "Hide",
+  "Iniciar sessão": "Sign In",
+  "A autenticar...": "Authenticating...",
+  "Credenciais inválidas.": "Invalid credentials.",
+  "Autenticação bem-sucedida! A redirecionar...": "Authentication successful! Redirecting...",
+
+  "ÁREA SEGURA": "SECURE AREA",
+  "Área segura": "Secure Area",
+  "Entrar no sistema": "Sign In",
+  "Entrar no sistema >": "Sign In >"
+
+  
 }

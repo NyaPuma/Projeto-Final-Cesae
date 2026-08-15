@@ -23,31 +23,25 @@ Route::get('/', function () {
     return view('main');
 });
 
+// Rota de alteração de idioma (Pública e persistente)
 Route::get('/lang/{locale}', function ($locale) {
     if (in_array($locale, ['en', 'pt'])) {
         session(['locale' => $locale]);
-
-        return redirect()->back()->withCookie(cookie()->forever('locale', $locale));
+        app()->setLocale($locale);
+        cookie()->queue(cookie()->forever('locale', $locale));
     }
 
     return redirect()->back();
 })->name('lang.switch');
 
+// Vista de Login
 Route::get('/ui/login', function () {
-    return view('ui.auth');
+    return view()->exists('ui.login') ? view('ui.login') : view('ui.auth');
 })->name('ui.login');
 
-Route::get('/test-email', function () {
-    Mail::raw('Teste de comunicação com Mailtrap!', function ($message) {
-        $message->to('teste@exemplo.com')
-            ->subject('Teste do Sistema de Avarias');
-    });
-
-    return 'E-mail enviado com sucesso!';
-});
-
-// Endpoint público de Login
+// Processamento do Login (Obrigatório para autenticação)
 Route::post('/login', [AuthController::class, 'login'])
+    ->name('login')
     ->middleware(['rate.limit:5,1'])
     ->withoutMiddleware([VerifyCsrfToken::class]);
 
@@ -230,11 +224,5 @@ Route::middleware(['custom.auth'])->group(function () {
     Route::post('/admin/maintenance/schedule', [AdminController::class, 'scheduleMaintenance']);
 
 
-    Route::get('/lang/{locale}', function ($locale) {
-        if (in_array($locale, ['pt', 'en'])) {
-            session(['locale' => $locale]);
-            app()->setLocale($locale);
-        }
-        return redirect()->back();
-    });
+
 });
