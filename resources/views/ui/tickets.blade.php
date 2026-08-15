@@ -2,7 +2,6 @@
 
 @section('content')
 <script>
-// Marcar que esta página requer autenticação
 window.requireAuthOnLoad = true;
 </script>
 
@@ -22,7 +21,7 @@ window.requireAuthOnLoad = true;
         . '</div>'
 ])
 
-    {{-- Painel de Pesquisa Avançada Bento-Style --}}
+    {{-- Painel de Pesquisa --}}
     <div class="mb-6 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm animate-[fadeIn_0.2s_ease-out]">
         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 
@@ -79,7 +78,7 @@ window.requireAuthOnLoad = true;
         </div>
     </div>
 
-    {{-- Tabela de Resultados Estruturada Limpa (Como na Imagem do Exemplo) --}}
+    {{-- Tabela de Resultados --}}
     <div class="w-full overflow-hidden bg-[var(--surface)] border border-[var(--border)] rounded-2xl shadow-sm" role="region" aria-live="polite" aria-label="{{ __('Lista de tickets') }}">
         <div class="overflow-x-auto">
             <table id="ticketsTable" class="min-w-full divide-y divide-[var(--border)] text-left text-xs">
@@ -109,7 +108,7 @@ window.requireAuthOnLoad = true;
         </div>
     </div>
 
-    {{-- Área de Paginação Alinhada --}}
+    {{-- Paginação --}}
     <div id="pagination" class="mt-5 flex items-center justify-between text-xs text-[var(--text-soft)] px-1"></div>
 
 @endcomponent
@@ -118,34 +117,66 @@ window.requireAuthOnLoad = true;
 @push('scripts')
 <script>
 const priorityColors = {
-    baixa:   'border border-emerald-500/20 bg-emerald-500/10 text-emerald-800 dark:text-emerald-400',
-    low:     'border border-emerald-500/20 bg-emerald-500/10 text-emerald-800 dark:text-emerald-400',
-    média:   'border border-amber-500/20 bg-amber-500/10 text-amber-800 dark:text-amber-400',
-    media:   'border border-amber-500/20 bg-amber-500/10 text-amber-800 dark:text-amber-400',
-    medium:  'border border-amber-500/20 bg-amber-500/10 text-amber-800 dark:text-amber-400',
-    alta:    'border border-orange-500/20 bg-orange-500/10 text-orange-800 dark:text-orange-400',
-    high:    'border border-orange-500/20 bg-orange-500/10 text-orange-800 dark:text-orange-400',
-    
-    // ALTERADO: De Roxo para Vermelho (Rose) Pulsante
-    crítica: 'border border-rose-500/20 bg-rose-500/10 text-rose-800 dark:text-rose-400 animate-pulse font-bold',
-    critica: 'border border-rose-500/20 bg-rose-500/10 text-rose-800 dark:text-rose-400 animate-pulse font-bold',
-    critical:'border border-rose-500/20 bg-rose-500/10 text-rose-800 dark:text-rose-400 animate-pulse font-bold'
+    baixa:    'border border-emerald-500/20 bg-emerald-500/10 text-emerald-800 dark:text-emerald-400',
+    low:      'border border-emerald-500/20 bg-emerald-500/10 text-emerald-800 dark:text-emerald-400',
+    média:    'border border-amber-500/20 bg-amber-500/10 text-amber-800 dark:text-amber-400',
+    media:    'border border-amber-500/20 bg-amber-500/10 text-amber-800 dark:text-amber-400',
+    medium:   'border border-amber-500/20 bg-amber-500/10 text-amber-800 dark:text-amber-400',
+    alta:     'border border-orange-500/20 bg-orange-500/10 text-orange-800 dark:text-orange-400',
+    high:     'border border-orange-500/20 bg-orange-500/10 text-orange-800 dark:text-orange-400',
+    crítica:  'border border-rose-500/20 bg-rose-500/10 text-rose-800 dark:text-rose-400 animate-pulse font-bold',
+    critica:  'border border-rose-500/20 bg-rose-500/10 text-rose-800 dark:text-rose-400 animate-pulse font-bold',
+    critical: 'border border-rose-500/20 bg-rose-500/10 text-rose-800 dark:text-rose-400 animate-pulse font-bold'
 };
 
-const priorityTranslations = {
-    baixa: "{{ __('Baixa') }}",
-    média: "{{ __('Média') }}",
-    alta: "{{ __('Alta') }}",
-    crítica: "{{ __('Crítica') }}"
-};
+function formatDynamicText(text) {
+    if (!text) return '—';
+    const locale = window.currentLocale || 'pt';
+    if (locale !== 'en') return text;
 
-const statusTranslations = {
-    aberta: "{{ __('Aberta') }}",
-    aberto: "{{ __('Aberta') }}",
-    'em curso': "{{ __('Em Curso') }}",
-    fechada: "{{ __('Fechada') }}",
-    fechado: "{{ __('Fechada') }}"
-};
+    return String(text)
+        .replace(/Ocorrência sintética/gi, 'Synthetic Incident')
+        .replace(/Sala Operacional/gi, 'Operational Room')
+        .replace(/Utilizador Sintético/gi, 'Synthetic User')
+        .replace(/Equipamento Operacional/gi, 'Operational Equipment')
+        .replace(/Linha de Montagem/gi, 'Assembly Line')
+        .replace(/Técnico/gi, 'Technician')
+        .replace(/Administrador/gi, 'Administrator');
+}
+
+function translateStatusLabel(status) {
+    if (!status) return 'N/A';
+    const locale = window.currentLocale || 'pt';
+    if (locale !== 'en') return status;
+
+    const map = {
+        'fechada': 'CLOSED',
+        'fechado': 'CLOSED',
+        'closed': 'CLOSED',
+        'sem rede': 'NO NETWORK',
+        'no network': 'NO NETWORK',
+        'em revisão': 'UNDER REVIEW',
+        'em revisao': 'UNDER REVIEW',
+        'under review': 'UNDER REVIEW',
+        'pendente orçamento': 'BUDGET PENDING',
+        'pendente orcamento': 'BUDGET PENDING',
+        'budget pending': 'BUDGET PENDING',
+        'aguarda peças': 'AWAITING PARTS',
+        'aguarda pecas': 'AWAITING PARTS',
+        'awaiting parts': 'AWAITING PARTS',
+        'cancelada': 'CANCELLED',
+        'cancelado': 'CANCELLED',
+        'cancelled': 'CANCELLED',
+        'aberta': 'OPEN',
+        'aberto': 'OPEN',
+        'open': 'OPEN',
+        'em curso': 'IN PROGRESS',
+        'in progress': 'IN PROGRESS'
+    };
+
+    const key = String(status).trim().toLowerCase();
+    return map[key] || String(status).toUpperCase();
+}
 
 let currentPage = 1;
 
@@ -163,11 +194,11 @@ function authHeader(){
 async function loadTickets(page = 1) {
     currentPage = page;
     const params = new URLSearchParams();
-    const q          = document.getElementById('filter_q').value.trim();
-    const status     = document.getElementById('filter_status').value;
-    const priority   = document.getElementById('filter_priority').value;
-    const dateFrom   = document.getElementById('filter_date_from').value;
-    const dateTo     = document.getElementById('filter_date_to').value;
+    const q        = document.getElementById('filter_q').value.trim();
+    const status   = document.getElementById('filter_status').value;
+    const priority = document.getElementById('filter_priority').value;
+    const dateFrom = document.getElementById('filter_date_from').value;
+    const dateTo   = document.getElementById('filter_date_to').value;
 
     if (q)        params.append('q', q);
     if (status)   params.append('status', status);
@@ -176,19 +207,21 @@ async function loadTickets(page = 1) {
     if (dateTo)   params.append('date_to', dateTo);
     params.append('page', page);
 
-    const endpoint = '/tickets/search';
-    const url = `${endpoint}?${params.toString()}`;
-
+    const url = `/tickets/search?${params.toString()}`;
     const tbody = document.getElementById('ticketsBody');
-    tbody.innerHTML = `<tr><td colspan="8" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]">${"{{ __('A atualizar dados...') }}"}</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="8" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]">${__('A atualizar dados...')}</td></tr>`;
 
     try {
         const res = await fetch(url, { headers: authHeader() });
         
-        if (res.status === 401) { showFeedback("{{ __('Autenticação necessária. Faça login.') }}", true); window.location = '/ui/login'; return; }
+        if (res.status === 401) { 
+            showFeedback(__('Autenticação necessária. Faça login.'), true); 
+            window.location = '/ui/login'; 
+            return; 
+        }
         if (!res.ok) {
             const errData = await res.json().catch(() => ({}));
-            showFeedback(errData.message || "{{ __('Não foi possível carregar os tickets de momento.') }}", true);
+            showFeedback(errData.message || __('Não foi possível carregar os tickets de momento.'), true);
             return;
         }
         const data = await res.json().catch(() => ({}));
@@ -197,10 +230,10 @@ async function loadTickets(page = 1) {
         const meta    = data.tickets?.meta ?? data.tickets ?? {};
         const total   = meta.total ?? tickets.length;
 
-        document.getElementById('resultsCount').textContent = total > 0 ? `${total} ${"{{ __('resultado(s) encontrado(s)') }}"}` : "{{ __('Sem resultados') }}";
+        document.getElementById('resultsCount').textContent = total > 0 ? `${total} ${__('resultado(s) encontrado(s)')}` : __('Sem resultados');
 
         if (!tickets.length) {
-            tbody.innerHTML = `<tr><td colspan="8" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]"><div class="mx-auto max-w-sm rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface-2)] p-5">${"{{ __('Nenhum ticket encontrado com os filtros aplicados.') }}"}</div></td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="8" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]"><div class="mx-auto max-w-sm rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface-2)] p-5">${__('Nenhum ticket encontrado com os filtros aplicados.')}</div></td></tr>`;
             document.getElementById('pagination').innerHTML = '';
             return;
         }
@@ -208,49 +241,55 @@ async function loadTickets(page = 1) {
         tbody.innerHTML = tickets.map(t => {
             const priorityKey = (t.priority || '').toLowerCase();
             const priColor = priorityColors[priorityKey] ?? 'border border-[var(--border)] bg-[var(--surface-2)] text-[var(--text-soft)]';
-            const priorityLabel = priorityTranslations[priorityKey] ?? t.priority;
-            const statusName = t.status?.name ?? t.status ?? 'N/A';
-            const statusKey = statusName.toLowerCase();
+            const priorityLabel = __(t.priority || '').toUpperCase();
 
-            let statusBadge = `<span class="inline-flex items-center gap-1.5 font-bold text-[var(--text)] text-[11px] uppercase tracking-tight">${statusTranslations[statusKey] || statusName}</span>`;
-            if(statusKey === 'aberta' || statusKey === 'aberto') {
-                statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-blue-500/10 text-blue-700 dark:text-blue-400 uppercase tracking-tight">${statusTranslations.aberta}</span>`;
-            } else if (statusKey === 'em curso') {
-                statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-amber-500/10 text-amber-800 dark:text-amber-400 uppercase tracking-tight">${statusTranslations['em curso']}</span>`;
-            } else if (statusKey === 'fechada' || statusKey === 'fechado') {
-                statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-[var(--text-soft)]/10 text-[var(--text-soft)] uppercase tracking-tight">${statusTranslations.fechada}</span>`;
+            const rawStatus = t.status?.name ?? t.status ?? 'N/A';
+            const statusKey = String(rawStatus).toLowerCase();
+            const translatedStatus = translateStatusLabel(rawStatus);
+
+            let statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-[var(--surface-2)] text-[var(--text-soft)] border border-[var(--border)] uppercase tracking-tight">${translatedStatus}</span>`;
+            if (statusKey.includes('abert') || statusKey.includes('open')) {
+                statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-500/20 uppercase tracking-tight">${translatedStatus}</span>`;
+            } else if (statusKey.includes('curso') || statusKey.includes('progress')) {
+                statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-amber-500/10 text-amber-800 dark:text-amber-400 border border-amber-500/20 uppercase tracking-tight">${translatedStatus}</span>`;
+            } else if (statusKey.includes('fechad') || statusKey.includes('close')) {
+                statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-emerald-500/10 text-emerald-800 dark:text-emerald-400 border border-emerald-500/20 uppercase tracking-tight">${translatedStatus}</span>`;
+            } else if (statusKey.includes('cancel')) {
+                statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-rose-500/10 text-rose-800 dark:text-rose-400 border border-rose-500/20 uppercase tracking-tight">${translatedStatus}</span>`;
             }
 
             return `<tr class="hover:bg-[var(--surface-2)]/50 transition-colors duration-150">
                 <td class="px-5 py-4 font-mono text-[var(--text-soft)] font-bold">#${t.id}</td>
-                <td class="px-5 py-4 font-semibold text-[var(--text)]">${t.title}</td>
+                <td class="px-5 py-4 font-semibold text-[var(--text)]">${formatDynamicText(t.title)}</td>
                 <td class="px-5 py-4">
-                    <span class="inline-block px-2.5 py-1 rounded-lg text-[11px] font-bold uppercase tracking-tight ${priColor}">${priorityLabel}</span>
+                    <span class="inline-block px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-tight ${priColor}">${priorityLabel}</span>
                 </td>
                 <td class="px-5 py-4">${statusBadge}</td>
-                <td class="px-5 py-4 text-[var(--text-soft)] font-semibold">${t.equipment ? t.equipment.name : '—'}</td>
-                <td class="px-5 py-4 text-[var(--text-soft)] font-semibold">${t.room ? t.room.name : '—'}</td>
-                <td class="px-5 py-4 text-xs font-semibold text-[var(--text)]">${t.technician ? t.technician.name : '<span class="text-[var(--text-soft)] font-normal italic">—</span>'}</td>
+                <td class="px-5 py-4 text-[var(--text-soft)] font-semibold">${formatDynamicText(t.equipment ? t.equipment.name : '—')}</td>
+                <td class="px-5 py-4 text-[var(--text-soft)] font-semibold">${formatDynamicText(t.room ? t.room.name : '—')}</td>
+                <td class="px-5 py-4 text-xs font-semibold text-[var(--text)]">${t.technician ? formatDynamicText(t.technician.name) : '<span class="text-[var(--text-soft)] font-normal italic">—</span>'}</td>
                 <td class="px-5 py-4 text-right">
-                    <a href="/ui/tickets/${t.id}" class="inline-flex items-center justify-center px-3.5 py-1.5 bg-[var(--surface)] hover:bg-[var(--surface-2)] text-[11px] font-semibold text-[var(--text)] border border-[var(--border)] rounded-lg shadow-sm transition-all min-h-[28px]">${"{{ __('Ver') }}"}</a>
+                    <a href="/ui/tickets/${t.id}" class="inline-flex items-center justify-center px-3.5 py-1.5 bg-[var(--surface)] hover:bg-[var(--surface-2)] text-[11px] font-semibold text-[var(--text)] border border-[var(--border)] rounded-lg shadow-sm transition-all min-h-[28px]">${__('Ver')}</a>
                 </td>
             </tr>`;
         }).join('');
 
-        const lastPage  = meta.last_page ?? 1;
-        const currPage  = meta.current_page ?? page;
-        const pagEl     = document.getElementById('pagination');
+        const lastPage = meta.last_page ?? 1;
+        const currPage = meta.current_page ?? page;
+        const pagEl    = document.getElementById('pagination');
+        
         if (lastPage <= 1) { pagEl.innerHTML = ''; return; }
+        
         pagEl.innerHTML = `
             <button onclick="loadTickets(${currPage - 1})" ${currPage <= 1 ? 'disabled' : ''}
-                class="ui-button ui-button--primary inline-flex items-center justify-center px-3.5 py-2 text-xs font-bold text-[var(--on-primary)] rounded-xl shadow-sm hover:opacity-90 transition-all disabled:opacity-40 disabled:cursor-not-allowed min-h-[36px]">← ${"{{ __('Anterior') }}"}</button>
-            <span class="font-bold text-[var(--text-soft)]">${"{{ __('Página') }}"} ${currPage} ${"{{ __('de') }}"} ${lastPage}</span>
+                class="ui-button ui-button--primary inline-flex items-center justify-center px-3.5 py-2 text-xs font-bold text-[var(--on-primary)] rounded-xl shadow-sm hover:opacity-90 transition-all disabled:opacity-40 disabled:cursor-not-allowed min-h-[36px]">← ${__('Anterior')}</button>
+            <span class="font-bold text-[var(--text-soft)]">${__('Página')} ${currPage} ${__('de')} ${lastPage}</span>
             <button onclick="loadTickets(${currPage + 1})" ${currPage >= lastPage ? 'disabled' : ''}
-                class="ui-button ui-button--primary inline-flex items-center justify-center px-3.5 py-2 text-xs font-bold text-[var(--on-primary)] rounded-xl shadow-sm hover:opacity-90 transition-all disabled:opacity-40 disabled:cursor-not-allowed min-h-[36px]">${"{{ __('Próxima') }}"} →</button>
+                class="ui-button ui-button--primary inline-flex items-center justify-center px-3.5 py-2 text-xs font-bold text-[var(--on-primary)] rounded-xl shadow-sm hover:opacity-90 transition-all disabled:opacity-40 disabled:cursor-not-allowed min-h-[36px]">${__('Próxima')} →</button>
         `;
     } catch (err) {
         console.error('❌ Exceção em loadTickets:', err);
-        showFeedback("{{ __('Erro ao carregar tickets.') }} " + err.message, true);
+        showFeedback(`${__('Erro ao carregar tickets.')} ${err.message}`, true);
     }
 }
 
