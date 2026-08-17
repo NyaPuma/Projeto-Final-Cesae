@@ -25,12 +25,12 @@ enum AuditEventEnum: string
     public function label(): string
     {
         return match ($this) {
-            self::Created => 'Registo Criado',
-            self::Updated => 'Registo Atualizado',
-            self::Deleted => 'Registo Eliminado',
-            self::Login => 'Início de Sessão',
-            self::Logout => 'Fim de Sessão',
-            self::PasswordChanged => 'Palavra-passe Alterada',
+            self::Created => __('auth.Registo Criado'),
+            self::Updated => __('auth.Registo Atualizado'),
+            self::Deleted => __('auth.Registo Eliminado'),
+            self::Login => __('auth.Início de Sessão'),
+            self::Logout => __('auth.Fim de Sessão'),
+            self::PasswordChanged => __('auth.Palavra-passe Alterada'),
         };
     }
 

@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => 'Ninguna evidencia subida.',
+    'remove_photo' => 'Eliminar fotografía',
+    'remove_file' => 'Eliminar archivo',
+    'load_error' => 'Error al cargar fotografías.',
+    'confirm_remove' => '¿Seguro que quieres eliminar esta fotografía?',
+    'remove_error' => 'Error al eliminar la fotografía.',
+    'removed' => 'Fotografía eliminada correctamente.',
+    'sent' => '¡Fotografía enviada!',
+    'file' => 'Archivo',
+    'Anexos' => 'Adjuntos',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => 'Actualice las credenciales, fotografía y permisos de acceso del perfil de usuario.',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => 'Suba una imagen (PNG, JPG o WEBP hasta 2MB).',
+    'Emergência Imediata. Risco de acidente.' => 'Emergencia Inmediata. Riesgo de accidente.',
+    'Escolher Fotografia' => 'Elegir Fotografía',
+    'Escolher ficheiro' => 'Elegir archivo',
+    'Fotografia (Opcional)' => 'Fotografía (Opcional)',
+    'Fotografia do Utilizador' => 'Fotografía del Usuario',
+    'Imagem' => 'Imagen',
+    'Inserir Imagem (Opcional)' => 'Insertar Imagen (Opcional)',
+    'Nenhum ficheiro' => 'Ningún archivo',
+    'Nenhum ficheiro selecionado' => 'Ningún archivo seleccionado',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => 'Perfil actual: :profile. Acceda a los módulos según los permisos de su rol.',
+    'Tipo de ficheiro não permitido.' => 'Tipo de archivo no permitido.',
+];

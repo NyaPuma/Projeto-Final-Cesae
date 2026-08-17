@@ -7,7 +7,7 @@ namespace App\Services;
 use Illuminate\Http\Request;
 
 /**
- * Serviço central de locais (idiomas/regiões).
+ * Serviço central de locais (idiomas).
  *
  * Centraliza o acesso a `config('locales')` — a fonte única de verdade — e
  * fornece a resolução de preferência do utilizador a partir do request.
@@ -15,21 +15,177 @@ use Illuminate\Http\Request;
 final class LocaleService
 {
     /**
-     * Locais agrupados por continente, na ordem definida em config.
+     * Lista de idiomas suportados.
      *
-     * @return array<string, array<string, array<string, mixed>>>
+     * @return array<string, array<string, mixed>>
      */
     public static function grouped(): array
     {
         $locales = config('locales', []);
 
-        return is_array($locales)
-            ? array_filter($locales, fn ($v) => is_array($v))
+        $languages = $locales['languages'] ?? [];
+
+        return is_array($languages)
+            ? array_filter($languages, fn ($v) => is_array($v))
             : [];
     }
 
     /**
-     * Lista plana de todos os locais (código => metadata).
+     * Lista de idiomas suportados agrupados por continente.
+     *
+     * @return array<string, array<string, array<string, mixed>>>
+     */
+    public static function groupedByContinent(): array
+    {
+        $grouped = [];
+
+        foreach (self::all() as $code => $meta) {
+            $continent = $meta['continent'] ?? 'other';
+            $grouped[$continent][] = [
+                'code' => $code,
+                ...$meta,
+            ];
+        }
+
+        return $grouped;
+    }
+
+    /**
+     * Lista de moedas suportadas agrupadas por continente.
+     *
+     * @return array<string, list<string>>
+     */
+    public static function currenciesByContinent(): array
+    {
+        $currencyContinents = [
+            'EUR' => 'europe',
+            'USD' => 'north_america',
+            'GBP' => 'europe',
+            'BRL' => 'south_america',
+            'JPY' => 'asia',
+            'CNY' => 'asia',
+            'PLN' => 'europe',
+            'ARS' => 'south_america',
+            'CAD' => 'north_america',
+            'MXN' => 'north_america',
+            'INR' => 'asia',
+            'AED' => 'asia',
+            'KRW' => 'asia',
+            'ALL' => 'europe',
+            'AZN' => 'asia',
+            'BAM' => 'europe',
+            'BGN' => 'europe',
+            'BYN' => 'europe',
+            'CHF' => 'europe',
+            'CZK' => 'europe',
+            'DKK' => 'europe',
+            'GEL' => 'asia',
+            'HUF' => 'europe',
+            'ISK' => 'europe',
+            'MDL' => 'europe',
+            'MKD' => 'europe',
+            'RON' => 'europe',
+            'RSD' => 'europe',
+            'RUB' => 'europe',
+            'SEK' => 'europe',
+            'TRY' => 'asia',
+            'UAH' => 'europe',
+            'AMD' => 'asia',
+            'THB' => 'asia',
+            'VND' => 'asia',
+            'IDR' => 'asia',
+            'HKD' => 'asia',
+            'TWD' => 'asia',
+            'SGD' => 'asia',
+            'CLP' => 'south_america',
+            'COP' => 'south_america',
+            'SAR' => 'asia',
+            'EGP' => 'africa',
+            'NOK' => 'europe',
+            'AUD' => 'oceania',
+        ];
+
+        $grouped = [];
+
+        foreach (self::supportedCurrencies() as $currency) {
+            $continent = $currencyContinents[$currency] ?? 'other';
+            $grouped[$continent][] = $currency;
+        }
+
+        return $grouped;
+    }
+
+    /**
+     * Lista de moedas suportadas.
+     *
+     * A lista de moedas é independente das línguas configuradas, pelo que é
+     * delegada em `PreferenciasService::supportedCurrencies()`.
+     *
+     * @return list<string>
+     */
+    public static function supportedCurrencies(): array
+    {
+        return \App\Services\PreferenciasService::supportedCurrencies();
+    }
+
+    /**
+     * Nome por extenso da moeda ISO 4217.
+     */
+    public static function currencyName(string $currency): string
+    {
+        $names = [
+            'EUR' => 'Euro',
+            'USD' => 'Dólar Americano',
+            'GBP' => 'Libra Esterlina',
+            'BRL' => 'Real Brasileiro',
+            'JPY' => 'Iene Japonês',
+            'CNY' => 'Yuan Chinês',
+            'PLN' => 'Złoty Polaco',
+            'ARS' => 'Peso Argentino',
+            'CAD' => 'Dólar Canadiano',
+            'MXN' => 'Peso Mexicano',
+            'INR' => 'Rupia Indiana',
+            'AED' => 'Dirham dos EAU',
+            'KRW' => 'Won Sul-Coreano',
+            'ALL' => 'Lek Albanês',
+            'AZN' => 'Manat Azerbaijano',
+            'BAM' => 'Marco Convertível',
+            'BGN' => 'Lev Búlgaro',
+            'BYN' => 'Rublo Bielorrusso',
+            'CHF' => 'Franco Suíço',
+            'CZK' => 'Coroa Checa',
+            'DKK' => 'Coroa Dinamarquesa',
+            'GEL' => 'Lari Georgiano',
+            'HUF' => 'Florim Húngaro',
+            'ISK' => 'Coroa Islandesa',
+            'MDL' => 'Leu Moldavo',
+            'MKD' => 'Denar Macedónio',
+            'RON' => 'Leu Romeno',
+            'RSD' => 'Dinar Sérvio',
+            'RUB' => 'Rublo Russo',
+            'SEK' => 'Coroa Sueca',
+            'TRY' => 'Lira Turca',
+            'UAH' => 'Hryvnia Ucraniana',
+            'AMD' => 'Dram Arménio',
+            'THB' => 'Baht Tailandês',
+            'VND' => 'Dong Vietnamita',
+            'IDR' => 'Rupia Indonésia',
+            'HKD' => 'Dólar de Hong Kong',
+            'TWD' => 'Dólar Taiwanês',
+            'SGD' => 'Dólar de Singapura',
+            'CLP' => 'Peso Chileno',
+            'COP' => 'Peso Colombiano',
+            'SAR' => 'Rial Saudita',
+            'EGP' => 'Libra Egípcia',
+            'NOK' => 'Coroa Norueguesa',
+            'AUD' => 'Dólar Australiano',
+        ];
+
+        return $names[strtoupper($currency)] ?? $currency;
+    }
+
+    /**
+     * Lista plana de todos os idiomas (código => metadata).
      *
      * @return array<string, array<string, mixed>>
      */
@@ -37,17 +193,44 @@ final class LocaleService
     {
         $flattened = [];
 
-        foreach (self::grouped() as $group) {
-            foreach ($group as $code => $meta) {
-                $flattened[$code] = $meta;
-            }
+        foreach (self::grouped() as $code => $meta) {
+            $flattened[$code] = $meta;
         }
+
+        self::sortByName($flattened);
 
         return $flattened;
     }
 
     /**
-     * Códigos de todos os locais suportados.
+     * Ordena alfabeticamente por nome (com acentuação, se o intl estiver
+     * disponível).
+     *
+     * @param  array<string, array<string, mixed>>  $locales
+     */
+    private static function sortByName(array &$locales): void
+    {
+        if (class_exists(\Collator::class)) {
+            $collator = new \Collator('pt_PT');
+
+            if ($collator) {
+                uasort($locales, static fn (array $a, array $b): int => $collator->compare(
+                    (string) ($a['name'] ?? ''),
+                    (string) ($b['name'] ?? ''),
+                ));
+
+                return;
+            }
+        }
+
+        uasort($locales, static fn (array $a, array $b): int => strcasecmp(
+            (string) ($a['name'] ?? ''),
+            (string) ($b['name'] ?? ''),
+        ));
+    }
+
+    /**
+     * Códigos de todos os idiomas suportados.
      *
      * @return list<string>
      */
@@ -57,38 +240,86 @@ final class LocaleService
     }
 
     /**
-     * Locale predefinido do sistema.
+     * Resolve um código de idioma para o seu locale de formatação predefinido.
      *
-     * Preferência: override de `app.locale` (definições na BD) → `locales.default`
-     * (env) → 'pt-PT'. Devolve sempre um código suportado.
+     * @return array{code: string, locale: string}
+     */
+    public static function resolveLocale(?string $locale = null): array
+    {
+        $targetLocale = $locale ?? app()->getLocale();
+
+        if (str_contains($targetLocale, '-')) {
+            return ['code' => $targetLocale, 'locale' => $targetLocale];
+        }
+
+        $meta = self::meta($targetLocale);
+
+        if ($meta && isset($meta['default_locale'])) {
+            return ['code' => $targetLocale, 'locale' => $meta['default_locale']];
+        }
+
+        return ['code' => $targetLocale, 'locale' => $targetLocale];
+    }
+
+    /**
+     * Idioma predefinido do sistema.
      */
     public static function default(): string
     {
-        $candidates = [
-            config('app.locale'),
-            config('locales.default'),
-            'pt-PT',
-        ];
+        $defaultLang = config('locales.default', 'pt');
+        $meta = self::meta($defaultLang);
 
-        foreach ($candidates as $candidate) {
-            if (is_string($candidate) && self::isSupported($candidate)) {
-                return $candidate;
-            }
+        if ($meta && isset($meta['default_locale'])) {
+            return $meta['default_locale'];
         }
 
         return 'pt-PT';
     }
 
     /**
-     * Verifica se um código é um locale suportado.
+     * Verifica se um código de idioma é suportado.
      */
     public static function isSupported(string $locale): bool
     {
-        return array_key_exists($locale, self::all());
+        if (array_key_exists($locale, self::all())) {
+            return true;
+        }
+
+        $base = strtolower(explode('-', $locale)[0]);
+        foreach (self::all() as $code => $meta) {
+            if (strtolower(explode('-', $code)[0]) === $base) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
-     * Metadata de um locale (null se não suportado).
+     * Resolve o default_locale para um código de idioma base.
+     *
+     * @return array{code: string, default_locale: string}
+     */
+    public static function resolveDefaultLocale(string $locale): array
+    {
+        $meta = self::meta($locale);
+
+        if ($meta && isset($meta['default_locale'])) {
+            return ['code' => $locale, 'default_locale' => $meta['default_locale']];
+        }
+
+        $base = strtolower(explode('-', $locale)[0]);
+        foreach (self::all() as $code => $meta) {
+            if (strtolower(explode('-', $code)[0]) === $base) {
+                return ['code' => $locale, 'default_locale' => $meta['default_locale'] ?? $code];
+            }
+        }
+
+        return ['code' => $locale, 'default_locale' => self::default()];
+    }
+
+    /**
+     * Metadata de um idioma (null se não suportado).
      *
      * @return array<string, mixed>|null
      */
@@ -98,7 +329,7 @@ final class LocaleService
     }
 
     /**
-     * Designação fiscal usada na região do locale ativo.
+     * Designação fiscal usada na região do idioma ativo.
      */
     public static function taxIdentifierLabel(?string $locale = null): string
     {
@@ -110,10 +341,7 @@ final class LocaleService
             'en-GB' => 'UTR',
             'en-US' => 'EIN',
             'es-ES' => 'NIF',
-            'es-MX' => 'RFC',
-            'es-AR' => 'CUIT',
             'fr-FR' => 'SIRET',
-            'fr-CA' => 'BN',
             'de-DE' => 'Steuernummer',
             'it-IT' => 'Partita IVA',
             'nl-NL' => 'BTW-nummer',
@@ -137,8 +365,8 @@ final class LocaleService
         return match ($code) {
             'pt-PT', 'pt-BR' => 'IVA',
             'en-GB', 'en-US', 'ar-AE' => 'VAT',
-            'es-ES', 'es-MX', 'es-AR' => 'IVA',
-            'fr-FR', 'fr-CA' => 'TVA',
+            'es-ES' => 'IVA',
+            'fr-FR' => 'TVA',
             'de-DE' => 'MwSt.',
             'it-IT' => 'IVA',
             'nl-NL' => 'btw',
@@ -153,7 +381,6 @@ final class LocaleService
 
     /**
      * Devolve a bandeira Unicode correspondente ao código ISO-3166 alpha-2.
-     * Mantém o seletor funcional sem depender de CDN ou imagens externas.
      */
     public static function flagEmoji(?string $countryCode): string
     {
@@ -170,39 +397,44 @@ final class LocaleService
     }
 
     /**
-     * Indica se o locale é right-to-left.
+     * Indica se o idioma é right-to-left.
      */
     public static function isRtl(string $locale): bool
     {
-        return (bool) (self::meta($locale)['rtl'] ?? false);
+        $meta = self::meta($locale);
+
+        return (bool) ($meta['rtl'] ?? false);
     }
 
     /**
-     * Moeda ISO 4217 do locale indicado (ou atual).
+     * Moeda ISO 4217 do idioma indicado (ou atual).
      */
     public static function currency(?string $locale = null): string
     {
         $targetLocale = $locale ?? app()->getLocale();
+        $meta = self::meta($targetLocale);
 
-        return (string) (self::meta($targetLocale)['currency'] ?? 'EUR');
+        return (string) ($meta['currencies'][0] ?? 'EUR');
     }
 
     /**
-     * Sistema de unidades do locale indicado (ou atual).
+     * Sistema de unidades do idioma indicado (ou atual).
      */
     public static function unitSystem(?string $locale = null): string
     {
         $targetLocale = $locale ?? app()->getLocale();
+        $meta = self::meta($targetLocale);
 
-        return (string) (self::meta($targetLocale)['unit_system'] ?? 'metric');
+        return (string) ($meta['unit_system'] ?? 'metric');
     }
 
     /**
-     * Formata um número segundo o locale indicado (ou atual).
+     * Formata um número segundo o idioma indicado (ou atual).
      */
     public static function formatNumber(int|float $value, int $decimals = 0, ?string $locale = null): string
     {
-        $targetLocale = $locale ?? app()->getLocale();
+        $resolved = self::resolveLocale($locale);
+        $targetLocale = $resolved['locale'];
 
         if (class_exists(\NumberFormatter::class)) {
             $formatter = new \NumberFormatter($targetLocale, \NumberFormatter::DECIMAL);
@@ -215,18 +447,21 @@ final class LocaleService
             }
         }
 
-        $decPoint = in_array($targetLocale, ['en-US', 'en-GB'], true) ? '.' : ',';
-        $thousandsSep = in_array($targetLocale, ['en-US', 'en-GB'], true) ? ',' : ' ';
+        $meta = self::meta($resolved['code']);
+        $numberFormat = $meta['number_format'] ?? ['decimal' => '.', 'thousand' => ','];
+        $decPoint = $numberFormat['decimal'] ?? '.';
+        $thousandsSep = $numberFormat['thousand'] ?? ',';
 
         return number_format((float) $value, $decimals, $decPoint, $thousandsSep);
     }
 
     /**
-     * Formata um montante na moeda do locale indicado (ou atual).
+     * Formata um montante na moeda do idioma indicado (ou atual).
      */
     public static function formatCurrency(int|float $value, ?string $currency = null, ?string $locale = null): string
     {
-        $targetLocale = $locale ?? app()->getLocale();
+        $resolved = self::resolveLocale($locale);
+        $targetLocale = $resolved['locale'];
         $currencyCode = $currency ?? self::currency($targetLocale);
 
         if (class_exists(\NumberFormatter::class)) {
@@ -272,11 +507,23 @@ final class LocaleService
             'TRY' => '₺',
             'UAH' => '₴',
             'AMD' => '֏',
+            'THB' => '฿',
+            'VND' => '₫',
+            'IDR' => 'Rp',
+            'HKD' => 'HK$',
+            'TWD' => 'NT$',
+            'SGD' => 'S$',
+            'CLP' => 'CLP$',
+            'COP' => 'COL$',
+            'SAR' => 'SAR',
+            'EGP' => 'E£',
+            'NOK' => 'kr',
+            'AUD' => 'A$',
         ];
 
         $symbol = $symbols[$currencyCode] ?? $currencyCode;
 
-        if (in_array($targetLocale, ['en-US', 'en-GB', 'fr-CA'], true)) {
+        if (in_array($targetLocale, ['en-US', 'en-GB'], true)) {
             return "{$symbol}{$formattedNum}";
         }
 
@@ -288,7 +535,8 @@ final class LocaleService
      */
     public static function formatPercent(int|float $value, int $decimals = 1, ?string $locale = null): string
     {
-        $targetLocale = $locale ?? app()->getLocale();
+        $resolved = self::resolveLocale($locale);
+        $targetLocale = $resolved['locale'];
 
         if (class_exists(\NumberFormatter::class)) {
             $formatter = new \NumberFormatter($targetLocale, \NumberFormatter::PERCENT);
@@ -307,7 +555,7 @@ final class LocaleService
     }
 
     /**
-     * Formata uma data (curta) segundo o locale indicado (ou atual).
+     * Formata uma data (curta) segundo o idioma indicado (ou atual).
      */
     public static function formatDate(mixed $value, ?string $locale = null): string
     {
@@ -317,7 +565,8 @@ final class LocaleService
             return '';
         }
 
-        $targetLocale = $locale ?? app()->getLocale();
+        $resolved = self::resolveLocale($locale);
+        $targetLocale = $resolved['locale'];
 
         if (class_exists(\IntlDateFormatter::class)) {
             $formatter = \IntlDateFormatter::create(
@@ -338,7 +587,7 @@ final class LocaleService
     }
 
     /**
-     * Formata data e hora segundo o locale indicado (ou atual).
+     * Formata data e hora segundo o idioma indicado (ou atual).
      */
     public static function formatDateTime(mixed $value, ?string $locale = null): string
     {
@@ -348,7 +597,8 @@ final class LocaleService
             return '';
         }
 
-        $targetLocale = $locale ?? app()->getLocale();
+        $resolved = self::resolveLocale($locale);
+        $targetLocale = $resolved['locale'];
 
         if (class_exists(\IntlDateFormatter::class)) {
             $formatter = \IntlDateFormatter::create(
@@ -369,16 +619,14 @@ final class LocaleService
     }
 
     /**
-     * Converte uma unidade de medida com base no sistema de unidades do locale.
-     *
-     * Tipos suportados: 'temperature', 'distance', 'weight', 'volume'.
-     *
-     * @return array{value: float, unit: string, formatted: string}
+     * Converte uma unidade de medida com base no sistema de unidades do idioma.
      */
     public static function convertUnit(float|int $value, string $type, string $fromUnit = '', ?string $locale = null): array
     {
         $numValue = (float) $value;
-        $unitSys = self::unitSystem($locale);
+        $resolved = self::resolveLocale($locale);
+        $targetLocale = $resolved['locale'];
+        $unitSys = self::unitSystem($targetLocale);
 
         switch (strtolower($type)) {
             case 'temperature':
@@ -410,8 +658,8 @@ final class LocaleService
                     $converted = $numValue / 0.621371;
                     $unit = 'km';
                 } elseif (! $isImperial && in_array($from, ['ft', 'feet', 'pés'], true)) {
-                    $converted = $numValue / 3.28084;
-                    $unit = 'm';
+                    $converted = $numValue / 0.621371;
+                    $unit = 'km';
                 } else {
                     $converted = $numValue;
                     $unit = $fromUnit !== '' ? $fromUnit : ($isImperial ? 'ft' : 'm');
@@ -456,7 +704,7 @@ final class LocaleService
                 break;
         }
 
-        $formattedNum = self::formatNumber($converted, 2, $locale);
+        $formattedNum = self::formatNumber($converted, 2, $targetLocale);
 
         return [
             'value' => round($converted, 2),
@@ -486,19 +734,24 @@ final class LocaleService
     }
 
     /**
-     * Normaliza um locale para um código suportado; se inválido devolve o
+     * Normaliza um idioma para um código suportado; se inválido devolve o
      * predefinido.
      */
     public static function sanitize(string $locale): string
     {
         if (self::isSupported($locale)) {
+            $meta = self::meta($locale);
+            if ($meta && isset($meta['default_locale'])) {
+                return $meta['default_locale'];
+            }
+
             return $locale;
         }
 
         $base = strtolower(explode('-', $locale)[0]);
         foreach (self::all() as $code => $meta) {
             if (strtolower(explode('-', $code)[0]) === $base) {
-                return $code;
+                return $meta['default_locale'] ?? $code;
             }
         }
 
@@ -506,11 +759,7 @@ final class LocaleService
     }
 
     /**
-     * Resolve o locale da preferência do request.
-     *
-     * Precedência: sessão → cookie → `Accept-Language` do browser → default.
-     * A preferência de BD do utilizador é resolvida pelo middleware (requer
-     * autenticação) e persistida na sessão.
+     * Resolve o idioma da preferência do request.
      */
     public static function resolveFromRequest(Request $request): string
     {
@@ -522,11 +771,7 @@ final class LocaleService
     }
 
     /**
-     * Resolve o locale do cabeçalho `Accept-Language` do browser.
-     *
-     * Cada idioma do browser é tentado por correspondência exata (ex. pt-PT)
-     * e, em seguida, por base (ex. pt → pt-PT). Retorna o primeiro hit na
-     * ordem do cabeçalho.
+     * Resolve o idioma do cabeçalho `Accept-Language` do browser.
      */
     public static function fromBrowser(Request $request): ?string
     {
@@ -584,7 +829,6 @@ final class LocaleService
             return \App\Services\PreferenciasService::getCurrency($request);
         }
 
-        // Para compatibilidade, tentamos obter do user atual
         $user = auth()->user();
         if ($user) {
             $prefs = \App\Services\PreferenciasService::forUser($user);
@@ -603,7 +847,6 @@ final class LocaleService
             return \App\Services\PreferenciasService::getDateFormat($request);
         }
 
-        // Para compatibilidade, tentamos obter do user atual
         $user = auth()->user();
         if ($user) {
             $prefs = \App\Services\PreferenciasService::forUser($user);
@@ -628,7 +871,7 @@ final class LocaleService
     public static function formatUserDate(mixed $value, ?Request $request = null, ?string $format = null): string
     {
         $userFormat = $format ?? self::userDateFormat($request);
-        
+
         if ($value instanceof \DateTimeInterface) {
             return $value->format($userFormat);
         }

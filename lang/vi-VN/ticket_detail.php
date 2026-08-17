@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => 'Không có tin nhắn nào được ghi nhận.',
+    'comments_error' => 'Lỗi khi tải lịch sử.',
+    'message_sent' => 'Tin nhắn đã được gửi!',
+    'incident_id' => 'Mã sự cố',
+    'description' => 'Mô tả sự cố',
+    'priority_level' => 'Mức ưu tiên',
+    'equipment' => 'Thiết bị / Tài sản',
+    'room' => 'Phòng / Vị trí',
+    'technician' => 'Kỹ thuật viên được phân công',
+    'pending_assignment' => 'Đang chờ phân công',
+    'reported_by' => 'Người báo cáo',
+    'source' => 'Nguồn',
+    'qr_code' => 'Mã QR',
+    'web' => 'Web',
+    'system' => 'Hệ thống',
+    'no_description' => 'Không có mô tả.',
+    'Data de abertura (De)' => 'Ngày mở (Từ)',
+    'Detalhe de um fornecedor' => 'Chi tiết nhà cung cấp',
+    'Detalhe de um fornecedor.' => 'Chi tiết nhà cung cấp.',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => 'Mô tả chi tiết sự cố xảy ra, tiếng ồn, rò rỉ hoặc hành vi bất thường...',
+    'Detalhes do Incidente' => 'Chi tiết sự cố',
+];

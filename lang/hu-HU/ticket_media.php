@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => 'Nincs feltöltött bizonyíték.',
+    'remove_photo' => 'Fénykép eltávolítása',
+    'remove_file' => 'Fájl eltávolítása',
+    'load_error' => 'Hiba a fényképek betöltésekor.',
+    'confirm_remove' => 'Biztosan el akarja távolítani ezt a fényképet?',
+    'remove_error' => 'Hiba a fénykép eltávolításakor.',
+    'removed' => 'A fénykép sikeresen eltávolítva.',
+    'sent' => 'Fénykép elküldve!',
+    'file' => 'Fájl',
+    'Anexos' => 'Mellékletek',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => 'Frissítse a felhasználói profil hitelesítő adatait, fényképét és hozzáférési jogosultságait.',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => 'Töltsön fel egy képet (PNG, JPG vagy WEBP, legfeljebb 2MB).',
+    'Emergência Imediata. Risco de acidente.' => 'Azonnali vészhelyzet. Balesetveszély.',
+    'Escolher Fotografia' => 'Fénykép kiválasztása',
+    'Escolher ficheiro' => 'Fájl kiválasztása',
+    'Fotografia (Opcional)' => 'Fénykép (opcionális)',
+    'Fotografia do Utilizador' => 'A felhasználó fényképe',
+    'Imagem' => 'Kép',
+    'Inserir Imagem (Opcional)' => 'Kép beszúrása (opcionális)',
+    'Nenhum ficheiro' => 'Nincs fájl',
+    'Nenhum ficheiro selecionado' => 'Nincs kiválasztott fájl',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => 'Aktuális profil: :profile. A modulokat szerepe jogosultságainak megfelelően érje el.',
+    'Tipo de ficheiro não permitido.' => 'A fájltípus nem engedélyezett.',
+];

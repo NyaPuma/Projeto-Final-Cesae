@@ -46,6 +46,13 @@ final class UpdateRoomRequest extends FormRequest
                 Rule::unique(Room::class, 'name')->ignore($room),
             ],
             'location' => ['nullable', 'string', 'max:255'],
+            'code' => ['nullable', 'string', 'max:50', Rule::unique(Room::class, 'code')->ignore($room)],
+            'building' => ['nullable', 'string', 'max:100'],
+            'floor' => ['nullable', 'string', 'max:50'],
+            'capacity' => ['nullable', 'integer', 'min:0', 'max:65535'],
+            'description' => ['nullable', 'string'],
+            'notes' => ['nullable', 'string'],
+            'active' => ['sometimes', 'boolean'],
         ];
     }
 
@@ -57,6 +64,13 @@ final class UpdateRoomRequest extends FormRequest
         return [
             'name' => 'nome da sala',
             'location' => 'localização',
+            'code' => 'código da sala',
+            'building' => 'edifício',
+            'floor' => 'piso',
+            'capacity' => 'capacidade',
+            'description' => 'descrição',
+            'notes' => 'notas internas',
+            'active' => 'estado ativo',
         ];
     }
 }

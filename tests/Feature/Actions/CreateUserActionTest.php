@@ -35,4 +35,46 @@ final class CreateUserActionTest extends TestCase
 
         $this->assertNotNull($user->profile_id);
     }
+
+    public function test_it_persists_profile_id_in_database(): void
+    {
+        UserProfile::factory()->create(['name' => 'user']);
+        $action = new CreateUserAction(app('App\Services\UserService'));
+
+        $data = new StoreUserData(
+            name: 'Persisted User',
+            email: 'persisted@example.com',
+            password: 'password123',
+            profileId: null,
+            active: true,
+        );
+
+        $user = $action->execute($data);
+
+        $this->assertDatabaseHas('users', [
+            'id' => $user->id,
+            'profile_id' => $user->profile_id,
+        ]);
+    }
+
+    public function test_it_uses_provided_profile_id_when_given(): void
+    {
+        $profile = UserProfile::factory()->create(['name' => 'technician']);
+        $action = new CreateUserAction(app('App\Services\UserService'));
+
+        $data = new StoreUserData(
+            name: 'Technical User',
+            email: 'tech@example.com',
+            password: 'password123',
+            profileId: $profile->id,
+            active: true,
+        );
+
+        $user = $action->execute($data);
+
+        $this->assertDatabaseHas('users', [
+            'id' => $user->id,
+            'profile_id' => $profile->id,
+        ]);
+    }
 }

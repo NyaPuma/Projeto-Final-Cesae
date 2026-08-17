@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => 'Geen berichten geregistreerd.',
+    'comments_error' => 'Fout bij het laden van de geschiedenis.',
+    'message_sent' => 'Bericht verzonden!',
+    'incident_id' => 'Melding-ID',
+    'description' => 'Beschrijving van de melding',
+    'priority_level' => 'Prioriteitsniveau',
+    'equipment' => 'Apparaat / asset',
+    'room' => 'Ruimte / locatie',
+    'technician' => 'Toegewezen technicus',
+    'pending_assignment' => 'In afwachting van toewijzing',
+    'reported_by' => 'Gemeld door',
+    'source' => 'Bron',
+    'qr_code' => 'QR-code',
+    'web' => 'Web',
+    'system' => 'Systeem',
+    'no_description' => 'Geen beschrijving verstrekt.',
+    'Data de abertura (De)' => 'Openingsdatum (Van)',
+    'Detalhe de um fornecedor' => 'Detail van een leverancier',
+    'Detalhe de um fornecedor.' => 'Detail van een leverancier.',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => 'Beschrijf het opgetreden probleem, geluiden, lekkages of abnormaal gedrag...',
+    'Detalhes do Incidente' => 'Details van het incident',
+];

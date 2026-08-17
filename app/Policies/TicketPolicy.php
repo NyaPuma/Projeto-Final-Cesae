@@ -162,7 +162,7 @@ final class TicketPolicy
      */
     public function viewAnalytics(User $user): bool
     {
-        return $user->isAdmin() || $user->isTechnician();
+        return $user->isAdmin();
     }
 
     /**
@@ -170,7 +170,7 @@ final class TicketPolicy
      */
     public function exportAnalytics(User $user): bool
     {
-        return $user->isAdmin() || $user->isTechnician();
+        return $user->isAdmin();
     }
 
     /**

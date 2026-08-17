@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => 'Докази не завантажено.',
+    'remove_photo' => 'Видалити фото',
+    'remove_file' => 'Видалити файл',
+    'load_error' => 'Помилка завантаження фотографій.',
+    'confirm_remove' => 'Ви впевнені, що хочете видалити це фото?',
+    'remove_error' => 'Помилка видалення фото.',
+    'removed' => 'Фотографію успішно видалено.',
+    'sent' => 'Фотографію надіслано!',
+    'file' => 'Файл',
+    'Anexos' => 'Вкладення',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => 'Оновіть облікові дані, фотографію та права доступу профілю користувача.',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => 'Завантажте зображення (PNG, JPG або WEBP до 2MB).',
+    'Emergência Imediata. Risco de acidente.' => 'Негайна надзвичайна ситуація. Ризик аварії.',
+    'Escolher Fotografia' => 'Обрати фотографію',
+    'Escolher ficheiro' => 'Обрати файл',
+    'Fotografia (Opcional)' => 'Фотографія (необов’язково)',
+    'Fotografia do Utilizador' => 'Фотографія користувача',
+    'Imagem' => 'Зображення',
+    'Inserir Imagem (Opcional)' => 'Вставити зображення (необов’язково)',
+    'Nenhum ficheiro' => 'Немає файлів',
+    'Nenhum ficheiro selecionado' => 'Файл не вибрано',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => 'Поточний профіль: :profile. Доступ до модулів відповідно до прав вашої ролі.',
+    'Tipo de ficheiro não permitido.' => 'Тип файлу не дозволено.',
+];

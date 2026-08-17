@@ -20,7 +20,7 @@ final class PasswordResetService
      */
     public function createResetToken(string $email): string
     {
-        $normalizedEmail = strtolower($email);
+        $normalizedEmail = strtolower(trim($email));
         $token = Str::random(64);
 
         DB::table('password_reset_tokens')->updateOrInsert(
@@ -40,7 +40,7 @@ final class PasswordResetService
      */
     public function validateToken(string $email, string $token): ?User
     {
-        $normalizedEmail = strtolower($email);
+        $normalizedEmail = strtolower(trim($email));
 
         $record = DB::table('password_reset_tokens')
             ->where('email', $normalizedEmail)
@@ -76,6 +76,6 @@ final class PasswordResetService
         $user->api_token = null;
         $user->save();
 
-        DB::table('password_reset_tokens')->where('email', strtolower($user->email))->delete();
+        DB::table('password_reset_tokens')->where('email', strtolower(trim($user->email)))->delete();
     }
 }

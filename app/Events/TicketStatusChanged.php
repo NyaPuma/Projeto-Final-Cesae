@@ -69,7 +69,7 @@ final class TicketStatusChanged implements ShouldBroadcast
     {
         return [
             'ticket_id' => $this->ticket->id,
-            'code' => $this->ticket->code ?? null,
+            'code' => $this->ticket->reference ?? null,
             'old_status' => [
                 'value' => $this->oldStatus->value,
                 'label' => $this->oldStatus->label(),

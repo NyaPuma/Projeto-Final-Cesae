@@ -11,7 +11,7 @@
 
 <div {{ $attributes->merge([
     'id' => $id,
-    'class' => 'mt-5 flex items-center justify-between px-1 text-xs text-[var(--text-soft)]'
+    'class' => 'ui-listing-pagination mt-5 flex items-center justify-between px-1 text-xs text-[var(--text-soft)]'
 ]) }}>
     {{ $slot }}
 </div>

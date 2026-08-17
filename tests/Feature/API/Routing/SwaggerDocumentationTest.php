@@ -2,7 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Enums\UserRoleEnum;
+use App\Models\User;
+use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class SwaggerDocumentationTest extends TestCase
@@ -41,6 +45,17 @@ class SwaggerDocumentationTest extends TestCase
             '/admin/rooms',
             '/admin/audits',
             '/admin/preventive',
+            '/stock/parts',
+            '/stock/parts/{part}',
+            '/stock/suppliers',
+            '/stock/suppliers/{supplier}',
+            '/stock/movements',
+            '/stock/dashboard/summary',
+            '/admin/parts',
+            '/admin/suppliers',
+            '/admin/tax-rates',
+            '/admin/part-categories',
+            '/admin/maintenance-plans',
         ];
 
         foreach ($requiredPaths as $path) {
@@ -60,6 +75,17 @@ class SwaggerDocumentationTest extends TestCase
             '/admin/rooms',
             '/admin/audits',
             '/admin/preventive',
+            '/stock/parts',
+            '/stock/parts/{part}',
+            '/stock/suppliers',
+            '/stock/suppliers/{supplier}',
+            '/stock/movements',
+            '/stock/dashboard/summary',
+            '/admin/parts',
+            '/admin/suppliers',
+            '/admin/tax-rates',
+            '/admin/part-categories',
+            '/admin/maintenance-plans',
         ] as $path) {
             foreach ($spec['paths'][$path] as $method => $operation) {
                 $this->assertArrayHasKey('security', $operation, "Missing security block for {$method} {$path}");
@@ -72,8 +98,37 @@ class SwaggerDocumentationTest extends TestCase
         $this->assertArrayHasKey('/admin/rooms/{id}/inactive', $spec['paths']);
     }
 
-    public function test_swagger_ui_route_is_available(): void
+    public function test_swagger_ui_route_requires_admin_authentication(): void
     {
-        $this->get('/docs/openapi')->assertOk();
+        $this->withoutVite();
+
+        UserProfile::create(['name' => UserRoleEnum::User->value]);
+        UserProfile::create(['name' => UserRoleEnum::Technician->value]);
+        UserProfile::create(['name' => UserRoleEnum::Admin->value]);
+
+        // Sem autenticação: redirecionado para o login
+        $this->get('/docs/openapi')->assertRedirect('/ui/login');
+
+        // Utilizador comum / técnico: acesso negado
+        $user = User::factory()->create([
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->first()->id,
+            'api_token' => Str::random(60),
+            'active' => true,
+        ]);
+
+        $this->withHeader('X-Auth-Token', $user->api_token)
+            ->get('/docs/openapi')
+            ->assertRedirect('/ui');
+
+        // Admin: acesso permitido
+        $admin = User::factory()->create([
+            'profile_id' => UserProfile::where('name', UserRoleEnum::Admin->value)->first()->id,
+            'api_token' => Str::random(60),
+            'active' => true,
+        ]);
+
+        $this->withHeader('X-Auth-Token', $admin->api_token)
+            ->get('/docs/openapi')
+            ->assertOk();
     }
 }

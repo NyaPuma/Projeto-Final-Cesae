@@ -4,12 +4,55 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Enums\BudgetStatusEnum;
+use App\Enums\TicketPriorityEnum;
+use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use Barryvdh\DomPDF\Facade\Pdf;
 use RuntimeException;
 
 final class AnalyticsExportService
 {
+    public function __construct(
+        private readonly ?LocalizationService $localization = null,
+    ) {}
+
+    private const CSV_DELIMITER = ';';
+
+    /** @var list<string> */
+    private const CSV_HEADERS = [
+        'ID',
+        'Código',
+        'Título',
+        'Estado',
+        'Prioridade',
+        'Urgente',
+        'Abertura',
+        'Em Curso',
+        'Fecho',
+        'Duração (min)',
+        'Custo (€)',
+        'Estado Orçamento',
+        'Montante Orçamento (€)',
+    ];
+
+    /** @var list<string> */
+    private const PDF_SELECT = [
+        'id',
+        'reference',
+        'title',
+        'priority',
+        'urgent',
+        'status_id',
+        'opened_at',
+        'in_progress_at',
+        'closed_at',
+        'minutes_spent',
+        'actual_cost',
+        'budget_status',
+        'budget_amount',
+    ];
+
     /**
      * Exporta os dados dos tickets diretamente para a saída padrão (CSV).
      *
@@ -62,18 +105,8 @@ final class AnalyticsExportService
     {
         $this->ensureDirectoryExists($path);
 
-        $tickets = Ticket::select([
-            'id',
-            'title',
-            'status_id',
-            'opened_at',
-            'in_progress_at',
-            'closed_at',
-            'minutes_spent',
-            'cost',
-            'budget_status',
-            'budget_amount',
-        ])
+        $tickets = Ticket::select(self::PDF_SELECT)
+            ->with('status')
             ->whereNull('tickets.deleted_at')
             ->latest()
             ->get();
@@ -104,47 +137,66 @@ final class AnalyticsExportService
      */
     private function writeCsvRows($handle): void
     {
-        fputcsv($handle, [
-            'id',
-            'title',
-            'status_id',
-            'opened_at',
-            'in_progress_at',
-            'closed_at',
-            'minutes_spent',
-            'cost',
-            'budget_status',
-            'budget_amount',
-        ]);
+        fwrite($handle, "\xEF\xBB\xBF");
 
-        Ticket::select([
-            'id',
-            'title',
-            'status_id',
-            'opened_at',
-            'in_progress_at',
-            'closed_at',
-            'minutes_spent',
-            'cost',
-            'budget_status',
-            'budget_amount',
-        ])
+        fputcsv($handle, self::CSV_HEADERS, self::CSV_DELIMITER);
+
+        Ticket::select(self::PDF_SELECT)
+            ->with('status')
             ->whereNull('tickets.deleted_at')
             ->chunk(500, function ($tickets) use ($handle): void {
                 foreach ($tickets as $ticket) {
-                    fputcsv($handle, [
-                        $ticket->id,
-                        $ticket->title,
-                        $ticket->status_id,
-                        $ticket->opened_at?->toDateTimeString(),
-                        $ticket->in_progress_at?->toDateTimeString(),
-                        $ticket->closed_at?->toDateTimeString(),
-                        $ticket->minutes_spent,
-                        $ticket->cost,
-                        $ticket->budget_status,
-                        $ticket->budget_amount,
-                    ]);
+                    fputcsv($handle, $this->csvRow($ticket), self::CSV_DELIMITER);
                 }
             });
     }
+
+    /**
+     * Converte um ticket numa linha CSV legível.
+     *
+     * @return list<string>
+     */
+    private function csvRow(Ticket $ticket): array
+    {
+        return [
+            (string) $ticket->id,
+            $ticket->reference ?? '#'.$ticket->id,
+            $ticket->title,
+            $this->statusLabel($ticket),
+            $this->priorityLabel($ticket->priority),
+            $ticket->urgent ? 'Sim' : 'Não',
+            $this->localization()->formatDateTime($ticket->opened_at),
+            $this->localization()->formatDateTime($ticket->in_progress_at),
+            $this->localization()->formatDateTime($ticket->closed_at),
+            (string) ($ticket->minutes_spent ?? ''),
+            $this->localization()->formatDecimal((float) $ticket->actual_cost),
+            $this->budgetLabel($ticket->budget_status),
+            $ticket->budget_amount !== null ? $this->localization()->formatDecimal((float) $ticket->budget_amount) : '',
+        ];
+    }
+
+    private function statusLabel(Ticket $ticket): string
+    {
+        $name = $ticket->status?->name;
+
+        return TicketStatusEnum::tryFrom((string) $name)?->label()
+            ?? (ucfirst((string) $name) ?: '—');
+    }
+
+    private function priorityLabel(?string $priority): string
+    {
+        return TicketPriorityEnum::tryFrom((string) $priority)?->label()
+            ?? ucfirst((string) $priority);
+    }
+
+    private function budgetLabel(?string $status): string
+    {
+        return BudgetStatusEnum::tryFrom((string) $status)?->label() ?? '';
+    }
+
+    private function localization(): LocalizationService
+    {
+        return $this->localization ?? app(LocalizationService::class);
+    }
+
 }

@@ -79,4 +79,12 @@ final class UserRepository implements UserRepositoryInterface
     {
         return $user->update(['active' => false]);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function delete(User $user): bool
+    {
+        return (bool) $user->delete();
+    }
 }

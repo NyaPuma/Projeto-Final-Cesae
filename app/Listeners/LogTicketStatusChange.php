@@ -25,19 +25,22 @@ final class LogTicketStatusChange implements ShouldQueue
     {
         $ticket = $event->ticket;
 
+        $oldStatus = $event->oldStatus->value;
+        $newStatus = $event->newStatus->value;
+
         // Busca ambos os status numa única consulta ao banco de dados
-        $statuses = TicketStatus::whereIn('name', [$event->oldStatus, $event->newStatus])
+        $statuses = TicketStatus::whereIn('name', [$oldStatus, $newStatus])
             ->get()
             ->keyBy('name');
 
-        $originStatus = $statuses->get($event->oldStatus);
-        $destinationStatus = $statuses->get($event->newStatus);
+        $originStatus = $statuses->get($oldStatus);
+        $destinationStatus = $statuses->get($newStatus);
 
         if (! $originStatus || ! $destinationStatus) {
             Log::warning('Could not resolve status IDs for workflow history', [
                 'ticket_id' => $ticket->id,
-                'old_status' => $event->oldStatus,
-                'new_status' => $event->newStatus,
+                'old_status' => $oldStatus,
+                'new_status' => $newStatus,
             ]);
 
             return;
@@ -48,7 +51,7 @@ final class LogTicketStatusChange implements ShouldQueue
             'origin_status_id' => $originStatus->id,
             'destination_status_id' => $destinationStatus->id,
             'technician_id' => $ticket->assigned_to,
-            'comment' => "Status changed from \"{$event->oldStatus}\" to \"{$event->newStatus}\".",
+            'comment' => "Status changed from \"{$oldStatus}\" to \"{$newStatus}\".",
         ]);
     }
 

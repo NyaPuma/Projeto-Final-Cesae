@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => 'Aucune preuve chargée.',
+    'remove_photo' => 'Supprimer la photographie',
+    'remove_file' => 'Supprimer le fichier',
+    'load_error' => 'Erreur lors du chargement des photographies.',
+    'confirm_remove' => 'Êtes-vous sûr de vouloir supprimer cette photographie ?',
+    'remove_error' => 'Erreur lors de la suppression de la photographie.',
+    'removed' => 'Photographie supprimée avec succès.',
+    'sent' => 'Photographie envoyée !',
+    'file' => 'Fichier',
+    'Anexos' => 'Pièces jointes',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => 'Mettez à jour les identifiants, la photographie et les permissions d’accès du profil utilisateur.',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => 'Chargez une image (PNG, JPG ou WEBP jusqu’à 2 Mo).',
+    'Emergência Imediata. Risco de acidente.' => 'Urgence Immédiate. Risque d’accident.',
+    'Escolher Fotografia' => 'Choisir une Photographie',
+    'Escolher ficheiro' => 'Choisir un fichier',
+    'Fotografia (Opcional)' => 'Photographie (Facultative)',
+    'Fotografia do Utilizador' => 'Photographie de l’Utilisateur',
+    'Imagem' => 'Image',
+    'Inserir Imagem (Opcional)' => 'Insérer une Image (Facultative)',
+    'Nenhum ficheiro' => 'Aucun fichier',
+    'Nenhum ficheiro selecionado' => 'Aucun fichier sélectionné',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => 'Profil actuel : :profile. Accédez aux modules selon les permissions de votre rôle.',
+    'Tipo de ficheiro não permitido.' => 'Type de fichier non autorisé.',
+];

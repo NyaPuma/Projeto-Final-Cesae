@@ -26,13 +26,13 @@ enum TicketWorkflowStatusEnum: string
     public function label(): string
     {
         return match ($this) {
-            self::Open => 'Aberto',
-            self::InProgress => 'Em Curso',
-            self::WaitingBudget => 'Pendente de Orçamento',
-            self::Approved => 'Aprovado',
-            self::Rejected => 'Recusado',
-            self::Closed => 'Fechado',
-            self::Cancelled => 'Cancelado',
+            self::Open => __('tickets.Aberto'),
+            self::InProgress => __('common.Em Curso'),
+            self::WaitingBudget => __('common.Pendente de Orçamento'),
+            self::Approved => __('common.Aprovado'),
+            self::Rejected => __('common.Recusado'),
+            self::Closed => __('tickets.Fechado'),
+            self::Cancelled => __('tickets.Cancelado'),
         };
     }
 

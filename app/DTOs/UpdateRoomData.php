@@ -11,6 +11,11 @@ final readonly class UpdateRoomData
         public ?string $code = null,
         public ?string $location = null,
         public ?bool $active = null,
+        public ?string $building = null,
+        public ?string $floor = null,
+        public ?int $capacity = null,
+        public ?string $description = null,
+        public ?string $notes = null,
     ) {
         if ($this->name !== null && trim($this->name) === '') {
             throw new \InvalidArgumentException('O nome da sala não pode ser uma string vazia.');
@@ -18,6 +23,10 @@ final readonly class UpdateRoomData
 
         if ($this->code !== null && trim($this->code) === '') {
             throw new \InvalidArgumentException('O código da sala não pode ser uma string vazia.');
+        }
+
+        if ($this->capacity !== null && $this->capacity < 0) {
+            throw new \InvalidArgumentException('A capacidade da sala não pode ser negativa.');
         }
     }
 
@@ -33,6 +42,11 @@ final readonly class UpdateRoomData
             code: self::parseCode($payload['code'] ?? null),
             location: self::parseNullableString($payload['location'] ?? null),
             active: self::parseNullableBool($payload['active'] ?? null),
+            building: self::parseNullableString($payload['building'] ?? null),
+            floor: self::parseNullableString($payload['floor'] ?? null),
+            capacity: self::parseNullableInt($payload['capacity'] ?? null),
+            description: self::parseNullableString($payload['description'] ?? null),
+            notes: self::parseNullableString($payload['notes'] ?? null),
         );
     }
 
@@ -41,7 +55,7 @@ final readonly class UpdateRoomData
      */
     private static function parseNullableString(mixed $value): ?string
     {
-        if (!is_string($value)) {
+        if (! is_string($value)) {
             return null;
         }
 
@@ -58,6 +72,16 @@ final readonly class UpdateRoomData
         $string = self::parseNullableString($value);
 
         return $string !== null ? strtoupper($string) : null;
+    }
+
+    /**
+     * Sanitiza valores inteiros opcionais, convertendo "" ou inválidos para null.
+     */
+    private static function parseNullableInt(mixed $value): ?int
+    {
+        $parsed = filter_var($value, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
+
+        return $parsed !== false && $parsed >= 0 ? $parsed : null;
     }
 
     /**
@@ -83,6 +107,11 @@ final readonly class UpdateRoomData
             'code' => $this->code,
             'location' => $this->location,
             'active' => $this->active,
+            'building' => $this->building,
+            'floor' => $this->floor,
+            'capacity' => $this->capacity,
+            'description' => $this->description,
+            'notes' => $this->notes,
         ], static fn (mixed $value): bool => $value !== null);
     }
 
@@ -91,6 +120,6 @@ final readonly class UpdateRoomData
      */
     public function hasUpdates(): bool
     {
-        return !empty($this->toArray());
+        return ! empty($this->toArray());
     }
 }

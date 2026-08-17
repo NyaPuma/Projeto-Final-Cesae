@@ -134,4 +134,50 @@ class TicketPhotoUploadTest extends TestCase
         $response->assertStatus(404);
         $response->assertJsonIsObject();
     }
+
+    public function test_ticket_photo_upload_rejects_oversized_file(): void
+    {
+        Storage::fake('public');
+
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+        $openId = TicketStatus::where('name', TicketStatusEnum::Open->value)->value('id');
+        $ticket = Ticket::create([
+            'user_id' => $user->id,
+            'title' => 'Photo size test',
+            'description' => 'Testing photo size limit',
+            'status_id' => $openId,
+            'opened_at' => now(),
+        ]);
+
+        $maxKb = (int) config('services.upload.max_photo_size_kb', 2048);
+
+        $this->withHeader('X-Auth-Token', $user->api_token)
+            ->postJson('/api/tickets/'.$ticket->id.'/photos', [
+                'photo' => UploadedFile::fake()->image('large.jpg', 800, 600)->size(($maxKb + 100) * 1024),
+            ])
+            ->assertStatus(422)
+            ->assertJsonStructure(['errors' => ['photo']]);
+    }
+
+    public function test_ticket_photo_upload_rejects_excessive_dimensions(): void
+    {
+        Storage::fake('public');
+
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+        $openId = TicketStatus::where('name', TicketStatusEnum::Open->value)->value('id');
+        $ticket = Ticket::create([
+            'user_id' => $user->id,
+            'title' => 'Photo dimension test',
+            'description' => 'Testing photo dimension limit',
+            'status_id' => $openId,
+            'opened_at' => now(),
+        ]);
+
+        $this->withHeader('X-Auth-Token', $user->api_token)
+            ->postJson('/api/tickets/'.$ticket->id.'/photos', [
+                'photo' => UploadedFile::fake()->image('huge.jpg', 5000, 5000),
+            ])
+            ->assertStatus(422)
+            ->assertJsonStructure(['errors' => ['photo']]);
+    }
 }

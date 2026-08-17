@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => 'Ingen beviser uploadet.',
+    'remove_photo' => 'Fjern foto',
+    'remove_file' => 'Fjern fil',
+    'load_error' => 'Fejl ved indlæsning af fotos.',
+    'confirm_remove' => 'Er du sikker på, at du vil fjerne dette foto?',
+    'remove_error' => 'Fejl ved fjernelse af foto.',
+    'removed' => 'Fotografiet blev fjernet succesfuldt.',
+    'sent' => 'Foto sendt!',
+    'file' => 'Fil',
+    'Anexos' => 'Vedhæftninger',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => 'Opdater brugerprofilens legitimationsoplysninger, foto og adgangsrettigheder.',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => 'Upload et billede (PNG, JPG eller WEBP op til 2MB).',
+    'Emergência Imediata. Risco de acidente.' => 'Øjeblikkelig Nødsituation. Risiko for ulykke.',
+    'Escolher Fotografia' => 'Vælg Foto',
+    'Escolher ficheiro' => 'Vælg fil',
+    'Fotografia (Opcional)' => 'Foto (Valgfrit)',
+    'Fotografia do Utilizador' => 'Brugerens Foto',
+    'Imagem' => 'Billede',
+    'Inserir Imagem (Opcional)' => 'Indsæt Billede (Valgfrit)',
+    'Nenhum ficheiro' => 'Ingen fil',
+    'Nenhum ficheiro selecionado' => 'Ingen fil valgt',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => 'Aktuel profil: :profile. Få adgang til modulerne i henhold til din rolles rettigheder.',
+    'Tipo de ficheiro não permitido.' => 'Filtypen er ikke tilladt.',
+];

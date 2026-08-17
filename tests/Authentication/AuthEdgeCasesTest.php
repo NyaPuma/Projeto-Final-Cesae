@@ -156,4 +156,45 @@ class AuthEdgeCasesTest extends TestCase
         $user->refresh();
         $this->assertNull($user->api_token);
     }
+
+    public function test_password_change_requires_all_strength_rules(): void
+    {
+        $user = User::factory()->create([
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->firstOrFail()->id,
+            'active' => true,
+            'password' => Hash::make('Password123!'),
+            'api_token' => Str::random(60),
+        ]);
+
+        $send = fn (array $payload) => $this->withHeader('X-Auth-Token', $user->api_token)
+            ->postJson('/api/password/change', $payload);
+
+        // Sem current_password
+        $send(['new_password' => 'StrongPass1!'])->assertStatus(422)
+            ->assertJsonValidationErrors(['current_password']);
+
+        // Sem new_password
+        $send(['current_password' => 'Password123!'])->assertStatus(422)
+            ->assertJsonValidationErrors(['new_password']);
+
+        // Igual à atual
+        $send(['current_password' => 'Password123!', 'new_password' => 'Password123!'])
+            ->assertStatus(422)
+            ->assertJsonValidationErrors(['new_password']);
+
+        // Falta símbolo
+        $send(['current_password' => 'Password123!', 'new_password' => 'Password123'])
+            ->assertStatus(422)
+            ->assertJsonValidationErrors(['new_password']);
+
+        // Apenas minúsculas
+        $send(['current_password' => 'Password123!', 'new_password' => 'onlylower123'])
+            ->assertStatus(422)
+            ->assertJsonValidationErrors(['new_password']);
+
+        // Sem números
+        $send(['current_password' => 'Password123!', 'new_password' => 'NoNumbers!'])
+            ->assertStatus(422)
+            ->assertJsonValidationErrors(['new_password']);
+    }
 }

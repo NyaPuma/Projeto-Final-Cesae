@@ -1,32 +1,55 @@
 import { getPagination, getResultsCount, getUsersTableBody } from './dom.js';
+import { getPaginationTranslations } from '../../components/listing/feedback.js';
 
 function isUserActive(user) {
     return user.active === true || user.active === 1 || user.active === '1' || String(user.active).toLowerCase() === 'true';
 }
 
 function getUserRole(user) {
-    return user.profile?.name || user.role || user.profile || '';
+    const role = user.profile?.name || user.role || user.profile || '';
+    const translations = window.SGM_USER_MANAGEMENT_I18N || {};
+
+    return role === 'admin' ? (translations.admin || 'Administrator') : role === 'technician'
+        ? (translations.technician || 'Technician') : role === 'user'
+            ? (translations.user || 'User') : role;
 }
 
 function renderStatusBadge(user) {
+    const translations = window.SGM_USER_MANAGEMENT_I18N || {};
+
     if (isUserActive(user)) {
-        return '<span class="inline-flex items-center gap-1.5 rounded-lg bg-emerald-500/10 px-2 py-0.5 text-[11px] font-bold uppercase tracking-tight text-emerald-600 dark:text-emerald-400"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>Ativo</span>';
+        return `<span class="inline-flex items-center gap-1.5 rounded-lg bg-emerald-500/10 px-2 py-0.5 text-[11px] font-bold uppercase tracking-tight text-emerald-600 dark:text-emerald-400"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>${translations.active || 'Active'}</span>`;
     }
 
-    return '<span class="inline-flex items-center gap-1.5 rounded-lg bg-[var(--text-soft)]/10 px-2 py-0.5 text-[11px] font-bold uppercase tracking-tight text-[var(--text-soft)]"><span class="h-1.5 w-1.5 rounded-full bg-[var(--text-soft)]"></span>Inativo</span>';
+    return `<span class="inline-flex items-center gap-1.5 rounded-lg bg-[var(--text-soft)]/10 px-2 py-0.5 text-[11px] font-bold uppercase tracking-tight text-[var(--text-soft)]"><span class="h-1.5 w-1.5 rounded-full bg-[var(--text-soft)]"></span>${translations.inactive || 'Inactive'}</span>`;
+}
+
+function escapeHtml(value) {
+    return String(value ?? '').replace(/[&<>"']/g, (char) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;',
+    }[char]));
 }
 
 function renderUserRow(user) {
+    const translations = window.SGM_USER_MANAGEMENT_I18N || {};
+
     return `<tr class="transition-colors duration-150 hover:bg-[var(--surface-2)]/50">
-        <td class="px-6 py-4 font-mono font-bold text-[var(--text-soft)]">#${user.id}</td>
-        <td class="px-6 py-4 font-semibold text-[var(--text)]">${user.name || ''}</td>
-        <td class="px-6 py-4 font-semibold text-[var(--text-soft)]">${user.email || ''}</td>
-        <td class="px-6 py-4">
-            <span class="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-2 py-0.5 text-[11px] font-bold uppercase tracking-tight text-[var(--text)] shadow-sm">${getUserRole(user)}</span>
+        <td class="px-6 py-4 font-mono font-bold text-[var(--text-soft)]" data-label="ID">#${user.id}</td>
+        <td class="px-6 py-4 font-semibold text-[var(--text)]" data-label="Nome">${escapeHtml(user.name)}</td>
+        <td class="px-6 py-4 font-semibold text-[var(--text-soft)]" data-label="Email">${escapeHtml(user.email)}</td>
+        <td class="px-6 py-4" data-label="Perfil">
+            <span class="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-2 py-0.5 text-[11px] font-bold uppercase tracking-tight text-[var(--text)] shadow-sm">${escapeHtml(getUserRole(user))}</span>
         </td>
-        <td class="px-6 py-4">${renderStatusBadge(user)}</td>
-        <td class="px-6 py-4 text-right">
-            <a href="/ui/users/${user.id}/edit" class="inline-flex min-h-[28px] items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-1.5 text-[11px] font-semibold text-[var(--text)] shadow-sm transition-all hover:bg-[var(--surface-2)]">Editar</a>
+        <td class="px-6 py-4" data-label="Estado">${renderStatusBadge(user)}</td>
+        <td class="ui-listing-actions px-6 py-4 text-right whitespace-nowrap">
+            <div class="inline-flex items-center justify-end gap-1.5">
+                <a href="/ui/users/${user.id}/edit" class="inline-flex min-h-[28px] items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-1.5 text-[11px] font-semibold text-[var(--text)] shadow-sm transition-all hover:bg-[var(--surface-2)]">${translations.edit || 'Edit'}</a>
+                <button type="button" data-action="delete-user" data-id="${user.id}" data-name="${escapeHtml(user.name)}" class="inline-flex min-h-[28px] items-center justify-center rounded-lg border border-red-500/30 bg-[var(--surface)] px-3 py-1.5 text-[11px] font-semibold text-red-600 dark:text-red-400 shadow-sm transition-all hover:bg-red-500/10 cursor-pointer">${translations.delete || 'Delete'}</button>
+            </div>
         </td>
     </tr>`;
 }
@@ -40,7 +63,8 @@ export function showFeedback(message, error = false) {
 }
 
 export function renderResultsCount(total) {
-    showFeedback(total > 0 ? `${total} resultado(s) encontrado(s)` : 'Sem resultados');
+    const translations = window.SGM_TICKETS_I18N || {};
+    showFeedback(total > 0 ? `${total} ${translations.resultsCount || ''}` : (translations.noResults || ''));
 }
 
 export function renderEmptyState() {
@@ -72,19 +96,21 @@ export function renderPagination(meta, currentPage) {
     const pagination = getPagination();
     if (!pagination) return;
 
-    const lastPage = meta.last_page ?? 1;
-    const page = meta.current_page ?? currentPage;
+    const metaInfo = meta.meta ?? meta;
+    const lastPage = metaInfo.last_page ?? 1;
+    const page = metaInfo.current_page ?? currentPage;
 
     if (lastPage <= 1) {
         pagination.innerHTML = '';
         return;
     }
 
+    const translations = getPaginationTranslations();
     pagination.innerHTML = `
         <button data-page="${page - 1}" ${page <= 1 ? 'disabled' : ''}
-            class="ui-button ui-button--primary inline-flex min-h-[36px] items-center justify-center rounded-xl px-3.5 py-2 text-xs font-bold text-[var(--on-primary)] shadow-sm transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40">← Anterior</button>
-        <span class="font-bold text-[var(--text-soft)]">Página ${page} de ${lastPage}</span>
+            class="ui-button ui-button--primary inline-flex min-h-[36px] items-center justify-center rounded-xl px-3.5 py-2 text-xs font-bold text-[var(--on-primary)] shadow-sm transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40">← ${translations.previous}</button>
+        <span class="font-bold text-[var(--text-soft)]">${translations.page} ${page} ${translations.of} ${lastPage}</span>
         <button data-page="${page + 1}" ${page >= lastPage ? 'disabled' : ''}
-            class="ui-button ui-button--primary inline-flex min-h-[36px] items-center justify-center rounded-xl px-3.5 py-2 text-xs font-bold text-[var(--on-primary)] shadow-sm transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40">Próxima →</button>
+            class="ui-button ui-button--primary inline-flex min-h-[36px] items-center justify-center rounded-xl px-3.5 py-2 text-xs font-bold text-[var(--on-primary)] shadow-sm transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40">${translations.next} →</button>
     `;
 }

@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => 'Nebyl nahrán žádný důkaz.',
+    'remove_photo' => 'Odebrat fotografii',
+    'remove_file' => 'Odebrat soubor',
+    'load_error' => 'Chyba při načítání fotografií.',
+    'confirm_remove' => 'Opravdu chcete odstranit tuto fotografii?',
+    'remove_error' => 'Chyba při odstraňování fotografie.',
+    'removed' => 'Fotografie byla úspěšně odstraněna.',
+    'sent' => 'Fotografie odeslána!',
+    'file' => 'Soubor',
+    'Anexos' => 'Přílohy',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => 'Aktualizujte přihlašovací údaje, fotografii a přístupová oprávnění uživatelského profilu.',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => 'Nahrajte obrázek (PNG, JPG nebo WEBP do 2MB).',
+    'Emergência Imediata. Risco de acidente.' => 'Okamžitá Pohotovost. Riziko nehody.',
+    'Escolher Fotografia' => 'Vybrat Fotografii',
+    'Escolher ficheiro' => 'Vybrat soubor',
+    'Fotografia (Opcional)' => 'Fotografie (Volitelná)',
+    'Fotografia do Utilizador' => 'Fotografie Uživatele',
+    'Imagem' => 'Obrázek',
+    'Inserir Imagem (Opcional)' => 'Vložit Obrázek (Volitelné)',
+    'Nenhum ficheiro' => 'Žádný soubor',
+    'Nenhum ficheiro selecionado' => 'Nebyl vybrán žádný soubor',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => 'Aktuální profil: :profile. K modulům přistupujte podle oprávnění své role.',
+    'Tipo de ficheiro não permitido.' => 'Nepovolený typ souboru.',
+];

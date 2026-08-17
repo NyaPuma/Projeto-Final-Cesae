@@ -28,7 +28,7 @@ final class CsrfMiddleware
 
         if (! $token || ! $this->validateCsrfToken($token)) {
             return response()->json([
-                'message' => __('CSRF Token inválido ou expirado.'),
+                'message' => __('validation.CSRF Token inválido ou expirado.'),
                 'error_code' => 419,
                 'errors' => [
                     '_token' => ['The CSRF token is invalid or has expired.'],
@@ -88,21 +88,30 @@ final class CsrfMiddleware
     }
 
     /**
-     * Extrai o token CSRF do pedido (cabeçalho ou sessão).
+     * Extrai o token CSRF do pedido (cabeçalho ou campo de formulário).
+     * Nunca devolve o token da sessão como "fornecido": isso permitiria
+     * que qualquer pedido com sessão ativa passasse sem apresentar token.
      */
     protected function getCsrfTokenFromRequest(Request $request): ?string
     {
-        $token = $request->header('X-CSRF-Token');
+        $headerToken = $request->header('X-CSRF-Token');
 
-        if ($token && ! empty($this->session->get('_token'))) {
-            return $token;
+        if (! empty($headerToken)) {
+            return $headerToken;
         }
 
-        return $this->session->get('_token');
+        $inputToken = $request->input('_token');
+
+        if (! empty($inputToken)) {
+            return $inputToken;
+        }
+
+        return null;
     }
 
     /**
      * Valida se o token fornecido corresponde ao armazenado em sessão.
+     * Usa hash_equals para uma comparação de tempo constante.
      */
     protected function validateCsrfToken(string $token): bool
     {
@@ -112,9 +121,9 @@ final class CsrfMiddleware
             return false;
         }
 
-        $storedToken = $this->session->get('_token');
+        $storedToken = (string) $this->session->get('_token');
 
-        if ($storedToken !== $trimmedToken) {
+        if ($storedToken === '' || ! hash_equals($storedToken, $trimmedToken)) {
             Log::debug('CsrfMiddleware - Token mismatch', [
                 'provided_token' => substr($trimmedToken, 0, 8) . '...',
                 'stored_token' => $storedToken ?: null,

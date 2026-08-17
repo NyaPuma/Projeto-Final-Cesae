@@ -17,6 +17,14 @@ final readonly class CreateEquipmentAction
                 'room_id' => $data->roomId,
                 'category_id' => $data->categoryId,
                 'active' => $data->active ?? true,
+                'asset_tag' => $data->assetTag,
+                'brand' => $data->brand,
+                'model' => $data->model,
+                'manufacturer' => $data->manufacturer,
+                'purchase_date' => $data->purchaseDate,
+                'warranty_until' => $data->warrantyUntil,
+                'status' => $data->status,
+                'notes' => $data->notes,
             ]);
 
             // Exemplo de disparo de evento no futuro:

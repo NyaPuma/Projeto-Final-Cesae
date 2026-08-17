@@ -63,8 +63,7 @@ class SimulateTelemetry extends Command
         $this->info('🔬 A iniciar simulação de telemetria...');
 
         // Procura utilizador administrador do sistema
-        $systemUser = User::whereHas('profile', fn ($q) => $q->where('name', UserRoleEnum::Admin->value))->first()
-            ?? User::where('is_admin', true)->first();
+        $systemUser = User::whereHas('profile', fn ($q) => $q->where('name', UserRoleEnum::Admin->value))->first();
 
         if (! $systemUser) {
             $this->error('❌ Nenhum utilizador administrador encontrado para atribuir como autor dos tickets.');

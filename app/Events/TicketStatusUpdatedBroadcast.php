@@ -67,7 +67,7 @@ final class TicketStatusUpdatedBroadcast implements ShouldBroadcastNow
     {
         return [
             'id' => $this->ticket->id,
-            'code' => $this->ticket->code ?? null,
+            'code' => $this->ticket->reference ?? null,
             'title' => $this->ticket->title,
             'old_status' => [
                 'value' => $this->oldStatus->value,

@@ -53,7 +53,7 @@ class PathTraversalTest extends FeatureTestCase
         $ticket = Ticket::factory()->create(['user_id' => $user->id]);
         $response = $this->asApiUser($user->api_token)
             ->post('/tickets/'.$ticket->id.'/photos', [
-                'photo' => UploadedFile::fake()->create('test/../../malicious.jpg', 100),
+                'photo' => UploadedFile::fake()->image('test/../../malicious.jpg'),
             ], ['Accept' => 'application/json']);
 
         $response->assertCreated();

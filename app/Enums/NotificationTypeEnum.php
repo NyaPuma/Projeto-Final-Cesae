@@ -12,6 +12,7 @@ enum NotificationTypeEnum: string
     case TicketClosed = 'ticket_closed';
     case TicketCreated = 'ticket_created';
     case PriorityOverride = 'priority_override';
+    case LowStock = 'low_stock';
 
     /**
      * Retorna todos os valores raw do Enum num array simples.
@@ -27,14 +28,15 @@ enum NotificationTypeEnum: string
     public function label(): string
     {
         return match ($this) {
-            self::BudgetRequest => 'Pedido de Orçamento',
-            self::BudgetSubmitted => 'Orçamento Submetido',
-            self::BudgetApproved => 'Orçamento Aprovado',
-            self::BudgetRejected => 'Orçamento Rejeitado',
-            self::BudgetAutoApproved => 'Orçamento Aprovado Automaticamente',
-            self::TicketClosed => 'Ticket Encerrado',
-            self::TicketCreated => 'Novo Ticket Criado',
-            self::PriorityOverride => 'Alteração Manual de Prioridade',
+            self::BudgetRequest => __('common.Pedido de Orçamento'),
+            self::BudgetSubmitted => __('common.Orçamento Submetido'),
+            self::BudgetApproved => __('common.Orçamento Aprovado'),
+            self::BudgetRejected => __('common.Orçamento Rejeitado'),
+            self::BudgetAutoApproved => __('common.Orçamento Aprovado Automaticamente'),
+            self::TicketClosed => __('tickets.Ticket Encerrado'),
+            self::TicketCreated => __('tickets.Novo Ticket Criado'),
+            self::PriorityOverride => __('common.Alteração Manual de Prioridade'),
+            self::LowStock => __('stock.Stock Baixo'),
         };
     }
 
@@ -51,6 +53,7 @@ enum NotificationTypeEnum: string
             self::TicketClosed => '🔧',
             self::TicketCreated => '🎫',
             self::PriorityOverride => '⚠️',
+            self::LowStock => '📦',
         };
     }
 
@@ -64,6 +67,7 @@ enum NotificationTypeEnum: string
             self::BudgetRejected, self::PriorityOverride => 'danger',
             self::BudgetRequest, self::BudgetSubmitted => 'warning',
             self::TicketCreated, self::TicketClosed => 'info',
+            self::LowStock => 'warning',
         };
     }
 
@@ -77,6 +81,7 @@ enum NotificationTypeEnum: string
             self::BudgetRequest, self::BudgetSubmitted => NotificationPriorityEnum::High,
             self::BudgetApproved, self::BudgetAutoApproved, self::TicketCreated => NotificationPriorityEnum::Normal,
             self::TicketClosed => NotificationPriorityEnum::Low,
+            self::LowStock => NotificationPriorityEnum::High,
         };
     }
 

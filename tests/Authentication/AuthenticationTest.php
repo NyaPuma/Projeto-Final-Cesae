@@ -281,4 +281,31 @@ class AuthenticationTest extends TestCase
 
         $response->assertStatus(403);
     }
+
+    #[Test]
+    public function login_validation_edge_cases(): void
+    {
+        $profile = UserProfile::where('name', UserRoleEnum::User->value)->first();
+        $user = User::factory()->create([
+            'profile_id' => $profile->id,
+            'password' => Hash::make('Password123!'),
+            'active' => true,
+        ]);
+
+        // Email inválido
+        $this->postJson('/api/login', ['email' => 'not-an-email', 'password' => 'Password123!'])
+            ->assertStatus(422)
+            ->assertJsonValidationErrors(['email']);
+
+        // Password em falta
+        $this->postJson('/api/login', ['email' => $user->email])
+            ->assertStatus(422)
+            ->assertJsonValidationErrors(['password']);
+
+        // Login com email em maiúsculas + espaços é normalizado para minúsculas
+        $this->post('/api/login', [
+            'email' => '  '.strtoupper($user->email).'  ',
+            'password' => 'Password123!',
+        ])->assertOk();
+    }
 }

@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => 'Geen bewijs geüpload.',
+    'remove_photo' => 'Foto verwijderen',
+    'remove_file' => 'Bestand verwijderen',
+    'load_error' => 'Fout bij het laden van de foto’s.',
+    'confirm_remove' => 'Weet u zeker dat u deze foto wilt verwijderen?',
+    'remove_error' => 'Fout bij het verwijderen van de foto.',
+    'removed' => 'Foto succesvol verwijderd.',
+    'sent' => 'Foto verzonden!',
+    'file' => 'Bestand',
+    'Anexos' => 'Bijlagen',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => 'Werk de inloggegevens, foto en toegangsrechten van het gebruikersprofiel bij.',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => 'Upload een afbeelding (PNG, JPG of WEBP tot 2MB).',
+    'Emergência Imediata. Risco de acidente.' => 'Onmiddellijke noodsituatie. Ongelukrisico.',
+    'Escolher Fotografia' => 'Foto kiezen',
+    'Escolher ficheiro' => 'Bestand kiezen',
+    'Fotografia (Opcional)' => 'Foto (optioneel)',
+    'Fotografia do Utilizador' => 'Gebruikersfoto',
+    'Imagem' => 'Afbeelding',
+    'Inserir Imagem (Opcional)' => 'Afbeelding invoegen (optioneel)',
+    'Nenhum ficheiro' => 'Geen bestand',
+    'Nenhum ficheiro selecionado' => 'Geen bestand geselecteerd',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => 'Huidig profiel: :profile. Toegang tot de modules volgens de rechten van uw rol.',
+    'Tipo de ficheiro não permitido.' => 'Bestandstype niet toegestaan.',
+];

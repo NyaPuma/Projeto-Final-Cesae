@@ -93,39 +93,19 @@ class AuthorizationSecurityTest extends FeatureTestCase
         $adminProfile = UserProfile::firstOrCreate(['name' => UserRoleEnum::Admin->value]);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->postJson('/api/profile/update', [
+            ->postJson('/profile/update', [
                 'name' => 'Hacker',
                 'profile_id' => $adminProfile->id,
             ]);
 
-        $status = $response->status();
-
-        $this->assertContains($status, [200, 403, 404, 422],
-            "Unexpected status {$status} on privilege escalation test"
-        );
+        $response->assertOk();
 
         $user->refresh();
-
-        if ($status === 404) {
-            $this->assertEquals($originalProfileId, $user->profile_id,
-                'User profile_id should not have changed when endpoint is 404'
-            );
-
-            return;
-        }
-
-        if ($user->profile_id == $adminProfile->id) {
-            \Log::critical('T4 â€” PRIVILEGE ESCALATION CONFIRMED', [
-                'user_id' => $user->id,
-                'old_profile_id' => $originalProfileId,
-                'new_profile_id' => $user->profile_id,
-            ]);
-            $this->fail("PRIVILEGE ESCALATION: User id={$user->id} changed to admin");
-        }
 
         $this->assertEquals($originalProfileId, $user->profile_id,
             'User profile_id should not have changed to admin'
         );
+        $this->assertNotEquals($adminProfile->id, $user->profile_id);
     }
 
     #[Test]

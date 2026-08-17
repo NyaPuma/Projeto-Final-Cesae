@@ -13,8 +13,8 @@ final readonly class ScheduleTicketAction
 {
     public function execute(Ticket $ticket, ScheduleTicketData $data): Ticket
     {
-        // Guard Clause: Não permite agendar tickets já encerrados
-        if ($ticket->hasStatus(TicketStatusEnum::Closed)) {
+        // Guard Clause: Não permite agendar tickets já encerrados (fechados ou cancelados)
+        if ($ticket->hasStatus(TicketStatusEnum::Closed) || $ticket->hasStatus(TicketStatusEnum::Cancelled)) {
             throw new InvalidArgumentException("Não é possível agendar um ticket que já se encontra encerrado.");
         }
 

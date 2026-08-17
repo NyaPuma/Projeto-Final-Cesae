@@ -47,6 +47,7 @@ class TicketsExportTest extends TestCase
             'Título',
             'Estado',
             'Prioridade',
+            'Urgente',
             'Aberto em',
             'Em Progresso em',
             'Fechado em',
@@ -91,16 +92,17 @@ class TicketsExportTest extends TestCase
         $export = new TicketsExport;
         $mapped = $export->map($ticket);
 
-        $this->assertCount(12, $mapped);
+        $this->assertCount(13, $mapped);
         $this->assertEquals($ticket->id, $mapped[0]);
         $this->assertEquals($ticket->reference, $mapped[1]);
         $this->assertEquals('Export Test Ticket', $mapped[2]);
         $this->assertEquals($status->name, $mapped[3]);
-        $this->assertEquals(TicketPriorityEnum::High->value, $mapped[4]);
-        $this->assertEquals(120, $mapped[8]);
-        $this->assertEquals(350.50, $mapped[9]);
-        $this->assertEquals(BudgetStatusEnum::Approved->value, $mapped[10]);
-        $this->assertEquals(500.00, $mapped[11]);
+        $this->assertEquals(TicketPriorityEnum::High->label(), $mapped[4]);
+        $this->assertEquals('Não', $mapped[5]); // urgent
+        $this->assertEquals(120, $mapped[9]);
+        $this->assertEquals(350.50, $mapped[10]);
+        $this->assertEquals(BudgetStatusEnum::Approved->value, $mapped[11]);
+        $this->assertEquals(500.00, $mapped[12]);
     }
 
     #[Test]
@@ -121,10 +123,33 @@ class TicketsExportTest extends TestCase
         $export = new TicketsExport;
         $mapped = $export->map($ticket);
 
-        $this->assertCount(12, $mapped);
-        $this->assertEquals('N/A', $mapped[10]); // budget_status
-        $this->assertEquals(0.0, $mapped[9]); // cost
-        $this->assertEquals(0.0, $mapped[11]); // budget_amount
+        $this->assertCount(13, $mapped);
+        $this->assertEquals('N/A', $mapped[11]); // budget_status
+        $this->assertEquals(0.0, $mapped[10]); // cost
+        $this->assertEquals(0.0, $mapped[12]); // budget_amount
+    }
+
+    #[Test]
+    public function it_marks_urgent_tickets_correctly(): void
+    {
+        $user = User::factory()->create();
+        $openStatusId = TicketStatus::where('name', TicketStatusEnum::Open->value)->value('id');
+
+        $ticket = Ticket::create([
+            'title' => 'Urgent Ticket',
+            'description' => 'Testing urgent flag',
+            'priority' => TicketPriorityEnum::Critical->value,
+            'urgent' => true,
+            'user_id' => $user->id,
+            'status_id' => $openStatusId,
+            'opened_at' => now(),
+        ]);
+
+        $export = new TicketsExport;
+        $mapped = $export->map($ticket);
+
+        $this->assertEquals('Sim', $mapped[5]);
+        $this->assertEquals(TicketPriorityEnum::Critical->label(), $mapped[4]);
     }
 
     #[Test]

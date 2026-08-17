@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => 'Aucun message enregistré.',
+    'comments_error' => 'Erreur lors du chargement de l’historique.',
+    'message_sent' => 'Message envoyé !',
+    'incident_id' => 'ID Occurrence',
+    'description' => 'Description de l’occurrence',
+    'priority_level' => 'Niveau de Priorité',
+    'equipment' => 'Équipement / Actif',
+    'room' => 'Salle / Localisation',
+    'technician' => 'Technicien Attribué',
+    'pending_assignment' => 'En attente d’attribution',
+    'reported_by' => 'Signalé par',
+    'source' => 'Origine',
+    'qr_code' => 'QR Code',
+    'web' => 'Web',
+    'system' => 'Système',
+    'no_description' => 'Aucune description fournie.',
+    'Data de abertura (De)' => 'Date d’ouverture (De)',
+    'Detalhe de um fornecedor' => 'Détail d’un fournisseur',
+    'Detalhe de um fornecedor.' => 'Détail d’un fournisseur.',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => 'Détaillez le problème survenu, bruits, fuites ou comportements anormaux...',
+    'Detalhes do Incidente' => 'Détails de l’Incident',
+];

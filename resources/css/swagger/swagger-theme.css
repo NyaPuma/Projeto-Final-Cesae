@@ -8,22 +8,6 @@
    ========================================================== */
 
 /* ==========================================================
-   0. VISUAL TEST - CONFIRM CSS IS LOADING
-   ========================================================== */
-
-/* Teste de choque visual para confirmação - se estes estilos aparecerem, o CSS está ativo */
-:root .swagger-ui .topbar {
-    background-color: #0f172a !important; /* Fundo Escuro */
-    border-bottom: 3px solid #3b82f6 !important;
-}
-:root .swagger-ui {
-    background-color: #020617 !important;
-}
-:root .swagger-ui .info .title {
-    color: #38bdf8 !important;
-}
-
-/* ==========================================================
    1. HIDE NATIVE SWAGGER ELEMENTS
    ========================================================== */
 
@@ -282,7 +266,7 @@
 :root .swagger-ui textarea:focus,
 :root .swagger-ui select:focus {
     border-color: var(--primary) !important;
-    box-shadow: 0 0 0 2px rgba(234, 88, 12, 0.1) !important;
+    box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.1) !important;
 }
 
 :root .dark .swagger-ui input[type="text"]:focus,
@@ -299,7 +283,7 @@
 :root [data-theme='dark'] .swagger-ui input[type="url"]:focus,
 :root [data-theme='dark'] .swagger-ui textarea:focus,
 :root [data-theme='dark'] .swagger-ui select:focus {
-    box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.15) !important;
+    box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.15) !important;
 }
 
 /* Input placeholders */

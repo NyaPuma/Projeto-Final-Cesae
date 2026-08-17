@@ -11,13 +11,13 @@
 --}}
 
 @props([
-    'eyebrow' => __('Inventário'),
-    'title' => __('Equipamentos'),
-    'description' => __('Distribuição do parque tecnológico por categoria.'),
+    'eyebrow' => __('common.Prioridades'),
+    'title' => __('tickets.Prioridade dos Tickets'),
+    'description' => __('tickets.Distribuição dos tickets por prioridade de resposta e intervenção.'),
     'canvasId' => 'equipmentChart',
     'totalId' => 'equipmentTotal',
     'legendId' => 'equipmentLegend',
-    'totalLabel' => __('Equipamentos'),
+    'totalLabel' => __('tickets.Tickets'),
 ])
 
 <article {{ $attributes->class(['overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--surface)]']) }}>

@@ -34,10 +34,12 @@ class DatabaseOptimizationTest extends TestCase
         $this->assertEquals($status->id, $result);
     }
 
-    public function test_ticket_status_cache_returns_null_when_not_seeded(): void
+    public function test_ticket_status_cache_creates_status_when_not_seeded(): void
     {
         $result = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
-        $this->assertNull($result);
+
+        $this->assertNotNull($result);
+        $this->assertDatabaseHas('ticket_statuses', ['name' => TicketStatusEnum::Open->value]);
     }
 
     public function test_ticket_status_cache_returns_consistent_results(): void

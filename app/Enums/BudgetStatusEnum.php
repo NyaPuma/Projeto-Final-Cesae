@@ -22,9 +22,9 @@ enum BudgetStatusEnum: string
     public function label(): string
     {
         return match ($this) {
-            self::Pending => 'Pendente',
-            self::Approved => 'Aprovado',
-            self::Rejected => 'Rejeitado',
+            self::Pending => __('common.Pendente'),
+            self::Approved => __('common.Aprovado'),
+            self::Rejected => __('common.Rejeitado'),
         };
     }
 

@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => 'Inga bevis uppladdade.',
+    'remove_photo' => 'Ta bort fotografi',
+    'remove_file' => 'Ta bort fil',
+    'load_error' => 'Fel vid inläsning av fotografier.',
+    'confirm_remove' => 'Är du säker på att du vill ta bort detta fotografi?',
+    'remove_error' => 'Fel vid borttagning av fotografi.',
+    'removed' => 'Fotografiet togs bort framgångsrikt.',
+    'sent' => 'Fotografi skickat!',
+    'file' => 'Fil',
+    'Anexos' => 'Bilagor',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => 'Uppdatera användarprofilens uppgifter, fotografi och åtkomstbehörigheter.',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => 'Ladda upp en bild (PNG, JPG eller WEBP upp till 2MB).',
+    'Emergência Imediata. Risco de acidente.' => 'Omedelbar Nödsituation. Risk för olycka.',
+    'Escolher Fotografia' => 'Välj Fotografi',
+    'Escolher ficheiro' => 'Välj fil',
+    'Fotografia (Opcional)' => 'Fotografi (Valfritt)',
+    'Fotografia do Utilizador' => 'Användarens Fotografi',
+    'Imagem' => 'Bild',
+    'Inserir Imagem (Opcional)' => 'Infoga Bild (Valfritt)',
+    'Nenhum ficheiro' => 'Ingen fil',
+    'Nenhum ficheiro selecionado' => 'Ingen fil vald',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => 'Aktuell profil: :profile. Få åtkomst till modulerna enligt din rolls behörigheter.',
+    'Tipo de ficheiro não permitido.' => 'Filtyp tillåts inte.',
+];

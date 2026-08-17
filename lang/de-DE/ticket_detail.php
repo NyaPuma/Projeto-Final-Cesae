@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => 'Keine Nachrichten erfasst.',
+    'comments_error' => 'Fehler beim Laden des Verlaufs.',
+    'message_sent' => 'Nachricht gesendet!',
+    'incident_id' => 'Vorkommnis-ID',
+    'description' => 'Beschreibung des Vorkommnisses',
+    'priority_level' => 'Prioritätsstufe',
+    'equipment' => 'Gerät / Anlage',
+    'room' => 'Raum / Standort',
+    'technician' => 'Zugewiesener Techniker',
+    'pending_assignment' => 'Auf Zuweisung wartend',
+    'reported_by' => 'Gemeldet von',
+    'source' => 'Quelle',
+    'qr_code' => 'QR-Code',
+    'web' => 'Web',
+    'system' => 'System',
+    'no_description' => 'Keine Beschreibung angegeben.',
+    'Data de abertura (De)' => 'Eröffnungsdatum (Von)',
+    'Detalhe de um fornecedor' => 'Detail eines Lieferanten',
+    'Detalhe de um fornecedor.' => 'Detail eines Lieferanten.',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => 'Beschreiben Sie das aufgetretene Problem, Geräusche, Lecks oder abnormales Verhalten...',
+    'Detalhes do Incidente' => 'Details des Vorfalls',
+];

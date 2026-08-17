@@ -22,9 +22,9 @@ enum UserRoleEnum: string
     public function label(): string
     {
         return match ($this) {
-            self::User => 'Utilizador',
-            self::Technician => 'Técnico',
-            self::Admin => 'Administrador',
+            self::User => __('common.Utilizador'),
+            self::Technician => __('common.Técnico'),
+            self::Admin => __('common.Administrador'),
         };
     }
 

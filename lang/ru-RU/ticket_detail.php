@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => 'Сообщений не зарегистрировано.',
+    'comments_error' => 'Ошибка загрузки истории.',
+    'message_sent' => 'Сообщение отправлено!',
+    'incident_id' => 'ID инцидента',
+    'description' => 'Описание инцидента',
+    'priority_level' => 'Уровень приоритета',
+    'equipment' => 'Оборудование / Актив',
+    'room' => 'Помещение / Местоположение',
+    'technician' => 'Назначенный техник',
+    'pending_assignment' => 'Ожидает назначения',
+    'reported_by' => 'Сообщил',
+    'source' => 'Источник',
+    'qr_code' => 'QR-код',
+    'web' => 'Веб',
+    'system' => 'Система',
+    'no_description' => 'Описание не предоставлено.',
+    'Data de abertura (De)' => 'Дата открытия (с)',
+    'Detalhe de um fornecedor' => 'Детали поставщика',
+    'Detalhe de um fornecedor.' => 'Детали поставщика.',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => 'Опишите возникшую проблему, шумы, утечки или необычное поведение...',
+    'Detalhes do Incidente' => 'Детали инцидента',
+];

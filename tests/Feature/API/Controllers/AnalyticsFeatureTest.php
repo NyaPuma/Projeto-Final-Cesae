@@ -18,7 +18,7 @@ class AnalyticsFeatureTest extends FeatureTestCase
             ->assertStatus(403);
     }
 
-    public function test_technician_and_admin_can_access_analytics_stats()
+    public function test_admin_can_access_analytics_stats()
     {
         $statusOpen = TicketStatus::where('name', 'aberta')->first();
         $statusClosed = TicketStatus::where('name', 'fechada')->first();
@@ -53,6 +53,32 @@ class AnalyticsFeatureTest extends FeatureTestCase
             ]);
     }
 
+    public function test_operator_is_forbidden_from_export_endpoints()
+    {
+        $operator = $this->createRegularUser();
+
+        foreach (['csv', 'pdf', 'excel'] as $format) {
+            $this->withHeader('X-Auth-Token', $operator->api_token)
+                ->getJson("/api/analytics/export/{$format}")
+                ->assertStatus(403);
+        }
+    }
+
+    public function test_technician_is_blocked_from_analytics_endpoints()
+    {
+        $technician = $this->createTechnician();
+
+        $this->withHeader('X-Auth-Token', $technician->api_token)
+            ->getJson('/api/analytics/stats')
+            ->assertStatus(403);
+
+        foreach (['csv', 'pdf', 'excel'] as $format) {
+            $this->withHeader('X-Auth-Token', $technician->api_token)
+                ->getJson("/api/analytics/export/{$format}")
+                ->assertStatus(403);
+        }
+    }
+
     public function test_export_csv_streams_tickets_report()
     {
         $admin = $this->createAdmin();
@@ -63,5 +89,27 @@ class AnalyticsFeatureTest extends FeatureTestCase
 
         $response->assertOk();
         $response->assertJsonPath('message', 'Exportação CSV em processamento. Receberá uma notificação quando estiver pronta.');
+    }
+
+    public function test_export_pdf_dispatches_processing_message()
+    {
+        $admin = $this->createAdmin();
+
+        $response = $this->withHeader('X-Auth-Token', $admin->api_token)
+            ->get('/api/analytics/export/pdf');
+
+        $response->assertOk();
+        $response->assertJsonPath('message', 'Exportação PDF em processamento. Receberá uma notificação quando estiver pronta.');
+    }
+
+    public function test_export_excel_dispatches_processing_message()
+    {
+        $admin = $this->createAdmin();
+
+        $response = $this->withHeader('X-Auth-Token', $admin->api_token)
+            ->get('/api/analytics/export/excel');
+
+        $response->assertOk();
+        $response->assertJsonPath('message', 'Exportação Excel em processamento. Receberá uma notificação quando estiver pronta.');
     }
 }

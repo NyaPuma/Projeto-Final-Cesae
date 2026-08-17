@@ -70,9 +70,13 @@ php artisan storage:link
 ```
 
 ## 5. Iniciar os workers de filas e a aplicação
-Para processar e-mails e notificações em segundo plano:
+Para processar e-mails, notificações e exportações em segundo plano:
 ```bash
 php artisan queue:work
+```
+Para executar as tarefas agendadas (ex.: verificação diária de stock baixo):
+```bash
+php artisan schedule:work
 ```
 Num novo terminal, inicia o servidor e compila os assets:
 ```bash

@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
 final class RateLimitMiddleware
@@ -49,8 +50,7 @@ final class RateLimitMiddleware
      */
     protected function resolveRequestSignature(Request $request): string
     {
-        // Para endpoints de autenticação, usar IP + email (se fornecido)
-        if ($request->is('login', 'register')) {
+        if ($this->isAuthEndpoint($request)) {
             $email = (string) $request->input('email', '');
 
             return sha1($request->ip() . '|' . $email);
@@ -61,6 +61,22 @@ final class RateLimitMiddleware
         $userId = $user ? (string) $user->id : 'guest';
 
         return sha1($request->ip() . '|' . $userId . '|' . $request->path());
+    }
+
+    /**
+     * Determina se o pedido atinge um endpoint de autenticação
+     * (login, registo ou recuperação de password) para o qual o
+     * limite deve ser aplicado por IP + email.
+     */
+    protected function isAuthEndpoint(Request $request): bool
+    {
+        if ($request->is('login', 'register')) {
+            return true;
+        }
+
+        $routeName = (string) ($request->route()?->getName() ?? '');
+
+        return $routeName === 'api.login' || Str::startsWith($routeName, 'api.password.');
     }
 
     /**
@@ -92,9 +108,11 @@ final class RateLimitMiddleware
         $retryAfter = $this->limiter->availableIn($key);
 
         $response = response()->json([
-            'message' => __('Demasiadas tentativas. Tente novamente mais tarde.'),
+            'message' => __('common.Demasiadas tentativas. Tente novamente mais tarde.'),
             'retry_after' => $retryAfter,
         ], 429);
+
+        $response->headers->set('Retry-After', $retryAfter);
 
         return $this->addHeaders($response, $maxAttempts, 0);
     }

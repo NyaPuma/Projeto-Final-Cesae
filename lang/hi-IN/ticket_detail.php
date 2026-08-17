@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => 'कोई दर्ज संदेश नहीं।',
+    'comments_error' => 'इतिहास लोड करते समय त्रुटि।',
+    'message_sent' => 'संदेश भेजा गया!',
+    'incident_id' => 'घटना संख्या',
+    'description' => 'घटना विवरण',
+    'priority_level' => 'प्राथमिकता',
+    'equipment' => 'उपकरण / संपत्ति',
+    'room' => 'कमरा / स्थान',
+    'technician' => 'नियुक्त तकनीशियन',
+    'pending_assignment' => 'नियुक्ति की प्रतीक्षा',
+    'reported_by' => 'रिपोर्ट करने वाला',
+    'source' => 'स्रोत',
+    'qr_code' => 'QR Code',
+    'web' => 'Web',
+    'system' => 'सिस्टम',
+    'no_description' => 'कोई विवरण प्रदान नहीं किया गया।',
+    'Data de abertura (De)' => 'खोलने की तिथि (से)',
+    'Detalhe de um fornecedor' => 'आपूर्तिकर्ता का विवरण',
+    'Detalhe de um fornecedor.' => 'आपूर्तिकर्ता का विवरण।',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => 'घटित समस्या, शोर, रिसाव या सामान्य से बाहर व्यवहार का विस्तृत विवरण...',
+    'Detalhes do Incidente' => 'घटना विवरण',
+];

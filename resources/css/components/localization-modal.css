@@ -1,0 +1,55 @@
+/* Localization Modal — tabs and panels */
+
+.localization-modal__tabs {
+  display: flex;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.localization-modal__tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.localization-modal__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-soft);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--transition), color var(--transition);
+}
+
+.localization-modal__tab:hover,
+.localization-modal__tab:focus-visible {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.localization-modal__tab--active {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.localization-modal__tab-panel {
+  display: none;
+}
+
+.localization-modal__tab-panel--active {
+  display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .localization-modal__tab {
+    transition: none;
+  }
+}

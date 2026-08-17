@@ -9,6 +9,7 @@ use App\Models\UserProfile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Base\FeatureTestCase;
 
@@ -118,6 +119,7 @@ class AuthenticationSecurityTest extends FeatureTestCase
             'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->value('id'),
             'password' => Hash::make('Password123!'),
             'active' => true,
+            'api_token' => Str::random(60),
         ]);
 
         $oldToken = $user->api_token;

@@ -13,9 +13,16 @@ final readonly class CreateRoomAction
         return DB::transaction(function () use ($data) {
             $room = Room::create([
                 'name' => trim($data->name),
-                'code' => strtoupper(trim($data->code)),
+                'code' => $data->code !== null && trim($data->code) !== ''
+                    ? strtoupper(trim($data->code))
+                    : null,
                 'location' => $data->location ? trim($data->location) : null,
                 'active' => $data->active ?? true,
+                'building' => $data->building,
+                'floor' => $data->floor,
+                'capacity' => $data->capacity,
+                'description' => $data->description,
+                'notes' => $data->notes,
             ]);
 
             // Exemplo de disparo de evento no futuro:

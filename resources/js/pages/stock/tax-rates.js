@@ -1,0 +1,115 @@
+import { authDelete, authPatch, authPost } from '../../utils/api.js';
+
+function extractError(data) {
+    let errorText = data.message || 'Ocorreu um erro.';
+    if (data.errors) {
+        errorText = Object.values(data.errors).flat().join(' ');
+    }
+    return errorText;
+}
+
+function showMessage(element, text, isError) {
+    element.textContent = text;
+    element.className = 'text-xs font-medium ' + (isError
+        ? 'text-red-600 dark:text-red-400'
+        : 'text-(--text-soft)');
+}
+
+function resetForm(form) {
+    form.dataset.taxRateFormMode = 'create';
+    form.dataset.taxRateId = '';
+    document.getElementById('trName').value = '';
+    document.getElementById('trPercent').value = '';
+    document.getElementById('trDefault').checked = false;
+    document.getElementById('trActive').checked = true;
+    document.getElementById('taxRateFormTitle').textContent = '➕ Nova taxa de IVA';
+    document.getElementById('trMessage').textContent = '';
+}
+
+async function submitHandler(e) {
+    e.preventDefault();
+    const form = e.target;
+    const message = document.getElementById('trMessage');
+    const submitBtn = document.getElementById('trSubmit');
+
+    const mode = form.dataset.taxRateFormMode;
+    const id = form.dataset.taxRateId;
+
+    const payload = {
+        name: document.getElementById('trName').value.trim(),
+        percent: document.getElementById('trPercent').value,
+        is_default: document.getElementById('trDefault').checked,
+        active: document.getElementById('trActive').checked,
+    };
+
+    submitBtn.disabled = true;
+    showMessage(message, 'A guardar...', false);
+
+    try {
+        const response = mode === 'edit' && id
+            ? await authPatch(`/admin/tax-rates/${id}`, payload)
+            : await authPost('/admin/tax-rates', payload);
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok) throw new Error(extractError(data));
+
+        showMessage(message, data.message || 'Guardado com sucesso!');
+        message.className = 'text-xs font-medium text-emerald-600 dark:text-emerald-400';
+        resetForm(form);
+        window.location.reload();
+    } catch (err) {
+        showMessage(message, err.message, true);
+    } finally {
+        submitBtn.disabled = false;
+    }
+}
+
+async function handleEdit(button) {
+    document.getElementById('trName').value = button.dataset.name || '';
+    document.getElementById('trPercent').value = button.dataset.percent || '';
+    document.getElementById('trDefault').checked = button.dataset.default === '1';
+    document.getElementById('trActive').checked = button.dataset.active === '1';
+
+    const form = document.getElementById('taxRateForm');
+    form.dataset.taxRateFormMode = 'edit';
+    form.dataset.taxRateId = button.dataset.taxRateEdit;
+    document.getElementById('taxRateFormTitle').textContent = '✏️ Editar taxa de IVA';
+    document.getElementById('trMessage').textContent = '';
+}
+
+async function handleDelete(id) {
+    const message = document.getElementById('trMessage');
+    showMessage(message, 'A desativar taxa...', false);
+
+    try {
+        const response = await authDelete(`/admin/tax-rates/${id}`);
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok) throw new Error(extractError(data));
+
+        window.location.reload();
+    } catch (err) {
+        showMessage(message, err.message, true);
+    }
+}
+
+function init() {
+    const form = document.getElementById('taxRateForm');
+    if (form) form.addEventListener('submit', submitHandler);
+
+    document.getElementById('trReset')?.addEventListener('click', () => resetForm(form));
+
+    document.querySelectorAll('[data-tax-rate-edit]').forEach((button) => {
+        button.addEventListener('click', () => handleEdit(button));
+    });
+
+    document.querySelectorAll('[data-tax-rate-delete]').forEach((button) => {
+        button.addEventListener('click', () => {
+            if (window.confirm('Tem a certeza que pretende desativar esta taxa de IVA?')) {
+                handleDelete(button.dataset.taxRateDelete);
+            }
+        });
+    });
+}
+
+export { init };

@@ -215,4 +215,130 @@ class AttachmentOperationFeatureTest extends TestCase
             ]]);
         $this->assertCount(2, $response->json('attachments'));
     }
+
+    public function test_upload_persists_disk_extension_and_original_name(): void
+    {
+        Storage::fake('public');
+
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
+
+        $ticket = Ticket::create([
+            'user_id' => $user->id,
+            'title' => 'Persist metadata',
+            'description' => 'Testing persisted upload metadata',
+            'priority' => TicketPriorityEnum::Medium->value,
+            'status_id' => $openId,
+            'opened_at' => now(),
+        ]);
+
+        $response = $this->withHeader('X-Auth-Token', $user->api_token)
+            ->postJson('/api/tickets/'.$ticket->id.'/photos', [
+                'photo' => UploadedFile::fake()->image('minha-foto.jpg', 640, 480),
+            ]);
+
+        $response->assertStatus(201);
+        $this->assertStringStartsWith('ticket_photos/', $response->json('attachment.path'));
+        $this->assertSame('public', $response->json('attachment.disk'));
+        $this->assertSame('jpg', $response->json('attachment.extension'));
+        $this->assertSame('minha-foto.jpg', $response->json('attachment.original_name'));
+        $this->assertSame('image/jpeg', $response->json('attachment.mime_type'));
+
+        Storage::disk('public')->assertExists($response->json('attachment.path'));
+        $this->assertDatabaseHas('ticket_attachments', [
+            'ticket_id' => $ticket->id,
+            'disk' => 'public',
+            'extension' => 'jpg',
+            'original_name' => 'minha-foto.jpg',
+        ]);
+    }
+
+    public function test_upload_derives_extension_from_real_mime_not_client_extension(): void
+    {
+        Storage::fake('public');
+
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
+
+        $ticket = Ticket::create([
+            'user_id' => $user->id,
+            'title' => 'Canonical extension',
+            'description' => 'Stored extension must come from the real mime mapping, not the client extension string',
+            'priority' => TicketPriorityEnum::Medium->value,
+            'status_id' => $openId,
+            'opened_at' => now(),
+        ]);
+
+        $response = $this->withHeader('X-Auth-Token', $user->api_token)
+            ->postJson('/api/tickets/'.$ticket->id.'/photos', [
+                'photo' => UploadedFile::fake()->image('photo.jpeg', 320, 240),
+            ]);
+
+        $response->assertStatus(201);
+        $file = $response->json('attachment.file_name');
+        $this->assertStringEndsWith('.jpg', $file);
+        $this->assertStringNotContainsString('.jpeg', $file);
+        $this->assertSame('jpg', $response->json('attachment.extension'));
+    }
+
+    public function test_upload_rejects_php_extension_even_with_valid_image(): void
+    {
+        Storage::fake('public');
+
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
+
+        $ticket = Ticket::create([
+            'user_id' => $user->id,
+            'title' => 'Php extension blocked',
+            'description' => 'A valid image named with a php extension must be rejected',
+            'priority' => TicketPriorityEnum::Medium->value,
+            'status_id' => $openId,
+            'opened_at' => now(),
+        ]);
+
+        $response = $this->withHeader('X-Auth-Token', $user->api_token)
+            ->postJson('/api/tickets/'.$ticket->id.'/photos', [
+                'photo' => UploadedFile::fake()->image('shell.php', 320, 240),
+            ]);
+
+        $response->assertStatus(422);
+        $response->assertJsonStructure(['errors' => ['photo']]);
+    }
+
+    public function test_model_delete_removes_physical_file_on_public_disk(): void
+    {
+        Storage::fake('public');
+
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
+
+        $ticket = Ticket::create([
+            'user_id' => $user->id,
+            'title' => 'Model disk fallback',
+            'description' => 'Legacy attachment without disk column must fall back to public disk',
+            'priority' => TicketPriorityEnum::Low->value,
+            'status_id' => $openId,
+            'opened_at' => now(),
+        ]);
+
+        $photo = UploadedFile::fake()->create('legacy.jpg', 10, 'image/jpeg');
+        $path = $photo->store('ticket_photos', 'public');
+
+        $attachment = TicketAttachment::create([
+            'ticket_id' => $ticket->id,
+            'user_id' => $user->id,
+            'file_name' => 'legacy.jpg',
+            'path' => $path,
+            'mime_type' => 'image/jpeg',
+            'size' => 1024,
+        ]);
+
+        Storage::disk('public')->assertExists($path);
+
+        $attachment->delete();
+
+        $this->assertSoftDeleted($attachment);
+        Storage::disk('public')->assertMissing($path);
+    }
 }

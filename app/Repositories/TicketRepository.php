@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
-use App\DTOs\TicketFilters;
 use App\Models\Ticket;
 use App\Repositories\Contracts\TicketRepositoryInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -33,45 +32,6 @@ final class TicketRepository implements TicketRepositoryInterface
     public function getAll(array $relations = []): LengthAwarePaginator
     {
         return Ticket::with($relations)->latest()->paginate(15);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function search(TicketFilters $filters): LengthAwarePaginator
-    {
-        $query = Ticket::with(['equipment', 'room', 'user', 'technician', 'status']);
-
-        if ($filters->query) {
-            $q = str_replace(['%', '_'], ['\%', '\_'], $filters->query);
-            $query->where('title', 'like', '%' . $q . '%');
-        }
-
-        if ($filters->status) {
-            $query->where('status_id', $filters->status);
-        }
-
-        if ($filters->priority) {
-            $query->where('priority', $filters->priority);
-        }
-
-        if ($filters->userId) {
-            $query->where('user_id', $filters->userId);
-        }
-
-        if ($filters->technicianId) {
-            $query->where('assigned_to', $filters->technicianId);
-        }
-
-        if ($filters->equipmentId) {
-            $query->where('equipment_id', $filters->equipmentId);
-        }
-
-        if ($filters->roomId) {
-            $query->where('room_id', $filters->roomId);
-        }
-
-        return $query->latest()->paginate(15);
     }
 
     /**

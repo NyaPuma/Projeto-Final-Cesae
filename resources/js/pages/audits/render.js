@@ -1,22 +1,44 @@
 import { renderResultsCount as renderSharedResultsCount, renderResultsFeedback, renderSimplePagination, renderTableEmptyState, renderTableErrorState } from '../../components/listing/feedback.js';
 import { getAuditsTableBody, getEventSelect, getPagination, getResultsCount } from './dom.js';
+import { formatDateTime } from '../../utils/locale.js';
 
 function getEventBadge(event) {
     const value = String(event || '').toLowerCase().trim();
+    const translations = getAuditTranslations();
 
     if (value.includes('create') || value.includes('criar') || value.includes('insert')) {
-        return '<span class="inline-flex items-center gap-1 rounded-lg border border-emerald-500/20 bg-emerald-500/10 px-2.5 py-1 text-[11px] font-bold uppercase tracking-tight text-emerald-700 dark:text-emerald-400">Criar</span>';
+        return `<span class="inline-flex items-center gap-1 rounded-lg border border-emerald-500/20 bg-emerald-500/10 px-2.5 py-1 text-[11px] font-bold uppercase tracking-tight text-emerald-700 dark:text-emerald-400">${translations.create || 'Created'}</span>`;
     }
 
     if (value.includes('update') || value.includes('editar') || value.includes('atualizar')) {
-        return '<span class="inline-flex items-center gap-1 rounded-lg border border-amber-500/20 bg-amber-500/10 px-2.5 py-1 text-[11px] font-bold uppercase tracking-tight text-amber-800 dark:text-amber-400">Editar</span>';
+        return `<span class="inline-flex items-center gap-1 rounded-lg border border-amber-500/20 bg-amber-500/10 px-2.5 py-1 text-[11px] font-bold uppercase tracking-tight text-amber-800 dark:text-amber-400">${translations.update || 'Updated'}</span>`;
     }
 
     if (value.includes('delete') || value.includes('eliminar') || value.includes('remover')) {
-        return '<span class="inline-flex items-center gap-1 rounded-lg border border-red-500/20 bg-red-500/10 px-2.5 py-1 text-[11px] font-bold uppercase tracking-tight text-red-700 dark:text-red-400">Eliminar</span>';
+        return `<span class="inline-flex items-center gap-1 rounded-lg border border-red-500/20 bg-red-500/10 px-2.5 py-1 text-[11px] font-bold uppercase tracking-tight text-red-700 dark:text-red-400">${translations.delete || 'Deleted'}</span>`;
     }
 
-    return `<span class="inline-flex items-center gap-1 rounded-lg border border-(--border) bg-(--surface-2) px-2.5 py-1 text-[11px] font-bold uppercase tracking-tight text-(--text-soft)">${event}</span>`;
+    const eventLabels = {
+        created: translations.created,
+        updated: translations.updated,
+        deleted: translations.deleted,
+    };
+    return `<span class="inline-flex items-center gap-1 rounded-lg border border-(--border) bg-(--surface-2) px-2.5 py-1 text-[11px] font-bold uppercase tracking-tight text-(--text-soft)">${eventLabels[value] || event}</span>`;
+}
+
+function getAuditTranslations() {
+    const configured = window.SGM_AUDIT_I18N || {};
+    const body = document.body?.dataset || {};
+
+    return {
+        allEvents: configured.allEvents || body.auditAllEvents || 'All events',
+        create: configured.create || body.auditCreated || 'Created',
+        update: configured.update || body.auditUpdated || 'Updated',
+        delete: configured.delete || body.auditDeleted || 'Deleted',
+        created: configured.created || body.auditCreated || 'Created',
+        updated: configured.updated || body.auditUpdated || 'Updated',
+        deleted: configured.deleted || body.auditDeleted || 'Deleted',
+    };
 }
 
 function formatStateData(state) {
@@ -41,12 +63,18 @@ export function populateEventFilter(audits) {
     const currentValue = select.value;
     const uniqueEvents = [...new Set(audits.map((item) => String(item.event || '').trim()))].filter(Boolean);
 
-    select.innerHTML = '<option value="">Todos os eventos</option>';
+    const translations = getAuditTranslations();
+    select.innerHTML = `<option value="">${translations.allEvents || 'All events'}</option>`;
 
     uniqueEvents.forEach((eventName) => {
         const option = document.createElement('option');
         option.value = eventName.toLowerCase();
-        option.textContent = eventName.charAt(0).toUpperCase() + eventName.slice(1);
+        const eventLabels = {
+            created: translations.created,
+            updated: translations.updated,
+            deleted: translations.deleted,
+        };
+        option.textContent = eventLabels[eventName.toLowerCase()] || eventName.charAt(0).toUpperCase() + eventName.slice(1);
         select.appendChild(option);
     });
 
@@ -88,18 +116,18 @@ export function renderAudits(audits) {
         const referenceValue = audit.auditable_id || audit.reference;
         const reference = referenceValue ? `ID: ${referenceValue}` : '-';
         const dateFormatted = audit.created_at
-            ? new Date(audit.created_at).toLocaleString('pt-PT', { hour12: false })
+            ? formatDateTime(audit.created_at)
             : '-';
 
         return `<tr class="transition-colors duration-150 hover:bg-(--surface-2)/50">
-            <td class="px-5 py-4 font-mono text-xs font-bold text-(--text-soft)">${logId}</td>
-            <td class="px-5 py-4 font-semibold text-(--text)">${user}</td>
-            <td class="px-5 py-4 font-semibold text-(--text-soft)">${entity}</td>
-            <td class="px-5 py-4 font-mono text-xs text-(--text-soft)">${reference}</td>
-            <td class="px-5 py-4">${getEventBadge(audit.event)}</td>
-            <td class="px-5 py-4">${formatStateData(audit.old_values || audit.old_state)}</td>
-            <td class="px-5 py-4">${formatStateData(audit.new_values || audit.new_state)}</td>
-            <td class="px-5 py-4 text-right font-mono text-xs font-semibold text-(--text-soft)">${dateFormatted}</td>
+            <td class="px-5 py-4 font-mono text-xs font-bold text-(--text-soft)" data-label="Log ID">${logId}</td>
+            <td class="px-5 py-4 font-semibold text-(--text)" data-label="Utilizador / Operador">${user}</td>
+            <td class="px-5 py-4 font-semibold text-(--text-soft)" data-label="Elemento Afetado">${entity}</td>
+            <td class="px-5 py-4 font-mono text-xs text-(--text-soft)" data-label="Referência">${reference}</td>
+            <td class="px-5 py-4" data-label="Tipo de Ação">${getEventBadge(audit.event)}</td>
+            <td class="px-5 py-4" data-label="Estado Anterior">${formatStateData(audit.old_values || audit.old_state)}</td>
+            <td class="px-5 py-4" data-label="Novo Estado">${formatStateData(audit.new_values || audit.new_state)}</td>
+            <td class="px-5 py-4 text-right font-mono text-xs font-semibold text-(--text-soft)" data-label="Data e Hora">${dateFormatted}</td>
         </tr>`;
     }).join('');
 }

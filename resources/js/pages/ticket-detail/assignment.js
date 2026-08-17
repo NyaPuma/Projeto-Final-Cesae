@@ -4,7 +4,7 @@ import { showMessage } from './ui.js';
 
 function getAssignmentPayload(technicianId) {
     return {
-        tecnico_id: technicianId,
+        technician_id: technicianId,
     };
 }
 

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Database\Seeders\Data\OperationalData;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -65,6 +66,9 @@ class UsersSeeder extends Seeder
         $targetCount = 100;
         $currentCount = DB::table('users')->count();
 
+        $names = OperationalData::technicianNames();
+        $nameIndex = 0;
+
         for ($i = 1; $i <= $targetCount - $currentCount; $i++) {
             $index = $i + $currentCount;
             // Distribuição realista: ~10% admin, ~15% técnico, ~75% utilizador comum
@@ -72,10 +76,16 @@ class UsersSeeder extends Seeder
             $profileName = $roll === 0 ? 'admin' : ($roll <= 2 ? 'technician' : 'user');
             $email = sprintf('synthetic-%03d@example.invalid', $index);
 
+            $name = $profileName === 'technician'
+                ? $names['first'][$nameIndex % count($names['first'])] . ' ' . $names['last'][$nameIndex % count($names['last'])]
+                : 'Utilizador Sintético ' . str_pad((string) $index, 3, '0', STR_PAD_LEFT);
+
+            $nameIndex++;
+
             DB::table('users')->updateOrInsert(
                 ['email' => $email],
                 [
-                    'name' => 'Utilizador Sintético '.str_pad((string) $index, 3, '0', STR_PAD_LEFT),
+                    'name' => $name,
                     'email' => $email,
                     'email_verified_at' => now(),
                     'password' => Hash::make('password'),

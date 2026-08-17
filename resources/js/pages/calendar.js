@@ -1,14 +1,34 @@
-import { authHeader, isAuthenticated } from '../utils/api.js';
+import { Calendar } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import localesAll from '@fullcalendar/core/locales-all';
+import { authHeader } from '../utils/api.js';
+import { formatDateTime } from '../utils/locale.js';
 
 let calendarInstance;
 let lastFocusedElement;
+let calendarEl;
+let equipmentList = [];
 
-function openModal(title, start, end) {
+function openModal({ title, start, end, description, technician, url }) {
     lastFocusedElement = document.activeElement;
 
-    document.getElementById('modalTitle').innerText = title.includes('🛡️') || title.includes('🔧') ? title : `🛡️ ${title}`;
+    document.getElementById('modalTitle').innerText = title;
     document.getElementById('modalStart').innerText = start;
     document.getElementById('modalEnd').innerText = end;
+    document.getElementById('modalDescription').innerText = description || '—';
+    document.getElementById('modalTechnician').innerText = technician || '—';
+
+    const openTicket = document.getElementById('modalTicketLink');
+    if (openTicket) {
+        if (url) {
+            openTicket.href = url;
+            openTicket.classList.remove('hidden');
+        } else {
+            openTicket.classList.add('hidden');
+        }
+    }
 
     const modal = document.getElementById('eventModal');
     modal.classList.remove('hidden');
@@ -35,6 +55,16 @@ function openScheduleModal() {
     modal.classList.remove('hidden');
     document.getElementById('schedFeedback').classList.add('hidden');
 
+    const searchInput = document.getElementById('sched_equipment_search');
+    const equipmentId = document.getElementById('sched_equipment_id');
+    if (searchInput) {
+        searchInput.value = '';
+    }
+    if (equipmentId) {
+        equipmentId.value = '';
+    }
+    hideEquipmentSearchEmpty();
+
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     tomorrow.setHours(9, 0, 0, 0);
@@ -48,37 +78,167 @@ function closeScheduleModal() {
 }
 
 async function loadScheduleFormData() {
-    const eqSelect = document.getElementById('sched_equipment_id');
     const techSelect = document.getElementById('sched_technician_id');
 
     try {
         const eqRes = await fetch('/equipments', { headers: authHeader() });
         if (eqRes.ok) {
             const eqData = await eqRes.json();
-            const list = eqData.equipments?.data ?? eqData.equipments ?? eqData ?? [];
-            const selectPlaceholder = eqSelect.dataset.placeholderSelect || 'Selecione um equipamento...';
-            eqSelect.innerHTML = `<option value="">${selectPlaceholder}</option>` +
-                list.map(e => `<option value="${e.id}">${e.name} (${e.room?.name || 'Sem Sala'})</option>`).join('');
+            equipmentList = eqData.equipments?.data ?? eqData.equipments ?? [];
         }
 
-        const techRes = await fetch('/admin/users?role=technician', { headers: authHeader() });
+        const techRes = await fetch('/admin/users', { headers: authHeader() });
         if (techRes.ok) {
             const techData = await techRes.json();
-            const techList = techData.users?.data ?? techData.users ?? techData ?? [];
+            const allUsers = techData.users?.data ?? techData.users ?? [];
+            const techList = allUsers.filter(t => t.profile?.name === 'technician');
+            const list = techList.length ? techList : allUsers;
             const autoAssignLabel = techSelect.dataset.placeholderAuto || 'Atribuição Automática';
             techSelect.innerHTML = `<option value="">${autoAssignLabel}</option>` +
-                techList.map(t => `<option value="${t.id}">${t.name}</option>`).join('');
+                list.map(t => `<option value="${t.id}">${t.name}</option>`).join('');
         }
     } catch (err) {
-        console.error("Erro ao carregar dados do formulário:", err);
+        console.error('Erro ao carregar dados do formulário:', err);
     }
+}
+
+function showEquipmentSearchEmpty() {
+    const el = document.getElementById('equipmentSearchEmpty');
+    if (el) el.classList.remove('hidden');
+}
+
+function hideEquipmentSearchEmpty() {
+    const el = document.getElementById('equipmentSearchEmpty');
+    if (el) el.classList.add('hidden');
+}
+
+function initEquipmentSearch() {
+    const input = document.getElementById('sched_equipment_search');
+    const hiddenInput = document.getElementById('sched_equipment_id');
+    const dropdown = document.getElementById('equipmentSuggestions');
+    const list = document.getElementById('equipmentSuggestionsList');
+    if (!input || !hiddenInput || !dropdown || !list) {
+        return;
+    }
+
+    let highlighted = -1;
+
+    function closeSuggestions() {
+        dropdown.classList.add('hidden');
+        input.setAttribute('aria-expanded', 'false');
+        highlighted = -1;
+    }
+
+    function applyHighlight() {
+        const items = list.querySelectorAll('li');
+        items.forEach((item, index) => {
+            item.classList.toggle('is-highlighted', index === highlighted);
+        });
+    }
+
+    function selectEquipment(item) {
+        input.value = item.name;
+        hiddenInput.value = item.id;
+        input.setAttribute('aria-activedescendant', '');
+        closeSuggestions();
+        hideEquipmentSearchEmpty();
+    }
+
+    function renderSuggestions(query) {
+        const q = query.trim().toLowerCase();
+        const matches = equipmentList.filter(e => !q || (e.name || '').toLowerCase().includes(q));
+
+        list.innerHTML = '';
+        highlighted = -1;
+
+        if (!matches.length) {
+            const empty = document.createElement('li');
+            empty.className = 'equipment-search__empty';
+            empty.textContent = 'Sem resultados';
+            list.appendChild(empty);
+            dropdown.classList.remove('hidden');
+            input.setAttribute('aria-expanded', 'true');
+            return;
+        }
+
+        matches.forEach(item => {
+            const li = document.createElement('li');
+            li.className = 'equipment-search__item';
+            li.setAttribute('role', 'option');
+
+            const name = document.createElement('span');
+            name.className = 'equipment-search__item-name';
+            name.textContent = item.name;
+
+            const room = document.createElement('span');
+            room.className = 'equipment-search__item-room';
+            room.textContent = item.room?.name || 'Sem Sala';
+
+            li.appendChild(name);
+            li.appendChild(room);
+            li.addEventListener('click', () => selectEquipment(item));
+            list.appendChild(li);
+        });
+
+        dropdown.classList.remove('hidden');
+        input.setAttribute('aria-expanded', 'true');
+    }
+
+    input.addEventListener('input', () => {
+        hiddenInput.value = '';
+        renderSuggestions(input.value);
+    });
+
+    input.addEventListener('focus', () => {
+        if (input.value) {
+            renderSuggestions(input.value);
+        }
+    });
+
+    input.addEventListener('keydown', (e) => {
+        const items = list.querySelectorAll('li');
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (items.length) {
+                highlighted = Math.min(highlighted + 1, items.length - 1);
+                applyHighlight();
+            }
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (items.length) {
+                highlighted = Math.max(highlighted - 1, 0);
+                applyHighlight();
+            }
+        } else if (e.key === 'Enter') {
+            if (highlighted > -1 && items[highlighted]) {
+                e.preventDefault();
+                items[highlighted].click();
+            } else if (hiddenInput.value) {
+                closeSuggestions();
+            }
+        } else if (e.key === 'Escape') {
+            closeSuggestions();
+        }
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!input.contains(e.target) && !dropdown.contains(e.target)) {
+            closeSuggestions();
+        }
+    });
 }
 
 async function submitPreventiveMaintenance(e) {
     e.preventDefault();
     const btn = document.getElementById('btnSubmitSched');
     const feedback = document.getElementById('schedFeedback');
+    const modal = document.getElementById('scheduleModal');
     feedback.classList.add('hidden');
+
+    const endpoint = modal.dataset.scheduleUrl || '/calendar/maintenance';
+    const labelScheduling = btn.dataset.labelScheduling || 'A agendar...';
+    const labelConfirm = btn.dataset.labelConfirm || 'Confirmar Agendamento';
+    const errMessage = feedback.dataset.errMessage || 'Erro ao agendar manutenção preventiva.';
 
     const payload = {
         title: document.getElementById('sched_title').value.trim(),
@@ -88,15 +248,18 @@ async function submitPreventiveMaintenance(e) {
         description: document.getElementById('sched_description').value.trim()
     };
 
-    const labelScheduling = btn.dataset.labelScheduling || 'A agendar...';
-    const labelConfirm = btn.dataset.labelConfirm || 'Confirmar Agendamento';
-    const errMessage = feedback.dataset.errMessage || 'Erro ao agendar manutenção preventiva.';
+    if (!payload.equipment_id) {
+        feedback.innerText = errMessage;
+        feedback.classList.remove('hidden');
+        showEquipmentSearchEmpty();
+        return;
+    }
 
     btn.disabled = true;
     btn.innerText = labelScheduling;
 
     try {
-        const res = await fetch('/admin/maintenance/schedule', {
+        const res = await fetch(endpoint, {
             method: 'POST',
             headers: Object.assign({ 'Content-Type': 'application/json' }, authHeader()),
             body: JSON.stringify(payload)
@@ -108,8 +271,8 @@ async function submitPreventiveMaintenance(e) {
         }
 
         closeScheduleModal();
-        if (calendarInstance) calendarInstance.refetchEvents();
         document.getElementById('preventiveForm').reset();
+        if (calendarInstance) calendarInstance.refetchEvents();
     } catch (err) {
         feedback.innerText = err.message;
         feedback.classList.remove('hidden');
@@ -126,163 +289,244 @@ function handleEscapeKey(e) {
     }
 }
 
-function initCalendar() {
-    if (!isAuthenticated()) {
-        window.location.href = "/ui/login";
+function saveEventMove(info) {
+    const event = info.event;
+    const start = event.start;
+    const end = event.end;
+
+    const prefix = calendarEl ? calendarEl.dataset.reschedulePrefix : '';
+    if (!prefix) {
+        info.revert();
         return;
     }
 
-    const userRole = (localStorage.getItem('user_role') || '').toLowerCase();
-    if (userRole === 'admin' || userRole === 'administrador') {
-        document.getElementById('btnAdminSchedule')?.classList.remove('hidden');
-    }
+    const payload = {
+        start: start ? start.toISOString() : null,
+        end: end ? end.toISOString() : null,
+    };
 
-    const calendarEl = document.getElementById("calendar");
-
-    if (calendarEl) {
-        const calendarLocale = calendarEl.dataset.locale || 'pt';
-        const btnToday = calendarEl.dataset.btnToday || 'Hoje';
-        const btnMonth = calendarEl.dataset.btnMonth || 'Mês';
-        const btnWeek = calendarEl.dataset.btnWeek || 'Semana';
-        const btnDay = calendarEl.dataset.btnDay || 'Dia';
-
-        calendarInstance = new FullCalendar.Calendar(calendarEl, {
-            locale: calendarLocale,
-            initialView: "dayGridMonth",
-            height: "auto",
-            firstDay: 1,
-            nowIndicator: true,
-            navLinks: true,
-            editable: false,
-            selectable: true,
-            expandRows: true,
-            dayMaxEvents: true,
-            weekends: true,
-
-            buttonText: {
-                today: btnToday,
-                month: btnMonth,
-                week: btnWeek,
-                day: btnDay
-            },
-
-            headerToolbar: {
-                left: "prev,next",
-                center: "title",
-                right: "dayGridMonth,timeGridWeek,timeGridDay"
-            },
-
-            eventContent: function(arg) {
-                const isPreventive = arg.event.extendedProps?.scheduled || arg.event.title.toLowerCase().includes('preventiv') || arg.event.title.toLowerCase().includes('troca');
-                const icon = isPreventive ? '🛡️' : '🔧';
-                const title = arg.event.title;
-                const time = arg.timeText;
-
-                const customEl = document.createElement('div');
-                customEl.className = 'flex items-center gap-2 overflow-hidden py-0.5 px-0.5';
-                customEl.innerHTML = `
-                    <span class="text-lg filter drop-shadow flex-shrink-0 leading-none">${icon}</span>
-                    <div class="truncate min-w-0">
-                        <div class="font-extrabold text-xs truncate leading-tight text-white">${title}</div>
-                        ${time ? `<div class="text-[10px] opacity-90 font-mono text-white/90 leading-none mt-0.5">${time}</div>` : ''}
-                    </div>
-                `;
-                return { domNodes: [customEl] };
-            },
-
-            events(fetchInfo, successCallback, failureCallback) {
-                document.querySelectorAll('.fc-day-has-scheduled').forEach(el => {
-                    el.classList.remove('fc-day-has-scheduled');
-                });
-
-                fetch("/calendar/events", { headers: authHeader() })
-                    .then(response => {
-                        if (!response.ok) {
-                            if (response.status === 401) {
-                                window.location.href = "/ui/login";
-                                return;
-                            }
-                            throw new Error("Erro ao carregar eventos da infraestrutura.");
-                        }
-                        return response.json();
-                    })
-                    .then(events => {
-                        if (!events) return;
-
-                        const totalEl = document.getElementById("eventsTotal");
-                        if (totalEl) totalEl.innerText = events.length;
-
-                        const currentPeriod = calendarInstance ? calendarInstance.getDate() : fetchInfo.start;
-                        const activeMonth = currentPeriod.getMonth();
-                        const activeYear = currentPeriod.getFullYear();
-
-                        const totalMonth = events.filter(e => {
-                            const eventDate = new Date(e.start);
-                            return eventDate.getMonth() === activeMonth && eventDate.getFullYear() === activeYear;
-                        }).length;
-
-                        const monthEl = document.getElementById("monthTotal");
-                        if (monthEl) monthEl.innerText = totalMonth;
-
-                        successCallback(events);
-                    })
-                    .catch(error => {
-                        console.error(error);
-                        failureCallback(error);
-                    });
-            },
-
-            eventDidMount(info) {
-                info.el.style.cursor = "pointer";
-                info.el.title = info.event.title;
-                info.el.setAttribute('tabindex', '0');
-                info.el.setAttribute('role', 'button');
-                info.el.setAttribute('aria-label', `${info.event.title}, clique para ver detalhes`);
-
-                if (info.event.start) {
-                    const dateStr = info.event.start.toISOString().split('T')[0];
-                    const dayCell = document.querySelector(`.fc-daygrid-day[data-date="${dateStr}"]`);
-                    if (dayCell) {
-                        dayCell.classList.add('fc-day-has-scheduled');
-                    }
-                }
-
-                info.el.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        info.el.click();
-                    }
-                });
-            },
-
-            eventClick(info) {
-                const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
-                const start = info.event.start ? info.event.start.toLocaleString("pt-PT", options) : "-";
-                const end = info.event.end ? info.event.end.toLocaleString("pt-PT", options) : "-";
-
-                openModal(info.event.title, start, end);
-            },
-
-            loading(isLoading) {
-                document.body.style.cursor = isLoading ? "progress" : "default";
+    fetch(`${prefix}/${event.id}`, {
+        method: 'PATCH',
+        headers: Object.assign({ 'Content-Type': 'application/json' }, authHeader()),
+        body: JSON.stringify(payload)
+    })
+        .then(response => {
+            if (response.status === 401) {
+                window.location.href = '/ui/login';
+                return null;
+            }
+            if (!response.ok) {
+                throw new Error('Erro ao reagendar o evento.');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data && calendarInstance) {
+                calendarInstance.refetchEvents();
+            }
+        })
+        .catch(error => {
+            console.error(error);
+            if (typeof info.revert === 'function') {
+                info.revert();
             }
         });
+}
 
-        calendarInstance.render();
+function initCalendar() {
+    const calendarElLocal = document.getElementById('calendar');
+    if (!calendarElLocal) {
+        return;
     }
+
+    calendarEl = calendarElLocal;
+
+    const appLocale = document.documentElement.lang || calendarEl.dataset.locale || 'pt-PT';
+    const localeMap = {
+        'en-GB': 'en-gb',
+        'en-US': 'en-gb',
+        'es-ES': 'es',
+        'fr-FR': 'fr',
+        'pt-BR': 'pt-br',
+        'pt-PT': 'pt',
+        'zh-CN': 'zh-cn',
+        'ar-AE': 'ar',
+    };
+    const calendarLocale = localeMap[appLocale] || appLocale.split('-')[0].toLowerCase();
+    const btnToday = calendarEl.dataset.btnToday || '';
+    const btnMonth = calendarEl.dataset.btnMonth || '';
+    const btnWeek = calendarEl.dataset.btnWeek || '';
+    const btnDay = calendarEl.dataset.btnDay || '';
+
+    calendarInstance = new Calendar(calendarEl, {
+        plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
+        locales: localesAll,
+        locale: calendarLocale,
+        initialView: 'dayGridMonth',
+        height: 'auto',
+        firstDay: 1,
+        nowIndicator: true,
+        navLinks: true,
+        editable: false,
+        selectable: true,
+        expandRows: true,
+        dayMaxEvents: true,
+        weekends: true,
+
+        buttonText: {
+            today: btnToday,
+            month: btnMonth,
+            week: btnWeek,
+            day: btnDay
+        },
+
+        dayHeaderContent: (arg) => new Intl.DateTimeFormat(appLocale, {
+            weekday: 'short',
+        }).format(arg.date),
+
+        datesSet: (info) => {
+            const titleElement = calendarEl.querySelector('.fc-toolbar-title');
+            if (!titleElement) return;
+
+            const options = info.view.type === 'dayGridMonth'
+                ? { month: 'long', year: 'numeric' }
+                : { day: 'numeric', month: 'long', year: 'numeric' };
+
+            titleElement.textContent = new Intl.DateTimeFormat(appLocale, options).format(info.view.currentStart);
+        },
+
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+
+        eventContent: function (arg) {
+            const isScheduled = arg.event.extendedProps?.scheduled !== false;
+            const icon = isScheduled ? '🛡️' : '🔧';
+            const title = arg.event.title;
+            const time = arg.timeText;
+
+            const customEl = document.createElement('div');
+            customEl.className = 'fc-custom-event';
+            customEl.innerHTML = `
+                <span class="fc-custom-event__icon">${icon}</span>
+                <div class="fc-custom-event__body">
+                    <div class="fc-custom-event__title">${title}</div>
+                    ${time ? `<div class="fc-custom-event__time">${time}</div>` : ''}
+                </div>
+            `;
+            return { domNodes: [customEl] };
+        },
+
+        events(fetchInfo, successCallback, failureCallback) {
+            document.querySelectorAll('.fc-day-has-scheduled').forEach(el => {
+                el.classList.remove('fc-day-has-scheduled');
+            });
+
+            fetch('/calendar/events', { headers: authHeader() })
+                .then(response => {
+                    if (response.status === 401) {
+                        window.location.href = '/ui/login';
+                        return null;
+                    }
+                    if (!response.ok) {
+                        throw new Error('Erro ao carregar eventos da infraestrutura.');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (!data) {
+                        return;
+                    }
+
+                    const events = data.events ?? [];
+
+                    const totalEl = document.getElementById('eventsTotal');
+                    if (totalEl) {
+                        totalEl.innerText = events.length;
+                    }
+
+                    const currentPeriod = calendarInstance ? calendarInstance.getDate() : new Date();
+                    const activeMonth = currentPeriod.getMonth();
+                    const activeYear = currentPeriod.getFullYear();
+
+                    const totalMonth = events.filter(event => {
+                        const eventDate = new Date(event.start);
+                        return eventDate.getMonth() === activeMonth && eventDate.getFullYear() === activeYear;
+                    }).length;
+
+                    const monthEl = document.getElementById('monthTotal');
+                    if (monthEl) {
+                        monthEl.innerText = totalMonth;
+                    }
+
+                    successCallback(events);
+                })
+                .catch(error => {
+                    console.error(error);
+                    failureCallback(error);
+                });
+        },
+
+        eventDidMount(info) {
+            const isScheduled = info.event.extendedProps?.scheduled !== false;
+            info.el.classList.add(isScheduled ? 'fc-event--scheduled' : 'fc-event--regular');
+            info.el.style.cursor = 'pointer';
+            info.el.title = info.event.title;
+            info.el.setAttribute('tabindex', '0');
+            info.el.setAttribute('role', 'button');
+            info.el.setAttribute('aria-label', `${info.event.title}, clique para ver detalhes`);
+
+            if (info.event.start) {
+                const dateStr = info.event.start.toISOString().split('T')[0];
+                const dayCell = document.querySelector(`.fc-daygrid-day[data-date="${dateStr}"]`);
+                if (dayCell) {
+                    dayCell.classList.add('fc-day-has-scheduled');
+                }
+            }
+
+            info.el.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    info.el.click();
+                }
+            });
+        },
+
+        eventClick(info) {
+            info.jsEvent.preventDefault();
+
+            const props = info.event.extendedProps || {};
+
+            openModal({
+                title: info.event.title,
+                start: info.event.start ? formatDateTime(info.event.start) : '-',
+                end: info.event.end ? formatDateTime(info.event.end) : '-',
+                description: props.description,
+                technician: props.technician,
+                url: info.event.url || props.url,
+            });
+        },
+
+        eventDrop: saveEventMove,
+        eventResize: saveEventMove,
+
+        loading(isLoading) {
+            document.body.style.cursor = isLoading ? 'progress' : 'default';
+        }
+    });
+
+    calendarInstance.render();
 }
 
 function init() {
     initCalendar();
 
+    initEquipmentSearch();
+
     document.querySelectorAll('[data-action="schedule"]').forEach(el => {
         el.addEventListener('click', openScheduleModal);
-    });
-
-    document.querySelectorAll('[data-action="today"]').forEach(el => {
-        el.addEventListener('click', () => {
-            if (calendarInstance) calendarInstance.today();
-        });
     });
 
     document.querySelectorAll('[data-action="close-modal"]').forEach(el => {

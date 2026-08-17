@@ -18,6 +18,10 @@ final class RegisterController extends Controller
 
     /**
      * Regista um novo utilizador no sistema e emite o token de acesso.
+     *
+     * O token é devolvido no corpo da resposta, mas não é ligado à sessão nem
+     * aos cookies do pedido atual: o registo é efetuado por um administrador
+     * em nome do novo utilizador e não deve assumir a sessão de quem regista.
      */
     public function __invoke(RegisterRequest $request): JsonResponse
     {
@@ -33,9 +37,12 @@ final class RegisterController extends Controller
             'active' => true,
         ]);
 
-        // 3. Cria o token de API e constrói a resposta de autenticação
-        $plainToken = $this->userService->createToken($user, $request);
+        // 3. Cria o token de API (sem o ligar à sessão de quem regista)
+        $plainToken = $this->userService->createToken($user, $request, false);
 
-        return $this->userService->buildAuthResponse($user, $plainToken, $request, 201);
+        return response()->json([
+            'user' => $user,
+            'token' => $plainToken,
+        ], 201);
     }
 }

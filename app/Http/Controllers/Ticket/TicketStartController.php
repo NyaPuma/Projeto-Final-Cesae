@@ -34,7 +34,7 @@ final class TicketStartController extends Controller
         // 2. Validação de estado elegível para início
         if (! $ticket->hasStatus(TicketStatusEnum::Open)) {
             return response()->json([
-                'message' => __('Apenas tickets no estado "Aberto" podem ser iniciados.'),
+                'message' => __('tickets.Apenas tickets no estado "Aberto" podem ser iniciados.'),
             ], 422);
         }
 
@@ -44,17 +44,17 @@ final class TicketStartController extends Controller
 
         // 3. Verificação de prioridades mais altas pendentes
         if ($higherPriority['has_higher'] && ! $force) {
-            $msg = __("⚠️ Existem :total ticket(s) de prioridade mais alta por atender.", [
+            $msg = __("tickets.⚠️ Existem :total ticket(s) de prioridade mais alta por atender.", [
                 'total' => $higherPriority['total'],
             ]);
 
             if ($higherPriority['assigned_to_user'] > 0) {
-                $msg .= ' ' . __("Destes, :assigned estão atribuídos a si.", [
+                $msg .= ' ' . __("common.Destes, :assigned estão atribuídos a si.", [
                     'assigned' => $higherPriority['assigned_to_user'],
                 ]);
             }
 
-            $msg .= ' ' . __('Recomenda-se resolver os mais urgentes primeiro.');
+            $msg .= ' ' . __('common.Recomenda-se resolver os mais urgentes primeiro.');
 
             return response()->json([
                 'warning' => true,
@@ -84,7 +84,7 @@ final class TicketStartController extends Controller
         $ticket->loadMissing(['equipment', 'room', 'technician', 'status']);
 
         return response()->json([
-            'message' => __('Intervenção iniciada com sucesso.'),
+            'message' => __('messages.Intervenção iniciada com sucesso.'),
             'overridden' => $force && $higherPriority['has_higher'],
             'ticket' => new TicketResource($ticket),
         ]);

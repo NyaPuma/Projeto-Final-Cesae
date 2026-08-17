@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => 'アップロードされた証拠はありません。',
+    'remove_photo' => '写真を削除',
+    'remove_file' => 'ファイルを削除',
+    'load_error' => '写真の読み込み中にエラーが発生しました。',
+    'confirm_remove' => 'この写真を削除してもよろしいですか？',
+    'remove_error' => '写真の削除中にエラーが発生しました。',
+    'removed' => '写真が正常に削除されました。',
+    'sent' => '写真が送信されました！',
+    'file' => 'ファイル',
+    'Anexos' => '添付ファイル',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => 'ユーザープロフィールの認証情報、写真、アクセス権限を更新します。',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => '画像をアップロード（PNG、JPG または WEBP、最大 2MB）。',
+    'Emergência Imediata. Risco de acidente.' => '即座に緊急。事故のリスク。',
+    'Escolher Fotografia' => '写真を選択',
+    'Escolher ficheiro' => 'ファイルを選択',
+    'Fotografia (Opcional)' => '写真（任意）',
+    'Fotografia do Utilizador' => 'ユーザー写真',
+    'Imagem' => '画像',
+    'Inserir Imagem (Opcional)' => '画像を挿入（任意）',
+    'Nenhum ficheiro' => 'ファイルなし',
+    'Nenhum ficheiro selecionado' => 'ファイル未選択',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => '現在のプロフィール：:profile。役割に応じた権限でモジュールにアクセスします。',
+    'Tipo de ficheiro não permitido.' => '許可されていないファイルタイプです。',
+];

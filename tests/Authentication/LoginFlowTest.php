@@ -52,7 +52,7 @@ class LoginFlowTest extends TestCase
         $login->assertOk();
         $token = $login->json('token');
 
-        $this->withCookie('api_token', $token);
+        $this->withUnencryptedCookie('api_token', $token);
 
         $pages = ['/ui', '/ui/tickets', '/ui/rooms', '/ui/users', '/ui/analytics'];
         foreach ($pages as $page) {
@@ -76,7 +76,7 @@ class LoginFlowTest extends TestCase
         $login->assertOk();
         $token = $login->json('token');
 
-        $this->withCookie('auth_token', $token);
+        $this->withUnencryptedCookie('auth_token', $token);
 
         $pages = ['/ui', '/ui/tickets', '/ui/rooms', '/ui/users', '/ui/analytics'];
         foreach ($pages as $page) {
@@ -100,8 +100,8 @@ class LoginFlowTest extends TestCase
         $login->assertOk();
         $token = $login->json('token');
 
-        $this->withCookie('api_token', $token);
-        $this->withCookie('auth_token', $token);
+        $this->withUnencryptedCookie('api_token', $token);
+        $this->withUnencryptedCookie('auth_token', $token);
 
         $ui = $this->get('/ui');
         $ui->assertOk();
@@ -150,8 +150,8 @@ class LoginFlowTest extends TestCase
         $login->assertOk();
         $token = $login->json('token');
 
-        $this->withCookie('api_token', $token);
-        $this->withCookie('auth_token', $token);
+        $this->withUnencryptedCookie('api_token', $token);
+        $this->withUnencryptedCookie('auth_token', $token);
 
         $ui = $this->get('/ui');
         $ui->assertOk();

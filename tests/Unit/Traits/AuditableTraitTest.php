@@ -7,6 +7,8 @@ use App\Enums\UserRoleEnum;
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
 use App\Models\Audit;
+use App\Models\Equipment;
+use App\Models\Room;
 use App\Models\Ticket;
 use App\Models\TicketStatus;
 use App\Models\TicketType;
@@ -14,6 +16,7 @@ use App\Models\User;
 use App\Models\UserProfile;
 use App\Services\TicketStatusService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Auth;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
@@ -24,6 +27,13 @@ class AuditableTraitTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        Auth::shouldUse('web');
+        Auth::logout();
+
+        Ticket::resetResolvedUserId();
+        Equipment::resetResolvedUserId();
+        Room::resetResolvedUserId();
 
         TicketType::firstOrCreate(['name' => 'avaria', 'description' => 'Avaria']);
         $typeId = TicketType::where('name', 'avaria')->first()->id;

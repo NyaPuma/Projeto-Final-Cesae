@@ -15,9 +15,9 @@ trait Auditable
 {
     /**
      * ID do utilizador armazenado em cache por pedido.
-     * Nota: Usa-se uma propriedade de instância para evitar problemas em
-     * workers de fila ou Swoole/Octane onde o estado estático persiste
-     * entre pedidos.
+     * Nota: O cache é estático por processo; em long-running processes
+     * (filas, Octane) deve ser reiniciado com resetResolvedUserId() para
+     * garantir que cada job/request usa o ID correto.
      *
      * @var int|null
      */

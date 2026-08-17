@@ -71,11 +71,13 @@ return [
 
             /*
              * Middleware allows to prevent unexpected access to API documentation
+             * A rota de docs exige sessão (custom.auth) e é reservada a admins,
+             * garantindo que a sidebar reflete o perfil real do utilizador.
              */
             'middleware' => [
-                'api' => [],
+                'api' => ['web', 'custom.auth', 'role:admin'],
                 'asset' => [],
-                'docs' => [],
+                'docs' => ['web', 'custom.auth', 'role:admin', \App\Http\Middleware\LocalizeSwaggerDocument::class],
                 'oauth2_callback' => [],
             ],
 

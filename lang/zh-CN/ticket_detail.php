@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => '无已记录的消息。',
+    'comments_error' => '加载历史记录时出错。',
+    'message_sent' => '消息已发送！',
+    'incident_id' => '事件编号',
+    'description' => '事件描述',
+    'priority_level' => '优先级',
+    'equipment' => '设备 / 资产',
+    'room' => '房间 / 位置',
+    'technician' => '已分配技术员',
+    'pending_assignment' => '待分配',
+    'reported_by' => '上报人',
+    'source' => '来源',
+    'qr_code' => '二维码',
+    'web' => 'Web',
+    'system' => '系统',
+    'no_description' => '未提供描述。',
+    'Data de abertura (De)' => '开始日期（从）',
+    'Detalhe de um fornecedor' => '供应商详情',
+    'Detalhe de um fornecedor.' => '供应商详情。',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => '详述发生的问题、噪音、泄漏或异常行为...',
+    'Detalhes do Incidente' => '事件详情',
+];

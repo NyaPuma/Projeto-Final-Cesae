@@ -32,9 +32,12 @@ final class TicketLifecycleController extends Controller
         // 2. Executa a reabertura no serviço de workflow
         if (! $this->workflowService->reopen($ticket)) {
             return response()->json([
-                'message' => __('Apenas tickets fechados ou cancelados podem ser reabertos.'),
+                'message' => __('tickets.Apenas tickets fechados ou cancelados podem ser reabertos.'),
             ], 422);
         }
+
+        // Invalida a relação em cache para refletir o novo estado
+        $ticket->unsetRelation('status');
 
         // 3. Notifica clientes via WebSockets sobre a mudança de estado
         $this->broadcastStatusChange($ticket, $oldStatus, $ticket->status);
@@ -42,7 +45,7 @@ final class TicketLifecycleController extends Controller
         $ticket->loadMissing(['equipment', 'room', 'technician', 'status']);
 
         return response()->json([
-            'message' => __('Ticket reaberto com sucesso.'),
+            'message' => __('messages.Ticket reaberto com sucesso.'),
             'ticket' => new TicketResource($ticket),
         ]);
     }
@@ -58,7 +61,7 @@ final class TicketLifecycleController extends Controller
         // 2. Validação de estado elegível para cancelamento
         if (! $ticket->hasStatus(TicketStatusEnum::Open)) {
             return response()->json([
-                'message' => __('Apenas tickets no estado "Aberto" podem ser cancelados.'),
+                'message' => __('tickets.Apenas tickets no estado "Aberto" podem ser cancelados.'),
             ], 422);
         }
 
@@ -67,13 +70,16 @@ final class TicketLifecycleController extends Controller
         // 3. Executa o cancelamento no serviço
         $this->workflowService->cancel($ticket);
 
+        // Invalida a relação em cache para refletir o novo estado
+        $ticket->unsetRelation('status');
+
         // 4. Emite o evento WebSocket
         $this->broadcastStatusChange($ticket, $oldStatus, TicketStatusEnum::Cancelled);
 
         $ticket->loadMissing(['equipment', 'room', 'technician', 'status']);
 
         return response()->json([
-            'message' => __('Ticket cancelado com sucesso.'),
+            'message' => __('messages.Ticket cancelado com sucesso.'),
             'ticket' => new TicketResource($ticket),
         ]);
     }

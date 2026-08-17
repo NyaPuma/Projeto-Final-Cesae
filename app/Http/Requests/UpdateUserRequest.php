@@ -38,7 +38,7 @@ final class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         /** @var User|int|string|null $user */
-        $user = $this->route('user') ?? $this->route('id');
+        $user = $this->route('targetUser') ?? $this->route('id');
 
         return [
             'name' => ['sometimes', 'string', 'max:255'],

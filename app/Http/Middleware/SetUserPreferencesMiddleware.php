@@ -42,9 +42,18 @@ final class SetUserPreferencesMiddleware
 
     /**
      * Resolve a língua a partir das preferências do utilizador.
+     *
+     * Precedência: sessão → cookie → preferências na BD do utilizador →
+     * `Accept-Language` do browser → default. A sessão/cookie têm precedência
+     * porque espelham a escolha explícita mais recente (incluindo o valor já
+     * persistido pelo `SetLocaleMiddleware`).
      */
     private function resolveLanguage(Request $request): string
     {
+        if ($this->hasExplicitLocale($request)) {
+            return LocaleService::resolveFromRequest($request);
+        }
+
         $user = Auth::user() ?? Auth::guard('api')->user();
 
         if ($user === null) {
@@ -54,11 +63,28 @@ final class SetUserPreferencesMiddleware
         if ($user !== null) {
             $prefs = PreferenciasService::forUser($user);
             if (LocaleService::isSupported($prefs['language'])) {
-                return $prefs['language'];
+                return LocaleService::sanitize($prefs['language']);
             }
         }
 
-        // Fallback para o locale da sessão/cookie
         return LocaleService::resolveFromRequest($request);
+    }
+
+    /**
+     * Indica se existe um locale explícito na sessão ou cookie.
+     */
+    private function hasExplicitLocale(Request $request): bool
+    {
+        if ($request->hasSession()) {
+            $sessionLocale = $request->session()->get('locale');
+
+            if (is_string($sessionLocale) && $sessionLocale !== '') {
+                return true;
+            }
+        }
+
+        $cookie = $request->cookie('locale');
+
+        return is_string($cookie) && $cookie !== '';
     }
 }

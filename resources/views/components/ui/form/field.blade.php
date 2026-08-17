@@ -21,7 +21,7 @@
 
             @if($required)
                 <span class="text-danger ml-0.5" aria-hidden="true">*</span>
-                <span class="sr-only">({{ __('obrigatório') }})</span>
+                <span class="sr-only">({{ __('validation.obrigatório') }})</span>
             @endif
         </label>
     @endif

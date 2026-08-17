@@ -37,8 +37,8 @@ final class BudgetDecisionRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'decision' => __('decisão'),
-            'feedback' => __('feedback/justificação'),
+            'decision' => __('common.decisão'),
+            'feedback' => __('ui.feedback/justificação'),
         ];
     }
 
@@ -50,10 +50,10 @@ final class BudgetDecisionRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'decision.required' => __('A decisão sobre o orçamento é obrigatória.'),
-            'decision.in' => __('A decisão deve ser aprovar (approve) ou rejeitar (reject).'),
-            'feedback.required_if' => __('É obrigatório fornecer um feedback/justificação ao rejeitar o orçamento.'),
-            'feedback.max' => __('O feedback não pode exceder 5000 caracteres.'),
+            'decision.required' => __('common.A decisão sobre o orçamento é obrigatória.'),
+            'decision.in' => __('validation.A decisão deve ser aprovar (approve) ou rejeitar (reject).'),
+            'feedback.required_if' => __('ui.É obrigatório fornecer um feedback/justificação ao rejeitar o orçamento.'),
+            'feedback.max' => __('ui.O feedback não pode exceder 5000 caracteres.'),
         ];
     }
 }

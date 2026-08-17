@@ -29,23 +29,3 @@ export async function fetchRooms(page) {
 
     return response.json().catch(() => ({}));
 }
-
-export async function persistRoom(formData) {
-    const id = formData.get('id');
-    const method = id ? 'PUT' : 'POST';
-    const url = id ? `/api/rooms/${id}` : '/api/rooms';
-
-    const response = await fetch(url, {
-        method,
-        headers: { ...authHeader(), 'Content-Type': 'application/json' },
-        body: JSON.stringify(Object.fromEntries(formData)),
-    });
-
-    const data = await response.json().catch(() => ({}));
-
-    if (!response.ok) {
-        throw new Error(data.message || 'Ocorreu um erro ao guardar a sala.');
-    }
-
-    return data;
-}

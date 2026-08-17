@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => 'Δεν ανέβηκε κανένα τεκμήριο.',
+    'remove_photo' => 'Αφαίρεση φωτογραφίας',
+    'remove_file' => 'Αφαίρεση αρχείου',
+    'load_error' => 'Σφάλμα κατά τη φόρτωση φωτογραφιών.',
+    'confirm_remove' => 'Είστε βέβαιοι ότι θέλετε να αφαιρέσετε αυτή τη φωτογραφία;',
+    'remove_error' => 'Σφάλμα κατά την αφαίρεση φωτογραφίας.',
+    'removed' => 'Η φωτογραφία αφαιρέθηκε με επιτυχία.',
+    'sent' => 'Η φωτογραφία στάλθηκε!',
+    'file' => 'Αρχείο',
+    'Anexos' => 'Συνημμένα',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => 'Ενημερώστε τα στοιχεία, τη φωτογραφία και τις άδειες πρόσβασης του προφίλ χρήστη.',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => 'Ανεβάστε μια εικόνα (PNG, JPG ή WEBP έως 2MB).',
+    'Emergência Imediata. Risco de acidente.' => 'Άμεση Επείγουσα. Κίνδυνος ατυχήματος.',
+    'Escolher Fotografia' => 'Επιλογή Φωτογραφίας',
+    'Escolher ficheiro' => 'Επιλογή αρχείου',
+    'Fotografia (Opcional)' => 'Φωτογραφία (Προαιρετικό)',
+    'Fotografia do Utilizador' => 'Φωτογραφία του Χρήστη',
+    'Imagem' => 'Εικόνα',
+    'Inserir Imagem (Opcional)' => 'Εισαγωγή Εικόνας (Προαιρετικό)',
+    'Nenhum ficheiro' => 'Κανένα αρχείο',
+    'Nenhum ficheiro selecionado' => 'Κανένα επιλεγμένο αρχείο',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => 'Τρέχον προφίλ: :profile. Αποκτήστε πρόσβαση στις ενότητες σύμφωνα με τα δικαιώματα του ρόλου σας.',
+    'Tipo de ficheiro não permitido.' => 'Μη επιτρεπόμενος τύπος αρχείου.',
+];

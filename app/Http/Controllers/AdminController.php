@@ -3,12 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Actions\ApproveBudgetAction;
-use App\Actions\AssignTechnicianAction;
 use App\Actions\CreatePreventiveTicketAction;
-use App\DTOs\AssignTechnicianData;
 use App\DTOs\BudgetDecisionData;
 use App\Enums\BudgetStatusEnum;
-use App\Http\Requests\AssignTechnicianRequest;
 use App\Http\Requests\BudgetDecisionRequest;
 use App\Http\Requests\StorePreventiveRequest;
 use App\Http\Resources\TicketResource;
@@ -19,7 +16,6 @@ final class AdminController extends Controller
 {
     public function __construct(
         private readonly ApproveBudgetAction $approveBudgetAction,
-        private readonly AssignTechnicianAction $assignTechnicianAction,
         private readonly CreatePreventiveTicketAction $createPreventiveAction,
     ) {}
 
@@ -41,44 +37,16 @@ final class AdminController extends Controller
         );
 
         // 3. Validação do estado e definição da mensagem formatada com i18n
-        $isApproved = $updatedTicket->budget_status === BudgetStatusEnum::Approved;
+        $isApproved = BudgetStatusEnum::normalize($updatedTicket->budget_status) === BudgetStatusEnum::Approved;
         $message = $isApproved
-            ? __('Orçamento aprovado. Ticket desbloqueado para intervenção.')
-            : __('Orçamento recusado. Reparação abortada.');
+            ? __('tickets.Orçamento aprovado. Ticket desbloqueado para intervenção.')
+            : __('common.Orçamento recusado. Reparação abortada.');
 
         $updatedTicket->loadMissing(['equipment', 'room', 'technician', 'status']);
 
         return response()->json([
             'message' => $message,
             'ticket' => new TicketResource($updatedTicket),
-        ]);
-    }
-
-    /**
-     * Atribui manualmente ou automaticamente um técnico a um ticket.
-     */
-    public function assignTechnician(AssignTechnicianRequest $request, Ticket $ticket): JsonResponse
-    {
-        // 1. Autorização via Policy
-        $this->authorize('assignTechnician', $ticket);
-
-        $data = AssignTechnicianData::fromRequest($request->validated());
-        $technician = $this->assignTechnicianAction->execute($ticket, $data->technicianId);
-
-        // 2. Trata falha na atribuição de técnico
-        if (! $technician) {
-            $message = $data->technicianId
-                ? __('Técnico selecionado é inválido ou indisponível.')
-                : __('Não existem técnicos disponíveis de momento.');
-
-            return response()->json(['message' => $message], 422);
-        }
-
-        $ticket->loadMissing(['equipment', 'room', 'technician', 'status']);
-
-        return response()->json([
-            'message' => __('Técnico atribuído com sucesso.'),
-            'ticket' => new TicketResource($ticket),
         ]);
     }
 
@@ -97,14 +65,14 @@ final class AdminController extends Controller
             admin: $admin,
             title: $request->validated('title'),
             description: $request->validated('description'),
-            technician: $request->integer('technician_id'),
+            technician: $request->validated('technician_id'),
             scheduledAt: $request->date('scheduled_at')
         );
 
         $ticket->loadMissing(['equipment', 'room', 'technician', 'status']);
 
         return response()->json([
-            'message' => __('Ticket preventivo criado com sucesso.'),
+            'message' => __('messages.Ticket preventivo criado com sucesso.'),
             'ticket' => new TicketResource($ticket),
         ], 201);
     }

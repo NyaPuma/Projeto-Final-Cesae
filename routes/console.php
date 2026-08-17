@@ -28,8 +28,11 @@ Schedule::command('telemetry:simulate --equipments=5 --probability=25')
 | Agendamento de Backup de Base de Dados
 |--------------------------------------------------------------------------
 | Cria um backup diário da base de dados MySQL com retenção de 30 dias.
+| A compressão gzip é controlada por DB_BACKUP_COMPRESSION (config) e a
+| retenção por DB_BACKUP_RETENTION_DAYS; a opção --clean remove os backups
+| mais antigos que o período de retenção.
 */
-Schedule::command('db:backup --compress --retention=30')
+Schedule::command('db:backup --clean')
     ->daily()
     ->at('02:00')
     ->withoutOverlapping()

@@ -92,6 +92,58 @@ class CommentOperationFeatureTest extends TestCase
             ->assertJsonValidationErrors(['comment']);
     }
 
+    public function test_comment_with_only_whitespace_is_rejected(): void
+    {
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
+
+        $ticket = Ticket::create([
+            'user_id' => $user->id,
+            'title' => 'Whitespace comment test',
+            'description' => 'Testing whitespace comment validation',
+            'priority' => TicketPriorityEnum::Medium->value,
+            'status_id' => $openId,
+            'opened_at' => now(),
+        ]);
+
+        $response = $this->withHeader('X-Auth-Token', $technician->api_token)
+            ->postJson("/tickets/{$ticket->id}/comments", [
+                'comment' => '    ',
+            ]);
+
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['comment']);
+    }
+
+    public function test_comment_text_is_trimmed(): void
+    {
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
+
+        $ticket = Ticket::create([
+            'user_id' => $user->id,
+            'title' => 'Trim comment test',
+            'description' => 'Testing comment trimming',
+            'priority' => TicketPriorityEnum::Medium->value,
+            'status_id' => $openId,
+            'opened_at' => now(),
+        ]);
+
+        $response = $this->withHeader('X-Auth-Token', $technician->api_token)
+            ->postJson("/tickets/{$ticket->id}/comments", [
+                'comment' => '   Part out received.   ',
+            ]);
+
+        $response->assertCreated();
+
+        $this->assertDatabaseHas('ticket_comments', [
+            'ticket_id' => $ticket->id,
+            'comment' => 'Part out received.',
+        ]);
+    }
+
     public function test_list_comments_returns_all_comments(): void
     {
         $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
@@ -124,8 +176,39 @@ class CommentOperationFeatureTest extends TestCase
 
         $response->assertOk()
             ->assertJsonStructure(['comments' => [
-                '*' => ['id', 'ticket_id', 'user_id', 'comment'],
+                '*' => ['id', 'ticket_id', 'user_id', 'comment', 'user'],
             ]]);
         $this->assertCount(2, $response->json('comments'));
+        $this->assertSame('First comment: Inspecting the issue.', $response->json('comments.0.comment'));
+        $this->assertSame('Second comment: Found the problem.', $response->json('comments.1.comment'));
+        $this->assertSame($technician->name, $response->json('comments.0.user.name'));
+    }
+
+    public function test_comment_min_and_max_length_validation(): void
+    {
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
+
+        $ticket = Ticket::create([
+            'user_id' => $user->id,
+            'title' => 'Comment length test',
+            'description' => 'Testing comment length validation',
+            'priority' => TicketPriorityEnum::Medium->value,
+            'status_id' => $openId,
+            'opened_at' => now(),
+        ]);
+
+        $send = fn (string $comment) => $this->withHeader('X-Auth-Token', $technician->api_token)
+            ->postJson("/tickets/{$ticket->id}/comments", ['comment' => $comment]);
+
+        // Comentário com menos de 3 caracteres
+        $send('ab')->assertStatus(422)->assertJsonValidationErrors(['comment']);
+
+        // Comentário acima de 2000 caracteres
+        $send(str_repeat('a', 2001))->assertStatus(422)->assertJsonValidationErrors(['comment']);
+
+        // Exatamente 2000 caracteres é aceite
+        $send(str_repeat('a', 2000))->assertCreated();
     }
 }

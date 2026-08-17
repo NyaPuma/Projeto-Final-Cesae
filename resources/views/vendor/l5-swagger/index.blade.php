@@ -1,138 +1,117 @@
-<!DOCTYPE html>
-<html lang="pt">
+@php
+    // ui.layout espera $user para condicionar o menu lateral (ex.: só admin vê o item Swagger).
+    // A rota de docs é pública, pelo que o user pode ser null fora de sessão.
+    $user = auth()->user() ?? (object) ['profile' => null];
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $documentationTitle }}</title>
+    $swaggerTranslations = [
+        'Authorize' => __('common.Autorizar'),
+        'Explore' => __('common.Explorar'),
+        'Filter by tag' => __('ui.Filtrar por etiqueta'),
+        'Show/Hide' => __('common.Mostrar/Ocultar'),
+        'List Operations' => __('common.Listar operações'),
+        'Expand Operations' => __('common.Expandir operações'),
+        'Collapse Operations' => __('common.Recolher operações'),
+        'Try it out' => __('common.Experimentar'),
+        'Execute' => __('common.Executar'),
+        'Clear' => __('common.Limpar'),
+        'Cancel' => __('ui.Cancelar'),
+        'Servers' => __('common.Servidores'),
+        'Server' => __('common.Servidor'),
+        'Responses' => __('common.Respostas'),
+        'Response' => __('common.Resposta'),
+        'Request body' => __('common.Corpo do pedido'),
+        'Request URL' => __('common.URL do pedido'),
+        'Response headers' => __('common.Cabeçalhos da resposta'),
+        'Response body' => __('common.Corpo da resposta'),
+        'Curl' => __('common.cURL'),
+        'Copy' => __('common.Copiar'),
+        'Download' => __('ui.Descarregar'),
+        'Loading...' => __('ui.A carregar...'),
+        'No operations defined in spec!' => __('common.Não existem operações definidas na especificação.'),
+        'Schemas' => __('common.Schemas'),
+        'Models' => __('common.Modelos'),
+        'Parameters' => __('common.Parâmetros'),
+        'Parameter' => __('common.Parâmetro'),
+        'Example Value' => __('common.Valor de exemplo'),
+        'Copy to clipboard' => __('common.Copiar para a área de transferência'),
+    ];
+@endphp
 
+@extends('ui.layout')
+
+@section('title', $documentationTitle)
+
+@section('page_key', 'docs')
+
+@push('styles')
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
 
     {{-- 1) CSS base oficial do Swagger UI --}}
     <link rel="stylesheet" type="text/css" href="{{ l5_swagger_asset($documentation, 'swagger-ui.css') }}">
 
-    {{-- 2) Design system principal da app --}}
-    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @else
-        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    @endif
-
     <link rel="icon" type="image/png" href="{{ l5_swagger_asset($documentation, 'favicon-32x32.png') }}" sizes="32x32" />
     <link rel="icon" type="image/png" href="{{ l5_swagger_asset($documentation, 'favicon-16x16.png') }}" sizes="16x16" />
 
-    {{-- Swagger UI custom theme (js) --}}
+    {{-- Bundle de estilos customizados do Swagger - carregado no FINAL para sobrepor estilos nativos --}}
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-        @vite([
-            'resources/js/swagger/utils.js',
-            'resources/js/swagger/search.js',
-            'resources/js/swagger/badges.js',
-            'resources/js/swagger/counters.js',
-            'resources/js/swagger/expand.js',
-            'resources/js/swagger/scrollspy.js',
-            'resources/js/swagger/toolbar.js',
-            'resources/js/swagger/sidebar.js',
-        ])
+        @vite(['resources/css/swagger/swagger-theme.css'])
     @endif
+@endpush
 
-    {{-- 3) Bundle de estilos customizados do Swagger - carregado no FINAL para sobrepor estilos nativos --}}
-    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-        @vite(['resources/css/swagger/swagger-theme.css', 'resources/js/swagger/swagger-init.js'])
-    @endif
+@section('content')
+    {{-- Toolbar de Controlo --}}
+    <div id="swagger-toolbar" class="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-sm">
+        <div class="relative w-full sm:w-96">
+            <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-soft)] pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="7" />
+                <path d="M20 20L17 17" />
+            </svg>
+        <input id="swaggerSearch" type="text" placeholder="{{ __('ui.Pesquisar endpoint...') }}" class="w-full pl-10 pr-4 py-2 text-xs rounded-xl border border-[var(--border)] bg-[var(--surface-2)] text-[var(--text)] outline-none focus:border-primary transition-all">
+        </div>
 
-</head>
-
-<body class="bg-[var(--bg)] text-[var(--text)] min-h-screen flex flex-col antialiased overflow-x-hidden">
-
-    {{-- Efeitos de Gradiente e Brilho de Fundo --}}
-    <div class="fixed inset-0 -z-50 pointer-events-none" aria-hidden="true">
-        <div class="absolute inset-0 bg-[var(--bg)]"></div>
-        <div class="absolute -top-60 left-1/2 -translate-x-1/2 h-[900px] w-[900px] rounded-full bg-orange-500/10 blur-[180px]"></div>
-        <div class="absolute bottom-0 right-0 h-[600px] w-[600px] rounded-full bg-blue-500/10 blur-[180px]"></div>
-        <div class="absolute top-40 left-0 h-[450px] w-[450px] rounded-full bg-orange-500/10 blur-[140px]"></div>
+        <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+            <button id="expandAll" type="button" class="px-3 py-2 text-xs font-semibold rounded-xl border border-[var(--border)] bg-[var(--surface-2)] hover:bg-[var(--border)] text-[var(--text)] transition cursor-pointer">
+                {{ __('common.Expandir tudo') }}
+            </button>
+            <button id="collapseAll" type="button" class="px-3 py-2 text-xs font-semibold rounded-xl border border-[var(--border)] bg-[var(--surface-2)] hover:bg-[var(--border)] text-[var(--text)] transition cursor-pointer">
+                {{ __('common.Recolher tudo') }}
+            </button>
+        </div>
     </div>
 
-    {{-- Header de Alta Fidelidade Ampliado (max-w-[1500px]) --}}
-    <header class="w-full border-b border-[var(--border)] bg-[var(--topbar)] px-4 sm:px-8 h-20 sticky top-0 z-50 backdrop-blur-xl">
-        <div class="mx-auto max-w-[1500px] h-full w-full flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <span class="inline-flex items-center justify-center h-10 w-10 rounded-xl bg-orange-500/10 text-lg shadow-sm">
-                    📚
-                </span>
-                <div class="flex flex-col">
-                    <span class="text-[9px] font-bold uppercase tracking-widest text-[var(--primary)] leading-none mb-1">
-                        Documentação da API
-                    </span>
-                    <span class="text-sm font-bold text-[var(--text)] leading-none">
-                        Swagger OpenAPI v3
-                    </span>
-                </div>
-            </div>
+    {{-- Contentor Principal do Swagger UI --}}
+    <div
+        id="swagger-ui"
+        class="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm"
+        data-url="{{ $urlsToDocs[$documentationTitle] ?? (is_array($urlsToDocs) ? reset($urlsToDocs) : '') }}"
+        data-csrf="{{ csrf_token() }}"
+        data-urls="{{ json_encode(collect($urlsToDocs)->map(fn($url, $title) => ['url' => $url, 'name' => $title])->values()) }}"
+        data-primary-name="{{ $documentationTitle }}"
+        data-operations-sorter="{{ isset($operationsSorter) ? $operationsSorter : '' }}"
+        data-config-url="{{ isset($configUrl) ? $configUrl : '' }}"
+        data-validator-url="{{ isset($validatorUrl) ? $validatorUrl : '' }}"
+        data-oauth2-redirect-url="{{ route('l5-swagger.' . $documentation . '.oauth2_callback', [], $useAbsolutePath) }}"
+        data-doc-expansion="{{ config('l5-swagger.defaults.ui.display.doc_expansion', 'none') }}"
+        data-filter="{{ config('l5-swagger.defaults.ui.display.filter') ? 'true' : 'false' }}"
+        data-persist-authorization="{{ config('l5-swagger.defaults.ui.authorization.persist_authorization') ? 'true' : 'false' }}"
+        data-has-oauth2-init="{{ in_array('oauth2', array_column(config('l5-swagger.defaults.securityDefinitions.securitySchemes'), 'type')) ? 'true' : 'false' }}"
+        data-use-pkce="{{ (bool) config('l5-swagger.defaults.ui.authorization.oauth2.use_pkce_with_authorization_code_grant') ? 'true' : 'false' }}"
+    ></div>
 
-            {{-- Botão Voltar ao Painel --}}
-            <div>
-                <a href="/ui" class="inline-flex h-10 px-4 items-center justify-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface)] text-xs font-semibold text-[var(--text)] shadow-sm transition-all hover:bg-[var(--surface-2)] cursor-pointer">
-                    <svg class="w-4 h-4 text-[var(--text-soft)]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path>
-                    </svg>
-                    Voltar ao painel
-                </a>
-            </div>
-        </div>
-    </header>
-
-    {{-- Enquadramento de Conteúdo Amplo --}}
-    <main class="mx-auto w-full max-w-[1500px] px-4 sm:px-8 py-8 flex-grow space-y-4">
-        
-        {{-- Toolbar de Controlo Totalmente Visível e Estilizada --}}
-        <div id="swagger-toolbar" class="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-sm">
-            <div class="relative w-full sm:w-96">
-                <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-soft)] pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="11" cy="11" r="7" />
-                    <path d="M20 20L17 17" />
-                </svg>
-                <input id="swaggerSearch" type="text" placeholder="Pesquisar endpoint..." class="w-full pl-10 pr-4 py-2 text-xs rounded-xl border border-[var(--border)] bg-[var(--surface-2)] text-[var(--text)] outline-none focus:border-primary transition-all">
-            </div>
-
-            <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
-                <button id="expandAll" type="button" class="px-3 py-2 text-xs font-semibold rounded-xl border border-[var(--border)] bg-[var(--surface-2)] hover:bg-[var(--border)] text-[var(--text)] transition cursor-pointer">
-                    Expandir tudo
-                </button>
-                <button id="collapseAll" type="button" class="px-3 py-2 text-xs font-semibold rounded-xl border border-[var(--border)] bg-[var(--surface-2)] hover:bg-[var(--border)] text-[var(--text)] transition cursor-pointer">
-                    Recolher tudo
-                </button>
-            </div>
-        </div>
-
-        {{-- Contentor Principal do Swagger UI --}}
-        <div 
-            id="swagger-ui" 
-            class="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm"
-            data-url="{{ $urlsToDocs[$documentationTitle] ?? (is_array($urlsToDocs) ? reset($urlsToDocs) : '') }}"
-            data-csrf="{{ csrf_token() }}"
-            data-urls="{{ json_encode(collect($urlsToDocs)->map(fn($url, $title) => ['url' => $url, 'name' => $title])->values()) }}"
-            data-primary-name="{{ $documentationTitle }}"
-            data-operations-sorter="{{ isset($operationsSorter) ? $operationsSorter : '' }}"
-            data-config-url="{{ isset($configUrl) ? $configUrl : '' }}"
-            data-validator-url="{{ isset($validatorUrl) ? $validatorUrl : '' }}"
-            data-oauth2-redirect-url="{{ route('l5-swagger.' . $documentation . '.oauth2_callback', [], $useAbsolutePath) }}"
-            data-doc-expansion="{{ config('l5-swagger.defaults.ui.display.doc_expansion', 'none') }}"
-            data-filter="{{ config('l5-swagger.defaults.ui.display.filter') ? 'true' : 'false' }}"
-            data-persist-authorization="{{ config('l5-swagger.defaults.ui.authorization.persist_authorization') ? 'true' : 'false' }}"
-            data-has-oauth2-init="{{ in_array('oauth2', array_column(config('l5-swagger.defaults.securityDefinitions.securitySchemes'), 'type')) ? 'true' : 'false' }}"
-            data-use-pkce="{{ (bool) config('l5-swagger.defaults.ui.authorization.oauth2.use_pkce_with_authorization_code_grant') ? 'true' : 'false' }}"
-        ></div>
-    </main>
-
-    <button id="scrollTop" class="fixed bottom-6 right-6 h-10 w-10 rounded-xl bg-orange-500 text-white font-bold shadow-lg flex items-center justify-center hover:bg-orange-600 transition cursor-pointer">
+    <button id="scrollTop" class="fixed bottom-6 right-6 h-10 w-10 rounded-xl bg-primary text-white font-bold shadow-lg flex items-center justify-center hover:bg-primary-hover transition cursor-pointer">
         ↑
     </button>
+@endsection
 
+@push('scripts')
+    <script>
+        window.SGM_SWAGGER_I18N = @json($swaggerTranslations);
+    </script>
     <script src="{{ l5_swagger_asset($documentation, 'swagger-ui-bundle.js') }}"></script>
     <script src="{{ l5_swagger_asset($documentation, 'swagger-ui-standalone-preset.js') }}"></script>
 
-    {{-- Native L5-Swagger initialization script --}}
+    {{-- Inicialização nativa do L5-Swagger --}}
     <script>
         window.onload = function() {
             const url = "{!! $urlsToDocs[$documentationTitle] ?? (is_array($urlsToDocs) ? reset($urlsToDocs) : '') !!}";
@@ -165,7 +144,4 @@
             window.ui = ui;
         };
     </script>
-
-</body>
-
-</html>
+@endpush

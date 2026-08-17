@@ -19,6 +19,9 @@ class TicketFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
+            'reporter_name' => null,
+            'reporter_contact' => null,
+            'source' => 'web',
             'assigned_to' => null,
             'room_id' => null,
             'equipment_id' => null,
@@ -30,6 +33,7 @@ class TicketFactory extends Factory
                 TicketPriorityEnum::Low->value,
                 TicketPriorityEnum::Medium->value,
                 TicketPriorityEnum::High->value,
+                TicketPriorityEnum::Critical->value,
             ]),
             'opened_at' => now()->subHours(2),
             'in_progress_at' => null,

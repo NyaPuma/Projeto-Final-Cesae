@@ -30,7 +30,7 @@ final class AuthController extends Controller
         $attempts = Cache::get($rateLimitKey, 0);
         if ($attempts >= $maxAttempts) {
             return response()->json([
-                'message' => __('Conta temporariamente bloqueada. Tente novamente mais tarde.'),
+                'message' => __('common.Conta temporariamente bloqueada. Tente novamente mais tarde.'),
             ], 429)->header('Retry-After', (string) ($lockoutMinutes * 60));
         }
 
@@ -43,10 +43,14 @@ final class AuthController extends Controller
         $valid = $user && Hash::check($request->input('password'), $user->password);
 
         if (! $valid) {
-            Cache::put($rateLimitKey, $attempts + 1, now()->addMinutes($lockoutMinutes));
+            // Incremento atómico: Cache::add semeia a chave com TTL no 1º insucesso;
+            // Cache::increment garante contagem correta sob concorrência.
+            if (! Cache::add($rateLimitKey, 1, now()->addMinutes($lockoutMinutes))) {
+                Cache::increment($rateLimitKey);
+            }
 
             return response()->json([
-                'message' => __('Credenciais inválidas.'),
+                'message' => __('common.Credenciais inválidas.'),
             ], 401);
         }
 

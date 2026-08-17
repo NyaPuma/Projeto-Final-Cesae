@@ -92,4 +92,113 @@ class EquipmentAndRoomCrudFeatureTest extends TestCase
             'id' => $equipId,
         ]);
     }
+
+    public function test_admin_can_list_equipments_with_resource_structure()
+    {
+        $adminProfile = UserProfile::firstOrCreate(['name' => UserRoleEnum::Admin->value]);
+        $admin = User::factory()->create([
+            'profile_id' => $adminProfile->id,
+            'api_token' => Str::random(60),
+        ]);
+        $room = Room::factory()->create();
+        Equipment::factory()->count(2)->create(['room_id' => $room->id]);
+
+        $response = $this->withHeader('X-Auth-Token', $admin->api_token)
+            ->getJson('/api/admin/equipment');
+
+        $response->assertOk()
+            ->assertJsonStructure(['equipments']);
+
+        $this->assertCount(2, $response->json('equipments'));
+    }
+
+    public function test_store_equipment_validation_errors(): void
+    {
+        $adminProfile = UserProfile::firstOrCreate(['name' => UserRoleEnum::Admin->value]);
+        $admin = User::factory()->create([
+            'profile_id' => $adminProfile->id,
+            'api_token' => Str::random(60),
+        ]);
+        $room = Room::factory()->create();
+
+        $send = fn (array $payload) => $this->withHeader('X-Auth-Token', $admin->api_token)
+            ->postJson('/api/admin/equipment', $payload);
+
+        // Campos obrigatórios em falta
+        $send([])->assertStatus(422)
+            ->assertJsonValidationErrors(['name', 'serial']);
+
+        // room_id inexistente
+        $send(['name' => 'Impressora', 'serial' => 'SN-VALID-1', 'room_id' => 99999])
+            ->assertStatus(422)
+            ->assertJsonValidationErrors(['room_id']);
+
+        // serial duplicado
+        Equipment::factory()->create(['serial' => 'SN-DUP-1', 'room_id' => $room->id]);
+        $send(['name' => 'Impressora', 'serial' => 'SN-DUP-1'])
+            ->assertStatus(422)
+            ->assertJsonValidationErrors(['serial']);
+
+        // active não booleano
+        $send(['name' => 'Impressora', 'serial' => 'SN-VALID-2', 'active' => 'yes'])
+            ->assertStatus(422)
+            ->assertJsonValidationErrors(['active']);
+    }
+
+    public function test_store_room_validation_errors(): void
+    {
+        $adminProfile = UserProfile::firstOrCreate(['name' => UserRoleEnum::Admin->value]);
+        $admin = User::factory()->create([
+            'profile_id' => $adminProfile->id,
+            'api_token' => Str::random(60),
+        ]);
+
+        $send = fn (array $payload) => $this->withHeader('X-Auth-Token', $admin->api_token)
+            ->postJson('/api/admin/rooms', $payload);
+
+        // Campos obrigatórios em falta
+        $send([])->assertStatus(422)->assertJsonValidationErrors(['name']);
+
+        // Nome duplicado
+        Room::factory()->create(['name' => 'Sala Duplicada']);
+        $send(['name' => 'Sala Duplicada'])
+            ->assertStatus(422)
+            ->assertJsonValidationErrors(['name']);
+
+        // Nome apenas com espaços colapsa para vazio
+        $send(['name' => '   '])->assertStatus(422)->assertJsonValidationErrors(['name']);
+
+        // location acima de 255 caracteres
+        $send(['name' => 'Sala Nova', 'location' => str_repeat('a', 256)])
+            ->assertStatus(422)
+            ->assertJsonValidationErrors(['location']);
+    }
+
+    public function test_update_room_validation_errors(): void
+    {
+        $adminProfile = UserProfile::firstOrCreate(['name' => UserRoleEnum::Admin->value]);
+        $admin = User::factory()->create([
+            'profile_id' => $adminProfile->id,
+            'api_token' => Str::random(60),
+        ]);
+
+        $room = Room::factory()->create(['name' => 'Sala A']);
+        Room::factory()->create(['name' => 'Sala B']);
+
+        $send = fn (array $payload) => $this->withHeader('X-Auth-Token', $admin->api_token)
+            ->patchJson("/api/admin/rooms/{$room->id}", $payload);
+
+        // Manter o próprio nome é aceite (ignore funciona)
+        $send(['name' => 'Sala A'])->assertOk();
+
+        // Nome de outra sala → 422
+        $send(['name' => 'Sala B'])
+            ->assertStatus(422)
+            ->assertJsonValidationErrors(['name']);
+
+        // location acima de 255 caracteres
+        $send(['location' => str_repeat('a', 256)])
+            ->assertStatus(422)
+            ->assertJsonValidationErrors(['location']);
+    }
 }

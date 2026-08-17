@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => 'Nicio dovadă încărcată.',
+    'remove_photo' => 'Elimină fotografia',
+    'remove_file' => 'Elimină fișierul',
+    'load_error' => 'Eroare la încărcarea fotografiilor.',
+    'confirm_remove' => 'Sigur doriți să eliminați această fotografie?',
+    'remove_error' => 'Eroare la eliminarea fotografiei.',
+    'removed' => 'Fotografia a fost eliminată cu succes.',
+    'sent' => 'Fotografie trimisă!',
+    'file' => 'Fișier',
+    'Anexos' => 'Atașamente',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => 'Actualizați credențialele, fotografia și permisiunile de acces ale profilului de utilizator.',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => 'Încărcați o imagine (PNG, JPG sau WEBP până la 2MB).',
+    'Emergência Imediata. Risco de acidente.' => 'Urgență Imediată. Risc de accident.',
+    'Escolher Fotografia' => 'Alege Fotografia',
+    'Escolher ficheiro' => 'Alege fișierul',
+    'Fotografia (Opcional)' => 'Fotografie (Opțional)',
+    'Fotografia do Utilizador' => 'Fotografia Utilizatorului',
+    'Imagem' => 'Imagine',
+    'Inserir Imagem (Opcional)' => 'Inserați Imagine (Opțional)',
+    'Nenhum ficheiro' => 'Niciun fișier',
+    'Nenhum ficheiro selecionado' => 'Niciun fișier selectat',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => 'Profil actual: :profile. Accesați modulele conform permisiunilor rolului dvs.',
+    'Tipo de ficheiro não permitido.' => 'Tip de fișier nepermis.',
+];

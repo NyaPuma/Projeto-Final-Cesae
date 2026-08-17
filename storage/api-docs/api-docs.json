@@ -39,6 +39,278 @@
                 ]
             }
         },
+        "/admin/maintenance-plans": {
+            "get": {
+                "tags": [
+                    "Admin Stock"
+                ],
+                "summary": "Listar planos de manutenção preventiva",
+                "description": "Lista paginada de planos de manutenção preventiva.",
+                "operationId": "92c08905490263cb0bf7b6112ef916b4",
+                "parameters": [
+                    {
+                        "name": "equipment_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista paginada de planos"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Admin Stock"
+                ],
+                "summary": "Criar plano de manutenção preventiva",
+                "description": "Cria um novo plano de manutenção preventiva.",
+                "operationId": "11cc569d09098407103fd3af3716ce16",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "equipment_id",
+                                    "name",
+                                    "interval_type",
+                                    "interval_value"
+                                ],
+                                "properties": {
+                                    "equipment_id": {
+                                        "type": "integer"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "interval_type": {
+                                        "type": "string",
+                                        "enum": [
+                                            "days",
+                                            "usage_hours",
+                                            "cycles"
+                                        ]
+                                    },
+                                    "interval_value": {
+                                        "type": "integer"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "active": {
+                                        "type": "boolean"
+                                    },
+                                    "parts": {
+                                        "description": "Peças do plano",
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "part_id": {
+                                                    "type": "integer"
+                                                },
+                                                "expected_quantity": {
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Plano criado com sucesso"
+                    },
+                    "422": {
+                        "description": "Dados inválidos"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/admin/maintenance-plans/{plan}": {
+            "get": {
+                "tags": [
+                    "Admin Stock"
+                ],
+                "summary": "Detalhe de um plano de manutenção",
+                "description": "Detalhe de um plano com as peças associadas.",
+                "operationId": "5ea3de123ae9cfed4163d642da8f29da",
+                "parameters": [
+                    {
+                        "name": "plan",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Plano com equipamento e peças associadas"
+                    },
+                    "404": {
+                        "description": "Plano não encontrado"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Admin Stock"
+                ],
+                "summary": "Eliminar plano de manutenção preventiva",
+                "description": "Elimina logicamente um plano.",
+                "operationId": "652e97b4be18939f14cb6698e3208800",
+                "parameters": [
+                    {
+                        "name": "plan",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Plano eliminado com sucesso"
+                    },
+                    "404": {
+                        "description": "Plano não encontrado"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Admin Stock"
+                ],
+                "summary": "Atualizar plano de manutenção preventiva",
+                "description": "Atualiza um plano de manutenção preventiva.",
+                "operationId": "562875b8a27c3344cce4696acd13464a",
+                "parameters": [
+                    {
+                        "name": "plan",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "equipment_id",
+                                    "name",
+                                    "interval_type",
+                                    "interval_value"
+                                ],
+                                "properties": {
+                                    "equipment_id": {
+                                        "type": "integer"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "interval_type": {
+                                        "type": "string",
+                                        "enum": [
+                                            "days",
+                                            "usage_hours",
+                                            "cycles"
+                                        ]
+                                    },
+                                    "interval_value": {
+                                        "type": "integer"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "active": {
+                                        "type": "boolean"
+                                    },
+                                    "parts": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "part_id": {
+                                                    "type": "integer"
+                                                },
+                                                "expected_quantity": {
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Plano atualizado com sucesso"
+                    },
+                    "422": {
+                        "description": "Dados inválidos"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
         "/notifications": {
             "get": {
                 "tags": [
@@ -120,6 +392,1375 @@
                     }
                 ]
             }
+        },
+        "/admin/part-categories": {
+            "get": {
+                "tags": [
+                    "Admin Stock"
+                ],
+                "summary": "Listar categorias de peças",
+                "description": "Lista todas as categorias de peças.",
+                "operationId": "0d2545e2e823e4732b5cf439b635e5f7",
+                "responses": {
+                    "200": {
+                        "description": "Lista de categorias de peças"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Admin Stock"
+                ],
+                "summary": "Criar categoria de peças",
+                "description": "Cria uma nova categoria.",
+                "operationId": "92c49d6e7a8ea3e681478704fce018f6",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "active": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Categoria criada com sucesso"
+                    },
+                    "422": {
+                        "description": "Dados inválidos"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/admin/part-categories/{category}": {
+            "delete": {
+                "tags": [
+                    "Admin Stock"
+                ],
+                "summary": "Desativar categoria de peças",
+                "description": "Desativa logicamente uma categoria.",
+                "operationId": "5acfd253e24d3358d14917981228f2ee",
+                "parameters": [
+                    {
+                        "name": "category",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Categoria desativada com sucesso"
+                    },
+                    "404": {
+                        "description": "Categoria não encontrada"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Admin Stock"
+                ],
+                "summary": "Atualizar categoria de peças",
+                "description": "Atualiza uma categoria.",
+                "operationId": "20224dfcc54d628fb759407f9c142f9e",
+                "parameters": [
+                    {
+                        "name": "category",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "active": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Categoria atualizada com sucesso"
+                    },
+                    "422": {
+                        "description": "Dados inválidos"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/stock/parts": {
+            "get": {
+                "tags": [
+                    "Stock"
+                ],
+                "summary": "Listar peças",
+                "description": "Lista paginada de peças do catálogo, com filtros por pesquisa, estado e categoria.",
+                "operationId": "2680fb30daccf7e28242bc0711455363",
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "Pesquisa por SKU ou nome",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Estado do stock (low_stock, out_of_stock, healthy)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "category_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista paginada de peças"
+                    },
+                    "401": {
+                        "description": "Autenticação necessária"
+                    },
+                    "403": {
+                        "description": "Acesso proibido para o perfil"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/stock/parts/{part}": {
+            "get": {
+                "tags": [
+                    "Stock"
+                ],
+                "summary": "Detalhe de uma peça",
+                "description": "Detalhe de uma peça.",
+                "operationId": "6fa257f57902e6319bec35c56f239dd1",
+                "parameters": [
+                    {
+                        "name": "part",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Peça com categoria, taxa de IVA e fornecedores"
+                    },
+                    "404": {
+                        "description": "Peça não encontrada"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/admin/parts": {
+            "post": {
+                "tags": [
+                    "Admin Stock"
+                ],
+                "summary": "Criar peça",
+                "description": "Cria uma peça e regista o stock inicial como movimento de entrada.",
+                "operationId": "47e21836c26b2148506390d0846c36d2",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "sku",
+                                    "name",
+                                    "unit_of_measure",
+                                    "cost_price",
+                                    "current_stock",
+                                    "min_stock"
+                                ],
+                                "properties": {
+                                    "sku": {
+                                        "description": "Código único (SKU)",
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "brand": {
+                                        "type": "string"
+                                    },
+                                    "manufacturer_ref": {
+                                        "type": "string"
+                                    },
+                                    "part_category_id": {
+                                        "type": "integer"
+                                    },
+                                    "unit_of_measure": {
+                                        "type": "string",
+                                        "enum": [
+                                            "unit",
+                                            "meter",
+                                            "liter",
+                                            "kg",
+                                            "pair",
+                                            "set",
+                                            "roll",
+                                            "other"
+                                        ]
+                                    },
+                                    "cost_price": {
+                                        "type": "number"
+                                    },
+                                    "tax_rate_id": {
+                                        "type": "integer"
+                                    },
+                                    "sale_price": {
+                                        "type": "number"
+                                    },
+                                    "current_stock": {
+                                        "type": "integer"
+                                    },
+                                    "min_stock": {
+                                        "type": "integer"
+                                    },
+                                    "max_stock": {
+                                        "type": "integer"
+                                    },
+                                    "location": {
+                                        "type": "string"
+                                    },
+                                    "active": {
+                                        "type": "boolean"
+                                    },
+                                    "technical_notes": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Peça criada com sucesso"
+                    },
+                    "422": {
+                        "description": "Dados inválidos"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/admin/parts/{part}": {
+            "delete": {
+                "tags": [
+                    "Admin Stock"
+                ],
+                "summary": "Eliminar peça",
+                "description": "Elimina logicamente uma peça.",
+                "operationId": "28c6118a14b976200d9bf3130dec92a1",
+                "parameters": [
+                    {
+                        "name": "part",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Peça eliminada com sucesso"
+                    },
+                    "404": {
+                        "description": "Peça não encontrada"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Admin Stock"
+                ],
+                "summary": "Atualizar peça",
+                "description": "Atualiza uma peça.",
+                "operationId": "02170285e84d2f9b1809291259e7e6b6",
+                "parameters": [
+                    {
+                        "name": "part",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "sku",
+                                    "name",
+                                    "unit_of_measure",
+                                    "cost_price",
+                                    "min_stock"
+                                ],
+                                "properties": {
+                                    "sku": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "brand": {
+                                        "type": "string"
+                                    },
+                                    "manufacturer_ref": {
+                                        "type": "string"
+                                    },
+                                    "part_category_id": {
+                                        "type": "integer"
+                                    },
+                                    "unit_of_measure": {
+                                        "type": "string",
+                                        "enum": [
+                                            "unit",
+                                            "meter",
+                                            "liter",
+                                            "kg",
+                                            "pair",
+                                            "set",
+                                            "roll",
+                                            "other"
+                                        ]
+                                    },
+                                    "cost_price": {
+                                        "type": "number"
+                                    },
+                                    "tax_rate_id": {
+                                        "type": "integer"
+                                    },
+                                    "sale_price": {
+                                        "type": "number"
+                                    },
+                                    "min_stock": {
+                                        "type": "integer"
+                                    },
+                                    "max_stock": {
+                                        "type": "integer"
+                                    },
+                                    "location": {
+                                        "type": "string"
+                                    },
+                                    "active": {
+                                        "type": "boolean"
+                                    },
+                                    "technical_notes": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Peça atualizada com sucesso"
+                    },
+                    "422": {
+                        "description": "Dados inválidos"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/stock/dashboard/summary": {
+            "get": {
+                "tags": [
+                    "Stock"
+                ],
+                "summary": "Resumo do dashboard de stock",
+                "description": "Valor total do stock, total de peças, contagem de peças com stock baixo e lista de alertas.",
+                "operationId": "a2866a7f4f54fc164a01e5daa9ea3d90",
+                "responses": {
+                    "200": {
+                        "description": "Resumo de métricas de stock"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/stock/dashboard/top-consumed": {
+            "get": {
+                "tags": [
+                    "Stock"
+                ],
+                "summary": "Peças mais consumidas",
+                "description": "Top peças mais consumidas num período.",
+                "operationId": "ed019de109283d6b0551ac59112f7151",
+                "parameters": [
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista das peças mais consumidas"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/stock/dashboard/slow-moving": {
+            "get": {
+                "tags": [
+                    "Stock"
+                ],
+                "summary": "Peças com stock parado",
+                "description": "Peças ativas sem movimentos há X dias, ordenadas por stock atual.",
+                "operationId": "2b84697d08526039dc9020d451d25a12",
+                "parameters": [
+                    {
+                        "name": "inactive_days",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de peças com stock parado"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/stock/dashboard/cost-by-equipment": {
+            "get": {
+                "tags": [
+                    "Stock"
+                ],
+                "summary": "Custo de peças por equipamento",
+                "description": "Custo de peças por equipamento.",
+                "operationId": "88fc39403ba11eb0e7dc4028986d47f0",
+                "parameters": [
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Custos de peças por equipamento"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/stock/dashboard/cost-by-ticket": {
+            "get": {
+                "tags": [
+                    "Stock"
+                ],
+                "summary": "Custo de peças por ticket",
+                "description": "Custo de peças por ticket/intervenção.",
+                "operationId": "666176642e91f91114a9d1c4945d3af1",
+                "parameters": [
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Custos de peças por ticket"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/stock/dashboard/runout-forecast": {
+            "get": {
+                "tags": [
+                    "Stock"
+                ],
+                "summary": "Previsão de rutura de stock",
+                "description": "Estimativa de meses de stock restantes com base no consumo médio mensal.",
+                "operationId": "5975bbb5c328bdcf96d82c085ac8cadf",
+                "parameters": [
+                    {
+                        "name": "months",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Previsão de rutura de stock"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/stock/movements": {
+            "get": {
+                "tags": [
+                    "Stock"
+                ],
+                "summary": "Listar movimentos de stock",
+                "description": "Lista paginada de movimentos, filtrável por peça, tipo de movimento e ticket.",
+                "operationId": "d077d854985b667853cd1c6fbc5344ad",
+                "parameters": [
+                    {
+                        "name": "part_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "movement_type",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "in",
+                                "out",
+                                "adjust",
+                                "return"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "ticket_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista paginada de movimentos"
+                    },
+                    "403": {
+                        "description": "Acesso proibido para o perfil"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Stock"
+                ],
+                "summary": "Registar movimento de stock",
+                "description": "Regista um movimento e atualiza atomicamente o stock da peça. Saídas usam quantidade positiva.",
+                "operationId": "a9702f508c0a44421fdde340130e4c93",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "part_id",
+                                    "movement_type",
+                                    "quantity"
+                                ],
+                                "properties": {
+                                    "part_id": {
+                                        "type": "integer"
+                                    },
+                                    "movement_type": {
+                                        "type": "string",
+                                        "enum": [
+                                            "in",
+                                            "out",
+                                            "adjust",
+                                            "return"
+                                        ]
+                                    },
+                                    "quantity": {
+                                        "type": "integer"
+                                    },
+                                    "reason": {
+                                        "type": "string"
+                                    },
+                                    "ticket_id": {
+                                        "type": "integer"
+                                    },
+                                    "equipment_id": {
+                                        "type": "integer"
+                                    },
+                                    "unit_price_snapshot": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Movimento registado com sucesso"
+                    },
+                    "422": {
+                        "description": "Dados inválidos ou stock insuficiente"
+                    },
+                    "500": {
+                        "description": "Não foi possível registar o movimento"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/stock/reports/low-stock.csv": {
+            "get": {
+                "tags": [
+                    "Stock"
+                ],
+                "summary": "Exportar CSV de stock baixo",
+                "description": "Exporta a lista de peças com stock baixo em CSV.",
+                "operationId": "d44c1aff0403e4af3e3bb930ccbb92a4",
+                "responses": {
+                    "200": {
+                        "description": "Ficheiro CSV de peças com stock baixo"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/stock/reports/inventory.csv": {
+            "get": {
+                "tags": [
+                    "Stock"
+                ],
+                "summary": "Exportar CSV do inventário",
+                "description": "Exporta o inventário completo em CSV.",
+                "operationId": "b2c2d2e7a07e71872086787c931f5491",
+                "responses": {
+                    "200": {
+                        "description": "Ficheiro CSV do inventário completo"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/stock/reports/costs-by-equipment.pdf": {
+            "get": {
+                "tags": [
+                    "Stock"
+                ],
+                "summary": "Exportar PDF de custos por equipamento",
+                "description": "Dispara a geração assíncrona do relatório de custos por equipamento (PDF).",
+                "operationId": "12562726361f4816592618005b5fb340",
+                "parameters": [
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Processamento do PDF iniciado (notificação quando pronto)"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/stock/suppliers": {
+            "get": {
+                "tags": [
+                    "Stock"
+                ],
+                "summary": "Listar fornecedores",
+                "description": "Lista paginada de fornecedores, com pesquisa por nome ou NIF.",
+                "operationId": "dd48fcdadf70003562d4b370b532cbd7",
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "Pesquisa por nome ou NIF",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista paginada de fornecedores"
+                    },
+                    "403": {
+                        "description": "Acesso proibido para o perfil"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/stock/suppliers/{supplier}": {
+            "get": {
+                "tags": [
+                    "Stock"
+                ],
+                "summary": "Detalhe de um fornecedor",
+                "description": "Detalhe de um fornecedor.",
+                "operationId": "34425542cd31eec91e0f84672a18d848",
+                "parameters": [
+                    {
+                        "name": "supplier",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Fornecedor com as peças associadas"
+                    },
+                    "404": {
+                        "description": "Fornecedor não encontrado"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/admin/suppliers": {
+            "post": {
+                "tags": [
+                    "Admin Stock"
+                ],
+                "summary": "Criar fornecedor",
+                "description": "Cria um novo fornecedor.",
+                "operationId": "c978c9ce85fc730ab910e3ba84df43d8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "nif": {
+                                        "type": "string"
+                                    },
+                                    "contact": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "address": {
+                                        "type": "string"
+                                    },
+                                    "avg_lead_time_days": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Fornecedor criado com sucesso"
+                    },
+                    "422": {
+                        "description": "Dados inválidos"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/admin/suppliers/{supplier}": {
+            "delete": {
+                "tags": [
+                    "Admin Stock"
+                ],
+                "summary": "Eliminar fornecedor",
+                "description": "Elimina logicamente um fornecedor.",
+                "operationId": "20cd9046e6915a1bacd71d8e73a99cb4",
+                "parameters": [
+                    {
+                        "name": "supplier",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Fornecedor eliminado com sucesso"
+                    },
+                    "404": {
+                        "description": "Fornecedor não encontrado"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Admin Stock"
+                ],
+                "summary": "Atualizar fornecedor",
+                "description": "Atualiza um fornecedor.",
+                "operationId": "63593f5e8dbb442cc17bf6adc0bac1db",
+                "parameters": [
+                    {
+                        "name": "supplier",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "nif": {
+                                        "type": "string"
+                                    },
+                                    "contact": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "address": {
+                                        "type": "string"
+                                    },
+                                    "avg_lead_time_days": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Fornecedor atualizado com sucesso"
+                    },
+                    "422": {
+                        "description": "Dados inválidos"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/admin/tax-rates": {
+            "get": {
+                "tags": [
+                    "Admin Stock"
+                ],
+                "summary": "Listar taxas de IVA",
+                "description": "Lista todas as taxas de IVA.",
+                "operationId": "442b6e675ceb1fd56896a0ad5d959841",
+                "responses": {
+                    "200": {
+                        "description": "Lista de taxas de IVA"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Admin Stock"
+                ],
+                "summary": "Criar taxa de IVA",
+                "description": "Cria uma nova taxa de IVA.",
+                "operationId": "a91763441b072660e6faebb84d916bc4",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "percent"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "percent": {
+                                        "type": "number"
+                                    },
+                                    "is_default": {
+                                        "type": "boolean"
+                                    },
+                                    "active": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Taxa de IVA criada com sucesso"
+                    },
+                    "422": {
+                        "description": "Dados inválidos"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/admin/tax-rates/{taxRate}": {
+            "delete": {
+                "tags": [
+                    "Admin Stock"
+                ],
+                "summary": "Desativar taxa de IVA",
+                "description": "Desativa logicamente uma taxa de IVA.",
+                "operationId": "8263b21546e9cd002f0210fb48a30765",
+                "parameters": [
+                    {
+                        "name": "taxRate",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Taxa de IVA desativada com sucesso"
+                    },
+                    "404": {
+                        "description": "Taxa de IVA não encontrada"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Admin Stock"
+                ],
+                "summary": "Atualizar taxa de IVA",
+                "description": "Atualiza uma taxa de IVA.",
+                "operationId": "1f58e2fb3125408916d66860101bd818",
+                "parameters": [
+                    {
+                        "name": "taxRate",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "percent"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "percent": {
+                                        "type": "number"
+                                    },
+                                    "is_default": {
+                                        "type": "boolean"
+                                    },
+                                    "active": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Taxa de IVA atualizada com sucesso"
+                    },
+                    "422": {
+                        "description": "Dados inválidos"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -139,6 +1780,14 @@
         }
     },
     "tags": [
+        {
+            "name": "Stock",
+            "description": "Catálogo de peças, fornecedores, movimentos de stock, dashboard e relatórios"
+        },
+        {
+            "name": "Admin Stock",
+            "description": "Gestão administrativa de peças, fornecedores, taxas de IVA, categorias e planos de manutenção"
+        },
         {
             "name": "Admin",
             "description": "Admin"

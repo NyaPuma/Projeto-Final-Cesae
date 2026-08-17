@@ -12,10 +12,10 @@
 
 @props([
     'endpoint' => '/api/activities',
-    'emptyMessage' => __('Nenhuma atividade recente encontrada.'),
-    'loadingMessage' => __('A carregar atividade...'),
-    'loadingDescription' => __('A obter os eventos mais recentes da plataforma.'),
-    'errorMessage' => __('Não foi possível carregar as atividades.'),
+    'emptyMessage' => __('dashboard.Nenhuma atividade recente encontrada.'),
+    'loadingMessage' => __('ui.A carregar atividade...'),
+    'loadingDescription' => __('common.A obter os eventos mais recentes da plataforma.'),
+    'errorMessage' => __('ui.Não foi possível carregar as atividades.'),
 ])
 
 <div
@@ -78,7 +78,7 @@
                 </div>
                 <div class="flex-1">
                     <h3 class="font-semibold text-red-600 dark:text-red-400" x-text="error"></h3>
-                    <p class="mt-2 text-sm text-[var(--text-soft)]">{{ __('Por favor, tente novamente mais tarde.') }}</p>
+                    <p class="mt-2 text-sm text-[var(--text-soft)]">{{ __('common.Por favor, tente novamente mais tarde.') }}</p>
                 </div>
             </div>
         </template>

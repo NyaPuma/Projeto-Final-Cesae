@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => 'Todisteita ei ole ladattu.',
+    'remove_photo' => 'Poista valokuva',
+    'remove_file' => 'Poista tiedosto',
+    'load_error' => 'Virhe valokuvien lataamisessa.',
+    'confirm_remove' => 'Haluatko varmasti poistaa tämän valokuvan?',
+    'remove_error' => 'Virhe valokuvan poistamisessa.',
+    'removed' => 'Valokuva poistettu onnistuneesti.',
+    'sent' => 'Valokuva lähetetty!',
+    'file' => 'Tiedosto',
+    'Anexos' => 'Liitteet',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => 'Päivitä käyttäjäprofiilin tunnukset, valokuva ja käyttöoikeudet.',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => 'Lataa kuva (PNG, JPG tai WEBP, enintään 2MB).',
+    'Emergência Imediata. Risco de acidente.' => 'Välitön hätätilanne. Onnettomuusriski.',
+    'Escolher Fotografia' => 'Valitse valokuva',
+    'Escolher ficheiro' => 'Valitse tiedosto',
+    'Fotografia (Opcional)' => 'Valokuva (valinnainen)',
+    'Fotografia do Utilizador' => 'Käyttäjän valokuva',
+    'Imagem' => 'Kuva',
+    'Inserir Imagem (Opcional)' => 'Lisää kuva (valinnainen)',
+    'Nenhum ficheiro' => 'Ei tiedostoa',
+    'Nenhum ficheiro selecionado' => 'Ei valittua tiedostoa',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => 'Nykyinen profiili: :profile. Käytä moduuleja roolisi oikeuksien mukaisesti.',
+    'Tipo de ficheiro não permitido.' => 'Tiedostotyyppiä ei sallita.',
+];

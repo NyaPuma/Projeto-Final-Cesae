@@ -3,26 +3,30 @@
  * Gestão do menu lateral (desktop/mobile)
  */
 
+function setMobileNavExpanded(expanded) {
+    document.querySelectorAll('[data-action="toggle-mobile-nav"]').forEach((btn) => {
+        btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    });
+}
+
+function setMobileNavAriaHidden(hidden) {
+    const drawer = document.getElementById('mobileNav');
+    if (drawer) {
+        drawer.setAttribute('aria-hidden', hidden ? 'true' : 'false');
+    }
+}
+
 export function isSidebarCollapsed() {
     return localStorage.getItem('sidebar_collapsed') === 'true';
 }
 
 export function toggleDesktopSidebar() {
     const sidebar = document.getElementById('desktopSidebar');
-    const wrapper = document.getElementById('mainWrapper');
 
-    if (!sidebar || !wrapper) return;
+    if (!sidebar) return;
 
     const isCollapsed = sidebar.classList.toggle('collapsed');
-
-    if (isCollapsed) {
-        wrapper.classList.remove('lg:ml-72');
-        wrapper.classList.add('lg:ml-20');
-    } else {
-        wrapper.classList.remove('lg:ml-20');
-        wrapper.classList.add('lg:ml-72');
-    }
-
+    document.body.classList.toggle('sidebar-collapsed', isCollapsed);
     localStorage.setItem('sidebar_collapsed', isCollapsed ? 'true' : 'false');
 }
 
@@ -32,18 +36,15 @@ export function toggleMobileNav() {
 
     if (!overlay || !drawer) return;
 
-    const isOpen = drawer.classList.contains('translate-x-0');
+    const isOpen = drawer.classList.contains('active');
 
     if (isOpen) {
         closeMobileNav();
     } else {
-        overlay.classList.remove('hidden');
-        void overlay.offsetWidth; // Força reflow para animação perfeita
-        overlay.classList.remove('opacity-0');
-        overlay.classList.add('opacity-100');
-
-        drawer.classList.remove('-translate-x-full');
-        drawer.classList.add('translate-x-0');
+        overlay.classList.add('active');
+        drawer.classList.add('active');
+        drawer.setAttribute('aria-hidden', 'false');
+        setMobileNavExpanded(true);
     }
 }
 
@@ -53,33 +54,31 @@ export function closeMobileNav() {
 
     if (!overlay || !drawer) return;
 
-    overlay.classList.remove('opacity-100');
-    overlay.classList.add('opacity-0');
-
-    drawer.classList.remove('translate-x-0');
-    drawer.classList.add('-translate-x-full');
-
-    setTimeout(() => {
-        if (!drawer.classList.contains('translate-x-0')) {
-            overlay.classList.add('hidden');
-        }
-    }, 300);
+    overlay.classList.remove('active');
+    drawer.classList.remove('active');
+    setMobileNavAriaHidden(true);
+    setMobileNavExpanded(false);
 }
 
 export function initSidebar() {
     const sidebar = document.getElementById('desktopSidebar');
-    const wrapper = document.getElementById('mainWrapper');
-
     const collapsed = isSidebarCollapsed();
 
     if (sidebar && collapsed) {
         sidebar.classList.add('collapsed');
+        document.body.classList.add('sidebar-collapsed');
     }
 
-    if (wrapper) {
-        wrapper.classList.toggle('lg:ml-72', !collapsed);
-        wrapper.classList.toggle('lg:ml-20', collapsed);
-    }
+    // O drawer mobile começa sempre fechado em qualquer navegação.
+    // Forçar o fecho aqui evita o flash/abertura indesejada na transição
+    // de página (e cobre o restore do bfcache, que preserva o DOM).
+    closeMobileNav();
+
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted) {
+            closeMobileNav();
+        }
+    });
 
     document.documentElement.classList.remove('pre-collapsed');
 }

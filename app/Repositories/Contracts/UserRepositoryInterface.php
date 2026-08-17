@@ -71,4 +71,12 @@ interface UserRepositoryInterface
      * @return bool
      */
     public function inactivate(User $user): bool;
+
+    /**
+     * Elimina (soft delete) um utilizador.
+     *
+     * @param User $user
+     * @return bool
+     */
+    public function delete(User $user): bool;
 }

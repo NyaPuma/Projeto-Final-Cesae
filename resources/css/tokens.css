@@ -1,53 +1,265 @@
-@theme {
-  /* Cores Semânticas (Light Mode defaults for Tailwind CSS v4) */
-  --color-primary: #ea580c;          /* Orange 600 */
-  --color-primary-hover: #c2410c;    /* Orange 700 */
-  --color-primary-light: rgba(234, 88, 12, 0.1);
-  --color-on-primary: #ffffff;       /* Text on primary */
-  
-  --color-surface: #ffffff;
-  --color-surface-2: #f8fafc;
-  --color-surface-hover: #f1f5f9;    /* Slate 100 */
-  --color-surface-disabled: #e2e8f0;
-  
-  --color-text: #0f172a;             /* Slate 900 */
-  --color-text-soft: #475569;        /* Slate 600 */
-  --color-border: #cbd5e1;           /* Slate 300 */
-  --color-border-hover: #94a3b8;     /* Slate 400 */
-  
-  --color-success: #15803d;          /* Green 700 */
-  --color-success-light: rgba(21, 128, 61, 0.1);
-  --color-danger: #b91c1c;           /* Red 700 */
-  --color-danger-light: rgba(185, 28, 28, 0.1);
-  --color-warning: #c2410c;          /* Orange 700 */
-  --color-warning-light: rgba(194, 65, 12, 0.1);
-  --color-info: #0369a1;             /* Sky 700 */
-  --color-info-light: rgba(3, 105, 161, 0.1);
+/*
+|--------------------------------------------------------------------------
+| Design Tokens — Fonte única do sistema de design
+|--------------------------------------------------------------------------
+| Cor, tipografia, espaçamento, raios, sombras, transições e métricas de
+| layout. Este ficheiro é a única origem de valores; todos os componentes
+| consomem estes tokens. A personalização do tema (página de definições)
+| sobrepõe apenas as variáveis `--color-*` via /theme/custom.css.
+|
+| NOTA: o bloco `@theme inline` (mais abaixo) faz a ponte com o Tailwind v4
+| para que utilities como `bg-primary`, `rounded-xl` ou `shadow-md`
+| resolvam para estas variáveis em runtime (seguem o tema personalizado).
+*/
+
+:root {
+    /* ---------------------------------------------------------------------
+       Cores de marca
+    --------------------------------------------------------------------- */
+    --color-primary: #ea580c;
+    --color-primary-hover: #c2410c;
+    --color-primary-light: rgba(234, 88, 12, 0.12);
+    --color-on-primary: #ffffff;
+    --color-secondary: #14213d;
+    --color-secondary-light: #1e293b;
+
+    /* ---------------------------------------------------------------------
+       Superfícies
+    --------------------------------------------------------------------- */
+    --color-surface: #ffffff;
+    --color-surface-2: #f8fafc;
+    --color-surface-3: #e2e8f0;
+    --color-surface-alt: #e2e8f0;
+    --color-surface-muted: #f1f5f9;
+    --color-surface-hover: #f1f5f9;
+
+    /* ---------------------------------------------------------------------
+       Texto e bordas
+    --------------------------------------------------------------------- */
+    --color-text: #0f172a;
+    --color-text-soft: #475569;
+    --color-text-muted: #64748b;
+    --color-border: #cbd5e1;
+    --color-border-hover: #94a3b8;
+    --color-border-strong: #94a3b8;
+
+    /* ---------------------------------------------------------------------
+       Cores de estado (semânticas)
+    --------------------------------------------------------------------- */
+    --color-success: #16a34a;
+    --color-success-light: rgba(22, 163, 74, 0.12);
+    --color-warning: #d97706;
+    --color-warning-hover: #b45309;
+    --color-warning-light: rgba(217, 119, 6, 0.12);
+    --color-danger: #b91c1c;
+    --color-danger-light: rgba(185, 28, 28, 0.12);
+    --color-info: #2563eb;
+    --color-info-light: rgba(37, 99, 235, 0.12);
+
+    /* ---------------------------------------------------------------------
+       Estados de ticket (personalizáveis na página de definições)
+    --------------------------------------------------------------------- */
+    --color-ticket-open: #2563eb;
+    --color-ticket-in-progress: #f59e0b;
+    --color-ticket-resolved: #10b981;
+    --color-ticket-urgent: #dc2626;
+
+    /* ---------------------------------------------------------------------
+       Tipografia
+    --------------------------------------------------------------------- */
+    --font-sans: "Inter", "Instrument Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-mono: "JetBrains Mono", "Cascadia Code", Consolas, "Liberation Mono", monospace;
+
+    /* Escala fluida calibrada para dashboard/aplicação (não marketing).
+       Nenhum tamanho de texto desce abaixo de ~0.8rem (legibilidade AA). */
+    --text-xs: clamp(0.8rem, 0.775rem + 0.125vw, 0.875rem);
+    --text-sm: clamp(0.875rem, 0.85rem + 0.125vw, 0.95rem);
+    --text-md: clamp(1rem, 0.98rem + 0.1vw, 1.0625rem);
+    --text-lg: clamp(1.0625rem, 1.02rem + 0.2vw, 1.125rem);
+    --text-xl: clamp(1.125rem, 1.06rem + 0.3vw, 1.25rem);
+    --text-2xl: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
+    --text-3xl: clamp(1.5rem, 1.35rem + 0.75vw, 2rem);
+    --text-4xl: clamp(1.875rem, 1.6rem + 1.1vw, 2.5rem);
+    --text-5xl: clamp(2.2rem, 1.9rem + 1.3vw, 3rem);
+
+    --font-weight-regular: 400;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-black: 800;
+
+    --leading-tight: 1.2;
+    --leading-normal: 1.5;
+    --leading-relaxed: 1.7;
+    --tracking-tight: -0.02em;
+
+    /* ---------------------------------------------------------------------
+       Espaçamento (base 4px = 0.25rem)
+    --------------------------------------------------------------------- */
+    --space-0: 0;
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-7: 2rem;
+    --space-8: 2.5rem;
+    --space-9: 3rem;
+    --space-10: 4rem;
+    --space-11: 5rem;
+    --space-12: 6rem;
+
+    /* Aliases semânticos usados pelos componentes (x-ui) */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+
+    /* ---------------------------------------------------------------------
+       Raios de borda (moderados — clareza industrial, sem "pill" exagerado)
+    --------------------------------------------------------------------- */
+    --radius-xs: 4px;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --radius-2xl: 24px;
+    --radius-3xl: 2rem;
+    --radius-round: 9999px;
+
+    /* ---------------------------------------------------------------------
+       Sombras (base RGB separada para dark mode)
+    --------------------------------------------------------------------- */
+    --shadow-base-rgb: 15 23 42;
+    --shadow-xs: 0 1px 2px rgba(var(--shadow-base-rgb), 0.05);
+    --shadow-sm: 0 2px 6px rgba(var(--shadow-base-rgb), 0.06);
+    --shadow-md: 0 8px 24px rgba(var(--shadow-base-rgb), 0.08);
+    --shadow-lg: 0 16px 40px rgba(var(--shadow-base-rgb), 0.12);
+    --shadow-xl: 0 24px 60px rgba(var(--shadow-base-rgb), 0.16);
+
+    /* ---------------------------------------------------------------------
+       Movimento e métricas de layout
+    --------------------------------------------------------------------- */
+    --transition-fast: 160ms ease;
+    --transition-medium: 240ms ease;
+    --transition-smooth: 320ms ease;
+    --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --content-width: 1200px;
+    --sidebar-width: 17.5rem;
+    --topbar-height: 4.5rem;
+
+    color-scheme: light;
 }
 
-/* Runtime overrides for Dark Mode */
+/* ---------------------------------------------------------------------
+   Dark mode — chrome e derivados apenas
+   As cores de base (primária, superfícies, texto, bordas, tickets) vêm
+   sempre do preset ativo em /theme/custom.css (light ou dark). O modo
+   dark troca para o preset equivalente da mesma família, por isso aqui
+   não se redefinem esses tokens — só os derivados estáticos que o tema
+   custom não cobre.
+--------------------------------------------------------------------- */
 .dark, [data-theme='dark'] {
-  --color-primary: #f97316;          /* Orange 500 (Contrast on white: 3.0:1, but on dark bg: excellent) */
-  --color-primary-hover: #ea580c;    /* Orange 600 */
-  --color-primary-light: rgba(249, 115, 22, 0.15);
-  --color-on-primary: #ffffff;       /* White text on orange background */
-  
-  --color-surface: #1e293b;          /* Slate 800 */
-  --color-surface-2: #161e2e;        /* Slate 900 variant */
-  --color-surface-hover: #334155;    /* Slate 700 */
-  --color-surface-disabled: #1e293b;
-  
-  --color-text: #f8fafc;             /* Slate 50 */
-  --color-text-soft: #cbd5e1;        /* Slate 300 */
-  --color-border: #475569;           /* Slate 600 */
-  --color-border-hover: #64748b;     /* Slate 500 */
-  
-  --color-success: #4ade80;          /* Green 400 */
-  --color-success-light: rgba(74, 222, 128, 0.1);
-  --color-danger: #f87171;           /* Red 400 */
-  --color-danger-light: rgba(248, 113, 113, 0.1);
-  --color-warning: #fb923c;          /* Orange 400 */
-  --color-warning-light: rgba(251, 146, 60, 0.1);
-  --color-info: #38bdf8;             /* Sky 400 */
-  --color-info-light: rgba(56, 189, 248, 0.1);
+    --color-secondary: #0f172a;
+    --color-secondary-light: #111827;
+
+    --color-surface-2: #161e2e;
+    --color-surface-3: #1e293b;
+    --color-surface-muted: #111827;
+    --color-surface-hover: #334155;
+
+    --color-text-muted: #94a3b8;
+
+    --color-border-hover: #64748b;
+    --color-border-strong: #64748b;
+
+    --color-success: #4ade80;
+    --color-success-light: rgba(74, 222, 128, 0.12);
+    --color-warning: #fbbf24;
+    --color-warning-hover: #f59e0b;
+    --color-warning-light: rgba(251, 191, 36, 0.12);
+    --color-danger: #f87171;
+    --color-danger-light: rgba(248, 113, 113, 0.12);
+    --color-info: #38bdf8;
+    --color-info-light: rgba(56, 189, 248, 0.12);
+
+    --shadow-base-rgb: 0 0 0;
+    --shadow-xs: 0 1px 2px rgba(var(--shadow-base-rgb), 0.15);
+    --shadow-sm: 0 2px 6px rgba(var(--shadow-base-rgb), 0.20);
+    --shadow-md: 0 8px 24px rgba(var(--shadow-base-rgb), 0.25);
+    --shadow-lg: 0 16px 40px rgba(var(--shadow-base-rgb), 0.30);
+    --shadow-xl: 0 24px 60px rgba(var(--shadow-base-rgb), 0.35);
+
+    color-scheme: dark;
+}
+
+html {
+    color-scheme: light;
+}
+
+/* ---------------------------------------------------------------------
+   Ponte com o Tailwind v4 (@theme inline)
+   As utilities de cor/raio/sombra/texto resolvem para os tokens em runtime,
+   por isso seguem o dark mode e a personalização de tema automáticamente.
+--------------------------------------------------------------------- */
+@theme inline {
+    --color-primary: var(--color-primary);
+    --color-primary-hover: var(--color-primary-hover);
+    --color-primary-light: var(--color-primary-light);
+    --color-on-primary: var(--color-on-primary);
+    --color-secondary: var(--color-secondary);
+    --color-secondary-light: var(--color-secondary-light);
+
+    --color-surface: var(--color-surface);
+    --color-surface-2: var(--color-surface-2);
+    --color-surface-3: var(--color-surface-3);
+    --color-surface-alt: var(--color-surface-alt);
+    --color-surface-muted: var(--color-surface-muted);
+    --color-surface-hover: var(--color-surface-hover);
+
+    --color-text: var(--color-text);
+    --color-text-soft: var(--color-text-soft);
+    --color-text-muted: var(--color-text-muted);
+    --color-border: var(--color-border);
+    --color-border-hover: var(--color-border-hover);
+    --color-border-strong: var(--color-border-strong);
+
+    --color-success: var(--color-success);
+    --color-success-light: var(--color-success-light);
+    --color-warning: var(--color-warning);
+    --color-warning-light: var(--color-warning-light);
+    --color-danger: var(--color-danger);
+    --color-danger-light: var(--color-danger-light);
+    --color-info: var(--color-info);
+    --color-info-light: var(--color-info-light);
+
+    --color-ticket-open: var(--color-ticket-open);
+    --color-ticket-in-progress: var(--color-ticket-in-progress);
+    --color-ticket-resolved: var(--color-ticket-resolved);
+    --color-ticket-urgent: var(--color-ticket-urgent);
+
+    --text-xs: var(--text-xs);
+    --text-sm: var(--text-sm);
+    --text-md: var(--text-md);
+    --text-lg: var(--text-lg);
+    --text-xl: var(--text-xl);
+    --text-2xl: var(--text-2xl);
+    --text-3xl: var(--text-3xl);
+    --text-4xl: var(--text-4xl);
+    --text-5xl: var(--text-5xl);
+
+    --radius-xs: var(--radius-xs);
+    --radius-sm: var(--radius-sm);
+    --radius-md: var(--radius-md);
+    --radius-lg: var(--radius-lg);
+    --radius-xl: var(--radius-xl);
+    --radius-2xl: var(--radius-2xl);
+
+    --shadow-xs: var(--shadow-xs);
+    --shadow-sm: var(--shadow-sm);
+    --shadow-md: var(--shadow-md);
+    --shadow-lg: var(--shadow-lg);
+    --shadow-xl: var(--shadow-xl);
 }

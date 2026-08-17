@@ -26,7 +26,13 @@ final class TicketBudgetController extends Controller
     public function submitEstimate(SubmitBudgetRequest $request, Ticket $ticket): JsonResponse
     {
         // 1. Autorização via Policy
-        $this->authorize('update', $ticket);
+        $this->authorize('submitBudget', $ticket);
+
+        // 2. Regras de domínio: estado permitido para submeter orçamento
+        $guard = $this->ensureSubmitAllowed($ticket);
+        if ($guard !== null) {
+            return $guard;
+        }
 
         $data = BudgetSubmissionData::fromSubmitEstimate($request->validated());
 
@@ -46,8 +52,14 @@ final class TicketBudgetController extends Controller
      */
     public function requestAuthorization(RequestBudgetRequest $request, Ticket $ticket): JsonResponse
     {
-        // 1. Autorização via Policy
-        $this->authorize('update', $ticket);
+        // 1. Autorização via Policy (apenas o técnico atribuído ao ticket)
+        $this->authorize('requestBudget', $ticket);
+
+        // 2. Regras de domínio: estado permitido para solicitar autorização
+        $guard = $this->ensureSubmitAllowed($ticket);
+        if ($guard !== null) {
+            return $guard;
+        }
 
         $data = BudgetSubmissionData::fromDetailedRequest($request->validated());
 
@@ -60,6 +72,28 @@ final class TicketBudgetController extends Controller
         }
 
         return $this->handleBelowThreshold($ticket, $data->estimatedBudget, $threshold);
+    }
+
+    /**
+     * Verifica as regras de domínio que impedem a submissão de um orçamento.
+     */
+    private function ensureSubmitAllowed(Ticket $ticket): ?JsonResponse
+    {
+        if ($ticket->hasStatus(TicketStatusEnum::Closed)
+            || $ticket->hasStatus(TicketStatusEnum::Cancelled)
+            || $ticket->hasStatus(TicketStatusEnum::Rejected)) {
+            return response()->json([
+                'message' => __('tickets.Não é possível submeter um orçamento para um ticket encerrado.'),
+            ], 422);
+        }
+
+        if ($ticket->budget_status === BudgetStatusEnum::Pending->value) {
+            return response()->json([
+                'message' => __('tickets.Já existe um pedido de orçamento pendente para este ticket.'),
+            ], 422);
+        }
+
+        return null;
     }
 
     /**
@@ -97,7 +131,7 @@ final class TicketBudgetController extends Controller
 
         $this->notificationService->notifyBudgetSubmitted(
             $ticket,
-            __('O técnico submeteu um orçamento de :amount€ para o ticket #:id - :title. Aguarda aprovação.', [
+            __('tickets.O técnico submeteu um orçamento de :amount€ para o ticket #:id - :title. Aguarda aprovação.', [
                 'amount' => $amount,
                 'id' => $ticket->id,
                 'title' => $ticket->title,
@@ -105,7 +139,7 @@ final class TicketBudgetController extends Controller
         );
 
         return response()->json([
-            'message' => __('Custo estimado excede o limiar. Ticket pendente de aprovação orçamental.'),
+            'message' => __('tickets.Custo estimado excede o limiar. Ticket pendente de aprovação orçamental.'),
             'ticket' => new TicketResource($ticket),
         ]);
     }
@@ -127,7 +161,7 @@ final class TicketBudgetController extends Controller
 
         $this->notificationService->notifyBudgetAutoApproved(
             $ticket,
-            __('Orçamento de :amount€ para o ticket #:id foi auto-aprovado (dentro do limiar de :threshold€). Pode prosseguir.', [
+            __('tickets.Orçamento de :amount€ para o ticket #:id foi auto-aprovado (dentro do limiar de :threshold€). Pode prosseguir.', [
                 'amount' => $amount,
                 'id' => $ticket->id,
                 'threshold' => $threshold,
@@ -135,7 +169,7 @@ final class TicketBudgetController extends Controller
         );
 
         return response()->json([
-            'message' => __('Custo estimado dentro da autonomia. Pode prosseguir com a intervenção.'),
+            'message' => __('common.Custo estimado dentro da autonomia. Pode prosseguir com a intervenção.'),
             'ticket' => new TicketResource($ticket),
         ]);
     }

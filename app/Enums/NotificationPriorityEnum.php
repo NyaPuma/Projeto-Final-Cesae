@@ -23,10 +23,10 @@ enum NotificationPriorityEnum: string
     public function label(): string
     {
         return match ($this) {
-            self::Low => 'Baixa',
-            self::Normal => 'Normal',
-            self::High => 'Alta',
-            self::Urgent => 'Urgente',
+            self::Low => __('tickets.Baixa'),
+            self::Normal => __('common.Normal'),
+            self::High => __('tickets.Alta'),
+            self::Urgent => __('tickets.Urgente'),
         };
     }
 

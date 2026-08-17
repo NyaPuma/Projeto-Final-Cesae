@@ -31,7 +31,7 @@ final class TicketCommentController extends Controller
         $comment->loadMissing('user');
 
         return response()->json([
-            'message' => __('Comentário adicionado com sucesso.'),
+            'message' => __('messages.Comentário adicionado com sucesso.'),
             'comment' => new TicketCommentResource($comment),
         ], 201);
     }
@@ -44,11 +44,14 @@ final class TicketCommentController extends Controller
         // 1. Autorização via Policy
         $this->authorize('view', $ticket);
 
-        // 2. Carrega os comentários com a respetiva relação do utilizador
-        $ticket->loadMissing(['comments.user']);
+        // 2. Carrega os comentários cronologicamente com a respetiva relação do utilizador
+        $comments = $ticket->comments()
+            ->with('user')
+            ->chronological()
+            ->get();
 
         return response()->json([
-            'comments' => TicketCommentResource::collection($ticket->comments),
+            'comments' => TicketCommentResource::collection($comments),
         ]);
     }
 }

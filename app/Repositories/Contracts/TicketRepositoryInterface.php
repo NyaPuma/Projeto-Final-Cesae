@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Repositories\Contracts;
 
-use App\DTOs\TicketFilters;
 use App\Models\Ticket;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -34,14 +33,6 @@ interface TicketRepositoryInterface
      * @return LengthAwarePaginator<Ticket>
      */
     public function getAll(array $relations = []): LengthAwarePaginator;
-
-    /**
-     * Pesquisa tickets com base em filtros estruturados (DTO).
-     *
-     * @param TicketFilters $filters
-     * @return LengthAwarePaginator<Ticket>
-     */
-    public function search(TicketFilters $filters): LengthAwarePaginator;
 
     /**
      * Cria um novo ticket.

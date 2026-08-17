@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => 'Χωρίς καταχωρημένα μηνύματα.',
+    'comments_error' => 'Σφάλμα κατά τη φόρτωση ιστορικού.',
+    'message_sent' => 'Το μήνυμα στάλθηκε!',
+    'incident_id' => 'ID Περιστατικού',
+    'description' => 'Περιγραφή του Περιστατικού',
+    'priority_level' => 'Επίπεδο Προτεραιότητας',
+    'equipment' => 'Εξοπλισμός / Στοιχείο',
+    'room' => 'Αίθουσα / Τοποθεσία',
+    'technician' => 'Ανατεθείς Τεχνικός',
+    'pending_assignment' => 'Σε αναμονή ανάθεσης',
+    'reported_by' => 'Αναφέρθηκε από',
+    'source' => 'Προέλευση',
+    'qr_code' => 'Κωδικός QR',
+    'web' => 'Web',
+    'system' => 'Σύστημα',
+    'no_description' => 'Δεν παρέχεται καμία περιγραφή.',
+    'Data de abertura (De)' => 'Ημερομηνία έναρξης (Από)',
+    'Detalhe de um fornecedor' => 'Λεπτομέρεια ενός προμηθευτή',
+    'Detalhe de um fornecedor.' => 'Λεπτομέρεια ενός προμηθευτή.',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => 'Περιγράψτε το πρόβλημα που παρουσιάστηκε, θορύβους, διαρροές ή μη φυσιολογικές συμπεριφορές...',
+    'Detalhes do Incidente' => 'Λεπτομέρειες του Περιστατικού',
+];

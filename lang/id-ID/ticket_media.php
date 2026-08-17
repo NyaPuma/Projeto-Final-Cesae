@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => 'Tidak ada bukti yang diunggah.',
+    'remove_photo' => 'Hapus foto',
+    'remove_file' => 'Hapus file',
+    'load_error' => 'Gagal memuat foto.',
+    'confirm_remove' => 'Apakah Anda yakin ingin menghapus foto ini?',
+    'remove_error' => 'Gagal menghapus foto.',
+    'removed' => 'Foto berhasil dihapus.',
+    'sent' => 'Foto terkirim!',
+    'file' => 'File',
+    'Anexos' => 'Lampiran',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => 'Perbarui kredensial, foto, dan izin akses profil pengguna.',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => 'Unggah gambar (PNG, JPG, atau WEBP hingga 2MB).',
+    'Emergência Imediata. Risco de acidente.' => 'Darurat Segera. Risiko kecelakaan.',
+    'Escolher Fotografia' => 'Pilih Foto',
+    'Escolher ficheiro' => 'Pilih file',
+    'Fotografia (Opcional)' => 'Foto (Opsional)',
+    'Fotografia do Utilizador' => 'Foto Pengguna',
+    'Imagem' => 'Gambar',
+    'Inserir Imagem (Opcional)' => 'Sisipkan Gambar (Opsional)',
+    'Nenhum ficheiro' => 'Tidak ada file',
+    'Nenhum ficheiro selecionado' => 'Tidak ada file yang dipilih',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => 'Profil saat ini: :profile. Akses modul sesuai izin peran Anda.',
+    'Tipo de ficheiro não permitido.' => 'Jenis file tidak diizinkan.',
+];

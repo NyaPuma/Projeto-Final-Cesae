@@ -1,4 +1,5 @@
 import { nextBudgetItemIndex } from './state.js';
+import { formatCurrency } from '../../utils/locale.js';
 
 export function recalcBudgetTotal() {
     let total = 0;
@@ -9,7 +10,7 @@ export function recalcBudgetTotal() {
         const subtotal = quantity * price;
 
         const subtotalElement = item.querySelector('.item-subtotal');
-        if (subtotalElement) subtotalElement.textContent = `${subtotal.toFixed(2)}€`;
+        if (subtotalElement) subtotalElement.textContent = formatCurrency(subtotal);
 
         total += subtotal;
     });
@@ -17,7 +18,7 @@ export function recalcBudgetTotal() {
     const totalDisplay = document.getElementById('techTotalEstimatedDisplay');
     const totalInput = document.getElementById('techEstimatedCostInput');
 
-    if (totalDisplay) totalDisplay.textContent = `${total.toFixed(2)} €`;
+    if (totalDisplay) totalDisplay.textContent = formatCurrency(total);
     if (totalInput) totalInput.value = total.toFixed(2);
 
     return total;
@@ -41,7 +42,7 @@ export function addBudgetItem(description = '', quantity = 1, price = 0, type = 
         <input type="text" class="item-desc rounded-lg border border-(--border) bg-(--surface-2) px-2.5 py-1.5 text-[11px] text-(--text) outline-none transition-all focus:border-(--text)" placeholder="Descrição" value="${description}">
         <input type="number" class="item-qty rounded-lg border border-(--border) bg-(--surface-2) px-2.5 py-1.5 text-[11px] font-mono text-(--text) outline-none transition-all focus:border-(--text)" placeholder="Qtd/H" min="1" value="${quantity}">
         <input type="number" step="0.01" class="item-price rounded-lg border border-(--border) bg-(--surface-2) px-2.5 py-1.5 text-[11px] font-mono text-(--text) outline-none transition-all focus:border-(--text)" placeholder="${pricePlaceholder}" min="0" value="${price}">
-        <span class="item-subtotal pt-2 text-right text-[11px] font-bold font-mono text-(--text)">${(quantity * price).toFixed(2)}€</span>
+        <span class="item-subtotal pt-2 text-right text-[11px] font-bold font-mono text-(--text)">${formatCurrency(quantity * price)}</span>
         <button type="button" data-action="remove-budget-item" class="btn-remove-item p-1 text-rose-400 transition-all hover:text-rose-500 cursor-pointer" title="Remover item">
             <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
@@ -111,13 +112,13 @@ export function renderBudgetDetailsForAdmin(details) {
             const rate = item.hourly_rate || 0;
             subtotal = hours * rate;
             laborTotal += subtotal;
-            detail = `${hours}h × ${rate.toFixed(2)}€/h`;
+            detail = `${hours}h × ${formatCurrency(rate)}/h`;
         } else {
             const quantity = item.quantity || 0;
             const unitPrice = item.unit_price || 0;
             subtotal = quantity * unitPrice;
             materialTotal += subtotal;
-            detail = `${quantity} × ${unitPrice.toFixed(2)}€`;
+            detail = `${quantity} × ${formatCurrency(unitPrice)}`;
         }
 
         totalAmount += subtotal;
@@ -128,7 +129,7 @@ export function renderBudgetDetailsForAdmin(details) {
             <div class="flex items-center justify-between py-1 text-[11px] ${index > 0 ? 'border-t border-(--border)/50' : ''}">
                 <span class="mr-2 flex-1 truncate text-(--text)">${icon} ${item.description || 'Item'}</span>
                 <span class="mx-2 whitespace-nowrap text-[10px] text-(--text-soft)">${detail}</span>
-                <span class="whitespace-nowrap font-bold font-mono text-(--text)">${subtotal.toFixed(2)}€</span>
+                <span class="whitespace-nowrap font-bold font-mono text-(--text)">${formatCurrency(subtotal)}</span>
             </div>
         `;
     }).join('');
@@ -136,11 +137,11 @@ export function renderBudgetDetailsForAdmin(details) {
     if (materialTotal > 0 || laborTotal > 0) {
         list.innerHTML += `
             <div class="mt-2 space-y-1 border-t-2 border-(--border) pt-2">
-                ${materialTotal > 0 ? `<div class="flex items-center justify-between text-[10px]"><span class="font-medium text-(--text-soft)">🔩 Total Materiais</span><span class="font-bold font-mono text-(--text)">${materialTotal.toFixed(2)}€</span></div>` : ''}
-                ${laborTotal > 0 ? `<div class="flex items-center justify-between text-[10px]"><span class="font-medium text-(--text-soft)">👷 Total Mão de Obra</span><span class="font-bold font-mono text-(--text)">${laborTotal.toFixed(2)}€</span></div>` : ''}
+                ${materialTotal > 0 ? `<div class="flex items-center justify-between text-[10px]"><span class="font-medium text-(--text-soft)">🔩 Total Materiais</span><span class="font-bold font-mono text-(--text)">${formatCurrency(materialTotal)}</span></div>` : ''}
+                ${laborTotal > 0 ? `<div class="flex items-center justify-between text-[10px]"><span class="font-medium text-(--text-soft)">👷 Total Mão de Obra</span><span class="font-bold font-mono text-(--text)">${formatCurrency(laborTotal)}</span></div>` : ''}
             </div>
         `;
     }
 
-    if (total) total.textContent = `${totalAmount.toFixed(2)} €`;
+    if (total) total.textContent = formatCurrency(totalAmount);
 }

@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => 'Viestit eivät ole rekisteröity.',
+    'comments_error' => 'Virhe historian lataamisessa.',
+    'message_sent' => 'Viesti lähetetty!',
+    'incident_id' => 'Tapahtuma-ID',
+    'description' => 'Tapahtuman kuvaus',
+    'priority_level' => 'Prioriteettitaso',
+    'equipment' => 'Laite / omaisuus',
+    'room' => 'Tila / sijainti',
+    'technician' => 'Määritetty teknikko',
+    'pending_assignment' => 'Odottaa määritystä',
+    'reported_by' => 'Ilmoittanut',
+    'source' => 'Alkuperä',
+    'qr_code' => 'QR Code',
+    'web' => 'Web',
+    'system' => 'Järjestelmä',
+    'no_description' => 'Kuvausta ei ole annettu.',
+    'Data de abertura (De)' => 'Avauspäivämäärä (alkaen)',
+    'Detalhe de um fornecedor' => 'Toimittajan tiedot',
+    'Detalhe de um fornecedor.' => 'Toimittajan tiedot.',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => 'Kuvaile tarkemmin ilmennyt ongelma, äänet, vuodot tai epänormaali käytös...',
+    'Detalhes do Incidente' => 'Häiriön tiedot',
+];

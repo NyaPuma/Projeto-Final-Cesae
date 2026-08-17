@@ -133,7 +133,7 @@ class SecurityHeadersTest extends TestCase
         $csp = $response->headers->get('Content-Security-Policy');
 
         // Expected production CSP with SHA-256 hash
-        $expectedCsp = "default-src 'self'; script-src 'self' 'sha256-yUJBAWN3tbQhmB6geMpw+PgJT0sHuIV6UyRTt6U8Lyc=' 'sha256-984T+3bISjZF+mcKmtZUkLmqv4c0vAokOJaZPqGd7N0='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none'";
+        $expectedCsp = "default-src 'self'; script-src 'self' 'sha256-yUJBAWN3tbQhmB6geMpw+PgJT0sHuIV6UyRTt6U8Lyc=' 'sha256-984T+3bISjZF+mcKmtZUkLmqv4c0vAokOJaZPqGd7N0=' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none'";
 
         $this->assertEquals($expectedCsp, $csp,
             'Production CSP must match the restrictive policy exactly');
@@ -196,7 +196,7 @@ class SecurityHeadersTest extends TestCase
 
         $csp = $response->headers->get('Content-Security-Policy');
 
-        $expectedCsp = "default-src 'self'; script-src 'self' 'sha256-yUJBAWN3tbQhmB6geMpw+PgJT0sHuIV6UyRTt6U8Lyc=' 'sha256-984T+3bISjZF+mcKmtZUkLmqv4c0vAokOJaZPqGd7N0='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none'";
+        $expectedCsp = "default-src 'self'; script-src 'self' 'sha256-yUJBAWN3tbQhmB6geMpw+PgJT0sHuIV6UyRTt6U8Lyc=' 'sha256-984T+3bISjZF+mcKmtZUkLmqv4c0vAokOJaZPqGd7N0=' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none'";
 
         $this->assertEquals($expectedCsp, $csp,
             'Staging CSP must match the restrictive production policy');
@@ -230,8 +230,8 @@ class SecurityHeadersTest extends TestCase
                 "X-Frame-Options should be DENY in {$env} environment");
             $this->assertEquals('nosniff', $response->headers->get('X-Content-Type-Options'),
                 "X-Content-Type-Options should be nosniff in {$env} environment");
-            $this->assertEquals('1; mode=block', $response->headers->get('X-XSS-Protection'),
-                "X-XSS-Protection should be '1; mode=block' in {$env} environment");
+            $this->assertEquals('0', $response->headers->get('X-XSS-Protection'),
+                "X-XSS-Protection should be '0' in {$env} environment");
             $this->assertEquals('strict-origin-when-cross-origin', $response->headers->get('Referrer-Policy'),
                 "Referrer-Policy should be strict-origin-when-cross-origin in {$env} environment");
             $this->assertEquals('camera=(), microphone=(), geolocation=()', $response->headers->get('Permissions-Policy'),
@@ -273,5 +273,26 @@ class SecurityHeadersTest extends TestCase
 
         $this->assertEquals($customCsp, $csp,
             'Middleware should not override pre-existing CSP header');
+    }
+
+    /**
+     * HSTS must only be sent over secure connections.
+     */
+    public function test_hsts_not_sent_on_non_secure_requests()
+    {
+        Config::set('app.env', 'production');
+        Config::set('app.debug', false);
+
+        $middleware = new SecurityHeaders;
+        $request = Request::create('/', 'GET');
+
+        $response = $middleware->handle($request, function ($req) {
+            return response('OK');
+        });
+
+        $this->assertNull(
+            $response->headers->get('Strict-Transport-Security'),
+            'HSTS must not be sent on non-secure requests'
+        );
     }
 }

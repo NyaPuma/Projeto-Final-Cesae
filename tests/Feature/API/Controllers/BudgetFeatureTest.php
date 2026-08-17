@@ -156,6 +156,7 @@ class BudgetFeatureTest extends TestCase
             ]);
 
         $response->assertOk();
+        $response->assertJsonPath('message', 'Orçamento aprovado. Ticket desbloqueado para intervenção.');
         $ticket->refresh();
         $this->assertEquals(BudgetStatusEnum::Approved->value, $ticket->budget_status);
         $this->assertTrue($ticket->hasStatus(TicketStatusEnum::InProgress));
@@ -191,6 +192,7 @@ class BudgetFeatureTest extends TestCase
             ]);
 
         $response->assertOk();
+        $response->assertJsonPath('message', 'Orçamento recusado. Reparação abortada.');
         $ticket->refresh();
         $this->assertEquals(BudgetStatusEnum::Rejected->value, $ticket->budget_status);
         $this->assertTrue($ticket->hasStatus(TicketStatusEnum::Rejected));
@@ -222,5 +224,366 @@ class BudgetFeatureTest extends TestCase
             ]);
 
         $response->assertStatus(403);
+    }
+
+    public function test_unassigned_technician_cannot_request_budget_authorization(): void
+    {
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
+        $inProgressId = app(TicketStatusService::class)->getByName(TicketStatusEnum::InProgress);
+
+        $ticket = Ticket::create([
+            'user_id' => $user->id,
+            'title' => 'Unassigned technician budget',
+            'description' => 'Only the assigned technician may request budget authorization',
+            'priority' => TicketPriorityEnum::Medium->value,
+            'status_id' => $inProgressId,
+            'in_progress_at' => now(),
+            'opened_at' => now()->subDay(),
+        ]);
+
+        $response = $this->withHeader('X-Auth-Token', $technician->api_token)
+            ->putJson("/api/technician/tickets/{$ticket->id}/request-budget", [
+                'budget_amount' => 500.00,
+                'budget_justification' => 'Parts needed',
+            ]);
+
+        $response->assertStatus(403);
+
+        $ticket->refresh();
+        $this->assertNull($ticket->assigned_to);
+        $this->assertFalse($ticket->budget_requested);
+    }
+
+    public function test_request_budget_authorization_rejected_while_budget_pending(): void
+    {
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
+        $pendingId = app(TicketStatusService::class)->getByName(TicketStatusEnum::PendingBudget);
+
+        $ticket = Ticket::create([
+            'user_id' => $user->id,
+            'title' => 'Duplicate pending budget',
+            'description' => 'A second request must be rejected while one is pending',
+            'priority' => TicketPriorityEnum::Medium->value,
+            'status_id' => $pendingId,
+            'assigned_to' => $technician->id,
+            'budget_requested' => true,
+            'budget_status' => BudgetStatusEnum::Pending->value,
+            'budget_amount' => 700.00,
+            'budget_requested_at' => now()->subHour(),
+            'opened_at' => now()->subDay(),
+        ]);
+
+        $response = $this->withHeader('X-Auth-Token', $technician->api_token)
+            ->putJson("/api/technician/tickets/{$ticket->id}/request-budget", [
+                'budget_amount' => 900.00,
+                'budget_justification' => 'Another estimate',
+            ]);
+
+        $response->assertStatus(422);
+
+        $ticket->refresh();
+        $this->assertEquals(700.00, (float) $ticket->budget_amount);
+        $this->assertEquals(BudgetStatusEnum::Pending->value, $ticket->budget_status);
+    }
+
+    public function test_request_budget_authorization_rejected_for_closed_ticket(): void
+    {
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
+        $closedId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Closed);
+
+        $ticket = Ticket::create([
+            'user_id' => $user->id,
+            'title' => 'Closed ticket budget',
+            'description' => 'No budget may be requested for a closed ticket',
+            'priority' => TicketPriorityEnum::Low->value,
+            'status_id' => $closedId,
+            'assigned_to' => $technician->id,
+            'opened_at' => now()->subDays(2),
+        ]);
+
+        $response = $this->withHeader('X-Auth-Token', $technician->api_token)
+            ->putJson("/api/technician/tickets/{$ticket->id}/request-budget", [
+                'budget_amount' => 100.00,
+                'budget_justification' => 'Late charge',
+            ]);
+
+        $response->assertStatus(422);
+    }
+
+    public function test_technician_can_submit_estimate_above_threshold(): void
+    {
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
+        $inProgressId = app(TicketStatusService::class)->getByName(TicketStatusEnum::InProgress);
+
+        $ticket = Ticket::create([
+            'user_id' => $user->id,
+            'title' => 'Estimate above threshold',
+            'description' => 'Submitting a high estimate',
+            'priority' => TicketPriorityEnum::High->value,
+            'status_id' => $inProgressId,
+            'in_progress_at' => now(),
+            'opened_at' => now()->subDay(),
+        ]);
+
+        $response = $this->withHeader('X-Auth-Token', $technician->api_token)
+            ->postJson('/tickets/'.$ticket->id.'/budget', [
+                'estimated_budget' => 500.00,
+            ]);
+
+        $response->assertOk();
+        $ticket->refresh();
+        $this->assertTrue($ticket->hasStatus(TicketStatusEnum::PendingBudget));
+        $this->assertTrue($ticket->budget_requested);
+        $this->assertEquals(BudgetStatusEnum::Pending->value, $ticket->budget_status);
+        $this->assertEquals(500.00, (float) $ticket->budget_amount);
+        $this->assertNotNull($ticket->budget_requested_at);
+        $this->assertEquals($technician->id, $ticket->assigned_to);
+    }
+
+    public function test_technician_can_submit_estimate_below_threshold_auto_approved(): void
+    {
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
+        $inProgressId = app(TicketStatusService::class)->getByName(TicketStatusEnum::InProgress);
+
+        $ticket = Ticket::create([
+            'user_id' => $user->id,
+            'title' => 'Estimate below threshold',
+            'description' => 'Submitting a low estimate',
+            'priority' => TicketPriorityEnum::Low->value,
+            'status_id' => $inProgressId,
+            'in_progress_at' => now(),
+            'opened_at' => now()->subDay(),
+        ]);
+
+        $response = $this->withHeader('X-Auth-Token', $technician->api_token)
+            ->postJson('/tickets/'.$ticket->id.'/budget', [
+                'estimated_budget' => 30.00,
+            ]);
+
+        $response->assertOk();
+        $ticket->refresh();
+        $this->assertTrue($ticket->hasStatus(TicketStatusEnum::InProgress));
+        $this->assertTrue($ticket->budget_requested);
+        $this->assertNull($ticket->budget_status);
+        $this->assertEquals(30.00, (float) $ticket->budget_amount);
+    }
+
+    public function test_user_cannot_submit_estimate(): void
+    {
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
+
+        $ticket = Ticket::create([
+            'user_id' => $user->id,
+            'title' => 'User estimate blocked',
+            'description' => 'Common users cannot submit budget estimates',
+            'priority' => TicketPriorityEnum::Medium->value,
+            'status_id' => $openId,
+            'opened_at' => now(),
+        ]);
+
+        $response = $this->withHeader('X-Auth-Token', $user->api_token)
+            ->postJson('/tickets/'.$ticket->id.'/budget', [
+                'estimated_budget' => 100.00,
+            ]);
+
+        $response->assertStatus(403);
+    }
+
+    public function test_submit_estimate_rejected_while_budget_pending(): void
+    {
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
+        $pendingId = app(TicketStatusService::class)->getByName(TicketStatusEnum::PendingBudget);
+
+        $ticket = Ticket::create([
+            'user_id' => $user->id,
+            'title' => 'Estimate while pending',
+            'description' => 'No estimate allowed while a budget request is pending',
+            'priority' => TicketPriorityEnum::Medium->value,
+            'status_id' => $pendingId,
+            'assigned_to' => $technician->id,
+            'budget_requested' => true,
+            'budget_status' => BudgetStatusEnum::Pending->value,
+            'budget_amount' => 300.00,
+            'budget_requested_at' => now()->subHour(),
+            'opened_at' => now()->subDay(),
+        ]);
+
+        $response = $this->withHeader('X-Auth-Token', $technician->api_token)
+            ->postJson('/tickets/'.$ticket->id.'/budget', [
+                'estimated_budget' => 150.00,
+            ]);
+
+        $response->assertStatus(422);
+
+        $ticket->refresh();
+        $this->assertEquals(300.00, (float) $ticket->budget_amount);
+    }
+
+    public function test_approve_budget_validation_errors(): void
+    {
+        $admin = $this->createUserWithToken(UserRoleEnum::Admin->value);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+        $pendingId = app(TicketStatusService::class)->getByName(TicketStatusEnum::PendingBudget);
+
+        $ticket = Ticket::create([
+            'user_id' => $user->id,
+            'title' => 'Budget validation ticket',
+            'description' => 'Testing budget validation errors',
+            'priority' => TicketPriorityEnum::Medium->value,
+            'status_id' => $pendingId,
+            'budget_requested' => true,
+            'budget_status' => BudgetStatusEnum::Pending->value,
+            'budget_amount' => 100.00,
+            'budget_requested_at' => now(),
+            'opened_at' => now(),
+        ]);
+
+        $send = fn (array $payload) => $this->withHeader('X-Auth-Token', $admin->api_token)
+            ->patchJson("/api/admin/tickets/{$ticket->id}/approve-budget", $payload);
+
+        // Teste 1: decision em falta
+        $send([])->assertStatus(422)->assertJsonValidationErrors(['decision']);
+
+        // Teste 2: decision inválida
+        $send(['decision' => 'maybe'])->assertStatus(422)->assertJsonValidationErrors(['decision']);
+
+        // Teste 3: rejeição sem feedback
+        $send(['decision' => 'reject'])->assertStatus(422)->assertJsonValidationErrors(['feedback']);
+
+        // Teste 4: feedback acima de 5000 caracteres
+        $send(['decision' => 'approve', 'feedback' => str_repeat('a', 5001)])
+            ->assertStatus(422)
+            ->assertJsonValidationErrors(['feedback']);
+    }
+
+    public function test_request_budget_validates_line_items_and_total(): void
+    {
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
+        $inProgressId = app(TicketStatusService::class)->getByName(TicketStatusEnum::InProgress);
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+
+        $ticket = Ticket::create([
+            'user_id' => $user->id,
+            'title' => 'Budget line items ticket',
+            'description' => 'Testing detailed budget line items',
+            'priority' => TicketPriorityEnum::Medium->value,
+            'status_id' => $inProgressId,
+            'assigned_to' => $technician->id,
+            'in_progress_at' => now(),
+            'opened_at' => now(),
+        ]);
+
+        $send = fn (array $payload) => $this->withHeader('X-Auth-Token', $technician->api_token)
+            ->putJson("/api/technician/tickets/{$ticket->id}/request-budget", $payload);
+
+        // Teste 1: soma dos itens não bate com budget_amount
+        $send([
+            'budget_amount' => 100.00,
+            'budget_details' => [
+                ['description' => 'Peça A', 'quantity' => 2, 'unit_price' => 10.00],
+                ['description' => 'Peça B', 'quantity' => 1, 'unit_price' => 20.00],
+            ],
+        ])->assertStatus(422)->assertJsonValidationErrors(['budget_amount']);
+
+        // Teste 2: item sem description
+        $send([
+            'budget_amount' => 40.00,
+            'budget_details' => [
+                ['quantity' => 2, 'unit_price' => 20.00],
+            ],
+        ])->assertStatus(422)->assertJsonValidationErrors(['budget_details.0.description']);
+
+        // Teste 3: quantidade inválida
+        $send([
+            'budget_amount' => 40.00,
+            'budget_details' => [
+                ['description' => 'Peça A', 'quantity' => 0, 'unit_price' => 20.00],
+            ],
+        ])->assertStatus(422)->assertJsonValidationErrors(['budget_details.0.quantity']);
+
+        // Teste 4: preço unitário negativo
+        $send([
+            'budget_amount' => 40.00,
+            'budget_details' => [
+                ['description' => 'Peça A', 'quantity' => 2, 'unit_price' => -10.00],
+            ],
+        ])->assertStatus(422)->assertJsonValidationErrors(['budget_details.0.unit_price']);
+
+        // Teste 5: soma correta é aceite
+        $send([
+            'budget_amount' => 40.00,
+            'budget_details' => [
+                ['description' => 'Peça A', 'quantity' => 2, 'unit_price' => 20.00],
+            ],
+        ])->assertOk();
+    }
+
+    public function test_submit_estimate_validates_material_and_labor_items(): void
+    {
+        $user = $this->createUserWithToken(UserRoleEnum::User->value);
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
+        $inProgressId = app(TicketStatusService::class)->getByName(TicketStatusEnum::InProgress);
+
+        $ticket = Ticket::create([
+            'user_id' => $user->id,
+            'title' => 'Submit estimate line items',
+            'description' => 'Testing material and labor line items',
+            'priority' => TicketPriorityEnum::Medium->value,
+            'status_id' => $inProgressId,
+            'in_progress_at' => now(),
+            'opened_at' => now(),
+        ]);
+
+        $send = fn (array $payload) => $this->withHeader('X-Auth-Token', $technician->api_token)
+            ->postJson('/tickets/'.$ticket->id.'/budget', $payload);
+
+        // Teste 1: item material sem quantity
+        $send([
+            'estimated_budget' => 40.00,
+            'budget_details' => [
+                ['description' => 'Peça A', 'type' => 'material', 'unit_price' => 20.00],
+            ],
+        ])->assertStatus(422)->assertJsonValidationErrors(['budget_details.0.quantity']);
+
+        // Teste 2: item labor sem hours
+        $send([
+            'estimated_budget' => 40.00,
+            'budget_details' => [
+                ['description' => 'Mão de obra', 'type' => 'labor', 'hourly_rate' => 20.00],
+            ],
+        ])->assertStatus(422)->assertJsonValidationErrors(['budget_details.0.hours']);
+
+        // Teste 3: tipo inválido
+        $send([
+            'estimated_budget' => 40.00,
+            'budget_details' => [
+                ['description' => 'Peça A', 'type' => 'fuel', 'quantity' => 2, 'unit_price' => 20.00],
+            ],
+        ])->assertStatus(422)->assertJsonValidationErrors(['budget_details.0.type']);
+
+        // Teste 4: soma não bate com o total
+        $send([
+            'estimated_budget' => 100.00,
+            'budget_details' => [
+                ['description' => 'Peça A', 'type' => 'material', 'quantity' => 2, 'unit_price' => 10.00],
+                ['description' => 'Mão de obra', 'type' => 'labor', 'hours' => 2, 'hourly_rate' => 25.00],
+            ],
+        ])->assertStatus(422)->assertJsonValidationErrors(['estimated_budget']);
+
+        // Teste 5: soma correta (material + labor) é aceite
+        $send([
+            'estimated_budget' => 70.00,
+            'budget_details' => [
+                ['description' => 'Peça A', 'type' => 'material', 'quantity' => 2, 'unit_price' => 10.00],
+                ['description' => 'Mão de obra', 'type' => 'labor', 'hours' => 2, 'hourly_rate' => 25.00],
+            ],
+        ])->assertOk();
     }
 }

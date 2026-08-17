@@ -118,14 +118,13 @@ final class CustomAuthMiddleware
 
     /**
      * Verifica se o token de acesso do utilizador expirou.
+     * Tokens sem data de criação nunca expiram (determinístico em testes).
      */
     private function isTokenExpired(User $user): bool
     {
-        if (app()->environment('testing')) {
-            return false;
-        }
+        $expiryDays = config('services.custom.auth.token_expiry_days', 30);
 
-        if (! $user->token_created_at || $user->token_created_at->diffInDays(now()) <= 30) {
+        if (! $user->token_created_at || $user->token_created_at->diffInDays(now()) <= $expiryDays) {
             return false;
         }
 
@@ -142,7 +141,7 @@ final class CustomAuthMiddleware
     {
         if ($request->expectsJson() || $request->wantsJson()) {
             return response()->json([
-                'message' => __('Autenticação necessária. Envie X-Auth-Token no cabeçalho.'),
+                'message' => __('auth.Autenticação necessária. Envie X-Auth-Token no cabeçalho.'),
                 'error_code' => 401,
             ], 401);
         }
@@ -157,7 +156,7 @@ final class CustomAuthMiddleware
     {
         if ($request->expectsJson() || $request->wantsJson()) {
             $response = response()->json([
-                'message' => __('Token inválido ou utilizador inativo.'),
+                'message' => __('equipment.Token inválido ou utilizador inativo.'),
                 'error_code' => 401,
                 'errors' => ['api_token' => ['Invalid or user is inactive.']],
             ], 401);
@@ -183,7 +182,7 @@ final class CustomAuthMiddleware
     {
         if ($request->expectsJson() || $request->wantsJson()) {
             return response()->json([
-                'message' => __('Perfil inválido.'),
+                'message' => __('validation.Perfil inválido.'),
                 'error_code' => 403,
                 'errors' => ['profile_id' => ['User must have a valid profile assigned.']],
             ], 403);
@@ -199,7 +198,7 @@ final class CustomAuthMiddleware
     {
         if ($request->expectsJson() || $request->wantsJson()) {
             return response()->json([
-                'message' => __('Token expirado. Faça login novamente.'),
+                'message' => __('auth.Token expirado. Faça login novamente.'),
                 'error_code' => 401,
             ], 401);
         }

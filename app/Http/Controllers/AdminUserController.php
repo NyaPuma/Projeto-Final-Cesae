@@ -55,7 +55,7 @@ final class AdminUserController extends Controller
         $newUser->loadMissing('profile');
 
         return response()->json([
-            'message' => __('Utilizador criado com sucesso.'),
+            'message' => __('messages.Utilizador criado com sucesso.'),
             'user' => new UserResource($newUser),
         ], 201);
     }
@@ -75,7 +75,7 @@ final class AdminUserController extends Controller
         $updatedUser->loadMissing('profile');
 
         return response()->json([
-            'message' => __('Utilizador atualizado com sucesso.'),
+            'message' => __('messages.Utilizador atualizado com sucesso.'),
             'user' => new UserResource($updatedUser),
         ]);
     }
@@ -91,7 +91,7 @@ final class AdminUserController extends Controller
         // 2. Regra de negócio: impede que o próprio administrador se inative a si mesmo
         if ($request->user()->id === $targetUser->id) {
             return response()->json([
-                'message' => __('Não é possível inativar a sua própria conta.'),
+                'message' => __('common.Não é possível inativar a sua própria conta.'),
             ], 422);
         }
 
@@ -101,8 +101,31 @@ final class AdminUserController extends Controller
         $targetUser->loadMissing('profile');
 
         return response()->json([
-            'message' => __('Utilizador inativado com sucesso.'),
+            'message' => __('messages.Utilizador inativado com sucesso.'),
             'user' => new UserResource($targetUser),
+        ]);
+    }
+
+    /**
+     * Elimina (soft delete) a conta de um utilizador do sistema.
+     */
+    public function destroy(Request $request, User $targetUser): JsonResponse
+    {
+        // 1. Autorização via Policy
+        $this->authorize('delete', $targetUser);
+
+        // 2. Regra de negócio: impede que o próprio administrador se apague a si mesmo
+        if ($request->user()->id === $targetUser->id) {
+            return response()->json([
+                'message' => __('common.Não é possível apagar a sua própria conta.'),
+            ], 422);
+        }
+
+        // 3. Eliminação (soft delete) do utilizador via Repositório
+        $this->userRepository->delete($targetUser);
+
+        return response()->json([
+            'message' => __('messages.Utilizador apagado com sucesso.'),
         ]);
     }
 

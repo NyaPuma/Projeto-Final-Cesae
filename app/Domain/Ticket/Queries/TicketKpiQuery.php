@@ -36,8 +36,7 @@ final readonly class TicketKpiQuery
     private function buildKpiQuery(Builder $query): Builder
     {
         $diffExpr = $this->diffMinutesExpression('opened_at', 'closed_at');
-        $nowExpr = $this->nowExpression();
-        $diffNowExpr = $this->diffMinutesExpression('opened_at', $nowExpr);
+        $diffWaitExpr = $this->diffMinutesExpression('opened_at', 'assigned_at');
 
         return $query->selectRaw("
             SUM(CASE WHEN status_id = ? THEN 1 ELSE 0 END) as open_tickets,
@@ -46,8 +45,8 @@ final readonly class TicketKpiQuery
             SUM(CASE WHEN status_id = ? AND opened_at IS NOT NULL AND closed_at IS NOT NULL THEN 1 ELSE 0 END) as closed_tickets,
             AVG(CASE WHEN status_id = ? AND opened_at IS NOT NULL AND closed_at IS NOT NULL
                 THEN {$diffExpr} END) as avg_resolution,
-            AVG(CASE WHEN status_id != ? AND opened_at IS NOT NULL
-                THEN {$diffNowExpr} END) as avg_waiting,
+            AVG(CASE WHEN opened_at IS NOT NULL AND assigned_at IS NOT NULL
+                THEN {$diffWaitExpr} END) as avg_waiting,
             SUM(CASE WHEN status_id = ? AND opened_at IS NOT NULL AND closed_at IS NOT NULL
                 AND {$diffExpr} <= ? THEN 1 ELSE 0 END) as sla_met
         ", [
@@ -56,7 +55,6 @@ final readonly class TicketKpiQuery
             BudgetStatusEnum::Pending->value,
             $this->closedStatusId,
             $this->closedStatusId,
-            $this->inProgressStatusId,
             $this->closedStatusId,
             $this->slaTargetMinutes,
         ]);
@@ -70,16 +68,6 @@ final readonly class TicketKpiQuery
             'sqlite' => "(julianday({$end}) - julianday({$start})) * 1440",
             'pgsql' => "EXTRACT(EPOCH FROM {$end} - {$start}) / 60",
             default => "TIMESTAMPDIFF(MINUTE, {$start}, {$end})",
-        };
-    }
-
-    private function nowExpression(): string
-    {
-        $driver = DB::connection()->getDriverName();
-
-        return match ($driver) {
-            'sqlite' => "datetime('now')",
-            default => 'NOW()',
         };
     }
 }

@@ -1,4 +1,5 @@
 import { authHeader } from '../utils/api.js';
+import { formatCurrency } from '../utils/locale.js';
 import { setTicketId, state } from './ticket-detail/state.js';
 import { renderTicketDetails } from './ticket-detail/details.js';
 import { addBudgetItem, recalcBudgetTotal, renderBudgetDetailsForAdmin } from './ticket-detail/budget.js';
@@ -68,8 +69,8 @@ async function fetchTicket() {
     const budgetCard = document.getElementById('budgetApprovalCard');
     if (budgetCard && currentUserIsAdmin()) {
         if (budgetIsPending) {
-            document.getElementById('budgetEstimatedCost').innerText = `${estimatedAmount.toFixed(2)} €`;
-            document.getElementById('budgetThresholdDisplay').innerText = `${threshold.toFixed(2)} €`;
+            document.getElementById('budgetEstimatedCost').innerText = formatCurrency(estimatedAmount);
+            document.getElementById('budgetThresholdDisplay').innerText = formatCurrency(threshold);
             document.getElementById('budgetTechnicianName').innerText = ticket.technician ? ticket.technician.name : 'Técnico de Campo';
             budgetCard.classList.remove('hidden');
             renderBudgetDetailsForAdmin(ticket.budget_details);

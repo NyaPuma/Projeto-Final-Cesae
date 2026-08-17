@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => 'Fără mesaje înregistrate.',
+    'comments_error' => 'Eroare la încărcarea istoricului.',
+    'message_sent' => 'Mesaj trimis!',
+    'incident_id' => 'ID Incident',
+    'description' => 'Descrierea Incidentului',
+    'priority_level' => 'Nivel de Prioritate',
+    'equipment' => 'Echipament / Activ',
+    'room' => 'Sală / Locație',
+    'technician' => 'Tehnician Atribuit',
+    'pending_assignment' => 'În așteptarea atribuirii',
+    'reported_by' => 'Raportat de',
+    'source' => 'Sursă',
+    'qr_code' => 'Cod QR',
+    'web' => 'Web',
+    'system' => 'Sistem',
+    'no_description' => 'Nicio descriere furnizată.',
+    'Data de abertura (De)' => 'Data deschiderii (De)',
+    'Detalhe de um fornecedor' => 'Detaliu al unui furnizor',
+    'Detalhe de um fornecedor.' => 'Detaliu al unui furnizor.',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => 'Descrieți problema apărută, zgomote, scurgeri sau comportamente anormale...',
+    'Detalhes do Incidente' => 'Detalii ale Incidentului',
+];

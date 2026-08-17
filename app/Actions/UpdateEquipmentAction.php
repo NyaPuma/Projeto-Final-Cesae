@@ -17,6 +17,14 @@ final readonly class UpdateEquipmentAction
                 'room_id' => $data->roomId ?? $equipment->room_id,
                 'category_id' => $data->categoryId ?? $equipment->category_id,
                 'active' => $data->active ?? $equipment->active,
+                'asset_tag' => $data->assetTag ?? $equipment->asset_tag,
+                'brand' => $data->brand ?? $equipment->brand,
+                'model' => $data->model ?? $equipment->model,
+                'manufacturer' => $data->manufacturer ?? $equipment->manufacturer,
+                'purchase_date' => $data->purchaseDate ?? $equipment->purchase_date,
+                'warranty_until' => $data->warrantyUntil ?? $equipment->warranty_until,
+                'status' => $data->status ?? $equipment->status,
+                'notes' => $data->notes ?? $equipment->notes,
             ]);
 
             // Exemplo de disparo de evento no futuro:

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\LocaleService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -24,16 +25,15 @@ final class PageController extends Controller
     }
 
     /**
-     * Alternar idioma da aplicação (pt / en).
+     * Alternar idioma da aplicação (rota legada).
      *
-     * Se o utilizador já estiver autenticado (token presente no cookie),
-     * redireciona para o painel em vez da página de login.
+     * Mantida por compatibilidade com o seletor atual do topbar; a preferência
+     * é normalizada para os locais suportados. A rota moderna é
+     * POST /locale (LocaleController).
      */
     public function switchLang(Request $request, string $locale): RedirectResponse
     {
-        if (! in_array($locale, ['en', 'pt'], true)) {
-            $locale = 'pt';
-        }
+        $locale = LocaleService::sanitize($locale);
 
         // Armazena o idioma na sessão e define um cookie permanente
         session(['locale' => $locale]);
@@ -73,7 +73,7 @@ final class PageController extends Controller
                 ->subject('Teste do Sistema de Avarias');
         });
 
-        return __('E-mail enviado com sucesso!');
+        return __('messages.E-mail enviado com sucesso!');
     }
 
     /**

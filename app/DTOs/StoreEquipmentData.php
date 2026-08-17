@@ -6,12 +6,27 @@ use Illuminate\Foundation\Http\FormRequest;
 
 final readonly class StoreEquipmentData
 {
+    public const STATUSES = [
+        'operacional',
+        'manutenção',
+        'avariado',
+        'abatido',
+    ];
+
     public function __construct(
         public string $name,
         public string $serial,
         public ?int $roomId = null,
         public ?int $categoryId = null,
         public bool $active = true,
+        public ?string $assetTag = null,
+        public ?string $brand = null,
+        public ?string $model = null,
+        public ?string $manufacturer = null,
+        public ?string $purchaseDate = null,
+        public ?string $warrantyUntil = null,
+        public string $status = 'operacional',
+        public ?string $notes = null,
     ) {
         if (trim($this->name) === '') {
             throw new \InvalidArgumentException('O nome do equipamento não pode estar vazio.');
@@ -28,6 +43,10 @@ final readonly class StoreEquipmentData
         if ($this->categoryId !== null && $this->categoryId <= 0) {
             throw new \InvalidArgumentException('O ID da categoria deve ser um número inteiro positivo.');
         }
+
+        if (! in_array($this->status, self::STATUSES, true)) {
+            throw new \InvalidArgumentException('O estado operacional do equipamento é inválido.');
+        }
     }
 
     /**
@@ -43,6 +62,16 @@ final readonly class StoreEquipmentData
             roomId: self::parseNullableInt($payload['room_id'] ?? null),
             categoryId: self::parseNullableInt($payload['category_id'] ?? null),
             active: self::parseBool($payload['active'] ?? true),
+            assetTag: self::parseNullableString($payload['asset_tag'] ?? null),
+            brand: self::parseNullableString($payload['brand'] ?? null),
+            model: self::parseNullableString($payload['model'] ?? null),
+            manufacturer: self::parseNullableString($payload['manufacturer'] ?? null),
+            purchaseDate: self::parseNullableString($payload['purchase_date'] ?? null),
+            warrantyUntil: self::parseNullableString($payload['warranty_until'] ?? null),
+            status: in_array($payload['status'] ?? 'operacional', self::STATUSES, true)
+                ? $payload['status']
+                : 'operacional',
+            notes: self::parseNullableString($payload['notes'] ?? null),
         );
     }
 
@@ -54,6 +83,20 @@ final readonly class StoreEquipmentData
         $parsed = filter_var($value, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
 
         return $parsed && $parsed > 0 ? $parsed : null;
+    }
+
+    /**
+     * Sanitiza strings opcionais, convertendo "" ou apenas espaços em null.
+     */
+    private static function parseNullableString(mixed $value): ?string
+    {
+        if (! is_string($value)) {
+            return null;
+        }
+
+        $trimmed = trim($value);
+
+        return $trimmed !== '' ? $trimmed : null;
     }
 
     /**
@@ -79,6 +122,14 @@ final readonly class StoreEquipmentData
             'room_id' => $this->roomId,
             'category_id' => $this->categoryId,
             'active' => $this->active,
+            'asset_tag' => $this->assetTag,
+            'brand' => $this->brand,
+            'model' => $this->model,
+            'manufacturer' => $this->manufacturer,
+            'purchase_date' => $this->purchaseDate,
+            'warranty_until' => $this->warrantyUntil,
+            'status' => $this->status,
+            'notes' => $this->notes,
         ];
     }
 }

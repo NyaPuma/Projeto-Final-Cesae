@@ -18,11 +18,12 @@ final readonly class TicketPriorityQuery
             ->selectRaw('
                 SUM(CASE WHEN priority = ? THEN 1 ELSE 0 END) as low,
                 SUM(CASE WHEN priority = ? THEN 1 ELSE 0 END) as medium,
-                SUM(CASE WHEN priority = ? THEN 1 ELSE 0 END) as high
+                SUM(CASE WHEN priority IN (?, ?) THEN 1 ELSE 0 END) as high
             ', [
                 TicketPriorityEnum::Low->value,
                 TicketPriorityEnum::Medium->value,
                 TicketPriorityEnum::High->value,
+                TicketPriorityEnum::Critical->value,
             ])
             ->first();
 

@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => 'Inga meddelanden registrerade.',
+    'comments_error' => 'Fel vid inläsning av historik.',
+    'message_sent' => 'Meddelande skickat!',
+    'incident_id' => 'Händelse-ID',
+    'description' => 'Händelsebeskrivning',
+    'priority_level' => 'Prioritetsnivå',
+    'equipment' => 'Utrustning / Tillgång',
+    'room' => 'Rum / Plats',
+    'technician' => 'Tilldelad Tekniker',
+    'pending_assignment' => 'Väntar på tilldelning',
+    'reported_by' => 'Rapporterad av',
+    'source' => 'Ursprung',
+    'qr_code' => 'QR Code',
+    'web' => 'Web',
+    'system' => 'System',
+    'no_description' => 'Ingen beskrivning har angetts.',
+    'Data de abertura (De)' => 'Öppningsdatum (Från)',
+    'Detalhe de um fornecedor' => 'Detalj för en leverantör',
+    'Detalhe de um fornecedor.' => 'Detalj för en leverantör.',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => 'Detaljera det uppkomna problemet, ljud, läckage eller onormalt beteende...',
+    'Detalhes do Incidente' => 'Incidentdetaljer',
+];

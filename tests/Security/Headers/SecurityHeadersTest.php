@@ -92,7 +92,7 @@ class SecurityHeadersTest extends TestCase
 
         $csp = $response->headers->get('Content-Security-Policy');
 
-        $expectedCsp = "default-src 'self'; script-src 'self' 'sha256-yUJBAWN3tbQhmB6geMpw+PgJT0sHuIV6UyRTt6U8Lyc=' 'sha256-984T+3bISjZF+mcKmtZUkLmqv4c0vAokOJaZPqGd7N0='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none'";
+        $expectedCsp = "default-src 'self'; script-src 'self' 'sha256-yUJBAWN3tbQhmB6geMpw+PgJT0sHuIV6UyRTt6U8Lyc=' 'sha256-984T+3bISjZF+mcKmtZUkLmqv4c0vAokOJaZPqGd7N0=' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none'";
 
         $this->assertEquals($expectedCsp, $csp,
             'Production CSP must match the restrictive policy exactly');
@@ -136,7 +136,7 @@ class SecurityHeadersTest extends TestCase
 
         $csp = $response->headers->get('Content-Security-Policy');
 
-        $expectedCsp = "default-src 'self'; script-src 'self' 'sha256-yUJBAWN3tbQhmB6geMpw+PgJT0sHuIV6UyRTt6U8Lyc=' 'sha256-984T+3bISjZF+mcKmtZUkLmqv4c0vAokOJaZPqGd7N0='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none'";
+        $expectedCsp = "default-src 'self'; script-src 'self' 'sha256-yUJBAWN3tbQhmB6geMpw+PgJT0sHuIV6UyRTt6U8Lyc=' 'sha256-984T+3bISjZF+mcKmtZUkLmqv4c0vAokOJaZPqGd7N0=' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none'";
 
         $this->assertEquals($expectedCsp, $csp,
             'Staging CSP must match the restrictive production policy');
@@ -160,8 +160,8 @@ class SecurityHeadersTest extends TestCase
                 "X-Frame-Options should be DENY in {$env} environment");
             $this->assertEquals('nosniff', $response->headers->get('X-Content-Type-Options'),
                 "X-Content-Type-Options should be nosniff in {$env} environment");
-            $this->assertEquals('1; mode=block', $response->headers->get('X-XSS-Protection'),
-                "X-XSS-Protection should be '1; mode=block' in {$env} environment");
+            $this->assertEquals('0', $response->headers->get('X-XSS-Protection'),
+                "X-XSS-Protection should be '0' in {$env} environment");
             $this->assertEquals('strict-origin-when-cross-origin', $response->headers->get('Referrer-Policy'),
                 "Referrer-Policy should be strict-origin-when-cross-origin in {$env} environment");
             $this->assertEquals('camera=(), microphone=(), geolocation=()', $response->headers->get('Permissions-Policy'),

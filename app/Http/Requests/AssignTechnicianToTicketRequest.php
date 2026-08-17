@@ -26,7 +26,7 @@ final class AssignTechnicianToTicketRequest extends FormRequest
     {
         return [
             'technician_id' => [
-                'required',
+                'nullable',
                 'integer',
                 Rule::exists('users', 'id'),
             ],
@@ -36,16 +36,16 @@ final class AssignTechnicianToTicketRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'technician_id' => __('técnico'),
+            'technician_id' => __('common.técnico'),
         ];
     }
 
     public function messages(): array
     {
         return [
-            'technician_id.required' => __('O campo técnico é obrigatório.'),
-            'technician_id.integer' => __('O identificador do técnico deve ser um número inteiro.'),
-            'technician_id.exists' => __('O técnico selecionado é inválido.'),
+            'technician_id.required' => __('validation.O campo técnico é obrigatório.'),
+            'technician_id.integer' => __('validation.O identificador do técnico deve ser um número inteiro.'),
+            'technician_id.exists' => __('validation.O técnico selecionado é inválido.'),
         ];
     }
 }

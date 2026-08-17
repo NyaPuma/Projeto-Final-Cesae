@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => 'कोई साक्ष्य अपलोड नहीं किया गया।',
+    'remove_photo' => 'फोटो हटाएं',
+    'remove_file' => 'फ़ाइल हटाएं',
+    'load_error' => 'फोटो लोड करते समय त्रुटि।',
+    'confirm_remove' => 'क्या आप वाकई इस फोटो को हटाना चाहते हैं?',
+    'remove_error' => 'फोटो हटाते समय त्रुटि।',
+    'removed' => 'फोटो सफलतापूर्वक हटाया गया।',
+    'sent' => 'फोटो भेजा गया!',
+    'file' => 'फ़ाइल',
+    'Anexos' => 'संलग्नक',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => 'उपयोगकर्ता प्रोफ़ाइल के प्रमाणपत्र, फोटो और पहुँच अनुमतियाँ अपडेट करें।',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => 'एक छवि अपलोड करें (PNG, JPG या WEBP, अधिकतम 2MB)।',
+    'Emergência Imediata. Risco de acidente.' => 'तत्काल आपातकाल। दुर्घटना का जोखिम।',
+    'Escolher Fotografia' => 'फोटो चुनें',
+    'Escolher ficheiro' => 'फ़ाइल चुनें',
+    'Fotografia (Opcional)' => 'फोटो (वैकल्पिक)',
+    'Fotografia do Utilizador' => 'उपयोगकर्ता फोटो',
+    'Imagem' => 'छवि',
+    'Inserir Imagem (Opcional)' => 'छवि डालें (वैकल्पिक)',
+    'Nenhum ficheiro' => 'कोई फ़ाइल नहीं',
+    'Nenhum ficheiro selecionado' => 'कोई फ़ाइल चयनित नहीं',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => 'वर्तमान प्रोफ़ाइल: :profile। अपनी भूमिका की अनुमतियों के अनुसार मॉड्यूल तक पहुँचें।',
+    'Tipo de ficheiro não permitido.' => 'अनुमत फ़ाइल प्रकार नहीं।',
+];

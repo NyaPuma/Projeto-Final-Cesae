@@ -41,6 +41,14 @@ final class StoreEquipmentRequest extends FormRequest
             'room_id' => ['nullable', 'integer', Rule::exists(Room::class, 'id')],
             'category_id' => ['nullable', 'integer', Rule::exists(EquipmentCategory::class, 'id')],
             'active' => ['sometimes', 'boolean'],
+            'asset_tag' => ['nullable', 'string', 'max:100', Rule::unique(Equipment::class, 'asset_tag')],
+            'brand' => ['nullable', 'string', 'max:100'],
+            'model' => ['nullable', 'string', 'max:100'],
+            'manufacturer' => ['nullable', 'string', 'max:100'],
+            'purchase_date' => ['nullable', 'date'],
+            'warranty_until' => ['nullable', 'date'],
+            'status' => ['nullable', Rule::in(['operacional', 'manutenção', 'avariado', 'abatido'])],
+            'notes' => ['nullable', 'string'],
         ];
     }
 
@@ -55,6 +63,14 @@ final class StoreEquipmentRequest extends FormRequest
             'room_id' => 'sala',
             'category_id' => 'categoria',
             'active' => 'status ativo',
+            'asset_tag' => 'etiqueta de ativo',
+            'brand' => 'marca',
+            'model' => 'modelo',
+            'manufacturer' => 'fabricante',
+            'purchase_date' => 'data de compra',
+            'warranty_until' => 'fim de garantia',
+            'status' => 'estado operacional',
+            'notes' => 'notas',
         ];
     }
 }

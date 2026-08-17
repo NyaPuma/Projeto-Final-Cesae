@@ -165,7 +165,9 @@ class PrivilegeEscalationTest extends FeatureTestCase
         ]);
 
         $response = $this->withApiUser('admin-token')
-            ->patchJson('/api/admin/tickets/'.$ticket->id.'/approve-budget');
+            ->patchJson('/api/admin/tickets/'.$ticket->id.'/approve-budget', [
+                'decision' => 'approve',
+            ]);
 
         $response->assertOk();
     }

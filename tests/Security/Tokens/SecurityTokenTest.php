@@ -49,7 +49,7 @@ class SecurityTokenTest extends TestCase
         $this->assertDatabaseHas('users', ['api_token' => $token2]);
     }
 
-    public function test_token_regenerated_on_password_change(): void
+    public function test_token_survives_password_change(): void
     {
         $profileId = UserProfile::where('name', UserRoleEnum::User->value)->value('id');
         $oldToken = Str::random(60);

@@ -40,9 +40,9 @@ final class ExportPdfJob implements ShouldQueue
         $filename = 'tickets_report_'.now()->format('Ymd_His').'.pdf';
 
         // Garante que o diretório 'exports' existe no disco configurado
-        Storage::disk('local')->makeDirectory('exports');
+        Storage::disk('public')->makeDirectory('exports');
 
-        $path = Storage::disk('local')->path('exports/'.$filename);
+        $path = Storage::disk('public')->path('exports/'.$filename);
 
         $analyticsService->exportPdfToFile($path);
 

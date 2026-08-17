@@ -58,9 +58,13 @@ final class UserService
      *
      * @param User $user
      * @param Request $request
+     * @param bool $withSession Quando false, o token não é ligado à sessão do pedido atual
+     *                          (necessário quando o registo é feito por outro utilizador,
+     *                          evitando que a sessão/cookies de quem regista sejam assumidos
+     *                          pelo novo utilizador).
      * @return string
      */
-    public function createToken(User $user, Request $request): string
+    public function createToken(User $user, Request $request, bool $withSession = true): string
     {
         /** @var int $tokenLength */
         $tokenLength = config('services.custom.tokens.length', 60);
@@ -70,9 +74,11 @@ final class UserService
         $user->token_created_at = now();
         $user->save();
 
-        $request->session()->regenerate();
-        $request->session()->put('api_token', $plainToken);
-        $request->session()->save();
+        if ($withSession && $request->hasSession()) {
+            $request->session()->regenerate();
+            $request->session()->put('api_token', $plainToken);
+            $request->session()->save();
+        }
         $user->load('profile');
 
         return $plainToken;
@@ -109,7 +115,7 @@ final class UserService
 
         $secure = $request->secure();
 
-        return response()->json(['message' => __('Sessão terminada com sucesso.')])
+        return response()->json(['message' => __('messages.Sessão terminada com sucesso.')])
             ->withCookie(cookie('api_token', null, -1, '/', null, $secure, true, false, 'Lax'))
             ->withCookie(cookie('auth_token', null, -1, '/', null, $secure, false, false, 'Lax'));
     }

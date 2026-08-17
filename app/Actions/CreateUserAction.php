@@ -23,11 +23,11 @@ final readonly class CreateUserAction
                 // Se o teu modelo User NÃO tiver 'password' => 'hashed' no $casts:
                 'password' => Hash::make($data->password),
                 // Se o modelo User já tiver o cast 'hashed', basta: 'password' => $data->password,
+                'profile_id' => $data->profileId,
                 'active' => $data->active ?? true,
             ]);
 
-            // Garante que a criação do perfil inicial corre na mesma transação SQL
-            $this->userService->ensureDefaultProfile($user);
+            // O UserObserver::creating assegura o perfil default quando profile_id é nulo.
 
             // Exemplo de disparo de evento no futuro:
             // UserCreated::dispatch($user);

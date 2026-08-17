@@ -38,9 +38,9 @@ final class CloseTicketRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'actual_cost' => __('custo real'),
-            'report' => __('relatório técnico'),
-            'force' => __('forçar encerramento'),
+            'actual_cost' => __('common.custo real'),
+            'report' => __('common.relatório técnico'),
+            'force' => __('common.forçar encerramento'),
         ];
     }
 
@@ -52,11 +52,11 @@ final class CloseTicketRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'actual_cost.required' => __('O custo real é obrigatório.'),
-            'actual_cost.numeric' => __('O custo real deve ser um valor numérico.'),
-            'actual_cost.min' => __('O custo real não pode ser um valor negativo.'),
-            'report.max' => __('O relatório técnico não pode exceder 5000 caracteres.'),
-            'force.boolean' => __('O campo forçar encerramento deve ser verdadeiro ou falso.'),
+            'actual_cost.required' => __('validation.O custo real é obrigatório.'),
+            'actual_cost.numeric' => __('validation.O custo real deve ser um valor numérico.'),
+            'actual_cost.min' => __('equipment.O custo real não pode ser um valor negativo.'),
+            'report.max' => __('common.O relatório técnico não pode exceder 5000 caracteres.'),
+            'force.boolean' => __('validation.O campo forçar encerramento deve ser verdadeiro ou falso.'),
         ];
     }
 }

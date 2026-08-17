@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => 'Không có hình ảnh nào được tải lên.',
+    'remove_photo' => 'Gỡ bỏ ảnh',
+    'remove_file' => 'Gỡ bỏ tệp',
+    'load_error' => 'Lỗi khi tải ảnh.',
+    'confirm_remove' => 'Bạn có chắc chắn muốn gỡ bỏ ảnh này không?',
+    'remove_error' => 'Lỗi khi gỡ bỏ ảnh.',
+    'removed' => 'Ảnh đã được gỡ bỏ thành công.',
+    'sent' => 'Ảnh đã được gửi!',
+    'file' => 'Tệp',
+    'Anexos' => 'Đính kèm',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => 'Cập nhật thông tin đăng nhập, ảnh và quyền truy cập hồ sơ người dùng.',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => 'Tải lên hình ảnh (PNG, JPG hoặc WEBP tối đa 2MB).',
+    'Emergência Imediata. Risco de acidente.' => 'Khẩn cấp ngay lập tức. Nguy cơ tai nạn.',
+    'Escolher Fotografia' => 'Chọn ảnh',
+    'Escolher ficheiro' => 'Chọn tệp',
+    'Fotografia (Opcional)' => 'Ảnh (Tùy chọn)',
+    'Fotografia do Utilizador' => 'Ảnh người dùng',
+    'Imagem' => 'Hình ảnh',
+    'Inserir Imagem (Opcional)' => 'Chèn hình ảnh (Tùy chọn)',
+    'Nenhum ficheiro' => 'Không có tệp',
+    'Nenhum ficheiro selecionado' => 'Chưa chọn tệp',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => 'Hồ sơ hiện tại: :profile. Truy cập các mô-đun theo quyền vai trò của bạn.',
+    'Tipo de ficheiro não permitido.' => 'Loại tệp không được phép.',
+];

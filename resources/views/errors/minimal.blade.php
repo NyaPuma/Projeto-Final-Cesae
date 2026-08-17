@@ -7,7 +7,7 @@
 
         {{-- Badge Semântico do Erro --}}
         <span class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-red-500/20 bg-red-500/10 text-xs font-bold uppercase tracking-[0.2em] text-red-500 mb-6" role="alert">
-            {{ __('Erro') }} @yield('code')
+            {{ __('messages.Erro') }} @yield('code')
         </span>
 
         {{-- Título Principal --}}
@@ -27,7 +27,7 @@
                 <svg class="h-4 w-4 mr-2 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/>
                 </svg>
-                <span id="error-recovery-text">{{ __('Voltar à Página Inicial') }}</span>
+                <span id="error-recovery-text">{{ __('ui.Voltar à Página Inicial') }}</span>
             </a>
         </div>
 
@@ -38,7 +38,7 @@
                     i
                 </div>
                 <div>
-                    <h3 class="font-bold text-sm text-[var(--text)]">{{ __('Detalhes do Incidente') }}</h3>
+                    <h3 class="font-bold text-sm text-[var(--text)]">{{ __('ticket_detail.Detalhes do Incidente') }}</h3>
                     <p class="mt-1 text-xs text-[var(--text-soft)] leading-5">
                         {{ $exception->getMessage() }}
                     </p>

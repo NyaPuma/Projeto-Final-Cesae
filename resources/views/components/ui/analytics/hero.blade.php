@@ -11,12 +11,12 @@
 --}}
 
 @props([
-    'badge' => __('Dashboard Analítico'),
-    'title' => __('Centro de Monitorização da Plataforma'),
-    'description' => __('Visualize em tempo real o desempenho operacional, acompanhe indicadores de manutenção, distribuição dos equipamentos, produtividade da equipa técnica e evolução das ocorrências registadas.'),
-    'statusTitle' => __('Operacional'),
-    'statusDescription' => __('Todos os serviços encontram-se disponíveis.'),
-    'statusLabel' => __('Online'),
+    'badge' => __('dashboard.Dashboard Analítico'),
+    'title' => __('common.Centro de Monitorização da Plataforma'),
+    'description' => __('tickets.Visualize em tempo real o desempenho operacional, acompanhe indicadores de manutenção, distribuição dos equipamentos, produtividade da equipa técnica e evolução das ocorrências registadas.'),
+    'statusTitle' => __('common.Operacional'),
+    'statusDescription' => __('common.Todos os serviços encontram-se disponíveis.'),
+    'statusLabel' => __('common.Online'),
 ])
 
 <section {{ $attributes->class(['relative overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--surface)]']) }}>
@@ -47,7 +47,7 @@
             {{-- Cartão de Estado Operacional --}}
             <div class="flex flex-col justify-between rounded-3xl border border-[var(--border)] bg-[var(--surface-2)] p-7">
                 <div>
-                    <x-ui.text.eyebrow as="p">{{ __('Estado') }}</x-ui.text.eyebrow>
+                    <x-ui.text.eyebrow as="p">{{ __('common.Estado') }}</x-ui.text.eyebrow>
                     <h2 class="mt-4 text-3xl font-black text-[var(--text)]">{{ $statusTitle }}</h2>
                     <p class="mt-2 text-sm text-[var(--text-soft)]">{{ $statusDescription }}</p>
                 </div>

@@ -12,6 +12,14 @@ final readonly class UpdateEquipmentData
         public ?int $roomId = null,
         public ?int $categoryId = null,
         public ?bool $active = null,
+        public ?string $assetTag = null,
+        public ?string $brand = null,
+        public ?string $model = null,
+        public ?string $manufacturer = null,
+        public ?string $purchaseDate = null,
+        public ?string $warrantyUntil = null,
+        public ?string $status = null,
+        public ?string $notes = null,
     ) {
         if ($this->name !== null && trim($this->name) === '') {
             throw new \InvalidArgumentException('O nome do equipamento não pode ser uma string vazia.');
@@ -28,6 +36,10 @@ final readonly class UpdateEquipmentData
         if ($this->categoryId !== null && $this->categoryId <= 0) {
             throw new \InvalidArgumentException('O ID da categoria deve ser um número inteiro positivo.');
         }
+
+        if ($this->status !== null && ! in_array($this->status, StoreEquipmentData::STATUSES, true)) {
+            throw new \InvalidArgumentException('O estado operacional do equipamento é inválido.');
+        }
     }
 
     /**
@@ -43,6 +55,16 @@ final readonly class UpdateEquipmentData
             roomId: self::parseNullableInt($payload['room_id'] ?? null),
             categoryId: self::parseNullableInt($payload['category_id'] ?? null),
             active: self::parseNullableBool($payload['active'] ?? null),
+            assetTag: self::parseNullableString($payload['asset_tag'] ?? null),
+            brand: self::parseNullableString($payload['brand'] ?? null),
+            model: self::parseNullableString($payload['model'] ?? null),
+            manufacturer: self::parseNullableString($payload['manufacturer'] ?? null),
+            purchaseDate: self::parseNullableString($payload['purchase_date'] ?? null),
+            warrantyUntil: self::parseNullableString($payload['warranty_until'] ?? null),
+            status: in_array($payload['status'] ?? null, StoreEquipmentData::STATUSES, true)
+                ? $payload['status']
+                : null,
+            notes: self::parseNullableString($payload['notes'] ?? null),
         );
     }
 
@@ -51,7 +73,7 @@ final readonly class UpdateEquipmentData
      */
     private static function parseNullableString(mixed $value): ?string
     {
-        if (!is_string($value)) {
+        if (! is_string($value)) {
             return null;
         }
 
@@ -104,6 +126,14 @@ final readonly class UpdateEquipmentData
             'room_id' => $this->roomId,
             'category_id' => $this->categoryId,
             'active' => $this->active,
+            'asset_tag' => $this->assetTag,
+            'brand' => $this->brand,
+            'model' => $this->model,
+            'manufacturer' => $this->manufacturer,
+            'purchase_date' => $this->purchaseDate,
+            'warranty_until' => $this->warrantyUntil,
+            'status' => $this->status,
+            'notes' => $this->notes,
         ], static fn (mixed $value): bool => $value !== null);
     }
 
@@ -112,6 +142,6 @@ final readonly class UpdateEquipmentData
      */
     public function hasUpdates(): bool
     {
-        return !empty($this->toArray());
+        return ! empty($this->toArray());
     }
 }

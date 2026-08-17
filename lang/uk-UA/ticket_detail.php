@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => 'Без зареєстрованих повідомлень.',
+    'comments_error' => 'Помилка завантаження історії.',
+    'message_sent' => 'Повідомлення надіслано!',
+    'incident_id' => 'ID інциденту',
+    'description' => 'Опис інциденту',
+    'priority_level' => 'Рівень пріоритету',
+    'equipment' => 'Обладнання / актив',
+    'room' => 'Кімната / розташування',
+    'technician' => 'Призначений технік',
+    'pending_assignment' => 'Очікує призначення',
+    'reported_by' => 'Повідомив',
+    'source' => 'Джерело',
+    'qr_code' => 'QR-код',
+    'web' => 'Веб',
+    'system' => 'Система',
+    'no_description' => 'Опис не надано.',
+    'Data de abertura (De)' => 'Дата відкриття (з)',
+    'Detalhe de um fornecedor' => 'Деталі постачальника',
+    'Detalhe de um fornecedor.' => 'Деталі постачальника.',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => 'Опишіть проблему, шуми, витоки або ненормальну поведінку...',
+    'Detalhes do Incidente' => 'Деталі інциденту',
+];

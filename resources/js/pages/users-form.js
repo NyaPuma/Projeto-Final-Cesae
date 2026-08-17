@@ -19,7 +19,8 @@ async function loadProfiles() {
         const data = await res.json();
         const profiles = data.profiles || [];
 
-        select.innerHTML = '<option value="">Selecione um perfil...</option>';
+        const translations = window.SGM_USER_MANAGEMENT_I18N || {};
+        select.innerHTML = `<option value="">${translations.profileLoading || 'Select a profile...'}</option>`;
         select.removeAttribute('disabled');
 
         profiles.forEach(p => {
@@ -27,9 +28,9 @@ async function loadProfiles() {
             opt.value = p.id;
 
             let label = p.name;
-            if (p.name === 'admin') label = 'Administrador';
-            else if (p.name === 'technician') label = 'Técnico de Manutenção';
-            else if (p.name === 'user') label = 'Utilizador Comum';
+            if (p.name === 'admin') label = translations.admin || 'Administrator';
+            else if (p.name === 'technician') label = translations.technician || 'Technician';
+            else if (p.name === 'user') label = translations.user || 'User';
 
             opt.textContent = label;
 

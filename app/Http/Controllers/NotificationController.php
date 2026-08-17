@@ -28,7 +28,8 @@ final class NotificationController extends Controller
     {
         $user = $request->user();
 
-        $perPage = min((int) $request->query('per_page', 50), 200);
+        $requestedPerPage = (int) $request->query('per_page', 50);
+        $perPage = $requestedPerPage >= 1 ? min($requestedPerPage, 200) : 50;
 
         $notifications = Notification::where('user_id', $user->id)
             ->latest()
@@ -64,7 +65,7 @@ final class NotificationController extends Controller
 
         if (! $notification) {
             return response()->json([
-                'message' => __('Notificação não encontrada.'),
+                'message' => __('common.Notificação não encontrada.'),
             ], 404);
         }
 
@@ -72,7 +73,7 @@ final class NotificationController extends Controller
         $notification->save();
 
         return response()->json([
-            'message' => __('Notificação marcada como lida com sucesso.'),
+            'message' => __('messages.Notificação marcada como lida com sucesso.'),
             'notification' => new NotificationResource($notification),
         ]);
     }
@@ -101,7 +102,7 @@ final class NotificationController extends Controller
         ]);
 
         return response()->json([
-            'message' => __('Email de teste em processamento via fila.'),
+            'message' => __('common.Email de teste em processamento via fila.'),
         ]);
     }
 }

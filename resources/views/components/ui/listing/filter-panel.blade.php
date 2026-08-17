@@ -14,17 +14,17 @@
         {{ $slot }}
     </div>
 
-    <div class="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-[var(--border)] pt-4">
+    <div class="mt-4 flex flex-col-reverse items-stretch gap-3 border-t border-[var(--border)] pt-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-2">
         <div class="flex items-center gap-2">
-            <x-ui.buttons.button id="btnSearch" variant="primary" size="sm" weight="bold">
-                {{ __('Pesquisar') }}
+            <x-ui.buttons.button id="btnSearch" variant="primary" size="sm" weight="bold" class="flex-1 sm:flex-none">
+                {{ __('ui.Pesquisar') }}
             </x-ui.buttons.button>
-            <x-ui.buttons.button id="btnClear" variant="secondary" size="sm" weight="semibold">
-                {{ __('Limpar filtros') }}
+            <x-ui.buttons.button id="btnClear" variant="secondary" size="sm" weight="semibold" class="flex-1 sm:flex-none">
+                {{ __('common.Limpar filtros') }}
             </x-ui.buttons.button>
         </div>
 
-        <div class="flex items-center gap-3">
+        <div class="flex items-center justify-between gap-3 sm:justify-end">
             @isset($afterActions)
                 {{ $afterActions }}
             @endisset

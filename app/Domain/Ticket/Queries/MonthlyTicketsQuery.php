@@ -28,7 +28,8 @@ final readonly class MonthlyTicketsQuery
     {
         $keys = [];
         foreach (range(5, 0) as $offset) {
-            $keys[] = $this->now->copy()->subMonths($offset)->format('Y-m');
+            // Normaliza para o início do mês para evitar overflow de dias (ex: 31 -> mês seguinte)
+            $keys[] = $this->now->copy()->startOfMonth()->subMonths($offset)->format('Y-m');
         }
 
         return $keys;

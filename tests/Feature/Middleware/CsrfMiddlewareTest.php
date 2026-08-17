@@ -46,6 +46,14 @@ class CsrfMiddlewareTest extends TestCase
             })
             ->name('api.test.csrf.require');
 
+        // Rota isolada com APENAS o CsrfMiddleware custom, para testes determinísticos
+        // (sem o ValidateCsrfToken do framework misturado no pipeline).
+        Route::middleware(\App\Http\Middleware\CsrfMiddleware::class)
+            ->post('/test-csrf-only', function () {
+                return response()->json(['ok' => true], 200);
+            })
+            ->name('test.csrf.only');
+
         // Rota para exercitar skip CSRF por nome de rota (lista em CsrfMiddleware::shouldSkipCsrfValidation)
         // Middleware espera route names como: api.auth.login, api.auth.logout, etc.
         Route::middleware(['api'])->post('/api/auth/login', function () {
@@ -59,12 +67,19 @@ class CsrfMiddlewareTest extends TestCase
 
     public function test_get_skips_csrf_validation(): void
     {
-        $response = $this->get('/test-csrf-require');
+        $user = User::factory()->create([
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->first()->id,
+            'api_token' => Str::random(60),
+            'active' => true,
+        ]);
 
-        // A rota dummy só existe como POST; se o GET falhar por 404,
-        // ainda assim o objetivo do teste (GET skip) não está validado.
-        // Portanto, criamos a rota GET dedicada ao teste.
-        $this->markTestSkipped('Este teste foi preparado para validar GET skip. Atualize as rotas dummy se necessário.');
+        // GET não exige token CSRF: o middleware deve ignorar a validação
+        // e a rota (protegida por custom.auth) deve responder 200 com JSON.
+        $response = $this->withHeader('X-Auth-Token', $user->api_token)
+            ->get('/test-csrf-require');
+
+        $response->assertStatus(200);
+        $response->assertJson(['ok' => true]);
     }
 
     public function test_post_without_csrf_token_returns_419_with_payload_structure_when_csrf_is_required(): void
@@ -188,6 +203,49 @@ class CsrfMiddlewareTest extends TestCase
             'email' => 'a@b.com',
             'password' => '123456',
         ]);
+
+        $response->assertStatus(200);
+        $response->assertJson(['ok' => true]);
+    }
+
+    public function test_post_with_active_session_but_no_csrf_token_is_rejected_with_419(): void
+    {
+        // Regressão de segurança: uma sessão ativa NUNCA deve dispensar a apresentação
+        // de um token CSRF no pedido. O middleware não pode usar o token da sessão
+        // como "token fornecido" (isso anularia a proteção CSRF).
+        $response = $this->withSession([
+            '_token' => 'session-token-value',
+        ])->post('/test-csrf-only', [
+            'title' => 'x',
+        ]);
+
+        $response->assertStatus(419);
+        $response->assertJson([
+            'message' => 'CSRF Token inválido ou expirado.',
+            'error_code' => 419,
+        ]);
+    }
+
+    public function test_post_with_mismatched_csrf_token_is_rejected_with_419(): void
+    {
+        $response = $this->withSession([
+            '_token' => 'session-token-value',
+        ])->withHeader('X-CSRF-Token', 'wrong-token-value')
+            ->post('/test-csrf-only', [
+                'title' => 'x',
+            ]);
+
+        $response->assertStatus(419);
+    }
+
+    public function test_post_with_matching_csrf_token_is_allowed(): void
+    {
+        $response = $this->withSession([
+            '_token' => 'session-token-value',
+        ])->withHeader('X-CSRF-Token', 'session-token-value')
+            ->post('/test-csrf-only', [
+                'title' => 'x',
+            ]);
 
         $response->assertStatus(200);
         $response->assertJson(['ok' => true]);

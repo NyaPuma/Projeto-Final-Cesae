@@ -7,6 +7,7 @@ use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use PHPUnit\Framework\Attributes\Test;
@@ -27,6 +28,10 @@ class RoleMiddlewareTest extends TestCase
 
         // Seed ticket statuses if not already done
         $this->artisan('db:seed', ['--class' => 'TicketLookupSeeder', '--force' => true]);
+
+        // custom.auth mutates the default guard to 'api' globally; reset it so
+        // actingAs() (web guard) works deterministically in standalone tests.
+        Auth::shouldUse('web');
     }
 
     #[Test]
@@ -231,5 +236,68 @@ class RoleMiddlewareTest extends TestCase
             ->getJson('/protected-all');
 
         $response->assertStatus(200);
+    }
+
+    #[Test]
+    public function it_rejects_unauthenticated_requests_when_used_standalone()
+    {
+        Route::middleware(['role:admin'])->get('/standalone-role', function () {
+            return response()->json(['message' => 'Access granted.']);
+        })->name('test.standalone.role');
+
+        $response = $this->getJson('/standalone-role');
+
+        $response->assertStatus(401);
+        $response->assertJson(['message' => 'Autenticação necessária.']);
+    }
+
+    #[Test]
+    public function it_rejects_users_without_profile_when_used_standalone()
+    {
+        Route::middleware(['role:admin'])->get('/standalone-role', function () {
+            return response()->json(['message' => 'Access granted.']);
+        })->name('test.standalone.role');
+
+        $user = User::factory()->create([
+            'api_token' => bin2hex(random_bytes(32)),
+            'active' => true,
+        ]);
+        DB::table('users')->where('id', $user->id)->update(['profile_id' => null]);
+
+        $response = $this->actingAs(User::find($user->id))->getJson('/standalone-role');
+
+        $response->assertStatus(403);
+        $response->assertJson(['message' => 'Perfil inválido.']);
+    }
+
+    #[Test]
+    public function it_allows_access_when_used_standalone_with_authenticated_user()
+    {
+        $adminProfile = UserProfile::where('name', UserRoleEnum::Admin->value)->first();
+
+        $admin = User::factory()->create([
+            'profile_id' => $adminProfile->id,
+            'active' => true,
+        ]);
+
+        Route::middleware(['role:admin'])->get('/standalone-role', function () {
+            return response()->json(['message' => 'Access granted.']);
+        })->name('test.standalone.role');
+
+        $response = $this->actingAs($admin)->getJson('/standalone-role');
+
+        $response->assertStatus(200);
+    }
+
+    #[Test]
+    public function it_redirects_web_requests_to_login_when_unauthenticated()
+    {
+        Route::middleware(['role:admin'])->get('/standalone-role-web', function () {
+            return response()->json(['message' => 'Access granted.']);
+        })->name('test.standalone.role.web');
+
+        $response = $this->get('/standalone-role-web');
+
+        $response->assertRedirect('/ui/login');
     }
 }

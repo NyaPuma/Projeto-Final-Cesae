@@ -19,13 +19,13 @@ Base Button Component (Otimizado)
     $variantClasses = match ($variant) {
         'primary' => 'ui-button ui-button--primary',
         'secondary' => 'ui-button border border-solid border-[var(--border)] bg-[var(--surface)] text-[var(--text)] shadow-xs hover:border-[var(--border-hover)] hover:bg-[var(--surface-hover,var(--surface))]',
-        'accent' => 'ui-button bg-orange-500 text-white shadow-sm hover:bg-orange-600 hover:text-white',
+        'accent' => 'ui-button ui-button--primary',
         'success' => 'ui-button bg-emerald-600 text-white shadow-sm hover:bg-emerald-500 hover:text-white',
         'danger' => 'ui-button border border-rose-500/30 bg-rose-500/10 text-rose-500 shadow-sm hover:bg-rose-500/20 hover:text-rose-500',
         'warning' => 'ui-button bg-amber-500 text-black shadow-sm hover:bg-amber-400 hover:text-black',
         'neutral' => 'ui-button bg-[var(--border)] text-[var(--text)] shadow-sm hover:border-rose-500/30 hover:bg-rose-500/10 hover:text-rose-500',
         'dark' => 'ui-button bg-[var(--text)] text-[var(--surface)] shadow-sm hover:opacity-90 hover:text-[var(--surface)]',
-        default => 'ui-button bg-orange-500 text-white shadow-sm hover:bg-orange-600 hover:text-white',
+        default => 'ui-button ui-button--primary',
     };
 
     $sizeClasses = match ($size) {

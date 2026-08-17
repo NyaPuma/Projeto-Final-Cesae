@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => 'Nincs regisztrált üzenet.',
+    'comments_error' => 'Hiba az előzmények betöltésekor.',
+    'message_sent' => 'Üzenet elküldve!',
+    'incident_id' => 'Eseményazonosító',
+    'description' => 'Esemény leírása',
+    'priority_level' => 'Prioritás szintje',
+    'equipment' => 'Berendezés / eszköz',
+    'room' => 'Terem / hely',
+    'technician' => 'Kijelölt technikus',
+    'pending_assignment' => 'Kijelölésre vár',
+    'reported_by' => 'Bejelentette:',
+    'source' => 'Eredet',
+    'qr_code' => 'QR Code',
+    'web' => 'Web',
+    'system' => 'Rendszer',
+    'no_description' => 'Nincs megadva leírás.',
+    'Data de abertura (De)' => 'Megnyitás dátuma (tól)',
+    'Detalhe de um fornecedor' => 'Beszállító adatai',
+    'Detalhe de um fornecedor.' => 'Beszállító adatai.',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => 'Írja le részletesen a felmerült problémát, zajokat, szivárgást vagy a szokásostól eltérő viselkedést...',
+    'Detalhes do Incidente' => 'Incidens adatai',
+];

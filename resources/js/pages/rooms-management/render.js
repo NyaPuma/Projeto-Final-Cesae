@@ -1,20 +1,36 @@
 import { renderResultsCount as renderSharedResultsCount, renderResultsFeedback, renderSimplePagination, renderTableEmptyState, renderTableErrorState } from '../../components/listing/feedback.js';
 import { getPagination, getResultsCount, getRoomsTableBody } from './dom.js';
 
+function translations() {
+    const data = document.body?.dataset || {};
+
+    return {
+        equipmentCount: window.SGM_ROOM_I18N?.equipmentCount || data.roomEquipmentCount || '',
+        edit: window.SGM_ROOM_I18N?.edit || data.roomEdit || '',
+        details: window.SGM_ROOM_I18N?.details || data.roomDetails || '',
+        empty: window.SGM_ROOM_I18N?.empty || data.roomEmpty || '',
+    };
+}
+
 function renderRoomRow(room) {
     const equipmentCount = room.equipments_count ?? room.equipments?.length ?? 0;
 
     return `<tr class="transition-colors duration-150 hover:bg-(--surface-2)/50">
-        <td class="px-5 py-4">
-            <div class="font-semibold text-(--text)">${room.name}</div>
-            <div class="mt-0.5 font-mono text-[10px] text-(--text-soft)">${room.code || '—'}</div>
+        <td class="px-5 py-4" data-label="Nome da Sala">
+            <div class="ui-listing-value">
+                <div class="font-semibold text-(--text)">${room.name}</div>
+                <div class="mt-0.5 font-mono text-[10px] text-(--text-soft)">${room.code || '—'}</div>
+            </div>
         </td>
-        <td class="px-5 py-4 font-semibold text-(--text-soft)">${room.location || '—'}</td>
-        <td class="px-5 py-4">
-            <span class="inline-flex items-center gap-1 rounded-lg bg-blue-500/10 px-2.5 py-1 text-[11px] font-bold uppercase tracking-tight text-blue-700 dark:text-blue-400">${equipmentCount} equipamento(s)</span>
+        <td class="px-5 py-4 font-semibold text-(--text-soft)" data-label="Localização">${room.location || '—'}</td>
+        <td class="px-5 py-4" data-label="Equipamentos">
+            <span class="inline-flex items-center gap-1 rounded-lg bg-blue-500/10 px-2.5 py-1 text-[11px] font-bold uppercase tracking-tight text-blue-700 dark:text-blue-400">${equipmentCount} ${translations().equipmentCount || ''}</span>
         </td>
-        <td class="px-5 py-4 text-right">
-            <a href="/ui/rooms/${room.id}" class="inline-flex min-h-[28px] items-center justify-center rounded-lg border border-(--border) bg-(--surface) px-3 py-1.5 text-[11px] font-semibold text-(--text) shadow-sm transition-all hover:bg-(--surface-2)">Ver detalhes</a>
+        <td class="ui-listing-actions px-5 py-4 text-right">
+            <div class="inline-flex items-center justify-end gap-1.5">
+                <a href="/ui/rooms/${room.id}/edit" class="inline-flex min-h-[28px] items-center justify-center rounded-lg border border-(--border) bg-(--surface) px-3 py-1.5 text-[11px] font-semibold text-(--text) shadow-sm transition-all hover:bg-(--surface-2)">${translations().edit || ''}</a>
+                <a href="/ui/rooms/${room.id}" class="inline-flex min-h-[28px] items-center justify-center rounded-lg border border-(--border) bg-(--surface) px-3 py-1.5 text-[11px] font-semibold text-(--text) shadow-sm transition-all hover:bg-(--surface-2)">${translations().details || ''}</a>
+            </div>
         </td>
     </tr>`;
 }
@@ -31,7 +47,7 @@ export function renderEmptyState() {
     renderTableEmptyState({
         tbody: getRoomsTableBody(),
         colspan: 4,
-        message: 'Nenhuma sala encontrada com os filtros aplicados.',
+        message: translations().empty || '',
     });
 
     const pagination = getPagination();

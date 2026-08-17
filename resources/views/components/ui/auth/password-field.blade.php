@@ -18,8 +18,8 @@
     'placeholder' => '••••••••',
     'required' => false,
     'toggle' => false,
-    'toggleLabel' => __('Mostrar'),
-    'hideLabel' => __('Ocultar'),
+    'toggleLabel' => __('common.Mostrar'),
+    'hideLabel' => __('common.Ocultar'),
     'toggle_label' => null, // Retrocompatibilidade com snake_case
 ])
 

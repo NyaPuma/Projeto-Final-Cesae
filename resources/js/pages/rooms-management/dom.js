@@ -25,14 +25,6 @@ export function getResultsCount() {
     return document.getElementById('resultsCount');
 }
 
-export function getRoomModal() {
-    return document.getElementById('roomModal');
-}
-
-export function getRoomForm() {
-    return document.getElementById('roomForm');
-}
-
 export function renderLoadingState() {
     const tbody = getRoomsTableBody();
     if (!tbody) return;

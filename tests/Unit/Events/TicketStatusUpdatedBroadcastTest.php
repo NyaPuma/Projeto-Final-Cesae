@@ -44,6 +44,7 @@ class TicketStatusUpdatedBroadcastTest extends DatabaseTestCase
         $data = $event->broadcastWith();
 
         $this->assertEquals($ticket->id, $data['id']);
+        $this->assertEquals($ticket->reference, $data['code']);
         $this->assertEquals('Status Update Test', $data['title']);
         $this->assertEquals('aberta', $data['old_status']['value']);
         $this->assertEquals('em curso', $data['new_status']['value']);

@@ -82,4 +82,37 @@ class BudgetDecisionDataTest extends TestCase
         $this->assertInstanceOf(\ReflectionClass::class, new \ReflectionClass($dto));
         $this->assertTrue((new \ReflectionClass($dto))->isReadOnly());
     }
+
+    #[Test]
+    public function it_sanitizes_feedback_whitespace_to_null(): void
+    {
+        $dto = BudgetDecisionData::fromRequest([
+            'decision' => 'reject',
+            'feedback' => '   ',
+        ]);
+
+        $this->assertNull($dto->feedback);
+        $this->assertNull($dto->toArray()['feedback']);
+    }
+
+    #[Test]
+    public function it_returns_convenience_helpers(): void
+    {
+        $approved = BudgetDecisionData::fromRequest(['decision' => 'approve']);
+        $rejected = BudgetDecisionData::fromRequest(['decision' => 'reject']);
+
+        $this->assertTrue($approved->isApproved());
+        $this->assertFalse($approved->isRejected());
+
+        $this->assertTrue($rejected->isRejected());
+        $this->assertFalse($rejected->isApproved());
+    }
+
+    #[Test]
+    public function it_throws_on_invalid_decision_value(): void
+    {
+        $this->expectException(\ValueError::class);
+
+        BudgetDecisionData::fromRequest(['decision' => 'maybe']);
+    }
 }

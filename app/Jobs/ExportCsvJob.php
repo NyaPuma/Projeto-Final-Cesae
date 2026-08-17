@@ -40,9 +40,9 @@ final class ExportCsvJob implements ShouldQueue
         $filename = 'tickets_report_'.now()->format('Ymd_His').'.csv';
 
         // Garante que a pasta de destino existe no disco configurado
-        Storage::disk('local')->makeDirectory('exports');
+        Storage::disk('public')->makeDirectory('exports');
 
-        $path = Storage::disk('local')->path('exports/'.$filename);
+        $path = Storage::disk('public')->path('exports/'.$filename);
 
         $analyticsService->exportCsvToFile($path);
 

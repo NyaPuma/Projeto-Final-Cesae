@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => '未上传任何证据。',
+    'remove_photo' => '移除照片',
+    'remove_file' => '移除文件',
+    'load_error' => '加载照片时出错。',
+    'confirm_remove' => '确定要移除这张照片吗？',
+    'remove_error' => '移除照片时出错。',
+    'removed' => '照片移除成功。',
+    'sent' => '照片已发送！',
+    'file' => '文件',
+    'Anexos' => '附件',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => '更新用户档案的凭据、照片和访问权限。',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => '上传图片（PNG、JPG 或 WEBP，最大 2MB）。',
+    'Emergência Imediata. Risco de acidente.' => '立即紧急。事故风险。',
+    'Escolher Fotografia' => '选择照片',
+    'Escolher ficheiro' => '选择文件',
+    'Fotografia (Opcional)' => '照片（可选）',
+    'Fotografia do Utilizador' => '用户照片',
+    'Imagem' => '图片',
+    'Inserir Imagem (Opcional)' => '插入图片（可选）',
+    'Nenhum ficheiro' => '无文件',
+    'Nenhum ficheiro selecionado' => '未选择文件',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => '当前档案：:profile。根据您的角色权限访问模块。',
+    'Tipo de ficheiro não permitido.' => '不允许的文件类型。',
+];

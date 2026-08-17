@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => 'Ingen beskeder registreret.',
+    'comments_error' => 'Fejl ved indlæsning af historik.',
+    'message_sent' => 'Besked sendt!',
+    'incident_id' => 'Hændelses-ID',
+    'description' => 'Hændelsesbeskrivelse',
+    'priority_level' => 'Prioritetsniveau',
+    'equipment' => 'Udstyr / Aktiv',
+    'room' => 'Lokale / Placering',
+    'technician' => 'Tildelt Tekniker',
+    'pending_assignment' => 'Afventer tildeling',
+    'reported_by' => 'Rapporteret af',
+    'source' => 'Oprindelse',
+    'qr_code' => 'QR Code',
+    'web' => 'Web',
+    'system' => 'System',
+    'no_description' => 'Ingen beskrivelse angivet.',
+    'Data de abertura (De)' => 'Åbningsdato (Fra)',
+    'Detalhe de um fornecedor' => 'Detalje for en leverandør',
+    'Detalhe de um fornecedor.' => 'Detalje for en leverandør.',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => 'Detaljér det opståede problem, lyde, lækager eller unormal adfærd...',
+    'Detalhes do Incidente' => 'Hændelsesdetaljer',
+];

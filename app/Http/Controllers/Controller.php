@@ -19,7 +19,7 @@ abstract class Controller
         $user = Auth::guard('api')->user() ?? $request->user();
 
         if (! $user) {
-            abort(401, __('Autenticação necessária. Envie o token de autenticação no cabeçalho.'));
+            abort(401, __('auth.Autenticação necessária. Envie o token de autenticação no cabeçalho.'));
         }
 
         return $user;
@@ -33,7 +33,7 @@ abstract class Controller
     protected function requireRole(User $user, array $roles): void
     {
         if (! $user->profile || ! in_array($user->profile->name, $roles, true)) {
-            abort(403, __('Acesso proibido para o seu perfil.'));
+            abort(403, __('common.Acesso proibido para o seu perfil.'));
         }
     }
 
@@ -43,7 +43,7 @@ abstract class Controller
     protected function jsonNotFound(?string $message = null): JsonResponse
     {
         return response()->json([
-            'message' => $message ?? __('Não encontrado.'),
+            'message' => $message ?? __('common.Não encontrado.'),
         ], 404);
     }
 

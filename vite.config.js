@@ -6,10 +6,10 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
+                'resources/js/early-theme.js',
                 'resources/css/app.css',
                 'resources/js/app.js',
-                'resources/css/swagger/swagger-theme.css',
-                'resources/js/swagger/swagger-init.js'
+                'resources/css/swagger/swagger-theme.css'
             ],
             refresh: true,
         }),

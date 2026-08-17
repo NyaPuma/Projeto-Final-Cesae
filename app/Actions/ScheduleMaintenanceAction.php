@@ -1,0 +1,54 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Actions;
+
+use App\DTOs\ScheduleMaintenanceData;
+use App\Enums\TicketStatusEnum;
+use App\Models\Ticket;
+use App\Models\User;
+use App\Services\TicketStatusService;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use RuntimeException;
+
+/**
+ * Cria um ticket de manutenção preventiva já agendado no calendário.
+ */
+final readonly class ScheduleMaintenanceAction
+{
+    public function __construct(
+        private TicketStatusService $statusService,
+    ) {}
+
+    public function execute(User $creator, ScheduleMaintenanceData $data): Ticket
+    {
+        $openStatusId = $this->statusService->getByName(TicketStatusEnum::Open);
+
+        if ($openStatusId === null) {
+            throw new RuntimeException("O estado '" . TicketStatusEnum::Open->value . "' não foi encontrado no sistema.");
+        }
+
+        $scheduledAt = Carbon::parse($data->scheduledAt);
+
+        return DB::transaction(function () use ($creator, $data, $openStatusId, $scheduledAt): Ticket {
+            $ticket = Ticket::create([
+                'reference' => 'MNT-' . now()->format('YmdHis') . '-' . strtoupper(uniqid()),
+                'title' => trim($data->title),
+                'description' => trim($data->description ?? __('maintenance_plan.Manutenção preventiva agendada.')),
+                'priority' => 'média',
+                'user_id' => $creator->id,
+                'equipment_id' => $data->equipmentId,
+                'assigned_to' => $data->assignedTo,
+                'status_id' => $openStatusId,
+                'opened_at' => now(),
+                'scheduled_at' => $scheduledAt,
+                'scheduled_end' => $scheduledAt->copy()->addHours(2),
+                'scheduled' => true,
+            ]);
+
+            return $ticket->load(['user', 'equipment', 'room', 'technician', 'status']);
+        });
+    }
+}

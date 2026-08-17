@@ -49,6 +49,14 @@ use OpenApi\Attributes as OA;
     name: 'Analytics',
     description: 'Relatórios e métricas de desempenho de manutenção'
 )]
+#[OA\Tag(
+    name: 'Stock',
+    description: 'Catálogo de peças, fornecedores, movimentos de stock, dashboard e relatórios'
+)]
+#[OA\Tag(
+    name: 'Admin Stock',
+    description: 'Gestão administrativa de peças, fornecedores, taxas de IVA, categorias e planos de manutenção'
+)]
 final class OpenApiSpec
 {
     // Esta classe serve apenas como contentor para as anotações globais da especificação OpenAPI.

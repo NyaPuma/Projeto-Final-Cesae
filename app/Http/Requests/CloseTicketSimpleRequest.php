@@ -38,9 +38,9 @@ final class CloseTicketSimpleRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'minutes_spent' => __('minutos despendidos'),
-            'cost' => __('custo'),
-            'technical_report' => __('relatório técnico'),
+            'minutes_spent' => __('common.minutos despendidos'),
+            'cost' => __('common.custo'),
+            'technical_report' => __('common.relatório técnico'),
         ];
     }
 
@@ -52,11 +52,11 @@ final class CloseTicketSimpleRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'minutes_spent.integer' => __('O tempo despendido deve ser um número inteiro de minutos.'),
-            'minutes_spent.min' => __('O tempo despendido não pode ser um valor negativo.'),
-            'cost.numeric' => __('O custo deve ser um valor numérico.'),
-            'cost.min' => __('O custo não pode ser um valor negativo.'),
-            'technical_report.max' => __('O relatório técnico não pode exceder 5000 caracteres.'),
+            'minutes_spent.integer' => __('validation.O tempo despendido deve ser um número inteiro de minutos.'),
+            'minutes_spent.min' => __('equipment.O tempo despendido não pode ser um valor negativo.'),
+            'cost.numeric' => __('validation.O custo deve ser um valor numérico.'),
+            'cost.min' => __('equipment.O custo não pode ser um valor negativo.'),
+            'technical_report.max' => __('common.O relatório técnico não pode exceder 5000 caracteres.'),
         ];
     }
 }

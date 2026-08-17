@@ -57,8 +57,9 @@ final class TicketAttachment extends Model
 
         // Garante que o ficheiro físico é removido do Storage ao apagar o registo na BD
         static::deleting(static function (self $attachment): void {
-            if ($attachment->path && Storage::exists($attachment->path)) {
-                Storage::delete($attachment->path);
+            $disk = $attachment->disk ?: 'public';
+            if ($attachment->path && Storage::disk($disk)->exists($attachment->path)) {
+                Storage::disk($disk)->delete($attachment->path);
             }
         });
     }
@@ -83,7 +84,7 @@ final class TicketAttachment extends Model
     protected function url(): Attribute
     {
         return Attribute::make(
-            get: fn (): string => Storage::url($this->path)
+            get: fn (): string => Storage::disk($this->disk ?: 'public')->url($this->path)
         );
     }
 

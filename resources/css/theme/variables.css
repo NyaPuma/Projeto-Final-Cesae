@@ -1,90 +1,96 @@
 /*
 |--------------------------------------------------------------------------
-| Design System: Variables & Theme System
+| Design System: Aliases semânticos
 |--------------------------------------------------------------------------
-| References tokens.css for visual styles and defines layout metrics.
+| Camada fina de aliases sobre os tokens em tokens.css. Nunca define valores
+| primários aqui — apenas referências a `--color-*`/`--space-*`/`--radius-*`
+| para que o tema personalizado e o dark mode fluam para os componentes.
 */
 
 :root {
-    /* Brand & Semantic Colors mapped to tokens.css */
+    /* Marca */
     --primary: var(--color-primary);
     --primary-hover: var(--color-primary-hover);
     --primary-light: var(--color-primary-light);
+    --primary-dark: var(--color-primary-hover);
+    --primary-rgb: 234, 88, 12;
     --on-primary: var(--color-on-primary);
 
-    --text-primary: var(--color-text);
+    /* Texto */
     --text: var(--color-text);
+    --text-primary: var(--color-text);
     --text-soft: var(--color-text-soft);
-    --text-muted: var(--color-text-soft); /* Simplified */
+    --text-muted: var(--color-text-muted);
 
+    /* Superfícies */
     --background: var(--color-surface-2);
     --bg: var(--color-surface-2);
     --surface: var(--color-surface);
     --surface-2: var(--color-surface-2);
-    --surface-3: var(--color-surface-disabled); /* fallback */
+    --surface-3: var(--color-surface-3);
+    --surface-alt: var(--color-surface-alt);
     --surface-secondary: var(--color-surface-2);
     --surface-hover: var(--color-surface-hover);
+    --surface-muted: var(--color-surface-muted);
 
+    /* Bordas */
     --border: var(--color-border);
-    --border-strong: var(--color-border-hover);
+    --border-strong: var(--color-border-strong);
     --border-color: var(--color-border);
     --border-hover: var(--color-border-hover);
 
+    /* Estados */
     --success: var(--color-success);
-    --warning: var(--color-warning);
-    --danger: var(--color-danger);
-    --info: var(--color-info);
+    --success-hover: var(--color-success);
+    --success-light: var(--color-success-light);
+    --success-dark: var(--color-success);
+    --success-text: var(--color-success);
+    --success-rgb: 22, 163, 74;
+    --success-border-color: color-mix(in srgb, var(--color-success) 30%, transparent);
 
+    --warning: var(--color-warning);
+    --warning-hover: var(--color-warning-hover);
+    --warning-light: var(--color-warning-light);
+    --warning-dark: var(--color-warning);
+    --warning-text: var(--color-warning);
+    --warning-rgb: 217, 119, 6;
+    --warning-border-color: color-mix(in srgb, var(--color-warning) 30%, transparent);
+    --on-warning: #18181b;
+
+    --danger: var(--color-danger);
+    --danger-hover: var(--color-danger);
+    --danger-light: var(--color-danger-light);
+    --danger-dark: var(--color-danger);
+    --danger-text: var(--color-danger);
+    --danger-rgb: 185, 28, 28;
+    --danger-border-color: color-mix(in srgb, var(--color-danger) 30%, transparent);
+
+    --info: var(--color-info);
+    --info-hover: var(--color-info);
+    --info-light: var(--color-info-light);
+    --info-dark: var(--color-info);
+    --info-text: var(--color-info);
+    --info-rgb: 37, 99, 235;
+    --info-border-color: color-mix(in srgb, var(--color-info) 30%, transparent);
+
+    /* Layout */
     --sidebar: var(--color-surface);
     --topbar: rgba(255, 255, 255, 0.85);
 
-    /* Spacing Scale (Base 4px = 0.25rem) */
-    --space-1: 0.25rem;  /* 4px */
-    --space-2: 0.5rem;   /* 8px */
-    --space-3: 0.75rem;  /* 12px */
-    --space-4: 1rem;     /* 16px */
-    --space-5: 1.25rem;  /* 20px */
-    --space-6: 1.5rem;   /* 24px */
-    --space-7: 2rem;     /* 32px */
-    --space-8: 2.5rem;   /* 40px */
-
-    /* Spacing Scale aliases from tokens */
-    --space-xs: 0.25rem;
-    --space-sm: 0.5rem;
-    --space-md: 1rem;
-    --space-lg: 1.5rem;
-    --space-xl: 2rem;
-
-    /* Radius (rem-based for accessibility resizing) */
-    --radius-xs: 0.375rem;
-    --radius-sm: 0.5rem;
-    --radius-md: 0.75rem;
-    --radius-lg: 1rem;
-    --radius-xl: 1.5rem;
-    --radius-2xl: 2rem;
-    --radius-round: 9999px;
-
-    /* Borders & Shadows */
-    --shadow-sm: var(--shadow-sm);
-    --shadow-md: var(--shadow-md);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
-
-    /* Layout & Motion */
-    --sidebar-width: 17.5rem; /* 280px */
-    --topbar-height: 4.5rem;  /* 72px */
-    --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-
-    color-scheme: light;
+    --space-xs: var(--space-1);
+    --space-sm: var(--space-2);
+    --space-md: var(--space-4);
+    --space-lg: var(--space-6);
+    --space-xl: var(--space-7);
 }
 
-/* Dark Mode Overrides */
+/* Dark Mode Overrides (apenas derivados estáticos que o tema custom não cobre) */
 .dark, [data-theme='dark'] {
     --topbar: rgba(11, 15, 25, 0.85);
 
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
-
-    color-scheme: dark;
+    --primary-rgb: 249, 115, 22;
+    --success-rgb: 74, 222, 128;
+    --warning-rgb: 251, 191, 36;
+    --danger-rgb: 248, 113, 113;
+    --info-rgb: 56, 189, 248;
 }

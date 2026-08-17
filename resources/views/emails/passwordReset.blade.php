@@ -132,34 +132,34 @@
         <tr>
             <td>
                 {{-- Identificador de Contexto --}}
-                <div class="header-badge">Segurança de Conta</div>
-                <h1 class="title">Pedido de Nova Password</h1>
+                <div class="header-badge">{{ __('common.Segurança de Conta') }}</div>
+                <h1 class="title">{{ __('auth.Pedido de Nova Password') }}</h1>
 
-                <p class="text-body">Olá,</p>
-                <p class="text-body">Recebemos uma solicitação para redefinir as credenciais de acesso associadas à sua conta. Para prosseguir com a alteração, utilize o botão de verificação abaixo:</p>
+                <p class="text-body">{{ __('common.Olá,') }}</p>
+                <p class="text-body">{{ __('stock.Recebemos uma solicitação para redefinir as credenciais de acesso associadas à sua conta. Para prosseguir com a alteração, utilize o botão de verificação abaixo:') }}</p>
 
                 {{-- Ação Principal Segura --}}
                 <div class="btn-container">
                     <a href="{{ $url ?? '#' }}" class="btn-action" target="_blank">
-                        Redefinir Password
+                        {{ __('auth.Redefinir Password') }}
                     </a>
                 </div>
 
                 {{-- Bloco de Segurança Normativo --}}
                 <div class="security-box">
-                    <span class="security-label">VALIDADE DO LINK:</span> Este link expira em {{ config('auth.passwords.'.config('auth.defaults.passwords').'.expire') ?? 60 }} minutos.<br>
-                    <span class="security-label">AVISO:</span> Se não solicitou esta alteração, nenhuma ação adicional é necessária e a sua password atual permanecerá segura.
+                    <span class="security-label">{{ __('common.VALIDADE DO LINK:') }}</span> {{ __('common.Este link expira em :minutes minutos.', ['minutes' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire') ?? 60]) }}<br>
+                    <span class="security-label">{{ __('messages.AVISO:') }}</span> {{ __('auth.Se não solicitou esta alteração, nenhuma ação adicional é necessária e a sua password atual permanecerá segura.') }}
                 </div>
 
                 {{-- Fallback de URL Puro para Clientes Restritos --}}
                 <p class="link-fallback">
-                    Se tiver problemas com o botão acima, copie e cole o URL seguinte no seu navegador:<br>
+                    {{ __('ui.Se tiver problemas com o botão acima, copie e cole o URL seguinte no seu navegador:') }}<br>
                     <a href="{{ $url ?? '#' }}">{{ $url ?? '#' }}</a>
                 </p>
 
                 {{-- Rodapé Sistémico --}}
                 <div class="footer">
-                    <p class="footer-text">Esta é uma notificação compulsória de segurança • Não responda</p>
+                    <p class="footer-text">{{ __('common.Esta é uma notificação compulsória de segurança • Não responda') }}</p>
                 </div>
             </td>
         </tr>

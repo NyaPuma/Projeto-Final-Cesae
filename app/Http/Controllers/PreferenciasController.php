@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Services\LocaleService;
 use App\Services\PreferenciasService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -17,6 +19,8 @@ use Illuminate\View\View;
  * - Língua (language)
  * - Moeda (currency)
  * - Formato de data (date_format)
+ * - Formato de hora (time_format)
+ * - Formato de número (number_format)
  */
 final class PreferenciasController extends Controller
 {
@@ -31,10 +35,57 @@ final class PreferenciasController extends Controller
             'currentLanguage' => $prefs['language'],
             'currentCurrency' => $prefs['currency'],
             'currentDateFormat' => $prefs['date_format'],
-            'supportedLocales' => \App\Services\LocaleService::all(),
+            'currentTimeFormat' => $prefs['time_format'],
+            'currentNumberFormat' => $prefs['number_format'] ?? PreferenciasService::getNumberFormat($request),
+            'supportedLocales' => LocaleService::all(),
             'supportedCurrencies' => PreferenciasService::supportedCurrencies(),
             'supportedDateFormats' => PreferenciasService::supportedDateFormats(),
+            'supportedTimeFormats' => PreferenciasService::supportedTimeFormats(),
+            'supportedNumberFormats' => PreferenciasService::supportedNumberFormats(),
         ]);
+    }
+
+    /**
+     * Resolve o utilizador autenticado (guard web ou token).
+     *
+     * As rotas de preferências não pertencem ao grupo `custom.auth`, pelo que
+     * o guard 'web' não está preenchido; o utilizador é resolvido a partir dos
+     * tokens presentes no pedido quando necessário.
+     */
+    private function resolveUser(Request $request): ?User
+    {
+        return $request->user() ?? \App\Services\AuthUserResolver::fromRequest($request);
+    }
+
+    /**
+     * Preferências de origem (BD do utilizador ou sessão), para preservar os
+     * campos que não estão a ser atualizados neste pedido.
+     */
+    private function currentPreferences(Request $request, ?User $user): array
+    {
+        return $user
+            ? PreferenciasService::forUser($user)
+            : PreferenciasService::fromSession($request);
+    }
+
+    /**
+     * Persiste as preferências (BD para utilizadores autenticados, sessão caso
+     * contrário) e sincroniza o locale na sessão.
+     */
+    private function persist(Request $request, ?User $user, array $preferences, string $locale): void
+    {
+        if ($user) {
+            PreferenciasService::saveForUser($user, $preferences);
+
+            // Também atualizar a coluna locale do user para compatibilidade com SetLocaleMiddleware
+            $user->forceFill(['locale' => $locale])->save();
+        } else {
+            PreferenciasService::saveToSession($request, $preferences);
+        }
+
+        if ($request->hasSession()) {
+            $request->session()->put('locale', $locale);
+        }
     }
 
     /**
@@ -46,31 +97,30 @@ final class PreferenciasController extends Controller
             'language' => 'required|string',
         ]);
 
-        $user = $request->user();
+        $locale = LocaleService::sanitize($validated['language']);
 
-        if ($user) {
-            PreferenciasService::saveForUser($user, [
-                'language' => $validated['language'],
-                'currency' => PreferenciasService::getCurrency($request),
-                'date_format' => PreferenciasService::getDateFormat($request),
-            ]);
-        } else {
-            PreferenciasService::saveToSession($request, [
-                'language' => $validated['language'],
-                'currency' => PreferenciasService::getCurrency($request),
-                'date_format' => PreferenciasService::getDateFormat($request),
-            ]);
-        }
+        $user = $this->resolveUser($request);
+        $current = $this->currentPreferences($request, $user);
+
+        $preferences = [
+            'language' => $locale,
+            'currency' => $current['currency'],
+            'date_format' => $current['date_format'],
+            'time_format' => $current['time_format'],
+            'number_format' => $current['number_format'],
+        ];
+
+        $this->persist($request, $user, $preferences, $locale);
 
         if ($request->wantsJson()) {
             return response()->json([
                 'success' => true,
-                'language' => $validated['language'],
-                'message' => __('Idioma atualizado com sucesso.'),
+                'language' => $locale,
+                'message' => __('preferences.Idioma atualizado com sucesso.'),
             ]);
         }
 
-        return back()->with('success', __('Idioma atualizado com sucesso.'));
+        return back()->with('success', __('preferences.Idioma atualizado com sucesso.'));
     }
 
     /**
@@ -82,31 +132,28 @@ final class PreferenciasController extends Controller
             'currency' => 'required|string|size:3',
         ]);
 
-        $user = $request->user();
+        $user = $this->resolveUser($request);
+        $current = $this->currentPreferences($request, $user);
 
-        if ($user) {
-            PreferenciasService::saveForUser($user, [
-                'language' => PreferenciasService::getLanguage($request),
-                'currency' => $validated['currency'],
-                'date_format' => PreferenciasService::getDateFormat($request),
-            ]);
-        } else {
-            PreferenciasService::saveToSession($request, [
-                'language' => PreferenciasService::getLanguage($request),
-                'currency' => $validated['currency'],
-                'date_format' => PreferenciasService::getDateFormat($request),
-            ]);
-        }
+        $preferences = [
+            'language' => $current['language'],
+            'currency' => $validated['currency'],
+            'date_format' => $current['date_format'],
+            'time_format' => $current['time_format'],
+            'number_format' => $current['number_format'],
+        ];
+
+        $this->persist($request, $user, $preferences, $current['language']);
 
         if ($request->wantsJson()) {
             return response()->json([
                 'success' => true,
                 'currency' => $validated['currency'],
-                'message' => __('Moeda atualizada com sucesso.'),
+                'message' => __('preferences.Moeda atualizada com sucesso.'),
             ]);
         }
 
-        return back()->with('success', __('Moeda atualizada com sucesso.'));
+        return back()->with('success', __('preferences.Moeda atualizada com sucesso.'));
     }
 
     /**
@@ -118,31 +165,94 @@ final class PreferenciasController extends Controller
             'date_format' => 'required|string',
         ]);
 
-        $user = $request->user();
+        $user = $this->resolveUser($request);
+        $current = $this->currentPreferences($request, $user);
 
-        if ($user) {
-            PreferenciasService::saveForUser($user, [
-                'language' => PreferenciasService::getLanguage($request),
-                'currency' => PreferenciasService::getCurrency($request),
-                'date_format' => $validated['date_format'],
-            ]);
-        } else {
-            PreferenciasService::saveToSession($request, [
-                'language' => PreferenciasService::getLanguage($request),
-                'currency' => PreferenciasService::getCurrency($request),
-                'date_format' => $validated['date_format'],
-            ]);
-        }
+        $preferences = [
+            'language' => $current['language'],
+            'currency' => $current['currency'],
+            'date_format' => $validated['date_format'],
+            'time_format' => $current['time_format'],
+            'number_format' => $current['number_format'],
+        ];
+
+        $this->persist($request, $user, $preferences, $current['language']);
 
         if ($request->wantsJson()) {
             return response()->json([
                 'success' => true,
                 'date_format' => $validated['date_format'],
-                'message' => __('Formato de data atualizado com sucesso.'),
+                'message' => __('preferences.Formato de data atualizado com sucesso.'),
             ]);
         }
 
-        return back()->with('success', __('Formato de data atualizado com sucesso.'));
+        return back()->with('success', __('preferences.Formato de data atualizado com sucesso.'));
+    }
+
+    /**
+     * Atualiza o formato de hora do utilizador.
+     */
+    public function updateTimeFormat(Request $request): JsonResponse|RedirectResponse
+    {
+        $validated = $request->validate([
+            'time_format' => 'required|string',
+        ]);
+
+        $user = $this->resolveUser($request);
+        $current = $this->currentPreferences($request, $user);
+
+        $preferences = [
+            'language' => $current['language'],
+            'currency' => $current['currency'],
+            'date_format' => $current['date_format'],
+            'time_format' => $validated['time_format'],
+            'number_format' => $current['number_format'],
+        ];
+
+        $this->persist($request, $user, $preferences, $current['language']);
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'time_format' => $validated['time_format'],
+                'message' => __('preferences.Formato de hora atualizado com sucesso.'),
+            ]);
+        }
+
+        return back()->with('success', __('preferences.Formato de hora atualizado com sucesso.'));
+    }
+
+    /**
+     * Atualiza o formato de números do utilizador.
+     */
+    public function updateNumberFormat(Request $request): JsonResponse|RedirectResponse
+    {
+        $validated = $request->validate([
+            'number_format' => 'required|string',
+        ]);
+
+        $user = $this->resolveUser($request);
+        $current = $this->currentPreferences($request, $user);
+
+        $preferences = [
+            'language' => $current['language'],
+            'currency' => $current['currency'],
+            'date_format' => $current['date_format'],
+            'time_format' => $current['time_format'],
+            'number_format' => $validated['number_format'],
+        ];
+
+        $this->persist($request, $user, $preferences, $current['language']);
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'number_format' => $validated['number_format'],
+                'message' => __('preferences.Formato de números atualizado com sucesso.'),
+            ]);
+        }
+
+        return back()->with('success', __('preferences.Formato de números atualizado com sucesso.'));
     }
 
     /**
@@ -154,24 +264,22 @@ final class PreferenciasController extends Controller
             'language' => 'required|string',
             'currency' => 'required|string|size:3',
             'date_format' => 'required|string',
+            'time_format' => 'required|string',
+            'number_format' => 'nullable|string',
         ]);
 
-        $user = $request->user();
+        $user = $this->resolveUser($request);
 
-        if ($user) {
-            PreferenciasService::saveForUser($user, $validated);
-        } else {
-            PreferenciasService::saveToSession($request, $validated);
-        }
+        $this->persist($request, $user, $validated, $validated['language']);
 
         if ($request->wantsJson()) {
             return response()->json([
                 'success' => true,
                 'preferences' => $validated,
-                'message' => __('Preferências atualizadas com sucesso.'),
+                'message' => __('preferences.Preferências atualizadas com sucesso.'),
             ]);
         }
 
-        return back()->with('success', __('Preferências atualizadas com sucesso.'));
+        return back()->with('success', __('preferences.Preferências atualizadas com sucesso.'));
     }
 }

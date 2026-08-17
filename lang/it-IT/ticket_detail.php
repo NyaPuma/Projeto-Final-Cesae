@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => 'Nessun messaggio registrato.',
+    'comments_error' => 'Errore nel caricamento della cronologia.',
+    'message_sent' => 'Messaggio inviato!',
+    'incident_id' => 'ID segnalazione',
+    'description' => 'Descrizione della segnalazione',
+    'priority_level' => 'Livello di priorità',
+    'equipment' => 'Apparecchiatura / Bene',
+    'room' => 'Sala / Posizione',
+    'technician' => 'Tecnico assegnato',
+    'pending_assignment' => 'In attesa di assegnazione',
+    'reported_by' => 'Segnalato da',
+    'source' => 'Origine',
+    'qr_code' => 'Codice QR',
+    'web' => 'Web',
+    'system' => 'Sistema',
+    'no_description' => 'Nessuna descrizione fornita.',
+    'Data de abertura (De)' => 'Data di apertura (Da)',
+    'Detalhe de um fornecedor' => 'Dettaglio di un fornitore',
+    'Detalhe de um fornecedor.' => 'Dettaglio di un fornitore.',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => 'Descrivi il problema verificatosi, rumori, perdite o comportamenti anomali...',
+    'Detalhes do Incidente' => 'Dettagli dell’incidente',
+];

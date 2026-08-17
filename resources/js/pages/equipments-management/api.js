@@ -29,37 +29,3 @@ export async function fetchEquipments(page) {
 
     return response.json().catch(() => ({}));
 }
-
-export async function fetchCurrentUser() {
-    const response = await fetch('/profile', {
-        headers: authHeader(),
-    });
-
-    if (!response.ok) {
-        return null;
-    }
-
-    return response.json().catch(() => null);
-}
-
-export async function persistEquipment(formData) {
-    const id = formData.get('id');
-    const method = id ? 'PATCH' : 'POST';
-    const url = id ? `/admin/equipment/${id}` : '/admin/equipment';
-
-    const payload = Object.fromEntries(formData);
-
-    const response = await fetch(url, {
-        method,
-        headers: { ...authHeader(), 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-    });
-
-    const data = await response.json().catch(() => ({}));
-
-    if (!response.ok) {
-        throw new Error(data.message || 'Ocorreu um erro ao guardar o equipamento.');
-    }
-
-    return data;
-}

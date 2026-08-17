@@ -70,6 +70,14 @@ jobs:
       - name: Run PHPUnit tests
         run: php artisan test
 
+      - name: Verify scheduler registration
+        run: php artisan schedule:list
+
+      - name: Verify database queue driver is healthy
+        run: |
+          DB_CONNECTION=sqlite DB_DATABASE=/tmp/ci-queue.sqlite php artisan migrate --force
+          DB_CONNECTION=sqlite DB_DATABASE=/tmp/ci-queue.sqlite php artisan queue:work --once
+
   static-analysis:
     name: Static Analysis
     runs-on: ubuntu-latest

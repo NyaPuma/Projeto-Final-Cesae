@@ -211,4 +211,53 @@ class AdminManagementTest extends TestCase
         $this->assertEquals($technician->id, $ticket->assigned_to);
         $this->assertNotNull($ticket->scheduled_at);
     }
+
+    public function test_admin_can_schedule_preventive_without_technician(): void
+    {
+        $adminProfile = UserProfile::where('name', UserRoleEnum::Admin->value)->firstOrFail();
+
+        $admin = User::factory()->create([
+            'profile_id' => $adminProfile->id,
+            'api_token' => Str::random(60),
+        ]);
+
+        $response = $this->withHeader('X-Auth-Token', $admin->api_token)
+            ->postJson('/api/admin/preventive', [
+                'title' => 'Preventiva sem técnico atribuído',
+                'description' => 'Deve criar o ticket sem técnico.',
+                'scheduled_at' => now()->addDays(3)->toDateTimeString(),
+            ]);
+
+        $response->assertCreated();
+        $ticket = Ticket::findOrFail($response->json('ticket.id'));
+        $this->assertNull($ticket->assigned_to);
+    }
+
+    public function test_preventive_validation_errors(): void
+    {
+        $adminProfile = UserProfile::where('name', UserRoleEnum::Admin->value)->firstOrFail();
+        $admin = User::factory()->create([
+            'profile_id' => $adminProfile->id,
+            'api_token' => Str::random(60),
+        ]);
+
+        $send = fn (array $payload) => $this->withHeader('X-Auth-Token', $admin->api_token)
+            ->postJson('/api/admin/preventive', $payload);
+
+        // Campos obrigatórios em falta
+        $send([])->assertStatus(422)->assertJsonValidationErrors(['title', 'scheduled_at']);
+
+        // Data no passado
+        $send([
+            'title' => 'Preventiva passada',
+            'scheduled_at' => now()->subDay()->toDateTimeString(),
+        ])->assertStatus(422)->assertJsonValidationErrors(['scheduled_at']);
+
+        // technician_id inexistente
+        $send([
+            'title' => 'Preventiva',
+            'scheduled_at' => now()->addWeek()->toDateTimeString(),
+            'technician_id' => 99999,
+        ])->assertStatus(422)->assertJsonValidationErrors(['technician_id']);
+    }
 }

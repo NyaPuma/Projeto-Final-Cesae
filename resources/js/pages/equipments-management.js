@@ -1,7 +1,5 @@
-import { fetchEquipments, persistEquipment } from './equipments-management/api.js';
-import { bindPagination, clearEquipmentFilters, getEquipmentForm, renderLoadingState } from './equipments-management/dom.js';
-import { bindEquipmentModalDismiss, closeEquipmentModal, openEquipmentModal, reportEquipmentSaveError } from './equipments-management/modal.js';
-import { revealAdminActions } from './equipments-management/permissions.js';
+import { fetchEquipments } from './equipments-management/api.js';
+import { bindPagination, clearEquipmentFilters, renderLoadingState } from './equipments-management/dom.js';
 import { renderEmptyState, renderEquipments, renderErrorState, renderPagination, renderResultsCount, showFeedback } from './equipments-management/render.js';
 import { equipmentsState, setCurrentPage } from './equipments-management/state.js';
 
@@ -13,9 +11,9 @@ async function loadEquipments(page = 1) {
         const data = await fetchEquipments(page);
         if (!data) return;
 
-        const equipments = data.equipments?.data ?? [];
+        const equipments = data.equipments?.data ?? data.equipments ?? [];
         const meta = data.equipments ?? {};
-        const total = meta.total ?? equipments.length;
+        const total = meta.meta?.total ?? meta.total ?? equipments.length;
 
         renderResultsCount(total);
 
@@ -29,18 +27,6 @@ async function loadEquipments(page = 1) {
     } catch (error) {
         showFeedback(error.message, true);
         renderErrorState(error.message);
-    }
-}
-
-async function handleEquipmentSave(event) {
-    event.preventDefault();
-
-    try {
-        await persistEquipment(new FormData(event.currentTarget));
-        closeEquipmentModal();
-        await loadEquipments(equipmentsState.currentPage);
-    } catch (error) {
-        reportEquipmentSaveError(error.message);
     }
 }
 
@@ -59,17 +45,9 @@ function bindFilters() {
     document.getElementById('filter_status')?.addEventListener('change', () => loadEquipments(1));
 }
 
-function bindEquipmentActions() {
-    document.getElementById('btnAddEquipment')?.addEventListener('click', openEquipmentModal);
-    getEquipmentForm()?.addEventListener('submit', handleEquipmentSave);
-}
-
 function init() {
     bindFilters();
-    bindEquipmentActions();
-    bindEquipmentModalDismiss();
     bindPagination(loadEquipments);
-    revealAdminActions();
     loadEquipments(equipmentsState.currentPage);
 }
 

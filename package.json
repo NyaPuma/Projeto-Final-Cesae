@@ -15,6 +15,10 @@
         "vite": "^8.1.5"
     },
     "dependencies": {
+        "@fullcalendar/core": "^6.1.8",
+        "@fullcalendar/daygrid": "^6.1.8",
+        "@fullcalendar/interaction": "^6.1.8",
+        "@fullcalendar/timegrid": "^6.1.8",
         "alpinejs": "^3.15.12",
         "chart.js": "^4.5.1",
         "laravel-echo": "^2.4.0",

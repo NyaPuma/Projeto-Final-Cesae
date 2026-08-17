@@ -1,6 +1,5 @@
-import { fetchRooms, persistRoom } from './rooms-management/api.js';
-import { bindPagination, clearRoomFilters, getRoomForm, renderLoadingState } from './rooms-management/dom.js';
-import { bindRoomModalDismiss, closeRoomModal, openRoomModal, reportRoomSaveError } from './rooms-management/modal.js';
+import { fetchRooms } from './rooms-management/api.js';
+import { bindPagination, clearRoomFilters, renderLoadingState } from './rooms-management/dom.js';
 import { renderEmptyState, renderErrorState, renderPagination, renderResultsCount, renderRooms, showFeedback } from './rooms-management/render.js';
 import { roomsState, setCurrentPage } from './rooms-management/state.js';
 
@@ -12,9 +11,9 @@ async function loadRooms(page = 1) {
         const data = await fetchRooms(page);
         if (!data) return;
 
-        const rooms = data.rooms?.data ?? [];
+        const rooms = data.rooms?.data ?? data.rooms ?? [];
         const meta = data.rooms ?? {};
-        const total = meta.total ?? rooms.length;
+        const total = meta.meta?.total ?? meta.total ?? rooms.length;
 
         renderResultsCount(total);
 
@@ -28,18 +27,6 @@ async function loadRooms(page = 1) {
     } catch (error) {
         showFeedback(error.message, true);
         renderErrorState(error.message);
-    }
-}
-
-async function handleRoomSave(event) {
-    event.preventDefault();
-
-    try {
-        await persistRoom(new FormData(event.currentTarget));
-        closeRoomModal();
-        await loadRooms(roomsState.currentPage);
-    } catch (error) {
-        reportRoomSaveError(error.message);
     }
 }
 
@@ -60,15 +47,8 @@ function bindFilters() {
     });
 }
 
-function bindRoomActions() {
-    document.getElementById('btnAddRoom')?.addEventListener('click', openRoomModal);
-    getRoomForm()?.addEventListener('submit', handleRoomSave);
-}
-
 function init() {
     bindFilters();
-    bindRoomActions();
-    bindRoomModalDismiss();
     bindPagination(loadRooms);
     loadRooms(roomsState.currentPage);
 }

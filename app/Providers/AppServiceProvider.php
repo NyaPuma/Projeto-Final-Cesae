@@ -6,16 +6,30 @@ namespace App\Providers;
 
 use App\Models\Audit;
 use App\Models\Equipment;
+use App\Models\MaintenancePlan;
+use App\Models\Part;
+use App\Models\PartCategory;
 use App\Models\Room;
+use App\Models\StockMovement;
+use App\Models\Supplier;
+use App\Models\TaxRate;
 use App\Models\Ticket;
 use App\Models\User;
+use App\Models\UserProfile;
 use App\Observers\AuditObserver;
 use App\Observers\TicketObserver;
 use App\Observers\UserObserver;
 use App\Policies\EquipmentPolicy;
+use App\Policies\MaintenancePlanPolicy;
+use App\Policies\PartCategoryPolicy;
+use App\Policies\PartPolicy;
 use App\Policies\RoomPolicy;
+use App\Policies\StockMovementPolicy;
+use App\Policies\SupplierPolicy;
+use App\Policies\TaxRatePolicy;
 use App\Policies\TicketPolicy;
 use App\Policies\UserPolicy;
+use App\Policies\UserProfilePolicy;
 use App\Repositories\Contracts\EquipmentRepositoryInterface;
 use App\Repositories\Contracts\RoomRepositoryInterface;
 use App\Repositories\Contracts\TicketRepositoryInterface;
@@ -27,8 +41,10 @@ use App\Repositories\UserRepository;
 use App\Services\AIService;
 use App\Services\AnalyticsService;
 use App\Services\NotificationService;
+use App\Services\SystemSettingsService;
 use App\Services\TicketStatusService;
 use Illuminate\Database\Events\QueryExecuted;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
@@ -52,6 +68,7 @@ final class AppServiceProvider extends ServiceProvider
         $this->app->singleton(AnalyticsService::class);
         $this->app->singleton(NotificationService::class);
         $this->app->singleton(AIService::class);
+        $this->app->singleton(SystemSettingsService::class);
     }
 
     /**
@@ -62,6 +79,10 @@ final class AppServiceProvider extends ServiceProvider
         $this->registerPolicies();
         $this->registerObservers();
         $this->registerSlowQueryListener();
+        $this->registerFormattingDirectives();
+
+        // Aplica os overrides guardados na página de Definições → Configurações
+        $this->app->make(SystemSettingsService::class)->applyOverrides();
     }
 
     /**
@@ -73,6 +94,34 @@ final class AppServiceProvider extends ServiceProvider
         Gate::policy(User::class, UserPolicy::class);
         Gate::policy(Equipment::class, EquipmentPolicy::class);
         Gate::policy(Room::class, RoomPolicy::class);
+        Gate::policy(UserProfile::class, UserProfilePolicy::class);
+        Gate::policy(Part::class, PartPolicy::class);
+        Gate::policy(Supplier::class, SupplierPolicy::class);
+        Gate::policy(StockMovement::class, StockMovementPolicy::class);
+        Gate::policy(TaxRate::class, TaxRatePolicy::class);
+        Gate::policy(PartCategory::class, PartCategoryPolicy::class);
+        Gate::policy(MaintenancePlan::class, MaintenancePlanPolicy::class);
+    }
+
+    /**
+     * Regista as directives de formatação localizada usadas nas views.
+     */
+    private function registerFormattingDirectives(): void
+    {
+        $service = \App\Services\LocalizationService::class;
+
+        Blade::directive('money', static fn (string $expr) => "<?php echo app({$service}::class)->formatCurrency($expr); ?>");
+        Blade::directive('number', static fn (string $expr) => "<?php echo app({$service}::class)->formatNumber($expr); ?>");
+        Blade::directive('percent', static fn (string $expr) => "<?php echo app({$service}::class)->formatPercent($expr); ?>");
+        Blade::directive('date', static fn (string $expr) => "<?php echo app({$service}::class)->formatDate($expr); ?>");
+        Blade::directive('datetime', static fn (string $expr) => "<?php echo app({$service}::class)->formatDateTime($expr); ?>");
+
+        // Diretivas @localized*
+        Blade::directive('localizedDate', static fn (string $expr) => "<?php echo app({$service}::class)->formatDate($expr); ?>");
+        Blade::directive('localizedDateTime', static fn (string $expr) => "<?php echo app({$service}::class)->formatDateTime($expr); ?>");
+        Blade::directive('localizedNumber', static fn (string $expr) => "<?php echo app({$service}::class)->formatNumber($expr); ?>");
+        Blade::directive('localizedCurrency', static fn (string $expr) => "<?php echo app({$service}::class)->formatCurrency($expr); ?>");
+        Blade::directive('localizedUnit', static fn (string $expr) => "<?php echo app({$service}::class)->convertUnit($expr)['formatted']; ?>");
     }
 
     /**

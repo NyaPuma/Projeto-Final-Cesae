@@ -14,19 +14,26 @@ export function renderAuthBox(profileUrl, loginUrl) {
 
     const userData = getUserData();
     const { name, role, token } = userData;
+    const body = document.body;
+    const translations = window.SGM_AUTH_I18N || {
+        profile: body?.dataset.authProfile,
+        logout: body?.dataset.authLogout,
+        signin: body?.dataset.authSignin,
+        loginRegister: body?.dataset.authLoginRegister,
+    };
 
     if (token) {
         if (box) {
             box.innerHTML = `
                 <div class="space-y-2">
                     <a href="${profileUrl}" class="w-full inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-(--on-primary) shadow-sm shadow-primary/20 hover:bg-(--primary-hover) transition-all duration-200 text-center">
-                        Ver Perfil
+                        ${translations.profile || ''}
                     </a>
                     <button
                         data-action="logout"
                         class="w-full inline-flex items-center justify-center rounded-xl bg-(--border) hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-400 px-4 py-2.5 text-xs font-semibold text-(--text) border border-transparent hover:border-red-500/20 transition-all duration-200 cursor-pointer"
                     >
-                        Terminar Sessão
+                        ${translations.logout || ''}
                     </button>
                 </div>
             `;
@@ -36,13 +43,13 @@ export function renderAuthBox(profileUrl, loginUrl) {
             boxMobile.innerHTML = `
                 <div class="space-y-2">
                     <a href="${profileUrl}" class="w-full inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-(--on-primary) shadow-sm shadow-primary/20 hover:bg-(--primary-hover) transition-all duration-200 text-center">
-                        Ver Perfil
+                        ${translations.profile || ''}
                     </a>
                     <button
                         data-action="logout"
                         class="w-full inline-flex items-center justify-center rounded-xl bg-(--border) hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-400 px-4 py-2.5 text-xs font-semibold text-(--text) border border-transparent hover:border-red-500/20 transition-all duration-200 cursor-pointer"
                     >
-                        Terminar Sessão
+                        ${translations.logout || ''}
                     </button>
                 </div>
             `;
@@ -68,7 +75,7 @@ export function renderAuthBox(profileUrl, loginUrl) {
                     href="${loginUrl}"
                     class="w-full inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-(--on-primary) shadow-sm shadow-primary/10 transition-all duration-200 hover:opacity-90 text-center"
                 >
-                    Iniciar Sessão
+                    ${translations.signin || ''}
                 </a>
             `;
         }
@@ -79,7 +86,7 @@ export function renderAuthBox(profileUrl, loginUrl) {
                     href="${loginUrl}"
                     class="w-full inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-(--on-primary) shadow-sm shadow-primary/10 transition-all duration-200 hover:opacity-90 text-center"
                 >
-                    Iniciar Sessão
+                    ${translations.signin || ''}
                 </a>
             `;
         }
@@ -87,7 +94,7 @@ export function renderAuthBox(profileUrl, loginUrl) {
         if (topbarUser) {
             topbarUser.innerHTML = `
                 <a href="${loginUrl}" class="inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-(--on-primary) shadow-sm shadow-primary/10 transition-all duration-200 hover:opacity-90">
-                    Login / Registo
+                    ${translations.loginRegister || ''}
                 </a>
             `;
         }

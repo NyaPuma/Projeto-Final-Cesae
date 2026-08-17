@@ -369,4 +369,86 @@ class CustomAuthMiddlewareTest extends TestCase
 
         $response->assertStatus(401);
     }
+
+    #[Test]
+    public function it_allows_access_with_a_valid_cookie_token(): void
+    {
+        $userProfile = UserProfile::where('name', UserRoleEnum::Technician->value)->first();
+
+        $user = User::factory()->create([
+            'profile_id' => $userProfile->id,
+            'api_token' => bin2hex(random_bytes(32)),
+            'active' => true,
+        ]);
+
+        Route::middleware(['custom.auth'])->get('/protected-auth', function () {
+            return response()->json([
+                'message' => 'Access granted.',
+            ], 200);
+        })->name('test.protected.auth.cookie');
+
+        $response = $this->withHeader('Accept', 'application/json')
+            ->call('GET', '/protected-auth', [], ['api_token' => $user->api_token]);
+
+        $response->assertStatus(200);
+        $response->assertJson(['message' => 'Access granted.']);
+    }
+
+    #[Test]
+    public function it_rejects_expired_tokens_with_401_and_clears_the_token(): void
+    {
+        $userProfile = UserProfile::where('name', UserRoleEnum::Technician->value)->first();
+
+        $user = User::factory()->create([
+            'profile_id' => $userProfile->id,
+            'api_token' => bin2hex(random_bytes(32)),
+            'active' => true,
+            'token_created_at' => now()->subDays(40),
+        ]);
+
+        Route::middleware(['custom.auth'])->get('/protected-auth', function () {
+            return response()->json([
+                'message' => 'Access granted.',
+            ], 200);
+        })->name('test.protected.auth.expired');
+
+        $response = $this->withHeader('X-Auth-Token', $user->api_token)
+            ->getJson('/protected-auth');
+
+        $response->assertStatus(401);
+        $response->assertJson([
+            'message' => 'Token expirado. Faça login novamente.',
+            'error_code' => 401,
+        ]);
+
+        $this->assertDatabaseHas('users', [
+            'id' => $user->id,
+            'api_token' => null,
+        ]);
+    }
+
+    #[Test]
+    public function it_accepts_tokens_within_the_validity_window(): void
+    {
+        $userProfile = UserProfile::where('name', UserRoleEnum::Technician->value)->first();
+
+        $user = User::factory()->create([
+            'profile_id' => $userProfile->id,
+            'api_token' => bin2hex(random_bytes(32)),
+            'active' => true,
+            'token_created_at' => now()->subDays(10),
+        ]);
+
+        Route::middleware(['custom.auth'])->get('/protected-auth', function () {
+            return response()->json([
+                'message' => 'Access granted.',
+            ], 200);
+        })->name('test.protected.auth.valid.window');
+
+        $response = $this->withHeader('X-Auth-Token', $user->api_token)
+            ->getJson('/protected-auth');
+
+        $response->assertStatus(200);
+        $response->assertJson(['message' => 'Access granted.']);
+    }
 }

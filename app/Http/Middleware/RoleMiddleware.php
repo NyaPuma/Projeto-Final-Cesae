@@ -2,9 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Enums\UserRoleEnum;
 use App\Models\User;
-use App\Models\UserProfile;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,15 +24,8 @@ final class RoleMiddleware
         }
 
         // 2. Garante que o utilizador possui um perfil válido atribuído
-        if (! $user->profile) {
-            $defaultProfile = UserProfile::where('name', UserRoleEnum::User->value)->first();
-
-            if ($defaultProfile && ! $user->profile_id) {
-                $user->update(['profile_id' => $defaultProfile->id]);
-                $user->load('profile');
-            } else {
-                return $this->handleInvalidProfile($request);
-            }
+        if (! $user->profile_id || ! $user->profile?->name) {
+            return $this->handleInvalidProfile($request);
         }
 
         // 3. Verifica se o papel do utilizador está autorizado para a rota
@@ -52,7 +43,7 @@ final class RoleMiddleware
     {
         if ($request->expectsJson() || $request->wantsJson()) {
             return response()->json([
-                'message' => __('Autenticação necessária.'),
+                'message' => __('auth.Autenticação necessária.'),
             ], 401);
         }
 
@@ -70,7 +61,7 @@ final class RoleMiddleware
     {
         if ($request->expectsJson() || $request->wantsJson()) {
             return response()->json([
-                'message' => __('Perfil inválido.'),
+                'message' => __('validation.Perfil inválido.'),
             ], 403);
         }
 
@@ -84,10 +75,10 @@ final class RoleMiddleware
     {
         if ($request->expectsJson() || $request->wantsJson()) {
             return response()->json([
-                'message' => __('Acesso proibido para o seu perfil.'),
+                'message' => __('common.Acesso proibido para o seu perfil.'),
             ], 403);
         }
 
-        return redirect('/ui')->with('error', __('Não tem permissões para aceder a esta página.'));
+        return redirect('/ui')->with('error', __('common.Não tem permissões para aceder a esta página.'));
     }
 }

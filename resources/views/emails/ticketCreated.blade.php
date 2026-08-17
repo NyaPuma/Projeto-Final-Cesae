@@ -47,44 +47,44 @@
     <table role="presentation" class="container">
         <tr>
             <td>
-                <div class="header-badge">Notificação de Incidente</div>
-                <h1 class="title">Nova Avaria Registada #{{ $ticket->id }}</h1>
+                <div class="header-badge">{{ __('common.Notificação de Incidente') }}</div>
+                <h1 class="title">{{ __('common.Nova Avaria Registada #:id', ['id' => $ticket->id]) }}</h1>
 
-                <p class="greeting">Olá,</p>
-                <p class="greeting greeting--last">Foi submetido um novo registo de avaria no sistema com os seguintes parâmetros operacionais:</p>
+                <p class="greeting">{{ __('common.Olá,') }}</p>
+                <p class="greeting greeting--last">{{ __('messages.Foi submetido um novo registo de avaria no sistema com os seguintes parâmetros operacionais:') }}</p>
 
                 <table role="presentation" class="details-table">
                     <tr class="data-row">
-                        <td class="label">Título</td>
+                        <td class="label">{{ __('common.Título') }}</td>
                         <td class="value value--title">{{ $ticket->title }}</td>
                     </tr>
                     <tr class="data-row">
-                        <td class="label">Equipamento</td>
-                        <td class="value">{{ $ticket->equipment?->name ?? 'Não especificado' }}</td>
+                        <td class="label">{{ __('equipment.Equipamento') }}</td>
+                        <td class="value">{{ $ticket->equipment?->name ?? __('common.Não especificado') }}</td>
                     </tr>
                     <tr class="data-row">
-                        <td class="label">Sala / Espaço</td>
-                        <td class="value">{{ $ticket->room?->name ?? 'Não especificada' }}</td>
+                        <td class="label">{{ __('room.Sala / Espaço') }}</td>
+                        <td class="value">{{ $ticket->room?->name ?? __('common.Não especificada') }}</td>
                     </tr>
                     <tr class="data-row">
-                        <td class="label">Prioridade</td>
+                        <td class="label">{{ __('common.Prioridade') }}</td>
                         <td class="value value--mono {{ match(strtolower($ticket->priority)) { 'alta', 'critica', 'crítica' => 'value--priority-high', 'media', 'média' => 'value--priority-medium', default => 'value--priority-default' } }}">
                             [{{ strtoupper($ticket->priority) }}]
                         </td>
                     </tr>
                     <tr class="data-row">
-                        <td class="label">Registado Por</td>
+                        <td class="label">{{ __('common.Registado Por') }}</td>
                         <td class="value">{{ $ticket->user?->name ?? 'Utilizador do Sistema' }}</td>
                     </tr>
                     <tr class="data-row">
-                        <td class="label">Data de Entrada</td>
+                        <td class="label">{{ __('common.Data de Entrada') }}</td>
                         <td class="value value--mono">
-                            {{ $ticket->created_at?->format('Y-m-d H:i') ?? now()->format('Y-m-d H:i') }}
+                            ($ticket->created_at ?? now())
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2" class="description-cell">
-                            <div class="label label--sub">Descrição do Sintoma</div>
+                            <div class="label label--sub">{{ __('common.Descrição do Sintoma') }}</div>
                             <div class="description-box">
                                 {{ $ticket->description }}
                             </div>
@@ -94,14 +94,14 @@
 
                 <div class="btn-container">
                     <a href="{{ url('/tickets/' . $ticket->id) }}" class="btn-action">
-                        Ver Detalhes do Ticket
+                        {{ __('tickets.Ver Detalhes do Ticket') }}
                     </a>
                 </div>
 
-                <p class="notice">O ciclo de vida, atribuição de técnicos e auditoria deste ticket podem ser geridos diretamente através do painel de controlo principal.</p>
+                <p class="notice">{{ __('tickets.O ciclo de vida, atribuição de técnicos e auditoria deste ticket podem ser geridos diretamente através do painel de controlo principal.') }}</p>
 
                 <div class="footer">
-                    <p class="footer-text">Mensagem automática de sistema • Não responda a este endereço</p>
+                    <p class="footer-text">{{ __('messages.Mensagem automática de sistema • Não responda a este endereço') }}</p>
                 </div>
             </td>
         </tr>

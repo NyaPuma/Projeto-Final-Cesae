@@ -2,6 +2,7 @@
 
 namespace Tests\Performance\Auth;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Tests\Performance\PerformanceTestCase;
 
@@ -90,8 +91,12 @@ class AuthPerformanceTest extends PerformanceTestCase
         $password = 'TestPassword123!';
         $this->commonUser->update(['password' => Hash::make($password)]);
 
+        $limiter = $this->app->make(\Illuminate\Cache\RateLimiter::class);
+        $key = sha1('127.0.0.1|'.$this->commonUser->email);
+
         $totalTime = $this->measureTime(function () use ($password) {
             for ($i = 0; $i < 20; $i++) {
+                Cache::flush();
                 $this->postJson('/api/login', [
                     'email' => $this->commonUser->email,
                     'password' => $password,

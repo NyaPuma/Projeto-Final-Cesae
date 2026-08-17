@@ -24,11 +24,11 @@ enum FileTypeEnum: string
     public function label(): string
     {
         return match ($this) {
-            self::Image => 'Imagem',
-            self::Document => 'Documento',
-            self::Video => 'Vídeo',
-            self::Audio => 'Áudio',
-            self::Other => 'Outro',
+            self::Image => __('ticket_media.Imagem'),
+            self::Document => __('common.Documento'),
+            self::Video => __('common.Vídeo'),
+            self::Audio => __('common.Áudio'),
+            self::Other => __('common.Outro'),
         };
     }
 

@@ -217,4 +217,123 @@ class TicketPolicyTest extends DatabaseTestCase
 
         $this->assertFalse($this->policy->approveBudget($user, $ticket));
     }
+
+    #[Test]
+    public function only_admin_or_technician_can_update_a_ticket(): void
+    {
+        $admin = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::Admin->value)->first()->id]);
+        $technician = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::Technician->value)->first()->id]);
+        $user = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->first()->id]);
+        $ticket = Ticket::factory()->create(['user_id' => $user->id]);
+
+        $this->assertTrue($this->policy->update($admin, $ticket));
+        $this->assertTrue($this->policy->update($technician, $ticket));
+        $this->assertFalse($this->policy->update($user, $ticket));
+    }
+
+    #[Test]
+    public function only_admin_can_delete_a_ticket(): void
+    {
+        $admin = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::Admin->value)->first()->id]);
+        $technician = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::Technician->value)->first()->id]);
+        $ticket = Ticket::factory()->create();
+
+        $this->assertTrue($this->policy->delete($admin, $ticket));
+        $this->assertFalse($this->policy->delete($technician, $ticket));
+    }
+
+    #[Test]
+    public function owner_can_comment_and_attach_photos_to_own_ticket(): void
+    {
+        $user = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->first()->id]);
+        $otherUser = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->first()->id]);
+        $own = Ticket::factory()->create(['user_id' => $user->id]);
+        $other = Ticket::factory()->create(['user_id' => $otherUser->id]);
+
+        $this->assertTrue($this->policy->comment($user, $own));
+        $this->assertFalse($this->policy->comment($user, $other));
+        $this->assertTrue($this->policy->attachPhoto($user, $own));
+        $this->assertFalse($this->policy->attachPhoto($user, $other));
+        $this->assertTrue($this->policy->deletePhoto($user, $own));
+        $this->assertFalse($this->policy->deletePhoto($user, $other));
+    }
+
+    #[Test]
+    public function staff_can_comment_on_any_ticket(): void
+    {
+        $technician = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::Technician->value)->first()->id]);
+        $ticket = Ticket::factory()->create();
+
+        $this->assertTrue($this->policy->comment($technician, $ticket));
+        $this->assertTrue($this->policy->attachPhoto($technician, $ticket));
+        $this->assertTrue($this->policy->deletePhoto($technician, $ticket));
+    }
+
+    #[Test]
+    public function only_owner_or_staff_can_schedule_a_ticket(): void
+    {
+        $user = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->first()->id]);
+        $otherUser = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->first()->id]);
+        $technician = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::Technician->value)->first()->id]);
+        $own = Ticket::factory()->create(['user_id' => $user->id]);
+        $other = Ticket::factory()->create(['user_id' => $otherUser->id]);
+
+        $this->assertTrue($this->policy->schedule($technician, $other));
+        $this->assertTrue($this->policy->schedule($user, $own));
+        $this->assertFalse($this->policy->schedule($user, $other));
+    }
+
+    #[Test]
+    public function only_technician_or_admin_can_submit_budget(): void
+    {
+        $admin = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::Admin->value)->first()->id]);
+        $technician = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::Technician->value)->first()->id]);
+        $user = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->first()->id]);
+        $ticket = Ticket::factory()->create();
+
+        $this->assertTrue($this->policy->submitBudget($admin, $ticket));
+        $this->assertTrue($this->policy->submitBudget($technician, $ticket));
+        $this->assertFalse($this->policy->submitBudget($user, $ticket));
+    }
+
+    #[Test]
+    public function only_technician_can_start_repair(): void
+    {
+        $admin = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::Admin->value)->first()->id]);
+        $technician = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::Technician->value)->first()->id]);
+        $ticket = Ticket::factory()->create();
+
+        $this->assertTrue($this->policy->startRepair($technician, $ticket));
+        $this->assertFalse($this->policy->startRepair($admin, $ticket));
+    }
+
+    #[Test]
+    public function only_assigned_technician_can_request_budget(): void
+    {
+        $technician = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::Technician->value)->first()->id]);
+        $otherTechnician = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::Technician->value)->first()->id]);
+        $assigned = Ticket::factory()->create(['assigned_to' => $technician->id]);
+        $unassigned = Ticket::factory()->create();
+
+        $this->assertTrue($this->policy->requestBudget($technician, $assigned));
+        $this->assertFalse($this->policy->requestBudget($otherTechnician, $assigned));
+        $this->assertFalse($this->policy->requestBudget($technician, $unassigned));
+    }
+
+    #[Test]
+    public function only_admin_can_assign_analytics_and_preventive(): void
+    {
+        $admin = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::Admin->value)->first()->id]);
+        $technician = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::Technician->value)->first()->id]);
+        $ticket = Ticket::factory()->create();
+
+        $this->assertTrue($this->policy->assign($admin, $ticket));
+        $this->assertFalse($this->policy->assign($technician, $ticket));
+        $this->assertTrue($this->policy->viewAnalytics($admin));
+        $this->assertFalse($this->policy->viewAnalytics($technician));
+        $this->assertTrue($this->policy->exportAnalytics($admin));
+        $this->assertFalse($this->policy->exportAnalytics($technician));
+        $this->assertTrue($this->policy->createPreventive($admin));
+        $this->assertFalse($this->policy->createPreventive($technician));
+    }
 }

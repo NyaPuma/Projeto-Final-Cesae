@@ -1,0 +1,622 @@
+<?php
+
+namespace App\Services;
+
+use App\Models\ThemeSetting;
+
+/**
+ * Fonte única dos temas pré-definidos (14 famílias × claro/escuro = 28 temas).
+ *
+ * Cada tema define o conjunto completo das cores guardadas em `theme_settings`.
+ * A cada família corresponde um par light/dark com o mesmo matiz — o botão
+ * de alternância claro/escuro troca para o equivalente e guarda-o.
+ */
+final class ThemePresetService
+{
+    /**
+     * Chaves de cor guardadas em theme_settings (nomes dos campos do formulário).
+     */
+    private const COLOR_KEYS = [
+        'primary', 'text', 'text_soft', 'surface', 'surface_alt', 'border',
+        'ticket_open', 'ticket_in_progress', 'ticket_resolved', 'ticket_urgent',
+    ];
+
+    /**
+     * Mapping nome de campo -> token CSS.
+     */
+    private const TOKENS = [
+        'primary' => '--color-primary',
+        'text' => '--color-text',
+        'text_soft' => '--color-text-soft',
+        'surface' => '--color-surface',
+        'surface_alt' => '--color-surface-alt',
+        'border' => '--color-border',
+        'ticket_open' => '--color-ticket-open',
+        'ticket_in_progress' => '--color-ticket-in-progress',
+        'ticket_resolved' => '--color-ticket-resolved',
+        'ticket_urgent' => '--color-ticket-urgent',
+    ];
+
+    /**
+     * @return array<string, array<string, string>> id do tema -> preset
+     */
+    public function all(): array
+    {
+        return [
+            'claro-laranja' => [
+                'label' => __('common.Laranja Industrial'),
+                'mode' => 'light',
+                'family' => 'laranja',
+                'primary' => '#ea580c',
+                'text' => '#0f172a',
+                'text_soft' => '#475569',
+                'surface' => '#ffffff',
+                'surface_alt' => '#e2e8f0',
+                'border' => '#cbd5e1',
+                'ticket_open' => '#2563eb',
+                'ticket_in_progress' => '#d97706',
+                'ticket_resolved' => '#059669',
+                'ticket_urgent' => '#dc2626',
+            ],
+            'escuro-laranja' => [
+                'label' => __('common.Laranja Noturno'),
+                'mode' => 'dark',
+                'family' => 'laranja',
+                'primary' => '#f97316',
+                'text' => '#f8fafc',
+                'text_soft' => '#94a3b8',
+                'surface' => '#0f172a',
+                'surface_alt' => '#1e293b',
+                'border' => '#334155',
+                'ticket_open' => '#3b82f6',
+                'ticket_in_progress' => '#fbbf24',
+                'ticket_resolved' => '#34d399',
+                'ticket_urgent' => '#f87171',
+            ],
+            'claro-azul' => [
+                'label' => __('common.Azul Profissional'),
+                'mode' => 'light',
+                'family' => 'azul',
+                'primary' => '#1d4ed8',
+                'text' => '#0f172a',
+                'text_soft' => '#475569',
+                'surface' => '#ffffff',
+                'surface_alt' => '#e2e8f0',
+                'border' => '#cbd5e1',
+                'ticket_open' => '#2563eb',
+                'ticket_in_progress' => '#d97706',
+                'ticket_resolved' => '#059669',
+                'ticket_urgent' => '#dc2626',
+            ],
+            'escuro-azul' => [
+                'label' => __('common.Azul Noturno'),
+                'mode' => 'dark',
+                'family' => 'azul',
+                'primary' => '#60a5fa',
+                'text' => '#f8fafc',
+                'text_soft' => '#94a3b8',
+                'surface' => '#0f172a',
+                'surface_alt' => '#1e293b',
+                'border' => '#334155',
+                'ticket_open' => '#3b82f6',
+                'ticket_in_progress' => '#fbbf24',
+                'ticket_resolved' => '#34d399',
+                'ticket_urgent' => '#f87171',
+            ],
+            'claro-verde' => [
+                'label' => __('common.Verde Saúde'),
+                'mode' => 'light',
+                'family' => 'verde',
+                'primary' => '#047857',
+                'text' => '#0f172a',
+                'text_soft' => '#475569',
+                'surface' => '#ffffff',
+                'surface_alt' => '#e2e8f0',
+                'border' => '#cbd5e1',
+                'ticket_open' => '#2563eb',
+                'ticket_in_progress' => '#d97706',
+                'ticket_resolved' => '#059669',
+                'ticket_urgent' => '#dc2626',
+            ],
+            'escuro-verde' => [
+                'label' => __('common.Verde Noturno'),
+                'mode' => 'dark',
+                'family' => 'verde',
+                'primary' => '#34d399',
+                'text' => '#f8fafc',
+                'text_soft' => '#94a3b8',
+                'surface' => '#0f172a',
+                'surface_alt' => '#1e293b',
+                'border' => '#334155',
+                'ticket_open' => '#3b82f6',
+                'ticket_in_progress' => '#fbbf24',
+                'ticket_resolved' => '#34d399',
+                'ticket_urgent' => '#f87171',
+            ],
+            'claro-vinho' => [
+                'label' => __('common.Vinho Formal'),
+                'mode' => 'light',
+                'family' => 'vinho',
+                'primary' => '#991b1b',
+                'text' => '#0f172a',
+                'text_soft' => '#475569',
+                'surface' => '#ffffff',
+                'surface_alt' => '#e2e8f0',
+                'border' => '#cbd5e1',
+                'ticket_open' => '#2563eb',
+                'ticket_in_progress' => '#d97706',
+                'ticket_resolved' => '#059669',
+                'ticket_urgent' => '#dc2626',
+            ],
+            'escuro-vinho' => [
+                'label' => __('common.Vinho Noturno'),
+                'mode' => 'dark',
+                'family' => 'vinho',
+                'primary' => '#f87171',
+                'text' => '#f8fafc',
+                'text_soft' => '#94a3b8',
+                'surface' => '#0f172a',
+                'surface_alt' => '#1e293b',
+                'border' => '#334155',
+                'ticket_open' => '#3b82f6',
+                'ticket_in_progress' => '#fbbf24',
+                'ticket_resolved' => '#34d399',
+                'ticket_urgent' => '#f87171',
+            ],
+            'claro-roxo' => [
+                'label' => __('equipment.Roxo Criativo'),
+                'mode' => 'light',
+                'family' => 'roxo',
+                'primary' => '#6d28d9',
+                'text' => '#0f172a',
+                'text_soft' => '#475569',
+                'surface' => '#ffffff',
+                'surface_alt' => '#e2e8f0',
+                'border' => '#cbd5e1',
+                'ticket_open' => '#2563eb',
+                'ticket_in_progress' => '#d97706',
+                'ticket_resolved' => '#059669',
+                'ticket_urgent' => '#dc2626',
+            ],
+            'escuro-roxo' => [
+                'label' => __('common.Roxo Noturno'),
+                'mode' => 'dark',
+                'family' => 'roxo',
+                'primary' => '#a78bfa',
+                'text' => '#f8fafc',
+                'text_soft' => '#94a3b8',
+                'surface' => '#0f172a',
+                'surface_alt' => '#1e293b',
+                'border' => '#334155',
+                'ticket_open' => '#3b82f6',
+                'ticket_in_progress' => '#fbbf24',
+                'ticket_resolved' => '#34d399',
+                'ticket_urgent' => '#f87171',
+            ],
+            'claro-teal' => [
+                'label' => __('common.Turquesa Técnica'),
+                'mode' => 'light',
+                'family' => 'teal',
+                'primary' => '#0f766e',
+                'text' => '#0f172a',
+                'text_soft' => '#475569',
+                'surface' => '#ffffff',
+                'surface_alt' => '#e2e8f0',
+                'border' => '#cbd5e1',
+                'ticket_open' => '#2563eb',
+                'ticket_in_progress' => '#d97706',
+                'ticket_resolved' => '#059669',
+                'ticket_urgent' => '#dc2626',
+            ],
+            'escuro-teal' => [
+                'label' => __('common.Turquesa Noturno'),
+                'mode' => 'dark',
+                'family' => 'teal',
+                'primary' => '#2dd4bf',
+                'text' => '#f8fafc',
+                'text_soft' => '#94a3b8',
+                'surface' => '#0f172a',
+                'surface_alt' => '#1e293b',
+                'border' => '#334155',
+                'ticket_open' => '#3b82f6',
+                'ticket_in_progress' => '#fbbf24',
+                'ticket_resolved' => '#34d399',
+                'ticket_urgent' => '#f87171',
+            ],
+            'claro-dourado' => [
+                'label' => __('common.Dourado Clássico'),
+                'mode' => 'light',
+                'family' => 'dourado',
+                'primary' => '#92400e',
+                'text' => '#0f172a',
+                'text_soft' => '#475569',
+                'surface' => '#ffffff',
+                'surface_alt' => '#e2e8f0',
+                'border' => '#cbd5e1',
+                'ticket_open' => '#2563eb',
+                'ticket_in_progress' => '#d97706',
+                'ticket_resolved' => '#059669',
+                'ticket_urgent' => '#dc2626',
+            ],
+            'escuro-dourado' => [
+                'label' => __('common.Dourado Noturno'),
+                'mode' => 'dark',
+                'family' => 'dourado',
+                'primary' => '#fbbf24',
+                'text' => '#f8fafc',
+                'text_soft' => '#94a3b8',
+                'surface' => '#0f172a',
+                'surface_alt' => '#1e293b',
+                'border' => '#334155',
+                'ticket_open' => '#3b82f6',
+                'ticket_in_progress' => '#fbbf24',
+                'ticket_resolved' => '#34d399',
+                'ticket_urgent' => '#f87171',
+            ],
+            'claro-grafite' => [
+                'label' => __('common.Grafite Urbano'),
+                'mode' => 'light',
+                'family' => 'grafite',
+                'primary' => '#334155',
+                'text' => '#0f172a',
+                'text_soft' => '#475569',
+                'surface' => '#ffffff',
+                'surface_alt' => '#e2e8f0',
+                'border' => '#cbd5e1',
+                'ticket_open' => '#2563eb',
+                'ticket_in_progress' => '#d97706',
+                'ticket_resolved' => '#059669',
+                'ticket_urgent' => '#dc2626',
+            ],
+            'escuro-grafite' => [
+                'label' => __('common.Grafite Noturno'),
+                'mode' => 'dark',
+                'family' => 'grafite',
+                'primary' => '#94a3b8',
+                'text' => '#f8fafc',
+                'text_soft' => '#94a3b8',
+                'surface' => '#0f172a',
+                'surface_alt' => '#1e293b',
+                'border' => '#334155',
+                'ticket_open' => '#3b82f6',
+                'ticket_in_progress' => '#fbbf24',
+                'ticket_resolved' => '#34d399',
+                'ticket_urgent' => '#f87171',
+            ],
+            'claro-rosa' => [
+                'label' => __('common.Rosa Contemporâneo'),
+                'mode' => 'light',
+                'family' => 'rosa',
+                'primary' => '#be185d',
+                'text' => '#0f172a',
+                'text_soft' => '#475569',
+                'surface' => '#ffffff',
+                'surface_alt' => '#e2e8f0',
+                'border' => '#cbd5e1',
+                'ticket_open' => '#2563eb',
+                'ticket_in_progress' => '#d97706',
+                'ticket_resolved' => '#059669',
+                'ticket_urgent' => '#dc2626',
+            ],
+            'escuro-rosa' => [
+                'label' => __('common.Rosa Noturno'),
+                'mode' => 'dark',
+                'family' => 'rosa',
+                'primary' => '#f472b6',
+                'text' => '#f8fafc',
+                'text_soft' => '#94a3b8',
+                'surface' => '#0f172a',
+                'surface_alt' => '#1e293b',
+                'border' => '#334155',
+                'ticket_open' => '#3b82f6',
+                'ticket_in_progress' => '#fbbf24',
+                'ticket_resolved' => '#34d399',
+                'ticket_urgent' => '#f87171',
+            ],
+            'claro-limao' => [
+                'label' => __('common.Limão Energia'),
+                'mode' => 'light',
+                'family' => 'limao',
+                'primary' => '#a16207',
+                'text' => '#0f172a',
+                'text_soft' => '#475569',
+                'surface' => '#ffffff',
+                'surface_alt' => '#e2e8f0',
+                'border' => '#cbd5e1',
+                'ticket_open' => '#2563eb',
+                'ticket_in_progress' => '#d97706',
+                'ticket_resolved' => '#059669',
+                'ticket_urgent' => '#dc2626',
+            ],
+            'escuro-limao' => [
+                'label' => __('common.Limão Noturno'),
+                'mode' => 'dark',
+                'family' => 'limao',
+                'primary' => '#facc15',
+                'text' => '#f8fafc',
+                'text_soft' => '#94a3b8',
+                'surface' => '#0f172a',
+                'surface_alt' => '#1e293b',
+                'border' => '#334155',
+                'ticket_open' => '#3b82f6',
+                'ticket_in_progress' => '#fbbf24',
+                'ticket_resolved' => '#34d399',
+                'ticket_urgent' => '#f87171',
+            ],
+            'claro-indigo' => [
+                'label' => __('common.Índigo Foco'),
+                'mode' => 'light',
+                'family' => 'indigo',
+                'primary' => '#4338ca',
+                'text' => '#0f172a',
+                'text_soft' => '#475569',
+                'surface' => '#ffffff',
+                'surface_alt' => '#e2e8f0',
+                'border' => '#cbd5e1',
+                'ticket_open' => '#2563eb',
+                'ticket_in_progress' => '#d97706',
+                'ticket_resolved' => '#059669',
+                'ticket_urgent' => '#dc2626',
+            ],
+            'escuro-indigo' => [
+                'label' => __('common.Índigo Noturno'),
+                'mode' => 'dark',
+                'family' => 'indigo',
+                'primary' => '#818cf8',
+                'text' => '#f8fafc',
+                'text_soft' => '#94a3b8',
+                'surface' => '#0f172a',
+                'surface_alt' => '#1e293b',
+                'border' => '#334155',
+                'ticket_open' => '#3b82f6',
+                'ticket_in_progress' => '#fbbf24',
+                'ticket_resolved' => '#34d399',
+                'ticket_urgent' => '#f87171',
+            ],
+            'claro-ciano' => [
+                'label' => __('common.Ciano Técnico'),
+                'mode' => 'light',
+                'family' => 'ciano',
+                'primary' => '#0e7490',
+                'text' => '#0f172a',
+                'text_soft' => '#475569',
+                'surface' => '#ffffff',
+                'surface_alt' => '#e2e8f0',
+                'border' => '#cbd5e1',
+                'ticket_open' => '#2563eb',
+                'ticket_in_progress' => '#d97706',
+                'ticket_resolved' => '#059669',
+                'ticket_urgent' => '#dc2626',
+            ],
+            'escuro-ciano' => [
+                'label' => __('common.Ciano Noturno'),
+                'mode' => 'dark',
+                'family' => 'ciano',
+                'primary' => '#22d3ee',
+                'text' => '#f8fafc',
+                'text_soft' => '#94a3b8',
+                'surface' => '#0f172a',
+                'surface_alt' => '#1e293b',
+                'border' => '#334155',
+                'ticket_open' => '#3b82f6',
+                'ticket_in_progress' => '#fbbf24',
+                'ticket_resolved' => '#34d399',
+                'ticket_urgent' => '#f87171',
+            ],
+            'claro-fuchsia' => [
+                'label' => __('common.Fúcsia Vibrante'),
+                'mode' => 'light',
+                'family' => 'fuchsia',
+                'primary' => '#a21caf',
+                'text' => '#0f172a',
+                'text_soft' => '#475569',
+                'surface' => '#ffffff',
+                'surface_alt' => '#e2e8f0',
+                'border' => '#cbd5e1',
+                'ticket_open' => '#2563eb',
+                'ticket_in_progress' => '#d97706',
+                'ticket_resolved' => '#059669',
+                'ticket_urgent' => '#dc2626',
+            ],
+            'escuro-fuchsia' => [
+                'label' => __('common.Fúcsia Noturno'),
+                'mode' => 'dark',
+                'family' => 'fuchsia',
+                'primary' => '#e879f9',
+                'text' => '#f8fafc',
+                'text_soft' => '#94a3b8',
+                'surface' => '#0f172a',
+                'surface_alt' => '#1e293b',
+                'border' => '#334155',
+                'ticket_open' => '#3b82f6',
+                'ticket_in_progress' => '#fbbf24',
+                'ticket_resolved' => '#34d399',
+                'ticket_urgent' => '#f87171',
+            ],
+            'claro-castanho' => [
+                'label' => __('common.Castanho Clássico'),
+                'mode' => 'light',
+                'family' => 'castanho',
+                'primary' => '#7c2d12',
+                'text' => '#0f172a',
+                'text_soft' => '#475569',
+                'surface' => '#ffffff',
+                'surface_alt' => '#e2e8f0',
+                'border' => '#cbd5e1',
+                'ticket_open' => '#2563eb',
+                'ticket_in_progress' => '#d97706',
+                'ticket_resolved' => '#059669',
+                'ticket_urgent' => '#dc2626',
+            ],
+            'escuro-castanho' => [
+                'label' => __('common.Castanho Noturno'),
+                'mode' => 'dark',
+                'family' => 'castanho',
+                'primary' => '#d6a35a',
+                'text' => '#f8fafc',
+                'text_soft' => '#94a3b8',
+                'surface' => '#0f172a',
+                'surface_alt' => '#1e293b',
+                'border' => '#334155',
+                'ticket_open' => '#3b82f6',
+                'ticket_in_progress' => '#fbbf24',
+                'ticket_resolved' => '#34d399',
+                'ticket_urgent' => '#f87171',
+            ],
+        ];
+    }
+
+    public function find(string $id): ?array
+    {
+        $preset = $this->all()[$id] ?? null;
+
+        if ($preset === null) {
+            return null;
+        }
+
+        $preset['id'] = $id;
+
+        return $preset;
+    }
+
+    /**
+     * Par da família com o modo oposto (light <-> dark).
+     */
+    public function paired(string $id): ?array
+    {
+        $preset = $this->find($id);
+
+        if ($preset === null) {
+            return null;
+        }
+
+        foreach ($this->all() as $candidateId => $candidate) {
+            if ($candidate['family'] === $preset['family'] && $candidate['mode'] !== $preset['mode']) {
+                return $this->find($candidateId);
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Valores de cor do preset mapeados para os tokens CSS.
+     *
+     * @return array<string, string>
+     */
+    public function valuesFor(string $id): array
+    {
+        $preset = $this->find($id);
+
+        if ($preset === null) {
+            return [];
+        }
+
+        $values = [];
+
+        foreach (self::TOKENS as $field => $token) {
+            $values[$token] = $preset[$field];
+        }
+
+        return $values;
+    }
+
+    /**
+     * Identifica qual preset corresponde aos valores guardados
+     * (aplica-se a cores pré-corrigidas, normalizando maiúsculas/minúsculas).
+     *
+     * @param  array<string, string>  $values  nome do campo -> cor
+     */
+    public function findByValues(array $values): ?string
+    {
+        $normalized = [];
+
+        foreach (self::COLOR_KEYS as $key) {
+            if (isset($values[$key])) {
+                $normalized[$key] = strtolower(ltrim($values[$key], '#'));
+            }
+        }
+
+        foreach ($this->all() as $id => $preset) {
+            $matches = true;
+
+            foreach ($normalized as $key => $color) {
+                if (strtolower(ltrim($preset[$key] ?? '', '#')) !== $color) {
+                    $matches = false;
+                    break;
+                }
+            }
+
+            if ($matches) {
+                return $id;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Tema atualmente ativo: usa `theme_name` se válido, senão tenta
+     * reconhecer pelas cores guardadas; em último caso volta ao default.
+     *
+     * @return array<string, string>
+     */
+    public function active(): array
+    {
+        $settings = ThemeSetting::query()->pluck('value', 'key')->toArray();
+
+        if (isset($settings['theme_name']) && ($preset = $this->find($settings['theme_name']))) {
+            return $preset;
+        }
+
+        $values = [];
+
+        foreach (self::TOKENS as $field => $token) {
+            if (isset($settings[$token])) {
+                $values[$field] = $settings[$token];
+            }
+        }
+
+        $id = $this->findByValues($values);
+
+        return $id !== null ? $this->find($id) : $this->find('claro-laranja');
+    }
+
+    /**
+     * Modo claro/escuro do tema ativo.
+     */
+    public function mode(): string
+    {
+        return $this->active()['mode'] === 'dark' ? 'dark' : 'light';
+    }
+
+    /**
+     * Aplica um preset: guarda as cores e o nome do tema em theme_settings.
+     *
+     * @return array<string, string> o preset aplicado
+     */
+    public function apply(string $id): array
+    {
+        $preset = $this->find($id);
+
+        if ($preset === null) {
+            throw new \InvalidArgumentException("Tema desconhecido: {$id}");
+        }
+
+        foreach (self::TOKENS as $field => $token) {
+            ThemeSetting::updateOrCreate(
+                ['key' => $token],
+                ['value' => $preset[$field]]
+            );
+        }
+
+        ThemeSetting::updateOrCreate(['key' => 'theme_name'], ['value' => $id]);
+
+        return $preset;
+    }
+
+    public function colorKeys(): array
+    {
+        return self::COLOR_KEYS;
+    }
+}

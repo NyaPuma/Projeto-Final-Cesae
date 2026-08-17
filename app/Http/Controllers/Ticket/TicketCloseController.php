@@ -10,6 +10,7 @@ use App\Http\Requests\CloseTicketSimpleRequest;
 use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
 use App\Services\NotificationService;
+use App\Services\LocalizationService;
 use App\Services\TicketWorkflowService;
 use Illuminate\Http\JsonResponse;
 
@@ -20,6 +21,7 @@ final class TicketCloseController extends Controller
     public function __construct(
         private readonly TicketWorkflowService $workflowService,
         private readonly NotificationService $notificationService,
+        private readonly LocalizationService $localization,
     ) {}
 
     /**
@@ -33,7 +35,7 @@ final class TicketCloseController extends Controller
         // 2. Validação de estado inicial
         if (! $ticket->hasStatus(TicketStatusEnum::InProgress)) {
             return response()->json([
-                'message' => __('Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.'),
+                'message' => __('tickets.Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.'),
             ], 422);
         }
 
@@ -53,7 +55,7 @@ final class TicketCloseController extends Controller
         $ticket->loadMissing(['equipment', 'room', 'technician', 'status']);
 
         return response()->json([
-            'message' => __('Ticket fechado com sucesso.'),
+            'message' => __('messages.Ticket fechado com sucesso.'),
             'ticket' => new TicketResource($ticket),
         ]);
     }
@@ -76,7 +78,7 @@ final class TicketCloseController extends Controller
             if ($higherPriority['has_higher']) {
                 return response()->json([
                     'warning' => true,
-                    'message' => __("⚠️ Existem :total ticket(s) de prioridade mais alta por atender.", [
+                    'message' => __("tickets.⚠️ Existem :total ticket(s) de prioridade mais alta por atender.", [
                         'total' => $higherPriority['total'],
                     ]),
                     'urgent_tickets_count' => $higherPriority['total'],
@@ -87,7 +89,8 @@ final class TicketCloseController extends Controller
         }
 
         $cost = $request->float('actual_cost');
-        $report = (string) $request->validated('report');
+        // Mantém null quando ausente para não apagar o relatório técnico existente
+        $report = $request->validated('report');
 
         // 3. Executa o encerramento no serviço de workflow
         $this->workflowService->close(
@@ -109,10 +112,10 @@ final class TicketCloseController extends Controller
         $this->broadcastStatusChange($ticket, $oldStatus, TicketStatusEnum::Closed);
 
         // 6. Envio de notificação global de encerramento
-        $formattedCost = number_format($cost, 2, ',', '.');
+        $formattedCost = $this->localization->formatDecimal($cost);
         $this->notificationService->notifyTicketClosed(
             $ticket,
-            __("O ticket #:id - :title foi concluído e fechado com custo final de :cost €.", [
+            __("tickets.O ticket #:id - :title foi concluído e fechado com custo final de :cost €.", [
                 'id' => $ticket->id,
                 'title' => $ticket->title,
                 'cost' => $formattedCost,
@@ -122,7 +125,7 @@ final class TicketCloseController extends Controller
         $ticket->loadMissing(['equipment', 'room', 'technician', 'status']);
 
         return response()->json([
-            'message' => __('Intervenção concluída e ticket fechado com sucesso.'),
+            'message' => __('messages.Intervenção concluída e ticket fechado com sucesso.'),
             'ticket' => new TicketResource($ticket),
         ]);
     }

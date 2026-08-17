@@ -20,7 +20,7 @@ final class Room extends Model
     protected static function booted(): void
     {
         static::creating(function (Room $room) {
-            if ($room->code === null) {
+            if ($room->code === null || trim((string) $room->code) === '') {
                 $room->code = 'RM-' . strtoupper(uniqid());
             }
         });

@@ -11,6 +11,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             TicketLookupSeeder::class,
             BulkOperationalDataSeeder::class,
+            StockDataSeeder::class,
+            ActivityFeedSeeder::class,
+            NotificationSeeder::class,
         ]);
     }
 }

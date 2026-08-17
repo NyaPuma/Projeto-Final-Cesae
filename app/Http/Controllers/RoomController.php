@@ -51,7 +51,7 @@ final class RoomController extends Controller
         $room = $this->createRoomAction->execute($data);
 
         return response()->json([
-            'message' => __('Sala criada com sucesso.'),
+            'message' => __('messages.Sala criada com sucesso.'),
             'room' => new RoomResource($room),
         ], 201);
     }
@@ -69,7 +69,7 @@ final class RoomController extends Controller
         $updatedRoom = $this->updateRoomAction->execute($room, $data);
 
         return response()->json([
-            'message' => __('Sala atualizada com sucesso.'),
+            'message' => __('messages.Sala atualizada com sucesso.'),
             'room' => new RoomResource($updatedRoom),
         ]);
     }
@@ -86,7 +86,7 @@ final class RoomController extends Controller
         $this->roomRepository->inactivate($room);
 
         return response()->json([
-            'message' => __('Sala inativada com sucesso.'),
+            'message' => __('messages.Sala inativada com sucesso.'),
         ]);
     }
 }

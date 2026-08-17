@@ -6,6 +6,7 @@ namespace Tests\Feature;
 use App\Enums\UserRoleEnum;
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
+use App\Jobs\GenerateAiRecommendationJob;
 use App\Models\Equipment;
 use App\Models\Room;
 use App\Models\Ticket;
@@ -14,6 +15,7 @@ use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Tests\TestCase;
@@ -110,11 +112,11 @@ class TicketOperationsTest extends TestCase
             $photosResponse->assertJsonStructure(['attachments']);
         }
 
-        // Calendário: rota web devolve HTML, mas pode redirecionar dependendo do estado de autenticação
+        // Calendário: rota web devolve HTML para utilizador autenticado
         $calendarResponse = $this->withHeader('X-Auth-Token', $technician->api_token)
             ->get('/calendar');
 
-        $this->assertContains($calendarResponse->getStatusCode(), [200, 302, 500]);
+        $calendarResponse->assertOk();
     }
 
     public function test_common_user_can_comment_and_upload_photo_on_their_own_ticket(): void
@@ -183,6 +185,8 @@ class TicketOperationsTest extends TestCase
 
     public function test_user_can_create_ticket_via_api(): void
     {
+        Queue::fake();
+
         $userProfile = UserProfile::where('name', UserRoleEnum::User->value)->firstOrFail();
         $user = User::factory()->create([
             'profile_id' => $userProfile->id,
@@ -217,6 +221,9 @@ class TicketOperationsTest extends TestCase
         $this->assertEquals('alta', $ticketData['priority']);
         $this->assertEquals($user->id, $ticketData['user_id']);
         $this->assertEquals($equipment->id, $ticketData['equipment_id']);
+
+        // A recomendação de técnico via IA é despachada em segundo plano após o commit
+        Queue::assertPushed(GenerateAiRecommendationJob::class);
 
         // Teste 2: Criar ticket sem equipment_id (opcional)
         $response2 = $this->withHeader('X-Auth-Token', $user->api_token)
@@ -291,5 +298,73 @@ class TicketOperationsTest extends TestCase
         ]);
 
         $response->assertStatus(401);
+    }
+
+    public function test_ticket_creation_validation_edge_cases(): void
+    {
+        $userProfile = UserProfile::where('name', UserRoleEnum::User->value)->firstOrFail();
+        $user = User::factory()->create([
+            'profile_id' => $userProfile->id,
+            'api_token' => Str::random(60),
+            'active' => true,
+        ]);
+
+        // Teste 1: room_id inexistente
+        $response = $this->withHeader('X-Auth-Token', $user->api_token)
+            ->postJson('/api/tickets', [
+                'title' => 'Teste',
+                'description' => 'Descrição',
+                'priority' => 'baixa',
+                'room_id' => 99999,
+            ]);
+
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['room_id']);
+
+        // Teste 2: IDs não numéricos
+        $response2 = $this->withHeader('X-Auth-Token', $user->api_token)
+            ->postJson('/api/tickets', [
+                'title' => 'Teste',
+                'description' => 'Descrição',
+                'priority' => 'baixa',
+                'equipment_id' => 'abc',
+                'room_id' => 'xyz',
+            ]);
+
+        $response2->assertStatus(422)
+            ->assertJsonValidationErrors(['equipment_id', 'room_id']);
+
+        // Teste 3: title acima de 255 caracteres
+        $response3 = $this->withHeader('X-Auth-Token', $user->api_token)
+            ->postJson('/api/tickets', [
+                'title' => str_repeat('a', 256),
+                'description' => 'Descrição',
+                'priority' => 'baixa',
+            ]);
+
+        $response3->assertStatus(422)
+            ->assertJsonValidationErrors(['title']);
+
+        // Teste 4: description acima de 5000 caracteres
+        $response4 = $this->withHeader('X-Auth-Token', $user->api_token)
+            ->postJson('/api/tickets', [
+                'title' => 'Teste',
+                'description' => str_repeat('a', 5001),
+                'priority' => 'baixa',
+            ]);
+
+        $response4->assertStatus(422)
+            ->assertJsonValidationErrors(['description']);
+
+        // Teste 5: title apenas com espaços (trim origina string vazia)
+        $response5 = $this->withHeader('X-Auth-Token', $user->api_token)
+            ->postJson('/api/tickets', [
+                'title' => '   ',
+                'description' => 'Descrição',
+                'priority' => 'baixa',
+            ]);
+
+        $response5->assertStatus(422)
+            ->assertJsonValidationErrors(['title']);
     }
 }

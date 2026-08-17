@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => 'Kanıt yüklenmedi.',
+    'remove_photo' => 'Fotoğrafı kaldır',
+    'remove_file' => 'Dosyayı kaldır',
+    'load_error' => 'Fotoğraflar yüklenirken hata oluştu.',
+    'confirm_remove' => 'Bu fotoğrafı kaldırmak istediğinizden emin misiniz?',
+    'remove_error' => 'Fotoğraf kaldırılırken hata oluştu.',
+    'removed' => 'Fotoğraf başarıyla kaldırıldı.',
+    'sent' => 'Fotoğraf gönderildi!',
+    'file' => 'Dosya',
+    'Anexos' => 'Ekler',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => 'Kullanıcı profili kimlik bilgilerini, fotoğrafını ve erişim izinlerini güncelleyin.',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => 'Bir görsel yükleyin (PNG, JPG veya WEBP, en fazla 2MB).',
+    'Emergência Imediata. Risco de acidente.' => 'Acil Durum. Kaza riski.',
+    'Escolher Fotografia' => 'Fotoğraf Seç',
+    'Escolher ficheiro' => 'Dosya seç',
+    'Fotografia (Opcional)' => 'Fotoğraf (isteğe bağlı)',
+    'Fotografia do Utilizador' => 'Kullanıcı Fotoğrafı',
+    'Imagem' => 'Görsel',
+    'Inserir Imagem (Opcional)' => 'Görsel Ekle (isteğe bağlı)',
+    'Nenhum ficheiro' => 'Dosya yok',
+    'Nenhum ficheiro selecionado' => 'Seçili dosya yok',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => 'Geçerli profil: :profile. Modüllere rolünüzün izinlerine göre erişin.',
+    'Tipo de ficheiro não permitido.' => 'İzin verilmeyen dosya türü.',
+];

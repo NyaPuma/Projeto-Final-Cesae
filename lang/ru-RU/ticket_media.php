@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => 'Доказательства не загружены.',
+    'remove_photo' => 'Удалить фотографию',
+    'remove_file' => 'Удалить файл',
+    'load_error' => 'Ошибка загрузки фотографий.',
+    'confirm_remove' => 'Вы уверены, что хотите удалить эту фотографию?',
+    'remove_error' => 'Ошибка удаления фотографии.',
+    'removed' => 'Фотография успешно удалена.',
+    'sent' => 'Фотография отправлена!',
+    'file' => 'Файл',
+    'Anexos' => 'Вложения',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => 'Обновите учётные данные, фотографию и права доступа профиля пользователя.',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => 'Загрузите изображение (PNG, JPG или WEBP до 2 МБ).',
+    'Emergência Imediata. Risco de acidente.' => 'Немедленная чрезвычайная ситуация. Риск аварии.',
+    'Escolher Fotografia' => 'Выбрать фотографию',
+    'Escolher ficheiro' => 'Выбрать файл',
+    'Fotografia (Opcional)' => 'Фотография (необязательно)',
+    'Fotografia do Utilizador' => 'Фотография пользователя',
+    'Imagem' => 'Изображение',
+    'Inserir Imagem (Opcional)' => 'Вставить изображение (необязательно)',
+    'Nenhum ficheiro' => 'Нет файлов',
+    'Nenhum ficheiro selecionado' => 'Файл не выбран',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => 'Текущий профиль: :profile. Доступ к модулям в соответствии с правами вашей роли.',
+    'Tipo de ficheiro não permitido.' => 'Тип файла не разрешён.',
+];

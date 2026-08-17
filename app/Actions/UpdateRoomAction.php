@@ -16,6 +16,11 @@ final readonly class UpdateRoomAction
                 'code' => $data->code ? strtoupper(trim($data->code)) : $room->code,
                 'location' => $data->location !== null ? trim($data->location) : $room->location,
                 'active' => $data->active ?? $room->active,
+                'building' => $data->building ?? $room->building,
+                'floor' => $data->floor ?? $room->floor,
+                'capacity' => $data->capacity ?? $room->capacity,
+                'description' => $data->description ?? $room->description,
+                'notes' => $data->notes ?? $room->notes,
             ]);
 
             // Exemplo de disparo de evento no futuro:

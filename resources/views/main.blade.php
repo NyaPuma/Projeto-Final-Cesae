@@ -5,20 +5,20 @@
     <div class="mx-auto max-w-3xl px-6 py-12 lg:px-8 text-center animate-[fadeIn_0.3s_ease-out]">
 
         <x-ui.text.pill tone="primary" size="sm" class="mb-6 gap-1.5 font-bold">
-            {{ __('Bem-vindo ao Sistema') }}
+            {{ __('messages.Bem-vindo ao Sistema') }}
         </x-ui.text.pill>
 
         <h1 class="text-4xl font-black tracking-tight text-[var(--text)] sm:text-5xl">
-            {{ __('Gestão de Avarias') }}
+            {{ __('common.Gestão de Avarias') }}
         </h1>
 
         <p class="mt-6 text-base leading-8 text-[var(--text-soft)] max-w-xl mx-auto">
-            {{ __('Plataforma centralizada de controlo operacional para gestão de ocorrências, manutenção de equipamentos e monitorização de salas.') }}
+            {{ __('tickets.Plataforma centralizada de controlo operacional para gestão de ocorrências, manutenção de equipamentos e monitorização de salas.') }}
         </p>
 
         <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a href="/ui/login" class="ui-button ui-button--primary inline-flex items-center justify-center rounded-2xl px-8 py-4 text-base font-bold shadow-lg shadow-primary/20 transition hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/30 w-full sm:w-auto min-h-[52px]">
-                {{ __('Iniciar Sessão') }}
+                {{ __('auth.Iniciar Sessão') }}
                 <svg class="h-4 w-4 ml-2" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
                 </svg>
@@ -30,8 +30,8 @@
                 ✓
             </div>
             <div>
-                <h3 class="font-bold text-sm text-[var(--text)]">{{ __('Ligação Segura SSL') }}</h3>
-                <p class="mt-1 text-xs text-[var(--text-soft)] leading-5">{{ __('Toda a comunicação com a nossa API é encriptada e os acessos são geridos através de tokens de autenticação individuais.') }}</p>
+                <h3 class="font-bold text-sm text-[var(--text)]">{{ __('common.Ligação Segura SSL') }}</h3>
+                <p class="mt-1 text-xs text-[var(--text-soft)] leading-5">{{ __('auth.Toda a comunicação com a nossa API é encriptada e os acessos são geridos através de tokens de autenticação individuais.') }}</p>
             </div>
         </div>
     </div>

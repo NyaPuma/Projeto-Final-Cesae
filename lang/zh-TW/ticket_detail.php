@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => '無已記錄的訊息。',
+    'comments_error' => '載入歷史記錄時發生錯誤。',
+    'message_sent' => '訊息已傳送！',
+    'incident_id' => '事件編號',
+    'description' => '事件描述',
+    'priority_level' => '優先順序',
+    'equipment' => '設備 / 資產',
+    'room' => '房間 / 位置',
+    'technician' => '已指派技術員',
+    'pending_assignment' => '待指派',
+    'reported_by' => '回報人',
+    'source' => '來源',
+    'qr_code' => '二維碼',
+    'web' => 'Web',
+    'system' => '系統',
+    'no_description' => '未提供描述。',
+    'Data de abertura (De)' => '建立日期（從）',
+    'Detalhe de um fornecedor' => '供應商詳情',
+    'Detalhe de um fornecedor.' => '供應商詳情。',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => '詳述發生的問題、噪音、滲漏或異常行為...',
+    'Detalhes do Incidente' => '事件詳情',
+];

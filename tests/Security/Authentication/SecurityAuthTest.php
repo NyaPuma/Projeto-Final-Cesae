@@ -156,6 +156,7 @@ class SecurityAuthTest extends TestCase
             'profile_id' => $profile->id,
             'password' => Hash::make('Password123!'),
             'active' => true,
+            'api_token' => Str::random(60),
         ]);
 
         $oldToken = $user->api_token;

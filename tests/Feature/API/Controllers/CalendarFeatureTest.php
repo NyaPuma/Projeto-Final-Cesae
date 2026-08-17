@@ -114,4 +114,20 @@ class CalendarFeatureTest extends TestCase
         $this->assertArrayHasKey('start', $events[0]);
         $this->assertArrayHasKey('end', $events[0]);
     }
+
+    public function test_calendar_view_requires_authentication(): void
+    {
+        $this->get('/calendar')->assertRedirect('/ui/login');
+    }
+
+    public function test_calendar_view_renders_for_authenticated_roles(): void
+    {
+        foreach ([UserRoleEnum::User->value, UserRoleEnum::Technician->value, UserRoleEnum::Admin->value] as $profileName) {
+            $user = $this->createUserWithToken($profileName);
+
+            $this->withHeader('X-Auth-Token', $user->api_token)
+                ->get('/calendar')
+                ->assertOk();
+        }
+    }
 }

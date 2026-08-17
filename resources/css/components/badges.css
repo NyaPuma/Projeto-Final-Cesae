@@ -1,0 +1,37 @@
+/* Status and priority badges (ticket states) */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+
+.badge--open { background: color-mix(in srgb, var(--color-ticket-open) 12%, transparent); color: var(--color-ticket-open); }
+.badge--in-progress { background: color-mix(in srgb, var(--color-ticket-in-progress) 12%, transparent); color: var(--color-ticket-in-progress); }
+.badge--resolved { background: color-mix(in srgb, var(--color-ticket-resolved) 12%, transparent); color: var(--color-ticket-resolved); }
+.badge--urgent { background: color-mix(in srgb, var(--color-ticket-urgent) 12%, transparent); color: var(--color-ticket-urgent); }
+
+.badge--neutral { background: color-mix(in srgb, var(--color-text-muted) 12%, transparent); color: var(--color-text-soft); }
+
+.dark .badge--open,
+[data-theme='dark'] .badge--open { background: color-mix(in srgb, var(--color-ticket-open) 18%, transparent); }
+
+.dark .badge--in-progress,
+[data-theme='dark'] .badge--in-progress { background: color-mix(in srgb, var(--color-ticket-in-progress) 18%, transparent); }
+
+.dark .badge--resolved,
+[data-theme='dark'] .badge--resolved { background: color-mix(in srgb, var(--color-ticket-resolved) 18%, transparent); }
+
+.dark .badge--urgent,
+[data-theme='dark'] .badge--urgent { background: color-mix(in srgb, var(--color-ticket-urgent) 18%, transparent); }
+
+.dark .badge--neutral,
+[data-theme='dark'] .badge--neutral { background: color-mix(in srgb, var(--color-text-muted) 18%, transparent); }

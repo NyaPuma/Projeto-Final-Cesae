@@ -19,7 +19,7 @@ final class ProfileController extends Controller
 
         if (! Hash::check($request->input('current_password'), $user->password)) {
             return response()->json([
-                'message' => __('Password atual incorreta.'),
+                'message' => __('auth.Password atual incorreta'),
             ], 403);
         }
 
@@ -27,7 +27,7 @@ final class ProfileController extends Controller
         $user->save();
 
         return response()->json([
-            'message' => __('Password alterada com sucesso.'),
+            'message' => __('messages.Password alterada com sucesso.'),
         ]);
     }
 
@@ -41,20 +41,6 @@ final class ProfileController extends Controller
         $newPassword = $request->input('password');
 
         if (! empty($newPassword)) {
-            $currentPassword = $request->input('current_password');
-
-            if (empty($currentPassword)) {
-                return response()->json([
-                    'message' => __('A palavra-passe atual é obrigatória para alterar a password.'),
-                ], 422);
-            }
-
-            if (! Hash::check($currentPassword, $user->password)) {
-                return response()->json([
-                    'message' => __('Password atual incorreta.'),
-                ], 403);
-            }
-
             $user->password = Hash::make($newPassword);
         }
 
@@ -68,7 +54,7 @@ final class ProfileController extends Controller
         $user->loadMissing('profile');
 
         return response()->json([
-            'message' => __('Perfil atualizado com sucesso.'),
+            'message' => __('messages.Perfil atualizado com sucesso.'),
             'user' => new UserResource($user),
         ]);
     }

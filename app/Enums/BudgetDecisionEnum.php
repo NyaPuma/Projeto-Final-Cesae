@@ -12,8 +12,8 @@ enum BudgetDecisionEnum: string
     public function label(): string
     {
         return match ($this) {
-            self::Approve => 'Aprovar',
-            self::Reject => 'Rejeitar',
+            self::Approve => __('common.Aprovar'),
+            self::Reject => __('common.Rejeitar'),
         };
     }
 

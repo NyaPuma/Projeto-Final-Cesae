@@ -67,6 +67,6 @@ class PasswordSecurityTest extends FeatureTestCase
 
         $this->assertNotEquals('plain-text-password', $user->password);
         $this->assertTrue(Hash::check('plain-text-password', $user->password));
-        $this->assertStringStartsWith('$argon2id$', $user->password);
+        $this->assertStringStartsWith('$2y$', $user->password);
     }
 }

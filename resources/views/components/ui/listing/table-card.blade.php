@@ -8,12 +8,12 @@
 @props([
     'table_id' => null,
     'body_id' => null,
-    'aria_label' => __('Tabela de dados'),
-    'loading_message' => __('A carregar registos...'),
+    'aria_label' => __('common.Tabela de dados'),
+    'loading_message' => __('auth.A carregar registos...'),
     'columns' => 1,
 ])
 
-<div {{ $attributes->merge(['class' => 'w-full overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-sm']) }} role="region" aria-live="polite" aria-label="{{ $aria_label }}">
+<div {{ $attributes->merge(['class' => 'ui-listing-table w-full overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-sm']) }} role="region" aria-live="polite" aria-label="{{ $aria_label }}">
     <div class="overflow-x-auto">
         <table @if($table_id) id="{{ $table_id }}" @endif class="min-w-full divide-y divide-[var(--border)] text-left text-xs">
             <thead class="bg-[var(--surface-2)] text-[var(--text)] uppercase tracking-wider font-bold text-[10px]">

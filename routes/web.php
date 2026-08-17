@@ -71,6 +71,28 @@ Route::get('/ticket/success/{ticket}', [PublicTicketController::class, 'success'
     ->name('ticket.public.success')
     ->where('ticket', '[0-9]+');
 
+// --- Preferências do Utilizador (Língua, Moeda, Formato de Data) ---
+Route::get('/preferences', [\App\Http\Controllers\PreferenciasController::class, 'edit'])
+    ->name('preferences.edit');
+Route::post('/preferences/language', [\App\Http\Controllers\PreferenciasController::class, 'updateLanguage'])
+    ->name('preferences.update_language')
+    ->withoutMiddleware([ValidateCsrfToken::class]);
+Route::post('/preferences/currency', [\App\Http\Controllers\PreferenciasController::class, 'updateCurrency'])
+    ->name('preferences.update_currency')
+    ->withoutMiddleware([ValidateCsrfToken::class]);
+Route::post('/preferences/date-format', [\App\Http\Controllers\PreferenciasController::class, 'updateDateFormat'])
+    ->name('preferences.update_date_format')
+    ->withoutMiddleware([ValidateCsrfToken::class]);
+Route::post('/preferences/time-format', [\App\Http\Controllers\PreferenciasController::class, 'updateTimeFormat'])
+    ->name('preferences.update_time_format')
+    ->withoutMiddleware([ValidateCsrfToken::class]);
+Route::post('/preferences/number-format', [\App\Http\Controllers\PreferenciasController::class, 'updateNumberFormat'])
+    ->name('preferences.update_number_format')
+    ->withoutMiddleware([ValidateCsrfToken::class]);
+Route::post('/preferences', [\App\Http\Controllers\PreferenciasController::class, 'updateAll'])
+    ->name('preferences.update_all')
+    ->withoutMiddleware([ValidateCsrfToken::class]);
+
 /*
 |--------------------------------------------------------------------------
 | Rotas Protegidas (Exigem Token de Autenticação Válido via custom.auth)
@@ -86,22 +108,6 @@ Route::middleware(['custom.auth'])->group(function () {
         ->name('auth.password.change');
     Route::post('/profile/update', [ProfileController::class, 'updateProfile'])
         ->name('auth.profile.update');
-
-    // --- Preferências do Utilizador (Língua, Moeda, Formato de Data) ---
-    Route::get('/preferences', [\App\Http\Controllers\PreferenciasController::class, 'edit'])
-        ->name('preferences.edit');
-    Route::post('/preferences/language', [\App\Http\Controllers\PreferenciasController::class, 'updateLanguage'])
-        ->name('preferences.update_language')
-        ->withoutMiddleware([ValidateCsrfToken::class]);
-    Route::post('/preferences/currency', [\App\Http\Controllers\PreferenciasController::class, 'updateCurrency'])
-        ->name('preferences.update_currency')
-        ->withoutMiddleware([ValidateCsrfToken::class]);
-    Route::post('/preferences/date-format', [\App\Http\Controllers\PreferenciasController::class, 'updateDateFormat'])
-        ->name('preferences.update_date_format')
-        ->withoutMiddleware([ValidateCsrfToken::class]);
-    Route::post('/preferences', [\App\Http\Controllers\PreferenciasController::class, 'updateAll'])
-        ->name('preferences.update_all')
-        ->withoutMiddleware([ValidateCsrfToken::class]);
 
     // --- Notificações ---
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');

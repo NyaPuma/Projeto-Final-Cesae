@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => 'Tidak ada pesan tercatat.',
+    'comments_error' => 'Gagal memuat riwayat.',
+    'message_sent' => 'Pesan terkirim!',
+    'incident_id' => 'ID Insiden',
+    'description' => 'Deskripsi insiden',
+    'priority_level' => 'Tingkat prioritas',
+    'equipment' => 'Peralatan / Aset',
+    'room' => 'Ruangan / Lokasi',
+    'technician' => 'Teknisi ditugaskan',
+    'pending_assignment' => 'Menunggu penugasan',
+    'reported_by' => 'Dilaporkan oleh',
+    'source' => 'Sumber',
+    'qr_code' => 'QR Code',
+    'web' => 'Web',
+    'system' => 'Sistem',
+    'no_description' => 'Tidak ada deskripsi yang diberikan.',
+    'Data de abertura (De)' => 'Tanggal pembukaan (Dari)',
+    'Detalhe de um fornecedor' => 'Detail pemasok',
+    'Detalhe de um fornecedor.' => 'Detail pemasok.',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => 'Jelaskan masalah yang terjadi, suara, kebocoran, atau perilaku di luar normal...',
+    'Detalhes do Incidente' => 'Detail Insiden',
+];

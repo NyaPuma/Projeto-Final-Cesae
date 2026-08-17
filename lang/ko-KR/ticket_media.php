@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => '업로드된 증거가 없습니다.',
+    'remove_photo' => '사진 제거',
+    'remove_file' => '파일 제거',
+    'load_error' => '사진을 불러오는 중 오류가 발생했습니다.',
+    'confirm_remove' => '이 사진을 제거하시겠습니까?',
+    'remove_error' => '사진 제거 중 오류가 발생했습니다.',
+    'removed' => '사진이 성공적으로 제거되었습니다.',
+    'sent' => '사진이 전송되었습니다!',
+    'file' => '파일',
+    'Anexos' => '첨부파일',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => '사용자 프로필의 자격 증명, 사진 및 접근 권한을 업데이트하세요.',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => '이미지를 업로드하세요 (PNG, JPG 또는 WEBP, 최대 2MB).',
+    'Emergência Imediata. Risco de acidente.' => '즉시 긴급. 사고 위험.',
+    'Escolher Fotografia' => '사진 선택',
+    'Escolher ficheiro' => '파일 선택',
+    'Fotografia (Opcional)' => '사진 (선택사항)',
+    'Fotografia do Utilizador' => '사용자 사진',
+    'Imagem' => '이미지',
+    'Inserir Imagem (Opcional)' => '이미지 삽입 (선택사항)',
+    'Nenhum ficheiro' => '파일 없음',
+    'Nenhum ficheiro selecionado' => '선택된 파일 없음',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => '현재 프로필: :profile. 역할 권한에 따라 모듈에 접근하세요.',
+    'Tipo de ficheiro não permitido.' => '허용되지 않는 파일 유형.',
+];

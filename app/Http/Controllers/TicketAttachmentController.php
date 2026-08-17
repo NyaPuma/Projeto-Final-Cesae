@@ -15,6 +15,13 @@ final class TicketAttachmentController extends Controller
 {
     private const ALLOWED_MIMES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
 
+    private const EXTENSION_BY_MIME = [
+        'image/jpeg' => 'jpg',
+        'image/png' => 'png',
+        'image/gif' => 'gif',
+        'image/webp' => 'webp',
+    ];
+
     /**
      * Faz o upload e associa uma nova fotografia a um ticket.
      */
@@ -29,12 +36,13 @@ final class TicketAttachmentController extends Controller
         // 2. Validação adicional de segurança do Mime Type real
         if (! in_array($realMime, self::ALLOWED_MIMES, true)) {
             return response()->json([
-                'message' => __('Tipo de ficheiro não permitido.'),
+                'message' => __('ticket_media.Tipo de ficheiro não permitido.'),
             ], 422);
         }
 
         // 3. Processamento seguro do nome do ficheiro e gravação no storage
-        $extension = $file->getClientOriginalExtension();
+        //    A extensão é derivada do MIME real (nunca do nome enviado pelo cliente)
+        $extension = self::EXTENSION_BY_MIME[$realMime] ?? 'img';
         $safeFilename = Str::uuid() . '.' . $extension;
         $path = $file->storeAs('ticket_photos', $safeFilename, 'public');
 
@@ -42,14 +50,17 @@ final class TicketAttachmentController extends Controller
         $attachment = TicketAttachment::create([
             'ticket_id' => $ticket->id,
             'user_id' => $request->user()->id,
+            'original_name' => $file->getClientOriginalName(),
             'file_name' => $safeFilename,
             'path' => $path,
+            'disk' => 'public',
+            'extension' => $extension,
             'mime_type' => $realMime,
             'size' => $file->getSize(),
         ]);
 
         return response()->json([
-            'message' => __('Fotografia carregada com sucesso.'),
+            'message' => __('messages.Fotografia carregada com sucesso.'),
             'attachment' => new TicketAttachmentResource($attachment),
         ], 201);
     }
@@ -80,7 +91,7 @@ final class TicketAttachmentController extends Controller
         // 2. Garante integridade relacional entre o anexo e o ticket
         if ($attachment->ticket_id !== $ticket->id) {
             return response()->json([
-                'message' => __('Anexo não encontrado para este ticket.'),
+                'message' => __('tickets.Anexo não encontrado para este ticket.'),
             ], 404);
         }
 
@@ -93,7 +104,7 @@ final class TicketAttachmentController extends Controller
         $attachment->delete();
 
         return response()->json([
-            'message' => __('Fotografia removida com sucesso.'),
+            'message' => __('messages.Fotografia removida com sucesso.'),
         ]);
     }
 }

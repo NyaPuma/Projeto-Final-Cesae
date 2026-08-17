@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => '기록된 메시지가 없습니다.',
+    'comments_error' => '기록을 불러오는 중 오류가 발생했습니다.',
+    'message_sent' => '메시지가 전송되었습니다!',
+    'incident_id' => '사건 번호',
+    'description' => '사건 설명',
+    'priority_level' => '우선순위',
+    'equipment' => '장비 / 자산',
+    'room' => '방 / 위치',
+    'technician' => '배정된 기술자',
+    'pending_assignment' => '배정 대기',
+    'reported_by' => '보고자',
+    'source' => '출처',
+    'qr_code' => 'QR코드',
+    'web' => 'Web',
+    'system' => '시스템',
+    'no_description' => '설명이 제공되지 않았습니다.',
+    'Data de abertura (De)' => '개시일 (부터)',
+    'Detalhe de um fornecedor' => '공급업체 상세',
+    'Detalhe de um fornecedor.' => '공급업체 상세.',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => '발생한 문제, 소음, 누수 또는 비정상적인 동작을 자세히 설명해 주세요...',
+    'Detalhes do Incidente' => '사건 상세',
+];

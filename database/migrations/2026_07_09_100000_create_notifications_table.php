@@ -39,8 +39,12 @@ return new class extends Migration
                 'comment_added',
                 'attachment_added',
                 'budget_requested',
+                'budget_request',
+                'budget_submitted',
                 'budget_approved',
                 'budget_rejected',
+                'budget_auto_approved',
+                'priority_override',
                 'system',
             ])->default('system');
 

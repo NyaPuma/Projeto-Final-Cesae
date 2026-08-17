@@ -9,9 +9,9 @@ use App\Enums\TicketPriorityEnum;
 use App\Enums\UserRoleEnum;
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Resources\TicketResource;
+use App\Jobs\GenerateAiRecommendationJob;
 use App\Models\Ticket;
 use App\Models\User;
-use App\Services\AIService;
 use App\Services\TechnicianAssignmentService;
 use App\Services\TicketSearchService;
 use Illuminate\Http\JsonResponse;
@@ -35,7 +35,12 @@ final class TicketController extends Controller
         // 1. Autorização via Policy (ViewAny)
         $this->authorize('viewAny', Ticket::class);
 
-        $tickets = $this->ticketRepository->getAll(['equipment', 'room', 'user', 'technician', 'status']);
+        $user = $request->user();
+
+        // Utilizadores comuns apenas veem os seus próprios tickets
+        $tickets = ($user->isTechnician() || $user->isAdmin())
+            ? $this->ticketRepository->getAll(['equipment', 'room', 'user', 'technician', 'status'])
+            : $this->ticketRepository->getTicketsByUser($user->id);
 
         return response()->json([
             'tickets' => TicketResource::collection($tickets),
@@ -54,10 +59,15 @@ final class TicketController extends Controller
         $data = CreateTicketData::fromRequest($request->validated());
 
         $ticket = $this->createTicketAction->execute($user, $data);
+
+        // Recomendação de técnico via IA processada em segundo plano
+        // (a GenerateAiRecommendationJob persiste o resultado no próprio ticket).
+        GenerateAiRecommendationJob::dispatch($ticket)->afterCommit();
+
         $ticket->loadMissing(['equipment', 'room', 'user', 'status']);
 
         return response()->json([
-            'message' => __('Ticket criado com sucesso.'),
+            'message' => __('messages.Ticket criado com sucesso.'),
             'ticket' => new TicketResource($ticket),
         ], 201);
     }
@@ -73,11 +83,28 @@ final class TicketController extends Controller
         $priority = $request->input('priority');
         if ($priority && ! in_array($priority, TicketPriorityEnum::acceptedValues(), true)) {
             return response()->json([
-                'message' => __('Prioridade inválida. Valores válidos: baixa, média, alta, crítica.'),
+                'message' => __('common.Prioridade inválida. Valores válidos: baixa, média, alta, crítica.'),
             ], 422);
         }
 
         $filters = TicketFilters::fromRequest($request->all());
+
+        // Utilizadores comuns apenas pesquisam os seus próprios tickets
+        $user = $request->user();
+        if (! $user->isTechnician() && ! $user->isAdmin()) {
+            $filters = new TicketFilters(
+                query: $filters->query,
+                priority: $filters->priority,
+                status: $filters->status,
+                dateFrom: $filters->dateFrom,
+                dateTo: $filters->dateTo,
+                userId: $user->id,
+                technicianId: $filters->technicianId,
+                equipmentId: $filters->equipmentId,
+                roomId: $filters->roomId,
+            );
+        }
+
         $tickets = $this->searchService->search($filters);
 
         return response()->json([
@@ -102,9 +129,7 @@ final class TicketController extends Controller
             ]);
         }
 
-        $recomendacaoIA = app(AIService::class)->recomendarTecnico($ticket);
-
-        return view('ui.ticket-detail', compact('ticket', 'recomendacaoIA'));
+        return view('ui.ticket-detail', compact('ticket'));
     }
 
     /**
@@ -117,7 +142,7 @@ final class TicketController extends Controller
 
         $user = $request->user();
         if (! $user->profile || ! in_array($user->profile->name, [UserRoleEnum::Technician->value, UserRoleEnum::Admin->value], true)) {
-            return response()->json(['message' => __('Acesso proibido para o seu perfil.')], 403);
+            return response()->json(['message' => __('common.Acesso proibido para o seu perfil.')], 403);
         }
 
         $tickets = $this->ticketRepository->getOpenTickets();
@@ -135,13 +160,19 @@ final class TicketController extends Controller
         // 1. Autorização via Policy
         $this->authorize('viewAny', Ticket::class);
 
+        // Restrito a técnicos/admins (dados operacionais sensíveis)
+        $user = $request->user();
+        if (! $user->profile || ! in_array($user->profile->name, [UserRoleEnum::Technician->value, UserRoleEnum::Admin->value], true)) {
+            return response()->json(['message' => __('common.Acesso proibido para o seu perfil.')], 403);
+        }
+
         $excludeId = (int) $request->input('exclude', 0);
         $ticket = $this->technicianService->findMostUrgentOpenTicket($excludeId > 0 ? $excludeId : null);
 
         if (! $ticket) {
             return response()->json([
                 'ticket_id' => null,
-                'message' => __('Não existem tickets abertos prioritários.'),
+                'message' => __('tickets.Não existem tickets abertos prioritários.'),
             ], 404);
         }
 

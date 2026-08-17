@@ -3,14 +3,38 @@
  * Main orchestrator for the analytics dashboard
  */
 
-import { fetchAnalytics, getThemeColors, showMessage, clearMessage } from './helpers.js';
-import { renderStatusChart, renderTrendChart, renderCostChart, renderEquipmentChart, destroyChart } from './charts.js';
+import { fetchAnalytics, showMessage, clearMessage } from './helpers.js';
+import { initExportActions } from './export.js';
+import {
+    renderStatusChart,
+    renderTrendChart,
+    renderCostChart,
+    renderEquipmentChart,
+    renderSlaChart,
+    renderMttrChart,
+    renderUrgencyChart,
+    renderRoomChart,
+    renderBudgetChart,
+    renderSourceChart,
+    renderCostByEquipmentChart,
+    renderStockMonthlyChart,
+    renderLowStockChart,
+    renderNotificationsChart,
+    renderUsersByRoleChart,
+    destroyChart
+} from './charts.js';
 import { renderKPIs, renderOperationalMetrics } from './kpi.js';
 import { renderActivity, renderSummary } from './activity.js';
 
 class AnalyticsDashboard {
     constructor() {
-        this.charts = { status: null, trend: null, cost: null, equipment: null };
+        this.charts = {
+            status: null, trend: null, cost: null, equipment: null,
+            sla: null, mttr: null, urgency: null, room: null,
+            budget: null, source: null, costByEquipment: null,
+            stockMonthly: null, lowStock: null, notifications: null,
+            usersByRole: null
+        };
         this.refreshTimer = null;
         this.lastData = null;
         this.elements = this.getElements();
@@ -31,6 +55,17 @@ class AnalyticsDashboard {
             equipmentChart: document.getElementById("equipmentChart"),
             equipmentLegend: document.getElementById("equipmentLegend"),
             equipmentTotal: document.getElementById("equipmentTotal"),
+            slaChart: document.getElementById("slaChart"),
+            mttrChart: document.getElementById("mttrChart"),
+            urgencyChart: document.getElementById("urgencyChart"),
+            roomChart: document.getElementById("roomChart"),
+            budgetChart: document.getElementById("budgetChart"),
+            sourceChart: document.getElementById("sourceChart"),
+            costByEquipmentChart: document.getElementById("costByEquipmentChart"),
+            stockMonthlyChart: document.getElementById("stockMonthlyChart"),
+            lowStockChart: document.getElementById("lowStockChart"),
+            notificationsChart: document.getElementById("notificationsChart"),
+            usersByRoleChart: document.getElementById("usersByRoleChart"),
             activityTimeline: document.getElementById("activityTimeline"),
             topEquipments: document.getElementById("topEquipments"),
             topRooms: document.getElementById("topRooms"),
@@ -96,6 +131,18 @@ class AnalyticsDashboard {
         renderOperationalMetrics(this.elements, data);
         renderActivity(this.elements.activityTimeline, data);
         renderSummary(this.elements, data);
+
+        this.charts.sla = renderSlaChart(this.elements.slaChart, data, this.charts.sla);
+        this.charts.mttr = renderMttrChart(this.elements.mttrChart, data, this.charts.mttr);
+        this.charts.urgency = renderUrgencyChart(this.elements.urgencyChart, data, this.charts.urgency);
+        this.charts.room = renderRoomChart(this.elements.roomChart, data, this.charts.room);
+        this.charts.budget = renderBudgetChart(this.elements.budgetChart, data, this.charts.budget);
+        this.charts.source = renderSourceChart(this.elements.sourceChart, data, this.charts.source);
+        this.charts.costByEquipment = renderCostByEquipmentChart(this.elements.costByEquipmentChart, data, this.charts.costByEquipment);
+        this.charts.stockMonthly = renderStockMonthlyChart(this.elements.stockMonthlyChart, data, this.charts.stockMonthly);
+        this.charts.lowStock = renderLowStockChart(this.elements.lowStockChart, data, this.charts.lowStock);
+        this.charts.notifications = renderNotificationsChart(this.elements.notificationsChart, data, this.charts.notifications);
+        this.charts.usersByRole = renderUsersByRoleChart(this.elements.usersByRoleChart, data, this.charts.usersByRole);
     }
 
     cleanup() {
@@ -117,6 +164,7 @@ class AnalyticsDashboard {
 
 // Inicialização
 export function init() {
+    initExportActions();
     if (document.getElementById("kpiPanel")) {
         new AnalyticsDashboard();
     }

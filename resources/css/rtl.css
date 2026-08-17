@@ -1,0 +1,99 @@
+/*
+ * Suporte RTL prioritário para o shell da aplicação.
+ * A direção é definida pelo atributo dir do elemento html.
+ */
+
+html[dir='rtl'] {
+    direction: rtl;
+}
+
+body.rtl {
+    direction: rtl;
+    text-align: start;
+}
+
+body.rtl .locale-trigger-wrapper {
+    right: auto;
+    left: var(--space-4);
+}
+
+@media (min-width: 1024px) {
+    body.rtl .page-wrapper,
+    body.rtl .sidebar-collapsed .page-wrapper {
+        padding-left: 0;
+        padding-right: var(--sidebar-width);
+    }
+
+    body.rtl.sidebar-collapsed .page-wrapper {
+        padding-left: 0;
+        padding-right: 5rem;
+    }
+
+    body.rtl .ui-sidebar {
+        left: auto;
+        right: 0;
+        border-right: 0;
+        border-left: 1px solid var(--border);
+    }
+}
+
+body.rtl .ui-mobile-nav {
+    left: auto;
+    right: 0;
+    transform: translateX(110%);
+    border-right: 0;
+    border-left: 1px solid var(--border);
+}
+
+body.rtl .ui-mobile-nav.active {
+    transform: translateX(0);
+}
+
+body.rtl .skip-link {
+    left: auto;
+    right: -9999px;
+}
+
+body.rtl .skip-link:focus-visible {
+    left: auto;
+    right: var(--space-4);
+}
+
+body.rtl .ui-topbar__dropdown-panel {
+    right: auto;
+    left: 0;
+}
+
+body.rtl .ui-topbar__notification-badge {
+    right: auto;
+    left: -0.25rem;
+}
+
+body.rtl .ui-topbar__actions,
+body.rtl .ui-topbar__user {
+    direction: rtl;
+}
+
+body.rtl input,
+body.rtl select,
+body.rtl textarea,
+body.rtl table {
+    text-align: start;
+}
+
+body.rtl th.text-right,
+body.rtl td.text-right {
+    text-align: end;
+}
+
+body.rtl .ui-directional-icon {
+    transform: scaleX(-1);
+}
+
+@media (max-width: 1023px) {
+    body.rtl .page-wrapper,
+    body.rtl .sidebar-collapsed .page-wrapper {
+        padding-right: 0;
+        padding-left: 0;
+    }
+}

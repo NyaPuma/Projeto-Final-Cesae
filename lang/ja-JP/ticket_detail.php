@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => '記録されたメッセージはありません。',
+    'comments_error' => '履歴の読み込み中にエラーが発生しました。',
+    'message_sent' => 'メッセージが送信されました！',
+    'incident_id' => 'インシデント番号',
+    'description' => 'インシデントの説明',
+    'priority_level' => '優先度',
+    'equipment' => '設備 / 資産',
+    'room' => '部屋 / 場所',
+    'technician' => '割り当て済み技術者',
+    'pending_assignment' => '割り当て待ち',
+    'reported_by' => '報告者',
+    'source' => '出典',
+    'qr_code' => 'QRコード',
+    'web' => 'Web',
+    'system' => 'システム',
+    'no_description' => '説明が提供されていません。',
+    'Data de abertura (De)' => '開始日（から）',
+    'Detalhe de um fornecedor' => 'サプライヤーの詳細',
+    'Detalhe de um fornecedor.' => 'サプライヤーの詳細。',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => '発生した問題、騒音、漏洩、または異常な動作を詳しく記述してください...',
+    'Detalhes do Incidente' => 'インシデントの詳細',
+];

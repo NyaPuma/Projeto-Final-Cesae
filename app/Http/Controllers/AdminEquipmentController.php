@@ -53,7 +53,7 @@ final class AdminEquipmentController extends Controller
         $equipment->loadMissing('room');
 
         return response()->json([
-            'message' => __('Equipamento criado com sucesso.'),
+            'message' => __('messages.Equipamento criado com sucesso.'),
             'equipment' => new EquipmentResource($equipment),
         ], 201);
     }
@@ -73,7 +73,7 @@ final class AdminEquipmentController extends Controller
         $updatedEquipment->loadMissing('room');
 
         return response()->json([
-            'message' => __('Equipamento atualizado com sucesso.'),
+            'message' => __('messages.Equipamento atualizado com sucesso.'),
             'equipment' => new EquipmentResource($updatedEquipment),
         ]);
     }
@@ -90,7 +90,7 @@ final class AdminEquipmentController extends Controller
         $this->equipmentRepository->delete($equipment);
 
         return response()->json([
-            'message' => __('Equipamento eliminado com sucesso.'),
+            'message' => __('messages.Equipamento eliminado com sucesso.'),
         ]);
     }
 }

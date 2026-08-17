@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => 'Kayıtlı mesaj yok.',
+    'comments_error' => 'Geçmiş yüklenirken hata oluştu.',
+    'message_sent' => 'Mesaj gönderildi!',
+    'incident_id' => 'Olay ID',
+    'description' => 'Olay Açıklaması',
+    'priority_level' => 'Öncelik Seviyesi',
+    'equipment' => 'Ekipman / Varlık',
+    'room' => 'Salon / Konum',
+    'technician' => 'Atanan Teknisyen',
+    'pending_assignment' => 'Atama bekliyor',
+    'reported_by' => 'Bildiren:',
+    'source' => 'Kaynak',
+    'qr_code' => 'QR Kod',
+    'web' => 'Web',
+    'system' => 'Sistem',
+    'no_description' => 'Açıklama sağlanmadı.',
+    'Data de abertura (De)' => 'Açılış tarihi (Başlangıç)',
+    'Detalhe de um fornecedor' => 'Bir tedarikçinin detayı',
+    'Detalhe de um fornecedor.' => 'Bir tedarikçinin detayı.',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => 'Meydana gelen sorunu, gürültüleri, sızıntıları veya normal dışı davranışları ayrıntılı şekilde açıklayın...',
+    'Detalhes do Incidente' => 'Olay Detayları',
+];

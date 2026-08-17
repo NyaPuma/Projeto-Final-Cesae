@@ -49,6 +49,22 @@ final class TicketSearchService
             }
         }
 
+        if ($filters->userId !== null) {
+            $query->where('user_id', $filters->userId);
+        }
+
+        if ($filters->technicianId !== null) {
+            $query->where('assigned_to', $filters->technicianId);
+        }
+
+        if ($filters->equipmentId !== null) {
+            $query->where('equipment_id', $filters->equipmentId);
+        }
+
+        if ($filters->roomId !== null) {
+            $query->where('room_id', $filters->roomId);
+        }
+
         if ($filters->dateFrom !== null && $filters->dateTo !== null && $filters->dateFrom > $filters->dateTo) {
             throw new \InvalidArgumentException('A data de início não pode ser posterior à data de fim.');
         }

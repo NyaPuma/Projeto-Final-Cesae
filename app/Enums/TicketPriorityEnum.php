@@ -35,10 +35,10 @@ enum TicketPriorityEnum: string
     public function label(): string
     {
         return match ($this) {
-            self::Low => 'Baixa',
-            self::Medium => 'Média',
-            self::High => 'Alta',
-            self::Critical => 'Crítica',
+            self::Low => __('tickets.Baixa'),
+            self::Medium => __('common.Média'),
+            self::High => __('tickets.Alta'),
+            self::Critical => __('common.Crítica'),
         };
     }
 

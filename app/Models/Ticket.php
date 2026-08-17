@@ -33,6 +33,7 @@ final class Ticket extends Model
     /** @var list<string> */
     protected $fillable = [
         'title', 'description', 'priority', 'user_id', 'assigned_to',
+        'reporter_name', 'reporter_contact', 'source',
         'equipment_id', 'room_id', 'status_id', 'reference', 'urgent',
         'opened_at', 'in_progress_at', 'closed_at', 'reopened_at',
         'assigned_at', 'first_response_at', 'resolved_at',
@@ -44,6 +45,7 @@ final class Ticket extends Model
         'budget_approved_at', 'budget_feedback', 'budget_details',
         'scheduled_at', 'scheduled_end', 'scheduled',
         'due_at', 'sla_breached',
+        'recommended_technician_id', 'ai_recommendation_reason', 'ai_processed_at',
     ];
 
     /**
@@ -77,6 +79,7 @@ final class Ticket extends Model
             'estimated_minutes' => 'integer',
             'minutes_spent' => 'integer',
             'budget_details' => 'array',
+            'ai_processed_at' => 'datetime',
         ];
     }
 

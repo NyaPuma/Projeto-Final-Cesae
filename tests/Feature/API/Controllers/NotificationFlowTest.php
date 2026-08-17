@@ -107,4 +107,58 @@ class NotificationFlowTest extends TestCase
         $response->assertStatus(404);
         $this->assertFalse($notification->fresh()->is_read);
     }
+
+    public function test_mark_as_read_returns_404_for_unknown_notification(): void
+    {
+        $profile = UserProfile::where('name', UserRoleEnum::User->value)->firstOrFail();
+        $user = User::factory()->create([
+            'profile_id' => $profile->id,
+            'api_token' => Str::random(60),
+        ]);
+
+        $this->withHeader('X-Auth-Token', $user->api_token)
+            ->patchJson('/api/notifications/999999')
+            ->assertStatus(404);
+    }
+
+    public function test_notifications_list_respects_and_clamps_per_page(): void
+    {
+        $profile = UserProfile::where('name', UserRoleEnum::User->value)->firstOrFail();
+        $user = User::factory()->create([
+            'profile_id' => $profile->id,
+            'api_token' => Str::random(60),
+        ]);
+
+        for ($i = 0; $i < 10; $i++) {
+            Notification::create([
+                'user_id' => $user->id,
+                'title' => "Notificação {$i}",
+                'message' => 'Mensagem',
+                'type' => 'system',
+                'is_read' => false,
+                'link' => null,
+            ]);
+        }
+
+        $this->withHeader('X-Auth-Token', $user->api_token)
+            ->getJson('/api/notifications?per_page=3')
+            ->assertOk()
+            ->assertJsonPath('notifications.meta.per_page', 3)
+            ->assertJsonPath('notifications.meta.total', 10);
+
+        $this->withHeader('X-Auth-Token', $user->api_token)
+            ->getJson('/api/notifications?per_page=500')
+            ->assertOk()
+            ->assertJsonPath('notifications.meta.per_page', 200);
+
+        $this->withHeader('X-Auth-Token', $user->api_token)
+            ->getJson('/api/notifications?per_page=-5')
+            ->assertOk()
+            ->assertJsonPath('notifications.meta.per_page', 50);
+
+        $this->withHeader('X-Auth-Token', $user->api_token)
+            ->getJson('/api/notifications?per_page=abc')
+            ->assertOk()
+            ->assertJsonPath('notifications.meta.per_page', 50);
+    }
 }

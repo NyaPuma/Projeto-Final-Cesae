@@ -74,6 +74,14 @@ final class Equipment extends Model
     }
 
     /**
+     * Planos de manutenção preventiva deste equipamento.
+     */
+    public function maintenancePlans(): HasMany
+    {
+        return $this->hasMany(MaintenancePlan::class);
+    }
+
+    /**
      * Scope para filtrar rapidamente apenas equipamentos ativos.
      */
     public function scopeActive(Builder $query): Builder

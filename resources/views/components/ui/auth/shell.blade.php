@@ -13,24 +13,33 @@
 @props([
     'title',
     'description',
-    'eyebrow' => __('Área segura'),
+    'eyebrow' => __('common.Área segura'),
     'highlights' => [],
 ])
 
 <!doctype html>
-<html lang="{{ app()->getLocale() }}">
+<html lang="{{ app()->getLocale() }}" dir="{{ \App\Services\LocaleService::isRtl(app()->getLocale()) ? 'rtl' : 'ltr' }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ $title }} — {{ __('Gestão de Avarias') }}</title>
+    <title>{{ $title }} — {{ __('common.Gestão de Avarias') }}</title>
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800" rel="stylesheet">
 
+    @vite('resources/js/early-theme.js')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="{{ route('theme.custom') }}?v={{ \App\Http\Controllers\ThemeController::cacheBuster() }}">
+
+    @include('ui.partials.theme-meta')
+
+    @include('ui.partials.locale-config')
 </head>
-<body {{ $attributes->merge(['class' => 'min-h-screen overflow-x-hidden bg-[var(--bg)] text-[var(--text)] antialiased']) }}>
+<body {{ $attributes->merge(['class' => 'min-h-screen overflow-x-hidden bg-[var(--bg)] text-[var(--text)] antialiased' . (\App\Services\LocaleService::isRtl(app()->getLocale()) ? ' rtl' : '')]) }}>
+    <div class="locale-trigger-wrapper fixed right-4 top-4 z-40">
+        @include('ui.partials.locale-trigger')
+    </div>
     {{-- Efeitos Visuais de Fundo (Glow) --}}
     <div class="pointer-events-none fixed inset-0 -z-10" aria-hidden="true">
         <div class="absolute inset-0 bg-[var(--bg)]"></div>
@@ -92,5 +101,6 @@
             </div>
         </div>
     </div>
+    @include('ui.partials.locale-modal')
 </body>
 </html>

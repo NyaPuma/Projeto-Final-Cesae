@@ -16,8 +16,8 @@ final readonly class ReopenTicketAction
 
     public function execute(Ticket $ticket): bool
     {
-        // Guard Clause: Apenas tickets fechados podem ser reabertos
-        if (! $ticket->hasStatus(TicketStatusEnum::Closed)) {
+        // Guard Clause: Apenas tickets fechados ou cancelados podem ser reabertos
+        if (! $ticket->hasStatus(TicketStatusEnum::Closed) && ! $ticket->hasStatus(TicketStatusEnum::Cancelled)) {
             return false;
         }
 

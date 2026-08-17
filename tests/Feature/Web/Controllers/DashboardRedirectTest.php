@@ -56,8 +56,8 @@ class DashboardRedirectTest extends TestCase
 
         // Verifica que os links do menu apontam para rotas reais (sem '*')
         // e que conseguem renderizar sem erro.
-        $dashboard->assertSee('href="/ui/tickets"', false);
-        $dashboard->assertSee('href="/ui/equipments"', false);
-        $dashboard->assertSee('href="/calendar"', false);
+        $dashboard->assertSee('http://localhost/ui/tickets"', false);
+        $dashboard->assertSee('http://localhost/ui/equipments"', false);
+        $dashboard->assertSee('http://localhost/calendar"', false);
     }
 }

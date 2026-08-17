@@ -1,0 +1,148 @@
+/*
+|--------------------------------------------------------------------------
+| Listing Pages (Mobile)
+|--------------------------------------------------------------------------
+|
+| Melhorias mobile para as páginas de listagem (Utilizadores, Salas,
+| Tickets, Equipamentos e Auditoria). Todas as regras vivem dentro do
+| breakpoint (max-width: 1023px) — o mesmo em que a sidebar desktop é
+| escondida — para que não haja scroll horizontal em telemóvel/tablet.
+| Desktop (≥ 1024px) permanece intacto.
+|
+| • Tabelas transformadas em cards com campos rotulados (data-label).
+| • Ações em botões full-width.
+| • Paginação como barra fixa no fundo do ecrã.
+|
+*/
+
+@media (max-width: 1023px) {
+  /* --- Listas como cards --- */
+  .ui-listing-table {
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .ui-listing-table thead {
+    display: none;
+  }
+
+  .ui-listing-table tbody {
+    display: block;
+  }
+
+  .ui-listing-table tbody tr {
+    display: block;
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+
+  .ui-listing-table tbody tr:last-child {
+    margin-bottom: 0;
+  }
+
+  .ui-listing-table tbody td {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.25rem 0.75rem;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+    white-space: normal;
+  }
+
+  .ui-listing-table tbody tr td:last-child {
+    border-bottom: 0;
+  }
+
+  /* Rótulo de cada campo (proveniente de data-label) */
+  .ui-listing-table tbody td[data-label]::before {
+    content: attr(data-label);
+    flex-shrink: 0;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+  }
+
+  /* Estado de carregamento / vazio / erro: centrado */
+  .ui-listing-table tbody td[colspan] {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem 1rem;
+  }
+
+  /* Valores compostos (ex.: nome + código) alinhados à direita */
+  .ui-listing-table tbody td .ui-listing-value {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    text-align: right;
+    min-width: 0;
+  }
+
+  /* Títulos devem embrulhar no mobile (sem truncate) */
+  .ui-listing-table .truncate {
+    overflow: visible;
+    white-space: normal;
+    max-width: none;
+  }
+
+  /* Blocos de estado (pré) não devem estourar o card */
+  .ui-listing-table tbody td pre {
+    max-width: 100%;
+  }
+
+  /* --- Ações: botões em largura total, fáceis de tocar --- */
+  .ui-listing-table tbody td.ui-listing-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .ui-listing-table tbody td.ui-listing-actions::before {
+    display: none;
+  }
+
+  .ui-listing-table tbody td.ui-listing-actions > div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  .ui-listing-table tbody td.ui-listing-actions a,
+  .ui-listing-table tbody td.ui-listing-actions button {
+    width: 100%;
+    min-height: 42px;
+    justify-content: center;
+  }
+
+  /* --- Paginação: barra fixa no fundo --- */
+  .ui-listing-pagination {
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.75rem -1rem 0;
+    padding: 0.75rem 1rem;
+    background: color-mix(in srgb, var(--surface) 88%, transparent);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid var(--border);
+  }
+
+  .ui-listing-pagination button {
+    flex: 1;
+    min-height: 44px;
+  }
+}

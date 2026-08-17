@@ -19,6 +19,8 @@ class UserPreference extends Model
         'language',
         'currency',
         'date_format',
+        'time_format',
+        'number_format',
     ];
 
     /**
@@ -31,6 +33,8 @@ class UserPreference extends Model
         'language' => 'string',
         'currency' => 'string',
         'date_format' => 'string',
+        'time_format' => 'string',
+        'number_format' => 'string',
     ];
 
     /**

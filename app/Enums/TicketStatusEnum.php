@@ -36,12 +36,12 @@ enum TicketStatusEnum: string
     public function label(): string
     {
         return match ($this) {
-            self::Open => 'Aberta',
-            self::InProgress => 'Em Curso',
-            self::Closed => 'Fechada',
-            self::Cancelled => 'Cancelada',
-            self::PendingBudget => 'Pendente Orçamento',
-            self::Rejected => 'Recusada',
+            self::Open => __('common.Aberta'),
+            self::InProgress => __('common.Em Curso'),
+            self::Closed => __('common.Fechada'),
+            self::Cancelled => __('ui.Cancelada'),
+            self::PendingBudget => __('common.Pendente Orçamento'),
+            self::Rejected => __('common.Recusada'),
         };
     }
 

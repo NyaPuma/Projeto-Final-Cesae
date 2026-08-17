@@ -9,8 +9,8 @@ Profile Security Form Card Component
 @props([])
 
 <x-ui.form.card
-    :title="__('Segurança & Palavra-passe')"
-    :description="__('Defina uma palavra-passe forte para proteger a sua conta.')"
+    :title="__('auth.Segurança & Palavra-passe')"
+    :description="__('auth.Defina uma palavra-passe forte para proteger a sua conta.')"
     icon='<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg>'
 >
     <form
@@ -18,11 +18,11 @@ Profile Security Form Card Component
         class="space-y-4"
         novalidate
         x-data="passwordStrength()"
-        data-saving-message="{{ __('A atualizar palavra-passe...') }}"
-        data-success-message="{{ __('Palavra-passe atualizada com sucesso.') }}"
-        data-error-message="{{ __('Não foi possível atualizar a palavra-passe.') }}"
+        data-saving-message="{{ __('auth.A atualizar palavra-passe...') }}"
+        data-success-message="{{ __('messages.Palavra-passe atualizada com sucesso.') }}"
+        data-error-message="{{ __('auth.Não foi possível atualizar a palavra-passe.') }}"
     >
-        <x-ui.form.field :id="'currentPassword'" :label="__('Palavra-passe atual')">
+        <x-ui.form.field :id="'currentPassword'" :label="__('auth.Palavra-passe atual')">
             <x-ui.form.input
                 id="currentPassword"
                 name="current_password"
@@ -33,18 +33,18 @@ Profile Security Form Card Component
             />
         </x-ui.form.field>
 
-        <x-ui.form.field :id="'newPassword'" :label="__('Nova palavra-passe')">
+        <x-ui.form.field :id="'newPassword'" :label="__('auth.Nova palavra-passe')">
             <x-ui.form.input
                 id="newPassword"
                 name="password"
                 type="password"
                 autocomplete="new-password"
                 x-model="password"
-                :placeholder="__('Mínimo 8 caracteres')"
+                :placeholder="__('stock.Mínimo 8 caracteres')"
                 class="py-3"
             />
 
-            <ul class="mt-3 space-y-1.5" aria-label="{{ __('Requisitos da palavra-passe') }}">
+            <ul class="mt-3 space-y-1.5" aria-label="{{ __('auth.Requisitos da palavra-passe') }}">
                 <li
                     :class="lengthOk ? 'text-emerald-600 dark:text-emerald-400' : 'text-zinc-500 dark:text-zinc-400'"
                     class="flex items-center gap-2 text-xs"
@@ -52,7 +52,7 @@ Profile Security Form Card Component
                     <svg class="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
-                    {{ __('Mínimo de 8 caracteres') }}
+                    {{ __('stock.Mínimo de 8 caracteres') }}
                 </li>
 
                 <li
@@ -62,7 +62,7 @@ Profile Security Form Card Component
                     <svg class="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
-                    {{ __('Pelo menos 1 letra maiúscula e 1 letra minúscula') }}
+                    {{ __('common.Pelo menos 1 letra maiúscula e 1 letra minúscula') }}
                 </li>
 
                 <li
@@ -72,7 +72,7 @@ Profile Security Form Card Component
                     <svg class="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
-                    {{ __('Pelo menos 1 símbolo ou número') }}
+                    {{ __('common.Pelo menos 1 símbolo ou número') }}
                 </li>
             </ul>
 
@@ -109,7 +109,7 @@ Profile Security Form Card Component
             </div>
         </x-ui.form.field>
 
-        <x-ui.form.field :id="'newPasswordConfirmation'" :label="__('Confirmar palavra-passe')">
+        <x-ui.form.field :id="'newPasswordConfirmation'" :label="__('auth.Confirmar palavra-passe')">
             <x-ui.form.input
                 id="newPasswordConfirmation"
                 name="password_confirmation"
@@ -124,7 +124,7 @@ Profile Security Form Card Component
 
         <div class="pt-2">
             <x-ui.buttons.submit id="submitPasswordBtn" variant="primary" size="md" weight="semibold" class="rounded-2xl disabled:cursor-not-allowed disabled:opacity-50">
-                {{ __('Atualizar palavra-passe') }}
+                {{ __('auth.Atualizar palavra-passe') }}
             </x-ui.buttons.submit>
         </div>
     </form>

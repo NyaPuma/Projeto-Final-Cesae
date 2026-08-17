@@ -25,26 +25,6 @@ export function getResultsCount() {
     return document.getElementById('resultsCount');
 }
 
-export function getEquipmentModal() {
-    return document.getElementById('equipmentModal');
-}
-
-export function getEquipmentForm() {
-    return document.getElementById('equipmentForm');
-}
-
-export function getAddEquipmentButton() {
-    return document.getElementById('btnAddEquipment');
-}
-
-export function showAddEquipmentButton() {
-    const button = getAddEquipmentButton();
-    if (!button) return;
-
-    button.classList.remove('hidden');
-    button.classList.add('inline-flex');
-}
-
 export function renderLoadingState() {
     const tbody = getEquipmentTableBody();
     if (!tbody) return;

@@ -10,10 +10,15 @@ use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithTitle;
+use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Style\Conditional;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
@@ -29,7 +34,8 @@ final class TicketsExport implements
     WithStyles,
     WithTitle,
     WithColumnFormatting,
-    WithChunkReading
+    WithChunkReading,
+    WithEvents
 {
     /**
      * Permite injetar uma query personalizada/filtrada a partir do Controller.
@@ -44,12 +50,14 @@ final class TicketsExport implements
     public function query(): Builder
     {
         return ($this->customQuery ?? Ticket::query())
+            ->with('status')
             ->select([
                 'id',
                 'reference',
                 'title',
                 'status_id',
                 'priority',
+                'urgent',
                 'opened_at',
                 'in_progress_at',
                 'closed_at',
@@ -81,6 +89,7 @@ final class TicketsExport implements
             'Título',
             'Estado',
             'Prioridade',
+            'Urgente',
             'Aberto em',
             'Em Progresso em',
             'Fechado em',
@@ -103,9 +112,8 @@ final class TicketsExport implements
             ? $ticket->status->label()
             : ($ticket->status->name ?? (string) ($ticket->status ?? 'N/A'));
 
-        $priorityLabel = $ticket->priority instanceof TicketPriorityEnum
-            ? $ticket->priority->label()
-            : (string) ($ticket->priority ?? 'N/A');
+        $priorityLabel = TicketPriorityEnum::normalize($ticket->priority)?->label()
+            ?? (string) ($ticket->priority ?? 'N/A');
 
         return [
             $ticket->id,
@@ -113,6 +121,7 @@ final class TicketsExport implements
             $ticket->title,
             $statusLabel,
             $priorityLabel,
+            $ticket->urgent ? 'Sim' : 'Não',
             $ticket->opened_at?->format('d/m/Y H:i') ?? '-',
             $ticket->in_progress_at?->format('d/m/Y H:i') ?? '-',
             $ticket->closed_at?->format('d/m/Y H:i') ?? '-',
@@ -129,9 +138,9 @@ final class TicketsExport implements
     public function columnFormats(): array
     {
         return [
-            'I' => NumberFormat::FORMAT_NUMBER,
-            'J' => '#,##0.00 "€"',
-            'L' => '#,##0.00 "€"',
+            'J' => NumberFormat::FORMAT_NUMBER,
+            'K' => '#,##0.00 "€"',
+            'M' => '#,##0.00 "€"',
         ];
     }
 
@@ -141,6 +150,40 @@ final class TicketsExport implements
     public function title(): string
     {
         return 'Relatório de Tickets';
+    }
+
+    /**
+     * Eventos da folha: congela o cabeçalho, ativa o autofiltro
+     * e aplica zebra (linhas alternadas) via formatação condicional.
+     */
+    public function registerEvents(): array
+    {
+        return [
+            AfterSheet::class => function (AfterSheet $event) {
+                $sheet = $event->sheet;
+                $highestRow = $sheet->getHighestDataRow();
+                $range = "A1:M{$highestRow}";
+
+                $sheet->freezePane('A2');
+                $sheet->setAutoFilter($range);
+
+                if ($highestRow > 1) {
+                    $conditional = new Conditional();
+                    $conditional->setConditionType(Conditional::CONDITION_EXPRESSION);
+                    $conditional->setOperatorType(Conditional::OPERATOR_EQUAL);
+                    $conditional->addCondition('MOD(ROW(),2)=0');
+                    $conditional->getStyle()
+                        ->getFill()
+                        ->setFillType(Fill::FILL_SOLID)
+                        ->setStartColor(new Color('FFF1F5F9'));
+
+                    $dataRange = $sheet->getStyle("A2:M{$highestRow}");
+                    $conditionalStyles = $dataRange->getConditionalStyles();
+                    $conditionalStyles[] = $conditional;
+                    $dataRange->setConditionalStyles($conditionalStyles);
+                }
+            },
+        ];
     }
 
     /**

@@ -1,6 +1,19 @@
 import { authHeader } from '../../utils/api.js';
+import { formatDateTime } from '../../utils/locale.js';
 import { state } from './state.js';
 import { showMessage } from './ui.js';
+
+function translations() {
+    const section = document.getElementById('commentsSection');
+    const data = section?.dataset || {};
+
+    return {
+        noComments: window.SGM_TICKET_DETAIL_I18N?.noComments || data.noComments || '',
+        commentsError: window.SGM_TICKET_DETAIL_I18N?.commentsError || data.commentsError || '',
+        messageSent: window.SGM_TICKET_DETAIL_I18N?.messageSent || data.messageSent || '',
+        system: window.SGM_TICKET_DETAIL_I18N?.system || '',
+    };
+}
 
 export async function fetchComments() {
     const section = document.getElementById('commentsSection');
@@ -14,21 +27,21 @@ export async function fetchComments() {
         const comments = data.comments || data;
 
         if (!comments || comments.length === 0) {
-            section.innerHTML = '<p class="py-1 italic text-(--text-soft)">Sem mensagens registadas.</p>';
+            section.innerHTML = `<p class="py-1 italic text-(--text-soft)">${translations().noComments}</p>`;
             return;
         }
 
         section.innerHTML = comments.map((comment) => `
             <div class="space-y-1 border-b border-(--border)/50 py-2">
                 <div class="flex justify-between font-bold text-(--text)">
-                    <span>${comment.user ? comment.user.name : 'Sistema'}</span>
-                    <span class="font-mono text-[10px] text-(--text-soft)">${comment.created_at || ''}</span>
+                    <span>${comment.user ? comment.user.name : translations().system}</span>
+                    <span class="font-mono text-[10px] text-(--text-soft)">${comment.created_at ? formatDateTime(comment.created_at) : ''}</span>
                 </div>
                 <p class="text-(--text-soft)">${comment.comment || comment.message || ''}</p>
             </div>
         `).join('');
     } catch {
-        section.innerHTML = '<p class="py-1 italic text-rose-500">Erro ao carregar histórico.</p>';
+        section.innerHTML = `<p class="py-1 italic text-rose-500">${translations().commentsError}</p>`;
     }
 }
 
@@ -49,6 +62,6 @@ export function bindCommentForm() {
 
         document.getElementById('commentText').value = '';
         await fetchComments();
-        showMessage('Mensagem enviada!');
+        showMessage(translations().messageSent);
     });
 }
