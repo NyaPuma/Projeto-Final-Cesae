@@ -9,7 +9,7 @@ enum BudgetStatusEnum: string
     case Rejected = 'rejected';
 
     /**
-     * Retorna todos os valores raw do Enum num array simples (ideal para validações Laravel).
+     * Return all raw enum values in a simple array (suitable for validation).
      */
     public static function values(): array
     {
@@ -17,7 +17,7 @@ enum BudgetStatusEnum: string
     }
 
     /**
-     * Retorna a descrição legível em Português para UI e relatórios.
+     * Return the human-readable description for UI and reports.
      */
     public function label(): string
     {
@@ -29,7 +29,7 @@ enum BudgetStatusEnum: string
     }
 
     /**
-     * Cor indicativa para badges/tabelas no frontend (ex: Filament, Tailwind, Bootstrap).
+     * Indicative color for badges and tables in the UI.
      */
     public function color(): string
     {
@@ -41,7 +41,7 @@ enum BudgetStatusEnum: string
     }
 
     /**
-     * Ícone indicativo para representação visual.
+     * Indicative icon for visual representation.
      */
     public function icon(): string
     {
@@ -53,7 +53,7 @@ enum BudgetStatusEnum: string
     }
 
     /**
-     * Indica se o orçamento já atingiu um estado terminal (aprovado ou rejeitado).
+     * Check if the budget has reached a terminal state (approved or rejected).
      */
     public function isFinal(): bool
     {
@@ -64,18 +64,18 @@ enum BudgetStatusEnum: string
     }
 
     /**
-     * Valida se é possível transitar de estado.
+     * Check if a transition to the target state is allowed.
      */
     public function canTransitionTo(self $target): bool
     {
         return match ($this) {
-            self::Pending => true, // De pendente pode passar a qualquer estado
-            self::Approved, self::Rejected => false, // Estados finais não transitam diretamente
+            self::Pending => true,
+            self::Approved, self::Rejected => false,
         };
     }
 
     /**
-     * Tenta converter um valor genérico (string ou Enum) de forma segura.
+     * Safely normalize mixed input (string or enum instance).
      */
     public static function normalize(mixed $value): ?self
     {

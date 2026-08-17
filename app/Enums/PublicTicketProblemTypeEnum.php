@@ -10,7 +10,7 @@ enum PublicTicketProblemTypeEnum: string
     case Other = 'outro';
 
     /**
-     * Retorna todos os valores raw do Enum num array simples.
+     * Return all raw enum values in a simple array.
      */
     public static function values(): array
     {
@@ -18,7 +18,7 @@ enum PublicTicketProblemTypeEnum: string
     }
 
     /**
-     * Retorna a descrição legível em Português para a UI.
+     * Return the human-readable description for the UI.
      */
     public function label(): string
     {
@@ -31,7 +31,7 @@ enum PublicTicketProblemTypeEnum: string
     }
 
     /**
-     * Converte o tipo de problema na prioridade de ticket correspondente.
+     * Map problem type to corresponding ticket priority.
      */
     public function priority(): TicketPriorityEnum
     {
@@ -44,7 +44,7 @@ enum PublicTicketProblemTypeEnum: string
     }
 
     /**
-     * Emoji representativo para o seletor do formulário público.
+     * Indicative emoji for the public ticket form selector.
      */
     public function icon(): string
     {
@@ -57,7 +57,7 @@ enum PublicTicketProblemTypeEnum: string
     }
 
     /**
-     * Converte com segurança entradas genéricas (com/sem acento, maiúsculas).
+     * Safely normalize generic input (handles accents, aliases, and case).
      */
     public static function normalize(mixed $value): ?self
     {
@@ -72,10 +72,10 @@ enum PublicTicketProblemTypeEnum: string
         $sanitized = mb_strtolower(trim($value));
 
         return match ($sanitized) {
-            'avaria' => self::Breakdown,
-            'manutencao_preventiva', 'manutenção preventiva', 'manutencao preventiva' => self::Preventive,
-            'falta_consumiveis', 'falta de consumíveis', 'falta de consumiveis' => self::Consumables,
-            'outro' => self::Other,
+            'breakdown', 'avaria' => self::Breakdown,
+            'preventive', 'manutencao_preventiva', 'manutenção preventiva', 'manutencao preventiva' => self::Preventive,
+            'consumables', 'falta_consumiveis', 'falta de consumíveis', 'falta de consumiveis' => self::Consumables,
+            'other', 'outro' => self::Other,
             default => self::tryFrom($sanitized),
         };
     }

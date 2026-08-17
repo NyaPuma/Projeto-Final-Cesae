@@ -13,7 +13,7 @@ enum TicketWorkflowStatusEnum: string
     case Cancelled = 'cancelled';
 
     /**
-     * Retorna todos os valores raw do Enum num array simples.
+     * Return all raw enum values in a simple array.
      */
     public static function values(): array
     {
@@ -21,7 +21,7 @@ enum TicketWorkflowStatusEnum: string
     }
 
     /**
-     * Retorna a descrição legível em Português para a UI.
+     * Return the human-readable description for UI.
      */
     public function label(): string
     {
@@ -37,7 +37,7 @@ enum TicketWorkflowStatusEnum: string
     }
 
     /**
-     * Cor indicativa para badges/tabelas no frontend.
+     * Indicative color for badges and tables in UI.
      */
     public function color(): string
     {
@@ -52,7 +52,7 @@ enum TicketWorkflowStatusEnum: string
     }
 
     /**
-     * Ícone indicativo para representação visual no frontend.
+     * Indicative icon for visual representation.
      */
     public function icon(): string
     {
@@ -68,7 +68,7 @@ enum TicketWorkflowStatusEnum: string
     }
 
     /**
-     * Indica se o estado atual é terminal (fim do workflow).
+     * Check if the status is terminal.
      */
     public function isFinal(): bool
     {
@@ -79,7 +79,7 @@ enum TicketWorkflowStatusEnum: string
     }
 
     /**
-     * Indica se o ticket se encontra num estado ativo no workflow.
+     * Check if the ticket is active within the workflow.
      */
     public function isActive(): bool
     {
@@ -87,7 +87,7 @@ enum TicketWorkflowStatusEnum: string
     }
 
     /**
-     * Define as transições válidas a partir do estado atual.
+     * Define valid state transitions from current status.
      *
      * @return array<self>
      */
@@ -99,12 +99,12 @@ enum TicketWorkflowStatusEnum: string
             self::WaitingBudget => [self::Approved, self::Rejected, self::Cancelled],
             self::Approved => [self::InProgress, self::Closed, self::Cancelled],
             self::Rejected => [self::WaitingBudget, self::Cancelled],
-            self::Closed, self::Cancelled => [], // Estados finais não aceitam transições diretas
+            self::Closed, self::Cancelled => [],
         };
     }
 
     /**
-     * Verifica se é possível transitar do estado atual para um novo estado pretendido.
+     * Check if a transition to the target status is allowed.
      */
     public function canTransitionTo(self $target): bool
     {
@@ -112,7 +112,7 @@ enum TicketWorkflowStatusEnum: string
     }
 
     /**
-     * Converte com segurança entradas genéricas (strings sanitizadas ou objetos).
+     * Safely normalize generic input (string or enum instance).
      */
     public static function normalize(mixed $value): ?self
     {

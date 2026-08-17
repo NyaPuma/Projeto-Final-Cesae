@@ -11,7 +11,7 @@ enum FileTypeEnum: string
     case Other = 'other';
 
     /**
-     * Retorna todos os valores raw do Enum num array simples.
+     * Return all raw enum values in a simple array.
      */
     public static function values(): array
     {
@@ -19,7 +19,7 @@ enum FileTypeEnum: string
     }
 
     /**
-     * Retorna a descrição legível em Português para a UI.
+     * Return the human-readable description for the UI.
      */
     public function label(): string
     {
@@ -33,7 +33,7 @@ enum FileTypeEnum: string
     }
 
     /**
-     * Ícone indicativo para representação visual no frontend (ex: Heroicons).
+     * Indicative icon for frontend visual representation.
      */
     public function icon(): string
     {
@@ -47,7 +47,7 @@ enum FileTypeEnum: string
     }
 
     /**
-     * Identifica o FileTypeEnum a partir do MIME type.
+     * Identify the FileTypeEnum based on MIME type.
      */
     public static function fromMimeType(string $mimeType): self
     {
@@ -73,27 +73,21 @@ enum FileTypeEnum: string
     }
 
     /**
-     * Lista abrangente de MIME types considerados documentos (PDF, Office, OpenDocument, RTF, CSV, etc.).
+     * List of MIME types classified as documents.
      */
     private static function isDocumentMimeType(string $mime): bool
     {
         $documentMimes = [
-            // PDF
             'application/pdf',
-            // Microsoft Word
             'application/msword',
             'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-            // Microsoft Excel
             'application/vnd.ms-excel',
             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-            // Microsoft PowerPoint
             'application/vnd.ms-powerpoint',
             'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-            // OpenDocument Formats
             'application/vnd.oasis.opendocument.text',
             'application/vnd.oasis.opendocument.spreadsheet',
             'application/vnd.oasis.opendocument.presentation',
-            // Outros documentos de texto/dados
             'application/rtf',
             'application/csv',
             'application/json',
@@ -104,7 +98,7 @@ enum FileTypeEnum: string
     }
 
     /**
-     * Tenta converter um valor genérico (string ou Enum) de forma segura.
+     * Safely normalize mixed input (string or enum instance).
      */
     public static function normalize(mixed $value): ?self
     {

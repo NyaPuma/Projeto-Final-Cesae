@@ -15,7 +15,7 @@ enum NotificationTypeEnum: string
     case LowStock = 'low_stock';
 
     /**
-     * Retorna todos os valores raw do Enum num array simples.
+     * Return all raw enum values in a simple array.
      */
     public static function values(): array
     {
@@ -23,7 +23,7 @@ enum NotificationTypeEnum: string
     }
 
     /**
-     * Retorna a descrição legível em Português para a UI e e-mails.
+     * Return the human-readable description for UI and emails.
      */
     public function label(): string
     {
@@ -41,7 +41,7 @@ enum NotificationTypeEnum: string
     }
 
     /**
-     * Emoji ou representação gráfica indicativa.
+     * Indicative emoji icon.
      */
     public function icon(): string
     {
@@ -58,7 +58,7 @@ enum NotificationTypeEnum: string
     }
 
     /**
-     * Cor indicativa para badges/toasts no frontend.
+     * Indicative color for badges and toasts.
      */
     public function color(): string
     {
@@ -72,7 +72,7 @@ enum NotificationTypeEnum: string
     }
 
     /**
-     * Mapeia a prioridade padrão do tipo de notificação.
+     * Map default priority for each notification type.
      */
     public function defaultPriority(): NotificationPriorityEnum
     {
@@ -86,7 +86,7 @@ enum NotificationTypeEnum: string
     }
 
     /**
-     * Indica se a notificação está relacionada com o módulo de orçamentos.
+     * Check if the notification type belongs to the budget workflow.
      */
     public function isBudgetRelated(): bool
     {
@@ -101,7 +101,7 @@ enum NotificationTypeEnum: string
     }
 
     /**
-     * Tenta converter um valor genérico (string ou Enum) de forma segura.
+     * Safely normalize mixed input (string or enum instance).
      */
     public static function normalize(mixed $value): ?self
     {

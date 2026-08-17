@@ -10,7 +10,7 @@ enum NotificationPriorityEnum: string
     case Urgent = 'urgent';
 
     /**
-     * Retorna todos os valores raw do Enum num array simples.
+     * Return all raw enum values in a simple array.
      */
     public static function values(): array
     {
@@ -18,7 +18,7 @@ enum NotificationPriorityEnum: string
     }
 
     /**
-     * Retorna a descrição legível em Português para a UI.
+     * Return the human-readable description for the UI.
      */
     public function label(): string
     {
@@ -31,7 +31,7 @@ enum NotificationPriorityEnum: string
     }
 
     /**
-     * Cor indicativa para badges, toasts e alertas no frontend.
+     * Indicative color for badges, toasts, and alerts.
      */
     public function color(): string
     {
@@ -44,7 +44,7 @@ enum NotificationPriorityEnum: string
     }
 
     /**
-     * Ícone indicativo para representação visual.
+     * Indicative icon for visual representation.
      */
     public function icon(): string
     {
@@ -57,7 +57,7 @@ enum NotificationPriorityEnum: string
     }
 
     /**
-     * Retorna a ponderação numérica para ordenação por prioridade em filas ou queries.
+     * Numeric weight for sorting by priority.
      */
     public function weight(): int
     {
@@ -70,7 +70,7 @@ enum NotificationPriorityEnum: string
     }
 
     /**
-     * Indica se a notificação requer envio imediato / contornar filas lentas.
+     * Check if the notification requires immediate dispatch.
      */
     public function isHighPriority(): bool
     {
@@ -81,7 +81,7 @@ enum NotificationPriorityEnum: string
     }
 
     /**
-     * Tenta converter um valor genérico (string ou Enum) de forma segura.
+     * Safely normalize mixed input (string or enum instance).
      */
     public static function normalize(mixed $value): ?self
     {

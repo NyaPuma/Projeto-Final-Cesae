@@ -12,7 +12,7 @@ enum AuditEventEnum: string
     case PasswordChanged = 'password_changed';
 
     /**
-     * Retorna todos os valores raw do Enum num array simples.
+     * Return all raw enum values in a simple array.
      */
     public static function values(): array
     {
@@ -20,7 +20,7 @@ enum AuditEventEnum: string
     }
 
     /**
-     * Retorna a descrição legível do evento em Português para UI e relatórios.
+     * Return the human-readable description for UI and reports.
      */
     public function label(): string
     {
@@ -35,7 +35,7 @@ enum AuditEventEnum: string
     }
 
     /**
-     * Cor indicativa para badges/tabelas no frontend ou painéis como Filament/Nova.
+     * Indicative color for badges and tables in UI.
      */
     public function color(): string
     {
@@ -49,7 +49,7 @@ enum AuditEventEnum: string
     }
 
     /**
-     * Verifica se o evento pertence ao grupo de segurança/autenticação.
+     * Check if the event belongs to authentication/security actions.
      */
     public function isAuthEvent(): bool
     {
@@ -60,7 +60,7 @@ enum AuditEventEnum: string
     }
 
     /**
-     * Tenta converter um valor genérico (string ou Enum) de forma segura.
+     * Safely normalize mixed input (string or enum instance).
      */
     public static function normalize(mixed $value): ?self
     {

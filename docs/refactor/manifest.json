@@ -1,0 +1,5691 @@
+{
+  "generated_at": "2026-08-17T12:58:23.372155+00:00",
+  "folders": {
+    "app/Enums": {
+      "status": "done",
+      "files": {
+        "app/Enums/AuditEventEnum.php": {
+          "status": "done",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Enums/BudgetDecisionEnum.php": {
+          "status": "done",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Enums/BudgetStatusEnum.php": {
+          "status": "done",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Enums/FileTypeEnum.php": {
+          "status": "done",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Enums/MaintenancePlanIntervalTypeEnum.php": {
+          "status": "done",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Enums/NotificationPriorityEnum.php": {
+          "status": "done",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Enums/NotificationTypeEnum.php": {
+          "status": "done",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Enums/PartUnitOfMeasureEnum.php": {
+          "status": "done",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Enums/PublicTicketProblemTypeEnum.php": {
+          "status": "done",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Enums/StockMovementTypeEnum.php": {
+          "status": "done",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Enums/TicketPriorityEnum.php": {
+          "status": "done",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Enums/TicketStatusEnum.php": {
+          "status": "done",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Enums/TicketWorkflowStatusEnum.php": {
+          "status": "done",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Enums/UserRoleEnum.php": {
+          "status": "done",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "done"
+    },
+    "app/Traits": {
+      "status": "pending",
+      "files": {
+        "app/Traits/Auditable.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "app/Models": {
+      "status": "pending",
+      "files": {
+        "app/Models/Audit.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Models/Equipment.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Models/EquipmentCategory.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Models/MaintenancePlan.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Models/Notification.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Models/Part.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Models/PartCategory.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Models/Room.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Models/StockMovement.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Models/Supplier.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Models/SystemSetting.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Models/TaxRate.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Models/ThemeSetting.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Models/Ticket.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Models/TicketAttachment.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Models/TicketComment.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Models/TicketStatus.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Models/TicketType.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Models/TicketWorkflowHistory.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Models/User.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Models/UserPreference.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Models/UserProfile.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "app/DTOs": {
+      "status": "pending",
+      "files": {
+        "app/DTOs/AssignTechnicianData.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/DTOs/BudgetDecisionData.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/DTOs/BudgetSubmissionData.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/DTOs/CloseTicketData.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/DTOs/CommentData.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/DTOs/CreateTicketData.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/DTOs/PasswordChangeData.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/DTOs/ProfileUpdateData.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/DTOs/ScheduleMaintenanceData.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/DTOs/ScheduleTicketData.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/DTOs/StoreEquipmentData.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/DTOs/StorePartData.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/DTOs/StoreRoomData.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/DTOs/StoreSupplierData.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/DTOs/StoreUserData.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/DTOs/TicketFilters.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/DTOs/UpdateEquipmentData.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/DTOs/UpdatePartData.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/DTOs/UpdateRoomData.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/DTOs/UpdateSupplierData.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/DTOs/UpdateUserData.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "app/ValueObjects": {
+      "status": "pending",
+      "files": {
+        "app/ValueObjects/Email.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/ValueObjects/Money.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/ValueObjects/SerialNumber.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "app/Concerns": {
+      "status": "pending",
+      "files": {
+        "app/Concerns/BroadcastsTicketStatus.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "app/Actions": {
+      "status": "pending",
+      "files": {
+        "app/Actions/ApproveBudgetAction.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Actions/AssignTechnicianAction.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Actions/CreateEquipmentAction.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Actions/CreatePartAction.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Actions/CreatePreventiveTicketAction.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Actions/CreatePublicTicketAction.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Actions/CreateRoomAction.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Actions/CreateSupplierAction.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Actions/CreateTicketAction.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Actions/CreateUserAction.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Actions/MaintenancePlanActions.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Actions/PartCategoryActions.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Actions/ScheduleMaintenanceAction.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Actions/ScheduleTicketAction.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Actions/SubmitBudgetAction.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Actions/TaxRateActions.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Actions/UpdateEquipmentAction.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Actions/UpdatePartAction.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Actions/UpdateRoomAction.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Actions/UpdateSupplierAction.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Actions/UpdateUserAction.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "app/Domain/Ticket/Actions": {
+      "status": "pending",
+      "files": {
+        "app/Domain/Ticket/Actions/CancelTicketAction.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Domain/Ticket/Actions/CheckHigherPriorityAction.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Domain/Ticket/Actions/CloseTicketAction.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Domain/Ticket/Actions/ReopenTicketAction.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Domain/Ticket/Actions/StartTicketAction.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "app/Domain/Ticket/Queries": {
+      "status": "pending",
+      "files": {
+        "app/Domain/Ticket/Queries/MonthlyTicketsQuery.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Domain/Ticket/Queries/ScheduledEventsQuery.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Domain/Ticket/Queries/TicketKpiQuery.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Domain/Ticket/Queries/TicketPriorityQuery.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Domain/Ticket/Queries/TopEntitiesQuery.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "app/Domain/Ticket/Services": {
+      "status": "pending",
+      "files": {
+        "app/Domain/Ticket/Services/TicketStatusChecker.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "app/Domain/Ticket/ValueObjects": {
+      "status": "pending",
+      "files": {
+        "app/Domain/Ticket/ValueObjects/BudgetPauseMinutes.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "app/Services": {
+      "status": "pending",
+      "files": {
+        "app/Services/AIService.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Services/AnalyticsDashboardService.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Services/AnalyticsExportService.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Services/AnalyticsService.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Services/AuthUserResolver.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Services/BudgetCalculatorService.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Services/BudgetNotificationService.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Services/CalendarService.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Services/EquipmentService.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Services/LocaleService.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Services/LocalizationService.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Services/LowStockAlertService.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Services/NotificationCreatorService.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Services/NotificationService.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Services/PartPriceCalculator.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Services/PartService.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Services/PasswordResetService.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Services/PreferenciasService.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Services/QrCodeService.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Services/StockDashboardService.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Services/StockMovementService.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Services/SystemSettingsService.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Services/TechnicianAssignmentService.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Services/ThemePresetService.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Services/TicketNotificationService.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Services/TicketSearchService.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Services/TicketStatusService.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Services/TicketWorkflowService.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Services/UserService.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "app/Repositories": {
+      "status": "pending",
+      "files": {
+        "app/Repositories/EquipmentRepository.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Repositories/RoomRepository.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Repositories/TicketRepository.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Repositories/UserRepository.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "app/Repositories/Contracts": {
+      "status": "pending",
+      "files": {
+        "app/Repositories/Contracts/EquipmentRepositoryInterface.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Repositories/Contracts/RoomRepositoryInterface.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Repositories/Contracts/TicketRepositoryInterface.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Repositories/Contracts/UserRepositoryInterface.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "app/Jobs": {
+      "status": "pending",
+      "files": {
+        "app/Jobs/CheckLowStockJob.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Jobs/ExportCsvJob.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Jobs/ExportEquipmentQrPdfJob.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Jobs/ExportExcelJob.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Jobs/ExportPdfJob.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Jobs/ExportStockCostsPdfJob.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Jobs/GenerateAiRecommendationJob.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Jobs/SendTestEmailJob.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "app/Listeners": {
+      "status": "pending",
+      "files": {
+        "app/Listeners/LogTicketStatusChange.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Listeners/LogTicketWorkflowChange.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Listeners/NotifyAssignedTechnician.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Listeners/SendTicketCreatedNotification.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Listeners/SendTicketStatusNotification.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "app/Events": {
+      "status": "pending",
+      "files": {
+        "app/Events/TicketCreated.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Events/TicketStatusChanged.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Events/TicketStatusUpdatedBroadcast.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "app/Mail": {
+      "status": "pending",
+      "files": {
+        "app/Mail/PasswordResetMail.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Mail/TestMail.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Mail/TicketCreated.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "app/Notifications": {
+      "status": "pending",
+      "files": {
+        "app/Notifications/NewTicketNotification.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Notifications/TicketNotification.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Notifications/TicketStatusChanged.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "app/Observers": {
+      "status": "pending",
+      "files": {
+        "app/Observers/AuditObserver.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Observers/TicketObserver.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Observers/UserObserver.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "app/Policies": {
+      "status": "pending",
+      "files": {
+        "app/Policies/AuditPolicy.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Policies/EquipmentPolicy.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Policies/MaintenancePlanPolicy.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Policies/PartCategoryPolicy.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Policies/PartPolicy.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Policies/RoomPolicy.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Policies/StockMovementPolicy.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Policies/SupplierPolicy.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Policies/TaxRatePolicy.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Policies/TicketPolicy.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Policies/UserPolicy.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Policies/UserProfilePolicy.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "app/Exports": {
+      "status": "pending",
+      "files": {
+        "app/Exports/TicketsExport.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "app/OpenApi": {
+      "status": "pending",
+      "files": {
+        "app/OpenApi/OpenApiSpec.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "app/Http/Requests": {
+      "status": "pending",
+      "files": {
+        "app/Http/Requests/AssignTechnicianToTicketRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/BudgetDecisionRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/ChangePasswordRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/CloseTicketRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/CloseTicketSimpleRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/LoginRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/PublicStoreTicketRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/RegisterRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/RequestBudgetRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/RescheduleEventRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/ResetPasswordRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/ScheduleMaintenanceRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/ScheduleTicketRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/SendResetLinkRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/StartTicketRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/StoreCommentRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/StoreEquipmentRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/StoreMaintenancePlanRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/StorePartCategoryRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/StorePartRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/StorePreventiveRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/StoreRoomRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/StoreStockMovementRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/StoreSupplierRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/StoreTaxRateRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/StoreTicketRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/StoreUserRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/SubmitBudgetRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/UpdateEquipmentRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/UpdateMaintenancePlanRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/UpdatePartCategoryRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/UpdatePartRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/UpdateProfileRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/UpdateRoomRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/UpdateSupplierRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/UpdateTaxRateRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/UpdateUserRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Requests/UploadPhotoRequest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "app/Http/Resources": {
+      "status": "pending",
+      "files": {
+        "app/Http/Resources/AuditResource.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Resources/EquipmentResource.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Resources/MaintenancePlanResource.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Resources/NotificationResource.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Resources/PartCategoryResource.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Resources/PartResource.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Resources/RoomResource.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Resources/StockMovementResource.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Resources/SupplierResource.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Resources/TaxRateResource.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Resources/TicketAttachmentResource.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Resources/TicketCommentResource.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Resources/TicketResource.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Resources/UserProfileResource.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Resources/UserResource.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "app/Http/Middleware": {
+      "status": "pending",
+      "files": {
+        "app/Http/Middleware/CsrfMiddleware.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Middleware/CustomAuthMiddleware.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Middleware/LocalizeSwaggerDocument.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Middleware/RateLimitMiddleware.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Middleware/RoleMiddleware.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Middleware/SecurityHeaders.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Middleware/SetLocaleMiddleware.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Middleware/SetUserPreferencesMiddleware.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "app/Http/Controllers": {
+      "status": "pending",
+      "files": {
+        "app/Http/Controllers/ActivityFeedController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/AdminController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/AdminEquipmentController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/AdminUserController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/AnalyticsController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/AuditController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/AuthController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/CalendarController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/Controller.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/LocaleController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/MaintenancePlanController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/NotificationController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/PageController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/PartCategoryController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/PartController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/PasswordResetController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/PreferenciasController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/ProfileController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/PublicTicketController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/QrCodeController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/RegisterController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/RoomController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/StockDashboardController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/StockMovementController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/StockReportController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/StockUiController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/SupplierController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/SystemSettingsController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/TaxRateController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/ThemeController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/TicketAttachmentController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/TicketBudgetController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/TicketCommentController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/TicketController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/UiController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "app/Http/Controllers/Ticket": {
+      "status": "pending",
+      "files": {
+        "app/Http/Controllers/Ticket/TicketAssignmentController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/Ticket/TicketCloseController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/Ticket/TicketLifecycleController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/Ticket/TicketScheduleController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Http/Controllers/Ticket/TicketStartController.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "app/Console/Commands": {
+      "status": "pending",
+      "files": {
+        "app/Console/Commands/DatabaseBackup.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Console/Commands/FixTicketEncoding.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Console/Commands/PartitionAudits.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Console/Commands/SimulateTelemetry.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "app/Providers": {
+      "status": "pending",
+      "files": {
+        "app/Providers/AppServiceProvider.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "app/Providers/EventServiceProvider.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "app": {
+      "status": "pending",
+      "files": {},
+      "readme_status": "pending"
+    },
+    "routes": {
+      "status": "pending",
+      "files": {
+        "routes/api.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "routes/console.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "routes/web.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "config": {
+      "status": "pending",
+      "files": {
+        "config/app.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "config/auth.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "config/backup.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "config/broadcasting.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "config/cache.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "config/database.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "config/filesystems.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "config/hashing.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "config/l5-swagger.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "config/locales.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "config/logging.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "config/mail.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "config/openai.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "config/queue.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "config/sanctum.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "config/services.custom.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "config/services.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "config/session.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "database/factories": {
+      "status": "pending",
+      "files": {
+        "database/factories/EquipmentCategoryFactory.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/factories/EquipmentFactory.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/factories/MaintenancePlanFactory.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/factories/PartCategoryFactory.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/factories/PartFactory.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/factories/RoomFactory.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/factories/StockMovementFactory.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/factories/SupplierFactory.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/factories/TaxRateFactory.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/factories/TicketAttachmentFactory.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/factories/TicketCommentFactory.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/factories/TicketFactory.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/factories/TicketStatusFactory.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/factories/TicketTypeFactory.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/factories/UserFactory.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/factories/UserProfileFactory.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "database/seeders": {
+      "status": "pending",
+      "files": {
+        "database/seeders/ActivityFeedSeeder.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/seeders/BulkOperationalDataSeeder.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/seeders/DatabaseSeeder.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/seeders/EquipmentCategoriesSeeder.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/seeders/EquipmentsSeeder.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/seeders/NotificationSeeder.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/seeders/RoomsSeeder.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/seeders/StockDataSeeder.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/seeders/TicketLookupSeeder.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/seeders/TicketsSeeder.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/seeders/UserProfilesSeeder.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/seeders/UsersSeeder.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "database/seeders/Data": {
+      "status": "pending",
+      "files": {
+        "database/seeders/Data/OperationalData.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/seeders/Data/TicketDataset.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "database/migrations": {
+      "status": "pending",
+      "files": {
+        "database/migrations/0001_01_01_000000_create_users_table.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/migrations/0001_01_01_000001_create_cache_table.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/migrations/0001_01_01_000002_create_jobs_table.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/migrations/0001_01_01_000003_create_rooms_table.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/migrations/0001_01_01_000004_create_equipments_table.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/migrations/0001_01_01_000005_create_tickets_table.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/migrations/0001_01_01_000006_create_audits_table.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/migrations/0001_01_01_000008_create_ticket_attachments_table.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/migrations/0001_01_01_000009_create_ticket_comments_table.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/migrations/2026_07_09_100000_create_notifications_table.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/migrations/2026_07_24_152504_create_audits_append_only_trigger.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/migrations/2026_07_31_000001_convert_ticket_tables_to_utf8mb4.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/migrations/2026_08_03_000001_add_ai_recommendation_columns_to_tickets_table.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/migrations/2026_08_05_000001_create_theme_settings_table.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/migrations/2026_08_05_000002_create_system_settings_table.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/migrations/2026_08_07_000001_add_reporter_fields_to_tickets_table.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/migrations/2026_08_08_000001_create_stock_catalog_tables.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/migrations/2026_08_08_000002_create_stock_movements_table.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/migrations/2026_08_08_000003_create_maintenance_plans_table.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/migrations/2026_08_08_000004_add_low_stock_notification_type.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/migrations/2026_08_10_000001_add_locale_to_users_table.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/migrations/2026_08_12_000001_create_user_preferences_table.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/migrations/2026_08_12_000002_populate_user_preferences.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/migrations/2026_08_12_000003_add_number_format_to_user_preferences.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "database/migrations/2026_08_12_000004_add_time_format_to_user_preferences.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "database": {
+      "status": "pending",
+      "files": {},
+      "readme_status": "pending"
+    },
+    "bootstrap": {
+      "status": "pending",
+      "files": {
+        "bootstrap/app.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "bootstrap/providers.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/views": {
+      "status": "pending",
+      "files": {
+        "resources/views/calendar.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/main.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/views/components/ui/analytics": {
+      "status": "pending",
+      "files": {
+        "resources/views/components/ui/analytics/activity-timeline-card.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/analytics/aside-card.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/analytics/aside-pill.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/analytics/chart-card.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/analytics/equipment-distribution-card.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/analytics/export-actions.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/analytics/hero.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/analytics/list-card.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/analytics/metric-card.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/analytics/section-heading.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/views/components/ui/auth": {
+      "status": "pending",
+      "files": {
+        "resources/views/components/ui/auth/form-header.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/auth/message.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/auth/password-field.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/auth/shell.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/auth/submit-button.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/auth/text-field.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/views/components/ui/buttons": {
+      "status": "pending",
+      "files": {
+        "resources/views/components/ui/buttons/button.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/buttons/icon-button.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/buttons/submit.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/views/components/ui/dashboard": {
+      "status": "pending",
+      "files": {
+        "resources/views/components/ui/dashboard/welcome-panel.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/views/components/ui/form": {
+      "status": "pending",
+      "files": {
+        "resources/views/components/ui/form/card.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/form/field.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/form/input.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/form/message.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/form/select.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/views/components/ui/listing": {
+      "status": "pending",
+      "files": {
+        "resources/views/components/ui/listing/filter-field.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/listing/filter-panel.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/listing/pagination.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/listing/table-card.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/views/components/ui/page-actions": {
+      "status": "pending",
+      "files": {
+        "resources/views/components/ui/page-actions/action-button.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/page-actions/back-button.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/page-actions/base-button.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/page-actions/base-link.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/page-actions/create-link.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/page-actions/export-link.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/page-actions/group.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/views/components/ui/partials": {
+      "status": "pending",
+      "files": {
+        "resources/views/components/ui/partials/page-header.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/views/components/ui/profile": {
+      "status": "pending",
+      "files": {
+        "resources/views/components/ui/profile/delete-account-card.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/profile/information-card.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/profile/security-card.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/profile/summary-card.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/views/components/ui/text": {
+      "status": "pending",
+      "files": {
+        "resources/views/components/ui/text/eyebrow.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/components/ui/text/pill.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/views/emails": {
+      "status": "pending",
+      "files": {
+        "resources/views/emails/passwordReset.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/emails/test-mail.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/emails/ticketCreated.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/views/errors": {
+      "status": "pending",
+      "files": {
+        "resources/views/errors/402.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/errors/403.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/errors/404.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/errors/500.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/errors/minimal.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/views/layouts": {
+      "status": "pending",
+      "files": {
+        "resources/views/layouts/layout.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/views/preferences": {
+      "status": "pending",
+      "files": {
+        "resources/views/preferences/edit.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/views/reports": {
+      "status": "pending",
+      "files": {
+        "resources/views/reports/equipments-qr.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/reports/stock-costs-by-equipment.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/reports/tickets.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/views/ui": {
+      "status": "pending",
+      "files": {
+        "resources/views/ui/analytics.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/audits.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/auth-reset.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/auth.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/equipments.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/index.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/layout.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/profile.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/rooms.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/ticket-create.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/ticket-detail.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/tickets.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/users-create.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/users-edit.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/users.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/views/ui/definicoes": {
+      "status": "pending",
+      "files": {
+        "resources/views/ui/definicoes/aparencia.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/definicoes/sistema.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/views/ui/equipments": {
+      "status": "pending",
+      "files": {
+        "resources/views/ui/equipments/create.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/equipments/edit.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/equipments/qr.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/equipments/show.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/views/ui/partials": {
+      "status": "pending",
+      "files": {
+        "resources/views/ui/partials/background-effects.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/partials/currency-dropdown.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/partials/currency-modal.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/partials/date-format-dropdown.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/partials/date-format-modal.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/partials/desktop-sidebar.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/partials/language-dropdown.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/partials/language-modal.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/partials/locale-config.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/partials/locale-modal.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/partials/locale-trigger.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/partials/localization-modal.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/partials/mobile-nav.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/partials/number-format-dropdown.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/partials/preferences-dropdowns-js.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/partials/theme-meta.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/partials/topbar.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/views/ui/rooms": {
+      "status": "pending",
+      "files": {
+        "resources/views/ui/rooms/create.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/rooms/edit.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/rooms/show.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/views/ui/stock": {
+      "status": "pending",
+      "files": {
+        "resources/views/ui/stock/categories.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/stock/dashboard.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/stock/movements.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/stock/parts.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/stock/plans.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/stock/suppliers.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/stock/tax-rates.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/views/ui/stock/parts": {
+      "status": "pending",
+      "files": {
+        "resources/views/ui/stock/parts/create.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/stock/parts/edit.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/stock/parts/show.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/views/ui/stock/suppliers": {
+      "status": "pending",
+      "files": {
+        "resources/views/ui/stock/suppliers/create.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/stock/suppliers/edit.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/views/ui/tickets/public": {
+      "status": "pending",
+      "files": {
+        "resources/views/ui/tickets/public/create.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/views/ui/tickets/public/success.blade.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/css": {
+      "status": "pending",
+      "files": {
+        "resources/css/app.css": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/css/base.css": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/css/layout.css": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/css/rtl.css": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/css/tokens.css": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/css/components": {
+      "status": "pending",
+      "files": {
+        "resources/css/components/badges.css": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/css/components/forms.css": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/css/components/locale-modal.css": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/css/components/localization-modal.css": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/css/components/navigation.css": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/css/components/sidebar.css": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/css/components/buttons": {
+      "status": "pending",
+      "files": {
+        "resources/css/components/buttons/button-base.css": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/css/components/buttons/button-variants.css": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/css/components/cards": {
+      "status": "pending",
+      "files": {
+        "resources/css/components/cards/card-base.css": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/css/pages": {
+      "status": "pending",
+      "files": {
+        "resources/css/pages/calendar.css": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/css/pages/definicoes.css": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/css/pages/listing.css": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/css/pages/login.css": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/css/pages/sistema-definicoes.css": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/css/pages/tickets.css": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/css/swagger": {
+      "status": "pending",
+      "files": {
+        "resources/css/swagger/swagger-theme.css": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/css/theme": {
+      "status": "pending",
+      "files": {
+        "resources/css/theme/variables.css": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/js": {
+      "status": "pending",
+      "files": {
+        "resources/js/alpine.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/analytics.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/api-client.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/app.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/early-theme.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/js/auth": {
+      "status": "pending",
+      "files": {
+        "resources/js/auth/login.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/auth/utils.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/js/bootstrap": {
+      "status": "pending",
+      "files": {
+        "resources/js/bootstrap/page-registry.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/js/components": {
+      "status": "pending",
+      "files": {
+        "resources/js/components/locale-modal.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/components/localization-modal.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/js/components/input": {
+      "status": "pending",
+      "files": {
+        "resources/js/components/input/autocomplete.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/components/input/combobox.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/components/input/otp.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/components/input/password-strength.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/js/components/listing": {
+      "status": "pending",
+      "files": {
+        "resources/js/components/listing/feedback.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/js/components/modal": {
+      "status": "pending",
+      "files": {
+        "resources/js/components/modal/base.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/js/core": {
+      "status": "pending",
+      "files": {
+        "resources/js/core/auth-box.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/core/auth.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/core/dropdown-manager.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/core/layout.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/core/navigation-manager.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/core/notifications.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/core/search-engine.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/core/sidebar.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/core/theme.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/js/pages": {
+      "status": "pending",
+      "files": {
+        "resources/js/pages/audits.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/auth-reset.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/calendar.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/dashboard.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/definicoes-aparencia.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/definicoes-sistema.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/equipments-form.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/equipments-management.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/error-page.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/profile.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/rooms-form.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/rooms-management.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/swagger.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/ticket-create.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/ticket-detail.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/tickets-management.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/users-form.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/users-management.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/js/pages/analytics": {
+      "status": "pending",
+      "files": {
+        "resources/js/pages/analytics/activity.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/analytics/charts.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/analytics/export.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/analytics/helpers.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/analytics/index.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/analytics/kpi.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/js/pages/audits": {
+      "status": "pending",
+      "files": {
+        "resources/js/pages/audits/api.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/audits/dom.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/audits/filters.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/audits/render.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/audits/state.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/js/pages/equipments-management": {
+      "status": "pending",
+      "files": {
+        "resources/js/pages/equipments-management/api.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/equipments-management/dom.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/equipments-management/render.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/equipments-management/state.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/js/pages/rooms-management": {
+      "status": "pending",
+      "files": {
+        "resources/js/pages/rooms-management/api.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/rooms-management/dom.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/rooms-management/render.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/rooms-management/state.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/js/pages/stock": {
+      "status": "pending",
+      "files": {
+        "resources/js/pages/stock/categories.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/stock/dashboard.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/stock/movements.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/stock/parts-form.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/stock/parts.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/stock/plans.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/stock/suppliers-form.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/stock/suppliers.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/stock/tax-rates.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/js/pages/stock/movements": {
+      "status": "pending",
+      "files": {
+        "resources/js/pages/stock/movements/api.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/stock/movements/dom.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/stock/movements/render.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/stock/movements/state.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/js/pages/stock/parts": {
+      "status": "pending",
+      "files": {
+        "resources/js/pages/stock/parts/api.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/stock/parts/dom.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/stock/parts/render.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/stock/parts/state.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/js/pages/stock/plans": {
+      "status": "pending",
+      "files": {
+        "resources/js/pages/stock/plans/api.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/stock/plans/dom.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/stock/plans/render.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/stock/plans/state.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/js/pages/stock/suppliers": {
+      "status": "pending",
+      "files": {
+        "resources/js/pages/stock/suppliers/api.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/stock/suppliers/dom.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/stock/suppliers/render.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/stock/suppliers/state.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/js/pages/ticket-create": {
+      "status": "pending",
+      "files": {
+        "resources/js/pages/ticket-create/autocomplete.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/ticket-create/dom.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/ticket-create/file-upload.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/ticket-create/form.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/ticket-create/priority.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/js/pages/ticket-detail": {
+      "status": "pending",
+      "files": {
+        "resources/js/pages/ticket-detail/assignment.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/ticket-detail/budget.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/ticket-detail/comments.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/ticket-detail/details.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/ticket-detail/photos.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/ticket-detail/priority-modal.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/ticket-detail/start-actions.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/ticket-detail/state.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/ticket-detail/ui.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/ticket-detail/workflow.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/js/pages/tickets-management": {
+      "status": "pending",
+      "files": {
+        "resources/js/pages/tickets-management/api.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/tickets-management/dom.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/tickets-management/render.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/tickets-management/state.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/js/pages/users-management": {
+      "status": "pending",
+      "files": {
+        "resources/js/pages/users-management/api.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/users-management/dom.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/users-management/render.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/pages/users-management/state.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/js/services": {
+      "status": "pending",
+      "files": {
+        "resources/js/services/autocomplete-service.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/js/utils": {
+      "status": "pending",
+      "files": {
+        "resources/js/utils/api.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "resources/js/utils/locale.js": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources/docs": {
+      "status": "pending",
+      "files": {
+        "resources/docs/design-notes.md": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "resources": {
+      "status": "pending",
+      "files": {},
+      "readme_status": "pending"
+    },
+    "public": {
+      "status": "pending",
+      "files": {
+        "public/.htaccess": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "public/favicon.ico": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "public/index.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "public/robots.txt": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "docs": {
+      "status": "pending",
+      "files": {
+        "docs/Plano-Testes.md": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/Requisitos.md": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/Workflow.md": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/analise-pocessos.md": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/api-endpoints.md": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/atas-reuniao.md": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/atribuicao-prioridades.md": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/dashboard-seed-report.md": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/diagrama-arquitetura.md": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/fase-13-final-report.md": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/fluxo-orcamental.md": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/guia-utilizador.md": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n-progress.md": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/permissoes.md": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/plano-projeto.md": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/product-backlog.md": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/tecnologias.md": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/workflow-integracoes.md": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "docs/assets": {
+      "status": "pending",
+      "files": {
+        "docs/assets/Diagrama_fluxo_inteligente_ticket.png": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "docs/i18n/archive-json": {
+      "status": "pending",
+      "files": {
+        "docs/i18n/archive-json/cs-CZ.json": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/archive-json/da-DK.json": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/archive-json/de-DE.json": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/archive-json/el-GR.json": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/archive-json/en-GB.json": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/archive-json/en-US.json": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/archive-json/es-ES.json": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/archive-json/fi-FI.json": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/archive-json/fr-FR.json": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/archive-json/hu-HU.json": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/archive-json/it-IT.json": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/archive-json/nl-NL.json": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/archive-json/pl-PL.json": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/archive-json/pt-BR.json": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/archive-json/pt-PT.json": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/archive-json/ro-RO.json": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/archive-json/sv-SE.json": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/archive-json/tr-TR.json": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "docs/i18n/review": {
+      "status": "pending",
+      "files": {
+        "docs/i18n/review/3a-identidade-es-ES.csv": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/review/3a-identidade-pt-BR.csv": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/review/audit_summary.json": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "docs/i18n/review/backup-3a": {
+      "status": "pending",
+      "files": {
+        "docs/i18n/review/backup-3a/common.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/review/backup-3a/tickets.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "docs/i18n/scripts": {
+      "status": "pending",
+      "files": {
+        "docs/i18n/scripts/audit_final.py": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/scripts/audit_usage.py": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/scripts/build_locale.py": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/scripts/build_ru_ru.py": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/scripts/php_lang_audit.py": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/scripts/th_part1.py": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/scripts/th_part2.py": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/scripts/th_part3.py": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/scripts/translations_bg_BG.py": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/scripts/translations_hi_IN.py": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/scripts/translations_id_ID.py": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/scripts/translations_ja_JP.py": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/scripts/translations_ko_KR.py": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/scripts/translations_ru_RU.py": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/scripts/translations_th_TH.py": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/scripts/translations_uk_UA.py": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/scripts/translations_vi_VN.py": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/scripts/translations_zh_CN.py": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "docs/i18n/scripts/translations_zh_TW.py": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    ".github": {
+      "status": "pending",
+      "files": {
+        ".github/dependabot.yml": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    ".github/actions/setup-php-composer": {
+      "status": "pending",
+      "files": {
+        ".github/actions/setup-php-composer/action.yml": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    ".github/workflows": {
+      "status": "pending",
+      "files": {
+        ".github/workflows/ci.yml": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        ".github/workflows/docker.yml": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        ".github/workflows/release.yml": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        ".github/workflows/security.yml": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tools": {
+      "status": "pending",
+      "files": {
+        "tools/generate_refactor_manifest.py": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests": {
+      "status": "pending",
+      "files": {
+        "tests/TestCase.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Authentication": {
+      "status": "pending",
+      "files": {
+        "tests/Authentication/AuthEdgeCasesTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Authentication/AuthFlowTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Authentication/AuthenticationTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Authentication/LoginFlowTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Authentication/PasswordResetFlowTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Authorization": {
+      "status": "pending",
+      "files": {
+        "tests/Authorization/UiAuthorizationTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Base": {
+      "status": "pending",
+      "files": {
+        "tests/Base/DatabaseTestCase.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Base/FeatureTestCase.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Base/UnitTestCase.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Concerns": {
+      "status": "pending",
+      "files": {
+        "tests/Concerns/CreatesEquipment.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Concerns/CreatesTickets.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Concerns/CreatesUsers.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Concerns/InteractsWithApi.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Concerns/InteractsWithEvents.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Concerns/InteractsWithMail.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Concerns/InteractsWithNotifications.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Concerns/InteractsWithQueue.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Concerns/InteractsWithStorage.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Concerns/SeedsLookupData.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Database/Constraints": {
+      "status": "pending",
+      "files": {
+        "tests/Database/Constraints/AttachmentPersistenceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Database/Constraints/AuditTrailTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Database/Constraints/BudgetCalculationTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Database/Constraints/CastIntegrityTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Database/Constraints/ConcurrencyTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Database/Constraints/DatabaseIntegrityTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Database/Constraints/DatabaseOptimizationTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Database/Constraints/ModelLifecycleTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Database/Constraints/NotificationPersistenceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Database/Constraints/RelationshipIntegrityTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Database/Constraints/TokenIntegrityTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Database/Constraints/WorkflowPersistenceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Database/Migrations": {
+      "status": "pending",
+      "files": {
+        "tests/Database/Migrations/DatabaseSchemaValidationTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Database/Seeders": {
+      "status": "pending",
+      "files": {
+        "tests/Database/Seeders/ComplianceSeedersTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Feature": {
+      "status": "pending",
+      "files": {
+        "tests/Feature/UserPreferencesTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Feature/API/Controllers": {
+      "status": "pending",
+      "files": {
+        "tests/Feature/API/Controllers/AdminCrudFeatureTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/API/Controllers/AdminManagementTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/API/Controllers/AdminUserControllerTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/API/Controllers/AiTriagingFeatureTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/API/Controllers/AnalyticsFeatureTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/API/Controllers/ApiAuthTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/API/Controllers/AttachmentOperationFeatureTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/API/Controllers/AuditEndpointsTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/API/Controllers/AuditFeatureTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/API/Controllers/BudgetFeatureTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/API/Controllers/CalendarFeatureTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/API/Controllers/CommentOperationFeatureTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/API/Controllers/EquipmentAndRoomCrudFeatureTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/API/Controllers/ErrorScenarioFeatureTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/API/Controllers/NotificationFeatureTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/API/Controllers/NotificationFlowTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/API/Controllers/StockManagementFeatureTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/API/Controllers/TicketAssignmentFeatureTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/API/Controllers/TicketAuditLogTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/API/Controllers/TicketAuthorizationFeatureTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/API/Controllers/TicketOperationsTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/API/Controllers/TicketPhotoUploadTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/API/Controllers/TicketScheduleFeatureTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/API/Controllers/TicketSearchTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/API/Controllers/TicketWorkflowFeatureTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Feature/API/Routing": {
+      "status": "pending",
+      "files": {
+        "tests/Feature/API/Routing/SwaggerDocumentationTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Feature/Actions": {
+      "status": "pending",
+      "files": {
+        "tests/Feature/Actions/CreateTicketActionTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/Actions/CreateUserActionTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Feature/Console": {
+      "status": "pending",
+      "files": {
+        "tests/Feature/Console/ConsoleCommandsTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Feature/Domain": {
+      "status": "pending",
+      "files": {
+        "tests/Feature/Domain/CheckHigherPriorityActionTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/Domain/TicketLifecycleActionsTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/Domain/TicketQueriesTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/Domain/TicketStatusCheckerTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Feature/Middleware": {
+      "status": "pending",
+      "files": {
+        "tests/Feature/Middleware/CsrfMiddlewareTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/Middleware/CustomAuthMiddlewareTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/Middleware/MiddlewareAuthTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/Middleware/RateLimitMiddlewareTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/Middleware/RoleMiddlewareTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/Middleware/SetLocaleMiddlewareTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Feature/Repositories": {
+      "status": "pending",
+      "files": {
+        "tests/Feature/Repositories/TicketRepositoryTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Feature/Validation": {
+      "status": "pending",
+      "files": {
+        "tests/Feature/Validation/ValidationEdgeCaseTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Feature/Web": {
+      "status": "pending",
+      "files": {
+        "tests/Feature/Web/LocaleControllerTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Feature/Web/Controllers": {
+      "status": "pending",
+      "files": {
+        "tests/Feature/Web/Controllers/DashboardRedirectTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/Web/Controllers/PageControllerTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/Web/Controllers/ProfileControllerTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/Web/Controllers/RegisterControllerTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/Web/Controllers/RoomControllerTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/Web/Controllers/UiControllerTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Feature/Web/Views": {
+      "status": "pending",
+      "files": {
+        "tests/Feature/Web/Views/AssetPipelineTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/Web/Views/DesignSystemComponentsTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/Web/Views/DesignSystemViewsTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Feature/Web/Views/UiUsabilityTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Fixtures/Builders": {
+      "status": "pending",
+      "files": {
+        "tests/Fixtures/Builders/TicketBuilder.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Fixtures/Builders/UserBuilder.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Fixtures/Datasets": {
+      "status": "pending",
+      "files": {
+        "tests/Fixtures/Datasets/TicketPriorityDataset.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Fixtures/Datasets/TicketStatusDataset.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Fixtures/Datasets/UserRoleDataset.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Fixtures/Fakes": {
+      "status": "pending",
+      "files": {
+        "tests/Fixtures/Fakes/FakeNotificationService.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Fixtures/Helpers": {
+      "status": "pending",
+      "files": {
+        "tests/Fixtures/Helpers/TestHelper.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Integration/Broadcasting": {
+      "status": "pending",
+      "files": {
+        "tests/Integration/Broadcasting/BroadcastAndQueueTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Integration/Database": {
+      "status": "pending",
+      "files": {
+        "tests/Integration/Database/ForeignKeyIntegrityTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Integration/Database/MassAssignmentProtectionTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Integration/Database/ModelLifecycleTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Integration/Database/RelationshipIntegrityTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Integration/Database/SoftDeleteTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Integration/Mail": {
+      "status": "pending",
+      "files": {
+        "tests/Integration/Mail/MailgunTestEmailTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Performance": {
+      "status": "pending",
+      "files": {
+        "tests/Performance/PerformanceTestCase.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Performance/APIPerformance": {
+      "status": "pending",
+      "files": {
+        "tests/Performance/APIPerformance/TicketEndpointPerformanceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Performance/Authentication": {
+      "status": "pending",
+      "files": {
+        "tests/Performance/Authentication/AuthPerformanceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Performance/CachePerformance": {
+      "status": "pending",
+      "files": {
+        "tests/Performance/CachePerformance/CachePerformanceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Performance/Dashboard": {
+      "status": "pending",
+      "files": {
+        "tests/Performance/Dashboard/DashboardPerformanceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Performance/DatabasePerformance": {
+      "status": "pending",
+      "files": {
+        "tests/Performance/DatabasePerformance/DatabasePerformanceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Performance/DatabasePerformance/LazyLoadingTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Performance/DatabasePerformance/NPlusOneQueryTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Performance/DatabasePerformance/PerformanceAndNPlusOneTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Performance/DatabasePerformance/QueryCountTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Performance/MemoryPerformance": {
+      "status": "pending",
+      "files": {
+        "tests/Performance/MemoryPerformance/MemoryPerformanceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Performance/MemoryPerformance/MemoryUsageTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Performance/ReportsPerformance": {
+      "status": "pending",
+      "files": {
+        "tests/Performance/ReportsPerformance/ReportPerformanceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Performance/ScalabilityPerformance": {
+      "status": "pending",
+      "files": {
+        "tests/Performance/ScalabilityPerformance/ScalabilityPerformanceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Performance/SearchPerformance": {
+      "status": "pending",
+      "files": {
+        "tests/Performance/SearchPerformance/SearchPerformanceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Performance/UploadsPerformance": {
+      "status": "pending",
+      "files": {
+        "tests/Performance/UploadsPerformance/UploadPerformanceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Security/APITokens": {
+      "status": "pending",
+      "files": {
+        "tests/Security/APITokens/APITokenSecurityTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Security/Authentication": {
+      "status": "pending",
+      "files": {
+        "tests/Security/Authentication/AuthenticationSecurityTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Security/Authentication/SecurityActiveTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Security/Authentication/SecurityAuthTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Security/Authorization": {
+      "status": "pending",
+      "files": {
+        "tests/Security/Authorization/AuthorizationSecurityTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Security/CSRF": {
+      "status": "pending",
+      "files": {
+        "tests/Security/CSRF/CsrfProtectionTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Security/CSRF/SecurityCsrfTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Security/FileUpload": {
+      "status": "pending",
+      "files": {
+        "tests/Security/FileUpload/FileUploadSecurityTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Security/Headers": {
+      "status": "pending",
+      "files": {
+        "tests/Security/Headers/SecurityHeadersTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Security/IDOR": {
+      "status": "pending",
+      "files": {
+        "tests/Security/IDOR/IDORTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Security/MassAssignment": {
+      "status": "pending",
+      "files": {
+        "tests/Security/MassAssignment/MassAssignmentTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Security/Password": {
+      "status": "pending",
+      "files": {
+        "tests/Security/Password/PasswordSecurityTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Security/Password/SecurityPasswordPolicyTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Security/PathTraversal": {
+      "status": "pending",
+      "files": {
+        "tests/Security/PathTraversal/PathTraversalTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Security/PrivilegeEscalation": {
+      "status": "pending",
+      "files": {
+        "tests/Security/PrivilegeEscalation/PrivilegeEscalationTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Security/RateLimiting": {
+      "status": "pending",
+      "files": {
+        "tests/Security/RateLimiting/RateLimitingTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Security/RateLimiting/SecurityBruteForceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Security/RateLimiting/SecurityRateLimitTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Security/SQLInjection": {
+      "status": "pending",
+      "files": {
+        "tests/Security/SQLInjection/SecurityVulnerabilitiesTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Security/SQLInjection/SqlInjectionTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Security/Session": {
+      "status": "pending",
+      "files": {
+        "tests/Security/Session/SecuritySessionTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Security/Session/SessionSecurityTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Security/Tokens": {
+      "status": "pending",
+      "files": {
+        "tests/Security/Tokens/SecurityTokenTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Security/Tokens/TokenSecurityTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Security/UserEnumeration": {
+      "status": "pending",
+      "files": {
+        "tests/Security/UserEnumeration/UserEnumerationTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Security/XSS": {
+      "status": "pending",
+      "files": {
+        "tests/Security/XSS/SecurityInputValidationTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Security/XSS/XSSProtectionTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Unit": {
+      "status": "pending",
+      "files": {
+        "tests/Unit/PreferenciasServiceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Unit/Actions": {
+      "status": "pending",
+      "files": {
+        "tests/Unit/Actions/ApproveBudgetActionTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Actions/AssignTechnicianActionTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Actions/CreateEquipmentActionTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Actions/CreatePreventiveTicketActionTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Actions/CreateRoomActionTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Actions/ScheduleTicketActionTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Actions/SubmitBudgetActionTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Actions/UpdateEquipmentActionTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Actions/UpdateRoomActionTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Actions/UpdateUserActionTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Unit/Concerns": {
+      "status": "pending",
+      "files": {
+        "tests/Unit/Concerns/BroadcastsTicketStatusTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Unit/Console": {
+      "status": "pending",
+      "files": {
+        "tests/Unit/Console/TelemetryCommandTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Unit/DTOs": {
+      "status": "pending",
+      "files": {
+        "tests/Unit/DTOs/AssignTechnicianDataTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/DTOs/BudgetDecisionDataTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/DTOs/BudgetSubmissionDataTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/DTOs/CloseTicketDataTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/DTOs/CommentDataTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/DTOs/CreateTicketDataTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/DTOs/PasswordChangeDataTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/DTOs/ProfileUpdateDataTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/DTOs/ScheduleTicketDataTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/DTOs/StoreEquipmentDataTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/DTOs/StoreRoomDataTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/DTOs/StoreUserDataTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/DTOs/TicketFiltersTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/DTOs/UpdateEquipmentDataTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/DTOs/UpdateRoomDataTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/DTOs/UpdateUserDataTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Unit/Enums": {
+      "status": "pending",
+      "files": {
+        "tests/Unit/Enums/AuditEventEnumTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Enums/BudgetDecisionEnumTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Enums/BudgetStatusEnumTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Enums/FileTypeEnumTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Enums/NotificationPriorityEnumTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Enums/NotificationTypeEnumTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Enums/TicketPriorityEnumTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Enums/TicketStatusEnumTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Enums/TicketWorkflowStatusEnumTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Enums/UserRoleEnumTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Unit/Events": {
+      "status": "pending",
+      "files": {
+        "tests/Unit/Events/TicketStatusChangedTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Events/TicketStatusUpdatedBroadcastTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Unit/Exports": {
+      "status": "pending",
+      "files": {
+        "tests/Unit/Exports/TicketsExportTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Unit/Http/Resources": {
+      "status": "pending",
+      "files": {
+        "tests/Unit/Http/Resources/ResourcesTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Unit/Jobs": {
+      "status": "pending",
+      "files": {
+        "tests/Unit/Jobs/ExportJobsTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Jobs/ExportReportPdfJobsTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Jobs/GenerateAiRecommendationJobTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Unit/Listeners": {
+      "status": "pending",
+      "files": {
+        "tests/Unit/Listeners/LogTicketStatusChangeTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Listeners/LogTicketWorkflowChangeTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Listeners/NotifyAssignedTechnicianTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Unit/Mail": {
+      "status": "pending",
+      "files": {
+        "tests/Unit/Mail/MailablesTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Unit/Middleware": {
+      "status": "pending",
+      "files": {
+        "tests/Unit/Middleware/SecurityHeadersTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Middleware/SetLocaleMiddlewareTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Unit/Models": {
+      "status": "pending",
+      "files": {
+        "tests/Unit/Models/AuditTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Models/CategoryTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Models/EquipmentCategoryTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Models/EquipmentTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Models/ModelAccessorsTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Models/NotificationModelTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Models/RoomTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Models/TicketAttachmentTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Models/TicketAttributesTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Models/TicketCommentTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Models/TicketStatusTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Models/TicketTypeTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Models/TicketWorkflowHistoryTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Models/TicketWorkflowTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Models/UserProfileTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Models/UserTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Unit/Observers": {
+      "status": "pending",
+      "files": {
+        "tests/Unit/Observers/ObserversTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Unit/Policies": {
+      "status": "pending",
+      "files": {
+        "tests/Unit/Policies/AccessPoliciesTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Policies/TicketPolicyTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Unit/Providers": {
+      "status": "pending",
+      "files": {
+        "tests/Unit/Providers/ProvidersTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Unit/Repositories": {
+      "status": "pending",
+      "files": {
+        "tests/Unit/Repositories/RepositoriesTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Unit/Services": {
+      "status": "pending",
+      "files": {
+        "tests/Unit/Services/AIServiceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Services/AnalyticsDashboardServiceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Services/AnalyticsExportServiceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Services/AnalyticsServiceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Services/BudgetCalculatorServiceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Services/BudgetNotificationServiceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Services/CalendarServiceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Services/EquipmentServiceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Services/LocaleServiceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Services/LocalizationServiceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Services/NotificationCreatorServiceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Services/NotificationServiceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Services/PasswordResetServiceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Services/ServicesTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Services/StockServicesTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Services/TechnicianAssignmentServiceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Services/TicketNotificationServiceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/Services/TicketSearchServiceTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Unit/Traits": {
+      "status": "pending",
+      "files": {
+        "tests/Unit/Traits/AuditableTraitTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    },
+    "tests/Unit/ValueObjects": {
+      "status": "pending",
+      "files": {
+        "tests/Unit/ValueObjects/BudgetPauseMinutesTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/ValueObjects/EmailTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/ValueObjects/MoneyTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        },
+        "tests/Unit/ValueObjects/SerialNumberTest.php": {
+          "status": "pending",
+          "new_path": null,
+          "notes": []
+        }
+      },
+      "readme_status": "pending"
+    }
+  }
+}

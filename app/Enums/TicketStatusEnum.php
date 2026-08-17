@@ -12,7 +12,7 @@ enum TicketStatusEnum: string
     case Rejected = 'recusada';
 
     /**
-     * Retorna todos os valores raw do Enum num array simples.
+     * Return all raw enum values in a simple array.
      */
     public static function values(): array
     {
@@ -20,7 +20,7 @@ enum TicketStatusEnum: string
     }
 
     /**
-     * Retorna todos os valores aceites, incluindo variações sem acentuação.
+     * Return all accepted values including unaccented variations.
      */
     public static function acceptedValues(): array
     {
@@ -31,7 +31,7 @@ enum TicketStatusEnum: string
     }
 
     /**
-     * Retorna a descrição legível em Português para a UI.
+     * Return the human-readable description for UI.
      */
     public function label(): string
     {
@@ -46,7 +46,7 @@ enum TicketStatusEnum: string
     }
 
     /**
-     * Cor indicativa para badges/tabelas no frontend.
+     * Indicative color for badges and tables in UI.
      */
     public function color(): string
     {
@@ -60,7 +60,7 @@ enum TicketStatusEnum: string
     }
 
     /**
-     * Ícone indicativo para representação visual na UI.
+     * Indicative icon for visual representation.
      */
     public function icon(): string
     {
@@ -75,7 +75,7 @@ enum TicketStatusEnum: string
     }
 
     /**
-     * Indica se o ticket atingiu um estado terminal (encerrado/cancelado/recusado).
+     * Check if the ticket has reached a terminal state (closed, cancelled, or rejected).
      */
     public function isFinal(): bool
     {
@@ -86,7 +86,7 @@ enum TicketStatusEnum: string
     }
 
     /**
-     * Indica se o ticket ainda se encontra ativo e em processamento.
+     * Check if the ticket is active and in processing.
      */
     public function isActive(): bool
     {
@@ -94,7 +94,7 @@ enum TicketStatusEnum: string
     }
 
     /**
-     * Converte com segurança entradas genéricas (com/sem acento, maiúsculas ou objetos).
+     * Safely normalize generic input (string or enum instance).
      */
     public static function normalize(mixed $value): ?self
     {
@@ -109,7 +109,12 @@ enum TicketStatusEnum: string
         $sanitized = mb_strtolower(trim($value));
 
         return match ($sanitized) {
-            'pendente orçamento', 'pendente orcamento' => self::PendingBudget,
+            'open', 'aberta', 'aberto' => self::Open,
+            'in_progress', 'em curso', 'em_curso' => self::InProgress,
+            'closed', 'fechada', 'fechado' => self::Closed,
+            'cancelled', 'canceled', 'cancelada', 'cancelado' => self::Cancelled,
+            'pending_budget', 'pendente orçamento', 'pendente orcamento' => self::PendingBudget,
+            'rejected', 'recusada', 'recusado' => self::Rejected,
             default => self::tryFrom($sanitized),
         };
     }

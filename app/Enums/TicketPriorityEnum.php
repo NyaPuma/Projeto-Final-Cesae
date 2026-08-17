@@ -10,7 +10,7 @@ enum TicketPriorityEnum: string
     case Critical = 'crítica';
 
     /**
-     * Retorna todos os valores raw do Enum num array simples.
+     * Return all raw enum values in a simple array.
      */
     public static function values(): array
     {
@@ -18,7 +18,7 @@ enum TicketPriorityEnum: string
     }
 
     /**
-     * Retorna todos os valores aceites, incluindo variações sem acentuação.
+     * Return all accepted values including unaccented variations.
      */
     public static function acceptedValues(): array
     {
@@ -30,7 +30,7 @@ enum TicketPriorityEnum: string
     }
 
     /**
-     * Retorna a descrição legível em Português para a UI.
+     * Return the human-readable description for UI.
      */
     public function label(): string
     {
@@ -43,7 +43,7 @@ enum TicketPriorityEnum: string
     }
 
     /**
-     * Cor indicativa para badges/tabelas no frontend.
+     * Indicative color for badges and tables in UI.
      */
     public function color(): string
     {
@@ -56,7 +56,7 @@ enum TicketPriorityEnum: string
     }
 
     /**
-     * Ícone indicativo para representação visual.
+     * Indicative icon for visual representation.
      */
     public function icon(): string
     {
@@ -69,7 +69,7 @@ enum TicketPriorityEnum: string
     }
 
     /**
-     * Retorna a ponderação numérica para ordenação por prioridade.
+     * Numeric weight for sorting by priority.
      */
     public function weight(): int
     {
@@ -82,20 +82,20 @@ enum TicketPriorityEnum: string
     }
 
     /**
-     * Tempo limite recomendado para resposta/resolução (SLA em horas).
+     * SLA limit for response/resolution (in hours).
      */
     public function slaHours(): int
     {
         return match ($this) {
-            self::Low => 48,      // 2 dias
-            self::Medium => 24,   // 1 dia
-            self::High => 8,      // 8 horas
-            self::Critical => 2,  // 2 horas
+            self::Low => 48,
+            self::Medium => 24,
+            self::High => 8,
+            self::Critical => 2,
         };
     }
 
     /**
-     * Indica se o ticket exige intervenção imediata (alerta de equipa/escalamento).
+     * Check if the ticket requires immediate escalation.
      */
     public function requiresImmediateAttention(): bool
     {
@@ -106,7 +106,7 @@ enum TicketPriorityEnum: string
     }
 
     /**
-     * Converte com segurança entradas genéricas (com/sem acento, maiúsculas ou objetos).
+     * Safely normalize generic input (string or enum instance).
      */
     public static function normalize(mixed $value): ?self
     {
@@ -121,10 +121,10 @@ enum TicketPriorityEnum: string
         $sanitized = mb_strtolower(trim($value));
 
         return match ($sanitized) {
-            'baixa' => self::Low,
-            'média', 'media' => self::Medium,
-            'alta' => self::High,
-            'crítica', 'critica' => self::Critical,
+            'low', 'baixa' => self::Low,
+            'medium', 'média', 'media' => self::Medium,
+            'high', 'alta' => self::High,
+            'critical', 'urgent', 'crítica', 'critica' => self::Critical,
             default => self::tryFrom($sanitized),
         };
     }

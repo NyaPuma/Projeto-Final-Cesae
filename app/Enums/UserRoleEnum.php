@@ -9,7 +9,7 @@ enum UserRoleEnum: string
     case Admin = 'admin';
 
     /**
-     * Retorna todos os valores raw do Enum num array simples.
+     * Return all raw enum values in a simple array.
      */
     public static function values(): array
     {
@@ -17,7 +17,7 @@ enum UserRoleEnum: string
     }
 
     /**
-     * Retorna a descrição legível em Português para a UI.
+     * Return the human-readable description for UI.
      */
     public function label(): string
     {
@@ -29,7 +29,7 @@ enum UserRoleEnum: string
     }
 
     /**
-     * Cor indicativa para badges e elementos de perfil no frontend.
+     * Indicative color for badges and profile elements.
      */
     public function color(): string
     {
@@ -41,7 +41,7 @@ enum UserRoleEnum: string
     }
 
     /**
-     * Ícone indicativo para representação visual na UI.
+     * Indicative icon for visual representation.
      */
     public function icon(): string
     {
@@ -53,7 +53,7 @@ enum UserRoleEnum: string
     }
 
     /**
-     * Retorna o peso numérico do papel para verificação de hierarquia.
+     * Numeric weight for role hierarchy verification.
      */
     public function weight(): int
     {
@@ -65,7 +65,7 @@ enum UserRoleEnum: string
     }
 
     /**
-     * Indica se o papel atual possui privilégios de Administrador.
+     * Check if the role has Administrator privileges.
      */
     public function isAdmin(): bool
     {
@@ -73,7 +73,7 @@ enum UserRoleEnum: string
     }
 
     /**
-     * Indica se o papel atual possui privilégios de Técnico.
+     * Check if the role has Technician privileges.
      */
     public function isTechnician(): bool
     {
@@ -81,7 +81,7 @@ enum UserRoleEnum: string
     }
 
     /**
-     * Indica se o papel é de um utilizador comum.
+     * Check if the role is a regular User.
      */
     public function isUser(): bool
     {
@@ -89,7 +89,7 @@ enum UserRoleEnum: string
     }
 
     /**
-     * Indica se o utilizador possui privilégios elevados (Técnico ou Admin).
+     * Check if the user has elevated privileges (Technician or Admin).
      */
     public function hasElevatedPrivileges(): bool
     {
@@ -100,7 +100,7 @@ enum UserRoleEnum: string
     }
 
     /**
-     * Verifica se o papel atual tem permissões iguais ou superiores ao papel exigido.
+     * Check if the role has at least the required role in hierarchy.
      */
     public function hasAtLeastRole(self $requiredRole): bool
     {
@@ -108,7 +108,7 @@ enum UserRoleEnum: string
     }
 
     /**
-     * Converte com segurança entradas genéricas (incluindo sinónimos em português ou objetos).
+     * Safely normalize generic input (string, PT synonyms, or enum instance).
      */
     public static function normalize(mixed $value): ?self
     {
