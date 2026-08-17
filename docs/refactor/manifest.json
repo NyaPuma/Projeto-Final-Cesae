@@ -337,15 +337,15 @@
       "readme_status": "pending"
     },
     "app/Concerns": {
-      "status": "pending",
+      "status": "done",
       "files": {
         "app/Concerns/BroadcastsTicketStatus.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         }
       },
-      "readme_status": "pending"
+      "readme_status": "done"
     },
     "app/Actions": {
       "status": "pending",

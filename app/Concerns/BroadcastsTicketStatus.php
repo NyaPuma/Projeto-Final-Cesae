@@ -13,7 +13,7 @@ use Throwable;
 trait BroadcastsTicketStatus
 {
     /**
-     * Transmite a alteração de estado do ticket (WebSockets) e notifica o utilizador.
+     * Broadcast ticket status change via WebSockets and dispatch notification to ticket owner.
      */
     protected function broadcastStatusChange(
         Ticket $ticket,
@@ -24,10 +24,8 @@ trait BroadcastsTicketStatus
         $newStatusValue = $newStatus instanceof TicketStatusEnum ? $newStatus->value : $newStatus;
 
         try {
-            // Dispara evento de WebSockets
             event(new TicketStatusUpdatedBroadcast($ticket, $oldStatusValue, $newStatusValue));
 
-            // Notifica o criador do ticket (o Eloquent resolve o lazy-loading automaticamente)
             /** @var User|null $user */
             $user = $ticket->user;
 
@@ -35,7 +33,7 @@ trait BroadcastsTicketStatus
                 $user->notify(new TicketStatusChanged($ticket, $oldStatusValue, $newStatusValue));
             }
         } catch (Throwable $e) {
-            Log::warning('Falha ao transmitir alteração de estado do ticket.', [
+            Log::warning('Failed to broadcast ticket status change.', [
                 'ticket_id' => $ticket->id,
                 'old_status' => $oldStatusValue,
                 'new_status' => $newStatusValue,

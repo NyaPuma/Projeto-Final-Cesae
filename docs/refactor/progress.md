@@ -81,9 +81,9 @@
 - [ ] `SerialNumber.php`
 - Folder README: pending
 
-### `app/Concerns` (1 files) — PENDING (0/1)
-- [ ] `BroadcastsTicketStatus.php`
-- Folder README: pending
+### `app/Concerns` (1 files) — DONE (1/1)
+- [x] `BroadcastsTicketStatus.php`
+- Folder README: done
 
 ### `app/Actions` (21 files) — PENDING (0/21)
 - [ ] `ApproveBudgetAction.php`
