@@ -26,30 +26,30 @@
 - [x] `Auditable.php`
 - Folder README: done
 
-### `app/Models` (22 files) — PENDING (0/22)
-- [ ] `Audit.php`
-- [ ] `Equipment.php`
-- [ ] `EquipmentCategory.php`
-- [ ] `MaintenancePlan.php`
-- [ ] `Notification.php`
-- [ ] `Part.php`
-- [ ] `PartCategory.php`
-- [ ] `Room.php`
-- [ ] `StockMovement.php`
-- [ ] `Supplier.php`
-- [ ] `SystemSetting.php`
-- [ ] `TaxRate.php`
-- [ ] `ThemeSetting.php`
-- [ ] `Ticket.php`
-- [ ] `TicketAttachment.php`
-- [ ] `TicketComment.php`
-- [ ] `TicketStatus.php`
-- [ ] `TicketType.php`
-- [ ] `TicketWorkflowHistory.php`
-- [ ] `User.php`
-- [ ] `UserPreference.php`
-- [ ] `UserProfile.php`
-- Folder README: pending
+### `app/Models` (22 files) — DONE (22/22)
+- [x] `Audit.php`
+- [x] `Equipment.php`
+- [x] `EquipmentCategory.php`
+- [x] `MaintenancePlan.php`
+- [x] `Notification.php`
+- [x] `Part.php`
+- [x] `PartCategory.php`
+- [x] `Room.php`
+- [x] `StockMovement.php`
+- [x] `Supplier.php`
+- [x] `SystemSetting.php`
+- [x] `TaxRate.php`
+- [x] `ThemeSetting.php`
+- [x] `Ticket.php`
+- [x] `TicketAttachment.php`
+- [x] `TicketComment.php`
+- [x] `TicketStatus.php`
+- [x] `TicketType.php`
+- [x] `TicketWorkflowHistory.php`
+- [x] `User.php`
+- [x] `UserPreference.php`
+- [x] `UserProfile.php`
+- Folder README: done
 
 ### `app/DTOs` (21 files) — PENDING (0/21)
 - [ ] `AssignTechnicianData.php`

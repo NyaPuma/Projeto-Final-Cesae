@@ -88,7 +88,7 @@ final class Part extends Model
     }
 
     /**
-     * Peças cujo stock atual está igual ou abaixo do mínimo.
+     * Scope to filter parts at or below minimum stock threshold.
      */
     public function scopeLowStock(Builder $query): Builder
     {
@@ -98,7 +98,7 @@ final class Part extends Model
     }
 
     /**
-     * Peças totalmente esgotadas.
+     * Scope to filter out-of-stock parts.
      */
     public function scopeOutOfStock(Builder $query): Builder
     {
@@ -106,7 +106,7 @@ final class Part extends Model
     }
 
     /**
-     * Preço de custo com IVA, calculado dinamicamente a partir da taxa.
+     * Cost price including VAT calculated from assigned tax rate.
      */
     public function priceWithVat(): float
     {
@@ -116,7 +116,7 @@ final class Part extends Model
     }
 
     /**
-     * Valor total em stock (stock_atual * preço de custo).
+     * Total stock valuation (current_stock * cost_price).
      */
     public function stockValue(): float
     {
@@ -129,12 +129,12 @@ final class Part extends Model
     }
 
     /**
-     * Garante que a unidade de medida é um valor válido do enum.
+     * Validate that the unit of measure matches a valid enum case.
      */
     public function validateUnitOfMeasure(string $unit): void
     {
         if (PartUnitOfMeasureEnum::tryFrom($unit) === null) {
-            throw new InvalidArgumentException("Unidade de medida inválida: {$unit}");
+            throw new InvalidArgumentException("Invalid unit of measure: {$unit}");
         }
     }
 }

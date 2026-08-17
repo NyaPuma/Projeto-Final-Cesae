@@ -33,12 +33,6 @@ final class TicketStatus extends Model
         'type_id',
     ];
 
-    // --- RELAÇÕES ---
-
-    /**
-     * Tipo de avaria ao qual este estado pertence.
-     * Manteve-se 'type_id' explicitamente para coincidir com a coluna da tabela.
-     */
     protected function casts(): array
     {
         return [
@@ -46,15 +40,13 @@ final class TicketStatus extends Model
         ];
     }
 
+    // --- RELATIONSHIPS ---
+
     public function type(): BelongsTo
     {
         return $this->belongsTo(TicketType::class, 'type_id');
     }
 
-    /**
-     * Chamados/Tickets que se encontram atualmente neste estado.
-     * Manteve-se 'status_id' explicitamente para coincidir com a coluna da tabela 'tickets'.
-     */
     public function tickets(): HasMany
     {
         return $this->hasMany(Ticket::class, 'status_id');

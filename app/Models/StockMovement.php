@@ -56,7 +56,7 @@ final class StockMovement extends Model
     }
 
     /**
-     * Variação efetiva de stock aplicada por este movimento.
+     * Calculate effective stock quantity delta applied by this movement.
      */
     public function delta(): int
     {
@@ -65,7 +65,7 @@ final class StockMovement extends Model
             StockMovementTypeEnum::Return->value => abs((int) $this->quantity),
             StockMovementTypeEnum::Out->value => -abs((int) $this->quantity),
             StockMovementTypeEnum::Adjust->value => (int) $this->quantity,
-            default => throw new InvalidArgumentException("Tipo de movimento inválido: {$this->movement_type}"),
+            default => throw new InvalidArgumentException("Invalid movement type: {$this->movement_type}"),
         };
     }
 }

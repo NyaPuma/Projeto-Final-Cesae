@@ -52,7 +52,7 @@ final class Notification extends Model
     }
 
     /**
-     * Scope para filtrar apenas notificações não lidas.
+     * Scope to filter unread notifications.
      */
     public function scopeUnread(Builder $query): Builder
     {
@@ -60,7 +60,7 @@ final class Notification extends Model
     }
 
     /**
-     * Scope para filtrar apenas notificações já lidas.
+     * Scope to filter read notifications.
      */
     public function scopeRead(Builder $query): Builder
     {
@@ -68,7 +68,7 @@ final class Notification extends Model
     }
 
     /**
-     * Marca a notificação como lida.
+     * Mark notification as read.
      */
     public function markAsRead(): bool
     {
@@ -76,7 +76,7 @@ final class Notification extends Model
     }
 
     /**
-     * Marca a notificação como não lida.
+     * Mark notification as unread.
      */
     public function markAsUnread(): bool
     {

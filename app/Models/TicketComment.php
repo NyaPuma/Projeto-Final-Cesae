@@ -51,7 +51,7 @@ final class TicketComment extends Model
     // --- SCOPES ---
 
     /**
-     * Scope para ordenar os comentários cronologicamente (do mais antigo para o mais recente).
+     * Scope to order comments chronologically.
      */
     public function scopeChronological(Builder $query): Builder
     {
@@ -61,7 +61,7 @@ final class TicketComment extends Model
     // --- ACCESSORS ---
 
     /**
-     * Retorna o tempo decorrido desde a criação em formato relativo (ex: "há 5 minutos").
+     * Relative time string (e.g. "5 minutes ago").
      */
     protected function timeAgo(): Attribute
     {
@@ -71,7 +71,7 @@ final class TicketComment extends Model
     }
 
     /**
-     * Indica se o comentário foi editado após a sua publicação.
+     * Check if the comment was edited after publishing.
      */
     protected function isEdited(): Attribute
     {

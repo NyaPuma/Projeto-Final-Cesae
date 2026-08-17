@@ -15,7 +15,6 @@ use Illuminate\Support\Number;
 final class TicketAttachment extends Model
 {
     use HasFactory;
-
     use SoftDeletes;
 
     protected $fillable = [
@@ -33,7 +32,7 @@ final class TicketAttachment extends Model
     ];
 
     /**
-     * Mapeamento de tipos dos atributos.
+     * Attribute type casting.
      *
      * @return array<string, string>
      */
@@ -44,9 +43,6 @@ final class TicketAttachment extends Model
         ];
     }
 
-    /**
-     * Eventos automatizados do modelo.
-     */
     protected static function booted(): void
     {
         static::creating(function (self $attachment): void {
@@ -55,7 +51,7 @@ final class TicketAttachment extends Model
             }
         });
 
-        // Garante que o ficheiro físico é removido do Storage ao apagar o registo na BD
+        // Ensure physical file is deleted from Storage on model deletion
         static::deleting(static function (self $attachment): void {
             $disk = $attachment->disk ?: 'public';
             if ($attachment->path && Storage::disk($disk)->exists($attachment->path)) {
@@ -64,7 +60,7 @@ final class TicketAttachment extends Model
         });
     }
 
-    // --- RELAÇÕES ---
+    // --- RELATIONSHIPS ---
 
     public function ticket(): BelongsTo
     {
@@ -79,7 +75,7 @@ final class TicketAttachment extends Model
     // --- ACCESSORS ---
 
     /**
-     * Obtém o URL direto do ficheiro para download ou visualização.
+     * Direct URL for file download or display.
      */
     protected function url(): Attribute
     {
@@ -89,7 +85,7 @@ final class TicketAttachment extends Model
     }
 
     /**
-     * Retorna o tamanho do ficheiro formatado em KB, MB ou GB.
+     * Formatted file size string (KB, MB, GB).
      */
     protected function formattedSize(): Attribute
     {
@@ -99,7 +95,7 @@ final class TicketAttachment extends Model
     }
 
     /**
-     * Verifica se o anexo é uma imagem.
+     * Check if attachment is an image.
      */
     protected function isImage(): Attribute
     {

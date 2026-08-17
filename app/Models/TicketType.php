@@ -32,12 +32,6 @@ final class TicketType extends Model
         'active',
     ];
 
-    // --- RELAÇÕES ---
-
-    /**
-     * Estados de fluxo de trabalho associados a este tipo de avaria.
-     * Manteve-se 'type_id' explicitamente para coincidir com a coluna da tabela 'ticket_statuses'.
-     */
     protected function casts(): array
     {
         return [
@@ -45,21 +39,23 @@ final class TicketType extends Model
         ];
     }
 
+    // --- RELATIONSHIPS ---
+
     public function statuses(): HasMany
     {
         return $this->hasMany(TicketStatus::class, 'type_id');
     }
 
     /**
-     * Obtém diretamente todos os chamados/tickets deste tipo através dos seus estados.
+     * Direct relationship to tickets associated with this type via statuses.
      */
     public function tickets(): HasManyThrough
     {
         return $this->hasManyThrough(
             Ticket::class,
             TicketStatus::class,
-            'type_id',   // Chave estrangeira na tabela 'ticket_statuses'
-            'status_id'  // Chave estrangeira na tabela 'tickets'
+            'type_id',   // Foreign key on ticket_statuses table
+            'status_id'  // Foreign key on tickets table
         );
     }
 }

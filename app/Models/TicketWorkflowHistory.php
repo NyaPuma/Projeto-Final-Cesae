@@ -14,9 +14,6 @@ final class TicketWorkflowHistory extends Model
 {
     use HasFactory;
 
-    /**
-     * Define explicitamente o nome da tabela no singular/unificado.
-     */
     protected $table = 'ticket_workflow_history';
 
     protected $fillable = [
@@ -27,35 +24,23 @@ final class TicketWorkflowHistory extends Model
         'comment',
     ];
 
-    // --- RELAÇÕES ---
+    // --- RELATIONSHIPS ---
 
-    /**
-     * Chamado/Ticket associado ao histórico.
-     */
     public function ticket(): BelongsTo
     {
         return $this->belongsTo(Ticket::class, 'ticket_id');
     }
 
-    /**
-     * Estado anterior/origem da transição.
-     */
     public function originStatus(): BelongsTo
     {
         return $this->belongsTo(TicketStatus::class, 'origin_status_id');
     }
 
-    /**
-     * Novo estado/destino da transição.
-     */
     public function destinationStatus(): BelongsTo
     {
         return $this->belongsTo(TicketStatus::class, 'destination_status_id');
     }
 
-    /**
-     * Técnico ou utilizador que executou a mudança de estado.
-     */
     public function technician(): BelongsTo
     {
         return $this->belongsTo(User::class, 'technician_id');
@@ -64,7 +49,7 @@ final class TicketWorkflowHistory extends Model
     // --- SCOPES ---
 
     /**
-     * Scope para ordenar o histórico por ordem cronológica decrescente (do mais recente ao mais antigo).
+     * Scope to order workflow history descending chronologically.
      */
     public function scopeChronological(Builder $query): Builder
     {
@@ -74,7 +59,7 @@ final class TicketWorkflowHistory extends Model
     // --- ACCESSORS ---
 
     /**
-     * Retorna uma representação em texto da transição (ex: "Aberto ➔ Em Progresso").
+     * Text representation of the status transition (e.g. "Open ➔ In Progress").
      */
     protected function transitionLabel(): Attribute
     {
@@ -88,7 +73,7 @@ final class TicketWorkflowHistory extends Model
     }
 
     /**
-     * Retorna o tempo decorrido em formato amigável.
+     * Relative time string.
      */
     protected function timeAgo(): Attribute
     {

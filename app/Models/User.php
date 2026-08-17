@@ -67,7 +67,7 @@ class User extends Authenticatable
         ];
     }
 
-    // --- MÉTODOS DE ROLES / PERFIS ---
+    // --- ROLE / PROFILE HELPERS ---
 
     public static function getAvailableRoles(): array
     {
@@ -94,12 +94,10 @@ class User extends Authenticatable
         return $this->profile?->name === UserRoleEnum::User->value;
     }
 
-
-
-    // --- RELAÇÕES ---
+    // --- RELATIONSHIPS ---
 
     /**
-     * Chamados/Tickets criados pelo utilizador.
+     * Tickets reported/created by this user.
      */
     public function tickets(): HasMany
     {
@@ -107,7 +105,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Chamados/Tickets atribuídos ao utilizador (técnico).
+     * Tickets assigned to this user (as technician).
      */
     public function assignedTickets(): HasMany
     {
@@ -115,7 +113,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Perfil / Função do utilizador (Admin, Técnico, Utilizador).
+     * Role profile associated with this user.
      */
     public function profile(): BelongsTo
     {
@@ -136,10 +134,10 @@ class User extends Authenticatable
         });
     }
 
-    // --- HELPERS DA APLICAÇÃO ---
+    // --- SECURITY & TOKEN HELPERS ---
 
     /**
-     * Gera uma hash HMAC SHA256 do token com a chave da aplicação.
+     * Generate HMAC SHA256 hash for API tokens.
      */
     public static function hashToken(string $token): string
     {

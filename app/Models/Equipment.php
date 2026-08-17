@@ -19,8 +19,7 @@ final class Equipment extends Model
     use SoftDeletes;
 
     /**
-     * O plural padrão do Eloquent para "Equipment" é "equipment" (invariável).
-     * Definir $table garante o mapeamento correto caso a tabela seja "equipments".
+     * Explicit table name mapping.
      */
     protected $table = 'equipments';
 
@@ -50,7 +49,7 @@ final class Equipment extends Model
     }
 
     /**
-     * Categoria à qual o equipamento pertence.
+     * Category that the equipment belongs to.
      */
     public function category(): BelongsTo
     {
@@ -58,7 +57,7 @@ final class Equipment extends Model
     }
 
     /**
-     * Sala onde o equipamento está alocado.
+     * Room where the equipment is located.
      */
     public function room(): BelongsTo
     {
@@ -66,7 +65,7 @@ final class Equipment extends Model
     }
 
     /**
-     * Chamados/Tickets associados a este equipamento.
+     * Maintenance tickets associated with this equipment.
      */
     public function tickets(): HasMany
     {
@@ -74,7 +73,7 @@ final class Equipment extends Model
     }
 
     /**
-     * Planos de manutenção preventiva deste equipamento.
+     * Preventive maintenance plans defined for this equipment.
      */
     public function maintenancePlans(): HasMany
     {
@@ -82,7 +81,7 @@ final class Equipment extends Model
     }
 
     /**
-     * Scope para filtrar rapidamente apenas equipamentos ativos.
+     * Scope to filter active equipment records.
      */
     public function scopeActive(Builder $query): Builder
     {

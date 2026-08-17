@@ -28,11 +28,10 @@ final class UserProfile extends Model
         'active',
     ];
 
-    // --- RELAÇÕES ---
+    // --- RELATIONSHIPS ---
 
     /**
-     * Utilizadores associados a este perfil.
-     * Manteve-se 'profile_id' explicitamente para coincidir com a coluna da tabela 'users'.
+     * Users associated with this profile.
      */
     public function users(): HasMany
     {

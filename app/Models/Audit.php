@@ -27,7 +27,7 @@ final class Audit extends Model
     ];
 
     /**
-     * Mapeamento de tipos dos atributos.
+     * Attribute type casting.
      *
      * @return array<string, string>
      */
@@ -40,7 +40,7 @@ final class Audit extends Model
     }
 
     /**
-     * Bloqueia qualquer tentativa de UPDATE ou DELETE ao nível dos eventos do Eloquent.
+     * Prevent UPDATE or DELETE on immutable audit records.
      */
     protected static function booted(): void
     {
@@ -54,7 +54,7 @@ final class Audit extends Model
     }
 
     /**
-     * Utilizador que realizou a ação auditada.
+     * User who triggered the audited event.
      */
     public function user(): BelongsTo
     {
@@ -62,7 +62,7 @@ final class Audit extends Model
     }
 
     /**
-     * Modelo polimórfico auditado (ex: Ticket, User, Budget, etc.).
+     * Polymorphic model audited (e.g. Ticket, User, Equipment, etc.).
      */
     public function auditable(): MorphTo
     {

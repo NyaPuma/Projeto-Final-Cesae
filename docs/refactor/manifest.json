@@ -89,120 +89,120 @@
       "readme_status": "done"
     },
     "app/Models": {
-      "status": "pending",
+      "status": "done",
       "files": {
         "app/Models/Audit.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/Models/Equipment.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/Models/EquipmentCategory.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/Models/MaintenancePlan.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/Models/Notification.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/Models/Part.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/Models/PartCategory.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/Models/Room.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/Models/StockMovement.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/Models/Supplier.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/Models/SystemSetting.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/Models/TaxRate.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/Models/ThemeSetting.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/Models/Ticket.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/Models/TicketAttachment.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/Models/TicketComment.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/Models/TicketStatus.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/Models/TicketType.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/Models/TicketWorkflowHistory.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/Models/User.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/Models/UserPreference.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/Models/UserProfile.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         }
       },
-      "readme_status": "pending"
+      "readme_status": "done"
     },
     "app/DTOs": {
       "status": "pending",

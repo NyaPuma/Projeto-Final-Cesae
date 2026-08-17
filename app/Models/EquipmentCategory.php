@@ -23,7 +23,7 @@ final class EquipmentCategory extends Model
     ];
 
     /**
-     * Mapeamento de tipos dos atributos (Sintaxe recomendada).
+     * Attribute type casting.
      *
      * @return array<string, string>
      */
@@ -35,8 +35,7 @@ final class EquipmentCategory extends Model
     }
 
     /**
-     * Uma categoria possui muitos equipamentos.
-     * Mantém-se 'category_id' explicitamente para coincidir com a coluna da tabela 'equipments'.
+     * Category has many equipments.
      */
     public function equipments(): HasMany
     {
@@ -44,7 +43,7 @@ final class EquipmentCategory extends Model
     }
 
     /**
-     * Scope para filtrar apenas categorias ativas.
+     * Scope to filter active categories.
      */
     public function scopeActive(Builder $query): Builder
     {

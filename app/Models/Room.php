@@ -47,7 +47,7 @@ final class Room extends Model
     }
 
     /**
-     * Equipamentos alocados nesta sala.
+     * Equipment allocated to this room.
      */
     public function equipments(): HasMany
     {
@@ -55,7 +55,7 @@ final class Room extends Model
     }
 
     /**
-     * Chamados/Tickets associados a esta sala.
+     * Maintenance tickets associated with this room.
      */
     public function tickets(): HasMany
     {
@@ -63,7 +63,7 @@ final class Room extends Model
     }
 
     /**
-     * Scope para filtrar apenas salas ativas.
+     * Scope to filter active rooms.
      */
     public function scopeActive(Builder $query): Builder
     {

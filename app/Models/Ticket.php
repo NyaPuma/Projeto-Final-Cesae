@@ -49,7 +49,7 @@ final class Ticket extends Model
     ];
 
     /**
-     * Mapeamento de tipos dos atributos.
+     * Attribute type casting.
      *
      * @return array<string, string>
      */
@@ -83,7 +83,7 @@ final class Ticket extends Model
         ];
     }
 
-    // --- RELAÇÕES ---
+    // --- RELATIONSHIPS ---
 
     public function user(): BelongsTo
     {
@@ -147,7 +147,7 @@ final class Ticket extends Model
     // --- ACCESSORS & HELPER METHODS ---
 
     /**
-     * Accessor moderno para calcular o tempo em minutos de pausa para aprovação de orçamento.
+     * Calculate pause duration in minutes while awaiting budget approval.
      */
     protected function budgetPauseMinutes(): Attribute
     {
