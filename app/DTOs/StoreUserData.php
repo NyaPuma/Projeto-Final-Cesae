@@ -14,25 +14,22 @@ final readonly class StoreUserData
         public bool $active = true,
     ) {
         if (trim($this->name) === '') {
-            throw new \InvalidArgumentException('O nome do utilizador não pode estar vazio.');
+            throw new \InvalidArgumentException('User name cannot be empty.');
         }
 
         if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
-            throw new \InvalidArgumentException('O e-mail fornecido é inválido.');
+            throw new \InvalidArgumentException('The provided e-mail is invalid.');
         }
 
         if ($this->password === '') {
-            throw new \InvalidArgumentException('A password não pode estar vazia.');
+            throw new \InvalidArgumentException('Password cannot be empty.');
         }
 
         if ($this->profileId !== null && $this->profileId <= 0) {
-            throw new \InvalidArgumentException('O ID do perfil deve ser um número inteiro positivo.');
+            throw new \InvalidArgumentException('Profile ID must be a positive integer.');
         }
     }
 
-    /**
-     * Cria o DTO a partir de um Array ou FormRequest.
-     */
     public static function fromRequest(FormRequest|array $data): self
     {
         $payload = $data instanceof FormRequest ? $data->validated() : $data;
@@ -47,7 +44,7 @@ final readonly class StoreUserData
     }
 
     /**
-     * Sanitiza IDs inteiros opcionais, convertendo "", 0 ou valores inválidos para null.
+     * Sanitize optional integer IDs, converting "", 0, or invalid values to null.
      */
     private static function parseNullableInt(mixed $value): ?int
     {
@@ -57,7 +54,8 @@ final readonly class StoreUserData
     }
 
     /**
-     * Normaliza a entrada booleana (trata "true", "false", "1", "0", "on", etc.).
+     * Normalize boolean input — handles "true", "false", "1", "0", "on", etc.
+     * Defaults to true when null is passed.
      */
     private static function parseBool(mixed $value): bool
     {
@@ -68,9 +66,6 @@ final readonly class StoreUserData
         return filter_var($value, FILTER_VALIDATE_BOOLEAN);
     }
 
-    /**
-     * Converte o DTO para array pronto a utilizar no Eloquent.
-     */
     public function toArray(): array
     {
         return [

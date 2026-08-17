@@ -9,9 +9,9 @@ final readonly class AssignTechnicianData
     public function __construct(
         public ?int $technicianId,
     ) {
-        // Opcional: validação defensiva para garantir que se houver ID, seja válido (> 0)
+        // Optional: defensive validation to ensure that if an ID is provided, it is a positive integer (> 0)
         if ($this->technicianId !== null && $this->technicianId <= 0) {
-            throw new \InvalidArgumentException('O ID do técnico deve ser um número inteiro positivo.');
+            throw new \InvalidArgumentException('Technician ID must be a positive integer.');
         }
     }
 

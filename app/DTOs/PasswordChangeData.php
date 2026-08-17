@@ -11,21 +11,18 @@ final readonly class PasswordChangeData
         public string $newPassword,
     ) {
         if ($this->currentPassword === '') {
-            throw new \InvalidArgumentException('A password atual é obrigatória.');
+            throw new \InvalidArgumentException('Current password is required.');
         }
 
         if ($this->newPassword === '') {
-            throw new \InvalidArgumentException('A nova password é obrigatória.');
+            throw new \InvalidArgumentException('New password is required.');
         }
 
         if ($this->currentPassword === $this->newPassword) {
-            throw new \InvalidArgumentException('A nova password deve ser diferente da password atual.');
+            throw new \InvalidArgumentException('New password must differ from the current password.');
         }
     }
 
-    /**
-     * Cria o DTO a partir de um Array ou FormRequest.
-     */
     public static function fromRequest(FormRequest|array $data): self
     {
         $payload = $data instanceof FormRequest ? $data->validated() : $data;
@@ -36,9 +33,6 @@ final readonly class PasswordChangeData
         );
     }
 
-    /**
-     * Converte o DTO para array.
-     */
     public function toArray(): array
     {
         return [

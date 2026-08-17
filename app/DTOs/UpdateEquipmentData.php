@@ -22,29 +22,26 @@ final readonly class UpdateEquipmentData
         public ?string $notes = null,
     ) {
         if ($this->name !== null && trim($this->name) === '') {
-            throw new \InvalidArgumentException('O nome do equipamento não pode ser uma string vazia.');
+            throw new \InvalidArgumentException('Equipment name cannot be an empty string.');
         }
 
         if ($this->serial !== null && trim($this->serial) === '') {
-            throw new \InvalidArgumentException('O número de série não pode ser uma string vazia.');
+            throw new \InvalidArgumentException('Serial number cannot be an empty string.');
         }
 
         if ($this->roomId !== null && $this->roomId <= 0) {
-            throw new \InvalidArgumentException('O ID da sala deve ser um número inteiro positivo.');
+            throw new \InvalidArgumentException('Room ID must be a positive integer.');
         }
 
         if ($this->categoryId !== null && $this->categoryId <= 0) {
-            throw new \InvalidArgumentException('O ID da categoria deve ser um número inteiro positivo.');
+            throw new \InvalidArgumentException('Category ID must be a positive integer.');
         }
 
         if ($this->status !== null && ! in_array($this->status, StoreEquipmentData::STATUSES, true)) {
-            throw new \InvalidArgumentException('O estado operacional do equipamento é inválido.');
+            throw new \InvalidArgumentException('Invalid equipment operational status.');
         }
     }
 
-    /**
-     * Cria o DTO a partir de um Array ou FormRequest.
-     */
     public static function fromRequest(FormRequest|array $data): self
     {
         $payload = $data instanceof FormRequest ? $data->validated() : $data;
@@ -69,7 +66,7 @@ final readonly class UpdateEquipmentData
     }
 
     /**
-     * Sanitiza strings opcionais, convertendo "" ou apenas espaços em null.
+     * Sanitize optional strings, converting "" or whitespace-only values to null.
      */
     private static function parseNullableString(mixed $value): ?string
     {
@@ -83,7 +80,7 @@ final readonly class UpdateEquipmentData
     }
 
     /**
-     * Sanitiza e converte o número de série para maiúsculas caso seja fornecido.
+     * Sanitize and upper-case the serial number when provided.
      */
     private static function parseSerial(mixed $value): ?string
     {
@@ -93,7 +90,7 @@ final readonly class UpdateEquipmentData
     }
 
     /**
-     * Sanitiza IDs inteiros opcionais, convertendo "", 0 ou valores inválidos para null.
+     * Sanitize optional integer IDs, converting "", 0, or invalid values to null.
      */
     private static function parseNullableInt(mixed $value): ?int
     {
@@ -103,7 +100,7 @@ final readonly class UpdateEquipmentData
     }
 
     /**
-     * Normaliza a entrada booleana sem forçar um valor padrão caso seja null.
+     * Normalize boolean input without forcing a default — null input stays null.
      */
     private static function parseNullableBool(mixed $value): ?bool
     {
@@ -116,7 +113,7 @@ final readonly class UpdateEquipmentData
     }
 
     /**
-     * Devolve apenas os campos preenchidos para atualização dinâmica via Eloquent.
+     * Returns only the fields that were provided for partial Eloquent updates.
      */
     public function toArray(): array
     {
@@ -137,9 +134,6 @@ final readonly class UpdateEquipmentData
         ], static fn (mixed $value): bool => $value !== null);
     }
 
-    /**
-     * Verifica se foi enviado pelo menos um campo para ser atualizado.
-     */
     public function hasUpdates(): bool
     {
         return ! empty($this->toArray());

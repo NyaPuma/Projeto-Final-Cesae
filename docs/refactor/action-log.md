@@ -11,3 +11,4 @@ Format: `YYYY-MM-DD HH:mm:ss UTC | ACTION | Target | Details`
 2026-08-17 13:04:00 UTC | REFACTOR & DOC | app/Traits | Cleaned comments in Auditable.php; created app/Traits/README.md; php -l passed.
 2026-08-17 13:04:30 UTC | REFACTOR & DOC | app/Concerns | Cleaned comments in BroadcastsTicketStatus.php; created app/Concerns/README.md; php -l passed.
 2026-08-17 13:09:00 UTC | REFACTOR & DOC | app/Models | Cleaned comments/exceptions across all 22 models; created app/Models/README.md; php -l passed.
+2026-08-17 13:17:00 UTC | REFACTOR & DOC | app/DTOs | Cleaned PT comments/exceptions to English across all 21 DTOs; noted STATUSES DB values; created README; php -l passed.

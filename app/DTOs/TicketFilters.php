@@ -20,13 +20,10 @@ final readonly class TicketFilters
         public ?int $roomId = null,
     ) {
         if ($this->dateFrom !== null && $this->dateTo !== null && $this->dateFrom->isAfter($this->dateTo)) {
-            throw new \InvalidArgumentException('A data inicial (dateFrom) não pode ser posterior à data final (dateTo).');
+            throw new \InvalidArgumentException('dateFrom cannot be later than dateTo.');
         }
     }
 
-    /**
-     * Cria o DTO a partir de um Array ou FormRequest (tipicamente vindo da Query String).
-     */
     public static function fromRequest(FormRequest|array $data): self
     {
         $payload = $data instanceof FormRequest ? $data->validated() : $data;
@@ -45,7 +42,8 @@ final readonly class TicketFilters
     }
 
     /**
-     * Tenta converter a entrada para o Enum de prioridade de forma segura.
+     * Safely coerce input to TicketPriorityEnum using normalize() when available,
+     * falling back to tryFrom().
      */
     private static function parsePriority(mixed $value): ?TicketPriorityEnum
     {
@@ -65,7 +63,7 @@ final readonly class TicketFilters
     }
 
     /**
-     * Sanitiza strings opcionais, convertendo "" ou apenas espaços em null.
+     * Sanitize optional strings, converting "" or whitespace-only values to null.
      */
     private static function parseNullableString(mixed $value): ?string
     {
@@ -79,7 +77,7 @@ final readonly class TicketFilters
     }
 
     /**
-     * Converte entradas numéricas de query string para inteiros válidos (> 0).
+     * Convert query-string numeric input to valid positive integers.
      */
     private static function parseNullableInt(mixed $value): ?int
     {
@@ -89,7 +87,8 @@ final readonly class TicketFilters
     }
 
     /**
-     * Converte datas recebidas para instâncias de CarbonImmutable.
+     * Convert date input to CarbonImmutable. Returns null for empty/un-parseable values
+     * rather than throwing, to handle loose query-string input gracefully.
      */
     private static function parseDate(mixed $value): ?CarbonImmutable
     {
@@ -113,7 +112,7 @@ final readonly class TicketFilters
     }
 
     /**
-     * Devolve apenas os filtros ativos (não nulos) para aplicação dinâmica em queries Eloquent.
+     * Returns only active (non-null) filters for dynamic Eloquent query building.
      */
     public function toArray(): array
     {
@@ -130,9 +129,6 @@ final readonly class TicketFilters
         ], static fn (mixed $value): bool => $value !== null);
     }
 
-    /**
-     * Verifica se existe pelo menos um filtro ativo na pesquisa.
-     */
     public function hasFilters(): bool
     {
         return !empty($this->toArray());

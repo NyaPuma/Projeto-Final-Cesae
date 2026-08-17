@@ -15,30 +15,27 @@ final readonly class CreateTicketData
         public ?int $roomId = null,
     ) {
         if (trim($this->title) === '') {
-            throw new \InvalidArgumentException('O título do ticket não pode estar vazio.');
+            throw new \InvalidArgumentException('Ticket title cannot be empty.');
         }
 
         if (trim($this->description) === '') {
-            throw new \InvalidArgumentException('A descrição do ticket não pode estar vazia.');
+            throw new \InvalidArgumentException('Ticket description cannot be empty.');
         }
 
         if ($this->equipmentId !== null && $this->equipmentId <= 0) {
-            throw new \InvalidArgumentException('O ID do equipamento deve ser um número inteiro positivo.');
+            throw new \InvalidArgumentException('Equipment ID must be a positive integer.');
         }
 
         if ($this->roomId !== null && $this->roomId <= 0) {
-            throw new \InvalidArgumentException('O ID da sala deve ser um número inteiro positivo.');
+            throw new \InvalidArgumentException('Room ID must be a positive integer.');
         }
     }
 
-    /**
-     * Cria o DTO a partir de um Array ou FormRequest.
-     */
     public static function fromRequest(FormRequest|array $data): self
     {
         $payload = $data instanceof FormRequest ? $data->validated() : $data;
 
-        // Normalização flexível do Enum de Prioridade
+        // Flexible priority enum normalization: accepts enum instance, value string, or method normalize()
         $rawPriority = $payload['priority'] ?? TicketPriorityEnum::Low;
         $priority = $rawPriority instanceof TicketPriorityEnum
             ? $rawPriority
@@ -56,7 +53,7 @@ final readonly class CreateTicketData
     }
 
     /**
-     * Sanitiza IDs inteiros opcionais, convertendo "", 0 ou valores inválidos para null.
+     * Sanitize optional integer IDs, converting "", 0, or invalid values to null.
      */
     private static function parseNullableInt(mixed $value): ?int
     {
@@ -65,9 +62,6 @@ final readonly class CreateTicketData
         return $parsed && $parsed > 0 ? $parsed : null;
     }
 
-    /**
-     * Converte o DTO para array pronto a utilizar no Eloquent / Service.
-     */
     public function toArray(): array
     {
         return [

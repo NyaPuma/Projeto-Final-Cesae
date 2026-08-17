@@ -51,29 +51,29 @@
 - [x] `UserProfile.php`
 - Folder README: done
 
-### `app/DTOs` (21 files) — PENDING (0/21)
-- [ ] `AssignTechnicianData.php`
-- [ ] `BudgetDecisionData.php`
-- [ ] `BudgetSubmissionData.php`
-- [ ] `CloseTicketData.php`
-- [ ] `CommentData.php`
-- [ ] `CreateTicketData.php`
-- [ ] `PasswordChangeData.php`
-- [ ] `ProfileUpdateData.php`
-- [ ] `ScheduleMaintenanceData.php`
-- [ ] `ScheduleTicketData.php`
-- [ ] `StoreEquipmentData.php`
-- [ ] `StorePartData.php`
-- [ ] `StoreRoomData.php`
-- [ ] `StoreSupplierData.php`
-- [ ] `StoreUserData.php`
-- [ ] `TicketFilters.php`
-- [ ] `UpdateEquipmentData.php`
-- [ ] `UpdatePartData.php`
-- [ ] `UpdateRoomData.php`
-- [ ] `UpdateSupplierData.php`
-- [ ] `UpdateUserData.php`
-- Folder README: pending
+### `app/DTOs` (21 files) — DONE (21/21)
+- [x] `AssignTechnicianData.php`
+- [x] `BudgetDecisionData.php`
+- [x] `BudgetSubmissionData.php`
+- [x] `CloseTicketData.php`
+- [x] `CommentData.php`
+- [x] `CreateTicketData.php`
+- [x] `PasswordChangeData.php`
+- [x] `ProfileUpdateData.php`
+- [x] `ScheduleMaintenanceData.php`
+- [x] `ScheduleTicketData.php`
+- [x] `StoreEquipmentData.php`
+- [x] `StorePartData.php`
+- [x] `StoreRoomData.php`
+- [x] `StoreSupplierData.php`
+- [x] `StoreUserData.php`
+- [x] `TicketFilters.php`
+- [x] `UpdateEquipmentData.php`
+- [x] `UpdatePartData.php`
+- [x] `UpdateRoomData.php`
+- [x] `UpdateSupplierData.php`
+- [x] `UpdateUserData.php`
+- Folder README: done
 
 ### `app/ValueObjects` (3 files) — PENDING (0/3)
 - [ ] `Email.php`

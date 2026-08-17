@@ -205,115 +205,115 @@
       "readme_status": "done"
     },
     "app/DTOs": {
-      "status": "pending",
+      "status": "done",
       "files": {
         "app/DTOs/AssignTechnicianData.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/DTOs/BudgetDecisionData.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/DTOs/BudgetSubmissionData.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/DTOs/CloseTicketData.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/DTOs/CommentData.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/DTOs/CreateTicketData.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/DTOs/PasswordChangeData.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/DTOs/ProfileUpdateData.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/DTOs/ScheduleMaintenanceData.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/DTOs/ScheduleTicketData.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/DTOs/StoreEquipmentData.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/DTOs/StorePartData.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/DTOs/StoreRoomData.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/DTOs/StoreSupplierData.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/DTOs/StoreUserData.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/DTOs/TicketFilters.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/DTOs/UpdateEquipmentData.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/DTOs/UpdatePartData.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/DTOs/UpdateRoomData.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/DTOs/UpdateSupplierData.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         },
         "app/DTOs/UpdateUserData.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         }
       },
-      "readme_status": "pending"
+      "readme_status": "done"
     },
     "app/ValueObjects": {
       "status": "pending",

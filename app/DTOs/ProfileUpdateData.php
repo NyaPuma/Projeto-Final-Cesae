@@ -11,17 +11,14 @@ final readonly class ProfileUpdateData
         public ?string $email = null,
     ) {
         if ($this->email !== null && !filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
-            throw new \InvalidArgumentException('O formato do e-mail fornecido é inválido.');
+            throw new \InvalidArgumentException('The provided e-mail format is invalid.');
         }
 
         if ($this->name !== null && trim($this->name) === '') {
-            throw new \InvalidArgumentException('O nome não pode ser composto apenas por espaços.');
+            throw new \InvalidArgumentException('Name cannot consist of whitespace only.');
         }
     }
 
-    /**
-     * Cria o DTO a partir de um Array ou FormRequest.
-     */
     public static function fromRequest(FormRequest|array $data): self
     {
         $payload = $data instanceof FormRequest ? $data->validated() : $data;
@@ -33,7 +30,7 @@ final readonly class ProfileUpdateData
     }
 
     /**
-     * Limpa espaços e converte strings vazias para null.
+     * Trim whitespace and convert empty strings to null.
      */
     private static function parseNullableString(mixed $value): ?string
     {
@@ -47,7 +44,7 @@ final readonly class ProfileUpdateData
     }
 
     /**
-     * Sanitiza e converte o e-mail para minúsculas.
+     * Sanitize and lower-case the e-mail value.
      */
     private static function parseEmail(mixed $value): ?string
     {
@@ -57,7 +54,7 @@ final readonly class ProfileUpdateData
     }
 
     /**
-     * Devolve apenas os campos efetivamente preenchidos para não apagar dados no Eloquent.
+     * Returns only the fields that were actually provided, preventing accidental Eloquent overwrites.
      */
     public function toArray(): array
     {
@@ -67,9 +64,6 @@ final readonly class ProfileUpdateData
         ], static fn (mixed $value): bool => $value !== null);
     }
 
-    /**
-     * Verifica se existe pelo menos um campo para atualizar.
-     */
     public function hasChanges(): bool
     {
         return $this->name !== null || $this->email !== null;

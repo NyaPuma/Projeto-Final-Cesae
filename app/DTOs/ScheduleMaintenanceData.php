@@ -17,11 +17,11 @@ final readonly class ScheduleMaintenanceData
         public ?string $description = null,
     ) {
         if (trim($this->title) === '') {
-            throw new InvalidArgumentException('O título da intervenção não pode estar vazio.');
+            throw new InvalidArgumentException('Intervention title cannot be empty.');
         }
 
         if ($this->equipmentId === null || $this->equipmentId <= 0) {
-            throw new InvalidArgumentException('O equipamento é obrigatório.');
+            throw new InvalidArgumentException('Equipment is required.');
         }
     }
 

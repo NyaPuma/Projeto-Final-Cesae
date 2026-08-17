@@ -18,17 +18,14 @@ final readonly class StoreRoomData
         public ?string $notes = null,
     ) {
         if (trim($this->name) === '') {
-            throw new \InvalidArgumentException('O nome da sala não pode estar vazio.');
+            throw new \InvalidArgumentException('Room name cannot be empty.');
         }
 
         if ($this->capacity !== null && $this->capacity < 0) {
-            throw new \InvalidArgumentException('A capacidade da sala não pode ser negativa.');
+            throw new \InvalidArgumentException('Room capacity cannot be negative.');
         }
     }
 
-    /**
-     * Cria o DTO a partir de um Array ou FormRequest.
-     */
     public static function fromRequest(FormRequest|array $data): self
     {
         $payload = $data instanceof FormRequest ? $data->validated() : $data;
@@ -47,7 +44,7 @@ final readonly class StoreRoomData
     }
 
     /**
-     * Sanitiza strings opcionais, convertendo "" ou espaços para null.
+     * Sanitize optional strings, converting "" or whitespace-only values to null.
      */
     private static function parseNullableString(mixed $value): ?string
     {
@@ -61,7 +58,7 @@ final readonly class StoreRoomData
     }
 
     /**
-     * Sanitiza e converte o código da sala para maiúsculas (ex: "lab-1" -> "LAB-1").
+     * Sanitize and upper-case the room code (e.g. "lab-1" -> "LAB-1").
      */
     private static function parseCode(mixed $value): ?string
     {
@@ -71,7 +68,7 @@ final readonly class StoreRoomData
     }
 
     /**
-     * Sanitiza valores inteiros opcionais, convertendo "", 0 ou inválidos para null.
+     * Sanitize optional integers, converting "", or invalid values to null.
      */
     private static function parseNullableInt(mixed $value): ?int
     {
@@ -81,7 +78,8 @@ final readonly class StoreRoomData
     }
 
     /**
-     * Normaliza a entrada booleana (trata "true", "1", "on", etc.).
+     * Normalize boolean input — handles "true", "1", "on", etc.
+     * Defaults to true when null is passed.
      */
     private static function parseBool(mixed $value): bool
     {
@@ -92,9 +90,6 @@ final readonly class StoreRoomData
         return filter_var($value, FILTER_VALIDATE_BOOLEAN);
     }
 
-    /**
-     * Converte o DTO para array pronto a utilizar no Eloquent.
-     */
     public function toArray(): array
     {
         return [

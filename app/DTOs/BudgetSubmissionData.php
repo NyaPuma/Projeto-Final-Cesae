@@ -12,12 +12,12 @@ final readonly class BudgetSubmissionData
         public bool $isDetailedRequest = false,
     ) {
         if ($this->estimatedBudget < 0) {
-            throw new \InvalidArgumentException('O valor estimado do orçamento não pode ser negativo.');
+            throw new \InvalidArgumentException('The estimated budget amount cannot be negative.');
         }
     }
 
     /**
-     * Construtor para estimativa simples de orçamento.
+     * Factory for a simple budget estimate submission.
      */
     public static function fromSubmitEstimate(FormRequest|array $data): self
     {
@@ -31,7 +31,7 @@ final readonly class BudgetSubmissionData
     }
 
     /**
-     * Construtor para pedido detalhado de orçamento.
+     * Factory for a detailed budget request.
      */
     public static function fromDetailedRequest(FormRequest|array $data): self
     {
@@ -45,7 +45,8 @@ final readonly class BudgetSubmissionData
     }
 
     /**
-     * Sanitiza a entrada monetária para float preciso (2 casas decimais).
+     * Sanitize monetary input to a precise float (2 decimal places).
+     * Handles both numeric values and strings like "150,50" (comma decimal separator).
      */
     private static function parseAmount(mixed $value): float
     {
@@ -53,7 +54,6 @@ final readonly class BudgetSubmissionData
             return round((float) $value, 2);
         }
 
-        // Caso venha formatado como string "150,50" -> converte vírgula para ponto
         if (is_string($value)) {
             $cleaned = str_replace(',', '.', preg_replace('/[^\d,.]/', '', $value));
 
@@ -65,9 +65,6 @@ final readonly class BudgetSubmissionData
         return 0.0;
     }
 
-    /**
-     * Converte o DTO para array pronto a utilizar no Eloquent.
-     */
     public function toArray(): array
     {
         return [

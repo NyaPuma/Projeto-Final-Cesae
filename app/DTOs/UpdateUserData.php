@@ -14,21 +14,18 @@ final readonly class UpdateUserData
         public ?bool $active = null,
     ) {
         if ($this->name !== null && trim($this->name) === '') {
-            throw new \InvalidArgumentException('O nome do utilizador não pode ser uma string vazia.');
+            throw new \InvalidArgumentException('User name cannot be an empty string.');
         }
 
         if ($this->email !== null && !filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
-            throw new \InvalidArgumentException('O formato do e-mail fornecido é inválido.');
+            throw new \InvalidArgumentException('The provided e-mail format is invalid.');
         }
 
         if ($this->profileId !== null && $this->profileId <= 0) {
-            throw new \InvalidArgumentException('O ID do perfil deve ser um número inteiro positivo.');
+            throw new \InvalidArgumentException('Profile ID must be a positive integer.');
         }
     }
 
-    /**
-     * Cria o DTO a partir de um Array ou FormRequest.
-     */
     public static function fromRequest(FormRequest|array $data): self
     {
         $payload = $data instanceof FormRequest ? $data->validated() : $data;
@@ -43,7 +40,7 @@ final readonly class UpdateUserData
     }
 
     /**
-     * Sanitiza strings opcionais, convertendo "" ou apenas espaços em null.
+     * Sanitize optional strings, converting "" or whitespace-only values to null.
      */
     private static function parseNullableString(mixed $value): ?string
     {
@@ -57,7 +54,7 @@ final readonly class UpdateUserData
     }
 
     /**
-     * Sanitiza e converte o e-mail para minúsculas caso seja fornecido.
+     * Sanitize and lower-case the e-mail value when provided.
      */
     private static function parseEmail(mixed $value): ?string
     {
@@ -67,7 +64,7 @@ final readonly class UpdateUserData
     }
 
     /**
-     * Garante que passwords em branco ("") sejam convertidas para null (preserva espaços internos).
+     * Convert blank password strings ("") to null; preserves internal whitespace.
      */
     private static function parsePassword(mixed $value): ?string
     {
@@ -79,7 +76,7 @@ final readonly class UpdateUserData
     }
 
     /**
-     * Sanitiza IDs inteiros opcionais, convertendo "", 0 ou valores inválidos para null.
+     * Sanitize optional integer IDs, converting "", 0, or invalid values to null.
      */
     private static function parseNullableInt(mixed $value): ?int
     {
@@ -89,7 +86,7 @@ final readonly class UpdateUserData
     }
 
     /**
-     * Normaliza a entrada booleana sem forçar um valor padrão caso seja null.
+     * Normalize boolean input without forcing a default — null input stays null.
      */
     private static function parseNullableBool(mixed $value): ?bool
     {
@@ -101,16 +98,14 @@ final readonly class UpdateUserData
             ?? filter_var($value, FILTER_VALIDATE_BOOLEAN);
     }
 
-    /**
-     * Verifica se foi fornecida uma nova password válida.
-     */
     public function hasPassword(): bool
     {
         return $this->password !== null;
     }
 
     /**
-     * Devolve os campos preenchidos para atualização no Eloquent (exclui a password por segurança).
+     * Returns fields provided for Eloquent update; password is excluded
+     * (handled separately via hashing in the service layer).
      */
     public function toArray(): array
     {
@@ -122,9 +117,6 @@ final readonly class UpdateUserData
         ], static fn (mixed $value): bool => $value !== null);
     }
 
-    /**
-     * Verifica se existe pelo menos um campo para ser atualizado (incluindo password).
-     */
     public function hasUpdates(): bool
     {
         return $this->hasPassword() || !empty($this->toArray());

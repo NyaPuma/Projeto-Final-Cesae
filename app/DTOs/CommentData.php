@@ -10,13 +10,10 @@ final readonly class CommentData
         public string $content,
     ) {
         if (trim($this->content) === '') {
-            throw new \InvalidArgumentException('O conteúdo do comentário não pode estar vazio.');
+            throw new \InvalidArgumentException('Comment content cannot be empty.');
         }
     }
 
-    /**
-     * Cria o DTO a partir de um Array ou FormRequest.
-     */
     public static function fromRequest(FormRequest|array $data): self
     {
         $payload = $data instanceof FormRequest ? $data->validated() : $data;
@@ -28,9 +25,6 @@ final readonly class CommentData
         );
     }
 
-    /**
-     * Converte o DTO para array simples.
-     */
     public function toArray(): array
     {
         return [

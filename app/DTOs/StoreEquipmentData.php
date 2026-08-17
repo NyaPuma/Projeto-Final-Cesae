@@ -6,6 +6,10 @@ use Illuminate\Foundation\Http\FormRequest;
 
 final readonly class StoreEquipmentData
 {
+    /**
+     * Valid operational status values stored in the database.
+     * These are Portuguese data values — do NOT rename; they match DB enum column values.
+     */
     public const STATUSES = [
         'operacional',
         'manutenção',
@@ -29,29 +33,26 @@ final readonly class StoreEquipmentData
         public ?string $notes = null,
     ) {
         if (trim($this->name) === '') {
-            throw new \InvalidArgumentException('O nome do equipamento não pode estar vazio.');
+            throw new \InvalidArgumentException('Equipment name cannot be empty.');
         }
 
         if (trim($this->serial) === '') {
-            throw new \InvalidArgumentException('O número de série não pode estar vazio.');
+            throw new \InvalidArgumentException('Serial number cannot be empty.');
         }
 
         if ($this->roomId !== null && $this->roomId <= 0) {
-            throw new \InvalidArgumentException('O ID da sala deve ser um número inteiro positivo.');
+            throw new \InvalidArgumentException('Room ID must be a positive integer.');
         }
 
         if ($this->categoryId !== null && $this->categoryId <= 0) {
-            throw new \InvalidArgumentException('O ID da categoria deve ser um número inteiro positivo.');
+            throw new \InvalidArgumentException('Category ID must be a positive integer.');
         }
 
         if (! in_array($this->status, self::STATUSES, true)) {
-            throw new \InvalidArgumentException('O estado operacional do equipamento é inválido.');
+            throw new \InvalidArgumentException('Invalid equipment operational status.');
         }
     }
 
-    /**
-     * Cria o DTO a partir de um Array ou FormRequest.
-     */
     public static function fromRequest(FormRequest|array $data): self
     {
         $payload = $data instanceof FormRequest ? $data->validated() : $data;
@@ -76,7 +77,7 @@ final readonly class StoreEquipmentData
     }
 
     /**
-     * Sanitiza IDs inteiros opcionais, convertendo "", 0 ou valores inválidos para null.
+     * Sanitize optional integer IDs, converting "", 0, or invalid values to null.
      */
     private static function parseNullableInt(mixed $value): ?int
     {
@@ -86,7 +87,7 @@ final readonly class StoreEquipmentData
     }
 
     /**
-     * Sanitiza strings opcionais, convertendo "" ou apenas espaços em null.
+     * Sanitize optional strings, converting "" or whitespace-only values to null.
      */
     private static function parseNullableString(mixed $value): ?string
     {
@@ -100,7 +101,8 @@ final readonly class StoreEquipmentData
     }
 
     /**
-     * Normaliza a entrada booleana (trata "true", "1", "on", etc.).
+     * Normalize boolean input — handles "true", "1", "on", etc.
+     * Defaults to true when null is passed (active by default).
      */
     private static function parseBool(mixed $value): bool
     {
@@ -111,9 +113,6 @@ final readonly class StoreEquipmentData
         return filter_var($value, FILTER_VALIDATE_BOOLEAN);
     }
 
-    /**
-     * Converte o DTO para array pronto a utilizar no Eloquent.
-     */
     public function toArray(): array
     {
         return [

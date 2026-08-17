@@ -12,25 +12,22 @@ final readonly class CloseTicketData
         public bool $force = false,
     ) {
         if ($this->actualCost < 0) {
-            throw new \InvalidArgumentException('O custo real do fecho do ticket não pode ser negativo.');
+            throw new \InvalidArgumentException('The actual cost for closing a ticket cannot be negative.');
         }
     }
 
-    /**
-     * Cria o DTO a partir de um Array ou FormRequest.
-     */
     public static function fromRequest(FormRequest|array $data): self
     {
         $payload = $data instanceof FormRequest ? $data->validated() : $data;
 
-        // Sanitização do relatório (limpa espaços e converte "" em null)
+        // Sanitize report: trim whitespace and convert empty string to null
         $rawReport = isset($payload['report']) ? trim((string) $payload['report']) : null;
         $report = $rawReport !== '' ? $rawReport : null;
 
-        // Normalização do custo real com 2 casas decimais
+        // Normalize cost to 2 decimal places
         $actualCost = self::parseCost($payload['actual_cost'] ?? 0);
 
-        // Conversão flexível do flag 'force' (trata "true", "1", true, etc.)
+        // Flexible boolean coercion for 'force' flag ("true", "1", true, etc.)
         $force = filter_var($payload['force'] ?? false, FILTER_VALIDATE_BOOLEAN);
 
         return new self(
@@ -41,7 +38,8 @@ final readonly class CloseTicketData
     }
 
     /**
-     * Sanitiza a entrada monetária para float preciso (2 casas decimais).
+     * Sanitize monetary input to a precise float (2 decimal places).
+     * Handles comma-separated decimal strings (e.g. "150,50").
      */
     private static function parseCost(mixed $value): float
     {
@@ -60,9 +58,6 @@ final readonly class CloseTicketData
         return 0.0;
     }
 
-    /**
-     * Converte o DTO para array pronto a utilizar no Eloquent / Service.
-     */
     public function toArray(): array
     {
         return [

@@ -12,14 +12,11 @@ final readonly class BudgetDecisionData
         public ?string $feedback = null,
     ) {}
 
-    /**
-     * Cria o DTO a partir de um Array ou FormRequest.
-     */
     public static function fromRequest(FormRequest|array $data): self
     {
         $payload = $data instanceof FormRequest ? $data->validated() : $data;
 
-        // Aceita 'decision' ou fallback para 'action'
+        // Accepts 'decision' or falls back to 'action'
         $rawDecision = $payload['decision'] ?? $payload['action'] ?? null;
 
         if ($rawDecision === null) {
@@ -30,7 +27,7 @@ final readonly class BudgetDecisionData
                 : BudgetDecisionEnum::from($rawDecision);
         }
 
-        // Sanitiza o feedback: limpa espaços e converte strings vazias para null
+        // Sanitize feedback: trim whitespace and convert empty strings to null
         $rawFeedback = isset($payload['feedback']) ? trim((string) $payload['feedback']) : null;
         $feedback = $rawFeedback !== '' ? $rawFeedback : null;
 
@@ -40,9 +37,6 @@ final readonly class BudgetDecisionData
         );
     }
 
-    /**
-     * Converte o DTO para array simples.
-     */
     public function toArray(): array
     {
         return [
@@ -51,9 +45,6 @@ final readonly class BudgetDecisionData
         ];
     }
 
-    /**
-     * Métodos auxiliares de conveniência para lógica de negócio.
-     */
     public function isApproved(): bool
     {
         return $this->decision === BudgetDecisionEnum::Approve;

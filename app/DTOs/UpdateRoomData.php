@@ -18,21 +18,18 @@ final readonly class UpdateRoomData
         public ?string $notes = null,
     ) {
         if ($this->name !== null && trim($this->name) === '') {
-            throw new \InvalidArgumentException('O nome da sala não pode ser uma string vazia.');
+            throw new \InvalidArgumentException('Room name cannot be an empty string.');
         }
 
         if ($this->code !== null && trim($this->code) === '') {
-            throw new \InvalidArgumentException('O código da sala não pode ser uma string vazia.');
+            throw new \InvalidArgumentException('Room code cannot be an empty string.');
         }
 
         if ($this->capacity !== null && $this->capacity < 0) {
-            throw new \InvalidArgumentException('A capacidade da sala não pode ser negativa.');
+            throw new \InvalidArgumentException('Room capacity cannot be negative.');
         }
     }
 
-    /**
-     * Cria o DTO a partir de um Array ou FormRequest.
-     */
     public static function fromRequest(FormRequest|array $data): self
     {
         $payload = $data instanceof FormRequest ? $data->validated() : $data;
@@ -51,7 +48,7 @@ final readonly class UpdateRoomData
     }
 
     /**
-     * Sanitiza strings opcionais, convertendo "" ou apenas espaços em null.
+     * Sanitize optional strings, converting "" or whitespace-only values to null.
      */
     private static function parseNullableString(mixed $value): ?string
     {
@@ -65,7 +62,7 @@ final readonly class UpdateRoomData
     }
 
     /**
-     * Sanitiza e converte o código da sala para maiúsculas (ex: "lab-1" -> "LAB-1").
+     * Sanitize and upper-case the room code (e.g. "lab-1" -> "LAB-1").
      */
     private static function parseCode(mixed $value): ?string
     {
@@ -75,7 +72,7 @@ final readonly class UpdateRoomData
     }
 
     /**
-     * Sanitiza valores inteiros opcionais, convertendo "" ou inválidos para null.
+     * Sanitize optional integers, converting "" or invalid values to null.
      */
     private static function parseNullableInt(mixed $value): ?int
     {
@@ -85,7 +82,7 @@ final readonly class UpdateRoomData
     }
 
     /**
-     * Normaliza a entrada booleana sem forçar um valor padrão caso seja null.
+     * Normalize boolean input without forcing a default — null input stays null.
      */
     private static function parseNullableBool(mixed $value): ?bool
     {
@@ -98,7 +95,7 @@ final readonly class UpdateRoomData
     }
 
     /**
-     * Devolve apenas os campos efetivamente preenchidos para atualização dinâmica no Eloquent.
+     * Returns only the fields that were provided for partial Eloquent updates.
      */
     public function toArray(): array
     {
@@ -115,9 +112,6 @@ final readonly class UpdateRoomData
         ], static fn (mixed $value): bool => $value !== null);
     }
 
-    /**
-     * Verifica se foi enviado pelo menos um campo para ser atualizado.
-     */
     public function hasUpdates(): bool
     {
         return ! empty($this->toArray());

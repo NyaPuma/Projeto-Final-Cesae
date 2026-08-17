@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use InvalidArgumentException;
 
 /**
- * Dados de criação de uma peça, sanitizados antes de chegarem à Action.
+ * Creation data for a spare part, sanitized before reaching the Action layer.
  */
 final readonly class StorePartData
 {
@@ -41,7 +41,7 @@ final readonly class StorePartData
         $currentStock = isset($data['current_stock']) ? (int) $data['current_stock'] : 0;
 
         if ($currentStock < 0) {
-            throw new InvalidArgumentException('O stock inicial não pode ser negativo.');
+            throw new InvalidArgumentException('Initial stock cannot be negative.');
         }
 
         return new self(

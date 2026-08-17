@@ -12,13 +12,10 @@ final readonly class ScheduleTicketData
         public ?CarbonImmutable $scheduledEnd = null,
     ) {
         if ($this->scheduledEnd !== null && $this->scheduledEnd->isBefore($this->scheduledAt)) {
-            throw new \InvalidArgumentException('A data de fim do agendamento não pode ser anterior à data de início.');
+            throw new \InvalidArgumentException('The scheduled end date cannot be earlier than the start date.');
         }
     }
 
-    /**
-     * Cria o DTO a partir de um Array ou FormRequest.
-     */
     public static function fromRequest(FormRequest|array $data): self
     {
         $payload = $data instanceof FormRequest ? $data->validated() : $data;
@@ -26,7 +23,7 @@ final readonly class ScheduleTicketData
         $scheduledAt = self::parseDate($payload['scheduled_at'] ?? null);
 
         if ($scheduledAt === null) {
-            throw new \InvalidArgumentException('A data de agendamento (scheduled_at) é obrigatória e deve ser válida.');
+            throw new \InvalidArgumentException('The scheduled_at date is required and must be a valid datetime.');
         }
 
         return new self(
@@ -36,7 +33,8 @@ final readonly class ScheduleTicketData
     }
 
     /**
-     * Converte strings, instâncias de DateTime ou inteiros (timestamps) para CarbonImmutable.
+     * Convert strings, DateTimeInterface instances, or timestamps to CarbonImmutable.
+     * Returns null for empty / un-parseable input rather than throwing.
      */
     private static function parseDate(mixed $value): ?CarbonImmutable
     {
@@ -59,9 +57,6 @@ final readonly class ScheduleTicketData
         }
     }
 
-    /**
-     * Converte o DTO para array pronto a utilizar em queries ou Eloquent.
-     */
     public function toArray(): array
     {
         return [
