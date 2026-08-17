@@ -78,15 +78,15 @@
       "readme_status": "done"
     },
     "app/Traits": {
-      "status": "pending",
+      "status": "done",
       "files": {
         "app/Traits/Auditable.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
           "notes": []
         }
       },
-      "readme_status": "pending"
+      "readme_status": "done"
     },
     "app/Models": {
       "status": "pending",

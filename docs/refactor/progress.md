@@ -22,9 +22,9 @@
 - [x] `UserRoleEnum.php`
 - Folder README: done
 
-### `app/Traits` (1 files) — PENDING (0/1)
-- [ ] `Auditable.php`
-- Folder README: pending
+### `app/Traits` (1 files) — DONE (1/1)
+- [x] `Auditable.php`
+- Folder README: done
 
 ### `app/Models` (22 files) — PENDING (0/22)
 - [ ] `Audit.php`

@@ -14,18 +14,16 @@ use Throwable;
 trait Auditable
 {
     /**
-     * ID do utilizador armazenado em cache por pedido.
-     * Nota: O cache é estático por processo; em long-running processes
-     * (filas, Octane) deve ser reiniciado com resetResolvedUserId() para
-     * garantir que cada job/request usa o ID correto.
+     * Cached user ID per request.
+     * Note: Static cache per process; in long-running processes (queues, Octane),
+     * reset with resetResolvedUserId() to ensure proper ID resolution.
      *
      * @var int|null
      */
     private static ?int $resolvedUserId = null;
 
     /**
-     * Reinicia o cache do ID do utilizador — útil em long-running processes
-     * (filas, Octane) para garantir que cada job/request usa o ID correto.
+     * Reset cached user ID for long-running processes (queues, Octane).
      */
     public static function resetResolvedUserId(): void
     {
@@ -33,7 +31,7 @@ trait Auditable
     }
 
     /**
-     * Regista os ouvintes de eventos do modelo para auditoria.
+     * Register Eloquent model event listeners for automatic audit logging.
      */
     public static function bootAuditable(): void
     {
@@ -53,10 +51,7 @@ trait Auditable
     }
 
     /**
-     * Cria o registo de auditoria para o modelo e evento especificados.
-     *
-     * @param Model $model
-     * @param string $event
+     * Create an audit record for the given model instance and lifecycle event.
      */
     private static function createAudit(Model $model, string $event): void
     {
@@ -103,10 +98,7 @@ trait Auditable
     }
 
     /**
-     * Resolve e armazena em cache o ID do utilizador associado ao pedido atual.
-     *
-     * @param Request|null $request
-     * @return int|null
+     * Resolve and cache the user ID associated with the current HTTP request or API token.
      */
     private static function resolveUserId(?Request $request): ?int
     {
