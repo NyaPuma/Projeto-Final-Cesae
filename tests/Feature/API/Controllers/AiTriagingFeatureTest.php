@@ -21,7 +21,7 @@ class AiTriagingFeatureTest extends TestCase
     {
         $techProfile = UserProfile::firstOrCreate(['name' => UserRoleEnum::Technician->value]);
         $technician = User::factory()->create(['profile_id' => $techProfile->id, 'active' => true]);
-        $ticket = Ticket::factory()->create(['description' => 'Fuga de óleo no motor hidráulico']);
+        $ticket = Ticket::factory()->create(['description' => 'Hydraulic motor oil leak']);
 
         OpenAI::fake([
             CreateResponse::fake([
@@ -29,8 +29,8 @@ class AiTriagingFeatureTest extends TestCase
                     [
                         'message' => [
                             'content' => json_encode([
-                                'tecnico_id' => $technician->id,
-                                'justificacao' => 'Recomendado por ter menor carga e especialidade técnica.',
+                                'technician_id' => $technician->id,
+                                'justification' => 'Recommended due to lower workload and technical specialty.',
                             ]),
                         ],
                     ],
@@ -40,11 +40,11 @@ class AiTriagingFeatureTest extends TestCase
 
         $startTime = microtime(true);
         $service = app(AIService::class);
-        $recommendation = $service->recomendarTecnico($ticket);
+        $recommendation = $service->recommendTechnician($ticket);
         $elapsed = microtime(true) - $startTime;
 
-        $this->assertEquals($technician->id, $recommendation['tecnico_id']);
-        $this->assertStringContainsString('Recomendado por ter menor carga', $recommendation['justificacao']);
+        $this->assertEquals($technician->id, $recommendation['technician_id']);
+        $this->assertStringContainsString('Recommended due to lower workload', $recommendation['justification']);
         // Verify response time SLA (RNF04: < 2 seconds)
         $this->assertLessThan(2.0, $elapsed);
     }
@@ -60,9 +60,9 @@ class AiTriagingFeatureTest extends TestCase
         ]);
 
         $service = app(AIService::class);
-        $recommendation = $service->recomendarTecnico($ticket);
+        $recommendation = $service->recommendTechnician($ticket);
 
-        $this->assertNull($recommendation['tecnico_id']);
-        $this->assertStringContainsString('Assistente de IA indisponível', $recommendation['justificacao']);
+        $this->assertNull($recommendation['technician_id']);
+        $this->assertStringContainsString('AI assistant unavailable', $recommendation['justification']);
     }
 }

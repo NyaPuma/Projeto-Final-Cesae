@@ -20,26 +20,26 @@ final class TicketLifecycleController extends Controller
     ) {}
 
     /**
-     * Reabre um ticket anteriormente fechado ou cancelado.
+     * Reopens a previously closed or cancelled ticket.
      */
     public function reopen(Request $request, Ticket $ticket): JsonResponse
     {
-        // 1. Autorização via Policy
+        // 1. Authorization via Policy
         $this->authorize('reopen', $ticket);
 
         $oldStatus = $ticket->status;
 
-        // 2. Executa a reabertura no serviço de workflow
+        // 2. Execute the reopen in the workflow service
         if (! $this->workflowService->reopen($ticket)) {
             return response()->json([
                 'message' => __('tickets.Apenas tickets fechados ou cancelados podem ser reabertos.'),
             ], 422);
         }
 
-        // Invalida a relação em cache para refletir o novo estado
+        // Invalidate the cached relation to reflect the new state
         $ticket->unsetRelation('status');
 
-        // 3. Notifica clientes via WebSockets sobre a mudança de estado
+        // 3. Notify clients via WebSockets about the status change
         $this->broadcastStatusChange($ticket, $oldStatus, $ticket->status);
 
         $ticket->loadMissing(['equipment', 'room', 'technician', 'status']);
@@ -51,14 +51,14 @@ final class TicketLifecycleController extends Controller
     }
 
     /**
-     * Cancela um ticket submetido pelo utilizador.
+     * Cancels a ticket submitted by the user.
      */
     public function cancel(Request $request, Ticket $ticket): JsonResponse
     {
-        // 1. Autorização via Policy (Valida se é o dono e se tem permissão)
+        // 1. Authorization via Policy (Validates ownership and permissions)
         $this->authorize('cancel', $ticket);
 
-        // 2. Validação de estado elegível para cancelamento
+        // 2. Eligible state validation for cancellation
         if (! $ticket->hasStatus(TicketStatusEnum::Open)) {
             return response()->json([
                 'message' => __('tickets.Apenas tickets no estado "Aberto" podem ser cancelados.'),
@@ -67,13 +67,13 @@ final class TicketLifecycleController extends Controller
 
         $oldStatus = $ticket->status;
 
-        // 3. Executa o cancelamento no serviço
+        // 3. Execute the cancellation in the service
         $this->workflowService->cancel($ticket);
 
-        // Invalida a relação em cache para refletir o novo estado
+        // Invalidate the cached relation to reflect the new state
         $ticket->unsetRelation('status');
 
-        // 4. Emite o evento WebSocket
+        // 4. Emit the WebSocket event
         $this->broadcastStatusChange($ticket, $oldStatus, TicketStatusEnum::Cancelled);
 
         $ticket->loadMissing(['equipment', 'room', 'technician', 'status']);

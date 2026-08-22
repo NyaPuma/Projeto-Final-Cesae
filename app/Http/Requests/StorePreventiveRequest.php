@@ -16,7 +16,7 @@ final class StorePreventiveRequest extends FormRequest
     }
 
     /**
-     * Remove espaços extras dos campos de texto antes da validação.
+     * Trims extra whitespace from text fields before validation.
      */
     protected function prepareForValidation(): void
     {
@@ -46,7 +46,7 @@ final class StorePreventiveRequest extends FormRequest
     }
 
     /**
-     * Nomes amigáveis dos atributos para as mensagens de erro.
+     * Friendly attribute names for error messages.
      */
     public function attributes(): array
     {

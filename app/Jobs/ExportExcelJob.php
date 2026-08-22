@@ -23,12 +23,12 @@ final class ExportExcelJob implements ShouldQueue
     use SerializesModels;
 
     /**
-     * O número de vezes que o job pode ser tentado antes de falhar.
+     * The maximum number of attempts before the job fails.
      */
     public int $tries = 3;
 
     /**
-     * O número máximo de segundos que o job pode executar.
+     * The maximum number of seconds the job may run.
      */
     public int $timeout = 300;
 
@@ -40,7 +40,7 @@ final class ExportExcelJob implements ShouldQueue
     {
         $filename = 'tickets_report_'.now()->format('Ymd_His').'.xlsx';
 
-        // Garante que a pasta de destino existe no disco configurado
+        // Ensure the destination directory exists on the configured disk
         Storage::disk('public')->makeDirectory('exports');
 
         Excel::store(
@@ -61,7 +61,7 @@ final class ExportExcelJob implements ShouldQueue
     }
 
     /**
-     * Notifica o utilizador caso ocorra uma falha fatal na geração do ficheiro.
+     * Notifies the user when a fatal error occurs during file generation.
      */
     public function failed(?Throwable $exception): void
     {

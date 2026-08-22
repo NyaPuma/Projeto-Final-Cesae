@@ -13,7 +13,7 @@ use Throwable;
 final class NotificationCreatorService
 {
     /**
-     * Cria uma notificação direcionada a um utilizador específico de forma segura.
+     * Creates a notification targeted to a specific user safely.
      *
      * @param int $userId
      * @param string $title
@@ -40,7 +40,7 @@ final class NotificationCreatorService
     }
 
     /**
-     * Cria uma notificação em massa para todos os utilizadores com o perfil de Administrador.
+     * Creates a bulk notification for all users with the Administrator profile.
      *
      * @param string $title
      * @param string $message

@@ -47,7 +47,7 @@ final class CustomAuthMiddleware
     }
 
     /**
-     * Recolhe todos os candidatos a token de autenticação do pedido.
+     * Collects all authentication token candidates from the request.
      */
     private function collectTokenCandidates(Request $request): array
     {
@@ -68,7 +68,7 @@ final class CustomAuthMiddleware
     }
 
     /**
-     * Resolve quais os tokens a tentar validar com base na precedência do pedido.
+     * Resolves which tokens to try validating based on request precedence.
      */
     private function resolveTokensToTry(Request $request, array $candidates): array
     {
@@ -80,7 +80,7 @@ final class CustomAuthMiddleware
     }
 
     /**
-     * Procura um utilizador válido através dos tokens candidatos.
+     * Finds a valid user through the candidate tokens.
      */
     private function findUserByTokens(array $tokens): array
     {
@@ -109,7 +109,7 @@ final class CustomAuthMiddleware
     }
 
     /**
-     * Verifica se o utilizador possui um perfil inválido ou inexistente.
+     * Checks whether the user has an invalid or missing profile.
      */
     private function hasInvalidProfile(User $user): bool
     {
@@ -117,8 +117,8 @@ final class CustomAuthMiddleware
     }
 
     /**
-     * Verifica se o token de acesso do utilizador expirou.
-     * Tokens sem data de criação nunca expiram (determinístico em testes).
+     * Checks whether the user's access token has expired.
+     * Tokens without a creation date never expire (deterministic in tests).
      */
     private function isTokenExpired(User $user): bool
     {
@@ -135,7 +135,7 @@ final class CustomAuthMiddleware
     }
 
     /**
-     * Retorna a resposta para pedidos não autenticados.
+     * Returns the response for unauthenticated requests.
      */
     private function unauthenticatedResponse(Request $request): Response
     {
@@ -150,7 +150,7 @@ final class CustomAuthMiddleware
     }
 
     /**
-     * Retorna a resposta para tokens inválidos ou utilizador inativo.
+     * Returns the response for invalid tokens or inactive users.
      */
     private function invalidTokenResponse(Request $request, bool $hasCookie): Response
     {
@@ -176,7 +176,7 @@ final class CustomAuthMiddleware
     }
 
     /**
-     * Retorna a resposta para perfis inválidos.
+     * Returns the response for invalid profiles.
      */
     private function invalidProfileResponse(Request $request): Response
     {
@@ -192,7 +192,7 @@ final class CustomAuthMiddleware
     }
 
     /**
-     * Retorna a resposta para tokens expirados.
+     * Returns the response for expired tokens.
      */
     private function expiredTokenResponse(Request $request): Response
     {

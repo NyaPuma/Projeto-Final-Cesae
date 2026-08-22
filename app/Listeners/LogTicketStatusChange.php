@@ -17,7 +17,7 @@ final class LogTicketStatusChange implements ShouldQueue
     use InteractsWithQueue;
 
     /**
-     * O número de vezes que o listener pode ser tentado na fila.
+     * The maximum number of times the listener may be attempted on the queue.
      */
     public int $tries = 3;
 
@@ -28,7 +28,7 @@ final class LogTicketStatusChange implements ShouldQueue
         $oldStatus = $event->oldStatus->value;
         $newStatus = $event->newStatus->value;
 
-        // Busca ambos os status numa única consulta ao banco de dados
+        // Fetch both statuses in a single database query
         $statuses = TicketStatus::whereIn('name', [$oldStatus, $newStatus])
             ->get()
             ->keyBy('name');
@@ -56,7 +56,7 @@ final class LogTicketStatusChange implements ShouldQueue
     }
 
     /**
-     * Trata o insucesso do Listener caso a escrita na tabela de histórico falhe.
+     * Handles listener failure when the workflow history write fails.
      */
     public function failed(TicketStatusUpdatedBroadcast $event, Throwable $exception): void
     {

@@ -34,7 +34,7 @@ final class TicketWorkflowService
     ) {}
 
     /**
-     * Inicia a reparação de um ticket.
+     * Starts ticket repair.
      *
      * @param Ticket $ticket
      * @return bool
@@ -45,7 +45,7 @@ final class TicketWorkflowService
     }
 
     /**
-     * Reabre um ticket anteriormente fechado ou cancelado.
+     * Reopens a previously closed or cancelled ticket.
      *
      * @param Ticket $ticket
      * @return bool
@@ -56,7 +56,7 @@ final class TicketWorkflowService
     }
 
     /**
-     * Cancela um ticket.
+     * Cancels a ticket.
      *
      * @param Ticket $ticket
      * @return bool
@@ -67,7 +67,7 @@ final class TicketWorkflowService
     }
 
     /**
-     * Fecha um ticket com os dados de custo, relatório e tempo gasto dentro de uma transação.
+     * Closes a ticket with cost, report, and time spent data within a transaction.
      *
      * @param Ticket $ticket
      * @param float|null $cost

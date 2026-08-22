@@ -42,7 +42,7 @@ final class TaxRateController extends Controller
     }
 
     /**
-     * Cria uma nova taxa de IVA.
+     * Creates a new VAT rate.
      */
     #[OA\Post(
         path: '/admin/tax-rates',
@@ -84,7 +84,7 @@ final class TaxRateController extends Controller
     }
 
     /**
-     * Atualiza uma taxa de IVA.
+     * Updates a VAT rate.
      */
     #[OA\Patch(
         path: '/admin/tax-rates/{taxRate}',
@@ -130,7 +130,7 @@ final class TaxRateController extends Controller
     }
 
     /**
-     * Desativa logicamente uma taxa de IVA.
+     * Soft-deactivates a VAT rate.
      */
     #[OA\Delete(
         path: '/admin/tax-rates/{taxRate}',

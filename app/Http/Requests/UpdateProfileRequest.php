@@ -15,7 +15,7 @@ final class UpdateProfileRequest extends FormRequest
     }
 
     /**
-     * Limpa espaços sobressalentes nos dados enviados.
+     * Trims whitespace from submitted data.
      */
     protected function prepareForValidation(): void
     {
@@ -56,7 +56,7 @@ final class UpdateProfileRequest extends FormRequest
     }
 
     /**
-     * Nomes amigáveis dos atributos para as mensagens de erro do Laravel.
+     * Friendly attribute names for Laravel's error messages.
      */
     public function attributes(): array
     {

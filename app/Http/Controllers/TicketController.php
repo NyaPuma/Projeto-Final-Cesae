@@ -28,16 +28,16 @@ final class TicketController extends Controller
     ) {}
 
     /**
-     * Lista todos os tickets registados no sistema com as relações necessárias.
+     * Lists all tickets registered in the system with the necessary relations.
      */
     public function index(Request $request): JsonResponse
     {
-        // 1. Autorização via Policy (ViewAny)
+        // 1. Authorization via Policy (ViewAny)
         $this->authorize('viewAny', Ticket::class);
 
         $user = $request->user();
 
-        // Utilizadores comuns apenas veem os seus próprios tickets
+        // Regular users only see their own tickets
         $tickets = ($user->isTechnician() || $user->isAdmin())
             ? $this->ticketRepository->getAll(['equipment', 'room', 'user', 'technician', 'status'])
             : $this->ticketRepository->getTicketsByUser($user->id);
@@ -48,11 +48,11 @@ final class TicketController extends Controller
     }
 
     /**
-     * Cria um novo ticket de suporte.
+     * Creates a new support ticket.
      */
     public function store(StoreTicketRequest $request): JsonResponse
     {
-        // 1. Autorização via Policy (Create)
+        // 1. Authorization via Policy (Create)
         $this->authorize('create', Ticket::class);
 
         $user = $request->user();
@@ -60,8 +60,8 @@ final class TicketController extends Controller
 
         $ticket = $this->createTicketAction->execute($user, $data);
 
-        // Recomendação de técnico via IA processada em segundo plano
-        // (a GenerateAiRecommendationJob persiste o resultado no próprio ticket).
+        // AI technician recommendation processed in the background
+        // (GenerateAiRecommendationJob persists the result on the ticket itself).
         GenerateAiRecommendationJob::dispatch($ticket)->afterCommit();
 
         $ticket->loadMissing(['equipment', 'room', 'user', 'status']);
@@ -73,11 +73,11 @@ final class TicketController extends Controller
     }
 
     /**
-     * Pesquisa e filtra tickets com base nos critérios submetidos.
+     * Searches and filters tickets based on the submitted criteria.
      */
     public function search(Request $request): JsonResponse
     {
-        // 1. Autorização via Policy
+        // 1. Authorization via Policy
         $this->authorize('viewAny', Ticket::class);
 
         $priority = $request->input('priority');
@@ -89,7 +89,7 @@ final class TicketController extends Controller
 
         $filters = TicketFilters::fromRequest($request->all());
 
-        // Utilizadores comuns apenas pesquisam os seus próprios tickets
+        // Regular users only search their own tickets
         $user = $request->user();
         if (! $user->isTechnician() && ! $user->isAdmin()) {
             $filters = new TicketFilters(
@@ -113,14 +113,14 @@ final class TicketController extends Controller
     }
 
     /**
-     * Exibe o detalhe de um ticket específico (suporta JSON para API ou View para Frontend Web).
+     * Displays the details of a specific ticket (supports JSON for API or View for Web Frontend).
      */
     public function show(Request $request, Ticket $ticket): JsonResponse|View
     {
-        // 1. Autorização via Policy
+        // 1. Authorization via Policy
         $this->authorize('view', $ticket);
 
-        // 2. Carrega relações avançadas se necessário
+        // 2. Load advanced relations if needed
         $ticket->loadMissing(['equipment.category', 'room', 'user', 'technician', 'status']);
 
         if ($request->wantsJson() || $request->ajax()) {
@@ -133,11 +133,11 @@ final class TicketController extends Controller
     }
 
     /**
-     * Lista todos os tickets que se encontram abertos no sistema.
+     * Lists all tickets that are currently open in the system.
      */
     public function openTickets(Request $request): JsonResponse
     {
-        // 1. Autorização via Policy (ViewAny restrito a técnicos/admins)
+        // 1. Authorization via Policy (ViewAny restricted to technicians/admins)
         $this->authorize('viewAny', Ticket::class);
 
         $user = $request->user();
@@ -153,14 +153,14 @@ final class TicketController extends Controller
     }
 
     /**
-     * Retorna o ticket aberto mais urgente para atribuição prioritária.
+     * Returns the most urgent open ticket for priority assignment.
      */
     public function getMostUrgentOpenTicket(Request $request): JsonResponse
     {
-        // 1. Autorização via Policy
+        // 1. Authorization via Policy
         $this->authorize('viewAny', Ticket::class);
 
-        // Restrito a técnicos/admins (dados operacionais sensíveis)
+        // Restricted to technicians/admins (sensitive operational data)
         $user = $request->user();
         if (! $user->profile || ! in_array($user->profile->name, [UserRoleEnum::Technician->value, UserRoleEnum::Admin->value], true)) {
             return response()->json(['message' => __('common.Acesso proibido para o seu perfil.')], 403);

@@ -59,5 +59,5 @@ use OpenApi\Attributes as OA;
 )]
 final class OpenApiSpec
 {
-    // Esta classe serve apenas como contentor para as anotações globais da especificação OpenAPI.
+    // This class serves only as a container for the global OpenAPI specification annotations.
 }

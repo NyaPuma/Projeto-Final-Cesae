@@ -10,7 +10,7 @@ use App\Models\User;
 final class EquipmentPolicy
 {
     /**
-     * Determina se o utilizador pode visualizar a listagem de equipamentos.
+     * Determines whether the user can view the equipment listing.
      */
     public function viewAny(User $user): bool
     {
@@ -18,7 +18,7 @@ final class EquipmentPolicy
     }
 
     /**
-     * Determina se o utilizador pode visualizar um equipamento específico.
+     * Determines whether the user can view a specific equipment.
      */
     public function view(User $user, Equipment $equipment): bool
     {
@@ -26,7 +26,7 @@ final class EquipmentPolicy
     }
 
     /**
-     * Determina se o utilizador pode criar novos equipamentos.
+     * Determines whether the user can create new equipment.
      */
     public function create(User $user): bool
     {
@@ -34,7 +34,7 @@ final class EquipmentPolicy
     }
 
     /**
-     * Determina se o utilizador pode atualizar um equipamento existente.
+     * Determines whether the user can update an existing equipment.
      */
     public function update(User $user, Equipment $equipment): bool
     {
@@ -42,7 +42,7 @@ final class EquipmentPolicy
     }
 
     /**
-     * Determina se o utilizador pode eliminar um equipamento.
+     * Determines whether the user can delete an equipment.
      */
     public function delete(User $user, Equipment $equipment): bool
     {
@@ -50,7 +50,7 @@ final class EquipmentPolicy
     }
 
     /**
-     * Método personalizado mantido para compatibilidade.
+     * Custom method kept for compatibility.
      */
     public function manage(User $user, ?Equipment $equipment = null): bool
     {
@@ -58,7 +58,7 @@ final class EquipmentPolicy
     }
 
     /**
-     * Método personalizado mantido para compatibilidade.
+     * Custom method kept for compatibility.
      */
     public function manageAny(User $user): bool
     {

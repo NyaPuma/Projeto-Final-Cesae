@@ -21,14 +21,14 @@ final class TicketBudgetController extends Controller
     ) {}
 
     /**
-     * Submete uma estimativa orçamental para um ticket.
+     * Submits a budget estimate for a ticket.
      */
     public function submitEstimate(SubmitBudgetRequest $request, Ticket $ticket): JsonResponse
     {
-        // 1. Autorização via Policy
+        // 1. Authorization via Policy
         $this->authorize('submitBudget', $ticket);
 
-        // 2. Regras de domínio: estado permitido para submeter orçamento
+        // 2. Domain rules: allowed status for budget submission
         $guard = $this->ensureSubmitAllowed($ticket);
         if ($guard !== null) {
             return $guard;
@@ -48,14 +48,14 @@ final class TicketBudgetController extends Controller
     }
 
     /**
-     * Solicita autorização de orçamento detalhado para um ticket.
+     * Requests detailed budget authorization for a ticket.
      */
     public function requestAuthorization(RequestBudgetRequest $request, Ticket $ticket): JsonResponse
     {
-        // 1. Autorização via Policy (apenas o técnico atribuído ao ticket)
+        // 1. Authorization via Policy (only the technician assigned to the ticket)
         $this->authorize('requestBudget', $ticket);
 
-        // 2. Regras de domínio: estado permitido para solicitar autorização
+        // 2. Domain rules: allowed status for requesting authorization
         $guard = $this->ensureSubmitAllowed($ticket);
         if ($guard !== null) {
             return $guard;
@@ -75,7 +75,7 @@ final class TicketBudgetController extends Controller
     }
 
     /**
-     * Verifica as regras de domínio que impedem a submissão de um orçamento.
+     * Validates domain rules that prevent budget submission.
      */
     private function ensureSubmitAllowed(Ticket $ticket): ?JsonResponse
     {
@@ -97,7 +97,7 @@ final class TicketBudgetController extends Controller
     }
 
     /**
-     * Aplica as alterações comuns de orçamento e atribuição ao ticket.
+     * Applies common budget and assignment changes to the ticket.
      */
     private function applyBudgetChanges(Ticket $ticket, BudgetSubmissionData $data, $user): void
     {
@@ -114,7 +114,7 @@ final class TicketBudgetController extends Controller
     }
 
     /**
-     * Processa o fluxo quando o orçamento excede o limiar configurado.
+     * Processes the flow when the budget exceeds the configured threshold.
      */
     private function handleAboveThreshold(Ticket $ticket, float $amount, float $threshold): JsonResponse
     {
@@ -145,7 +145,7 @@ final class TicketBudgetController extends Controller
     }
 
     /**
-     * Processa o fluxo quando o orçamento está abaixo do limiar configurado.
+     * Processes the flow when the budget is below the configured threshold.
      */
     private function handleBelowThreshold(Ticket $ticket, float $amount, float $threshold): JsonResponse
     {

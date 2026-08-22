@@ -16,16 +16,14 @@ final readonly class ReopenTicketAction
 
     public function execute(Ticket $ticket): bool
     {
-        // Guard Clause: Apenas tickets fechados ou cancelados podem ser reabertos
         if (! $ticket->hasStatus(TicketStatusEnum::Closed) && ! $ticket->hasStatus(TicketStatusEnum::Cancelled)) {
             return false;
         }
 
         $openStatusId = $this->statusService->getByName(TicketStatusEnum::Open);
 
-        // Se o estado não existir no sistema, deve abortar imediatamente antes de mutar a entidade
         if ($openStatusId === null) {
-            throw new RuntimeException("O estado '" . TicketStatusEnum::Open->value . "' não foi encontrado.");
+            throw new RuntimeException("Status '" . TicketStatusEnum::Open->value . "' was not found.");
         }
 
         return DB::transaction(function () use ($ticket, $openStatusId) {
@@ -34,9 +32,6 @@ final readonly class ReopenTicketAction
             $ticket->closed_at = null;
 
             $saved = $ticket->save();
-
-            // Exemplo de disparo de evento para notificações:
-            // TicketReopened::dispatch($ticket);
 
             return $saved;
         });

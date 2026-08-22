@@ -6,9 +6,9 @@
 --}}
 
 @php
-    $supportedCurrencies = \App\Services\PreferenciasService::supportedCurrencies();
-    $currentCurrency = \App\Services\PreferenciasService::getCurrency(request());
-    $preferences = \App\Services\PreferenciasService::current(request);
+    $supportedCurrencies = \App\Services\PreferencesService::supportedCurrencies();
+    $currentCurrency = \App\Services\PreferencesService::getCurrency(request());
+    $preferences = \App\Services\PreferencesService::current(request);
     
     // Nomes das moedas para display
     $currencyNames = [

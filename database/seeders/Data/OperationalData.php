@@ -72,7 +72,7 @@ final class OperationalData
     public static function equipmentCatalog(): array
     {
         return [
-            // Robótica (pesos altos — linha crítica)
+            // Robotics (high weights — critical line)
             ['name' => 'Braço Robótico KUKA KR210', 'brand' => 'KUKA', 'model' => 'KR210 R2700', 'category' => 'Robótica', 'weight' => 95, 'serial' => 'KUKA-KR210-2026', 'description' => 'Braço articulado principal da célula de soldadura da Linha de Montagem A.'],
             ['name' => 'Braço Robótico FANUC M-20iA', 'brand' => 'FANUC', 'model' => 'M-20iA/35M', 'category' => 'Robótica', 'weight' => 88, 'serial' => 'FANUC-M20IA-018', 'description' => 'Robô de manipulação de peças na célula de montagem B.'],
             ['name' => 'Robô de Paletização ABB IRB 460', 'brand' => 'ABB', 'model' => 'IRB 460', 'category' => 'Robótica', 'weight' => 60, 'serial' => 'ABB-IRB460-004', 'description' => 'Robô de paletização das linhas de embalagem automática.'],
@@ -80,7 +80,7 @@ final class OperationalData
             ['name' => 'Unidade de Controlo Robótica KRC4', 'brand' => 'KUKA', 'model' => 'KRC4', 'category' => 'Robótica', 'weight' => 55, 'serial' => 'KUKA-KRC4-002', 'description' => 'Controlador principal do braço robótico da linha de montagem.'],
             ['name' => 'Periférico de Segurança Robótica SICK', 'brand' => 'SICK', 'model' => 'microScan3', 'category' => 'Robótica', 'weight' => 45, 'serial' => 'SICK-MS3-007', 'description' => 'Scanner de segurança do perímetro da célula robotizada.'],
 
-            // Automação (pesos médios-altos)
+            // Automation (medium-high weights)
             ['name' => 'Prensa Hidráulica 50T', 'brand' => 'Mitsubishi', 'model' => 'PH-50T', 'category' => 'Automação', 'weight' => 90, 'serial' => 'PRES-HYD-50T-99', 'description' => 'Prensa hidráulica de estampagem de componentes metálicos.'],
             ['name' => 'Prensa Mecânica de Estampagem', 'brand' => 'Bruderer', 'model' => 'BSTA 200', 'category' => 'Automação', 'weight' => 78, 'serial' => 'BRD-BSTA200-03', 'description' => 'Prensa mecânica de alta velocidade da zona de estampagem.'],
             ['name' => 'Tapete Transportador de Corrente', 'brand' => 'Bosch Rexroth', 'model' => 'TS 4plus', 'category' => 'Automação', 'weight' => 72, 'serial' => 'RXT-TS4P-021', 'description' => 'Transportador de corrente da linha de montagem principal.'],
@@ -90,7 +90,7 @@ final class OperationalData
             ['name' => 'Célula de Embalagem por Paletização', 'brand' => 'Schneider', 'model' => 'EcoStruxure', 'category' => 'Automação', 'weight' => 58, 'serial' => 'SCH-ECO-016', 'description' => 'Célula de embalagem e paletização automática.'],
             ['name' => 'Bomba de Dosagem de Fluidos', 'brand' => 'Grundfos', 'model' => 'CRNE', 'category' => 'Automação', 'weight' => 52, 'serial' => 'GRF-CRNE-009', 'description' => 'Bomba de dosagem de lubrificante do sistema central.'],
 
-            // Infraestruturas (pesos médios)
+            // Infrastructure (medium weights)
             ['name' => 'Servidor Central Dell PowerEdge', 'brand' => 'Dell', 'model' => 'PowerEdge R750', 'category' => 'Infraestruturas', 'weight' => 80, 'serial' => 'DELL-PE-R750-SRV', 'description' => 'Servidor central de aplicações e base de dados.'],
             ['name' => 'UPS Industrial Eaton 93PM', 'brand' => 'Eaton', 'model' => '93PM', 'category' => 'Infraestruturas', 'weight' => 65, 'serial' => 'EAT-93PM-013', 'description' => 'UPS trifásica do edifício central.'],
             ['name' => 'Quadro Elétrico Principal', 'brand' => 'Schneider', 'model' => 'Prisma', 'category' => 'Infraestruturas', 'weight' => 60, 'serial' => 'SCH-PRSM-001', 'description' => 'Quadro elétrico de distribuição principal do pavilhão 1.'],
@@ -100,7 +100,7 @@ final class OperationalData
             ['name' => 'Switch Core Cisco Catalyst', 'brand' => 'Cisco', 'model' => 'Catalyst 9500', 'category' => 'Infraestruturas', 'weight' => 35, 'serial' => 'CSC-C9500-012', 'description' => 'Comutador de núcleo da rede industrial.'],
             ['name' => 'Central de Aspiração Industrial', 'brand' => 'Camfil', 'model' => 'Gold Series', 'category' => 'Infraestruturas', 'weight' => 38, 'serial' => 'CMF-GS-017', 'description' => 'Sistema de aspiração de poeiras da zona de pintura.'],
 
-            // Logística (pesos variados)
+            // Logistics (varied weights)
             ['name' => 'Empilhador Elétrico Toyota', 'brand' => 'Toyota', 'model' => '8FBE', 'category' => 'Logística', 'weight' => 75, 'serial' => 'TOY-ELEC-404', 'description' => 'Empilhador elétrico de contrapeso do armazém logístico.'],
             ['name' => 'Empilhador Gás STILL', 'brand' => 'STILL', 'model' => 'RX70', 'category' => 'Logística', 'weight' => 58, 'serial' => 'STL-RX70-020', 'description' => 'Empilhador a GPL para operações de cais.'],
             ['name' => 'Porta-Paletes Elétrico', 'brand' => 'Jungheinrich', 'model' => 'EJE 120', 'category' => 'Logística', 'weight' => 40, 'serial' => 'JNG-EJE120-015', 'description' => 'Porta-paletes elétrico de preparação de expedições.'],

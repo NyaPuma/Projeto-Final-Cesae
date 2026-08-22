@@ -7,11 +7,11 @@ namespace App\Services;
 use Carbon\Carbon;
 
 /**
- * Serviço de apresentação localizada.
+ * Localization presentation service.
  *
- * Mantém a API de formatação separada da resolução de preferências de locale.
- * A implementação usa `intl` quando disponível e conserva os fallbacks do
- * LocaleService para ambientes sem essa extensão.
+ * Keeps the formatting API separate from locale preference resolution.
+ * Uses `intl` when available and preserves LocaleService fallbacks for
+ * environments without that extension.
  */
 final class LocalizationService
 {

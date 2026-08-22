@@ -23,30 +23,30 @@ final class TicketAttachmentController extends Controller
     ];
 
     /**
-     * Faz o upload e associa uma nova fotografia a um ticket.
+     * Uploads and associates a new photo to a ticket.
      */
     public function store(UploadPhotoRequest $request, Ticket $ticket): JsonResponse
     {
-        // 1. Autorização via Policy
+        // 1. Authorization via Policy
         $this->authorize('attachPhoto', $ticket);
 
         $file = $request->file('photo');
         $realMime = $file->getMimeType();
 
-        // 2. Validação adicional de segurança do Mime Type real
+        // 2. Additional security validation of the real MIME type
         if (! in_array($realMime, self::ALLOWED_MIMES, true)) {
             return response()->json([
                 'message' => __('ticket_media.Tipo de ficheiro não permitido.'),
             ], 422);
         }
 
-        // 3. Processamento seguro do nome do ficheiro e gravação no storage
-        //    A extensão é derivada do MIME real (nunca do nome enviado pelo cliente)
+        // 3. Safe filename processing and storage write
+        //    The extension is derived from the real MIME (never from the client-submitted name)
         $extension = self::EXTENSION_BY_MIME[$realMime] ?? 'img';
         $safeFilename = Str::uuid() . '.' . $extension;
         $path = $file->storeAs('ticket_photos', $safeFilename, 'public');
 
-        // 4. Registo do anexo na base de dados
+        // 4. Register the attachment in the database
         $attachment = TicketAttachment::create([
             'ticket_id' => $ticket->id,
             'user_id' => $request->user()->id,
@@ -66,11 +66,11 @@ final class TicketAttachmentController extends Controller
     }
 
     /**
-     * Lista todos os anexos associados a um ticket.
+     * Lists all attachments associated with a ticket.
      */
     public function index(Request $request, Ticket $ticket): JsonResponse
     {
-        // 1. Autorização via Policy
+        // 1. Authorization via Policy
         $this->authorize('view', $ticket);
 
         $ticket->loadMissing('attachments');
@@ -81,26 +81,26 @@ final class TicketAttachmentController extends Controller
     }
 
     /**
-     * Remove um anexo específico de um ticket.
+     * Removes a specific attachment from a ticket.
      */
     public function destroy(Request $request, Ticket $ticket, TicketAttachment $attachment): JsonResponse
     {
-        // 1. Autorização via Policy específica para eliminação de fotos
+        // 1. Authorization via Policy for photo deletion
         $this->authorize('deletePhoto', $ticket);
 
-        // 2. Garante integridade relacional entre o anexo e o ticket
+        // 2. Ensure referential integrity between the attachment and the ticket
         if ($attachment->ticket_id !== $ticket->id) {
             return response()->json([
                 'message' => __('tickets.Anexo não encontrado para este ticket.'),
             ], 404);
         }
 
-        // 3. Remove o ficheiro físico do storage se existir
+        // 3. Remove the physical file from storage if it exists
         if (Storage::disk('public')->exists($attachment->path)) {
             Storage::disk('public')->delete($attachment->path);
         }
 
-        // 4. Elimina o registo da base de dados
+        // 4. Delete the database record
         $attachment->delete();
 
         return response()->json([

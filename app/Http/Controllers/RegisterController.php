@@ -17,18 +17,18 @@ final class RegisterController extends Controller
     ) {}
 
     /**
-     * Regista um novo utilizador no sistema e emite o token de acesso.
+     * Registers a new user in the system and issues an access token.
      *
-     * O token é devolvido no corpo da resposta, mas não é ligado à sessão nem
-     * aos cookies do pedido atual: o registo é efetuado por um administrador
-     * em nome do novo utilizador e não deve assumir a sessão de quem regista.
+     * The token is returned in the response body but is not linked to the session or
+     * the current request's cookies: the registration is performed by an administrator
+     * on behalf of the new user and should not assume the registrant's session.
      */
     public function __invoke(RegisterRequest $request): JsonResponse
     {
-        // 1. Garante a existência do perfil de utilizador comum padrão
+        // 1. Ensure the default regular user profile exists
         $profile = UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
 
-        // 2. Cria o novo registo de utilizador com dados validados
+        // 2. Create the new user record with validated data
         $user = User::create([
             'name' => $request->validated('name'),
             'email' => strtolower($request->validated('email')),
@@ -37,7 +37,7 @@ final class RegisterController extends Controller
             'active' => true,
         ]);
 
-        // 3. Cria o token de API (sem o ligar à sessão de quem regista)
+        // 3. Create the API token (without linking to the registrant's session)
         $plainToken = $this->userService->createToken($user, $request, false);
 
         return response()->json([

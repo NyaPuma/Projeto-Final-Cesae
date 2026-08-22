@@ -19,7 +19,7 @@ final class StockDashboardController extends Controller
     ) {}
 
     /**
-     * Estatísticas gerais do stock para o dashboard.
+     * General stock statistics for the dashboard.
      */
     #[OA\Get(
         path: '/stock/dashboard/summary',
@@ -44,7 +44,7 @@ final class StockDashboardController extends Controller
     }
 
     /**
-     * Top peças mais consumidas num período.
+     * Top most-consumed parts in a period.
      */
     #[OA\Get(
         path: '/stock/dashboard/top-consumed',
@@ -74,7 +74,7 @@ final class StockDashboardController extends Controller
     }
 
     /**
-     * Peças com stock parado (capital imobilizado).
+     * Slow-moving parts (capital tied up).
      */
     #[OA\Get(
         path: '/stock/dashboard/slow-moving',
@@ -103,7 +103,7 @@ final class StockDashboardController extends Controller
     }
 
     /**
-     * Custo de peças por equipamento.
+     * Cost of parts by equipment.
      */
     #[OA\Get(
         path: '/stock/dashboard/cost-by-equipment',
@@ -131,7 +131,7 @@ final class StockDashboardController extends Controller
     }
 
     /**
-     * Custo de peças por ticket/intervenção.
+     * Cost of parts by ticket/intervention.
      */
     #[OA\Get(
         path: '/stock/dashboard/cost-by-ticket',
@@ -159,7 +159,7 @@ final class StockDashboardController extends Controller
     }
 
     /**
-     * Previsão de rutura de stock.
+     * Stock runout forecast.
      */
     #[OA\Get(
         path: '/stock/dashboard/runout-forecast',

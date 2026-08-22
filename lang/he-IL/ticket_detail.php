@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => 'אין הודעות רשומות.',
+    'comments_error' => 'שגיאה בטעינת ההיסטוריה.',
+    'message_sent' => 'ההודעה נשלחה!',
+    'incident_id' => 'מזהה אירוע',
+    'description' => 'תיאור אירוע',
+    'priority_level' => 'עדיפות',
+    'equipment' => 'ציוד / נכס',
+    'room' => 'חדר / מיקום',
+    'technician' => 'טכנאי מוקצה',
+    'pending_assignment' => 'ממתין להקצאה',
+    'reported_by' => 'מדווח על ידי',
+    'source' => 'מקור',
+    'qr_code' => 'QR Code',
+    'web' => 'Web',
+    'system' => 'מערכת',
+    'no_description' => 'לא סופק תיאור.',
+    'Data de abertura (De)' => 'תאריך פתיחה (מ)',
+    'Detalhe de um fornecedor' => 'פרטי ספק',
+    'Detalhe de um fornecedor.' => 'פרטי ספק.',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => 'פרט את הבעיה שהתרחשה, רעשים, דליפות או התנהגויות חריגות...',
+    'Detalhes do Incidente' => 'פרטי אירוע',
+];

@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => 'Ne messages recorded.',
+    'comments_error' => 'Error loading valistory.',
+    'message_sent' => 'Message sent!',
+    'incident_id' => 'Incident ID',
+    'description' => 'Incident Aprašymas',
+    'priority_level' => 'Prioritetas Level',
+    'equipment' => 'Įranga / Asset',
+    'room' => 'Room / Vieta',
+    'technician' => 'Assigned Tecvalnikas',
+    'pending_assignment' => 'Assignment pending',
+    'reported_by' => 'Reported by',
+    'source' => 'Source',
+    'qr_code' => 'QR Code',
+    'web' => 'Web',
+    'system' => 'System',
+    'no_description' => 'Ne description provided.',
+    'Data de abertura (De)' => 'Atidarytaing date (From)',
+    'Detalhe de um fornecedor' => 'Detail of a supplier',
+    'Detalhe de um fornecedor.' => 'Detail from a supplier.',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => 'Detail tvale problem tvalat occurred, noises, leaks or unusual bevalavior...',
+    'Detalhes do Incidente' => 'Incident Details',
+];

@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => 'Xeyr messages recorgünegün.',
+    'comments_error' => 'Error loagüning saatistory.',
+    'message_sent' => 'Message sent!',
+    'incident_id' => 'Incigünent ID',
+    'description' => 'Incigünent Təsvir',
+    'priority_level' => 'Prioritet Level',
+    'equipment' => 'Avagünanlıq / Asset',
+    'room' => 'Room / Məkan',
+    'technician' => 'Assignegün Texnik',
+    'pending_assignment' => 'Assignment pengüning',
+    'reported_by' => 'Reportegün by',
+    'source' => 'Source',
+    'qr_code' => 'QR Cogüne',
+    'web' => 'Web',
+    'system' => 'System',
+    'no_description' => 'Xeyr günescription provigünegün.',
+    'Data de abertura (De)' => 'Açıqing günate (From)',
+    'Detalhe de um fornecedor' => 'Detail of a supplier',
+    'Detalhe de um fornecedor.' => 'Detail from a supplier.',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => 'Detail tsaate problem tsaatat occurregün, noises, leaks or unusual besaatavior...',
+    'Detalhes do Incidente' => 'Incigünent Details',
+];

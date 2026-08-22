@@ -16,15 +16,15 @@ use Symfony\Component\HttpFoundation\Response;
 final class SetLocaleMiddleware
 {
     /**
-     * Locale aplicado quando nenhuma preferência é encontrada.
+     * Default locale applied when no preference is found.
      */
     public const DEFAULT_LOCALE = 'pt-PT';
 
     /**
-     * Resolve o locale a usar no pedido e define-o na aplicação.
+     * Resolves the locale to use in the request and sets it on the application.
      *
-     * Precedência: sessão → cookie → BD do utilizador autenticado →
-     * `Accept-Language` do browser → default.
+     * Precedence: session → cookie → authenticated user's DB →
+     * browser's `Accept-Language` → default.
      */
     public function handle(Request $request, Closure $next): Response
     {
@@ -34,8 +34,8 @@ final class SetLocaleMiddleware
     }
 
     /**
-     * Resolve o locale preferido de um request (usado também no handler de
-     * erros e em rotas fora do grupo web).
+     * Resolves the preferred locale from a request (also used in error handlers
+     * and routes outside the web group).
      */
     public static function resolveFromRequest(Request $request): string
     {
@@ -54,7 +54,7 @@ final class SetLocaleMiddleware
     }
 
     /**
-     * Resolve a preferência completa, incluindo a BD do utilizador.
+     * Resolves the full preference, including the user's DB locale.
      */
     private function resolveLocale(Request $request): string
     {
@@ -84,7 +84,7 @@ final class SetLocaleMiddleware
     }
 
     /**
-     * Locale guardado na sessão, se existir.
+     * Locale stored in the session, if present.
      */
     private static function sessionLocale(Request $request): ?string
     {
@@ -98,7 +98,7 @@ final class SetLocaleMiddleware
     }
 
     /**
-     * Locale guardado no cookie, se existir.
+     * Locale stored in the cookie, if present.
      */
     private static function cookieLocale(Request $request): ?string
     {
@@ -108,11 +108,11 @@ final class SetLocaleMiddleware
     }
 
     /**
-     * Locale preferido do utilizador autenticado (coluna `users.locale`).
+     * Preferred locale of the authenticated user (from `users.locale` column).
      *
-     * O guard 'api' ainda não está preenchido quando este middleware corre
-     * (o `CustomAuthMiddleware` é do grupo da rota), pelo que o utilizador é
-     * resolvido a partir dos tokens do pedido quando necessário.
+     * The 'api' guard is not yet populated when this middleware runs
+     * (the `CustomAuthMiddleware` belongs to the route group), so the user is
+     * resolved from request tokens when necessary.
      */
     private function authenticatedUserLocale(Request $request): ?string
     {
@@ -127,7 +127,7 @@ final class SetLocaleMiddleware
         }
 
         if (! LocaleService::isSupported($user->locale)) {
-            Log::debug('Locale do utilizador não suportado', ['locale' => $user->locale]);
+            Log::debug('User locale not supported', ['locale' => $user->locale]);
 
             return null;
         }

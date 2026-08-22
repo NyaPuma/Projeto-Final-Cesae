@@ -22,16 +22,16 @@ final class TicketStartController extends Controller
     ) {}
 
     /**
-     * Inicia a intervenção num ticket (altera estado para Em Progresso).
+     * Starts the intervention on a ticket (changes status to In Progress).
      */
     public function __invoke(StartTicketRequest $request, Ticket $ticket): JsonResponse
     {
-        // 1. Autorização centralizada via Policy do Laravel
+        // 1. Centralized authorization via Laravel Policy
         $this->authorize('start', $ticket);
 
         $user = $request->user();
 
-        // 2. Validação de estado elegível para início
+        // 2. Eligible state validation for starting
         if (! $ticket->hasStatus(TicketStatusEnum::Open)) {
             return response()->json([
                 'message' => __('tickets.Apenas tickets no estado "Aberto" podem ser iniciados.'),
@@ -42,7 +42,7 @@ final class TicketStartController extends Controller
         $force = $request->boolean('force');
         $higherPriority = $this->workflowService->findHigherPriorityTickets($ticket);
 
-        // 3. Verificação de prioridades mais altas pendentes
+        // 3. Check for higher priority pending tickets
         if ($higherPriority['has_higher'] && ! $force) {
             $msg = __("tickets.⚠️ Existem :total ticket(s) de prioridade mais alta por atender.", [
                 'total' => $higherPriority['total'],
@@ -66,10 +66,10 @@ final class TicketStartController extends Controller
             ], 409);
         }
 
-        // 4. Delegação da atribuição e início do reparo para o serviço de workflow
+        // 4. Delegate assignment and repair start to the workflow service
         $this->workflowService->startRepair($ticket, $user);
 
-        // 5. Notifica sobre a sobrescrita de prioridade se for o caso
+        // 5. Notify about priority override if applicable
         if ($force && $higherPriority['has_higher']) {
             $this->notificationService->notifyPriorityOverride(
                 $ticket,
@@ -78,7 +78,7 @@ final class TicketStartController extends Controller
             );
         }
 
-        // 6. Transmissão da alteração de estado em tempo real (WebSockets)
+        // 6. Broadcast status change in real time (WebSockets)
         $this->broadcastStatusChange($ticket, $oldStatus, TicketStatusEnum::InProgress);
 
         $ticket->loadMissing(['equipment', 'room', 'technician', 'status']);

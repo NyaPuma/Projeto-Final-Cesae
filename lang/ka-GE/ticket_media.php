@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => 'არა eviდence uploaდeდ.',
+    'remove_photo' => 'Remove pსთoto',
+    'remove_file' => 'Remove file',
+    'load_error' => 'Error loaდing pსთotos.',
+    'confirm_remove' => 'Are you sure you want to remove tსთis pსთoto?',
+    'remove_error' => 'Error removing pსთoto.',
+    'removed' => 'Pსთoto removeდ successfully.',
+    'sent' => 'Pსთoto sent!',
+    'file' => 'File',
+    'Anexos' => 'Attacსთments',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => 'Upდate user profile creდentials, pსთoto, anდ access permissions.',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => 'ატვირთვა an image (PNG, JPG or WEBP up to 2MB).',
+    'Emergência Imediata. Risco de acidente.' => 'Immeდiate Emergency. Risk of acciდent.',
+    'Escolher Fotografia' => 'Cსთoose Pსთotograpსთy',
+    'Escolher ficheiro' => 'Cსთoose file',
+    'Fotografia (Opcional)' => 'Pსთotograpსთy (Optional)',
+    'Fotografia do Utilizador' => 'User Pსთoto',
+    'Imagem' => 'Image',
+    'Inserir Imagem (Opcional)' => 'Insert Image (Optional)',
+    'Nenhum ficheiro' => 'არა files',
+    'Nenhum ficheiro selecionado' => 'არა files selecteდ',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => 'Current profile: :profile. Access moდules accorდing to your role permissions.',
+    'Tipo de ficheiro não permitido.' => 'File type not alloweდ.',
+];

@@ -25,7 +25,7 @@ final class UiController extends Controller
     ) {}
 
     /**
-     * Renderiza a página principal (dashboard) da aplicação.
+     * Renders the main page (dashboard) of the application.
      */
     public function index(Request $request): View
     {
@@ -35,7 +35,7 @@ final class UiController extends Controller
     }
 
     /**
-     * Renderiza a vista de gestão de tickets.
+     * Renders the tickets management view.
      */
     public function tickets(Request $request): View
     {
@@ -45,7 +45,7 @@ final class UiController extends Controller
     }
 
     /**
-     * Renderiza o formulário de criação de tickets.
+     * Renders the ticket creation form.
      */
     public function ticketCreate(Request $request): View
     {
@@ -55,7 +55,7 @@ final class UiController extends Controller
     }
 
     /**
-     * Renderiza a vista de gestão de equipamentos.
+     * Renders the equipment management view.
      */
     public function equipments(Request $request): View
     {
@@ -65,7 +65,7 @@ final class UiController extends Controller
     }
 
     /**
-     * Renderiza o formulário de criação de equipamentos.
+     * Renders the equipment creation form.
      */
     public function equipmentCreate(Request $request): View
     {
@@ -79,7 +79,7 @@ final class UiController extends Controller
     }
 
     /**
-     * Renderiza o formulário de edição de um equipamento específico.
+     * Renders the edit form for a specific piece of equipment.
      */
     public function equipmentEdit(Request $request, Equipment $equipment): View
     {
@@ -94,13 +94,13 @@ final class UiController extends Controller
     }
 
     /**
-     * Renderiza o detalhe de um equipamento específico.
+     * Renders the detail view for a specific piece of equipment.
      */
     public function equipmentDetail(Request $request, Equipment $equipment): View
     {
         $user = $request->user();
 
-        // 1. Relações carregadas antecipadamente para a página de detalhe
+        // 1. Relations loaded eagerly for the detail page
         $equipment->loadMissing([
             'room',
             'category',
@@ -109,14 +109,14 @@ final class UiController extends Controller
             'tickets.technician',
         ]);
 
-        // 2. Estatísticas rápidas do equipamento
+        // 2. Quick equipment statistics
         $statusService = app(TicketStatusService::class);
         $openStatusId = $statusService->getByName(TicketStatusEnum::Open);
         $inProgressStatusId = $statusService->getByName(TicketStatusEnum::InProgress);
 
         $tickets = $equipment->tickets->sortByDesc('opened_at');
 
-        // 3. Trilho de auditoria recente deste equipamento
+        // 3. Recent audit trail for this equipment
         $audits = Audit::query()
             ->where('auditable_type', Equipment::class)
             ->where('auditable_id', $equipment->id)
@@ -136,7 +136,7 @@ final class UiController extends Controller
     }
 
     /**
-     * Renderiza a vista de gestão de utilizadores.
+     * Renders the user management view.
      */
     public function users(Request $request): View
     {
@@ -146,7 +146,7 @@ final class UiController extends Controller
     }
 
     /**
-     * Renderiza o formulário de criação de utilizadores.
+     * Renders the user creation form.
      */
     public function userCreate(Request $request): View
     {
@@ -156,7 +156,7 @@ final class UiController extends Controller
     }
 
     /**
-     * Renderiza o formulário de edição de um utilizador específico.
+     * Renders the edit form for a specific user.
      */
     public function userEdit(Request $request, User $targetUser): View
     {
@@ -170,7 +170,7 @@ final class UiController extends Controller
     }
 
     /**
-     * Renderiza a vista de gestão de salas.
+     * Renders the room management view.
      */
     public function rooms(Request $request): View
     {
@@ -180,7 +180,7 @@ final class UiController extends Controller
     }
 
     /**
-     * Renderiza o formulário de criação de salas.
+     * Renders the room creation form.
      */
     public function roomCreate(Request $request): View
     {
@@ -190,13 +190,13 @@ final class UiController extends Controller
     }
 
     /**
-     * Renderiza o detalhe de uma sala específica.
+     * Renders the detail view for a specific room.
      */
     public function roomDetail(Request $request, Room $room): View
     {
         $user = $request->user();
 
-        // 1. Relações carregadas antecipadamente para a página de detalhe
+        // 1. Relations loaded eagerly for the detail page
         $room->loadMissing([
             'equipments.category',
             'tickets.status',
@@ -204,7 +204,7 @@ final class UiController extends Controller
             'tickets.technician',
         ]);
 
-        // 2. Estatísticas rápidas da sala
+        // 2. Quick room statistics
         $statusService = app(TicketStatusService::class);
         $openStatusId = $statusService->getByName(TicketStatusEnum::Open);
         $inProgressStatusId = $statusService->getByName(TicketStatusEnum::InProgress);
@@ -212,7 +212,7 @@ final class UiController extends Controller
         $tickets = $room->tickets->sortByDesc('opened_at');
         $equipments = $room->equipments->sortByDesc('active')->sortByDesc('created_at');
 
-        // 3. Trilho de auditoria recente desta sala
+        // 3. Recent audit trail for this room
         $audits = Audit::query()
             ->where('auditable_type', Room::class)
             ->where('auditable_id', $room->id)
@@ -233,7 +233,7 @@ final class UiController extends Controller
     }
 
     /**
-     * Renderiza o formulário de edição de uma sala específica.
+     * Renders the edit form for a specific room.
      */
     public function roomEdit(Request $request, Room $room): View
     {
@@ -246,7 +246,7 @@ final class UiController extends Controller
     }
 
     /**
-     * Renderiza a vista de registos de auditoria do sistema.
+     * Renders the system audit log view.
      */
     public function audits(Request $request): View
     {
@@ -256,7 +256,7 @@ final class UiController extends Controller
     }
 
     /**
-     * Renderiza a vista de detalhe de um ticket específico.
+     * Renders the detail view for a specific ticket.
      */
     public function ticketDetail(Request $request, int $id): View
     {
@@ -269,7 +269,7 @@ final class UiController extends Controller
     }
 
     /**
-     * Endpoint JSON auxiliar para listagem paginada de equipamentos na interface.
+     * Helper JSON endpoint for paginated equipment listing in the UI.
      */
     public function getEquipments(Request $request): JsonResponse
     {
@@ -286,7 +286,7 @@ final class UiController extends Controller
     }
 
     /**
-     * Renderiza a vista de relatórios e análises estatísticas.
+     * Renders the reports and analytics view.
      */
     public function analytics(Request $request): View
     {
@@ -296,7 +296,7 @@ final class UiController extends Controller
     }
 
     /**
-     * Renderiza a vista de perfil do utilizador autenticado.
+     * Renders the authenticated user's profile view.
      */
     public function profile(Request $request): View
     {
@@ -306,7 +306,7 @@ final class UiController extends Controller
     }
 
     /**
-     * Renderiza a página de definições de aparência do painel.
+     * Renders the panel appearance settings page.
      */
     public function themeAppearance(Request $request): View
     {
@@ -334,10 +334,10 @@ final class UiController extends Controller
     }
 
     /**
-     * Temas pré-definidos com contraste garantido (WCAG AA):
-     * texto e texto secundário >= 4.5:1 sobre a superfície,
-     * primária >= 3:1 sobre a superfície e texto dos botões >= 4.5:1.
-     * Cada família tem um par claro/escuro que o botão do painel alterna.
+     * Predefined themes with guaranteed contrast (WCAG AA):
+     * text and secondary text >= 4.5:1 over the surface,
+     * primary >= 3:1 over the surface and button text >= 4.5:1.
+     * Each family has a light/dark pair that the panel button toggles.
      */
     private function themePresets(): array
     {
@@ -345,7 +345,7 @@ final class UiController extends Controller
     }
 
     /**
-     * Guarda as definições de aparência escolhidas pelo administrador.
+     * Saves the appearance settings chosen by the administrator.
      */
     public function themeAppearanceUpdate(Request $request): JsonResponse|RedirectResponse
     {
@@ -457,8 +457,8 @@ final class UiController extends Controller
     }
 
     /**
-     * Ajusta a cor automaticamente (escurecendo ou clareando para o extremo
-     * que melhor garante contraste) até cumprir o rácio mínimo contra o fundo.
+     * Automatically adjusts the color (darkening or lightening toward whichever
+     * extreme best ensures contrast) until the minimum ratio against the background is met.
      */
     private function ensureContrast(string $hex, string $background, float $minRatio): string
     {
@@ -475,8 +475,8 @@ final class UiController extends Controller
     }
 
     /**
-     * Escolhe texto legível (preto ou branco puros) sobre a cor primária,
-     * garantindo contraste WCAG >= 4.5:1 para qualquer cor de fundo.
+     * Picks readable text color (pure black or white) over a given color,
+     * ensuring WCAG contrast >= 4.5:1 for any background.
      */
     private function readableOnColor(string $hex): string
     {

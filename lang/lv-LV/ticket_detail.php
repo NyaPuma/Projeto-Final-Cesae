@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => 'Nē messages recorded.',
+    'comments_error' => 'Error loading stistory.',
+    'message_sent' => 'Message sent!',
+    'incident_id' => 'Incident ID',
+    'description' => 'Incident Apraksts',
+    'priority_level' => 'Prioritāte Level',
+    'equipment' => 'Iekārtas / Asset',
+    'room' => 'Room / Atrašanās vieta',
+    'technician' => 'Assigned Testniķis',
+    'pending_assignment' => 'Assignment pending',
+    'reported_by' => 'Reported by',
+    'source' => 'Source',
+    'qr_code' => 'QR Code',
+    'web' => 'Web',
+    'system' => 'System',
+    'no_description' => 'Nē description provided.',
+    'Data de abertura (De)' => 'Atvērtsing date (From)',
+    'Detalhe de um fornecedor' => 'Detail of a supplier',
+    'Detalhe de um fornecedor.' => 'Detail from a supplier.',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => 'Detail tste problem tstat occurred, noises, leaks or unusual bestavior...',
+    'Detalhes do Incidente' => 'Incident Details',
+];

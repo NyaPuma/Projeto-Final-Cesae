@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Log;
 use Throwable;
 
 /**
- * Verifica diariamente as peças com stock baixo e dispara alertas.
+ * Checks for low-stock parts daily and triggers admin alerts.
  *
- * Agendado no scheduler (bootstrap/app.php) — evita cálculo a cada pedido.
+ * Scheduled in the scheduler (bootstrap/app.php) to avoid calculation on every request.
  */
 final class CheckLowStockJob implements ShouldQueue
 {
@@ -24,11 +24,11 @@ final class CheckLowStockJob implements ShouldQueue
         try {
             $created = $alertService->notifyAdminsForLowStock();
 
-            Log::info('CheckLowStockJob concluído', [
+            Log::info('CheckLowStockJob completed', [
                 'notifications_created' => $created,
             ]);
         } catch (Throwable $e) {
-            Log::error('Falha no CheckLowStockJob', [
+            Log::error('CheckLowStockJob failed', [
                 'error' => $e->getMessage(),
             ]);
         }

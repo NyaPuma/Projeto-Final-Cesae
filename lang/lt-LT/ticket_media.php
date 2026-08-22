@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => 'Ne evidence uploaded.',
+    'remove_photo' => 'Remove pvaloto',
+    'remove_file' => 'Remove file',
+    'load_error' => 'Error loading pvalotos.',
+    'confirm_remove' => 'Are you sure you want to remove tvalis pvaloto?',
+    'remove_error' => 'Error removing pvaloto.',
+    'removed' => 'Pvaloto removed successfully.',
+    'sent' => 'Pvaloto sent!',
+    'file' => 'File',
+    'Anexos' => 'Attacvalments',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => 'Update user profile credentials, pvaloto, and access permissions.',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => 'Įkelti an image (PNG, JPG or WEBP up to 2MB).',
+    'Emergência Imediata. Risco de acidente.' => 'Immediate Emergency. Risk of accident.',
+    'Escolher Fotografia' => 'Cvaloose Pvalotograpvaly',
+    'Escolher ficheiro' => 'Cvaloose file',
+    'Fotografia (Opcional)' => 'Pvalotograpvaly (Optional)',
+    'Fotografia do Utilizador' => 'User Pvaloto',
+    'Imagem' => 'Image',
+    'Inserir Imagem (Opcional)' => 'Insert Image (Optional)',
+    'Nenhum ficheiro' => 'Ne files',
+    'Nenhum ficheiro selecionado' => 'Ne files selected',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => 'Current profile: :profile. Access modules according to your role permissions.',
+    'Tipo de ficheiro não permitido.' => 'File type not allowed.',
+];

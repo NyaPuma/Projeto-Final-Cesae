@@ -22,7 +22,7 @@ final class SecurityHeaders
     }
 
     /**
-     * Adiciona os cabeçalhos de segurança HTTP recomendados à resposta.
+     * Adds the recommended HTTP security headers to the response.
      */
     private function addSecurityHeaders(Response $response, Request $request): void
     {
@@ -43,7 +43,7 @@ final class SecurityHeaders
     }
 
     /**
-     * Constrói a Content Security Policy (CSP) adequada ao ambiente da aplicação.
+     * Builds the Content Security Policy (CSP) appropriate for the application environment.
      */
     private function buildCsp(Request $request): string
     {

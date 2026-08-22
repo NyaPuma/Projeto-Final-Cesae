@@ -75,408 +75,409 @@
 - [x] `UpdateUserData.php`
 - Folder README: done
 
-### `app/ValueObjects` (3 files) — PENDING (0/3)
-- [ ] `Email.php`
-- [ ] `Money.php`
-- [ ] `SerialNumber.php`
-- Folder README: pending
+### `app/ValueObjects` (3 files) — DONE (3/3)
+- [x] `Email.php` — no changes needed (already English)
+- [x] `Money.php` — Portuguese docblocks translated to English
+- [x] `SerialNumber.php` — Portuguese docblocks translated to English
+- Folder README: done
 
 ### `app/Concerns` (1 files) — DONE (1/1)
 - [x] `BroadcastsTicketStatus.php`
 - Folder README: done
 
-### `app/Actions` (21 files) — PENDING (0/21)
-- [ ] `ApproveBudgetAction.php`
-- [ ] `AssignTechnicianAction.php`
-- [ ] `CreateEquipmentAction.php`
-- [ ] `CreatePartAction.php`
-- [ ] `CreatePreventiveTicketAction.php`
-- [ ] `CreatePublicTicketAction.php`
-- [ ] `CreateRoomAction.php`
-- [ ] `CreateSupplierAction.php`
-- [ ] `CreateTicketAction.php`
-- [ ] `CreateUserAction.php`
-- [ ] `MaintenancePlanActions.php`
-- [ ] `PartCategoryActions.php`
-- [ ] `ScheduleMaintenanceAction.php`
-- [ ] `ScheduleTicketAction.php`
-- [ ] `SubmitBudgetAction.php`
-- [ ] `TaxRateActions.php`
-- [ ] `UpdateEquipmentAction.php`
-- [ ] `UpdatePartAction.php`
-- [ ] `UpdateRoomAction.php`
-- [ ] `UpdateSupplierAction.php`
-- [ ] `UpdateUserAction.php`
+### `app/Actions` (21 files) — DONE (21/21)
+- [x] `ApproveBudgetAction.php` — PT comments/strings translated to English
+- [x] `AssignTechnicianAction.php` — PT docblock translated
+- [x] `CreateEquipmentAction.php` — removed commented-out event stub
+- [x] `CreatePartAction.php` — PT comment block translated
+- [x] `CreatePreventiveTicketAction.php` — PT exception/description translated, removed event stub
+- [x] `CreatePublicTicketAction.php` — PT docblock/exception translated
+- [x] `CreateRoomAction.php` — removed commented-out event stub
+- [x] `CreateSupplierAction.php` — already clean
+- [x] `CreateTicketAction.php` — PT exception translated, removed event stub
+- [x] `CreateUserAction.php` — PT comments translated, removed event stub
+- [x] `MaintenancePlanActions.php` — PT error message translated
+- [x] `PartCategoryActions.php` — already clean
+- [x] `ScheduleMaintenanceAction.php` — PT class docblock/exception/priority translated
+- [x] `ScheduleTicketAction.php` — PT comments/exceptions translated, removed event stub
+- [x] `SubmitBudgetAction.php` — PT comments/exceptions translated, removed event stub
+- [x] `TaxRateActions.php` — already clean
+- [x] `UpdateEquipmentAction.php` — removed commented-out event stub
+- [x] `UpdatePartAction.php` — already clean
+- [x] `UpdateRoomAction.php` — removed commented-out event stub
+- [x] `UpdateSupplierAction.php` — already clean
+- [x] `UpdateUserAction.php` — removed commented-out event stub
+- Folder README: done
+
+### `app/Domain/Ticket/Actions` (5 files) — DONE (5/5)
+- [x] `CancelTicketAction.php` — PT docblock/comments translated
+- [x] `CheckHigherPriorityAction.php` — PT comments removed
+- [x] `CloseTicketAction.php` — PT comments removed, event stub removed
+- [x] `ReopenTicketAction.php` — PT comments/exception translated, event stub removed
+- [x] `StartTicketAction.php` — PT comments/exception translated, event stub removed
+- Folder README: done
+
+### `app/Domain/Ticket/Queries` (5 files) — DONE (5/5)
+- [x] `MonthlyTicketsQuery.php` — PT comment translated
+- [x] `ScheduledEventsQuery.php` — already clean
+- [x] `TicketKpiQuery.php` — already clean
+- [x] `TicketPriorityQuery.php` — PT comment translated
+- [x] `TopEntitiesQuery.php` — already clean (user-facing subtitle strings excluded per §3)
+- Folder README: done
+
+### `app/Domain/Ticket/Services` (1 files) — DONE (1/1)
+- [x] `TicketStatusChecker.php` — PT docblock translated
+- Folder README: done
+
+### `app/Domain/Ticket/ValueObjects` (1 files) — DONE (1/1)
+- [x] `BudgetPauseMinutes.php` — PT docblocks/comments translated
+- Folder README: done
+
+### `app/Services` (29 files) — DONE (29/29)
+- [x] `AIService.php`
+- [x] `AnalyticsDashboardService.php`
+- [x] `AnalyticsExportService.php`
+- [x] `AnalyticsService.php`
+- [x] `AuthUserResolver.php`
+- [x] `BudgetCalculatorService.php`
+- [x] `BudgetNotificationService.php`
+- [x] `CalendarService.php`
+- [x] `EquipmentService.php`
+- [x] `LocaleService.php`
+- [x] `LocalizationService.php`
+- [x] `LowStockAlertService.php`
+- [x] `NotificationCreatorService.php`
+- [x] `NotificationService.php`
+- [x] `PartPriceCalculator.php`
+- [x] `PartService.php`
+- [x] `PasswordResetService.php`
+- [x] `PreferencesService.php` (renamed from PreferenciasService.php)
+- [x] `QrCodeService.php`
+- [x] `StockDashboardService.php`
+- [x] `StockMovementService.php`
+- [x] `SystemSettingsService.php`
+- [x] `TechnicianAssignmentService.php`
+- [x] `ThemePresetService.php`
+- [x] `TicketNotificationService.php`
+- [x] `TicketSearchService.php`
+- [x] `TicketStatusService.php`
+- [x] `TicketWorkflowService.php`
+- [x] `UserService.php`
+- Folder README: done
+
+### `app/Repositories` (4 files) — DONE (4/4)
+- [x] `EquipmentRepository.php` — already clean
+- [x] `RoomRepository.php` — already clean
+- [x] `TicketRepository.php` — already clean
+- [x] `UserRepository.php` — already clean
+- Folder README: done
+
+### `app/Repositories/Contracts` (4 files) — DONE (4/4)
+- [x] `EquipmentRepositoryInterface.php` — PT docblocks translated
+- [x] `RoomRepositoryInterface.php` — PT docblocks translated
+- [x] `TicketRepositoryInterface.php` — PT docblocks translated
+- [x] `UserRepositoryInterface.php` — PT docblocks translated
+- Folder README: done
+
+### `app/Jobs` (8 files) — DONE (8/8)
+- [x] `CheckLowStockJob.php` — PT docblock/log messages translated
+- [x] `ExportCsvJob.php` — PT docblocks/comments translated; user-facing notification strings left as-is (i18n)
+- [x] `ExportEquipmentQrPdfJob.php` — PT docblocks/comments translated; user-facing notification strings left as-is (i18n)
+- [x] `ExportExcelJob.php` — PT docblocks/comments translated; user-facing notification strings left as-is (i18n)
+- [x] `ExportPdfJob.php` — PT docblocks/comments translated; user-facing notification strings left as-is (i18n)
+- [x] `ExportStockCostsPdfJob.php` — PT docblocks/comments translated; user-facing notification strings left as-is (i18n)
+- [x] `GenerateAiRecommendationJob.php` — already clean
+- [x] `SendTestEmailJob.php` — PT docblocks translated
+- Folder README: done
+
+### `app/Listeners` (5 files) — DONE (5/5)
+- [x] `LogTicketStatusChange.php` — PT docblocks/comments translated
+- [x] `LogTicketWorkflowChange.php` — PT docblocks translated
+- [x] `NotifyAssignedTechnician.php` — PT docblocks translated
+- [x] `SendTicketCreatedNotification.php` — PT docblocks translated
+- [x] `SendTicketStatusNotification.php` — PT docblocks translated
+- Folder README: done
+
+### `app/Events` (3 files) — DONE (3/3)
+- [x] `TicketCreated.php` — PT docblocks translated
+- [x] `TicketStatusChanged.php` — PT docblocks translated
+- [x] `TicketStatusUpdatedBroadcast.php` — PT docblocks translated
+- Folder README: done
+
+### `app/Mail` (3 files) — DONE (3/3)
+- [x] `PasswordResetMail.php` — already clean (subject line is user-facing, i18n domain)
+- [x] `TestMail.php` — PT comment translated; subject line is user-facing (i18n)
+- [x] `TicketCreated.php` — PT docblocks translated; subject line is user-facing (i18n)
+- Folder README: done
+
+### `app/Notifications` (3 files) — DONE (3/3)
+- [x] `NewTicketNotification.php` — PT docblocks translated; user-facing notification strings left as-is (i18n)
+- [x] `TicketNotification.php` — PT docblocks translated
+- [x] `TicketStatusChanged.php` — PT docblocks translated; user-facing notification strings left as-is (i18n)
+- Folder README: done
+
+### `app/Observers` (3 files) — DONE (3/3)
+- [x] `AuditObserver.php` — PT docblocks/exception messages translated
+- [x] `TicketObserver.php` — PT docblock/comments translated
+- [x] `UserObserver.php` — PT docblock/comments translated
+- Folder README: done
+
+### `app/Policies` (12 files) — DONE (12/12)
+- [x] `AuditPolicy.php` — already clean
+- [x] `EquipmentPolicy.php` — PT docblocks translated
+- [x] `MaintenancePlanPolicy.php` — already clean
+- [x] `PartCategoryPolicy.php` — already clean
+- [x] `PartPolicy.php` — already clean
+- [x] `RoomPolicy.php` — PT docblocks translated
+- [x] `StockMovementPolicy.php` — already clean
+- [x] `SupplierPolicy.php` — already clean
+- [x] `TaxRatePolicy.php` — already clean
+- [x] `TicketPolicy.php` — PT docblocks translated (20 methods)
+- [x] `UserPolicy.php` — PT docblocks translated
+- [x] `UserProfilePolicy.php` — PT docblock translated
+- Folder README: done
+
+### `app/Exports` (1 files) — DONE (1/1)
+- [x] `TicketsExport.php` — PT docblocks translated; heading labels/title left as-is (i18n)
+- Folder README: done
+
+### `app/OpenApi` (1 files) — DONE (1/1)
+- [x] `OpenApiSpec.php` — PT class comment translated; OA attribute values left as-is (L5-Swagger / i18n)
+- Folder README: done
+
+### `app/Http/Requests` (38 files) — DONE (38/38)
+- [x] `AssignTechnicianToTicketRequest.php`
+- [x] `BudgetDecisionRequest.php`
+- [x] `ChangePasswordRequest.php`
+- [x] `CloseTicketRequest.php`
+- [x] `CloseTicketSimpleRequest.php`
+- [x] `LoginRequest.php`
+- [x] `PublicStoreTicketRequest.php`
+- [x] `RegisterRequest.php`
+- [x] `RequestBudgetRequest.php`
+- [x] `RescheduleEventRequest.php`
+- [x] `ResetPasswordRequest.php`
+- [x] `ScheduleMaintenanceRequest.php`
+- [x] `ScheduleTicketRequest.php`
+- [x] `SendResetLinkRequest.php`
+- [x] `StartTicketRequest.php`
+- [x] `StoreCommentRequest.php`
+- [x] `StoreEquipmentRequest.php`
+- [x] `StoreMaintenancePlanRequest.php`
+- [x] `StorePartCategoryRequest.php`
+- [x] `StorePartRequest.php`
+- [x] `StorePreventiveRequest.php`
+- [x] `StoreRoomRequest.php`
+- [x] `StoreStockMovementRequest.php`
+- [x] `StoreSupplierRequest.php`
+- [x] `StoreTaxRateRequest.php`
+- [x] `StoreTicketRequest.php`
+- [x] `StoreUserRequest.php`
+- [x] `SubmitBudgetRequest.php`
+- [x] `UpdateEquipmentRequest.php`
+- [x] `UpdateMaintenancePlanRequest.php`
+- [x] `UpdatePartCategoryRequest.php`
+- [x] `UpdatePartRequest.php`
+- [x] `UpdateProfileRequest.php`
+- [x] `UpdateRoomRequest.php`
+- [x] `UpdateSupplierRequest.php`
+- [x] `UpdateTaxRateRequest.php`
+- [x] `UpdateUserRequest.php`
+- [x] `UploadPhotoRequest.php`
+- Folder README: done
+
+### `app/Http/Resources` (15 files) — DONE (15/15)
+- [x] `AuditResource.php`
+- [x] `EquipmentResource.php`
+- [x] `MaintenancePlanResource.php`
+- [x] `NotificationResource.php`
+- [x] `PartCategoryResource.php`
+- [x] `PartResource.php`
+- [x] `RoomResource.php`
+- [x] `StockMovementResource.php`
+- [x] `SupplierResource.php`
+- [x] `TaxRateResource.php`
+- [x] `TicketAttachmentResource.php`
+- [x] `TicketCommentResource.php`
+- [x] `TicketResource.php`
+- [x] `UserProfileResource.php`
+- [x] `UserResource.php`
+- Folder README: done
+
+### `app/Http/Middleware` (8 files) — DONE (8/8)
+- [x] `CsrfMiddleware.php`
+- [x] `CustomAuthMiddleware.php`
+- [x] `LocalizeSwaggerDocument.php`
+- [x] `RateLimitMiddleware.php`
+- [x] `RoleMiddleware.php`
+- [x] `SecurityHeaders.php`
+- [x] `SetLocaleMiddleware.php`
+- [x] `SetUserPreferencesMiddleware.php`
+- Folder README: done
 - Folder README: pending
 
-### `app/Domain/Ticket/Actions` (5 files) — PENDING (0/5)
-- [ ] `CancelTicketAction.php`
-- [ ] `CheckHigherPriorityAction.php`
-- [ ] `CloseTicketAction.php`
-- [ ] `ReopenTicketAction.php`
-- [ ] `StartTicketAction.php`
-- Folder README: pending
+### `app/Http/Controllers` (35 files) — DONE (35/35)
+- [x] `ActivityFeedController.php`
+- [x] `AdminController.php`
+- [x] `AdminEquipmentController.php`
+- [x] `AdminUserController.php`
+- [x] `AnalyticsController.php`
+- [x] `AuditController.php`
+- [x] `AuthController.php`
+- [x] `CalendarController.php`
+- [x] `Controller.php`
+- [x] `LocaleController.php`
+- [x] `MaintenancePlanController.php`
+- [x] `NotificationController.php`
+- [x] `PageController.php`
+- [x] `PartCategoryController.php`
+- [x] `PartController.php`
+- [x] `PasswordResetController.php`
+- [x] `PreferencesController.php` (renamed from PreferenciasController.php) — class + file + route refs updated
+- [x] `ProfileController.php`
+- [x] `PublicTicketController.php`
+- [x] `QrCodeController.php`
+- [x] `RegisterController.php`
+- [x] `RoomController.php`
+- [x] `StockDashboardController.php`
+- [x] `StockMovementController.php`
+- [x] `StockReportController.php`
+- [x] `StockUiController.php`
+- [x] `SupplierController.php`
+- [x] `SystemSettingsController.php`
+- [x] `TaxRateController.php`
+- [x] `ThemeController.php`
+- [x] `TicketAttachmentController.php`
+- [x] `TicketBudgetController.php`
+- [x] `TicketCommentController.php`
+- [x] `TicketController.php`
+- [x] `UiController.php`
+- Folder README: done
 
-### `app/Domain/Ticket/Queries` (5 files) — PENDING (0/5)
-- [ ] `MonthlyTicketsQuery.php`
-- [ ] `ScheduledEventsQuery.php`
-- [ ] `TicketKpiQuery.php`
-- [ ] `TicketPriorityQuery.php`
-- [ ] `TopEntitiesQuery.php`
-- Folder README: pending
+### `app/Http/Controllers/Ticket` (5 files) — DONE (5/5)
+- [x] `TicketAssignmentController.php`
+- [x] `TicketCloseController.php`
+- [x] `TicketLifecycleController.php`
+- [x] `TicketScheduleController.php`
+- [x] `TicketStartController.php`
+- Folder README: done
 
-### `app/Domain/Ticket/Services` (1 files) — PENDING (0/1)
-- [ ] `TicketStatusChecker.php`
-- Folder README: pending
+### `app/Console/Commands` (4 files) — DONE (4/4)
+- [x] `DatabaseBackup.php`
+- [x] `FixTicketEncoding.php`
+- [x] `PartitionAudits.php`
+- [x] `SimulateTelemetry.php`
+- Folder README: done
 
-### `app/Domain/Ticket/ValueObjects` (1 files) — PENDING (0/1)
-- [ ] `BudgetPauseMinutes.php`
-- Folder README: pending
+### `app/Providers` (2 files) — DONE (2/2)
+- [x] `AppServiceProvider.php`
+- [x] `EventServiceProvider.php`
+- Folder README: done
 
-### `app/Services` (29 files) — PENDING (0/29)
-- [ ] `AIService.php`
-- [ ] `AnalyticsDashboardService.php`
-- [ ] `AnalyticsExportService.php`
-- [ ] `AnalyticsService.php`
-- [ ] `AuthUserResolver.php`
-- [ ] `BudgetCalculatorService.php`
-- [ ] `BudgetNotificationService.php`
-- [ ] `CalendarService.php`
-- [ ] `EquipmentService.php`
-- [ ] `LocaleService.php`
-- [ ] `LocalizationService.php`
-- [ ] `LowStockAlertService.php`
-- [ ] `NotificationCreatorService.php`
-- [ ] `NotificationService.php`
-- [ ] `PartPriceCalculator.php`
-- [ ] `PartService.php`
-- [ ] `PasswordResetService.php`
-- [ ] `PreferenciasService.php`
-- [ ] `QrCodeService.php`
-- [ ] `StockDashboardService.php`
-- [ ] `StockMovementService.php`
-- [ ] `SystemSettingsService.php`
-- [ ] `TechnicianAssignmentService.php`
-- [ ] `ThemePresetService.php`
-- [ ] `TicketNotificationService.php`
-- [ ] `TicketSearchService.php`
-- [ ] `TicketStatusService.php`
-- [ ] `TicketWorkflowService.php`
-- [ ] `UserService.php`
-- Folder README: pending
+### `app` (0 files) — DONE (0/0)
+- Folder README: done
 
-### `app/Repositories` (4 files) — PENDING (0/4)
-- [ ] `EquipmentRepository.php`
-- [ ] `RoomRepository.php`
-- [ ] `TicketRepository.php`
-- [ ] `UserRepository.php`
-- Folder README: pending
+### `routes` (3 files) — DONE (3/3)
+- [x] `api.php`
+- [x] `console.php`
+- [x] `web.php`
+- Folder README: done
 
-### `app/Repositories/Contracts` (4 files) — PENDING (0/4)
-- [ ] `EquipmentRepositoryInterface.php`
-- [ ] `RoomRepositoryInterface.php`
-- [ ] `TicketRepositoryInterface.php`
-- [ ] `UserRepositoryInterface.php`
-- Folder README: pending
+### `config` (18 files) — DONE (18/18)
+- [x] `app.php`
+- [x] `auth.php`
+- [x] `backup.php`
+- [x] `broadcasting.php`
+- [x] `cache.php`
+- [x] `database.php`
+- [x] `filesystems.php`
+- [x] `hashing.php`
+- [x] `l5-swagger.php`
+- [x] `locales.php`
+- [x] `logging.php`
+- [x] `mail.php`
+- [x] `openai.php`
+- [x] `queue.php`
+- [x] `sanctum.php`
+- [x] `services.custom.php`
+- [x] `services.php`
+- [x] `session.php`
+- Folder README: done
 
-### `app/Jobs` (8 files) — PENDING (0/8)
-- [ ] `CheckLowStockJob.php`
-- [ ] `ExportCsvJob.php`
-- [ ] `ExportEquipmentQrPdfJob.php`
-- [ ] `ExportExcelJob.php`
-- [ ] `ExportPdfJob.php`
-- [ ] `ExportStockCostsPdfJob.php`
-- [ ] `GenerateAiRecommendationJob.php`
-- [ ] `SendTestEmailJob.php`
-- Folder README: pending
+### `database/factories` (16 files) — DONE (16/16)
+- [x] `EquipmentCategoryFactory.php`
+- [x] `EquipmentFactory.php`
+- [x] `MaintenancePlanFactory.php`
+- [x] `PartCategoryFactory.php`
+- [x] `PartFactory.php`
+- [x] `RoomFactory.php`
+- [x] `StockMovementFactory.php`
+- [x] `SupplierFactory.php`
+- [x] `TaxRateFactory.php`
+- [x] `TicketAttachmentFactory.php`
+- [x] `TicketCommentFactory.php`
+- [x] `TicketFactory.php`
+- [x] `TicketStatusFactory.php`
+- [x] `TicketTypeFactory.php`
+- [x] `UserFactory.php`
+- [x] `UserProfileFactory.php`
+- Folder README: done
 
-### `app/Listeners` (5 files) — PENDING (0/5)
-- [ ] `LogTicketStatusChange.php`
-- [ ] `LogTicketWorkflowChange.php`
-- [ ] `NotifyAssignedTechnician.php`
-- [ ] `SendTicketCreatedNotification.php`
-- [ ] `SendTicketStatusNotification.php`
-- Folder README: pending
+### `database/seeders` (12 files) — DONE (12/12)
+- [x] `ActivityFeedSeeder.php`
+- [x] `BulkOperationalDataSeeder.php`
+- [x] `DatabaseSeeder.php`
+- [x] `EquipmentCategoriesSeeder.php`
+- [x] `EquipmentsSeeder.php`
+- [x] `NotificationSeeder.php`
+- [x] `RoomsSeeder.php`
+- [x] `StockDataSeeder.php`
+- [x] `TicketLookupSeeder.php`
+- [x] `TicketsSeeder.php`
+- [x] `UserProfilesSeeder.php`
+- [x] `UsersSeeder.php`
+- Folder README: done
 
-### `app/Events` (3 files) — PENDING (0/3)
-- [ ] `TicketCreated.php`
-- [ ] `TicketStatusChanged.php`
-- [ ] `TicketStatusUpdatedBroadcast.php`
-- Folder README: pending
+### `database/seeders/Data` (2 files) — DONE (2/2)
+- [x] `OperationalData.php`
+- [x] `TicketDataset.php`
+- Folder README: done
 
-### `app/Mail` (3 files) — PENDING (0/3)
-- [ ] `PasswordResetMail.php`
-- [ ] `TestMail.php`
-- [ ] `TicketCreated.php`
-- Folder README: pending
+### `database/migrations` (25 files) — DONE (25/25)
+- [x] `0001_01_01_000000_create_users_table.php`
+- [x] `0001_01_01_000001_create_cache_table.php`
+- [x] `0001_01_01_000002_create_jobs_table.php`
+- [x] `0001_01_01_000003_create_rooms_table.php`
+- [x] `0001_01_01_000004_create_equipments_table.php`
+- [x] `0001_01_01_000005_create_tickets_table.php`
+- [x] `0001_01_01_000006_create_audits_table.php`
+- [x] `0001_01_01_000008_create_ticket_attachments_table.php`
+- [x] `0001_01_01_000009_create_ticket_comments_table.php`
+- [x] `2026_07_09_100000_create_notifications_table.php`
+- [x] `2026_07_24_152504_create_audits_append_only_trigger.php`
+- [x] `2026_07_31_000001_convert_ticket_tables_to_utf8mb4.php`
+- [x] `2026_08_03_000001_add_ai_recommendation_columns_to_tickets_table.php`
+- [x] `2026_08_05_000001_create_theme_settings_table.php`
+- [x] `2026_08_05_000002_create_system_settings_table.php`
+- [x] `2026_08_07_000001_add_reporter_fields_to_tickets_table.php`
+- [x] `2026_08_08_000001_create_stock_catalog_tables.php`
+- [x] `2026_08_08_000002_create_stock_movements_table.php`
+- [x] `2026_08_08_000003_create_maintenance_plans_table.php`
+- [x] `2026_08_08_000004_add_low_stock_notification_type.php`
+- [x] `2026_08_10_000001_add_locale_to_users_table.php`
+- [x] `2026_08_12_000001_create_user_preferences_table.php`
+- [x] `2026_08_12_000002_populate_user_preferences.php`
+- [x] `2026_08_12_000003_add_number_format_to_user_preferences.php`
+- [x] `2026_08_12_000004_add_time_format_to_user_preferences.php`
+- Folder README: done
 
-### `app/Notifications` (3 files) — PENDING (0/3)
-- [ ] `NewTicketNotification.php`
-- [ ] `TicketNotification.php`
-- [ ] `TicketStatusChanged.php`
-- Folder README: pending
+### `database` (0 files) — DONE (0/0)
+- Folder README: done
 
-### `app/Observers` (3 files) — PENDING (0/3)
-- [ ] `AuditObserver.php`
-- [ ] `TicketObserver.php`
-- [ ] `UserObserver.php`
-- Folder README: pending
-
-### `app/Policies` (12 files) — PENDING (0/12)
-- [ ] `AuditPolicy.php`
-- [ ] `EquipmentPolicy.php`
-- [ ] `MaintenancePlanPolicy.php`
-- [ ] `PartCategoryPolicy.php`
-- [ ] `PartPolicy.php`
-- [ ] `RoomPolicy.php`
-- [ ] `StockMovementPolicy.php`
-- [ ] `SupplierPolicy.php`
-- [ ] `TaxRatePolicy.php`
-- [ ] `TicketPolicy.php`
-- [ ] `UserPolicy.php`
-- [ ] `UserProfilePolicy.php`
-- Folder README: pending
-
-### `app/Exports` (1 files) — PENDING (0/1)
-- [ ] `TicketsExport.php`
-- Folder README: pending
-
-### `app/OpenApi` (1 files) — PENDING (0/1)
-- [ ] `OpenApiSpec.php`
-- Folder README: pending
-
-### `app/Http/Requests` (38 files) — PENDING (0/38)
-- [ ] `AssignTechnicianToTicketRequest.php`
-- [ ] `BudgetDecisionRequest.php`
-- [ ] `ChangePasswordRequest.php`
-- [ ] `CloseTicketRequest.php`
-- [ ] `CloseTicketSimpleRequest.php`
-- [ ] `LoginRequest.php`
-- [ ] `PublicStoreTicketRequest.php`
-- [ ] `RegisterRequest.php`
-- [ ] `RequestBudgetRequest.php`
-- [ ] `RescheduleEventRequest.php`
-- [ ] `ResetPasswordRequest.php`
-- [ ] `ScheduleMaintenanceRequest.php`
-- [ ] `ScheduleTicketRequest.php`
-- [ ] `SendResetLinkRequest.php`
-- [ ] `StartTicketRequest.php`
-- [ ] `StoreCommentRequest.php`
-- [ ] `StoreEquipmentRequest.php`
-- [ ] `StoreMaintenancePlanRequest.php`
-- [ ] `StorePartCategoryRequest.php`
-- [ ] `StorePartRequest.php`
-- [ ] `StorePreventiveRequest.php`
-- [ ] `StoreRoomRequest.php`
-- [ ] `StoreStockMovementRequest.php`
-- [ ] `StoreSupplierRequest.php`
-- [ ] `StoreTaxRateRequest.php`
-- [ ] `StoreTicketRequest.php`
-- [ ] `StoreUserRequest.php`
-- [ ] `SubmitBudgetRequest.php`
-- [ ] `UpdateEquipmentRequest.php`
-- [ ] `UpdateMaintenancePlanRequest.php`
-- [ ] `UpdatePartCategoryRequest.php`
-- [ ] `UpdatePartRequest.php`
-- [ ] `UpdateProfileRequest.php`
-- [ ] `UpdateRoomRequest.php`
-- [ ] `UpdateSupplierRequest.php`
-- [ ] `UpdateTaxRateRequest.php`
-- [ ] `UpdateUserRequest.php`
-- [ ] `UploadPhotoRequest.php`
-- Folder README: pending
-
-### `app/Http/Resources` (15 files) — PENDING (0/15)
-- [ ] `AuditResource.php`
-- [ ] `EquipmentResource.php`
-- [ ] `MaintenancePlanResource.php`
-- [ ] `NotificationResource.php`
-- [ ] `PartCategoryResource.php`
-- [ ] `PartResource.php`
-- [ ] `RoomResource.php`
-- [ ] `StockMovementResource.php`
-- [ ] `SupplierResource.php`
-- [ ] `TaxRateResource.php`
-- [ ] `TicketAttachmentResource.php`
-- [ ] `TicketCommentResource.php`
-- [ ] `TicketResource.php`
-- [ ] `UserProfileResource.php`
-- [ ] `UserResource.php`
-- Folder README: pending
-
-### `app/Http/Middleware` (8 files) — PENDING (0/8)
-- [ ] `CsrfMiddleware.php`
-- [ ] `CustomAuthMiddleware.php`
-- [ ] `LocalizeSwaggerDocument.php`
-- [ ] `RateLimitMiddleware.php`
-- [ ] `RoleMiddleware.php`
-- [ ] `SecurityHeaders.php`
-- [ ] `SetLocaleMiddleware.php`
-- [ ] `SetUserPreferencesMiddleware.php`
-- Folder README: pending
-
-### `app/Http/Controllers` (35 files) — PENDING (0/35)
-- [ ] `ActivityFeedController.php`
-- [ ] `AdminController.php`
-- [ ] `AdminEquipmentController.php`
-- [ ] `AdminUserController.php`
-- [ ] `AnalyticsController.php`
-- [ ] `AuditController.php`
-- [ ] `AuthController.php`
-- [ ] `CalendarController.php`
-- [ ] `Controller.php`
-- [ ] `LocaleController.php`
-- [ ] `MaintenancePlanController.php`
-- [ ] `NotificationController.php`
-- [ ] `PageController.php`
-- [ ] `PartCategoryController.php`
-- [ ] `PartController.php`
-- [ ] `PasswordResetController.php`
-- [ ] `PreferenciasController.php`
-- [ ] `ProfileController.php`
-- [ ] `PublicTicketController.php`
-- [ ] `QrCodeController.php`
-- [ ] `RegisterController.php`
-- [ ] `RoomController.php`
-- [ ] `StockDashboardController.php`
-- [ ] `StockMovementController.php`
-- [ ] `StockReportController.php`
-- [ ] `StockUiController.php`
-- [ ] `SupplierController.php`
-- [ ] `SystemSettingsController.php`
-- [ ] `TaxRateController.php`
-- [ ] `ThemeController.php`
-- [ ] `TicketAttachmentController.php`
-- [ ] `TicketBudgetController.php`
-- [ ] `TicketCommentController.php`
-- [ ] `TicketController.php`
-- [ ] `UiController.php`
-- Folder README: pending
-
-### `app/Http/Controllers/Ticket` (5 files) — PENDING (0/5)
-- [ ] `TicketAssignmentController.php`
-- [ ] `TicketCloseController.php`
-- [ ] `TicketLifecycleController.php`
-- [ ] `TicketScheduleController.php`
-- [ ] `TicketStartController.php`
-- Folder README: pending
-
-### `app/Console/Commands` (4 files) — PENDING (0/4)
-- [ ] `DatabaseBackup.php`
-- [ ] `FixTicketEncoding.php`
-- [ ] `PartitionAudits.php`
-- [ ] `SimulateTelemetry.php`
-- Folder README: pending
-
-### `app/Providers` (2 files) — PENDING (0/2)
-- [ ] `AppServiceProvider.php`
-- [ ] `EventServiceProvider.php`
-- Folder README: pending
-
-### `app` (0 files) — PENDING (0/0)
-- Folder README: pending
-
-### `routes` (3 files) — PENDING (0/3)
-- [ ] `api.php`
-- [ ] `console.php`
-- [ ] `web.php`
-- Folder README: pending
-
-### `config` (18 files) — PENDING (0/18)
-- [ ] `app.php`
-- [ ] `auth.php`
-- [ ] `backup.php`
-- [ ] `broadcasting.php`
-- [ ] `cache.php`
-- [ ] `database.php`
-- [ ] `filesystems.php`
-- [ ] `hashing.php`
-- [ ] `l5-swagger.php`
-- [ ] `locales.php`
-- [ ] `logging.php`
-- [ ] `mail.php`
-- [ ] `openai.php`
-- [ ] `queue.php`
-- [ ] `sanctum.php`
-- [ ] `services.custom.php`
-- [ ] `services.php`
-- [ ] `session.php`
-- Folder README: pending
-
-### `database/factories` (16 files) — PENDING (0/16)
-- [ ] `EquipmentCategoryFactory.php`
-- [ ] `EquipmentFactory.php`
-- [ ] `MaintenancePlanFactory.php`
-- [ ] `PartCategoryFactory.php`
-- [ ] `PartFactory.php`
-- [ ] `RoomFactory.php`
-- [ ] `StockMovementFactory.php`
-- [ ] `SupplierFactory.php`
-- [ ] `TaxRateFactory.php`
-- [ ] `TicketAttachmentFactory.php`
-- [ ] `TicketCommentFactory.php`
-- [ ] `TicketFactory.php`
-- [ ] `TicketStatusFactory.php`
-- [ ] `TicketTypeFactory.php`
-- [ ] `UserFactory.php`
-- [ ] `UserProfileFactory.php`
-- Folder README: pending
-
-### `database/seeders` (12 files) — PENDING (0/12)
-- [ ] `ActivityFeedSeeder.php`
-- [ ] `BulkOperationalDataSeeder.php`
-- [ ] `DatabaseSeeder.php`
-- [ ] `EquipmentCategoriesSeeder.php`
-- [ ] `EquipmentsSeeder.php`
-- [ ] `NotificationSeeder.php`
-- [ ] `RoomsSeeder.php`
-- [ ] `StockDataSeeder.php`
-- [ ] `TicketLookupSeeder.php`
-- [ ] `TicketsSeeder.php`
-- [ ] `UserProfilesSeeder.php`
-- [ ] `UsersSeeder.php`
-- Folder README: pending
-
-### `database/seeders/Data` (2 files) — PENDING (0/2)
-- [ ] `OperationalData.php`
-- [ ] `TicketDataset.php`
-- Folder README: pending
-
-### `database/migrations` (25 files) — PENDING (0/25)
-- [ ] `0001_01_01_000000_create_users_table.php`
-- [ ] `0001_01_01_000001_create_cache_table.php`
-- [ ] `0001_01_01_000002_create_jobs_table.php`
-- [ ] `0001_01_01_000003_create_rooms_table.php`
-- [ ] `0001_01_01_000004_create_equipments_table.php`
-- [ ] `0001_01_01_000005_create_tickets_table.php`
-- [ ] `0001_01_01_000006_create_audits_table.php`
-- [ ] `0001_01_01_000008_create_ticket_attachments_table.php`
-- [ ] `0001_01_01_000009_create_ticket_comments_table.php`
-- [ ] `2026_07_09_100000_create_notifications_table.php`
-- [ ] `2026_07_24_152504_create_audits_append_only_trigger.php`
-- [ ] `2026_07_31_000001_convert_ticket_tables_to_utf8mb4.php`
-- [ ] `2026_08_03_000001_add_ai_recommendation_columns_to_tickets_table.php`
-- [ ] `2026_08_05_000001_create_theme_settings_table.php`
-- [ ] `2026_08_05_000002_create_system_settings_table.php`
-- [ ] `2026_08_07_000001_add_reporter_fields_to_tickets_table.php`
-- [ ] `2026_08_08_000001_create_stock_catalog_tables.php`
-- [ ] `2026_08_08_000002_create_stock_movements_table.php`
-- [ ] `2026_08_08_000003_create_maintenance_plans_table.php`
-- [ ] `2026_08_08_000004_add_low_stock_notification_type.php`
-- [ ] `2026_08_10_000001_add_locale_to_users_table.php`
-- [ ] `2026_08_12_000001_create_user_preferences_table.php`
-- [ ] `2026_08_12_000002_populate_user_preferences.php`
-- [ ] `2026_08_12_000003_add_number_format_to_user_preferences.php`
-- [ ] `2026_08_12_000004_add_time_format_to_user_preferences.php`
-- Folder README: pending
-
-### `database` (0 files) — PENDING (0/0)
-- Folder README: pending
-
-### `bootstrap` (2 files) — PENDING (0/2)
-- [ ] `app.php`
-- [ ] `providers.php`
-- Folder README: pending
+### `bootstrap` (2 files) — DONE (2/2)
+- [x] `app.php`
+- [x] `providers.php`
+- Folder README: done
 
 ### `resources/views` (2 files) — PENDING (0/2)
 - [ ] `calendar.blade.php`

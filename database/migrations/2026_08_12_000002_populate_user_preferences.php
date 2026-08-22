@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Obter todos os utilizadores que não têm preferências definidas
+        // Get all users who don't have preferences defined
         $usersWithoutPrefs = \DB::table('users')
             ->leftJoin('user_preferences', 'users.id', '=', 'user_preferences.user_id')
             ->whereNull('user_preferences.user_id')
@@ -35,11 +35,11 @@ return new class extends Migration
     }
 
     /**
-     * Remove as preferências criadas por esta migration (reversível).
+     * Removes the preferences created by this migration (reversible).
      */
     public function down(): void
     {
-        // Remover apenas as preferências criadas com os valores default desta migration
+        // Remove only the preferences created with this migration's default values
         UserPreference::where('language', 'pt')
             ->where('currency', 'EUR')
             ->where('date_format', 'd/m/Y')

@@ -25,7 +25,7 @@ final class SupplierController extends Controller
     ) {}
 
     /**
-     * Lista paginada de fornecedores.
+     * Paginated listing of suppliers.
      */
     #[OA\Get(
         path: '/stock/suppliers',
@@ -68,7 +68,7 @@ final class SupplierController extends Controller
     }
 
     /**
-     * Detalhe de um fornecedor.
+     * Supplier detail view.
      */
     #[OA\Get(
         path: '/stock/suppliers/{supplier}',
@@ -133,7 +133,7 @@ final class SupplierController extends Controller
     }
 
     /**
-     * Atualiza um fornecedor.
+     * Updates a supplier.
      */
     #[OA\Patch(
         path: '/admin/suppliers/{supplier}',
@@ -176,7 +176,7 @@ final class SupplierController extends Controller
     }
 
     /**
-     * Elimina logicamente um fornecedor.
+     * Soft-deletes a supplier.
      */
     #[OA\Delete(
         path: '/admin/suppliers/{supplier}',

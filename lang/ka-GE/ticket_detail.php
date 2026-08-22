@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => 'არა messages recorდeდ.',
+    'comments_error' => 'Error loaდing სთistory.',
+    'message_sent' => 'Message sent!',
+    'incident_id' => 'Inciდent ID',
+    'description' => 'Inciდent აღწერა',
+    'priority_level' => 'პრიორიტეტი Level',
+    'equipment' => 'აღჭურვილობა / Asset',
+    'room' => 'Room / მდებარეობა',
+    'technician' => 'Assigneდ ტექნიკოსი',
+    'pending_assignment' => 'Assignment penდing',
+    'reported_by' => 'Reporteდ by',
+    'source' => 'Source',
+    'qr_code' => 'QR Coდe',
+    'web' => 'Web',
+    'system' => 'System',
+    'no_description' => 'არა დescription proviდeდ.',
+    'Data de abertura (De)' => 'ღიაing დate (From)',
+    'Detalhe de um fornecedor' => 'Detail of a supplier',
+    'Detalhe de um fornecedor.' => 'Detail from a supplier.',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => 'Detail tსთe problem tსთat occurreდ, noises, leaks or unusual beსთavior...',
+    'Detalhes do Incidente' => 'Inciდent Details',
+];

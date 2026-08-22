@@ -10,7 +10,7 @@ use App\Models\User;
 final class TicketPolicy
 {
     /**
-     * Determina se o utilizador pode listar os tickets.
+     * Determines whether the user can list tickets.
      */
     public function viewAny(User $user): bool
     {
@@ -18,7 +18,7 @@ final class TicketPolicy
     }
 
     /**
-     * Determina se o utilizador pode visualizar um ticket específico.
+     * Determines whether the user can view a specific ticket.
      */
     public function view(User $user, Ticket $ticket): bool
     {
@@ -26,7 +26,7 @@ final class TicketPolicy
     }
 
     /**
-     * Determina se o utilizador pode criar novos tickets.
+     * Determines whether the user can create new tickets.
      */
     public function create(User $user): bool
     {
@@ -34,7 +34,7 @@ final class TicketPolicy
     }
 
     /**
-     * Determina se o utilizador pode atualizar um ticket.
+     * Determines whether the user can update a ticket.
      */
     public function update(User $user, Ticket $ticket): bool
     {
@@ -42,7 +42,7 @@ final class TicketPolicy
     }
 
     /**
-     * Determina se o utilizador pode eliminar um ticket.
+     * Determines whether the user can delete a ticket.
      */
     public function delete(User $user, Ticket $ticket): bool
     {
@@ -50,7 +50,7 @@ final class TicketPolicy
     }
 
     /**
-     * Determina se o utilizador pode comentar num ticket.
+     * Determines whether the user can comment on a ticket.
      */
     public function comment(User $user, Ticket $ticket): bool
     {
@@ -58,7 +58,7 @@ final class TicketPolicy
     }
 
     /**
-     * Determina se o utilizador pode anexar fotografias ao ticket.
+     * Determines whether the user can attach photos to a ticket.
      */
     public function attachPhoto(User $user, Ticket $ticket): bool
     {
@@ -66,7 +66,7 @@ final class TicketPolicy
     }
 
     /**
-     * Determina se o utilizador pode remover fotografias do ticket.
+     * Determines whether the user can remove photos from a ticket.
      */
     public function deletePhoto(User $user, Ticket $ticket): bool
     {
@@ -74,7 +74,7 @@ final class TicketPolicy
     }
 
     /**
-     * Determina se o utilizador pode cancelar o seu próprio ticket.
+     * Determines whether the user can cancel their own ticket.
      */
     public function cancel(User $user, Ticket $ticket): bool
     {
@@ -86,7 +86,7 @@ final class TicketPolicy
     }
 
     /**
-     * Determina se o técnico pode iniciar o atendimento do ticket.
+     * Determines whether the technician can start working on the ticket.
      */
     public function start(User $user, Ticket $ticket): bool
     {
@@ -94,7 +94,7 @@ final class TicketPolicy
     }
 
     /**
-     * Determina se o técnico pode fechar o ticket.
+     * Determines whether the technician can close the ticket.
      */
     public function close(User $user, Ticket $ticket): bool
     {
@@ -102,7 +102,7 @@ final class TicketPolicy
     }
 
     /**
-     * Determina se o utilizador pode reabrir o ticket.
+     * Determines whether the user can reopen the ticket.
      */
     public function reopen(User $user, Ticket $ticket): bool
     {
@@ -110,7 +110,7 @@ final class TicketPolicy
     }
 
     /**
-     * Determina se o utilizador pode agendar a intervenção.
+     * Determines whether the user can schedule an intervention.
      */
     public function schedule(User $user, Ticket $ticket): bool
     {
@@ -118,7 +118,7 @@ final class TicketPolicy
     }
 
     /**
-     * Determina se o técnico ou administrador pode submeter um orçamento.
+     * Determines whether the technician or admin can submit a budget/quote.
      */
     public function submitBudget(User $user, Ticket $ticket): bool
     {
@@ -126,7 +126,7 @@ final class TicketPolicy
     }
 
     /**
-     * Determina se o administrador pode aprovar o orçamento.
+     * Determines whether the admin can approve the budget/quote.
      */
     public function approveBudget(User $user, Ticket $ticket): bool
     {
@@ -134,7 +134,7 @@ final class TicketPolicy
     }
 
     /**
-     * Determina se o técnico pode iniciar a reparação.
+     * Determines whether the technician can start the repair.
      */
     public function startRepair(User $user, Ticket $ticket): bool
     {
@@ -142,7 +142,7 @@ final class TicketPolicy
     }
 
     /**
-     * Determina se o técnico atribuído pode solicitar orçamento.
+     * Determines whether the assigned technician can request a budget/quote.
      */
     public function requestBudget(User $user, Ticket $ticket): bool
     {
@@ -150,7 +150,7 @@ final class TicketPolicy
     }
 
     /**
-     * Determina se o administrador pode atribuir o ticket a um técnico.
+     * Determines whether the admin can assign the ticket to a technician.
      */
     public function assign(User $user, Ticket $ticket): bool
     {
@@ -158,7 +158,7 @@ final class TicketPolicy
     }
 
     /**
-     * Determina se o utilizador pode aceder às analíticas.
+     * Determines whether the user can access analytics.
      */
     public function viewAnalytics(User $user): bool
     {
@@ -166,7 +166,7 @@ final class TicketPolicy
     }
 
     /**
-     * Determina se o utilizador pode exportar dados analíticos.
+     * Determines whether the user can export analytics data.
      */
     public function exportAnalytics(User $user): bool
     {
@@ -174,7 +174,7 @@ final class TicketPolicy
     }
 
     /**
-     * Determina se o administrador pode criar manutenção preventiva.
+     * Determines whether the admin can create preventive maintenance.
      */
     public function createPreventive(User $user): bool
     {
@@ -182,7 +182,7 @@ final class TicketPolicy
     }
 
     /**
-     * Verifica se o utilizador tem acesso geral ao ticket (Admin/Técnico ou Criador).
+     * Checks whether the user has general access to the ticket (Admin/Technician or Creator).
      */
     private function canAccessTicket(User $user, Ticket $ticket): bool
     {

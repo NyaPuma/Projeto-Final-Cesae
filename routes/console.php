@@ -10,11 +10,11 @@ Artisan::command('inspire', function () {
 
 /*
 |--------------------------------------------------------------------------
-| Agendamento de Telemetria Preventiva
+| Preventive Telemetry Scheduling
 |--------------------------------------------------------------------------
-| O comando telemetry:simulate executa automaticamente a cada hora,
-| verificando anomalias nos equipamentos e criando tickets de manutenção.
-| Para ativar, certifique-se de que o cron do Laravel está configurado:
+| The telemetry:simulate command runs automatically every hour,
+| checking for equipment anomalies and creating maintenance tickets.
+| To activate, ensure the Laravel cron is configured:
 |   * * * * * php /path-to-project/artisan schedule:run >> /dev/null 2>&1
 */
 Schedule::command('telemetry:simulate --equipments=5 --probability=25')
@@ -25,12 +25,12 @@ Schedule::command('telemetry:simulate --equipments=5 --probability=25')
 
 /*
 |--------------------------------------------------------------------------
-| Agendamento de Backup de Base de Dados
+| Database Backup Scheduling
 |--------------------------------------------------------------------------
-| Cria um backup diário da base de dados MySQL com retenção de 30 dias.
-| A compressão gzip é controlada por DB_BACKUP_COMPRESSION (config) e a
-| retenção por DB_BACKUP_RETENTION_DAYS; a opção --clean remove os backups
-| mais antigos que o período de retenção.
+| Creates a daily MySQL database backup with 30-day retention.
+| Gzip compression is controlled by DB_BACKUP_COMPRESSION (config) and
+| retention by DB_BACKUP_RETENTION_DAYS; the --clean option removes backups
+| older than the retention period.
 */
 Schedule::command('db:backup --clean')
     ->daily()
@@ -40,9 +40,9 @@ Schedule::command('db:backup --clean')
 
 /*
 |--------------------------------------------------------------------------
-| Agendamento de Partições de Auditoria
+| Audit Partition Scheduling
 |--------------------------------------------------------------------------
-| Regista partições mensais para a tabela de auditorias.
+| Creates monthly partitions for the audit table.
 */
 Schedule::command('audit:partition --months=12')
     ->monthly()

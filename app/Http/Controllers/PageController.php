@@ -9,15 +9,15 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 /**
- * Controller para páginas estáticas e utilitárias
- * que anteriormente usavam closures nas rotas.
+ * Controller for static and utility pages
+ * that previously used closures in routes.
  *
- * Consolidar aqui permite que php artisan route:cache funcione.
+ * Consolidating here allows php artisan route:cache to work.
  */
 final class PageController extends Controller
 {
     /**
-     * Página inicial (landing page).
+     * Home page (landing page).
      */
     public function home(): View
     {
@@ -25,34 +25,34 @@ final class PageController extends Controller
     }
 
     /**
-     * Alternar idioma da aplicação (rota legada).
+     * Switch application language (legacy route).
      *
-     * Mantida por compatibilidade com o seletor atual do topbar; a preferência
-     * é normalizada para os locais suportados. A rota moderna é
+     * Kept for compatibility with the current topbar selector; the preference
+     * is normalized to supported locales. The modern route is
      * POST /locale (LocaleController).
      */
     public function switchLang(Request $request, string $locale): RedirectResponse
     {
         $locale = LocaleService::sanitize($locale);
 
-        // Armazena o idioma na sessão e define um cookie permanente
+        // Store the language in session and set a permanent cookie
         session(['locale' => $locale]);
         $cookie = cookie()->forever('locale', $locale);
 
-        // Verifica se o utilizador está autenticado através dos cookies de sessão
+        // Check if the user is authenticated via session cookies
         $authToken = $request->cookie('api_token') ?: $request->cookie('auth_token');
 
         if ($authToken) {
-            // Utilizador autenticado — redireciona para o dashboard
+            // Authenticated user — redirect to dashboard
             return redirect()->route('ui.index')->withCookie($cookie);
         }
 
-        // Não autenticado — redireciona para a página de login
+        // Not authenticated — redirect to login page
         return redirect()->route('ui.login')->withCookie($cookie);
     }
 
     /**
-     * Vista de login (formulário de autenticação).
+     * Login view (authentication form).
      */
     public function login(): View
     {
@@ -60,7 +60,7 @@ final class PageController extends Controller
     }
 
     /**
-     * Rota de teste de e-mail (apenas em ambientes não-produção).
+     * Email test route (non-production environments only).
      */
     public function testEmail(): string
     {
@@ -77,7 +77,7 @@ final class PageController extends Controller
     }
 
     /**
-     * Formulário de reset de password (API).
+     * Password reset form (API).
      */
     public function passwordResetForm(string $token): View
     {

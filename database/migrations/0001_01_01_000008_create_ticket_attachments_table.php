@@ -81,7 +81,7 @@ return new class extends Migration
                 'attachments_ticket_mime_idx'
             );
 
-            // Filtros por extensão
+            // Extension filters
             $table->index(
                 'extension',
                 'attachments_extension_idx'
@@ -93,7 +93,7 @@ return new class extends Migration
                 'attachments_checksum_idx'
             );
 
-            // Ordenação cronológica
+            // Chronological ordering
             $table->index(
                 'created_at',
                 'attachments_created_at_idx'

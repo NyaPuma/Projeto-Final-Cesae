@@ -7,7 +7,7 @@ namespace App\ValueObjects;
 use InvalidArgumentException;
 
 /**
- * Value Object que representa e manipula valores monetários de forma segura e imutável.
+ * Immutable value object representing and manipulating monetary values safely.
  */
 final readonly class Money
 {
@@ -15,10 +15,10 @@ final readonly class Money
     private string $currency;
 
     /**
-     * Cria uma nova instância de Money com o montante em cêntimos e a respetiva moeda.
+     * Creates a new Money instance from an amount in cents and its currency.
      *
-     * @param int $amount Montante em cêntimos
-     * @param string $currency Código ISO de 3 letras da moeda (ex: EUR)
+     * @param int $amount Amount in cents
+     * @param string $currency Three-letter ISO currency code (e.g. EUR)
      * @throws InvalidArgumentException
      */
     public function __construct(int $amount, string $currency = 'EUR')
@@ -30,7 +30,7 @@ final readonly class Money
     }
 
     /**
-     * Valida se o montante fornecido é válido (não negativo).
+     * Validates that the provided amount is valid (non-negative).
      *
      * @param int $amount
      * @throws InvalidArgumentException
@@ -43,7 +43,7 @@ final readonly class Money
     }
 
     /**
-     * Valida se a moeda é um código ISO válido de 3 letras.
+     * Validates that the currency is a valid 3-letter ISO code.
      *
      * @param string $currency
      * @throws InvalidArgumentException
@@ -56,7 +56,7 @@ final readonly class Money
     }
 
     /**
-     * Cria uma instância de Money a partir de um valor decimal (float).
+     * Creates a Money instance from a decimal (float) value.
      *
      * @param float $amount
      * @param string $currency
@@ -68,7 +68,7 @@ final readonly class Money
     }
 
     /**
-     * Cria uma instância de Money com valor zero.
+     * Creates a zero-value Money instance.
      *
      * @param string $currency
      * @return self
@@ -79,7 +79,7 @@ final readonly class Money
     }
 
     /**
-     * Retorna o montante em cêntimos.
+     * Returns the amount in cents.
      *
      * @return int
      */
@@ -89,7 +89,7 @@ final readonly class Money
     }
 
     /**
-     * Retorna o código da moeda.
+     * Returns the currency code.
      *
      * @return string
      */
@@ -99,7 +99,7 @@ final readonly class Money
     }
 
     /**
-     * Converte o montante para formato decimal (float).
+     * Converts the amount to decimal (float) format.
      *
      * @return float
      */
@@ -109,7 +109,7 @@ final readonly class Money
     }
 
     /**
-     * Retorna o valor formatado com duas casas decimais e a moeda.
+     * Returns the value formatted with two decimal places and the currency.
      *
      * @return string
      */
@@ -119,7 +119,7 @@ final readonly class Money
     }
 
     /**
-     * Adiciona outro montante monetário, validando a compatibilidade de moedas.
+     * Adds another monetary amount, validating currency compatibility.
      *
      * @param Money $other
      * @return self
@@ -133,7 +133,7 @@ final readonly class Money
     }
 
     /**
-     * Subtrai outro montante monetário, validando a compatibilidade de moedas.
+     * Subtracts another monetary amount, validating currency compatibility.
      *
      * @param Money $other
      * @return self
@@ -147,7 +147,7 @@ final readonly class Money
     }
 
     /**
-     * Multiplica o montante por um fator numérico.
+     * Multiplies the amount by a numeric factor.
      *
      * @param float $factor
      * @return self
@@ -158,7 +158,7 @@ final readonly class Money
     }
 
     /**
-     * Verifica se este montante e moeda são iguais a outro objeto Money.
+     * Checks whether this amount and currency are equal to another Money object.
      *
      * @param Money $other
      * @return bool
@@ -169,7 +169,7 @@ final readonly class Money
     }
 
     /**
-     * Verifica se o montante é zero.
+     * Checks whether the amount is zero.
      *
      * @return bool
      */
@@ -179,7 +179,7 @@ final readonly class Money
     }
 
     /**
-     * Verifica se o montante é estritamente positivo.
+     * Checks whether the amount is strictly positive.
      *
      * @return bool
      */
@@ -189,7 +189,7 @@ final readonly class Money
     }
 
     /**
-     * Assegura que ambos os objetos Money utilizam a mesma moeda.
+     * Ensures both Money objects use the same currency.
      *
      * @param Money $other
      * @throws InvalidArgumentException
@@ -202,7 +202,7 @@ final readonly class Money
     }
 
     /**
-     * Retorna a representação em string do objeto monetário formatado.
+     * Returns the formatted string representation of this monetary object.
      *
      * @return string
      */

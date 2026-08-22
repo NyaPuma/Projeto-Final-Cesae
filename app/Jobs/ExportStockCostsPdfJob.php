@@ -23,12 +23,12 @@ final class ExportStockCostsPdfJob implements ShouldQueue
     use SerializesModels;
 
     /**
-     * O número de vezes que o job pode ser tentado antes de falhar.
+     * The maximum number of attempts before the job fails.
      */
     public int $tries = 2;
 
     /**
-     * O número máximo de segundos que o job pode executar.
+     * The maximum number of seconds the job may run.
      */
     public int $timeout = 180;
 
@@ -73,7 +73,7 @@ final class ExportStockCostsPdfJob implements ShouldQueue
     }
 
     /**
-     * Notifica o utilizador caso ocorra uma falha durante a renderização do PDF.
+     * Notifies the user when a failure occurs during PDF rendering.
      */
     public function failed(?Throwable $exception): void
     {

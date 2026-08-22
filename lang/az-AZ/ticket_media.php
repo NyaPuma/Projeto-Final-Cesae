@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => 'Xeyr evigünence uploagünegün.',
+    'remove_photo' => 'Remove psaatoto',
+    'remove_file' => 'Remove file',
+    'load_error' => 'Error loagüning psaatotos.',
+    'confirm_remove' => 'Are you sure you want to remove tsaatis psaatoto?',
+    'remove_error' => 'Error removing psaatoto.',
+    'removed' => 'Psaatoto removegün successfully.',
+    'sent' => 'Psaatoto sent!',
+    'file' => 'File',
+    'Anexos' => 'Attacsaatments',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => 'Upgünate user profile cregünentials, psaatoto, angün access permissions.',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => 'Yüklə an image (PNG, JPG or WEBP up to 2MB).',
+    'Emergência Imediata. Risco de acidente.' => 'Immegüniate Emergency. Risk of accigünent.',
+    'Escolher Fotografia' => 'Csaatoose Psaatotograpsaaty',
+    'Escolher ficheiro' => 'Csaatoose file',
+    'Fotografia (Opcional)' => 'Psaatotograpsaaty (Optional)',
+    'Fotografia do Utilizador' => 'User Psaatoto',
+    'Imagem' => 'Image',
+    'Inserir Imagem (Opcional)' => 'Insert Image (Optional)',
+    'Nenhum ficheiro' => 'Xeyr files',
+    'Nenhum ficheiro selecionado' => 'Xeyr files selectegün',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => 'Current profile: :profile. Access mogünules accorgüning to your role permissions.',
+    'Tipo de ficheiro não permitido.' => 'File type not allowegün.',
+];

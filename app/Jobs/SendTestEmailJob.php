@@ -22,19 +22,19 @@ final class SendTestEmailJob implements ShouldQueue
     use SerializesModels;
 
     /**
-     * Número máximo de tentativas de envio.
+     * Maximum number of send attempts.
      */
     public int $tries = 3;
 
     /**
-     * Intervalo de espera (em segundos) entre as tentativas.
+     * Wait time (in seconds) between attempts.
      *
      * @var array<int, int>
      */
     public array $backoff = [5, 15, 30];
 
     /**
-     * Tempo máximo de execução do Job em segundos.
+     * Maximum execution time for the job in seconds.
      */
     public int $timeout = 30;
 
@@ -59,7 +59,7 @@ final class SendTestEmailJob implements ShouldQueue
     }
 
     /**
-     * Regista o insucesso no log caso o envio falhe em todas as tentativas.
+     * Logs the failure when the email could not be sent after all attempts.
      */
     public function failed(?Throwable $exception): void
     {

@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => 'Žiadne zaznamenané správy.',
+    'comments_error' => 'Chyba pri načítavaní histórie.',
+    'message_sent' => 'Správa odoslaná!',
+    'incident_id' => 'Číslo incidentu',
+    'description' => 'Popis incidentu',
+    'priority_level' => 'Priorita',
+    'equipment' => 'Vybavenie / Majetok',
+    'room' => 'Miestnosť / Umiestnenie',
+    'technician' => 'Priradený technik',
+    'pending_assignment' => 'Čakajúce na priradenie',
+    'reported_by' => 'Nahlásil',
+    'source' => 'Zdroj',
+    'qr_code' => 'QR kód',
+    'web' => 'Web',
+    'system' => 'Systém',
+    'no_description' => 'Nebol poskytnutý žiadny popis.',
+    'Data de abertura (De)' => 'Dátum otvorenia (Od)',
+    'Detalhe de um fornecedor' => 'Podrobnosti dodávateľa',
+    'Detalhe de um fornecedor.' => 'Podrobnosti dodávateľa.',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => 'Popíšte vzniknutý problém, zvuky, úniky alebo nezvyčajné správanie...',
+    'Detalhes do Incidente' => 'Podrobnosti incidentu',
+];

@@ -12,16 +12,16 @@ use Illuminate\Http\Request;
 final class TicketCommentController extends Controller
 {
     /**
-     * Adiciona um novo comentário a um ticket específico.
+     * Adds a new comment to a specific ticket.
      */
     public function store(StoreCommentRequest $request, int $id): JsonResponse
     {
         $ticket = Ticket::findOrFail($id);
 
-        // 1. Autorização via Policy
+        // 1. Authorization via Policy
         $this->authorize('view', $ticket);
 
-        // 2. Registo do comentário com dados validados
+        // 2. Register the comment with validated data
         $comment = TicketComment::create([
             'ticket_id' => $ticket->id,
             'user_id' => $request->user()->id,
@@ -37,14 +37,14 @@ final class TicketCommentController extends Controller
     }
 
     /**
-     * Lista todos os comentários associados a um ticket.
+     * Lists all comments associated with a ticket.
      */
     public function index(Request $request, Ticket $ticket): JsonResponse
     {
-        // 1. Autorização via Policy
+        // 1. Authorization via Policy
         $this->authorize('view', $ticket);
 
-        // 2. Carrega os comentários cronologicamente com a respetiva relação do utilizador
+        // 2. Load comments chronologically with the respective user relation
         $comments = $ticket->comments()
             ->with('user')
             ->chronological()

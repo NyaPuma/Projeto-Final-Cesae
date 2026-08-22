@@ -13,7 +13,7 @@ use RuntimeException;
 final class QrCodeService
 {
     /**
-     * URL pública que o QR Code deverá codificar.
+     * Public URL that the QR Code should encode.
      */
     public function urlFor(Equipment $equipment): string
     {
@@ -21,7 +21,7 @@ final class QrCodeService
     }
 
     /**
-     * Gera o QR Code em formato PNG (binário) para download.
+     * Generates the QR Code in PNG format (binary) for download.
      */
     public function png(Equipment $equipment): string
     {
@@ -31,7 +31,7 @@ final class QrCodeService
     }
 
     /**
-     * Gera o QR Code como Data URI (PNG) para incorporar em <img> ou PDF.
+     * Generates the QR Code as a Data URI (PNG) for embedding in <img> or PDF.
      */
     public function pngDataUri(Equipment $equipment): string
     {
@@ -40,14 +40,14 @@ final class QrCodeService
         $dataUri = $result->getDataUri();
 
         if (! is_string($dataUri) || $dataUri === '') {
-            throw new RuntimeException('Não foi possível gerar o QR Code em formato PNG.');
+            throw new RuntimeException('Could not generate QR Code in PNG format.');
         }
 
         return $dataUri;
     }
 
     /**
-     * Gera o QR Code em formato SVG (vetorial) para impressão de alta qualidade.
+     * Generates the QR Code in SVG format (vector) for high-quality printing.
      */
     public function svg(Equipment $equipment): string
     {

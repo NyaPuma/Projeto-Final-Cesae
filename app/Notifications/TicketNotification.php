@@ -21,7 +21,7 @@ final class TicketNotification extends Notification implements ShouldQueue
     ) {}
 
     /**
-     * Define os canais de envio (Broadcast via WebSockets e Base de Dados).
+     * Defines the notification channels (broadcast via WebSockets and database).
      *
      * @return array<int, string>
      */
@@ -31,7 +31,7 @@ final class TicketNotification extends Notification implements ShouldQueue
     }
 
     /**
-     * Payload transmitido em tempo real via WebSockets (Reverb / Pusher).
+     * Payload broadcast in real time via WebSockets (Reverb / Pusher).
      */
     public function toBroadcast(object $notifiable): BroadcastMessage
     {
@@ -44,7 +44,7 @@ final class TicketNotification extends Notification implements ShouldQueue
     }
 
     /**
-     * Payload gravado na tabela 'notifications' da base de dados.
+     * Payload stored in the 'notifications' database table.
      *
      * @return array<string, mixed>
      */

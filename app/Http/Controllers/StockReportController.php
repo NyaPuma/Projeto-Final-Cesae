@@ -19,7 +19,7 @@ final class StockReportController extends Controller
     ) {}
 
     /**
-     * Exporta a lista de peças com stock baixo em CSV.
+     * Exports the low-stock parts list as CSV.
      */
     #[OA\Get(
         path: '/stock/reports/low-stock.csv',
@@ -62,7 +62,7 @@ final class StockReportController extends Controller
     }
 
     /**
-     * Exporta o inventário completo em CSV.
+     * Exports the complete inventory as CSV.
      */
     #[OA\Get(
         path: '/stock/reports/inventory.csv',
@@ -107,7 +107,7 @@ final class StockReportController extends Controller
     }
 
     /**
-     * Dispara a geração assíncrona do relatório de custos por equipamento (PDF).
+     * Dispatches asynchronous generation of the cost-by-equipment report (PDF).
      */
     #[OA\Get(
         path: '/stock/reports/costs-by-equipment.pdf',

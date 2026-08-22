@@ -8,12 +8,12 @@ use App\Models\User;
 use Illuminate\Http\Request;
 
 /**
- * Resolve o utilizador autenticado a partir dos tokens presentes no pedido.
+ * Resolves the authenticated user from tokens present in the request.
  *
- * O guard 'api' usa o driver 'token' (comparação sem hash), que não resolve
- * os utilizadores desta aplicação (os tokens são guardados com hash). Este
- * serviço replica a lógica do `CustomAuthMiddleware` para contextos onde esse
- * middleware não corre (ex.: rota pública de troca de idioma).
+ * The 'api' guard uses the 'token' driver (non-hashed comparison), which does
+ * not resolve this application's users (tokens are stored hashed). This service
+ * replicates the logic of `CustomAuthMiddleware` for contexts where that middleware
+ * does not run (e.g. public language-switch route).
  */
 final class AuthUserResolver
 {

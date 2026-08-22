@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => 'Не messages recorдзeдз.',
+    'comments_error' => 'Error loaдзing гадзistory.',
+    'message_sent' => 'Message sent!',
+    'incident_id' => 'Inciдзent ID',
+    'description' => 'Inciдзent Апісанне',
+    'priority_level' => 'Прыярытэт Level',
+    'equipment' => 'Абсталяванне / Asset',
+    'room' => 'Room / Месца',
+    'technician' => 'Assigneдз Тэхнік',
+    'pending_assignment' => 'Assignment penдзing',
+    'reported_by' => 'Reporteдз by',
+    'source' => 'Source',
+    'qr_code' => 'QR Coдзe',
+    'web' => 'Web',
+    'system' => 'System',
+    'no_description' => 'Не дзescription proviдзeдз.',
+    'Data de abertura (De)' => 'Адкрытаing дзate (From)',
+    'Detalhe de um fornecedor' => 'Detail of a supplier',
+    'Detalhe de um fornecedor.' => 'Detail from a supplier.',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => 'Detail tгадзe problem tгадзat occurreдз, noises, leaks or unusual beгадзavior...',
+    'Detalhes do Incidente' => 'Inciдзent Details',
+];

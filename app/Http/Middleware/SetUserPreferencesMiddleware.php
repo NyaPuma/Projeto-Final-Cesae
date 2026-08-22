@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Middleware;
 
 use App\Services\LocaleService;
-use App\Services\PreferenciasService;
+use App\Services\PreferencesService;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -14,11 +14,11 @@ use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Middleware para definir as preferências do utilizador (língua, moeda, formato de data).
+ * Middleware to set user preferences (language, currency, date format).
  *
- * Este middleware:
- * 1. Define App::setLocale() a partir da preferência de língua
- * 2. Expõe helpers para acessar moeda e formato de data
+ * This middleware:
+ * 1. Sets App::setLocale() from language preference
+ * 2. Exposes helpers to access currency and date format
  */
 final class SetUserPreferencesMiddleware
 {
@@ -27,12 +27,12 @@ final class SetUserPreferencesMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // 1. Definir a língua a partir das preferências do utilizador
+        // 1. Set language from user preferences
         $language = $this->resolveLanguage($request);
         App::setLocale($language);
 
-        // 2. Guardar as preferências atuais no request para acesso fácil
-        $prefs = PreferenciasService::current($request);
+        // 2. Store current preferences in request for easy access
+        $prefs = PreferencesService::current($request);
         $request->merge([
             '_preferences' => $prefs,
         ]);
@@ -41,12 +41,12 @@ final class SetUserPreferencesMiddleware
     }
 
     /**
-     * Resolve a língua a partir das preferências do utilizador.
+     * Resolves language from user preferences.
      *
-     * Precedência: sessão → cookie → preferências na BD do utilizador →
-     * `Accept-Language` do browser → default. A sessão/cookie têm precedência
-     * porque espelham a escolha explícita mais recente (incluindo o valor já
-     * persistido pelo `SetLocaleMiddleware`).
+     * Precedence: session → cookie → DB user preferences →
+     * browser `Accept-Language` → default. Session/cookie have precedence
+     * because they reflect the most recent explicit choice (including the value
+     * already persisted by `SetLocaleMiddleware`).
      */
     private function resolveLanguage(Request $request): string
     {
@@ -61,7 +61,7 @@ final class SetUserPreferencesMiddleware
         }
 
         if ($user !== null) {
-            $prefs = PreferenciasService::forUser($user);
+            $prefs = PreferencesService::forUser($user);
             if (LocaleService::isSupported($prefs['language'])) {
                 return LocaleService::sanitize($prefs['language']);
             }
@@ -71,7 +71,7 @@ final class SetUserPreferencesMiddleware
     }
 
     /**
-     * Indica se existe um locale explícito na sessão ou cookie.
+     * Indicates whether an explicit locale exists in session or cookie.
      */
     private function hasExplicitLocale(Request $request): bool
     {

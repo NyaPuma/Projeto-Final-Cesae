@@ -23,7 +23,7 @@ final class TicketCreated extends Mailable implements ShouldQueue
     ) {}
 
     /**
-     * Define o envelope e assunto da mensagem.
+     * Defines the envelope and message subject.
      */
     public function envelope(): Envelope
     {
@@ -33,7 +33,7 @@ final class TicketCreated extends Mailable implements ShouldQueue
     }
 
     /**
-     * Define o conteúdo e a template da mensagem.
+     * Defines the content and template for the message.
      */
     public function content(): Content
     {
@@ -43,7 +43,7 @@ final class TicketCreated extends Mailable implements ShouldQueue
     }
 
     /**
-     * Anexos para a mensagem.
+     * Attachments for the message.
      *
      * @return array<int, Attachment>
      */

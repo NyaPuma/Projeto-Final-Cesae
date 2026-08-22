@@ -8,16 +8,16 @@
 --}}
 
 @php
-    $currentLanguage = \App\Services\PreferenciasService::getLanguage(request());
-    $currentCurrency = \App\Services\PreferenciasService::getCurrency(request());
-    $currentDateFormat = \App\Services\PreferenciasService::getDateFormat(request());
-    $currentTimeFormat = \App\Services\PreferenciasService::getTimeFormat(request());
-    $currentNumberFormat = \App\Services\PreferenciasService::getNumberFormat(request());
+    $currentLanguage = \App\Services\PreferencesService::getLanguage(request());
+    $currentCurrency = \App\Services\PreferencesService::getCurrency(request());
+    $currentDateFormat = \App\Services\PreferencesService::getDateFormat(request());
+    $currentTimeFormat = \App\Services\PreferencesService::getTimeFormat(request());
+    $currentNumberFormat = \App\Services\PreferencesService::getNumberFormat(request());
 
     $grouped = \App\Services\LocaleService::groupedByContinent();
-    $supportedDateFormats = \App\Services\PreferenciasService::groupedDateFormats();
-    $supportedTimeFormats = \App\Services\PreferenciasService::supportedTimeFormats();
-    $supportedNumberFormats = \App\Services\PreferenciasService::groupedNumberFormats();
+    $supportedDateFormats = \App\Services\PreferencesService::groupedDateFormats();
+    $supportedTimeFormats = \App\Services\PreferencesService::supportedTimeFormats();
+    $supportedNumberFormats = \App\Services\PreferencesService::groupedNumberFormats();
 
     $tabLabels = [
         'language' => __('common.Idioma'),

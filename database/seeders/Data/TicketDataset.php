@@ -195,7 +195,7 @@ final class TicketDataset
 
     private function partsCost(): float
     {
-        // ~65% das intervenções sem peças de maior valor.
+        // ~65% of interventions without high-value parts.
         return round(random_int(1, 100) <= 65 ? random_int(0, 40) : random_int(40, 280), 2);
     }
 

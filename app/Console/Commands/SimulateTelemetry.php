@@ -14,8 +14,8 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Comando de simulação de telemetria para manutenção preventiva.
- * Gera tickets de avaria automáticos com base em anomalias aleatórias nos equipamentos.
+ * Telemetry simulation command for preventive maintenance.
+ * Generates automatic fault tickets based on random equipment anomalies.
  */
 class SimulateTelemetry extends Command
 {
@@ -62,7 +62,7 @@ class SimulateTelemetry extends Command
 
         $this->info('🔬 A iniciar simulação de telemetria...');
 
-        // Procura utilizador administrador do sistema
+        // Find the system administrator user
         $systemUser = User::whereHas('profile', fn ($q) => $q->where('name', UserRoleEnum::Admin->value))->first();
 
         if (! $systemUser) {
@@ -71,10 +71,10 @@ class SimulateTelemetry extends Command
             return self::FAILURE;
         }
 
-        // Obtém o ID do estado Aberto antecipadamente (resolve N+1)
+        // Pre-fetch the Open status ID (resolves N+1)
         $openStatusId = $statusService->getByName(TicketStatusEnum::Open);
 
-        // Carrega equipamentos ativos e faz Eager Loading dos tickets não resolvidos para evitar N+1
+        // Load active equipment with eager-loaded unresolved tickets to avoid N+1
         $equipments = Equipment::where('active', true)
             ->withExists(['tickets as has_open_ticket' => function ($query) use ($openStatusId) {
                 // Considera aberto se estiver em Open ou estados ativos não concluídos
@@ -93,14 +93,14 @@ class SimulateTelemetry extends Command
         $ticketsCreated = 0;
 
         foreach ($equipments as $equipment) {
-            // Evita duplicação consultando o atributo pré-carregado no Eloquent
+            // Avoids duplication by consulting the pre-loaded Eloquent attribute
             if ($equipment->has_open_ticket) {
                 $this->line("  ⏭  Equipamento #{$equipment->id} ({$equipment->name}) já tem um ticket ativo. A ignorar.");
 
                 continue;
             }
 
-            // Teste de probabilidade de anomalia (0 a 100)
+            // Anomaly probability test (0 to 100)
             if (random_int(1, 100) > $probability) {
                 $this->line("  ✅ Equipamento #{$equipment->id} ({$equipment->name}) sem anomalias detetadas.");
 

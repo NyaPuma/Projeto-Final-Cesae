@@ -10,7 +10,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 interface RoomRepositoryInterface
 {
     /**
-     * Encontra uma sala pelo seu ID.
+     * Find a room by its ID.
      *
      * @param int $id
      * @return Room|null
@@ -18,7 +18,7 @@ interface RoomRepositoryInterface
     public function findById(int $id): ?Room;
 
     /**
-     * Retorna uma listagem paginada de salas.
+     * Return a paginated list of rooms.
      *
      * @param array<int, string> $relations
      * @return LengthAwarePaginator<Room>
@@ -26,14 +26,14 @@ interface RoomRepositoryInterface
     public function getAll(array $relations = []): LengthAwarePaginator;
 
     /**
-     * Retorna todas as salas ativas.
+     * Return all active rooms.
      *
      * @return array<int, Room>
      */
     public function getActive(): array;
 
     /**
-     * Cria um novo registo de sala.
+     * Create a new room record.
      *
      * @param array<string, mixed> $data
      * @return Room
@@ -41,7 +41,7 @@ interface RoomRepositoryInterface
     public function create(array $data): Room;
 
     /**
-     * Atualiza uma sala existente.
+     * Update an existing room.
      *
      * @param Room $room
      * @param array<string, mixed> $data
@@ -50,7 +50,7 @@ interface RoomRepositoryInterface
     public function update(Room $room, array $data): bool;
 
     /**
-     * Inativa uma sala.
+     * Inactivate a room.
      *
      * @param Room $room
      * @return bool

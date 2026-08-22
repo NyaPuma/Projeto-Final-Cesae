@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => 'לא הועלו ראיות.',
+    'remove_photo' => 'הסרת תמונה',
+    'remove_file' => 'הסרת קובץ',
+    'load_error' => 'שגיאה בטעינת תמונה.',
+    'confirm_remove' => 'האם אתה בטוח שברצונך להסיר את התמונה הזו?',
+    'remove_error' => 'שגיאה בהסרת תמונה.',
+    'removed' => 'התמונה הוסרה בהצלחה.',
+    'sent' => 'התמונה נשלחה!',
+    'file' => 'קובץ',
+    'Anexos' => 'קבצים מצורפים',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => 'עדכן את פרטי הכניסה, התמונה והרשאות הגישה של פרופיל המשתמש.',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => 'העלה תמונה (PNG, JPG או WEBP עד 2MB).',
+    'Emergência Imediata. Risco de acidente.' => 'חירום מיידי. סיכון לתאונה.',
+    'Escolher Fotografia' => 'בחירת תמונה',
+    'Escolher ficheiro' => 'בחירת קובץ',
+    'Fotografia (Opcional)' => 'תמונה (אופציונלי)',
+    'Fotografia do Utilizador' => 'תמונת משתמש',
+    'Imagem' => 'תמונה',
+    'Inserir Imagem (Opcional)' => 'הכנסה תמונה (אופציונלי)',
+    'Nenhum ficheiro' => 'ללא קובץ',
+    'Nenhum ficheiro selecionado' => 'לא נבחר קובץ',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => 'פרופיל נוכחי: :profile. גש למודולים בהתאם להרשאות התפקיד שלך.',
+    'Tipo de ficheiro não permitido.' => 'סוג קובץ לא מותר.',
+];

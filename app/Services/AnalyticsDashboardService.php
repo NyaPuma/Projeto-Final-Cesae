@@ -34,7 +34,7 @@ final class AnalyticsDashboardService
     ) {}
 
     /**
-     * Retorna o payload completo do painel analítico (com cache).
+     * Returns the complete analytics dashboard payload (with cache).
      *
      * @return array<string, mixed>
      */
@@ -48,7 +48,7 @@ final class AnalyticsDashboardService
     }
 
     /**
-     * Constrói o payload de dados para o painel analítico.
+     * Builds the data payload for the analytics dashboard.
      *
      * @return array<string, mixed>
      */
@@ -137,7 +137,7 @@ final class AnalyticsDashboardService
     }
 
     /**
-     * Desempenho mensal: taxa de SLA (percentagem) e MTTR (minutos) por mês.
+     * Monthly performance: SLA rate (percentage) and MTTR (minutes) by month.
      *
      * @param  array<int, string>  $monthLabels
      * @return array{sla: array<int, float|null>, mttr: array<int, float|null>}
@@ -190,7 +190,7 @@ final class AnalyticsDashboardService
     }
 
     /**
-     * Distribuição dos tickets por urgência.
+     * Ticket distribution by urgency.
      *
      * @return array{labels: Collection<int, string>, data: Collection<int, int>}
      */
@@ -209,7 +209,7 @@ final class AnalyticsDashboardService
     }
 
     /**
-     * Distribuição dos tickets por sala (top 8).
+     * Ticket distribution by room (top 8).
      *
      * @return array{labels: Collection<int, string>, data: Collection<int, int>}
      */
@@ -231,7 +231,7 @@ final class AnalyticsDashboardService
     }
 
     /**
-     * Distribuição dos tickets por estado de orçamento.
+     * Ticket distribution by budget status.
      *
      * @return array{labels: Collection<int, string>, data: Collection<int, int>}
      */
@@ -253,7 +253,7 @@ final class AnalyticsDashboardService
     }
 
     /**
-     * Distribuição dos tickets por origem (web, qr, api, ...).
+     * Ticket distribution by source (web, qr, api, ...).
      *
      * @return array{labels: Collection<int, string>, data: Collection<int, int>}
      */
@@ -282,7 +282,7 @@ final class AnalyticsDashboardService
     }
 
     /**
-     * Custo total de intervenção por equipamento (top 8).
+     * Total intervention cost by equipment (top 8).
      *
      * @return array{labels: Collection<int, string>, data: Collection<int, float>}
      */
@@ -306,7 +306,7 @@ final class AnalyticsDashboardService
     }
 
     /**
-     * Movimentação mensal de stock (entradas e saídas).
+     * Monthly stock movement (entries and exits).
      *
      * @param  array<int, string>  $monthLabels
      * @return array{labels: array<int, string>, in: array<int, int>, out: array<int, int>}
@@ -349,7 +349,7 @@ final class AnalyticsDashboardService
     }
 
     /**
-     * Peças em alerta de stock baixo (top 8 por criticidade).
+     * Low stock alert parts (top 8 by criticality).
      *
      * @return array{labels: Collection<int, string>, data: Collection<int, int>}
      */
@@ -369,7 +369,7 @@ final class AnalyticsDashboardService
     }
 
     /**
-     * Notificações por tipo (top 8).
+     * Notifications by type (top 8).
      *
      * @return array{labels: Collection<int, string>, data: Collection<int, int>}
      */
@@ -400,7 +400,7 @@ final class AnalyticsDashboardService
     }
 
     /**
-     * Distribuição de utilizadores por perfil.
+     * User distribution by role.
      *
      * @return array{labels: Collection<int, string>, data: Collection<int, int>}
      */
@@ -421,7 +421,7 @@ final class AnalyticsDashboardService
     }
 
     /**
-     * Obtém a atividade recente registada nas auditorias do sistema.
+     * Gets recent activity recorded in system audits.
      *
      * @return Collection<int, array{title: string, description: string, time: string}>
      */
@@ -441,15 +441,15 @@ final class AnalyticsDashboardService
     }
 
     /**
-     * Traduz o evento de auditoria numa descrição legível.
+     * Translates the audit event into a readable description.
      */
     private function getAuditDescription(string $event): string
     {
         return match ($event) {
-            'created' => 'Registou uma nova entrada no sistema.',
-            'updated' => 'Atualizou campos de um registo.',
-            'deleted' => 'Removeu um registo do sistema.',
-            default => 'Ação registada na auditoria.',
+            'created' => 'Created a new entry in the system.',
+            'updated' => 'Updated fields in a record.',
+            'deleted' => 'Removed a record from the system.',
+            default => 'Action logged in audit.',
         };
     }
 }

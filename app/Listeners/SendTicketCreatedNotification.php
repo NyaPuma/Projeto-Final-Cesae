@@ -16,12 +16,12 @@ final class SendTicketCreatedNotification implements ShouldQueue
     use InteractsWithQueue;
 
     /**
-     * O número de vezes que o listener pode ser tentado na fila.
+     * The maximum number of times the listener may be attempted on the queue.
      */
     public int $tries = 3;
 
     /**
-     * Intervalo de espera (em segundos) entre as tentativas.
+     * Wait time (in seconds) between attempts.
      *
      * @var array<int, int>
      */
@@ -37,7 +37,7 @@ final class SendTicketCreatedNotification implements ShouldQueue
     }
 
     /**
-     * Regista a falha no log caso o envio da notificação falhe em todas as tentativas.
+     * Logs the failure when notification delivery fails after all attempts.
      */
     public function failed(TicketCreated $event, Throwable $exception): void
     {

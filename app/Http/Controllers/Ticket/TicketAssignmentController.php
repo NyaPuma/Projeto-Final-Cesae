@@ -22,28 +22,28 @@ final class TicketAssignmentController extends Controller
     ) {}
 
     /**
-     * Atribui um técnico a um ticket e atualiza o estado para Em Progresso.
+     * Assigns a technician to a ticket and updates the status to In Progress.
      */
     public function __invoke(AssignTechnicianToTicketRequest $request, Ticket $ticket): JsonResponse
     {
-        // 1. Autorização via Policy nativa do Laravel
+        // 1. Authorization via Laravel's native Policy
         $this->authorize('assign', $ticket);
 
-        // 2. Guard: tickets encerrados não podem receber técnico
+        // 2. Guard: closed tickets cannot receive a technician
         if ($ticket->hasStatus(TicketStatusEnum::Closed) || $ticket->hasStatus(TicketStatusEnum::Cancelled)) {
             return response()->json([
                 'message' => __('tickets.Não é possível atribuir um técnico a um ticket encerrado.'),
             ], 422);
         }
 
-        // 3. Preserva o estado anterior diretamente como Enum
+        // 3. Preserve the previous state directly as an Enum
         $oldStatus = $ticket->status;
 
-        // 4. Executa a atribuição no serviço de domínio (suporta null = atribuição automática)
+        // 4. Execute the assignment in the domain service (supports null = automatic assignment)
         $technicianId = $request->validated()['technician_id'] ?? null;
         $technician = $this->technicianService->assignToTicket($ticket, $technicianId);
 
-        // 5. Trata a falha de atribuição (técnico inválido/indisponível)
+        // 5. Handle assignment failure (invalid/unavailable technician)
         if ($technician === null) {
             $message = $technicianId
                 ? __('validation.Técnico selecionado é inválido ou indisponível.')
@@ -52,16 +52,16 @@ final class TicketAssignmentController extends Controller
             return response()->json(['message' => $message], 422);
         }
 
-        // 6. Transita o ticket para Em Progresso (consistente com o broadcast)
+        // 6. Transition the ticket to In Progress (consistent with the broadcast)
         $this->workflowService->startRepair($ticket);
 
-        // Evita que a relação de estado (já carregada) fique obsoleta na resposta
+        // Prevent the status relation (already loaded) from becoming stale in the response
         $ticket->unsetRelation('status');
 
-        // 7. Emite a alteração de estado para os canais de WebSocket
+        // 7. Emit status change to WebSocket channels
         $this->broadcastStatusChange($ticket, $oldStatus, TicketStatusEnum::InProgress);
 
-        // 8. Carrega relações necessárias para o Resource
+        // 8. Load relations needed for the Resource
         $ticket->loadMissing(['equipment', 'room', 'technician', 'status']);
 
         return response()->json([

@@ -8,15 +8,15 @@ use App\Models\Part;
 use App\Models\TaxRate;
 
 /**
- * Cálculo de preços de peças com IVA configurável.
+ * Part price calculation with configurable VAT.
  *
- * O preço final é sempre calculado dinamicamente a partir da taxa associada:
- * preco_final = preco_custo * (1 + percentagem / 100). Nunca hardcoded.
+ * The final price is always calculated dynamically from the associated tax rate:
+ * final_price = cost_price * (1 + percentage / 100). Never hardcoded.
  */
 final class PartPriceCalculator
 {
     /**
-     * Preço de custo com IVA incluído, a partir da taxa da peça.
+     * Cost price with VAT included, from the part's tax rate.
      */
     public function priceWithVat(Part $part, ?TaxRate $taxRate = null): float
     {
@@ -27,7 +27,7 @@ final class PartPriceCalculator
     }
 
     /**
-     * Montante de IVA (diferença entre preço com e sem IVA).
+     * VAT amount (difference between price with and without VAT).
      */
     public function vatAmount(Part $part, ?TaxRate $taxRate = null): float
     {
@@ -35,7 +35,7 @@ final class PartPriceCalculator
     }
 
     /**
-     * Preço de venda com IVA (se aplicável a faturação interna).
+     * Sale price with VAT (if applicable for internal billing).
      */
     public function salePriceWithVat(Part $part, ?TaxRate $taxRate = null): ?float
     {

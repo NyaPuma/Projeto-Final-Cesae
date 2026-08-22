@@ -23,14 +23,14 @@ final class RoomController extends Controller
     ) {}
 
     /**
-     * Lista todas as salas registadas no sistema.
+     * Lists all rooms registered in the system.
      */
     public function indexRoom(Request $request): JsonResponse
     {
-        // 1. Autorização via Policy
+        // 1. Authorization via Policy
         $this->authorize('viewAny', Room::class);
 
-        // 2. Procura de salas através do repositório
+        // 2. Search for rooms via the repository
         $rooms = $this->roomRepository->getAll();
 
         return response()->json([
@@ -39,14 +39,14 @@ final class RoomController extends Controller
     }
 
     /**
-     * Cria uma nova sala no sistema.
+     * Creates a new room in the system.
      */
     public function storeRoom(StoreRoomRequest $request): JsonResponse
     {
-        // 1. Autorização via Policy
+        // 1. Authorization via Policy
         $this->authorize('create', Room::class);
 
-        // 2. Executa DTO e Action para criação
+        // 2. Execute DTO and Action for creation
         $data = StoreRoomData::fromRequest($request->validated());
         $room = $this->createRoomAction->execute($data);
 
@@ -57,14 +57,14 @@ final class RoomController extends Controller
     }
 
     /**
-     * Atualiza os dados de uma sala existente.
+     * Updates an existing room's data.
      */
     public function updateRoom(UpdateRoomRequest $request, Room $room): JsonResponse
     {
-        // 1. Autorização via Policy
+        // 1. Authorization via Policy
         $this->authorize('update', $room);
 
-        // 2. Executa DTO e Action para atualização
+        // 2. Execute DTO and Action for update
         $data = UpdateRoomData::fromRequest($request->validated());
         $updatedRoom = $this->updateRoomAction->execute($room, $data);
 
@@ -75,14 +75,14 @@ final class RoomController extends Controller
     }
 
     /**
-     * Inativa uma sala existente no sistema.
+     * Deactivates an existing room in the system.
      */
     public function inactivateRoom(Request $request, Room $room): JsonResponse
     {
-        // 1. Autorização via Policy
+        // 1. Authorization via Policy
         $this->authorize('update', $room);
 
-        // 2. Inativação via Repositório
+        // 2. Deactivation via Repository
         $this->roomRepository->inactivate($room);
 
         return response()->json([

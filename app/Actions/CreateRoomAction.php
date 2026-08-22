@@ -25,9 +25,6 @@ final readonly class CreateRoomAction
                 'notes' => $data->notes,
             ]);
 
-            // Exemplo de disparo de evento no futuro:
-            // RoomCreated::dispatch($room);
-
             return $room;
         });
     }

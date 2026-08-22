@@ -18,14 +18,14 @@ final class TicketScheduleController extends Controller
     ) {}
 
     /**
-     * Agenda a janela de intervenção para um determinado ticket.
+     * Schedules the intervention window for a given ticket.
      */
     public function __invoke(ScheduleTicketRequest $request, Ticket $ticket): JsonResponse
     {
-        // 1. Autorização centralizada via Policy do Laravel
+        // 1. Centralized authorization via Laravel Policy
         $this->authorize('schedule', $ticket);
 
-        // 2. Executa o agendamento no action de domínio (valida tickets encerrados e o intervalo)
+        // 2. Execute the scheduling in the domain action (validates closed tickets and the interval)
         try {
             $ticket = $this->scheduleTicketAction->execute(
                 $ticket,
@@ -37,10 +37,10 @@ final class TicketScheduleController extends Controller
             ], 422);
         }
 
-        // 3. Carrega as relações necessárias para a resposta
+        // 3. Load the relations needed for the response
         $ticket->loadMissing(['equipment', 'room']);
 
-        // 4. Resposta JSON padronizada via API Resource
+        // 4. Standardized JSON response via API Resource
         return response()->json([
             'message' => __('messages.Intervenção agendada com sucesso.'),
             'ticket' => new TicketResource($ticket),

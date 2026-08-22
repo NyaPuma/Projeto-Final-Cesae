@@ -12,7 +12,7 @@ abstract class Controller
 {
     use AuthorizesRequests;
     /**
-     * Obtém o utilizador autenticado a partir do guard API ou da request padrão.
+     * Gets the authenticated user from the API guard or the default request.
      */
     protected function authenticatedUser(Request $request): User
     {
@@ -26,9 +26,9 @@ abstract class Controller
     }
 
     /**
-     * Verifica se o utilizador possui um dos perfis permitidos.
+     * Checks whether the user has one of the allowed profiles.
      *
-     * @deprecated Recomenda-se a utilização de Policies do Laravel para controlo de acessos.
+     * @deprecated Use Laravel Policies for access control instead.
      */
     protected function requireRole(User $user, array $roles): void
     {
@@ -38,7 +38,7 @@ abstract class Controller
     }
 
     /**
-     * Retorna uma resposta JSON formatada para recurso não encontrado.
+     * Returns a formatted JSON response for resource not found.
      */
     protected function jsonNotFound(?string $message = null): JsonResponse
     {
@@ -48,7 +48,7 @@ abstract class Controller
     }
 
     /**
-     * Retorna uma resposta JSON formatada para erros de validação manuais.
+     * Returns a formatted JSON response for manual validation errors.
      */
     protected function jsonValidationError(mixed $errors): JsonResponse
     {

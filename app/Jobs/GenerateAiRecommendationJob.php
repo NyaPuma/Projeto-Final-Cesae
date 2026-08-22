@@ -23,19 +23,19 @@ final class GenerateAiRecommendationJob implements ShouldQueue, ShouldBeUnique
     use SerializesModels;
 
     /**
-     * Número máximo de tentativas antes de considerar o job como falhado.
+     * Maximum number of attempts before the job is considered failed.
      */
     public int $tries = 3;
 
     /**
-     * Tempo de espera (em segundos) entre cada tentativa (backoff exponencial).
+     * Wait time (in seconds) between each attempt (exponential backoff).
      *
      * @var array<int, int>
      */
     public array $backoff = [10, 30, 60];
 
     /**
-     * Tempo máximo (em segundos) que a chamada à API de IA pode demorar.
+     * Maximum time (in seconds) the AI API call can take.
      */
     public int $timeout = 60;
 
@@ -44,8 +44,8 @@ final class GenerateAiRecommendationJob implements ShouldQueue, ShouldBeUnique
     ) {}
 
     /**
-     * Garante que apenas uma recomendação é gerada por ticket de cada vez,
-     * evitando chamadas duplicadas ao serviço de IA (idempotência).
+     * Ensures only one recommendation is generated per ticket at a time,
+     * preventing duplicate AI service calls (idempotency).
      */
     public function uniqueId(): string
     {
@@ -53,7 +53,7 @@ final class GenerateAiRecommendationJob implements ShouldQueue, ShouldBeUnique
     }
 
     /**
-     * Mantém o lock de unicidade durante 2 minutos após o término do job.
+     * Keeps the uniqueness lock for 2 minutes after job completion.
      */
     public function uniqueFor(): int
     {
@@ -62,39 +62,39 @@ final class GenerateAiRecommendationJob implements ShouldQueue, ShouldBeUnique
 
     public function handle(AIService $aiService): void
     {
-        // 1. Obtém a recomendação do serviço de IA
-        $recommendation = $aiService->recomendarTecnico($this->ticket);
+        // 1. Get recommendation from AI service
+        $recommendation = $aiService->recommendTechnician($this->ticket);
 
         try {
-            // 2. Persiste o resultado no modelo de Ticket
+            // 2. Persist result on Ticket model
             $this->ticket->update([
-                'recommended_technician_id' => $recommendation['tecnico_id'] ?? null,
-                'ai_recommendation_reason' => $recommendation['justificacao'] ?? null,
+                'recommended_technician_id' => $recommendation['technician_id'] ?? null,
+                'ai_recommendation_reason' => $recommendation['justification'] ?? null,
                 'ai_processed_at' => now(),
             ]);
         } catch (Throwable $e) {
-            Log::warning("Não foi possível persistir a recomendação de IA do Ticket #{$this->ticket->id}.", [
+            Log::warning("Could not persist AI recommendation for Ticket #{$this->ticket->id}.", [
                 'error' => $e->getMessage(),
             ]);
         }
     }
 
     /**
-     * Trata o insucesso do Job caso a API de IA fique indisponível.
+     * Handles job failure when AI API becomes unavailable.
      */
     public function failed(?Throwable $exception): void
     {
-        logger()->error("Falha ao gerar recomendação de IA para o Ticket #{$this->ticket->id}", [
+        logger()->error("Failed to generate AI recommendation for Ticket #{$this->ticket->id}", [
             'exception' => $exception?->getMessage(),
         ]);
 
         try {
             $this->ticket->update([
                 'ai_processed_at' => now(),
-                'ai_recommendation_reason' => 'Não foi possível obter uma recomendação automática no momento.',
+                'ai_recommendation_reason' => 'Could not obtain an automatic recommendation at this time.',
             ]);
         } catch (Throwable $e) {
-            Log::warning("Não foi possível registar a falha de IA no Ticket #{$this->ticket->id}.", [
+            Log::warning("Could not log AI failure on Ticket #{$this->ticket->id}.", [
                 'error' => $e->getMessage(),
             ]);
         }

@@ -61,10 +61,10 @@ class AIServiceTest extends TestCase
             'opened_at' => now(),
         ]);
 
-        $result = $this->aiService->recomendarTecnico($ticket);
+        $result = $this->aiService->recommendTechnician($ticket);
 
-        $this->assertNull($result['tecnico_id']);
-        $this->assertStringContainsString('não existem técnicos', $result['justificacao']);
+        $this->assertNull($result['technician_id']);
+        $this->assertStringContainsString('No active operational technicians', $result['justification']);
     }
 
     #[Test]
@@ -90,10 +90,10 @@ class AIServiceTest extends TestCase
             'opened_at' => now(),
         ]);
 
-        $result = $this->aiService->recomendarTecnico($ticket);
+        $result = $this->aiService->recommendTechnician($ticket);
 
-        $this->assertNull($result['tecnico_id']);
-        $this->assertStringContainsString('indisponível', $result['justificacao']);
+        $this->assertNull($result['technician_id']);
+        $this->assertStringContainsString('unavailable', $result['justification']);
     }
 
     #[Test]
@@ -120,10 +120,10 @@ class AIServiceTest extends TestCase
             'opened_at' => now(),
         ]);
 
-        $result = $this->aiService->recomendarTecnico($ticket);
+        $result = $this->aiService->recommendTechnician($ticket);
 
-        $this->assertNull($result['tecnico_id']);
-        $this->assertStringContainsString('não existem técnicos', $result['justificacao']);
+        $this->assertNull($result['technician_id']);
+        $this->assertStringContainsString('No active operational technicians', $result['justification']);
     }
 
     #[Test]
@@ -149,18 +149,18 @@ class AIServiceTest extends TestCase
             'opened_at' => now(),
         ]);
 
-        $result = $this->aiService->recomendarTecnico($ticket);
+        $result = $this->aiService->recommendTechnician($ticket);
 
-        $this->assertNull($result['tecnico_id']);
-        $this->assertStringContainsString('indisponível', $result['justificacao']);
+        $this->assertNull($result['technician_id']);
+        $this->assertStringContainsString('unavailable', $result['justification']);
     }
 
     #[Test]
     public function it_returns_correct_result_structure(): void
     {
-        $result = $this->aiService->recomendarTecnico(new Ticket);
+        $result = $this->aiService->recommendTechnician(new Ticket);
 
-        $this->assertArrayHasKey('tecnico_id', $result);
-        $this->assertArrayHasKey('justificacao', $result);
+        $this->assertArrayHasKey('technician_id', $result);
+        $this->assertArrayHasKey('justification', $result);
     }
 }

@@ -17,7 +17,7 @@ final class LogTicketWorkflowChange implements ShouldQueue
     use InteractsWithQueue;
 
     /**
-     * O número de vezes que o listener pode ser tentado na fila.
+     * The maximum number of times the listener may be attempted on the queue.
      */
     public int $tries = 3;
 
@@ -36,7 +36,7 @@ final class LogTicketWorkflowChange implements ShouldQueue
     }
 
     /**
-     * Regista a falha no log caso a gravação do histórico falhe.
+     * Logs the failure when the workflow history write fails.
      */
     public function failed(TicketStatusChanged $event, Throwable $exception): void
     {

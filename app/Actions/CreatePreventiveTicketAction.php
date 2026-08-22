@@ -28,7 +28,7 @@ final readonly class CreatePreventiveTicketAction
         $openStatusId = $this->statusService->getByName(TicketStatusEnum::Open);
 
         if ($openStatusId === null) {
-            throw new RuntimeException("O estado '" . TicketStatusEnum::Open->value . "' não foi encontrado no sistema.");
+            throw new RuntimeException("Status '" . TicketStatusEnum::Open->value . "' was not found in the system.");
         }
 
         $resolvedTechnician = $this->resolveTechnician($technician);
@@ -38,16 +38,13 @@ final readonly class CreatePreventiveTicketAction
                 'user_id' => $admin->id,
                 'assigned_to' => $resolvedTechnician?->id,
                 'title' => trim($title),
-                'description' => $description ? trim($description) : 'Manutenção preventiva agendada.',
+                'description' => $description ? trim($description) : 'Scheduled preventive maintenance.',
                 'priority' => TicketPriorityEnum::Medium->value,
                 'status_id' => $openStatusId,
                 'opened_at' => now(),
                 'scheduled_at' => $scheduledAt ? Carbon::parse($scheduledAt) : now(),
                 'scheduled' => true,
             ]);
-
-            // Exemplo de disparo de evento no futuro:
-            // PreventiveTicketCreated::dispatch($ticket);
 
             return $ticket->load(['technician', 'status', 'user']);
         });

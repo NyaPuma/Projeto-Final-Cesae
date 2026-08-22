@@ -20,7 +20,7 @@ final class TechnicianAssignmentService
     ) {}
 
     /**
-     * Encontra o técnico ativo com menor carga de trabalho (tickets em curso).
+     * Finds the active technician with the lowest workload (in-progress tickets).
      *
      * @return User|null
      */
@@ -36,7 +36,7 @@ final class TechnicianAssignmentService
     }
 
     /**
-     * Atribui um técnico a um ticket (específico por ID ou automaticamente ao menos ocupado).
+     * Assigns a technician to a ticket (specific by ID or automatically the least busy).
      *
      * @param Ticket $ticket
      * @param int|null $technicianId

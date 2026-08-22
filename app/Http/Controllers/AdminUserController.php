@@ -25,14 +25,14 @@ final class AdminUserController extends Controller
     ) {}
 
     /**
-     * Lista todos os utilizadores com os seus respetivos perfis.
+     * Lists all users with their respective profiles.
      */
     public function index(Request $request): JsonResponse
     {
-        // 1. Autorização via Policy
+        // 1. Authorization via Policy
         $this->authorize('viewAny', User::class);
 
-        // 2. Procura de utilizadores com eager loading do perfil
+        // 2. Search for users with eager loading of profile
         $users = $this->userRepository->getAll(['profile']);
 
         return response()->json([
@@ -41,14 +41,14 @@ final class AdminUserController extends Controller
     }
 
     /**
-     * Regista um novo utilizador no sistema.
+     * Registers a new user in the system.
      */
     public function store(StoreUserRequest $request): JsonResponse
     {
-        // 1. Autorização via Policy
+        // 1. Authorization via Policy
         $this->authorize('create', User::class);
 
-        // 2. Executa DTO e Action para criação
+        // 2. Execute DTO and Action for creation
         $data = StoreUserData::fromRequest($request->validated());
         $newUser = $this->createUserAction->execute($data);
 
@@ -61,14 +61,14 @@ final class AdminUserController extends Controller
     }
 
     /**
-     * Atualiza as informações de um utilizador existente.
+     * Updates an existing user's information.
      */
     public function update(UpdateUserRequest $request, User $targetUser): JsonResponse
     {
-        // 1. Autorização via Policy
+        // 1. Authorization via Policy
         $this->authorize('update', $targetUser);
 
-        // 2. Executa DTO e Action para atualização
+        // 2. Execute DTO and Action for update
         $data = UpdateUserData::fromRequest($request->validated());
         $updatedUser = $this->updateUserAction->execute($targetUser, $data);
 
@@ -81,21 +81,21 @@ final class AdminUserController extends Controller
     }
 
     /**
-     * Inativa a conta de um utilizador no sistema.
+     * Deactivates a user account in the system.
      */
     public function inactivate(Request $request, User $targetUser): JsonResponse
     {
-        // 1. Autorização via Policy
+        // 1. Authorization via Policy
         $this->authorize('inactivate', $targetUser);
 
-        // 2. Regra de negócio: impede que o próprio administrador se inative a si mesmo
+        // 2. Business rule: prevents the administrator from deactivating themselves
         if ($request->user()->id === $targetUser->id) {
             return response()->json([
                 'message' => __('common.Não é possível inativar a sua própria conta.'),
             ], 422);
         }
 
-        // 3. Inativação do utilizador via Repositório
+        // 3. Deactivate user via Repository
         $this->userRepository->inactivate($targetUser);
 
         $targetUser->loadMissing('profile');
@@ -107,21 +107,21 @@ final class AdminUserController extends Controller
     }
 
     /**
-     * Elimina (soft delete) a conta de um utilizador do sistema.
+     * Soft-deletes a user account from the system.
      */
     public function destroy(Request $request, User $targetUser): JsonResponse
     {
-        // 1. Autorização via Policy
+        // 1. Authorization via Policy
         $this->authorize('delete', $targetUser);
 
-        // 2. Regra de negócio: impede que o próprio administrador se apague a si mesmo
+        // 2. Business rule: prevents the administrator from deleting themselves
         if ($request->user()->id === $targetUser->id) {
             return response()->json([
                 'message' => __('common.Não é possível apagar a sua própria conta.'),
             ], 422);
         }
 
-        // 3. Eliminação (soft delete) do utilizador via Repositório
+        // 3. Soft delete of user via Repository
         $this->userRepository->delete($targetUser);
 
         return response()->json([
@@ -130,11 +130,11 @@ final class AdminUserController extends Controller
     }
 
     /**
-     * Lista todos os perfis/funções disponíveis no sistema.
+     * Lists all available profiles/roles in the system.
      */
     public function profiles(Request $request): JsonResponse
     {
-        // 1. Autorização via Policy (ou reutilização de permissão da model UserProfile)
+        // 1. Authorization via Policy (or reuse of UserProfile model permission)
         $this->authorize('viewAny', UserProfile::class);
 
         $profiles = UserProfile::all();

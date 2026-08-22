@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => 'No messages recorded.',
+    'comments_error' => 'Error loading history.',
+    'message_sent' => 'Message sent!',
+    'incident_id' => 'Incident ID',
+    'description' => 'Incident Description',
+    'priority_level' => 'Priority Level',
+    'equipment' => 'Equipment / Asset',
+    'room' => 'Room / Location',
+    'technician' => 'Assigned Technician',
+    'pending_assignment' => 'Assignment pending',
+    'reported_by' => 'Reported by',
+    'source' => 'Source',
+    'qr_code' => 'QR Code',
+    'web' => 'Web',
+    'system' => 'System',
+    'no_description' => 'No description provided.',
+    'Data de abertura (De)' => 'Opening date (From)',
+    'Detalhe de um fornecedor' => 'Detail of a supplier',
+    'Detalhe de um fornecedor.' => 'Detail from a supplier.',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => 'Detail the problem that occurred, noises, leaks or unusual behavior...',
+    'Detalhes do Incidente' => 'Incident Details',
+];

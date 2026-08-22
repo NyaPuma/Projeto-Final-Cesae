@@ -23,7 +23,7 @@ final class CalendarController extends Controller
     ) {}
 
     /**
-     * Renderiza a vista do calendário para o utilizador autenticado.
+     * Renders the calendar view for the authenticated user.
      */
     public function index(Request $request): View
     {
@@ -34,7 +34,7 @@ final class CalendarController extends Controller
     }
 
     /**
-     * Retorna os eventos agendados do utilizador em formato JSON.
+     * Returns the user's scheduled events in JSON format.
      */
     public function events(Request $request): JsonResponse
     {
@@ -47,7 +47,7 @@ final class CalendarController extends Controller
     }
 
     /**
-     * Agenda uma manutenção preventiva, criando um ticket agendado (admin).
+     * Schedules a preventive maintenance, creating a scheduled ticket (admin).
      */
     public function scheduleMaintenance(ScheduleMaintenanceRequest $request): JsonResponse
     {
@@ -71,7 +71,7 @@ final class CalendarController extends Controller
     }
 
     /**
-     * Reagenda um evento arrastado no calendário (admin ou técnico atribuído).
+     * Reschedules a calendar-dragged event (admin or assigned technician).
      */
     public function reschedule(Ticket $ticket, RescheduleEventRequest $request): JsonResponse
     {

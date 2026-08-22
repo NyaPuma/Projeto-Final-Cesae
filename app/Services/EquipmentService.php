@@ -10,7 +10,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 final class EquipmentService
 {
     /**
-     * Retorna uma listagem paginada de equipamentos com base em termos de pesquisa e estado.
+     * Returns a paginated listing of equipment based on search terms and status.
      *
      * @param string|null $search
      * @param string|null $status

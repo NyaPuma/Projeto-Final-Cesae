@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => 'ไม่มีหลักฐานที่อัปโหลดไว้',
+    'remove_photo' => 'ลบรูปภาพ',
+    'remove_file' => 'ลบไฟล์',
+    'load_error' => 'เกิดข้อผิดพลาดในการโหลดรูปภาพ',
+    'confirm_remove' => 'คุณแน่ใจหรือไม่ว่าต้องการลบรูปภาพนี้?',
+    'remove_error' => 'เกิดข้อผิดพลาดในการลบรูปภาพ',
+    'removed' => 'ลบรูปภาพสำเร็จ',
+    'sent' => 'ส่งรูปภาพแล้ว!',
+    'file' => 'ไฟล์',
+    'Anexos' => 'ไฟล์แนบ',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => 'อัปเดตข้อมูลประจำตัว รูปภาพ และสิทธิ์การเข้าถึงของโปรไฟล์ผู้ใช้',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => 'อัปโหลดรูปภาพ (PNG, JPG หรือ WEBP ขนาดไม่เกิน 2MB)',
+    'Emergência Imediata. Risco de acidente.' => 'ฉุกเฉินทันที มีความเสี่ยงอุบัติเหตุ',
+    'Escolher Fotografia' => 'เลือกรูปภาพ',
+    'Escolher ficheiro' => 'เลือกไฟล์',
+    'Fotografia (Opcional)' => 'รูปภาพ (ไม่บังคับ)',
+    'Fotografia do Utilizador' => 'รูปภาพผู้ใช้',
+    'Imagem' => 'รูปภาพ',
+    'Inserir Imagem (Opcional)' => 'แทรกรูปภาพ (ไม่บังคับ)',
+    'Nenhum ficheiro' => 'ไม่มีไฟล์',
+    'Nenhum ficheiro selecionado' => 'ไม่ได้เลือกไฟล์',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => 'โปรไฟล์ปัจจุบัน: :profile เข้าถึงโมดูลตามสิทธิ์ของบทบาทของคุณ',
+    'Tipo de ficheiro não permitido.' => 'ประเภทไฟล์ที่ไม่อนุญาต',
+];

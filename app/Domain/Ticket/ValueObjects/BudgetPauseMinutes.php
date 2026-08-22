@@ -14,7 +14,7 @@ final readonly class BudgetPauseMinutes implements Stringable, JsonSerializable
     ) {}
 
     /**
-     * Construtor nomeado para sintaxe fluida.
+     * Named constructor for fluent syntax.
      */
     public static function make(?CarbonInterface $requestedAt, ?CarbonInterface $decidedAt): self
     {
@@ -22,8 +22,8 @@ final readonly class BudgetPauseMinutes implements Stringable, JsonSerializable
     }
 
     /**
-     * Devolve o total de minutos decorridos na pausa.
-     * Retorna 0 se a pausa não foi concluída ou se os dados forem inválidos.
+     * Returns the total minutes elapsed during the pause.
+     * Returns 0 if the pause was not completed or if data is invalid.
      */
     public function value(): int
     {
@@ -31,7 +31,6 @@ final readonly class BudgetPauseMinutes implements Stringable, JsonSerializable
             return 0;
         }
 
-        // Garante que a data de decisão não é anterior ao pedido
         if ($this->decidedAt->isBefore($this->requestedAt)) {
             return 0;
         }
@@ -40,7 +39,7 @@ final readonly class BudgetPauseMinutes implements Stringable, JsonSerializable
     }
 
     /**
-     * Converte o valor para horas arredondado a 2 casas decimais.
+     * Converts the value to hours, rounded to 2 decimal places.
      */
     public function toHours(): float
     {
@@ -48,7 +47,7 @@ final readonly class BudgetPauseMinutes implements Stringable, JsonSerializable
     }
 
     /**
-     * Indica se a pausa do orçamento se encontra pendente de decisão.
+     * Indicates whether the budget pause is still pending a decision.
      */
     public function isPending(): bool
     {
@@ -56,7 +55,7 @@ final readonly class BudgetPauseMinutes implements Stringable, JsonSerializable
     }
 
     /**
-     * Indica se não existe tempo de pausa acumulado.
+     * Indicates whether no pause time has been accumulated.
      */
     public function isEmpty(): bool
     {

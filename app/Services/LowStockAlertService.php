@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Log;
 use Throwable;
 
 /**
- * Deteta peças com stock baixo e dispara notificações in-app.
+ * Detects parts with low stock and triggers in-app notifications.
  *
- * Usado pelo job agendado CheckLowStockJob para evitar cálculo a cada pedido.
+ * Used by the scheduled CheckLowStockJob to avoid calculation on every request.
  */
 final class LowStockAlertService
 {
@@ -22,8 +22,8 @@ final class LowStockAlertService
     ) {}
 
     /**
-     * Devolve as peças em estado de alerta, ordenadas por criticidade
-     * (razão stock_atual / stock_minimo).
+     * Returns parts in alert state, sorted by criticality
+     * (current_stock / min_stock ratio).
      *
      * @return array<int, Part>
      */
@@ -38,9 +38,9 @@ final class LowStockAlertService
     }
 
     /**
-     * Cria uma notificação in-app por peça em alerta para todos os admins.
+     * Creates an in-app notification for each alert part to all admins.
      *
-     * @return int número de notificações criadas
+     * @return int number of notifications created
      */
     public function notifyAdminsForLowStock(): int
     {
@@ -55,8 +55,8 @@ final class LowStockAlertService
         foreach ($parts as $part) {
             try {
                 $this->notificationCreatorService->createForAdmins(
-                    title: __('stock.Stock Baixo'),
-                    message: __('stock.:part — stock atual :current (mínimo :min)', [
+                    title: __('stock.Low Stock'),
+                    message: __('stock.:part — current stock :current (minimum :min)', [
                         'part' => $part->name,
                         'current' => $part->current_stock,
                         'min' => $part->min_stock,
@@ -67,7 +67,7 @@ final class LowStockAlertService
 
                 $created++;
             } catch (Throwable $e) {
-                Log::warning('Falha ao notificar stock baixo', [
+                Log::warning('Failed to notify low stock', [
                     'part_id' => $part->id,
                     'error' => $e->getMessage(),
                 ]);

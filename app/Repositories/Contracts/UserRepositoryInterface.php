@@ -10,7 +10,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 interface UserRepositoryInterface
 {
     /**
-     * Encontra um utilizador pelo seu ID.
+     * Find a user by their ID.
      *
      * @param int $id
      * @return User|null
@@ -18,7 +18,7 @@ interface UserRepositoryInterface
     public function findById(int $id): ?User;
 
     /**
-     * Encontra um utilizador pelo seu endereço de e-mail.
+     * Find a user by their email address.
      *
      * @param string $email
      * @return User|null
@@ -26,7 +26,7 @@ interface UserRepositoryInterface
     public function findByEmail(string $email): ?User;
 
     /**
-     * Retorna uma listagem paginada de utilizadores.
+     * Return a paginated list of users.
      *
      * @param array<int, string> $relations
      * @return LengthAwarePaginator<User>
@@ -34,21 +34,21 @@ interface UserRepositoryInterface
     public function getAll(array $relations = []): LengthAwarePaginator;
 
     /**
-     * Retorna todos os técnicos ativos.
+     * Return all active technicians.
      *
      * @return array<int, User>
      */
     public function getActiveTechnicians(): array;
 
     /**
-     * Retorna todos os administradores.
+     * Return all administrators.
      *
      * @return array<int, User>
      */
     public function getAdmins(): array;
 
     /**
-     * Cria um novo utilizador.
+     * Create a new user.
      *
      * @param array<string, mixed> $data
      * @return User
@@ -56,7 +56,7 @@ interface UserRepositoryInterface
     public function create(array $data): User;
 
     /**
-     * Atualiza um utilizador existente.
+     * Update an existing user.
      *
      * @param User $user
      * @param array<string, mixed> $data
@@ -65,7 +65,7 @@ interface UserRepositoryInterface
     public function update(User $user, array $data): bool;
 
     /**
-     * Inativa um utilizador.
+     * Inactivate a user.
      *
      * @param User $user
      * @return bool
@@ -73,7 +73,7 @@ interface UserRepositoryInterface
     public function inactivate(User $user): bool;
 
     /**
-     * Elimina (soft delete) um utilizador.
+     * Delete (soft delete) a user.
      *
      * @param User $user
      * @return bool

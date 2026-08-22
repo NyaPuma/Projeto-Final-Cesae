@@ -16,7 +16,7 @@ final class StoreRoomRequest extends FormRequest
     }
 
     /**
-     * Limpa espaços sobressalentes antes de validar.
+     * Trims whitespace before validation.
      */
     protected function prepareForValidation(): void
     {
@@ -47,7 +47,7 @@ final class StoreRoomRequest extends FormRequest
     }
 
     /**
-     * Mapeia os nomes dos campos para as mensagens padrão do Laravel.
+     * Maps field names to Laravel's default messages.
      */
     public function attributes(): array
     {

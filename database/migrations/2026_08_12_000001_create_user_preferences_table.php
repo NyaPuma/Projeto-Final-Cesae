@@ -15,21 +15,21 @@ return new class extends Migration
                 ->constrained('users')
                 ->cascadeOnDelete();
 
-            // Língua: pt, en, fr, etc.
+            // Language: pt, en, fr, etc.
             $table->string('language', 10)
                 ->default('pt');
 
-            // Moeda: ISO 4217 (EUR, USD, GBP, etc.)
+            // Currency: ISO 4217 (EUR, USD, GBP, etc.)
             $table->string('currency', 3)
                 ->default('EUR');
 
-            // Formato de data: d/m/Y, m/d/Y, Y-m-d, etc.
+            // Date format: d/m/Y, m/d/Y, Y-m-d, etc.
             $table->string('date_format', 20)
                 ->default('d/m/Y');
 
             $table->timestamps();
 
-            // Garantir que cada utilizador tem apenas uma linha de preferências
+            // Ensure each user has only one preferences row
             $table->unique('user_id');
         });
     }

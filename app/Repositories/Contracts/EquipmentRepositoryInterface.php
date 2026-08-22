@@ -10,7 +10,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 interface EquipmentRepositoryInterface
 {
     /**
-     * Encontra um equipamento pelo seu ID.
+     * Find an equipment by its ID.
      *
      * @param int $id
      * @return Equipment|null
@@ -18,7 +18,7 @@ interface EquipmentRepositoryInterface
     public function findById(int $id): ?Equipment;
 
     /**
-     * Retorna uma listagem paginada de equipamentos.
+     * Return a paginated list of equipment.
      *
      * @param array<int, string> $relations
      * @return LengthAwarePaginator<Equipment>
@@ -26,7 +26,7 @@ interface EquipmentRepositoryInterface
     public function getAll(array $relations = []): LengthAwarePaginator;
 
     /**
-     * Cria um novo registo de equipamento.
+     * Create a new equipment record.
      *
      * @param array<string, mixed> $data
      * @return Equipment
@@ -34,7 +34,7 @@ interface EquipmentRepositoryInterface
     public function create(array $data): Equipment;
 
     /**
-     * Atualiza um equipamento existente.
+     * Update an existing equipment.
      *
      * @param Equipment $equipment
      * @param array<string, mixed> $data
@@ -43,7 +43,7 @@ interface EquipmentRepositoryInterface
     public function update(Equipment $equipment, array $data): bool;
 
     /**
-     * Elimina um equipamento da base de dados.
+     * Delete an equipment from the database.
      *
      * @param Equipment $equipment
      * @return bool

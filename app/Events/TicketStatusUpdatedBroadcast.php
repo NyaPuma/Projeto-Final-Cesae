@@ -37,7 +37,7 @@ final class TicketStatusUpdatedBroadcast implements ShouldBroadcastNow
     }
 
     /**
-     * Os canais privados onde o evento deve ser transmitido imediatamente.
+     * The private channels on which the event should be broadcast immediately.
      *
      * @return array<\Illuminate\Broadcasting\Channel>
      */
@@ -51,7 +51,7 @@ final class TicketStatusUpdatedBroadcast implements ShouldBroadcastNow
     }
 
     /**
-     * Nome do evento emitido para o frontend (Laravel Echo).
+     * The event name emitted to the frontend (Laravel Echo).
      */
     public function broadcastAs(): string
     {
@@ -59,7 +59,7 @@ final class TicketStatusUpdatedBroadcast implements ShouldBroadcastNow
     }
 
     /**
-     * Payload completo com cores e rótulos para renderização imediata na UI.
+     * Complete payload with colors and labels for immediate UI rendering.
      *
      * @return array<string, mixed>
      */

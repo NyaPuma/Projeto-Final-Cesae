@@ -18,11 +18,11 @@ final class AnalyticsController extends Controller
     ) {}
 
     /**
-     * Retorna os dados analíticos e métricas do dashboard.
+     * Returns the dashboard's analytical data and metrics.
      */
     public function stats(Request $request): JsonResponse
     {
-        // 1. Autorização via Policy
+        // 1. Authorization via Policy
         $this->authorize('viewAnalytics', Ticket::class);
 
         return response()->json(
@@ -31,16 +31,16 @@ final class AnalyticsController extends Controller
     }
 
     /**
-     * Dispara o processamento assíncrono para exportação em CSV.
+     * Dispatches asynchronous processing for CSV export.
      */
     public function exportCsv(Request $request): JsonResponse
     {
-        // 1. Autorização via Policy
+        // 1. Authorization via Policy
         $this->authorize('exportAnalytics', Ticket::class);
 
         $user = $request->user();
 
-        // 2. Dispara o job assíncrono em background
+        // 2. Dispatch the asynchronous background job
         ExportCsvJob::dispatch($user->id);
 
         return response()->json([
@@ -49,16 +49,16 @@ final class AnalyticsController extends Controller
     }
 
     /**
-     * Dispara o processamento assíncrono para exportação em PDF.
+     * Dispatches asynchronous processing for PDF export.
      */
     public function exportPdf(Request $request): JsonResponse
     {
-        // 1. Autorização via Policy
+        // 1. Authorization via Policy
         $this->authorize('exportAnalytics', Ticket::class);
 
         $user = $request->user();
 
-        // 2. Dispara o job assíncrono em background
+        // 2. Dispatch the asynchronous background job
         ExportPdfJob::dispatch($user->id);
 
         return response()->json([
@@ -67,16 +67,16 @@ final class AnalyticsController extends Controller
     }
 
     /**
-     * Dispara o processamento assíncrono para exportação em Excel.
+     * Dispatches asynchronous processing for Excel export.
      */
     public function exportExcel(Request $request): JsonResponse
     {
-        // 1. Autorização via Policy
+        // 1. Authorization via Policy
         $this->authorize('exportAnalytics', Ticket::class);
 
         $user = $request->user();
 
-        // 2. Dispara o job assíncrono em background
+        // 2. Dispatch the asynchronous background job
         ExportExcelJob::dispatch($user->id);
 
         return response()->json([

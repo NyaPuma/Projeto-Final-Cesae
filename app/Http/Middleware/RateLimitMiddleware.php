@@ -33,7 +33,7 @@ final class RateLimitMiddleware
             return $this->buildResponse($key, $maxAttemptsInt, $decayMinutes);
         }
 
-        // Regista a tentativa atual no limitador de taxa
+        // Record the current attempt in the rate limiter
         $this->limiter->hit($key, $decayMinutes * 60);
 
         $response = $next($request);
@@ -46,7 +46,7 @@ final class RateLimitMiddleware
     }
 
     /**
-     * Resolve a assinatura única do pedido para efeitos de limite de taxa.
+     * Resolves the unique request signature for rate limiting purposes.
      */
     protected function resolveRequestSignature(Request $request): string
     {
@@ -56,7 +56,7 @@ final class RateLimitMiddleware
             return sha1($request->ip() . '|' . $email);
         }
 
-        // Para outros endpoints, usar IP + user_id (se autenticado) ou 'guest'
+        // For other endpoints, use IP + user_id (if authenticated) or 'guest'
         $user = $request->user();
         $userId = $user ? (string) $user->id : 'guest';
 
@@ -64,9 +64,9 @@ final class RateLimitMiddleware
     }
 
     /**
-     * Determina se o pedido atinge um endpoint de autenticação
-     * (login, registo ou recuperação de password) para o qual o
-     * limite deve ser aplicado por IP + email.
+     * Determines whether the request targets an authentication endpoint
+     * (login, registration, or password recovery) where the
+     * limit should be applied per IP + email.
      */
     protected function isAuthEndpoint(Request $request): bool
     {
@@ -80,7 +80,7 @@ final class RateLimitMiddleware
     }
 
     /**
-     * Adiciona os cabeçalhos informativos de limite de taxa à resposta.
+     * Adds informative rate limit headers to the response.
      */
     protected function addHeaders(Response $response, int $maxAttempts, int $remainingAttempts): Response
     {
@@ -93,7 +93,7 @@ final class RateLimitMiddleware
     }
 
     /**
-     * Calcula o número de tentativas restantes permitidas.
+     * Calculates the number of remaining allowed attempts.
      */
     protected function calculateRemainingAttempts(string $key, int $maxAttempts): int
     {
@@ -101,7 +101,7 @@ final class RateLimitMiddleware
     }
 
     /**
-     * Constrói a resposta a retornar quando o limite de taxa é excedido.
+     * Builds the response to return when the rate limit is exceeded.
      */
     protected function buildResponse(string $key, int $maxAttempts, int $decayMinutes): Response
     {

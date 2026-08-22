@@ -118,41 +118,41 @@ return new class extends Migration
 
             /*
             |--------------------------------------------------------------------------
-            | Índices
+            | Indexes
             |--------------------------------------------------------------------------
             */
 
-            // Notificações pendentes do utilizador
+            // Pending notifications for the user
             $table->index(
                 ['user_id', 'is_read', 'created_at'],
                 'notifications_unread_idx'
             );
 
-            // Histórico de notificações do utilizador
+            // Notification history for the user
             $table->index(
                 ['user_id', 'created_at'],
                 'notifications_user_created_idx'
             );
 
-            // Filtragem por tipo
+            // Filter by type
             $table->index(
                 ['type', 'created_at'],
                 'notifications_type_created_idx'
             );
 
-            // Entidade relacionada
+            // Related entity
             $table->index(
                 ['notifiable_type', 'notifiable_id'],
                 'notifications_notifiable_idx'
             );
 
-            // Prioridade para alertas urgentes
+            // Priority for urgent alerts
             $table->index(
                 ['priority', 'is_read', 'created_at'],
                 'notifications_priority_idx'
             );
 
-            // Expiração automática
+            // Automatic expiration
             $table->index(
                 'expires_at',
                 'notifications_expires_idx'

@@ -20,23 +20,23 @@ final class AdminController extends Controller
     ) {}
 
     /**
-     * Aprova ou recusa o orçamento associado a um ticket.
+     * Approves or rejects the budget associated with a ticket.
      */
     public function approveBudget(BudgetDecisionRequest $request, Ticket $ticket): JsonResponse
     {
-        // 1. Autorização via Policy
+        // 1. Authorization via Policy
         $this->authorize('approveBudget', $ticket);
 
         $admin = $request->user();
 
-        // 2. Executa a ação de aprovação/recusa do orçamento
+        // 2. Execute the budget approval/rejection action
         $updatedTicket = $this->approveBudgetAction->execute(
             $ticket,
             $admin,
             BudgetDecisionData::fromRequest($request->validated())
         );
 
-        // 3. Validação do estado e definição da mensagem formatada com i18n
+        // 3. Validate status and set the formatted message with i18n
         $isApproved = BudgetStatusEnum::normalize($updatedTicket->budget_status) === BudgetStatusEnum::Approved;
         $message = $isApproved
             ? __('tickets.Orçamento aprovado. Ticket desbloqueado para intervenção.')
@@ -51,16 +51,16 @@ final class AdminController extends Controller
     }
 
     /**
-     * Cria um novo ticket de manutenção preventiva.
+     * Creates a new preventive maintenance ticket.
      */
     public function storePreventive(StorePreventiveRequest $request): JsonResponse
     {
-        // 1. Autorização via Policy (verificação na classe Model)
+        // 1. Authorization via Policy (verification in Model class)
         $this->authorize('createPreventive', Ticket::class);
 
         $admin = $request->user();
 
-        // 2. Executa a criação do ticket preventivo com os dados validados
+        // 2. Execute the preventive ticket creation with validated data
         $ticket = $this->createPreventiveAction->execute(
             admin: $admin,
             title: $request->validated('title'),

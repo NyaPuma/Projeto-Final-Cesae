@@ -9,7 +9,7 @@ use App\Models\Ticket;
 final class BudgetCalculatorService
 {
     /**
-     * Calcula o custo total de materiais associados ao orçamento do ticket.
+     * Calculates the total cost of materials associated with the ticket budget.
      */
     public function calculateTotalMaterialCost(Ticket $ticket): float
     {
@@ -17,7 +17,7 @@ final class BudgetCalculatorService
     }
 
     /**
-     * Calcula o custo total de mão de obra associada ao orçamento do ticket.
+     * Calculates the total labor cost associated with the ticket budget.
      */
     public function calculateTotalLaborCost(Ticket $ticket): float
     {
@@ -25,7 +25,7 @@ final class BudgetCalculatorService
     }
 
     /**
-     * Calcula o valor total global do orçamento (materiais + mão de obra).
+     * Calculates the total global budget amount (materials + labor).
      */
     public function calculateBudgetTotal(Ticket $ticket): float
     {
@@ -33,7 +33,7 @@ final class BudgetCalculatorService
     }
 
     /**
-     * Retorna a desagregação detalhada dos itens de orçamento do ticket.
+     * Returns the detailed breakdown of ticket budget items.
      *
      * @return array{
      *     materials: array<int, array{type?: string, quantity?: float|int, unit_price?: float|int, subtotal: float, [string]: mixed}>,
@@ -74,7 +74,7 @@ final class BudgetCalculatorService
     }
 
     /**
-     * Calcula o custo de um determinado tipo de item de orçamento.
+     * Calculates the cost of a specific budget item type.
      */
     private function calculateByType(Ticket $ticket, string $type): float
     {

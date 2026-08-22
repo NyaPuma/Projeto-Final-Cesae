@@ -53,17 +53,17 @@ use Illuminate\Support\ServiceProvider;
 final class AppServiceProvider extends ServiceProvider
 {
     /**
-     * Regista todos os serviços e vinculações de contratos na aplicação.
+     * Registers all services and contract bindings in the application.
      */
     public function register(): void
     {
-        // Vinculação de Interfaces aos Repositórios Concretos
+        // Bind interfaces to concrete repositories
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
         $this->app->bind(TicketRepositoryInterface::class, TicketRepository::class);
         $this->app->bind(EquipmentRepositoryInterface::class, EquipmentRepository::class);
         $this->app->bind(RoomRepositoryInterface::class, RoomRepository::class);
 
-        // Registo de Serviços de Domínio como Singletons
+        // Register domain services as singletons
         $this->app->singleton(TicketStatusService::class);
         $this->app->singleton(AnalyticsService::class);
         $this->app->singleton(NotificationService::class);
@@ -72,7 +72,7 @@ final class AppServiceProvider extends ServiceProvider
     }
 
     /**
-     * Bootstrap de quaisquer serviços da aplicação.
+     * Bootstraps any application services.
      */
     public function boot(): void
     {
@@ -81,12 +81,12 @@ final class AppServiceProvider extends ServiceProvider
         $this->registerSlowQueryListener();
         $this->registerFormattingDirectives();
 
-        // Aplica os overrides guardados na página de Definições → Configurações
+        // Apply overrides saved in the Settings → Configuration page
         $this->app->make(SystemSettingsService::class)->applyOverrides();
     }
 
     /**
-     * Regista as políticas de autorização para os modelos.
+     * Registers authorization policies for the models.
      */
     private function registerPolicies(): void
     {
@@ -104,7 +104,7 @@ final class AppServiceProvider extends ServiceProvider
     }
 
     /**
-     * Regista as directives de formatação localizada usadas nas views.
+     * Registers localized formatting directives used in views.
      */
     private function registerFormattingDirectives(): void
     {
@@ -116,7 +116,7 @@ final class AppServiceProvider extends ServiceProvider
         Blade::directive('date', static fn (string $expr) => "<?php echo app({$service}::class)->formatDate($expr); ?>");
         Blade::directive('datetime', static fn (string $expr) => "<?php echo app({$service}::class)->formatDateTime($expr); ?>");
 
-        // Diretivas @localized*
+        // @localized* directives
         Blade::directive('localizedDate', static fn (string $expr) => "<?php echo app({$service}::class)->formatDate($expr); ?>");
         Blade::directive('localizedDateTime', static fn (string $expr) => "<?php echo app({$service}::class)->formatDateTime($expr); ?>");
         Blade::directive('localizedNumber', static fn (string $expr) => "<?php echo app({$service}::class)->formatNumber($expr); ?>");
@@ -125,7 +125,7 @@ final class AppServiceProvider extends ServiceProvider
     }
 
     /**
-     * Regista os observers responsáveis por escutar os ciclos de vida dos modelos.
+     * Registers observers responsible for listening to model lifecycle events.
      */
     private function registerObservers(): void
     {
@@ -135,7 +135,7 @@ final class AppServiceProvider extends ServiceProvider
     }
 
     /**
-     * Regista o listener para detetar e registar em log consultas SQL lentas.
+     * Registers a listener to detect and log slow SQL queries.
      */
     private function registerSlowQueryListener(): void
     {

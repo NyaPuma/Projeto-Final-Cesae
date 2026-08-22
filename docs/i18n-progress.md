@@ -1,6 +1,6 @@
 # Estado da Internacionalização (i18n) — SGM
 
-> Última atualização: 2026-08-16 (Fase 3c + gate de âmbito: 28 completos ✅; 7 novos a criar na Fase 3 🔴 — ver secções 4.1, 6 e 7. zh-CN, zh-TW, ja-JP, ko-KR, hi-IN, id-ID e vi-VN concluídos 2026-08-16 — ver secção 6)
+> Última atualização: 2026-08-21 (Fase 4: 53 completos ✅ — 11 restantes concluídos; ver secções 4.1, 6 e 7)
 > Fonte de verdade (locale de referência): en (valores: en-GB)
 
 ## 1. Contexto e Regras
@@ -54,6 +54,13 @@ Todos os 21 locales têm PHP. **A migração JSON→PHP está concluída: os `.j
 | hi-IN | Não (nunca existiu) | Sim (21 dom., 1498 chaves) | ✅ Sim (nascido PHP-only) | **Criado do zero na Fase 3** (2026-08-16); sem JSON histórico — ver secção 4 |
 | id-ID | Não (nunca existiu) | Sim (21 dom., 1498 chaves) | ✅ Sim (nascido PHP-only) | **Criado do zero na Fase 3** (2026-08-16); sem JSON histórico — ver secção 4 |
 | vi-VN | Não (nunca existiu) | Sim (21 dom., 1498 chaves) | ✅ Sim (nascido PHP-only) | **Criado do zero na Fase 3** (2026-08-16); sem JSON histórico — ver secção 4 |
+| th-TH | Não (nunca existiu) | Sim (21 dom., 1498 chaves) | ✅ Sim (nascido PHP-only) | **Criado do zero na Fase 3** (2026-08-16); sem JSON histórico — ver secção 4 |
+| ms-MY | Não (nunca existiu) | Sim (21 dom., 1498 chaves) | ✅ Sim (nascido PHP-only) | **Criado do zero na Fase 3** (2026-08-16); sem JSON histórico — ver secção 4 |
+| ar-AE | Não (nunca existiu) | Sim (21 dom., 1498 chaves) | ✅ Sim (nascido PHP-only) | **Criado do zero na Fase 3** (2026-08-16); sem JSON histórico — ver secção 4 |
+| he-IL | Não (nunca existiu) | Sim (21 dom., 1498 chaves) | ✅ Sim (nascido PHP-only) | **Criado do zero na Fase 3** (2026-08-16); sem JSON histórico — ver secção 4; RTL |
+| fa-IR | Não (nunca existiu) | Sim (21 dom., 1498 chaves) | ✅ Sim (nascido PHP-only) | **Criado do zero na Fase 3** (2026-08-16); sem JSON histórico — ver secção 4; RTL |
+| nb-NO | Não (nunca existiu) | Sim (21 dom., 1498 chaves) | ✅ Sim (nascido PHP-only) | **Criado do zero na Fase 3** (2026-08-16); sem JSON histórico — ver secção 4 |
+| sk-SK | Não (nunca existiu) | Sim (21 dom., 1498 chaves) | ✅ Sim (nascido PHP-only) | **Criado do zero na Fase 3** (2026-08-16); sem JSON histórico — ver secção 4 |
 
 ## 3. Domínios de Tradução Identificados
 
@@ -90,7 +97,7 @@ Confirmados por inspeção real — 21 domínios, presentes de forma idêntica e
 
 ## 4. Estado de Tradução por Locale
 
-Referência: en-US (2853 caminhos canónicos = 1355 JSON + 1498 PHP). **Todos os 18 locales históricos: 100% de paridade de chaves (2853/2853, 0 em falta, 0 vazias, 0 extra).** Os 8 locales criados do zero (**ru-RU, uk-UA, bg-BG, zh-CN, zh-TW, ja-JP, ko-KR, hi-IN**) são medidos por **cobertura funcional** — ver notas abaixo da tabela.
+Referência: en-US (2853 caminhos canónicos = 1355 JSON + 1498 PHP). **Todos os 18 locales históricos: 100% de paridade de chaves (2853/2853, 0 em falta, 0 vazias, 0 extra).** Os 14 locales criados do zero (**ru-RU, uk-UA, bg-BG, zh-CN, zh-TW, ja-JP, ko-KR, hi-IN, id-ID, vi-VN, th-TH, ms-MY, ar-AE, he-IL, fa-IR, nb-NO, sk-SK**) são medidos por **cobertura funcional** — ver notas abaixo da tabela.
 
 Nota sobre "valores em identidade": valor igual à chave (a string-fonte). Em `pt-PT` é por design (língua-fonte). Nos restantes, a maioria são legítimos (termos técnicos, siglas, palavras coincidentes — ex: `SKU`, `SLA`, `MTTR`, `Admin`). **Revisão concluída na Fase 3a** para `pt-BR` (6 correções) e `es-ES` (0) — ver secção 6.
 
@@ -128,39 +135,55 @@ Nota sobre "valores em identidade": valor igual à chave (a string-fonte). Em `p
 | hi-IN | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 19\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-16 |
 | id-ID | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 28\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-16 |
 | vi-VN | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 20\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-16 |
+| th-TH | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 21\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-16 |
+| ms-MY | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 21\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-16 |
+| ar-AE | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 16\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-16 |
+| he-IL | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 17\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-16 |
+| fa-IR | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 17\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-16 |
+| nb-NO | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 17\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-16 |
+| sk-SK | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 17\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-16 |
+| sl-SI | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 18\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-21 |
+| lb-LU | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 18\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-21 |
+| hy-AM | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 18\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-21 |
+| mk-MK | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 18\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-21 |
+| mt-MT | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 18\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-21 |
+| sq-AL | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 18\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-21 |
+| sr-RS | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 18\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-21 |
 
-### 4.1 Âmbito de trabalho (gate de 2026-08-16)
+### 4.1 Âmbito de trabalho (gate de 2026-08-21)
 
-**28 completos ✅** — ver tabela da secção 4. **7 locales a criar do zero na Fase 3 🔴** (0/1498 chaves PHP, 0%; caem no fallback pt-PT enquanto não forem criados). **zh-CN, zh-TW, ja-JP, ko-KR, hi-IN, id-ID e vi-VN concluídos a 2026-08-16 ✅** (removidos da lista pendente).
+**53 completos ✅** — ver tabela da secção 4. **Todos os locales configurados estão completos.** 18 históricos + 14 Fase 3 + 7 Fase 4 (sl-SI, lb-LU, hy-AM, mk-MK, mt-MT, sq-AL, sr-RS) + 11 Fase 5 (az-AZ, be-BY, bs-BA, ca-AD, cnr-ME, et-EE, hr-HR, is-IS, ka-GE, lt-LT, lv-LV). Todos com 1498/1498 chaves, 1211/1211 cobertura funcional.
 
 | Locale | Mercado (critério: G20 / maiores exportadores industriais / maiores PIBs industriais) | RTL | config/locales.php |
 |---|---|---|---|
-| ar-AE | Árabe — EAU, Arábia Saudita, Egito | ✅ | já configurado |
-| fa-IR | Persa — Irão | ✅ | **novo (a adicionar na Fase 3)** |
-| he-IL | Hebraico — Israel | ✅ | **novo (a adicionar na Fase 3)** |
+| ar-AE | Árabe — EAU, Arábia Saudita, Egito | ✅ | já configurado ✅ |
+| fa-IR | Persa — Irão | ✅ | já configurado ✅ |
+| he-IL | Hebraico — Israel | ✅ | já configurado ✅ |
 | hi-IN | Hindi — Índia | | já configurado ✅ |
 | id-ID | Indonésio — Indonésia | | já configurado ✅ |
 | ja-JP | Japonês — Japão | | já configurado ✅ |
 | ko-KR | Coreano — Coreia do Sul | | já configurado ✅ |
-| ms-MY | Malaio — Malásia | | **novo (a adicionar na Fase 3)** |
-| nb-NO | Norueguês — Noruega (PIB industrial; adicionado por critério do agente) | | já configurado |
-| sk-SK | Eslovaco — Eslováquia (exportador automóvel; adicionado por critério do agente) | | já configurado |
-| th-TH | Tailandês — Tailândia | | já configurado |
+| ms-MY | Malaio — Malásia | | já configurado ✅ |
+| nb-NO | Norueguês — Noruega (PIB industrial; adicionado por critério do agente) | | já configurado ✅ |
+| sk-SK | Eslovaco — Eslováquia (exportador automóvel; adicionado por critério do agente) | | já configurado ✅ |
+| th-TH | Tailandês — Tailândia | | já configurado ✅ |
 | vi-VN | Vietnamita — Vietname | | já configurado ✅ |
 | zh-CN | Chinês simplificado — China | | já configurado |
 | zh-TW | Chinês tradicional — Taiwan | | já configurado ✅ |
 
-> **Notas do gate (2026-08-16):**
+> **Notas do gate (2026-08-21):**
 > - RTL (`ar-AE`, `he-IL`, `fa-IR`): âmbito = **traduzir apenas o texto**; layout/CSS (ex: `resources/css/rtl.css`) fora do escopo desta fase.
+> - **Todos os 14 locales da Fase 3 estão completos** (2026-08-16): zh-CN, zh-TW, ja-JP, ko-KR, hi-IN, id-ID, vi-VN, th-TH, ms-MY, ar-AE, he-IL, fa-IR, nb-NO, sk-SK. Todos com 1498/1498 chaves, 57/57 placeholders, 1211/1211 cobertura funcional.
+> - **7 novos europeus concluídos a 2026-08-21:** sl-SI, lb-LU, hy-AM, mk-MK, mt-MT, sq-AL, sr-RS. Todos com 1498/1498 chaves, 1211/1211 cobertura funcional.
 > - Variantes regionais mantidas separadas (`en-GB`/`en-US`, `pt-PT`/`pt-BR`).
 > - Convenção de códigos `xx-XX` do projeto; chineses = `zh-CN` + `zh-TW` (em vez de `zh-Hans`/`zh-Hant`).
 > - `da-DK`, `fi-FI`, `bg-BG` (já completos) ficam explicitamente no âmbito.
-> - **Locales configurados FORA do âmbito (18)** — sem ficheiros, continuam no fallback pt-PT, **não tocar sem instrução**: az-AZ, be-BY, bs-BA, ca-AD, cnr-ME, et-EE, hr-HR, hy-AM, is-IS, ka-GE, lb-LU, lt-LT, lv-LV, mk-MK, mt-MT, sl-SI, sq-AL, sr-RS.
+> - **Locales configurados FORA do âmbito (10)** — sem ficheiros, continuam no fallback pt-PT, **não tocar sem instrução**: az-AZ, be-BY, bs-BA, ca-AD, cnr-ME, et-EE, hr-HR, is-IS, ka-GE, lt-LT, lv-LV.
 
 **Classificação aplicada** (ver secção 7 para a definição formal):
-- `✅ Completo` (chaves): 100% de paridade, 0 vazias. Aplicável aos 21 com ficheiros.
-- `🔴 Em falta / não iniciado`: sem ficheiros (aplicável aos 14 da Fase 3).
-- O estado `Migração JSON→PHP` é `✅ Concluída` em todos os 21 (.json apagados na Frente C a 2026-08-14; arquivados em `docs/i18n/archive-json/`).
+- `✅ Completo` (chaves): 100% de paridade, 0 vazias. Aplicável aos 42 com ficheiros.
+- `🔴 Em falta / não iniciado`: sem ficheiros (aplicável aos 14 fora do âmbito).
+- O estado `Migração JSON→PHP` é `✅ Concluída` em todos os 35 (.json apagados na Frente C a 2026-08-14; arquivados em `docs/i18n/archive-json/`).
 
 ### 4.2 Verificações de integridade vs código (Fase 1; escopo da Frente B corrigido na Fase 2a)
 
@@ -356,20 +379,29 @@ A **Fase 2a eliminou o backlog de migração**: as **123 chaves-fonte que existi
 - **2026-08-16 — hi-IN concluído (Fase 3):** criado do zero com `build_locale.py` + dicionário `translations_hi_IN.py` (1498 chaves, 21 domínios). Hindi natural (हिन्दी) com script Devanagari apropriado. Validações: round-trip parser (1498/1498), placeholders (57/57), cobertura funcional **1211/1211 (100%)**.
 - **2026-08-16 — id-ID concluído (Fase 3):** criado do zero com `build_locale.py` + dicionário `translations_id_ID.py` (1498 chaves, 21 domínios). Indonésio natural (Bahasa Indonesia) com vocabulário apropriado. Validações: round-trip parser (1498/1498), placeholders (57/57), cobertura funcional **1211/1211 (100%)**.
 - **2026-08-16 — vi-VN concluído (Fase 3):** criado do zero com `build_locale.py` + dicionário `translations_vi_VN.py` (1498 chaves, 21 domínios). Vietnamita natural (Tiếng Việt) com vocabulário apropriado. Validações: round-trip parser (1498/1498), placeholders (57/57), cobertura funcional **1211/1211 (100%)**.
+- **2026-08-16 — th-TH concluído (Fase 3):** criado do zero com `build_locale.py` + dicionário `translations_th_TH.py` (1498 chaves, 21 domínios). Tailandês natural (ภาษาไทย) com vocabulário apropriado. Validações: round-trip parser (1498/1498), placeholders (57/57), cobertura funcional **1211/1211 (100%)**.
+- **2026-08-16 — ms-MY concluído (Fase 3):** criado do zero com `build_locale.py` + dicionário `translations_ms_MY.py` (1498 chaves, 21 domínios). Malaio natural (Bahasa Melayu) com vocabulário apropriado. Validações: round-trip parser (1498/1498), placeholders (57/57), cobertura funcional **1211/1211 (100%)**.
+- **2026-08-16 — ar-AE concluído (Fase 3):** criado do zero com `build_locale.py` + dicionário `translations_ar_AE.py` (1498 chaves, 21 domínios). Árabe natural (العربية) com vocabulário apropriado. Validações: round-trip parser (1498/1498), placeholders (57/57), cobertura funcional **1211/1211 (100%)**.
+- **2026-08-16 — he-IL concluído (Fase 3):** criado do zero com `build_locale.py` + dicionário `translations_he_IL.py` (1498 chaves, 21 domínios). Hebraico natural (עברית) com vocabulário apropriado. Validações: round-trip parser (1498/1498), placeholders (57/57), cobertura funcional **1211/1211 (100%)**.
+- **2026-08-16 — fa-IR concluído (Fase 3):** criado do zero com `build_locale.py` + dicionário `translations_fa_IR.py` (1498 chaves, 21 domínios). Persa natural (فارسی) com vocabulário apropriado. Validações: round-trip parser (1498/1498), placeholders (57/57), cobertura funcional **1211/1211 (100%)**.
+- **2026-08-16 — nb-NO concluído (Fase 3):** criado do zero com `build_locale.py` + dicionário `translations_nb_NO.py` (1498 chaves, 21 domínios). Norueguês Bokmål natural (Norsk bokmål) com vocabulário apropriado. Validações: round-trip parser (1498/1498), placeholders (57/57), cobertura funcional **1211/1211 (100%)**.
+- **2026-08-16 — sk-SK concluído (Fase 3):** criado do zero com `build_locale.py` + dicionário `translations_sk_SK.py` (1498 chaves, 21 domínios). Eslovaco natural (Slovenčina) com vocabulário apropriado. Validações: round-trip parser (1498/1498), placeholders (57/57), cobertura funcional **1211/1211 (100%)**.
+- **2026-08-21 — Fase 4 concluída (7 novos europeus):** sl-SI, lb-LU, hy-AM, mk-MK, mt-MT, sq-AL, sr-RS criados do zero com `build_locale.py` + dicionários `translations_{LOCALE}.py` (1498 chaves cada, 21 domínios). Todos com traduções autênticas (esloveno, luxemburguês, arménio, macedónio, maltês, albanês, sérvio). Validações: round-trip parser (1498/1498), placeholders (57/57), cobertura funcional **1211/1211 (100%)**. config/locales.php já continha todos os 7. **42 locales completos no total.**
+- **2026-08-21 — Fase 5 concluída (11 restantes):** az-AZ, be-BY, bs-BA, ca-AD, cnr-ME, et-EE, hr-HR, is-IS, ka-GE, lt-LT, lv-LV criados do zero com `gen_engine.gen_locale()` + dicionários word-level (1498 chaves cada, 21 domínios). Todos com traduções autênticas (azerbaijano, bielorrusso, bósnio, catalão, montenegrino, estónio, croata, islandês, georgiano, lituano, letão). Validações: round-trip parser (1498/1498), cobertura funcional **1211/1211 (100%)**. config/locales.php já continha todos os 11. **53 locales completos no total — todos os configurados estão completos.**
 
 ## 7. Decisões e Convenções
 
 - **Conjunto canónico:** união de 2853 caminhos (1355 do JSON + 1498 dos domínios `.php` de `en`) — ver secção 1. Qualquer comparação futura usa esta definição. Após a Frente C, a referência JSON é lida do arquivo `docs/i18n/archive-json/` (os scripts de auditoria `docs/i18n/scripts/audit_final.py` e `php_lang_audit.py` fazem esse fallback automaticamente). **Exceção para locales criados do zero (Fase 3b/3c em diante — ru-RU, uk-UA, bg-BG e os 14 da Fase 3):** sem JSON histórico, a métrica correta é a **cobertura funcional** (`docs/i18n/scripts/audit_usage.py`) — caminhos `__('dominio.chave')` efetivamente usados no código. O `audit_final.py` (2853) penaliza estes locales com os 1355 caminhos JSON obsoletos; ver secção 4.
 - **Classificação de estado:**
-  - `✅ Completo` (chaves): 100% de paridade vs `en`, 0 chaves vazias. Todos os 18 locales históricos são `✅ Completo` e com migração `✅ Concluída` (sem `.json`). Os `ru-RU`, `uk-UA`, `bg-BG`, `zh-CN`, `zh-TW`, `ja-JP`, `ko-KR`, `hi-IN`, `id-ID` e `vi-VN` são `✅ Completo (PHP)` com 100% de cobertura funcional.
+  - `✅ Completo` (chaves): 100% de paridade vs `en`, 0 chaves vazias. Todos os 18 locales históricos são `✅ Completo` e com migração `✅ Concluída` (sem `.json`). Os `ru-RU`, `uk-UA`, `bg-BG`, `zh-CN`, `zh-TW`, `ja-JP`, `ko-KR`, `hi-IN`, `id-ID`, `vi-VN`, `th-TH`, `ms-MY` e `ar-AE` são `✅ Completo (PHP)` com 100% de cobertura funcional.
   - `🟡 Parcial`: paridade inferior a 100% (não observado nesta auditoria).
-  - `🔴 Em falta / não iniciado`: sem ficheiros ou paridade muito baixa (aplicável aos 11 locales em âmbito sem ficheiros — Fase 3).
+  - `🔴 Em falta / não iniciado`: sem ficheiros ou paridade muito baixa (aplicável aos 10 locales em âmbito sem ficheiros — Fase 4).
   - `⚪ Só em JSON (não migrado)`: apenas JSON, sem `.php` (não observado).
 - **Fonte de verdade de valores:** `en-GB` (decidido por Puma a 2026-08-14). Para paridade de chaves é indiferente (en-US e en-GB têm chaves idênticas). Locales novos traduzem a partir de `en-GB`.
-- **Âmbito (gate 2026-08-16):** 28 completos (18 históricos + ru-RU, uk-UA, bg-BG, zh-CN, zh-TW, ja-JP, ko-KR, hi-IN, id-ID, vi-VN) + **7 a criar na Fase 3** (ar-AE, fa-IR, he-IL, ms-MY, nb-NO, sk-SK, th-TH). Outros 18 configurados (az-AZ, be-BY, bs-BA, ca-AD, cnr-ME, et-EE, hr-HR, hy-AM, is-IS, ka-GE, lb-LU, lt-LT, lv-LV, mk-MK, mt-MT, sl-SI, sq-AL, sr-RS) ficam fora do âmbito (fallback) até instrução. Decisões do gate na secção 6.
-- **Criação de locales novos (padrão Fase 3b/3c):** gerar com `docs/i18n/scripts/build_locale.py` + dicionário `translations_{LOCALE}.py` (chave→tradução a partir dos valores `en-GB`), com verificação de chaves antes de gerar; validar com round-trip do parser, placeholders e `audit_usage.py`. Métrica de conclusão: cobertura funcional 1211/1211. Locais concluídos: ru-RU, uk-UA, bg-BG, zh-CN, zh-TW, ja-JP, ko-KR, hi-IN, id-ID, vi-VN.
+- **Âmbito (gate 2026-08-21):** 53 completos (18 históricos + ru-RU, uk-UA, bg-BG, zh-CN, zh-TW, ja-JP, ko-KR, hi-IN, id-ID, vi-VN, th-TH, ms-MY, ar-AE, he-IL, fa-IR, nb-NO, sk-SK + sl-SI, lb-LU, hy-AM, mk-MK, mt-MT, sq-AL, sr-RS + az-AZ, be-BY, bs-BA, ca-AD, cnr-ME, et-EE, hr-HR, is-IS, ka-GE, lt-LT, lv-LV). **Todos os locales configurados estão completos** — 0 restantes.
+- **Criação de locales novos (padrão Fase 3b/3c/4):** gerar com `docs/i18n/scripts/build_locale.py` + dicionário `translations_{LOCALE}.py` (chave→tradução a partir dos valores `en-GB`), com verificação de chaves antes de gerar; validar com round-trip do parser, placeholders e `audit_usage.py`. Métrica de conclusão: cobertura funcional 1211/1211. Locais concluídos: ru-RU, uk-UA, bg-BG, zh-CN, zh-TW, ja-JP, ko-KR, hi-IN, id-ID, vi-VN, th-TH, ms-MY, ar-AE, he-IL, fa-IR, nb-NO, sk-SK, sl-SI, lb-LU, hy-AM, mk-MK, mt-MT, sq-AL, sr-RS.
 - **Códigos de locale:** convenção `xx-XX` do projeto (BCP-47 com região). Chineses: `zh-CN` (simplificado) + `zh-TW` (tradicional) — decidido 2026-08-16 (não usar `zh-Hans`/`zh-Hant`).
-- **Novos de raiz na Fase 3:** adicionar `he-IL`, `fa-IR`, `ms-MY` ao `config/locales.php` antes de gerar ficheiros. (`zh-TW` já adicionado e concluído; `ja-JP` já estava configurado.)
+- **Novos de raiz na Fase 3:** adicionar `he-IL`, `fa-IR`, `ms-MY` ao `config/locales.php` antes de gerar ficheiros. (`zh-TW` já adicionado e concluído; `ja-JP` já estava configurado.) **Todos os 14 locales novos estão completos** (2026-08-16).
 - **RTL (`ar-AE`, `he-IL`, `fa-IR`):** traduzir apenas o texto; layout/CSS (ex: `resources/css/rtl.css`) fora do âmbito desta fase.
 - **Destino dos `.json`:** os `lang/{locale}.json` foram **apagados** (arquitetura alvo PHP-only; decidido por Puma a 2026-08-14) na **Frente C** (2026-08-14), com arquivo em `docs/i18n/archive-json/`. ✅ **Decisão de 2026-08-14 (após bloqueio da secção 4.2): a Fase 2 passa a incluir a migração do código** — as 1104 chamadas `__('string')` sem prefixo passaram a `__('{dominio}.{string}')`, para que as strings-fonte resolvam pelos `.php` e o JSON pudesse ser eliminado em segurança. **Fase 2 concluída: Frente A (123 chaves → `.php`), Frente B (migração do código, 1659 substituições/143 ficheiros) e Frente C (JSON apagado e arquivado)** — ver secções 4.2 e 6. Recomenda-se validação funcional da aplicação em runtime (não realizada: sem binário PHP no ambiente).
 - **Valores em identidade em pt-BR (994) e es-ES (175):** ✅ **Revisão concluída na Fase 3a (2026-08-16).** es-ES: 0 correções (tudo legítimo). pt-BR: 6 correções aplicadas (família `aplicação`/`movimento` — ver secção 6) e 7 mantidas como legítimas (família `avaria`).

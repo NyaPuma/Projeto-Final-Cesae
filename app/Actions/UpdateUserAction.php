@@ -23,9 +23,6 @@ final readonly class UpdateUserAction
 
             $user->update($attributes);
 
-            // Exemplo de disparo de evento no futuro:
-            // UserUpdated::dispatch($user);
-
             return $user->load('profile');
         });
     }

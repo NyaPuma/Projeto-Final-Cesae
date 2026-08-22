@@ -13,7 +13,7 @@ use OpenApi\Attributes as OA;
 final class NotificationController extends Controller
 {
     /**
-     * Lista de forma paginada as notificações do utilizador autenticado.
+     * Lists the authenticated user's notifications in a paginated manner.
      */
     #[OA\Get(
         path: '/notifications',
@@ -41,7 +41,7 @@ final class NotificationController extends Controller
     }
 
     /**
-     * Marca uma notificação específica como lida.
+     * Marks a specific notification as read.
      */
     #[OA\Patch(
         path: '/notifications/{id}',
@@ -60,7 +60,7 @@ final class NotificationController extends Controller
     {
         $user = $request->user();
 
-        // Garante que a notificação pertence estritamente ao utilizador autenticado
+        // Ensures the notification strictly belongs to the authenticated user
         $notification = Notification::where('user_id', $user->id)->find($id);
 
         if (! $notification) {
@@ -79,7 +79,7 @@ final class NotificationController extends Controller
     }
 
     /**
-     * Dispara o envio de um email de teste em background via fila.
+     * Dispatches a test email in the background via queue.
      */
     #[OA\Post(
         path: '/notifications/test-email',

@@ -22,7 +22,7 @@ final class TicketStatusChanged extends Notification implements ShouldQueue
     ) {}
 
     /**
-     * Define os canais de envio (E-mail e Painel/BD).
+     * Defines the notification channels (mail and database).
      *
      * @return array<int, string>
      */
@@ -32,7 +32,7 @@ final class TicketStatusChanged extends Notification implements ShouldQueue
     }
 
     /**
-     * Representação da notificação por E-mail.
+     * Mail representation of the notification.
      */
     public function toMail(object $notifiable): MailMessage
     {
@@ -53,7 +53,7 @@ final class TicketStatusChanged extends Notification implements ShouldQueue
     }
 
     /**
-     * Representação da notificação na Base de Dados (Painel do Utilizador).
+     * Database representation of the notification (User Panel).
      *
      * @return array<string, mixed>
      */
@@ -73,7 +73,7 @@ final class TicketStatusChanged extends Notification implements ShouldQueue
     }
 
     /**
-     * Resolve o rótulo amigável do estado a partir da string ou Enum.
+     * Resolves the human-friendly status label from a string or enum.
      */
     private function resolveStatusLabel(string $status): string
     {

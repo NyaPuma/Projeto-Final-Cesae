@@ -23,8 +23,8 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 /**
- * Classe de exportação de Tickets para Excel.
- * Suporta filtragem dinâmica, formatação nativa de moedas/datas e leitura em blocos.
+ * Excel export class for Tickets.
+ * Supports dynamic filtering, native currency/date formatting, and chunked reading.
  */
 final class TicketsExport implements
     FromQuery,
@@ -38,14 +38,14 @@ final class TicketsExport implements
     WithEvents
 {
     /**
-     * Permite injetar uma query personalizada/filtrada a partir do Controller.
+     * Allows injecting a custom/filtered query from the Controller.
      */
     public function __construct(
         private readonly ?Builder $customQuery = null
     ) {}
 
     /**
-     * Query base para a exportação.
+     * Base query for the export.
      */
     public function query(): Builder
     {
@@ -71,7 +71,7 @@ final class TicketsExport implements
     }
 
     /**
-     * Tamanho dos blocos de leitura na base de dados para otimização de memória.
+     * Chunk size for database reading to optimize memory usage.
      */
     public function chunkSize(): int
     {
@@ -79,7 +79,7 @@ final class TicketsExport implements
     }
 
     /**
-     * Cabeçalho da folha de cálculo.
+     * Spreadsheet header row.
      */
     public function headings(): array
     {
@@ -101,7 +101,7 @@ final class TicketsExport implements
     }
 
     /**
-     * Mapeia cada registo Eloquent para uma linha do Excel.
+     * Maps each Eloquent record to an Excel row.
      *
      * @param Ticket $ticket
      */
@@ -133,7 +133,7 @@ final class TicketsExport implements
     }
 
     /**
-     * Formatação nativa das colunas no Excel (Permite cálculos e somas nas células).
+     * Native column formatting in Excel (enables calculations and sums in cells).
      */
     public function columnFormats(): array
     {
@@ -145,7 +145,7 @@ final class TicketsExport implements
     }
 
     /**
-     * Título do separador no Excel.
+     * Excel sheet tab title.
      */
     public function title(): string
     {
@@ -153,8 +153,8 @@ final class TicketsExport implements
     }
 
     /**
-     * Eventos da folha: congela o cabeçalho, ativa o autofiltro
-     * e aplica zebra (linhas alternadas) via formatação condicional.
+     * Sheet events: freezes the header, enables autofilter,
+     * and applies zebra striping via conditional formatting.
      */
     public function registerEvents(): array
     {
@@ -187,7 +187,7 @@ final class TicketsExport implements
     }
 
     /**
-     * Estilização visual da folha (Cabeçalho).
+     * Visual styling for the sheet (header row).
      */
     public function styles(Worksheet $sheet): array
     {

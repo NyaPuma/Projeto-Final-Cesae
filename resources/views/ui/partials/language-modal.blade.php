@@ -7,8 +7,8 @@
 
 @php
     $grouped = \App\Services\LocaleService::groupedByContinent();
-    $currentLanguage = \App\Services\PreferenciasService::getLanguage(request());
-    $preferences = \App\Services\PreferenciasService::current(request());
+    $currentLanguage = \App\Services\PreferencesService::getLanguage(request());
+    $preferences = \App\Services\PreferencesService::current(request());
     $currentLangBase = explode('-', $currentLanguage)[0];
 @endphp
 

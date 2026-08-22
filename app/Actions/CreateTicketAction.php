@@ -21,7 +21,7 @@ final readonly class CreateTicketAction
         $openStatusId = $this->statusService->getByName(TicketStatusEnum::Open);
 
         if ($openStatusId === null) {
-            throw new RuntimeException("O estado '" . TicketStatusEnum::Open->value . "' não foi encontrado no sistema.");
+            throw new RuntimeException("Status '" . TicketStatusEnum::Open->value . "' was not found in the system.");
         }
 
         return DB::transaction(function () use ($user, $data, $openStatusId) {
@@ -36,9 +36,6 @@ final readonly class CreateTicketAction
                 'status_id' => $openStatusId,
                 'opened_at' => now(),
             ]);
-
-            // Exemplo de disparo de evento no futuro:
-            // TicketCreated::dispatch($ticket);
 
             return $ticket->load(['user', 'equipment', 'room', 'status']);
         });

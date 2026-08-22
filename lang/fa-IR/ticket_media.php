@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => 'هیچ شواهدی آپلود نشده است.',
+    'remove_photo' => 'حذف عکس',
+    'remove_file' => 'حذف فایل',
+    'load_error' => 'خطا در بارگذاری عکس.',
+    'confirm_remove' => 'آیا مطمئن هستید که می‌خواهید این عکس را حذف کنید؟',
+    'remove_error' => 'خطا در حذف عکس.',
+    'removed' => 'عکس با موفقیت حذف شد.',
+    'sent' => 'عکس ارسال شد!',
+    'file' => 'فایل',
+    'Anexos' => 'پیوست‌ها',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => 'اعتبارنامه‌ها، عکس و مجوزهای دسترسی پروفایل کاربر را به‌روزرسانی کنید.',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => 'تصویری آپلود کنید (PNG، JPG یا WEBP حداکثر 2 مگابایت).',
+    'Emergência Imediata. Risco de acidente.' => 'اورژانس فوری. خطر تصادف.',
+    'Escolher Fotografia' => 'انتخاب عکس',
+    'Escolher ficheiro' => 'انتخاب فایل',
+    'Fotografia (Opcional)' => 'عکس (اختیاری)',
+    'Fotografia do Utilizador' => 'عکس کاربر',
+    'Imagem' => 'تصویر',
+    'Inserir Imagem (Opcional)' => 'درج تصویر (اختیاری)',
+    'Nenhum ficheiro' => 'بدون فایل',
+    'Nenhum ficheiro selecionado' => 'فایلی انتخاب نشده است',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => 'پروفایل فعلی: :profile. مطابق مجوزهای نقش خود به ماژول‌ها دسترسی پیدا کنید.',
+    'Tipo de ficheiro não permitido.' => 'نوع فایل مجاز نیست.',
+];

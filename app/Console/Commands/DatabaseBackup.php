@@ -61,7 +61,7 @@ class DatabaseBackup extends Command
         } catch (Throwable $e) {
             $this->error("Falha ao efetuar o backup: {$e->getMessage()}");
 
-            // Remove o ficheiro incompleto se o processo tiver falhado
+            // Remove the incomplete file if the process failed
             if (File::exists($filepath)) {
                 File::delete($filepath);
             }
@@ -84,7 +84,7 @@ class DatabaseBackup extends Command
             ? implode(' ', array_map('escapeshellarg', array_map(fn ($t) => "--ignore-table={$database}.{$t}", $excludeTables)))
             : '';
 
-        // Não passamos a password via CLI para evitar exposição na tabela de processos
+        // We don't pass the password via CLI to avoid exposing it in the process table
         $cmd = sprintf(
             'mysqldump -h %s -P %d -u %s %s %s --routines --triggers --single-transaction --result-file=%s',
             escapeshellarg($host),
@@ -95,9 +95,9 @@ class DatabaseBackup extends Command
             escapeshellarg($filepath)
         );
 
-        // Injeta a password com segurança via variável de ambiente MYSQL_PWD
+        // Inject the password securely via the MYSQL_PWD environment variable
         $result = Process::env(['MYSQL_PWD' => $password])
-            ->timeout(600) // Timeout de 10 minutos para bases de dados maiores
+            ->timeout(600) // 10-minute timeout for larger databases
             ->run($cmd);
 
         if ($result->failed()) {
@@ -127,7 +127,7 @@ class DatabaseBackup extends Command
     }
 
     /**
-     * Comprime o ficheiro de backup utilizando a extensão zlib nativa do PHP.
+     * Compresses the backup file using PHP's native zlib extension.
      */
     private function compressBackup(string $filepath): string
     {
@@ -141,7 +141,7 @@ class DatabaseBackup extends Command
         }
 
         while (! feof($fpIn)) {
-            gzwrite($fpOut, fread($fpIn, 524288)); // Leitura em blocos de 512KB
+            gzwrite($fpOut, fread($fpIn, 524288)); // Read in 512KB chunks
         }
 
         fclose($fpIn);

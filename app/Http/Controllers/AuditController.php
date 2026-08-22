@@ -11,8 +11,8 @@ use OpenApi\Attributes as OA;
 final class AuditController extends Controller
 {
     /**
-     * Lista os registos de auditoria do sistema.
-     * Protegido globalmente via middleware e verificado via Policy.
+     * Lists the system's audit records.
+     * Protected globally via middleware and verified via Policy.
      */
     #[OA\Get(
         path: '/admin/audits',
@@ -28,17 +28,17 @@ final class AuditController extends Controller
     )]
     public function index(Request $request): JsonResponse
     {
-        // 1. Autorização via Policy
+        // 1. Authorization via Policy
         $this->authorize('viewAny', Audit::class);
 
-        // 2. Procura paginada com Eager Loading da relação com o utilizador
+        // 2. Paginated search with Eager Loading of the user relation
         $perPage = config('services.custom.pagination.admin_per_page', 15);
 
         $audits = Audit::with('user')
             ->latest()
             ->paginate($perPage);
 
-        // 3. Retorno padronizado usando API Resource
+        // 3. Standardized response using API Resource
         return response()->json([
             'audits' => AuditResource::collection($audits)->response()->getData(true),
         ]);

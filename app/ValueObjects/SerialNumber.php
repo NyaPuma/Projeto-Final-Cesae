@@ -7,14 +7,14 @@ namespace App\ValueObjects;
 use InvalidArgumentException;
 
 /**
- * Value Object que representa e valida um número de série de forma imutável.
+ * Immutable value object representing and validating a serial number.
  */
 final readonly class SerialNumber
 {
     private string $value;
 
     /**
-     * Cria uma nova instância de SerialNumber após validação e normalização.
+     * Creates a new SerialNumber instance after validation and normalization.
      *
      * @param string $serial
      * @throws InvalidArgumentException
@@ -26,7 +26,7 @@ final readonly class SerialNumber
     }
 
     /**
-     * Valida se o número de série cumpre os requisitos de formato, tamanho e caracteres permitidos.
+     * Validates that the serial number meets format, length, and character requirements.
      *
      * @param string $serial
      * @throws InvalidArgumentException
@@ -47,7 +47,7 @@ final readonly class SerialNumber
     }
 
     /**
-     * Retorna o valor normalizado do número de série.
+     * Returns the normalized serial number value.
      *
      * @return string
      */
@@ -57,7 +57,7 @@ final readonly class SerialNumber
     }
 
     /**
-     * Compara se este número de série é exatamente igual a outro objeto SerialNumber.
+     * Checks whether this serial number is exactly equal to another SerialNumber.
      *
      * @param SerialNumber $other
      * @return bool
@@ -68,7 +68,7 @@ final readonly class SerialNumber
     }
 
     /**
-     * Retorna a representação em string do número de série.
+     * Returns the string representation of the serial number.
      *
      * @return string
      */

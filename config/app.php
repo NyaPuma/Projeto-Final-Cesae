@@ -80,7 +80,7 @@ return [
     |
     */
 
-    // O SGM usa Português europeu como fallback operacional.
+    // SGM uses European Portuguese as the operational fallback.
     'locale' => env('APP_LOCALE', 'pt-PT'),
 
     'fallback_locale' => env('APP_FALLBACK_LOCALE', 'pt-PT'),

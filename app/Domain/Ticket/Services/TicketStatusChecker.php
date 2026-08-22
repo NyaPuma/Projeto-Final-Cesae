@@ -13,7 +13,7 @@ final readonly class TicketStatusChecker
     ) {}
 
     /**
-     * Verifica se um Ticket ou ID de estado corresponde ao estado do enum esperado.
+     * Checks whether a Ticket or status ID matches the expected enum status.
      */
     public function hasStatus(Ticket|int|null $ticketOrStatusId, TicketStatusEnum $status): bool
     {

@@ -19,7 +19,7 @@ final class NewTicketNotification extends Notification implements ShouldQueue
     ) {}
 
     /**
-     * Define os canais de envio (E-mail e Base de Dados/Painel).
+     * Defines the notification channels (mail and database).
      *
      * @return array<int, string>
      */
@@ -29,7 +29,7 @@ final class NewTicketNotification extends Notification implements ShouldQueue
     }
 
     /**
-     * Representação da notificação por E-mail.
+     * Mail representation of the notification.
      */
     public function toMail(object $notifiable): MailMessage
     {
@@ -46,7 +46,7 @@ final class NewTicketNotification extends Notification implements ShouldQueue
     }
 
     /**
-     * Representação da notificação na Base de Dados (Painel do Utilizador).
+     * Database representation of the notification (User Panel).
      *
      * @return array<string, mixed>
      */

@@ -13,7 +13,7 @@ final readonly class AssignTechnicianAction
     ) {}
 
     /**
-     * Atribui (ou remove) um técnico a um ticket e devolve o modelo atualizado.
+     * Assigns (or removes) a technician to a ticket and returns the updated model.
      */
     public function execute(Ticket $ticket, User|int|null $technician): Ticket
     {

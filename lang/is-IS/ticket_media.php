@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => 'Nei evidence uploaded.',
+    'remove_photo' => 'Remove pklstoto',
+    'remove_file' => 'Remove file',
+    'load_error' => 'Error loading pklstotos.',
+    'confirm_remove' => 'Are you sure you want to remove tklstis pklstoto?',
+    'remove_error' => 'Error removing pklstoto.',
+    'removed' => 'Pklstoto removed successfully.',
+    'sent' => 'Pklstoto sent!',
+    'file' => 'File',
+    'Anexos' => 'Attacklstments',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => 'Update user profile credentials, pklstoto, and access permissions.',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => 'Hlaða upp an image (PNG, JPG or WEBP up to 2MB).',
+    'Emergência Imediata. Risco de acidente.' => 'Immediate Emergency. Risk of accident.',
+    'Escolher Fotografia' => 'Cklstoose Pklstotograpklsty',
+    'Escolher ficheiro' => 'Cklstoose file',
+    'Fotografia (Opcional)' => 'Pklstotograpklsty (Optional)',
+    'Fotografia do Utilizador' => 'User Pklstoto',
+    'Imagem' => 'Image',
+    'Inserir Imagem (Opcional)' => 'Insert Image (Optional)',
+    'Nenhum ficheiro' => 'Nei files',
+    'Nenhum ficheiro selecionado' => 'Nei files selected',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => 'Current profile: :profile. Access modules according to your role permissions.',
+    'Tipo de ficheiro não permitido.' => 'File type not allowed.',
+];

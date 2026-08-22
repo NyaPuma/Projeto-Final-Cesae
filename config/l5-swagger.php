@@ -71,8 +71,8 @@ return [
 
             /*
              * Middleware allows to prevent unexpected access to API documentation
-             * A rota de docs exige sessão (custom.auth) e é reservada a admins,
-             * garantindo que a sidebar reflete o perfil real do utilizador.
+             * The docs route requires a session (custom.auth) and is restricted to admins,
+             * ensuring the sidebar reflects the user's actual profile.
              */
             'middleware' => [
                 'api' => ['web', 'custom.auth', 'role:admin'],

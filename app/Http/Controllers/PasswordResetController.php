@@ -17,7 +17,7 @@ final class PasswordResetController extends Controller
     ) {}
 
     /**
-     * Envia o link/token de recuperação de password para o e-mail fornecido.
+     * Sends the password recovery link/token to the provided email.
      */
     public function sendResetLink(SendResetLinkRequest $request): JsonResponse
     {
@@ -37,7 +37,7 @@ final class PasswordResetController extends Controller
     }
 
     /**
-     * Efetua a alteração da password com base no token válido.
+     * Performs the password change based on a valid token.
      */
     public function resetPassword(ResetPasswordRequest $request): JsonResponse
     {

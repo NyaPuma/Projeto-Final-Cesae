@@ -12,14 +12,14 @@ use RuntimeException;
 final class TicketStatusService
 {
     /**
-     * Cache estático em memória para otimizar consultas repetidas durante o ciclo de vida do pedido.
+     * Static in-memory cache to optimize repeated queries during request lifecycle.
      *
      * @var array<string, int>
      */
     private static array $statusIdCache = [];
 
     /**
-     * Obtém o ID do estado do ticket pelo nome do enum, utilizando cache em memória e persistente.
+     * Gets ticket status ID by enum name, using in-memory and persistent cache.
      *
      * @param TicketStatusEnum $status
      * @return int|null

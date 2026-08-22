@@ -42,7 +42,7 @@ final class CsrfMiddleware
     }
 
     /**
-     * Determina se a validação CSRF deve ser ignorada para o pedido atual.
+     * Determines whether CSRF validation should be skipped for the current request.
      */
     protected function shouldSkipCsrfValidation(Request $request): bool
     {
@@ -88,9 +88,9 @@ final class CsrfMiddleware
     }
 
     /**
-     * Extrai o token CSRF do pedido (cabeçalho ou campo de formulário).
-     * Nunca devolve o token da sessão como "fornecido": isso permitiria
-     * que qualquer pedido com sessão ativa passasse sem apresentar token.
+     * Extracts the CSRF token from the request (header or form field).
+     * Never returns the session token as "provided": that would allow
+     * any request with an active session to pass without presenting a token.
      */
     protected function getCsrfTokenFromRequest(Request $request): ?string
     {
@@ -110,8 +110,8 @@ final class CsrfMiddleware
     }
 
     /**
-     * Valida se o token fornecido corresponde ao armazenado em sessão.
-     * Usa hash_equals para uma comparação de tempo constante.
+     * Validates that the provided token matches the one stored in the session.
+     * Uses hash_equals for constant-time comparison.
      */
     protected function validateCsrfToken(string $token): bool
     {
@@ -136,7 +136,7 @@ final class CsrfMiddleware
     }
 
     /**
-     * Regenera o ID de sessão para segurança adicional contra fixation attacks.
+     * Regenerates the session ID for additional security against fixation attacks.
      */
     protected function regenerateSessionId(): void
     {

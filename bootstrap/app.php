@@ -28,7 +28,7 @@ return Application::configure(basePath: dirname(__DIR__))
             SecurityHeaders::class,
         ]);
 
-        // Registar os aliases para usar de forma limpa no ficheiro de rotas
+        // Register aliases for clean usage in route files
         $middleware->alias([
             'custom.auth' => CustomAuthMiddleware::class,
             'role' => RoleMiddleware::class,
@@ -48,8 +48,8 @@ return Application::configure(basePath: dirname(__DIR__))
             return response()->json(['message' => $e->getMessage()], 422);
         });
 
-        // Garante o locale (sessão/cookie/browser) também nas páginas de erro,
-        // onde o middleware do grupo web já não corre.
+        // Ensures the locale (session/cookie/browser) is also set on error pages,
+        // where the web group middleware no longer runs.
         $exceptions->render(function (\Throwable $e, \Illuminate\Http\Request $request) {
             app()->setLocale(SetLocaleMiddleware::resolveFromRequest($request));
         });

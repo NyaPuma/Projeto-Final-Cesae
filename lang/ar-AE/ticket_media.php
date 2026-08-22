@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => 'لم يتم تحميل أي أدلة.',
+    'remove_photo' => 'إزالة الصورة',
+    'remove_file' => 'إزالة الملف',
+    'load_error' => 'خطأ في تحميل الصورة.',
+    'confirm_remove' => 'هل أنت متأكد من إزالة هذه الصورة؟',
+    'remove_error' => 'خطأ في إزالة الصورة.',
+    'removed' => 'تمت إزالة الصورة بنجاح.',
+    'sent' => 'تم إرسال الصورة!',
+    'file' => 'ملف',
+    'Anexos' => 'المرفقات',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => 'تحديث بيانات الاعتماد والصورة وأذونات الوصول لملف المستخدم.',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => 'تحميل صورة (PNG أو JPG أو WEBP حتى 2 ميجابايت).',
+    'Emergência Imediata. Risco de acidente.' => 'طارئ فوري. خطر حادث.',
+    'Escolher Fotografia' => 'اختيار صورة',
+    'Escolher ficheiro' => 'اختيار ملف',
+    'Fotografia (Opcional)' => 'صورة (اختياري)',
+    'Fotografia do Utilizador' => 'صورة المستخدم',
+    'Imagem' => 'صورة',
+    'Inserir Imagem (Opcional)' => 'إدراج صورة (اختياري)',
+    'Nenhum ficheiro' => 'لا ملف',
+    'Nenhum ficheiro selecionado' => 'لم يتم تحديد ملف',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => 'الملف الحالي: :profile. الوصول إلى الوحدات وفقاً لأذونات دورك.',
+    'Tipo de ficheiro não permitido.' => 'نوع الملف غير مسموح به.',
+];

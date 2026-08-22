@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => 'Ne evidence uploaded.',
+    'remove_photo' => 'Remove photo',
+    'remove_file' => 'Remove file',
+    'load_error' => 'Error loading photos.',
+    'confirm_remove' => 'Are you sure you want to remove this photo?',
+    'remove_error' => 'Error removing photo.',
+    'removed' => 'Photo removed successfully.',
+    'sent' => 'Photo sent!',
+    'file' => 'File',
+    'Anexos' => 'Attachments',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => 'Update user profile credentials, photo, and access permissions.',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => 'Prenesi an image (PNG, JPG or WEBP up to 2MB).',
+    'Emergência Imediata. Risco de acidente.' => 'Immediate Emergency. Risk of accident.',
+    'Escolher Fotografia' => 'Choose Photography',
+    'Escolher ficheiro' => 'Choose file',
+    'Fotografia (Opcional)' => 'Photography (Optional)',
+    'Fotografia do Utilizador' => 'User Photo',
+    'Imagem' => 'Image',
+    'Inserir Imagem (Opcional)' => 'Insert Image (Optional)',
+    'Nenhum ficheiro' => 'Ne files',
+    'Nenhum ficheiro selecionado' => 'Ne files selected',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => 'Current profile: :profile. Access modules according to your role permissions.',
+    'Tipo de ficheiro não permitido.' => 'File type not allowed.',
+];

@@ -12,10 +12,10 @@ use Illuminate\Support\Collection;
 final class CalendarService
 {
     /**
-     * Obtém os eventos agendados formatados para um utilizador específico.
-     * - Admin vê todos os agendamentos;
-     * - Técnico vê apenas os seus tickets atribuídos;
-     * - Utilizador comum vê apenas os seus próprios tickets.
+     * Gets formatted scheduled events for a specific user.
+     * - Admin sees all schedules;
+     * - Technician sees only their assigned tickets;
+     * - Regular user sees only their own tickets.
      *
      * @param User $user
      * @return Collection<int, array<string, mixed>>
@@ -34,7 +34,7 @@ final class CalendarService
 
         return $query->get()->map(fn (Ticket $ticket): array => [
             'id' => $ticket->id,
-            'title' => $ticket->title ?: ($ticket->equipment->name ?? 'Avaria Geral'),
+            'title' => $ticket->title ?: ($ticket->equipment->name ?? 'General Fault'),
             'start' => $ticket->scheduled_at->toIso8601String(),
             'end' => $ticket->scheduled_end?->toIso8601String(),
             'description' => $ticket->description,
@@ -47,7 +47,7 @@ final class CalendarService
     }
 
     /**
-     * Obtém os eventos agendados globais dentro de um intervalo de datas opcional.
+     * Gets global scheduled events within an optional date range.
      *
      * @param string|null $from
      * @param string|null $to

@@ -22,12 +22,12 @@ final class ExportPdfJob implements ShouldQueue
     use SerializesModels;
 
     /**
-     * O número de vezes que o job pode ser tentado antes de falhar.
+     * The maximum number of attempts before the job fails.
      */
     public int $tries = 2;
 
     /**
-     * O número máximo de segundos que o job pode executar.
+     * The maximum number of seconds the job may run.
      */
     public int $timeout = 180;
 
@@ -39,7 +39,7 @@ final class ExportPdfJob implements ShouldQueue
     {
         $filename = 'tickets_report_'.now()->format('Ymd_His').'.pdf';
 
-        // Garante que o diretório 'exports' existe no disco configurado
+        // Ensure the 'exports' directory exists on the configured disk
         Storage::disk('public')->makeDirectory('exports');
 
         $path = Storage::disk('public')->path('exports/'.$filename);
@@ -57,7 +57,7 @@ final class ExportPdfJob implements ShouldQueue
     }
 
     /**
-     * Notifica o utilizador caso ocorra uma falha durante a renderização do PDF.
+     * Notifies the user when a failure occurs during PDF rendering.
      */
     public function failed(?Throwable $exception): void
     {

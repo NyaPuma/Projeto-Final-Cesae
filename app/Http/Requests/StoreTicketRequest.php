@@ -18,7 +18,7 @@ final class StoreTicketRequest extends FormRequest
     }
 
     /**
-     * Limpa espaços sobressalentes nos textos antes da validação.
+     * Trims whitespace from text fields before validation.
      */
     protected function prepareForValidation(): void
     {
@@ -40,7 +40,7 @@ final class StoreTicketRequest extends FormRequest
     }
 
     /**
-     * Nomes amigáveis para as mensagens de erro padrão.
+     * Friendly names for default error messages.
      */
     public function attributes(): array
     {

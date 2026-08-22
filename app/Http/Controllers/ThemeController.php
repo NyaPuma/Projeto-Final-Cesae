@@ -36,8 +36,8 @@ final class ThemeController extends Controller
     }
 
     /**
-     * Alterna para o preset equivalente (claro <-> escuro da mesma família)
-     * e guarda-o — usado pelo botão de modo do painel.
+     * Switches to the equivalent preset (light <-> dark of the same family)
+     * and saves it — used by the panel's mode button.
      */
     public function switchTheme(Request $request): JsonResponse
     {
@@ -56,9 +56,9 @@ final class ThemeController extends Controller
     }
 
     /**
-     * Hash dos valores de tema guardados, usado como cache-buster (?v=) no
-     * link do CSS dinâmico — garante que uma alteração de tema é buscada de
-     * imediato, sem ficar presa a caches de browser antigos.
+     * Hash of saved theme values, used as a cache-buster (?v=) in the
+     * dynamic CSS link — ensures a theme change is fetched immediately,
+     * without being stuck to old browser caches.
      */
     public static function cacheBuster(): string
     {
@@ -111,8 +111,8 @@ final class ThemeController extends Controller
     }
 
     /**
-     * Escolhe texto legível (preto ou branco puros) sobre a cor primária,
-     * garantindo contraste WCAG >= 4.5:1 para qualquer cor de fundo.
+     * Picks readable text color (pure black or white) over a given color,
+     * ensuring WCAG contrast >= 4.5:1 for any background.
      */
     private function readableOnColor(string $hex): string
     {

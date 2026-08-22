@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => 'لم يتم تسجيل أي رسائل.',
+    'comments_error' => 'خطأ في تحميل السجل.',
+    'message_sent' => 'تم إرسال الرسالة!',
+    'incident_id' => 'رقم الحادثة',
+    'description' => 'وصف الحادثة',
+    'priority_level' => 'الأولوية',
+    'equipment' => 'معدات / أصول',
+    'room' => 'غرفة / موقع',
+    'technician' => 'الفني المعين',
+    'pending_assignment' => 'في انتظار التعيين',
+    'reported_by' => 'أبلغ عنه',
+    'source' => 'المصدر',
+    'qr_code' => 'رمز QR',
+    'web' => 'Web',
+    'system' => 'النظام',
+    'no_description' => 'لم يتم تقديم وصف.',
+    'Data de abertura (De)' => 'تاريخ الفتح (من)',
+    'Detalhe de um fornecedor' => 'تفاصيل المورد',
+    'Detalhe de um fornecedor.' => 'تفاصيل المورد.',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => 'تفصيل المشكلة التي حدثت، الأصوات، التسريبات أو السلوكيات غير الطبيعية...',
+    'Detalhes do Incidente' => 'تفاصيل الحادثة',
+];

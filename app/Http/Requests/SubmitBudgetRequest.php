@@ -23,18 +23,18 @@ final class SubmitBudgetRequest extends FormRequest
             'budget_details.*.description' => ['required', 'string', 'max:255'],
             'budget_details.*.type' => ['required', 'string', Rule::in(['material', 'labor'])],
 
-            // Validação condicional para itens do tipo 'material'
+            // Conditional validation for 'material' type items
             'budget_details.*.quantity' => ['required_if:budget_details.*.type,material', 'nullable', 'numeric', 'min:0.01'],
             'budget_details.*.unit_price' => ['required_if:budget_details.*.type,material', 'nullable', 'numeric', 'min:0'],
 
-            // Validação condicional para itens do tipo 'labor' (mão de obra)
+            // Conditional validation for 'labor' type items
             'budget_details.*.hours' => ['required_if:budget_details.*.type,labor', 'nullable', 'numeric', 'min:0.1'],
             'budget_details.*.hourly_rate' => ['required_if:budget_details.*.type,labor', 'nullable', 'numeric', 'min:0'],
         ];
     }
 
     /**
-     * Valida se a soma dos itens individuais bate com o valor total estimado.
+     * Validates that the sum of individual items matches the estimated total.
      */
     public function after(): array
     {
@@ -80,7 +80,7 @@ final class SubmitBudgetRequest extends FormRequest
     }
 
     /**
-     * Mapeamento de atributos para mensagens de erro legíveis.
+     * Maps attributes to human-readable error messages.
      */
     public function attributes(): array
     {

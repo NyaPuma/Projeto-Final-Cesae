@@ -39,7 +39,7 @@ final class TicketStatusChanged implements ShouldBroadcast
     }
 
     /**
-     * Os canais onde o evento deve ser transmitido em tempo real (WebSockets).
+     * The channels on which the event should be broadcast in real time (WebSockets).
      *
      * @return array<\Illuminate\Broadcasting\Channel>
      */
@@ -53,7 +53,7 @@ final class TicketStatusChanged implements ShouldBroadcast
     }
 
     /**
-     * Nome do evento emitido para o frontend (Laravel Echo).
+     * The event name emitted to the frontend (Laravel Echo).
      */
     public function broadcastAs(): string
     {
@@ -61,7 +61,7 @@ final class TicketStatusChanged implements ShouldBroadcast
     }
 
     /**
-     * Payload otimizado e rico para consumo imediato no frontend.
+     * Optimized and rich payload for immediate frontend consumption.
      *
      * @return array<string, mixed>
      */

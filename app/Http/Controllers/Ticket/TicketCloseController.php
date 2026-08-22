@@ -25,14 +25,14 @@ final class TicketCloseController extends Controller
     ) {}
 
     /**
-     * Encerramento simples/rápido de ticket em curso.
+     * Simple/quick close of an in-progress ticket.
      */
     public function simpleClose(CloseTicketSimpleRequest $request, Ticket $ticket): JsonResponse
     {
-        // 1. Autorização via Policy
+        // 1. Authorization via Policy
         $this->authorize('close', $ticket);
 
-        // 2. Validação de estado inicial
+        // 2. Initial state validation
         if (! $ticket->hasStatus(TicketStatusEnum::InProgress)) {
             return response()->json([
                 'message' => __('tickets.Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.'),
@@ -41,7 +41,7 @@ final class TicketCloseController extends Controller
 
         $oldStatus = $ticket->status;
 
-        // 3. Execução do workflow de encerramento
+        // 3. Execute the closing workflow
         $this->workflowService->close(
             ticket: $ticket,
             cost: $request->float('cost'),
@@ -49,7 +49,7 @@ final class TicketCloseController extends Controller
             minutesSpent: $request->integer('minutes_spent')
         );
 
-        // 4. Emissão de evento em tempo real
+        // 4. Emit real-time event
         $this->broadcastStatusChange($ticket, $oldStatus, TicketStatusEnum::Closed);
 
         $ticket->loadMissing(['equipment', 'room', 'technician', 'status']);
@@ -61,18 +61,18 @@ final class TicketCloseController extends Controller
     }
 
     /**
-     * Encerramento final com verificação de prioridades pendentes e envio de notificações.
+     * Final close with pending priority verification and notification dispatch.
      */
     public function closeFinal(CloseTicketRequest $request, Ticket $ticket): JsonResponse
     {
-        // 1. Autorização via Policy
+        // 1. Authorization via Policy
         $this->authorize('close', $ticket);
 
         $user = $request->user();
         $force = $request->boolean('force');
         $oldStatus = $ticket->status;
 
-        // 2. Validação de tickets pendentes com maior prioridade
+        // 2. Validate pending tickets with higher priority
         if (! $force) {
             $higherPriority = $this->workflowService->findHigherPriorityTickets($ticket);
             if ($higherPriority['has_higher']) {
@@ -89,10 +89,10 @@ final class TicketCloseController extends Controller
         }
 
         $cost = $request->float('actual_cost');
-        // Mantém null quando ausente para não apagar o relatório técnico existente
+        // Keep null when absent to avoid overwriting the existing technical report
         $report = $request->validated('report');
 
-        // 3. Executa o encerramento no serviço de workflow
+        // 3. Execute the closing in the workflow service
         $this->workflowService->close(
             ticket: $ticket,
             cost: $cost,
@@ -100,7 +100,7 @@ final class TicketCloseController extends Controller
             minutesSpent: $request->integer('minutes_spent')
         );
 
-        // 4. Notifica se houve sobrescrita de prioridade
+        // 4. Notify if priority was overridden
         if ($force) {
             $higherPriority = $this->workflowService->findHigherPriorityTickets($ticket);
             if ($higherPriority['has_higher']) {
@@ -108,10 +108,10 @@ final class TicketCloseController extends Controller
             }
         }
 
-        // 5. Emissão de tempo real via WebSockets
+        // 5. Broadcast real-time via WebSockets
         $this->broadcastStatusChange($ticket, $oldStatus, TicketStatusEnum::Closed);
 
-        // 6. Envio de notificação global de encerramento
+        // 6. Dispatch global closing notification
         $formattedCost = $this->localization->formatDecimal($cost);
         $this->notificationService->notifyTicketClosed(
             $ticket,

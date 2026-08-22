@@ -17,7 +17,7 @@ final class ScheduleMaintenanceRequest extends FormRequest
     }
 
     /**
-     * Limpa espaços sobressalentes nos textos antes da validação.
+     * Trims whitespace from text fields before validation.
      */
     protected function prepareForValidation(): void
     {

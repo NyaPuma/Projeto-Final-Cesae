@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => 'ไม่มีข้อความที่บันทึกไว้',
+    'comments_error' => 'เกิดข้อผิดพลาดในการโหลดประวัติ',
+    'message_sent' => 'ส่งข้อความแล้ว!',
+    'incident_id' => 'หมายเลขเหตุการณ์',
+    'description' => 'คำอธิบายเหตุการณ์',
+    'priority_level' => 'ระดับความสำคัญ',
+    'equipment' => 'อุปกรณ์ / สินทรัพย์',
+    'room' => 'ห้อง / ตำแหน่ง',
+    'technician' => 'ช่างเทคนิคที่มอบหมาย',
+    'pending_assignment' => 'รอการมอบหมาย',
+    'reported_by' => 'ผู้รายงาน',
+    'source' => 'แหล่งที่มา',
+    'qr_code' => 'QR Code',
+    'web' => 'Web',
+    'system' => 'ระบบ',
+    'no_description' => 'ไม่มีคำอธิบายที่ให้ไว้',
+    'Data de abertura (De)' => 'วันที่เปิด (จาก)',
+    'Detalhe de um fornecedor' => 'รายละเอียดผู้จัดจำหน่าย',
+    'Detalhe de um fornecedor.' => 'รายละเอียดผู้จัดจำหน่าย',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => 'อธิบายปัญหาที่เกิดขึ้น เสียง การรั่วไหล หรือพฤติกรรมที่ผิดปกติ...',
+    'Detalhes do Incidente' => 'รายละเอียดเหตุการณ์',
+];

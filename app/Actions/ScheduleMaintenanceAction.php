@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 use RuntimeException;
 
 /**
- * Cria um ticket de manutenção preventiva já agendado no calendário.
+ * Creates a preventive maintenance ticket already scheduled on the calendar.
  */
 final readonly class ScheduleMaintenanceAction
 {
@@ -27,7 +27,7 @@ final readonly class ScheduleMaintenanceAction
         $openStatusId = $this->statusService->getByName(TicketStatusEnum::Open);
 
         if ($openStatusId === null) {
-            throw new RuntimeException("O estado '" . TicketStatusEnum::Open->value . "' não foi encontrado no sistema.");
+            throw new RuntimeException("Status '" . TicketStatusEnum::Open->value . "' was not found in the system.");
         }
 
         $scheduledAt = Carbon::parse($data->scheduledAt);

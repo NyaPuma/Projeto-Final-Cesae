@@ -65,21 +65,21 @@ return new class extends Migration
             |--------------------------------------------------------------------------
             */
 
-            // Pesquisa por código único já possui índice através do UNIQUE
+            // Unique code lookup already has an index via UNIQUE
 
-            // Salas por edifício e piso
+            // Rooms by building and floor
             $table->index([
                 'building',
                 'floor',
             ]);
 
-            // Salas ativas por edifício
+            // Active rooms by building
             $table->index([
                 'building',
                 'active',
             ]);
 
-            // Listagem geral de salas disponíveis
+            // General listing of available rooms
             $table->index([
                 'active',
                 'deleted_at',

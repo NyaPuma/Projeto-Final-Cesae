@@ -18,7 +18,7 @@ final class StoreEquipmentRequest extends FormRequest
     }
 
     /**
-     * Limpa espaços extras do nome e número de série antes da validação.
+     * Trims extra whitespace from name and serial number before validation.
      */
     protected function prepareForValidation(): void
     {
@@ -53,7 +53,7 @@ final class StoreEquipmentRequest extends FormRequest
     }
 
     /**
-     * Nomes amigáveis para os campos nas mensagens de validação padrão.
+     * Friendly names for fields in default validation messages.
      */
     public function attributes(): array
     {

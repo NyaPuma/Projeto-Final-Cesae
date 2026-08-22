@@ -13,20 +13,19 @@ use InvalidArgumentException;
 use RuntimeException;
 
 /**
- * Centraliza toda a alteração de stock de peças.
+ * Centralizes all part stock changes.
  *
- * Regra de negócio: qualquer alteração a `current_stock` passa obrigatoriamente
- * por um registo em `stock_movements`, dentro de uma transação, garantindo
- * rastreabilidade total e atomicidade.
+ * Business rule: any change to `current_stock` must go through a record in
+ * `stock_movements`, within a transaction, ensuring full traceability and atomicity.
  */
 final class StockMovementService
 {
     /**
-     * Regista um movimento e atualiza o stock da peça de forma atómica.
+     * Records a movement and updates part stock atomically.
      *
-     * @param  int  $quantity  quantidade (positiva para in/return, negativa para out,
-     *                         com sinal para adjust — aceita-se qualquer valor)
-     * @param  User|null  $user  utilizador que regista o movimento
+     * @param  int  $quantity  quantity (positive for in/return, negative for out,
+     *                         signed for adjust — any value accepted)
+     * @param  User|null  $user  user recording the movement
      */
     public function record(
         Part $part,
@@ -39,14 +38,14 @@ final class StockMovementService
         ?float $unitPriceSnapshot = null,
     ): StockMovement {
         if ($quantity === 0) {
-            throw new InvalidArgumentException('A quantidade de um movimento não pode ser zero.');
+            throw new InvalidArgumentException('A movement quantity cannot be zero.');
         }
 
         return DB::transaction(function () use ($part, $movementType, $quantity, $reason, $ticketId, $equipmentId, $user, $unitPriceSnapshot) {
             $locked = Part::query()->lockForUpdate()->find($part->id);
 
             if ($locked === null) {
-                throw new RuntimeException("A peça '{$part->sku}' não foi encontrada.");
+                throw new RuntimeException("Part '{$part->sku}' not found.");
             }
 
             $delta = $this->delta($movementType, $quantity);
@@ -55,7 +54,7 @@ final class StockMovementService
 
             if ($newStock < 0) {
                 throw new InvalidArgumentException(
-                    "Stock insuficiente: o movimento deixaria a peça '{$locked->sku}' com stock negativo."
+                    "Insufficient stock: the movement would leave part '{$locked->sku}' with negative stock."
                 );
             }
 
@@ -81,7 +80,7 @@ final class StockMovementService
     }
 
     /**
-     * Calcula a variação de stock consoante o tipo de movimento.
+     * Calculates stock delta based on movement type.
      */
     private function delta(StockMovementTypeEnum $type, int $quantity): int
     {

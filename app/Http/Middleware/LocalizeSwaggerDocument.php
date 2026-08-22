@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Localiza os campos humanos do documento OpenAPI no locale atual.
- * Paths, operationIds, schemas, propriedades e valores técnicos permanecem
- * estáveis para não quebrar clientes nem exemplos da API.
+ * Localizes the human-readable fields of the OpenAPI document for the current locale.
+ * Paths, operationIds, schemas, properties, and technical values remain
+ * stable to avoid breaking clients or API examples.
  */
 final class LocalizeSwaggerDocument
 {

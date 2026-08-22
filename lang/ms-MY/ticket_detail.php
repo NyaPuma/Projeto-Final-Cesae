@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => 'Tiada mesej direkodkan.',
+    'comments_error' => 'Ralat semasa memuatkan sejarah.',
+    'message_sent' => 'Mesej berjaya dihantar!',
+    'incident_id' => 'ID insiden',
+    'description' => 'Penerangan insiden',
+    'priority_level' => 'Tahap keutamaan',
+    'equipment' => 'Peralatan / Aset',
+    'room' => 'Bilik / Lokasi',
+    'technician' => 'Juruteknik ditugaskan',
+    'pending_assignment' => 'Menunggu tugasan',
+    'reported_by' => 'Dilaporkan oleh',
+    'source' => 'Sumber',
+    'qr_code' => 'Kod QR',
+    'web' => 'Web',
+    'system' => 'Sistem',
+    'no_description' => 'Tiada penerangan disediakan.',
+    'Data de abertura (De)' => 'Tarikh pembukaan (Dari)',
+    'Detalhe de um fornecedor' => 'Butiran pembekal',
+    'Detalhe de um fornecedor.' => 'Butiran pembekal.',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => 'Terangkan masalah yang berlaku, bunyi, kebocoran atau tingkah laku luar biasa...',
+    'Detalhes do Incidente' => 'Butiran Insiden',
+];

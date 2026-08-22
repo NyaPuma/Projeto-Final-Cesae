@@ -23,14 +23,14 @@ final class AdminEquipmentController extends Controller
     ) {}
 
     /**
-     * Lista todos os equipamentos registados no sistema.
+     * Lists all equipment registered in the system.
      */
     public function index(Request $request): JsonResponse
     {
-        // 1. Autorização via Policy
+        // 1. Authorization via Policy
         $this->authorize('viewAny', Equipment::class);
 
-        // 2. Procura de equipamentos (suporta paginação se implementada no repositório)
+        // 2. Search for equipment (supports pagination if implemented in the repository)
         $equipments = $this->equipmentRepository->getAll();
 
         return response()->json([
@@ -39,14 +39,14 @@ final class AdminEquipmentController extends Controller
     }
 
     /**
-     * Cria um novo equipamento no sistema.
+     * Creates a new equipment in the system.
      */
     public function store(StoreEquipmentRequest $request): JsonResponse
     {
-        // 1. Autorização via Policy
+        // 1. Authorization via Policy
         $this->authorize('create', Equipment::class);
 
-        // 2. Executa DTO e Action para criar o equipamento
+        // 2. Execute DTO and Action to create the equipment
         $data = StoreEquipmentData::fromRequest($request->validated());
         $equipment = $this->createEquipmentAction->execute($data);
 
@@ -59,14 +59,14 @@ final class AdminEquipmentController extends Controller
     }
 
     /**
-     * Atualiza os dados de um equipamento existente.
+     * Updates an existing equipment's data.
      */
     public function update(UpdateEquipmentRequest $request, Equipment $equipment): JsonResponse
     {
-        // 1. Autorização via Policy
+        // 1. Authorization via Policy
         $this->authorize('update', $equipment);
 
-        // 2. Executa DTO e Action para atualizar
+        // 2. Execute DTO and Action for update
         $data = UpdateEquipmentData::fromRequest($request->validated());
         $updatedEquipment = $this->updateEquipmentAction->execute($equipment, $data);
 
@@ -79,14 +79,14 @@ final class AdminEquipmentController extends Controller
     }
 
     /**
-     * Elimina um equipamento do sistema.
+     * Deletes an equipment from the system.
      */
     public function destroy(Request $request, Equipment $equipment): JsonResponse
     {
-        // 1. Autorização via Policy
+        // 1. Authorization via Policy
         $this->authorize('delete', $equipment);
 
-        // 2. Executa a remoção via Repositório
+        // 2. Execute removal via Repository
         $this->equipmentRepository->delete($equipment);
 
         return response()->json([

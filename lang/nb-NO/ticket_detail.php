@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => 'Ingen registrerte meldinger.',
+    'comments_error' => 'Feil ved lasting av historikk.',
+    'message_sent' => 'Melding sendt!',
+    'incident_id' => 'Hendelsesnummer',
+    'description' => 'Hendelsesbeskrivelse',
+    'priority_level' => 'Prioritet',
+    'equipment' => 'Utstyr / Eiendel',
+    'room' => 'Rom / Plassering',
+    'technician' => 'Tildelt tekniker',
+    'pending_assignment' => 'Venter på tildeling',
+    'reported_by' => 'Rapportert av',
+    'source' => 'Kilde',
+    'qr_code' => 'QR-kode',
+    'web' => 'Web',
+    'system' => 'System',
+    'no_description' => 'Ingen beskrivelse oppgitt.',
+    'Data de abertura (De)' => 'Åpningsdato (Fra)',
+    'Detalhe de um fornecedor' => 'Leverandørdetaljer',
+    'Detalhe de um fornecedor.' => 'Leverandørdetaljer.',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => 'Beskriv detaljert problemet som oppsto, støy, lekkasjer eller unormal atferd...',
+    'Detalhes do Incidente' => 'Hendelsedetaljer',
+];

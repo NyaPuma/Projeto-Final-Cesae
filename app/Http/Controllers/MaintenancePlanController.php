@@ -22,7 +22,7 @@ final class MaintenancePlanController extends Controller
     ) {}
 
     /**
-     * Lista paginada de planos de manutenção preventiva.
+     * Paginated listing of preventive maintenance plans.
      */
     #[OA\Get(
         path: '/admin/maintenance-plans',
@@ -59,7 +59,7 @@ final class MaintenancePlanController extends Controller
     }
 
     /**
-     * Detalhe de um plano com as peças associadas.
+     * Plan detail with associated parts.
      */
     #[OA\Get(
         path: '/admin/maintenance-plans/{plan}',
@@ -84,7 +84,7 @@ final class MaintenancePlanController extends Controller
     }
 
     /**
-     * Cria um novo plano de manutenção preventiva.
+     * Creates a new preventive maintenance plan.
      */
     #[OA\Post(
         path: '/admin/maintenance-plans',
@@ -150,7 +150,7 @@ final class MaintenancePlanController extends Controller
     }
 
     /**
-     * Atualiza um plano de manutenção preventiva.
+     * Updates a preventive maintenance plan.
      */
     #[OA\Patch(
         path: '/admin/maintenance-plans/{plan}',
@@ -216,7 +216,7 @@ final class MaintenancePlanController extends Controller
     }
 
     /**
-     * Elimina logicamente um plano.
+     * Soft-deletes a plan.
      */
     #[OA\Delete(
         path: '/admin/maintenance-plans/{plan}',
@@ -243,7 +243,7 @@ final class MaintenancePlanController extends Controller
     }
 
     /**
-     * Converte a lista de peças [id, expected_quantity] num mapa part_id => quantity.
+     * Converts the parts list [id, expected_quantity] into a part_id => quantity map.
      *
      * @return array<int, int>
      */

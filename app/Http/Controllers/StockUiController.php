@@ -15,7 +15,7 @@ use Illuminate\View\View;
 final class StockUiController extends Controller
 {
     /**
-     * Dashboard do módulo de stock.
+     * Stock module dashboard.
      */
     public function dashboard(Request $request): View
     {
@@ -25,7 +25,7 @@ final class StockUiController extends Controller
     }
 
     /**
-     * Listagem de peças.
+     * Parts listing.
      */
     public function parts(Request $request): View
     {
@@ -38,7 +38,7 @@ final class StockUiController extends Controller
     }
 
     /**
-     * Formulário de criação de peça.
+     * Part creation form.
      */
     public function partCreate(Request $request): View
     {
@@ -52,7 +52,7 @@ final class StockUiController extends Controller
     }
 
     /**
-     * Detalhe de uma peça.
+     * Part detail view.
      */
     public function partShow(Request $request, Part $part): View
     {
@@ -65,7 +65,7 @@ final class StockUiController extends Controller
     }
 
     /**
-     * Formulário de edição de peça.
+     * Part edit form.
      */
     public function partEdit(Request $request, Part $part): View
     {
@@ -80,7 +80,7 @@ final class StockUiController extends Controller
     }
 
     /**
-     * Listagem de fornecedores.
+     * Suppliers listing.
      */
     public function suppliers(Request $request): View
     {
@@ -90,7 +90,7 @@ final class StockUiController extends Controller
     }
 
     /**
-     * Formulário de criação de fornecedor.
+     * Supplier creation form.
      */
     public function supplierCreate(Request $request): View
     {
@@ -100,7 +100,7 @@ final class StockUiController extends Controller
     }
 
     /**
-     * Formulário de edição de fornecedor.
+     * Supplier edit form.
      */
     public function supplierEdit(Request $request, Supplier $supplier): View
     {
@@ -113,7 +113,7 @@ final class StockUiController extends Controller
     }
 
     /**
-     * Listagem de movimentos de stock.
+     * Stock movements listing.
      */
     public function movements(Request $request): View
     {
@@ -126,7 +126,7 @@ final class StockUiController extends Controller
     }
 
     /**
-     * Gestão de taxas de IVA (admin).
+     * VAT rates management (admin).
      */
     public function taxRates(Request $request): View
     {
@@ -139,7 +139,7 @@ final class StockUiController extends Controller
     }
 
     /**
-     * Gestão de categorias de peças (admin).
+     * Part categories management (admin).
      */
     public function categories(Request $request): View
     {
@@ -152,7 +152,7 @@ final class StockUiController extends Controller
     }
 
     /**
-     * Planos de manutenção preventiva.
+     * Preventive maintenance plans.
      */
     public function plans(Request $request): View
     {

@@ -27,9 +27,6 @@ final readonly class CreateEquipmentAction
                 'notes' => $data->notes,
             ]);
 
-            // Exemplo de disparo de evento no futuro:
-            // EquipmentCreated::dispatch($equipment);
-
             return $equipment->load(['room', 'category']);
         });
     }

@@ -66,13 +66,13 @@ final readonly class TicketObserver
     }
 
     /**
-     * Invalida as caches de analítica e dashboards associadas aos tickets.
+     * Invalidates analytics and dashboard caches associated with tickets.
      */
     private function invalidateAnalyticsCache(): void
     {
         Cache::forget('analytics_dashboard_payload');
 
-        // Se usar tags de cache (ex: Redis), pode fazer:
+        // If using cache tags (e.g. Redis), you can do:
         // Cache::tags(['tickets', 'analytics'])->flush();
     }
 }

@@ -9,8 +9,8 @@ return [
     | Backup Configuration
     |--------------------------------------------------------------------------
     |
-    | Configuração para backups da base de dados. Utiliza mysqldump (MySQL)
-    | ou sqlite3 (SQLite) diretamente, sem dependência de packages externos.
+| Database backup configuration. Uses mysqldump (MySQL)
+| or sqlite3 (SQLite) directly, without external package dependencies.
     |
     */
 

@@ -11,12 +11,12 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Estatísticas e relatórios do módulo de stock.
+ * Stock module statistics and reports.
  */
 final class StockDashboardService
 {
     /**
-     * Valor total do stock em armazém (soma de stock_atual * preco_custo).
+     * Total stock value in warehouse (sum of current_stock * cost_price).
      */
     public function totalStockValue(): float
     {
@@ -27,7 +27,7 @@ final class StockDashboardService
     }
 
     /**
-     * Total de peças distintas em catálogo.
+     * Total distinct parts in catalog.
      */
     public function totalParts(): int
     {
@@ -35,7 +35,7 @@ final class StockDashboardService
     }
 
     /**
-     * Número de peças em alerta de stock baixo.
+     * Number of parts in low stock alert.
      */
     public function lowStockCount(): int
     {
@@ -43,7 +43,7 @@ final class StockDashboardService
     }
 
     /**
-     * Peças com stock parado (sem movimento há X dias) — capital imobilizado.
+     * Parts with stagnant stock (no movement for X days) — tied-up capital.
      *
      * @return Collection<int, Part>
      */
@@ -62,7 +62,7 @@ final class StockDashboardService
     }
 
     /**
-     * Top N peças mais consumidas (saídas) num período.
+     * Top N most consumed parts (exits) in a period.
      *
      * @return Collection<int, array{part_id: int, part_name: string, sku: string, total_quantity: int, total_value: float}>
      */
@@ -82,7 +82,7 @@ final class StockDashboardService
     }
 
     /**
-     * Custo de peças consumidas por equipamento.
+     * Cost of parts consumed by equipment.
      *
      * @return Collection<int, array{equipment_id: int|null, equipment_name: string|null, total_quantity: int, total_value: float}>
      */
@@ -109,7 +109,7 @@ final class StockDashboardService
     }
 
     /**
-     * Custo de peças consumidas por ticket/intervenção.
+     * Cost of parts consumed by ticket/intervention.
      *
      * @return Collection<int, array{ticket_id: int, ticket_reference: string, total_quantity: int, total_value: float}>
      */
@@ -136,7 +136,7 @@ final class StockDashboardService
     }
 
     /**
-     * Previsão simples de rutura de stock baseada no consumo médio mensal.
+     * Simple stockout forecast based on average monthly consumption.
      *
      * @return Collection<int, array{part_id: int, part_name: string, sku: string, current_stock: int, avg_monthly_usage: float, est_months_of_stock: float}>
      */
@@ -177,7 +177,7 @@ final class StockDashboardService
     }
 
     /**
-     * Query base de consumo: movimentos de saída (e ajustes negativos) num período.
+     * Base consumption query: exit movements (and negative adjustments) in a period.
      */
     private function consumptionQuery(?string $from = null, ?string $to = null)
     {

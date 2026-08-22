@@ -33,7 +33,7 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Rotas Públicas da API (Acesso Aberto)
+| Public API Routes (Open Access)
 |--------------------------------------------------------------------------
 */
 
@@ -61,12 +61,12 @@ Route::post('/password/reset', [PasswordResetController::class, 'resetPassword']
 
 /*
 |--------------------------------------------------------------------------
-| Rotas Protegidas da API (Autenticadas via X-Auth-Token)
+| Protected API Routes (Authenticated via X-Auth-Token)
 |--------------------------------------------------------------------------
 */
 Route::middleware(['custom.auth'])->group(function () {
 
-    // Autenticação
+    // Authentication
     Route::post('/password/change', [\App\Http\Controllers\ProfileController::class, 'changePassword'])->name('api.password.change');
 
     // Tickets
@@ -75,11 +75,11 @@ Route::middleware(['custom.auth'])->group(function () {
     Route::post('/tickets', [TicketController::class, 'store'])->name('api.tickets.store');
     Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('api.tickets.show');
 
-    // Comentários
+    // Comments
     Route::post('/tickets/{ticket}/comments', [TicketCommentController::class, 'store'])->name('api.tickets.comments.store');
     Route::get('/tickets/{ticket}/comments', [TicketCommentController::class, 'index'])->name('api.tickets.comments.index');
 
-    // Fotos
+    // Photos
     Route::post('/tickets/{ticket}/photos', [TicketAttachmentController::class, 'store'])->name('api.tickets.photos.store');
     Route::get('/tickets/{ticket}/photos', [TicketAttachmentController::class, 'index'])->name('api.tickets.photos.index');
     Route::delete('/tickets/{ticket}/photos/{attachment}', [TicketAttachmentController::class, 'destroy'])->name('api.tickets.photos.destroy');
@@ -89,7 +89,7 @@ Route::middleware(['custom.auth'])->group(function () {
     Route::post('/tickets/{ticket}/cancel', [TicketLifecycleController::class, 'cancel'])->name('api.tickets.cancel');
     Route::post('/tickets/{ticket}/schedule', TicketScheduleController::class)->name('api.tickets.schedule');
 
-    // Técnico
+    // Technician
     Route::middleware(['role:technician'])->group(function () {
         Route::put('/technician/tickets/{ticket}/start', TicketStartController::class)->name('api.technician.tickets.start');
         Route::put('/technician/tickets/{ticket}/close', [TicketCloseController::class, 'simpleClose'])->name('api.technician.tickets.close');
@@ -97,7 +97,7 @@ Route::middleware(['custom.auth'])->group(function () {
         Route::put('/technician/tickets/{ticket}/request-budget', [TicketBudgetController::class, 'requestAuthorization'])->name('api.technician.tickets.request-budget');
     });
 
-    // Stock: leitura e movimentos (admins e técnicos)
+    // Stock: read and movements (admins and technicians)
     Route::middleware(['role:admin,technician'])->group(function () {
         Route::get('/stock/parts', [PartController::class, 'index'])->name('api.stock.parts.index');
         Route::get('/stock/parts/{part}', [PartController::class, 'show'])->name('api.stock.parts.show');
@@ -115,7 +115,7 @@ Route::middleware(['custom.auth'])->group(function () {
 
     // Admin
     Route::middleware(['role:admin'])->group(function () {
-        // Utilizadores
+        // Users
         Route::get('/admin/users', [AdminUserController::class, 'index'])->name('api.admin.users.index');
         Route::post('/admin/users', [AdminUserController::class, 'store'])->name('api.admin.users.store');
         Route::patch('/admin/users/{targetUser}', [AdminUserController::class, 'update'])->name('api.admin.users.update');
@@ -123,27 +123,27 @@ Route::middleware(['custom.auth'])->group(function () {
         Route::delete('/admin/users/{targetUser}', [AdminUserController::class, 'destroy'])->name('api.admin.users.destroy');
         Route::get('/admin/profiles', [AdminUserController::class, 'profiles'])->name('api.admin.profiles.index');
 
-        // Auditoria
+        // Audit
         Route::get('/admin/audits', [AuditController::class, 'index'])->name('api.admin.audits.index');
 
-        // Equipamentos
+        // Equipment
         Route::get('/admin/equipment', [AdminEquipmentController::class, 'index'])->name('api.admin.equipment.index');
         Route::post('/admin/equipment', [AdminEquipmentController::class, 'store'])->name('api.admin.equipment.store');
         Route::patch('/admin/equipment/{equipment}', [AdminEquipmentController::class, 'update'])->name('api.admin.equipment.update');
         Route::delete('/admin/equipment/{equipment}', [AdminEquipmentController::class, 'destroy'])->name('api.admin.equipment.destroy');
 
-        // Salas
+        // Rooms
         Route::get('/admin/rooms', [RoomController::class, 'indexRoom'])->name('api.admin.rooms.index');
         Route::post('/admin/rooms', [RoomController::class, 'storeRoom'])->name('api.admin.rooms.store');
         Route::patch('/admin/rooms/{room}', [RoomController::class, 'updateRoom'])->name('api.admin.rooms.update');
         Route::patch('/admin/rooms/{room}/inactive', [RoomController::class, 'inactivateRoom'])->name('api.admin.rooms.inactivate');
 
-        // Orçamento e Manutenção Preventiva
+        // Budget and Preventive Maintenance
         Route::post('/admin/preventive', [AdminController::class, 'storePreventive'])->name('api.admin.preventive.store');
         Route::patch('/admin/tickets/{ticket}/approve-budget', [AdminController::class, 'approveBudget'])->name('api.admin.tickets.approve-budget');
         Route::patch('/admin/tickets/{ticket}/atribuir', TicketAssignmentController::class)->name('api.admin.tickets.atribuir');
 
-        // Stock: gestão (admin)
+        // Stock: management (admin)
         Route::post('/admin/parts', [PartController::class, 'store'])->name('api.admin.stock.parts.store');
         Route::patch('/admin/parts/{part}', [PartController::class, 'update'])->name('api.admin.stock.parts.update');
         Route::delete('/admin/parts/{part}', [PartController::class, 'destroy'])->name('api.admin.stock.parts.destroy');
@@ -167,13 +167,13 @@ Route::middleware(['custom.auth'])->group(function () {
         Route::patch('/admin/maintenance-plans/{plan}', [MaintenancePlanController::class, 'update'])->name('api.admin.stock.plans.update');
         Route::delete('/admin/maintenance-plans/{plan}', [MaintenancePlanController::class, 'destroy'])->name('api.admin.stock.plans.destroy');
 
-        // Stock: relatórios (admin)
+        // Stock: reports (admin)
         Route::get('/stock/reports/low-stock.csv', [StockReportController::class, 'lowStockCsv'])->name('api.stock.reports.low-stock.csv');
         Route::get('/stock/reports/inventory.csv', [StockReportController::class, 'inventoryCsv'])->name('api.stock.reports.inventory.csv');
         Route::get('/stock/reports/costs-by-equipment.pdf', [StockReportController::class, 'costsByEquipmentPdf'])->name('api.stock.reports.costs-by-equipment.pdf');
     });
 
-    // Analíticos
+    // Analytics
     Route::middleware(['role:admin'])->group(function () {
         Route::get('/analytics/stats', [AnalyticsController::class, 'stats'])->name('api.analytics.stats');
         Route::get('/analytics/export/csv', [AnalyticsController::class, 'exportCsv'])->name('api.analytics.export.csv');
@@ -181,7 +181,7 @@ Route::middleware(['custom.auth'])->group(function () {
         Route::get('/analytics/export/excel', [AnalyticsController::class, 'exportExcel'])->name('api.analytics.export.excel');
     });
 
-    // Notificações
+    // Notifications
     Route::get('/notifications', [NotificationController::class, 'index'])->name('api.notifications.index');
     Route::patch('/notifications/{id}', [NotificationController::class, 'markAsRead'])->name('api.notifications.mark-read');
     Route::post('/notifications/test-email', [NotificationController::class, 'sendTestEmail'])

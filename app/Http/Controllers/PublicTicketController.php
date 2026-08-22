@@ -33,7 +33,7 @@ final class PublicTicketController extends Controller
     ) {}
 
     /**
-     * Formulário público de reporte de avaria, acedido via QR Code.
+     * Public damage report form, accessed via QR Code.
      */
     public function create(Request $request): View
     {
@@ -50,7 +50,7 @@ final class PublicTicketController extends Controller
     }
 
     /**
-     * Regista o ticket público e notifica os administradores.
+     * Registers the public ticket and notifies administrators.
      */
     public function store(PublicStoreTicketRequest $request): RedirectResponse
     {
@@ -73,7 +73,7 @@ final class PublicTicketController extends Controller
             $this->storePhoto($ticket, $request);
         }
 
-        // Recomendação de técnico via IA processada em segundo plano após o commit.
+        // AI technician recommendation processed in the background after commit.
         GenerateAiRecommendationJob::dispatch($ticket)->afterCommit();
 
         $this->notifyAdmins($ticket);
@@ -82,7 +82,7 @@ final class PublicTicketController extends Controller
     }
 
     /**
-     * Ecrã de confirmação com o número do ticket criado.
+     * Confirmation screen with the created ticket number.
      */
     public function success(Ticket $ticket): View
     {
@@ -92,7 +92,7 @@ final class PublicTicketController extends Controller
     }
 
     /**
-     * Grava a fotografia do reporte como anexo do ticket (sem conta de utilizador).
+     * Saves the report photo as a ticket attachment (without user account).
      */
     private function storePhoto(Ticket $ticket, PublicStoreTicketRequest $request): void
     {
@@ -126,7 +126,7 @@ final class PublicTicketController extends Controller
     }
 
     /**
-     * Notifica todos os administradores da criação do novo ticket.
+     * Notifies all administrators about the new ticket creation.
      */
     private function notifyAdmins(Ticket $ticket): void
     {

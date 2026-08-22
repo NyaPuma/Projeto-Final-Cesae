@@ -23,9 +23,6 @@ final readonly class UpdateRoomAction
                 'notes' => $data->notes ?? $room->notes,
             ]);
 
-            // Exemplo de disparo de evento no futuro:
-            // RoomUpdated::dispatch($room);
-
             return $room;
         });
     }

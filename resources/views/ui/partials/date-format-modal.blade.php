@@ -6,9 +6,9 @@
 --}}
 
 @php
-    $supportedDateFormats = \App\Services\PreferenciasService::supportedDateFormats();
-    $currentDateFormat = \App\Services\PreferenciasService::getDateFormat(request());
-    $preferences = \App\Services\PreferenciasService::current(request);
+    $supportedDateFormats = \App\Services\PreferencesService::supportedDateFormats();
+    $currentDateFormat = \App\Services\PreferencesService::getDateFormat(request());
+    $preferences = \App\Services\PreferencesService::current(request);
     
     // Nomes amigáveis para os formatos
     $formatNames = [

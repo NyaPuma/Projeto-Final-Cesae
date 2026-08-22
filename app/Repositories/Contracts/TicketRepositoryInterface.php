@@ -10,7 +10,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 interface TicketRepositoryInterface
 {
     /**
-     * Encontra um ticket pelo seu ID.
+     * Find a ticket by its ID.
      *
      * @param int $id
      * @return Ticket|null
@@ -18,7 +18,7 @@ interface TicketRepositoryInterface
     public function findById(int $id): ?Ticket;
 
     /**
-     * Encontra um ticket pelo seu ID carregando relações específicas.
+     * Find a ticket by its ID, loading specific relationships.
      *
      * @param int $id
      * @param array<int, string> $relations
@@ -27,7 +27,7 @@ interface TicketRepositoryInterface
     public function findWithRelations(int $id, array $relations = []): ?Ticket;
 
     /**
-     * Retorna uma listagem paginada de tickets.
+     * Return a paginated list of tickets.
      *
      * @param array<int, string> $relations
      * @return LengthAwarePaginator<Ticket>
@@ -35,7 +35,7 @@ interface TicketRepositoryInterface
     public function getAll(array $relations = []): LengthAwarePaginator;
 
     /**
-     * Cria um novo ticket.
+     * Create a new ticket.
      *
      * @param array<string, mixed> $data
      * @return Ticket
@@ -43,7 +43,7 @@ interface TicketRepositoryInterface
     public function create(array $data): Ticket;
 
     /**
-     * Atualiza um ticket existente.
+     * Update an existing ticket.
      *
      * @param Ticket $ticket
      * @param array<string, mixed> $data
@@ -52,7 +52,7 @@ interface TicketRepositoryInterface
     public function update(Ticket $ticket, array $data): bool;
 
     /**
-     * Elimina um ticket da base de dados.
+     * Delete a ticket from the database.
      *
      * @param Ticket $ticket
      * @return bool
@@ -60,14 +60,14 @@ interface TicketRepositoryInterface
     public function delete(Ticket $ticket): bool;
 
     /**
-     * Retorna todos os tickets abertos de forma paginada.
+     * Return all open tickets in a paginated manner.
      *
      * @return LengthAwarePaginator<Ticket>
      */
     public function getOpenTickets(): LengthAwarePaginator;
 
     /**
-     * Retorna os tickets atribuídos a um técnico específico.
+     * Return tickets assigned to a specific technician.
      *
      * @param int $technicianId
      * @return LengthAwarePaginator<Ticket>
@@ -75,7 +75,7 @@ interface TicketRepositoryInterface
     public function getTicketsByTechnician(int $technicianId): LengthAwarePaginator;
 
     /**
-     * Retorna os tickets criados por um utilizador específico.
+     * Return tickets created by a specific user.
      *
      * @param int $userId
      * @return LengthAwarePaginator<Ticket>

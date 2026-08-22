@@ -30,7 +30,7 @@ final class TestMail extends Mailable
     {
         return new Content(
             view: 'emails.test-mail',
-            // O $recipientName já é injetado automaticamente na view por ser uma propriedade pública
+            // $recipientName is automatically injected into the view as a public property
         );
     }
 }

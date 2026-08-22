@@ -17,7 +17,7 @@
                 aria-haspopup="dialog"
                 aria-expanded="false">
                 🌐
-                <span class="ui-topbar__locale">{{ strtoupper(substr(\App\Services\PreferenciasService::getLanguage(request()), 0, 2)) }}</span>
+                <span class="ui-topbar__locale">{{ strtoupper(substr(\App\Services\PreferencesService::getLanguage(request()), 0, 2)) }}</span>
             </x-ui.buttons.button>
 
             <x-ui.buttons.button type="button"
@@ -30,7 +30,7 @@
                 aria-haspopup="dialog"
                 aria-expanded="false">
                 💰
-                <span class="ui-topbar__locale">{{ \App\Services\PreferenciasService::getCurrency(request()) }}</span>
+                <span class="ui-topbar__locale">{{ \App\Services\PreferencesService::getCurrency(request()) }}</span>
             </x-ui.buttons.button>
 
             <x-ui.buttons.button type="button"
@@ -43,7 +43,7 @@
                 aria-haspopup="dialog"
                 aria-expanded="false">
                 📅
-                <span class="ui-topbar__locale">{{ \App\Services\PreferenciasService::getDateFormat(request()) }}</span>
+                <span class="ui-topbar__locale">{{ \App\Services\PreferencesService::getDateFormat(request()) }}</span>
             </x-ui.buttons.button>
 
             <x-ui.buttons.button type="button"
@@ -56,7 +56,7 @@
                 aria-haspopup="dialog"
                 aria-expanded="false">
                 🕐
-                <span class="ui-topbar__locale">{{ \App\Services\PreferenciasService::getTimeFormat(request()) }}</span>
+                <span class="ui-topbar__locale">{{ \App\Services\PreferencesService::getTimeFormat(request()) }}</span>
             </x-ui.buttons.button>
 
             <x-ui.buttons.button type="button"
@@ -69,7 +69,7 @@
                 aria-haspopup="dialog"
                 aria-expanded="false">
                 🔢
-                <span class="ui-topbar__locale">{{ \App\Services\PreferenciasService::getNumberFormat(request()) !== null ? json_decode(\App\Services\PreferenciasService::getNumberFormat(request()), true)['example'] ?? '1,234.56' : '1,234.56' }}</span>
+                <span class="ui-topbar__locale">{{ \App\Services\PreferencesService::getNumberFormat(request()) !== null ? json_decode(\App\Services\PreferencesService::getNumberFormat(request()), true)['example'] ?? '1,234.56' : '1,234.56' }}</span>
             </x-ui.buttons.button>
 
             <div class="ui-topbar__dropdown" id="notificationBellContainer">

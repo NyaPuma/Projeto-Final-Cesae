@@ -16,7 +16,7 @@ final class AuthController extends Controller
     ) {}
 
     /**
-     * Autentica um utilizador com base nas credenciais submetidas.
+     * Authenticates a user based on the submitted credentials.
      */
     public function login(LoginRequest $request): JsonResponse
     {
@@ -26,7 +26,7 @@ final class AuthController extends Controller
         $maxAttempts = config('services.custom.auth.max_attempts', 5);
         $lockoutMinutes = config('services.custom.auth.lockout_minutes', 15);
 
-        // 1. Verifica o limite de tentativas de login (Rate Limiting via Cache)
+        // 1. Check the login attempt rate limit (Rate Limiting via Cache)
         $attempts = Cache::get($rateLimitKey, 0);
         if ($attempts >= $maxAttempts) {
             return response()->json([
@@ -34,17 +34,17 @@ final class AuthController extends Controller
             ], 429)->header('Retry-After', (string) ($lockoutMinutes * 60));
         }
 
-        // 2. Procura o utilizador ativo
+        // 2. Find the active user
         $user = \App\Models\User::where('email', $email)
             ->where('active', true)
             ->first();
 
-        // 3. Validação das credenciais
+        // 3. Validate credentials
         $valid = $user && Hash::check($request->input('password'), $user->password);
 
         if (! $valid) {
-            // Incremento atómico: Cache::add semeia a chave com TTL no 1º insucesso;
-            // Cache::increment garante contagem correta sob concorrência.
+        // Atomic increment: Cache::add seeds the key with TTL on first failure;
+        // Cache::increment ensures correct count under concurrency.
             if (! Cache::add($rateLimitKey, 1, now()->addMinutes($lockoutMinutes))) {
                 Cache::increment($rateLimitKey);
             }
@@ -54,16 +54,16 @@ final class AuthController extends Controller
             ], 401);
         }
 
-        // 4. Limpa as tentativas falhadas em caso de sucesso
+        // 4. Clear failed attempts on success
         Cache::forget($rateLimitKey);
 
-        // 5. Atualiza o hash da password se necessário (re-hash automático)
+        // 5. Rehash password hash if needed (automatic re-hash)
         if (Hash::needsRehash($user->password)) {
             $user->password = Hash::make($request->input('password'));
             $user->save();
         }
 
-        // 6. Garante o perfil e cria o token de sessão/api
+        // 6. Ensure profile exists and create session/api token
         $this->userService->ensureDefaultProfile($user);
         $plainToken = $this->userService->createToken($user, $request);
 
@@ -71,7 +71,7 @@ final class AuthController extends Controller
     }
 
     /**
-     * Termina a sessão do utilizador autenticado.
+     * Terminates the authenticated user's session.
      */
     public function logout(Request $request): JsonResponse
     {

@@ -71,7 +71,7 @@ class UsersSeeder extends Seeder
 
         for ($i = 1; $i <= $targetCount - $currentCount; $i++) {
             $index = $i + $currentCount;
-            // Distribuição realista: ~10% admin, ~15% técnico, ~75% utilizador comum
+            // Realistic distribution: ~10% admin, ~15% technician, ~75% regular user
             $roll = $index % 10;
             $profileName = $roll === 0 ? 'admin' : ($roll <= 2 ? 'technician' : 'user');
             $email = sprintf('synthetic-%03d@example.invalid', $index);

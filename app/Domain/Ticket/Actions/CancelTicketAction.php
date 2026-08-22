@@ -14,13 +14,12 @@ final readonly class CancelTicketAction
     ) {}
 
     /**
-     * Cancelar um ticket de suporte.
+     * Cancels a support ticket.
      */
     public function execute(Ticket $ticket): bool
     {
         $cancelledStatusId = $this->statusService->getByName(TicketStatusEnum::Cancelled);
 
-        // Guard Clause: Se já estiver cancelado, ignora ou lança exceção
         if ($ticket->status_id === $cancelledStatusId) {
             return true;
         }

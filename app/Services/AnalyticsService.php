@@ -16,7 +16,7 @@ final class AnalyticsService
     ) {}
 
     /**
-     * Obtém o payload completo para o painel analítico.
+     * Gets the complete payload for the analytics dashboard.
      *
      * @return array<string, mixed>
      */
@@ -26,7 +26,7 @@ final class AnalyticsService
     }
 
     /**
-     * Exporta os dados analíticos em formato CSV para a saída padrão.
+     * Exports analytics data in CSV format to standard output.
      */
     public function exportCsv(): void
     {
@@ -34,7 +34,7 @@ final class AnalyticsService
     }
 
     /**
-     * Exporta os dados analíticos para um ficheiro CSV no caminho especificado.
+     * Exports analytics data to a CSV file at the specified path.
      *
      * @param string $path
      */
@@ -44,7 +44,7 @@ final class AnalyticsService
     }
 
     /**
-     * Exporta o relatório analítico em formato PDF para o caminho especificado.
+     * Exports the analytics report in PDF format to the specified path.
      *
      * @param string $path
      */

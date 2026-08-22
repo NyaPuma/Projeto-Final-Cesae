@@ -19,7 +19,7 @@ final class PartCategoryController extends Controller
     ) {}
 
     /**
-     * Lista todas as categorias de peças.
+     * Lists all part categories.
      */
     #[OA\Get(
         path: '/admin/part-categories',
@@ -42,7 +42,7 @@ final class PartCategoryController extends Controller
     }
 
     /**
-     * Cria uma nova categoria.
+     * Creates a new category.
      */
     #[OA\Post(
         path: '/admin/part-categories',
@@ -80,7 +80,7 @@ final class PartCategoryController extends Controller
     }
 
     /**
-     * Atualiza uma categoria.
+     * Updates a category.
      */
     #[OA\Patch(
         path: '/admin/part-categories/{category}',
@@ -122,7 +122,7 @@ final class PartCategoryController extends Controller
     }
 
     /**
-     * Desativa logicamente uma categoria.
+     * Soft-deactivates a category.
      */
     #[OA\Delete(
         path: '/admin/part-categories/{category}',

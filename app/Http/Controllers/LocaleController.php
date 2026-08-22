@@ -6,19 +6,19 @@ namespace App\Http\Controllers;
 
 use App\Services\AuthUserResolver;
 use App\Services\LocaleService;
-use App\Services\PreferenciasService;
+use App\Services\PreferencesService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 final class LocaleController extends Controller
 {
     /**
-     * Guarda a preferência de idioma do utilizador.
+     * Saves the user's language preference.
      *
-     * Grava na sessão e num cookie permanente; se o utilizador estiver
-     * autenticado, persiste também na coluna `users.locale` e na tabela
-     * `user_preferences` para que o middleware de preferências não reverta
-     * o locale. Redireciona de volta para a página de origem.
+     * Writes to session and a permanent cookie; if the user is
+     * authenticated, also persists to the `users.locale` column and
+     * `user_preferences` table so the preferences middleware does not revert
+     * the locale. Redirects back to the originating page.
      */
     public function switch(Request $request): RedirectResponse
     {
@@ -38,12 +38,12 @@ final class LocaleController extends Controller
         if ($user) {
             $user->forceFill(['locale' => $locale])->save();
 
-            PreferenciasService::saveForUser($user, [
+            PreferencesService::saveForUser($user, [
                 'language' => $locale,
-                'currency' => PreferenciasService::getCurrency($request),
-                'date_format' => PreferenciasService::getDateFormat($request),
-                'time_format' => PreferenciasService::getTimeFormat($request),
-                'number_format' => PreferenciasService::getNumberFormat($request),
+                'currency' => PreferencesService::getCurrency($request),
+                'date_format' => PreferencesService::getDateFormat($request),
+                'time_format' => PreferencesService::getTimeFormat($request),
+                'number_format' => PreferencesService::getNumberFormat($request),
             ]);
         }
 

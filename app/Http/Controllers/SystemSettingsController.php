@@ -14,7 +14,7 @@ final class SystemSettingsController extends Controller
     ) {}
 
     /**
-     * Página de configurações do sistema (admin).
+     * System settings page (admin).
      */
     public function index(Request $request): View
     {
@@ -26,8 +26,8 @@ final class SystemSettingsController extends Controller
     }
 
     /**
-     * Guarda overrides (auto-save de selects/toggles ou botão de cada grupo)
-     * ou repõe um grupo inteiro ({reset: groupId}).
+     * Saves overrides (auto-save of selects/toggles or each group's button)
+     * or resets an entire group ({reset: groupId}).
      */
     public function update(Request $request): JsonResponse
     {

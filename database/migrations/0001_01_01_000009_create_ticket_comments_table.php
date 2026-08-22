@@ -60,13 +60,13 @@ return new class extends Migration
             |--------------------------------------------------------------------------
             */
 
-            // Listagem cronológica de comentários por ticket
+            // Chronological listing of comments per ticket
             $table->index(
                 ['ticket_id', 'created_at'],
                 'ticket_comments_ticket_created_idx'
             );
 
-            // Comentários internos por ticket
+            // Internal comments per ticket
             $table->index(
                 ['ticket_id', 'is_internal'],
                 'ticket_comments_ticket_internal_idx'
@@ -78,7 +78,7 @@ return new class extends Migration
                 'ticket_comments_parent_created_idx'
             );
 
-            // Comentários editados
+            // Edited comments
             $table->index(
                 'edited_at',
                 'ticket_comments_edited_at_idx'

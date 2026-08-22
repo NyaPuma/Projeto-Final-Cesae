@@ -87,19 +87,19 @@ return new class extends Migration
                 'audits_auditable_idx'
             );
 
-            // Histórico de auditorias por utilizador
+            // Audit history by user
             $table->index(
                 ['user_id', 'created_at'],
                 'audits_user_created_idx'
             );
 
-            // Pesquisa por tipo de evento
+            // Search by event type
             $table->index(
                 ['event', 'created_at'],
                 'audits_event_created_idx'
             );
 
-            // Ordenação cronológica
+            // Chronological ordering
             $table->index(
                 'created_at',
                 'audits_created_at_idx'

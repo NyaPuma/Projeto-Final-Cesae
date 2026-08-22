@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 final class PasswordResetService
 {
     /**
-     * Cria e armazena um token seguro de redefinição de palavra-passe para o e-mail fornecido.
+     * Creates and stores a secure password reset token for the provided email.
      *
      * @param string $email
      * @return string
@@ -32,7 +32,7 @@ final class PasswordResetService
     }
 
     /**
-     * Valida o token de redefinição de palavra-passe, verificando a expiração e correspondência.
+     * Validates the password reset token, checking expiration and match.
      *
      * @param string $email
      * @param string $token
@@ -65,7 +65,7 @@ final class PasswordResetService
     }
 
     /**
-     * Redefine a palavra-passe do utilizador, revoga tokens de API associados e remove o registo de recuperação.
+     * Resets the user password, revokes associated API tokens, and removes the recovery record.
      *
      * @param User $user
      * @param string $password

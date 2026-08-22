@@ -54,7 +54,7 @@ final class AnalyticsExportService
     ];
 
     /**
-     * Exporta os dados dos tickets diretamente para a saída padrão (CSV).
+     * Exports ticket data directly to standard output (CSV).
      *
      * @throws RuntimeException
      */
@@ -63,7 +63,7 @@ final class AnalyticsExportService
         $handle = fopen('php://output', 'w');
 
         if ($handle === false) {
-            throw new RuntimeException('Não foi possível abrir o fluxo de saída padrão.');
+            throw new RuntimeException('Could not open standard output stream.');
         }
 
         try {
@@ -74,7 +74,7 @@ final class AnalyticsExportService
     }
 
     /**
-     * Exporta os dados dos tickets para um ficheiro CSV no caminho especificado.
+     * Exports ticket data to a CSV file at the specified path.
      *
      * @param string $path
      * @throws RuntimeException
@@ -86,7 +86,7 @@ final class AnalyticsExportService
         $handle = fopen($path, 'w');
 
         if ($handle === false) {
-            throw new RuntimeException("Não foi possível abrir o ficheiro para escrita: {$path}");
+            throw new RuntimeException("Could not open file for writing: {$path}");
         }
 
         try {
@@ -97,7 +97,7 @@ final class AnalyticsExportService
     }
 
     /**
-     * Exporta o relatório analítico em formato PDF para o caminho especificado.
+     * Exports the analytics report in PDF format to the specified path.
      *
      * @param string $path
      */
@@ -116,7 +116,7 @@ final class AnalyticsExportService
     }
 
     /**
-     * Garante que o diretório pai do caminho do ficheiro existe.
+     * Ensures the parent directory of the file path exists.
      *
      * @param string $path
      * @throws RuntimeException
@@ -126,12 +126,12 @@ final class AnalyticsExportService
         $dir = dirname($path);
 
         if (! is_dir($dir) && ! mkdir($dir, 0755, true) && ! is_dir($dir)) {
-            throw new RuntimeException("Não foi possível criar o diretório: {$dir}");
+            throw new RuntimeException("Could not create directory: {$dir}");
         }
     }
 
     /**
-     * Escreve o cabeçalho e as linhas de dados em formato CSV no ponteiro fornecido.
+     * Writes CSV header and data rows to the provided file pointer.
      *
      * @param resource $handle
      */
@@ -152,7 +152,7 @@ final class AnalyticsExportService
     }
 
     /**
-     * Converte um ticket numa linha CSV legível.
+     * Converts a ticket into a readable CSV row.
      *
      * @return list<string>
      */

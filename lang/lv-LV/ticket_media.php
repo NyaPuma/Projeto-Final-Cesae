@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => 'Nē evidence uploaded.',
+    'remove_photo' => 'Remove pstoto',
+    'remove_file' => 'Remove file',
+    'load_error' => 'Error loading pstotos.',
+    'confirm_remove' => 'Are you sure you want to remove tstis pstoto?',
+    'remove_error' => 'Error removing pstoto.',
+    'removed' => 'Pstoto removed successfully.',
+    'sent' => 'Pstoto sent!',
+    'file' => 'File',
+    'Anexos' => 'Attacstments',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => 'Update user profile credentials, pstoto, and access permissions.',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => 'Augšupielādēt an image (PNG, JPG or WEBP up to 2MB).',
+    'Emergência Imediata. Risco de acidente.' => 'Immediate Emergency. Risk of accident.',
+    'Escolher Fotografia' => 'Cstoose Pstotograpsty',
+    'Escolher ficheiro' => 'Cstoose file',
+    'Fotografia (Opcional)' => 'Pstotograpsty (Optional)',
+    'Fotografia do Utilizador' => 'User Pstoto',
+    'Imagem' => 'Image',
+    'Inserir Imagem (Opcional)' => 'Insert Image (Optional)',
+    'Nenhum ficheiro' => 'Nē files',
+    'Nenhum ficheiro selecionado' => 'Nē files selected',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => 'Current profile: :profile. Access modules according to your role permissions.',
+    'Tipo de ficheiro não permitido.' => 'File type not allowed.',
+];

@@ -105,7 +105,7 @@
 | 5 | Sem cobertura de testes para `TicketStartController` | `tests/` | Médio | ⬜ Pendente |
 | 6 | `phpstan.neon` aponta para `vendor/larastan/larastan/extension.neon` — mas PHPStan v2 usa `phpstan/phpstan` diretamente | `phpstan.neon` | Baixo | ⬜ Pendente |
 | 7 | Lazy loading `$user->profile` no `TicketController::openTickets()` (fora de loop, single query) | `app/Http/Controllers/TicketController.php:119` | Muito Baixo | ⬜ Pendente |
-| 8 | `AIService::recomendarTecnico()` — análise pendente | `app/Services/AIService.php` | Médio | ⬜ Pendente |
+| 8 | `AIService::recommendTechnician()` — analysis pending | `app/Services/AIService.php` | Medium | ⬜ Pending |
 | 9 | Duplicação de testes de SecurityHeaders em 2 locais | `tests/Security/Headers/` + `tests/Unit/Middleware/` | Baixo | ⬜ Pendente |
 | 10 | Faltam testes de Feature para rotas admin | `routes/web.php` (grupo admin, 25+ routes) | Médio | ⬜ Pendente |
 

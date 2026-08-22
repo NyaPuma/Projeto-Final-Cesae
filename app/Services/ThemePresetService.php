@@ -5,16 +5,16 @@ namespace App\Services;
 use App\Models\ThemeSetting;
 
 /**
- * Fonte única dos temas pré-definidos (14 famílias × claro/escuro = 28 temas).
+ * Single source of truth for preset themes (14 families × light/dark = 28 themes).
  *
- * Cada tema define o conjunto completo das cores guardadas em `theme_settings`.
- * A cada família corresponde um par light/dark com o mesmo matiz — o botão
- * de alternância claro/escuro troca para o equivalente e guarda-o.
+ * Each theme defines the complete set of colors stored in `theme_settings`.
+ * Each family has a light/dark pair with the same hue — the light/dark toggle
+ * button switches to the equivalent and saves it.
  */
 final class ThemePresetService
 {
     /**
-     * Chaves de cor guardadas em theme_settings (nomes dos campos do formulário).
+     * Color keys stored in theme_settings (form field names).
      */
     private const COLOR_KEYS = [
         'primary', 'text', 'text_soft', 'surface', 'surface_alt', 'border',
@@ -22,7 +22,7 @@ final class ThemePresetService
     ];
 
     /**
-     * Mapping nome de campo -> token CSS.
+     * Field name -> CSS token mapping.
      */
     private const TOKENS = [
         'primary' => '--color-primary',
@@ -480,7 +480,7 @@ final class ThemePresetService
     }
 
     /**
-     * Par da família com o modo oposto (light <-> dark).
+     * Family pair with opposite mode (light <-> dark).
      */
     public function paired(string $id): ?array
     {
@@ -500,7 +500,7 @@ final class ThemePresetService
     }
 
     /**
-     * Valores de cor do preset mapeados para os tokens CSS.
+     * Preset color values mapped to CSS tokens.
      *
      * @return array<string, string>
      */
@@ -522,10 +522,10 @@ final class ThemePresetService
     }
 
     /**
-     * Identifica qual preset corresponde aos valores guardados
-     * (aplica-se a cores pré-corrigidas, normalizando maiúsculas/minúsculas).
+     * Identifies which preset matches stored values
+     * (applies to pre-corrected colors, normalizing case).
      *
-     * @param  array<string, string>  $values  nome do campo -> cor
+     * @param  array<string, string>  $values  field name -> color
      */
     public function findByValues(array $values): ?string
     {
@@ -556,8 +556,8 @@ final class ThemePresetService
     }
 
     /**
-     * Tema atualmente ativo: usa `theme_name` se válido, senão tenta
-     * reconhecer pelas cores guardadas; em último caso volta ao default.
+     * Currently active theme: uses `theme_name` if valid, otherwise tries
+     * to recognize by stored colors; falls back to default.
      *
      * @return array<string, string>
      */
@@ -583,7 +583,7 @@ final class ThemePresetService
     }
 
     /**
-     * Modo claro/escuro do tema ativo.
+     * Light/dark mode of the active theme.
      */
     public function mode(): string
     {
@@ -591,9 +591,9 @@ final class ThemePresetService
     }
 
     /**
-     * Aplica um preset: guarda as cores e o nome do tema em theme_settings.
+     * Applies a preset: saves colors and theme name to theme_settings.
      *
-     * @return array<string, string> o preset aplicado
+     * @return array<string, string> the applied preset
      */
     public function apply(string $id): array
     {

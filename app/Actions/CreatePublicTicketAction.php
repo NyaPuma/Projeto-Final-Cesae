@@ -17,7 +17,7 @@ final readonly class CreatePublicTicketAction
     ) {}
 
     /**
-     * Cria um ticket reportado publicamente (via QR Code) sem conta de utilizador.
+     * Creates a publicly reported ticket (via QR Code) without a user account.
      */
     public function execute(
         Equipment $equipment,
@@ -29,7 +29,7 @@ final readonly class CreatePublicTicketAction
         $openStatusId = $this->statusService->getByName(TicketStatusEnum::Open);
 
         if ($openStatusId === null) {
-            throw new RuntimeException("O estado '" . TicketStatusEnum::Open->value . "' não foi encontrado no sistema.");
+            throw new RuntimeException("Status '" . TicketStatusEnum::Open->value . "' was not found in the system.");
         }
 
         return DB::transaction(function () use ($equipment, $problemType, $description, $reporterName, $reporterContact, $openStatusId) {

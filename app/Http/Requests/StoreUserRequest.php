@@ -18,7 +18,7 @@ final class StoreUserRequest extends FormRequest
     }
 
     /**
-     * Limpa espaços extras e normaliza o email antes da validação.
+     * Trims extra whitespace and normalizes email before validation.
      */
     protected function prepareForValidation(): void
     {
@@ -65,7 +65,7 @@ final class StoreUserRequest extends FormRequest
     }
 
     /**
-     * Mapeia os nomes dos atributos para as mensagens de erro do Laravel.
+     * Maps attribute names to Laravel's error messages.
      */
     public function attributes(): array
     {

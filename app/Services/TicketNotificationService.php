@@ -17,7 +17,7 @@ final class TicketNotificationService
     ) {}
 
     /**
-     * Notifica o utilizador criador do ticket sobre o encerramento do mesmo.
+     * Notifies the ticket creator user about ticket closure.
      *
      * @param Ticket $ticket
      * @param string $message
@@ -27,7 +27,7 @@ final class TicketNotificationService
         if ($ticket->user_id) {
             $this->creator->createForUser(
                 userId: $ticket->user_id,
-                title: NotificationTypeEnum::TicketClosed->icon() . " Ticket Fechado - #{$ticket->id}",
+                title: NotificationTypeEnum::TicketClosed->icon() . " Ticket Closed - #{$ticket->id}",
                 message: $message,
                 type: NotificationTypeEnum::TicketClosed->value,
                 link: "/ui/tickets/{$ticket->id}",
@@ -36,7 +36,7 @@ final class TicketNotificationService
     }
 
     /**
-     * Notifica os administradores quando um técnico inicia um ticket ignorando outros mais urgentes.
+     * Notifies administrators when a technician starts a ticket ignoring more urgent ones.
      *
      * @param Ticket $ticket
      * @param string $technicianName
@@ -44,8 +44,8 @@ final class TicketNotificationService
      */
     public function notifyPriorityOverride(Ticket $ticket, string $technicianName, int $urgentCount): void
     {
-        $title = NotificationTypeEnum::PriorityOverride->icon() . " Ticket Não Prioritário - #{$ticket->id}";
-        $message = "O técnico {$technicianName} iniciou o ticket #{$ticket->id} ({$ticket->title}) com prioridade '{$ticket->priority}', ignorando {$urgentCount} ticket(s) mais urgente(s) pendentes.";
+        $title = NotificationTypeEnum::PriorityOverride->icon() . " Non-Priority Ticket - #{$ticket->id}";
+        $message = "Technician {$technicianName} started ticket #{$ticket->id} ({$ticket->title}) with priority '{$ticket->priority}', ignoring {$urgentCount} more urgent pending ticket(s).";
 
         $this->creator->createForAdmins(
             title: $title,

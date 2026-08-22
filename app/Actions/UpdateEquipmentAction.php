@@ -27,9 +27,6 @@ final readonly class UpdateEquipmentAction
                 'notes' => $data->notes ?? $equipment->notes,
             ]);
 
-            // Exemplo de disparo de evento no futuro:
-            // EquipmentUpdated::dispatch($equipment);
-
             return $equipment->load(['room', 'category']);
         });
     }

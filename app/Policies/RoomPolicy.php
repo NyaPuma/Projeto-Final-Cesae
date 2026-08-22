@@ -10,7 +10,7 @@ use App\Models\User;
 final class RoomPolicy
 {
     /**
-     * Determina se o utilizador pode visualizar a listagem de salas.
+     * Determines whether the user can view the room listing.
      */
     public function viewAny(User $user): bool
     {
@@ -18,7 +18,7 @@ final class RoomPolicy
     }
 
     /**
-     * Determina se o utilizador pode visualizar uma sala específica.
+     * Determines whether the user can view a specific room.
      */
     public function view(User $user, Room $room): bool
     {
@@ -26,7 +26,7 @@ final class RoomPolicy
     }
 
     /**
-     * Determina se o utilizador pode criar novas salas.
+     * Determines whether the user can create new rooms.
      */
     public function create(User $user): bool
     {
@@ -34,7 +34,7 @@ final class RoomPolicy
     }
 
     /**
-     * Determina se o utilizador pode atualizar uma sala existente.
+     * Determines whether the user can update an existing room.
      */
     public function update(User $user, Room $room): bool
     {
@@ -42,7 +42,7 @@ final class RoomPolicy
     }
 
     /**
-     * Determina se o utilizador pode eliminar uma sala.
+     * Determines whether the user can delete a room.
      */
     public function delete(User $user, Room $room): bool
     {
@@ -50,7 +50,7 @@ final class RoomPolicy
     }
 
     /**
-     * Método personalizado mantido para compatibilidade.
+     * Custom method kept for compatibility.
      */
     public function manage(User $user, ?Room $room = null): bool
     {
@@ -58,7 +58,7 @@ final class RoomPolicy
     }
 
     /**
-     * Método personalizado mantido para compatibilidade.
+     * Custom method kept for compatibility.
      */
     public function manageAny(User $user): bool
     {

@@ -7,10 +7,10 @@ namespace App\Services;
 use Illuminate\Http\Request;
 
 /**
- * Serviço central de locais (idiomas).
+ * Central locale (language) service.
  *
- * Centraliza o acesso a `config('locales')` — a fonte única de verdade — e
- * fornece a resolução de preferência do utilizador a partir do request.
+ * Centralizes access to `config('locales')` — the single source of truth — and
+ * provides user preference resolution from the request.
  */
 final class LocaleService
 {
@@ -31,7 +31,7 @@ final class LocaleService
     }
 
     /**
-     * Lista de idiomas suportados agrupados por continente.
+     * List of supported languages grouped by continent.
      *
      * @return array<string, array<string, array<string, mixed>>>
      */
@@ -51,7 +51,7 @@ final class LocaleService
     }
 
     /**
-     * Lista de moedas suportadas agrupadas por continente.
+     * List of supported currencies grouped by continent.
      *
      * @return array<string, list<string>>
      */
@@ -116,20 +116,20 @@ final class LocaleService
     }
 
     /**
-     * Lista de moedas suportadas.
+     * List of supported currencies.
      *
-     * A lista de moedas é independente das línguas configuradas, pelo que é
-     * delegada em `PreferenciasService::supportedCurrencies()`.
+     * The currency list is independent of configured languages, so it is
+     * delegated to `PreferencesService::supportedCurrencies()`.
      *
      * @return list<string>
      */
     public static function supportedCurrencies(): array
     {
-        return \App\Services\PreferenciasService::supportedCurrencies();
+        return \App\Services\PreferencesService::supportedCurrencies();
     }
 
     /**
-     * Nome por extenso da moeda ISO 4217.
+     * Full name of the ISO 4217 currency.
      */
     public static function currencyName(string $currency): string
     {
@@ -185,7 +185,7 @@ final class LocaleService
     }
 
     /**
-     * Lista plana de todos os idiomas (código => metadata).
+     * Flat list of all languages (code => metadata).
      *
      * @return array<string, array<string, mixed>>
      */
@@ -203,8 +203,7 @@ final class LocaleService
     }
 
     /**
-     * Ordena alfabeticamente por nome (com acentuação, se o intl estiver
-     * disponível).
+     * Sorts alphabetically by name (with accent support if intl is available).
      *
      * @param  array<string, array<string, mixed>>  $locales
      */
@@ -230,7 +229,7 @@ final class LocaleService
     }
 
     /**
-     * Códigos de todos os idiomas suportados.
+     * Codes of all supported languages.
      *
      * @return list<string>
      */
@@ -240,7 +239,7 @@ final class LocaleService
     }
 
     /**
-     * Resolve um código de idioma para o seu locale de formatação predefinido.
+     * Resolves a language code to its default formatting locale.
      *
      * @return array{code: string, locale: string}
      */
@@ -262,7 +261,7 @@ final class LocaleService
     }
 
     /**
-     * Idioma predefinido do sistema.
+     * System default language.
      */
     public static function default(): string
     {
@@ -277,7 +276,7 @@ final class LocaleService
     }
 
     /**
-     * Verifica se um código de idioma é suportado.
+     * Checks whether a language code is supported.
      */
     public static function isSupported(string $locale): bool
     {
@@ -296,7 +295,7 @@ final class LocaleService
     }
 
     /**
-     * Resolve o default_locale para um código de idioma base.
+     * Resolves the default_locale for a base language code.
      *
      * @return array{code: string, default_locale: string}
      */
@@ -319,7 +318,7 @@ final class LocaleService
     }
 
     /**
-     * Metadata de um idioma (null se não suportado).
+     * Language metadata (null if not supported).
      *
      * @return array<string, mixed>|null
      */
@@ -329,7 +328,7 @@ final class LocaleService
     }
 
     /**
-     * Designação fiscal usada na região do idioma ativo.
+     * Tax identifier label used in the active language's region.
      */
     public static function taxIdentifierLabel(?string $locale = null): string
     {
@@ -356,7 +355,7 @@ final class LocaleService
     }
 
     /**
-     * Designação local do imposto sobre o consumo equivalente ao IVA/VAT.
+     * Local designation for consumption tax equivalent to VAT.
      */
     public static function indirectTaxLabel(?string $locale = null): string
     {
@@ -380,7 +379,7 @@ final class LocaleService
     }
 
     /**
-     * Devolve a bandeira Unicode correspondente ao código ISO-3166 alpha-2.
+     * Returns the Unicode flag emoji for the given ISO-3166 alpha-2 country code.
      */
     public static function flagEmoji(?string $countryCode): string
     {
@@ -397,7 +396,7 @@ final class LocaleService
     }
 
     /**
-     * Indica se o idioma é right-to-left.
+     * Indicates whether the language is right-to-left.
      */
     public static function isRtl(string $locale): bool
     {
@@ -407,7 +406,7 @@ final class LocaleService
     }
 
     /**
-     * Moeda ISO 4217 do idioma indicado (ou atual).
+     * ISO 4217 currency for the indicated (or current) language.
      */
     public static function currency(?string $locale = null): string
     {
@@ -418,7 +417,7 @@ final class LocaleService
     }
 
     /**
-     * Sistema de unidades do idioma indicado (ou atual).
+     * Unit system for the indicated (or current) language.
      */
     public static function unitSystem(?string $locale = null): string
     {
@@ -429,7 +428,7 @@ final class LocaleService
     }
 
     /**
-     * Formata um número segundo o idioma indicado (ou atual).
+     * Formats a number according to the indicated (or current) language.
      */
     public static function formatNumber(int|float $value, int $decimals = 0, ?string $locale = null): string
     {
@@ -456,7 +455,7 @@ final class LocaleService
     }
 
     /**
-     * Formata um montante na moeda do idioma indicado (ou atual).
+     * Formats a monetary amount in the indicated (or current) language's currency.
      */
     public static function formatCurrency(int|float $value, ?string $currency = null, ?string $locale = null): string
     {
@@ -531,7 +530,7 @@ final class LocaleService
     }
 
     /**
-     * Formata uma percentagem — o valor é a percentagem real (55 = "55%").
+     * Formats a percentage — the value is the actual percentage (55 = "55%").
      */
     public static function formatPercent(int|float $value, int $decimals = 1, ?string $locale = null): string
     {
@@ -555,7 +554,7 @@ final class LocaleService
     }
 
     /**
-     * Formata uma data (curta) segundo o idioma indicado (ou atual).
+     * Formats a date (short) according to the indicated (or current) language.
      */
     public static function formatDate(mixed $value, ?string $locale = null): string
     {
@@ -587,7 +586,7 @@ final class LocaleService
     }
 
     /**
-     * Formata data e hora segundo o idioma indicado (ou atual).
+     * Formats date and time according to the indicated (or current) language.
      */
     public static function formatDateTime(mixed $value, ?string $locale = null): string
     {
@@ -619,7 +618,7 @@ final class LocaleService
     }
 
     /**
-     * Converte uma unidade de medida com base no sistema de unidades do idioma.
+     * Converts a unit of measurement based on the language's unit system.
      */
     public static function convertUnit(float|int $value, string $type, string $fromUnit = '', ?string $locale = null): array
     {
@@ -714,7 +713,7 @@ final class LocaleService
     }
 
     /**
-     * Normaliza um valor para \DateTime (null se inválido).
+     * Normalizes a value to \DateTime (null if invalid).
      */
     private static function asDateTime(mixed $value): ?\DateTimeInterface
     {
@@ -734,8 +733,7 @@ final class LocaleService
     }
 
     /**
-     * Normaliza um idioma para um código suportado; se inválido devolve o
-     * predefinido.
+     * Normalizes a locale to a supported code; returns the default if invalid.
      */
     public static function sanitize(string $locale): string
     {
@@ -759,7 +757,7 @@ final class LocaleService
     }
 
     /**
-     * Resolve o idioma da preferência do request.
+     * Resolves the language from the request's preference.
      */
     public static function resolveFromRequest(Request $request): string
     {
@@ -771,7 +769,7 @@ final class LocaleService
     }
 
     /**
-     * Resolve o idioma do cabeçalho `Accept-Language` do browser.
+     * Resolves the language from the browser's `Accept-Language` header.
      */
     public static function fromBrowser(Request $request): ?string
     {
@@ -821,17 +819,17 @@ final class LocaleService
     }
 
     /**
-     * Obtém a moeda ativa para o utilizador (das preferências).
+     * Gets the active currency for the user (from preferences).
      */
     public static function userCurrency(?Request $request = null): string
     {
         if ($request) {
-            return \App\Services\PreferenciasService::getCurrency($request);
+            return \App\Services\PreferencesService::getCurrency($request);
         }
 
         $user = auth()->user();
         if ($user) {
-            $prefs = \App\Services\PreferenciasService::forUser($user);
+            $prefs = \App\Services\PreferencesService::forUser($user);
             return $prefs['currency'];
         }
 
@@ -839,17 +837,17 @@ final class LocaleService
     }
 
     /**
-     * Obtém o formato de data ativo para o utilizador (das preferências).
+     * Gets the active date format for the user (from preferences).
      */
     public static function userDateFormat(?Request $request = null): string
     {
         if ($request) {
-            return \App\Services\PreferenciasService::getDateFormat($request);
+            return \App\Services\PreferencesService::getDateFormat($request);
         }
 
         $user = auth()->user();
         if ($user) {
-            $prefs = \App\Services\PreferenciasService::forUser($user);
+            $prefs = \App\Services\PreferencesService::forUser($user);
             return $prefs['date_format'];
         }
 
@@ -857,7 +855,7 @@ final class LocaleService
     }
 
     /**
-     * Formata um valor monetário usando a moeda do utilizador.
+     * Formats a monetary value using the user's currency.
      */
     public static function formatMoney(int|float $value, ?Request $request = null, ?string $currency = null): string
     {
@@ -866,7 +864,7 @@ final class LocaleService
     }
 
     /**
-     * Formata uma data usando o formato do utilizador.
+     * Formats a date using the user's format.
      */
     public static function formatUserDate(mixed $value, ?Request $request = null, ?string $format = null): string
     {

@@ -18,17 +18,17 @@ final class RoleMiddleware
         /** @var User|null $user */
         $user = Auth::user();
 
-        // 1. Verifica se o utilizador está autenticado e ativo
+        // 1. Check if the user is authenticated and active
         if (! $user || ! $user->active) {
             return $this->handleUnauthenticated($request);
         }
 
-        // 2. Garante que o utilizador possui um perfil válido atribuído
+        // 2. Ensure the user has a valid profile assigned
         if (! $user->profile_id || ! $user->profile?->name) {
             return $this->handleInvalidProfile($request);
         }
 
-        // 3. Verifica se o papel do utilizador está autorizado para a rota
+        // 3. Check if the user's role is authorized for the route
         if (! in_array($user->profile->name, $roles, true)) {
             return $this->handleForbidden($request);
         }
@@ -37,7 +37,7 @@ final class RoleMiddleware
     }
 
     /**
-     * Trata o cenário de utilizador não autenticado ou inativo.
+     * Handles the unauthenticated or inactive user scenario.
      */
     private function handleUnauthenticated(Request $request): Response
     {
@@ -55,7 +55,7 @@ final class RoleMiddleware
     }
 
     /**
-     * Trata o cenário de perfil de utilizador inválido ou em falta.
+     * Handles the invalid or missing user profile scenario.
      */
     private function handleInvalidProfile(Request $request): Response
     {
@@ -69,7 +69,7 @@ final class RoleMiddleware
     }
 
     /**
-     * Trata o cenário de acesso proibido por falta de permissões adequadas.
+     * Handles the forbidden access scenario due to insufficient permissions.
      */
     private function handleForbidden(Request $request): Response
     {

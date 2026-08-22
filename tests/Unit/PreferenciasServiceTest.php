@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace Tests\Unit;
 
-use App\Services\PreferenciasService;
+use App\Services\PreferencesService;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Testes unitários para o PreferenciasService.
- * 
- * Testa a validação e normalização de preferências independentemente.
+ * Unit tests for PreferencesService.
+ *
+ * Tests validation and normalization of preferences independently.
  */
 class PreferenciasServiceTest extends TestCase
 {
     /** @test */
     public function it_returns_supported_currencies_list(): void
     {
-        $currencies = PreferenciasService::supportedCurrencies();
+        $currencies = PreferencesService::supportedCurrencies();
 
         $this->assertIsArray($currencies);
         $this->assertContains('EUR', $currencies);
@@ -28,7 +28,7 @@ class PreferenciasServiceTest extends TestCase
     /** @test */
     public function it_returns_supported_date_formats_list(): void
     {
-        $formats = PreferenciasService::supportedDateFormats();
+        $formats = PreferencesService::supportedDateFormats();
 
         $this->assertIsArray($formats);
         $this->assertContains('d/m/Y', $formats);
@@ -39,9 +39,9 @@ class PreferenciasServiceTest extends TestCase
     /** @test */
     public function it_normalizes_currency_to_uppercase(): void
     {
-        $prefs = PreferenciasService::validatePreferences([
+        $prefs = PreferencesService::validatePreferences([
             'language' => 'pt',
-            'currency' => 'eur', // minúsculas
+            'currency' => 'eur', // lowercase
             'date_format' => 'd/m/Y',
         ]);
 
@@ -51,7 +51,7 @@ class PreferenciasServiceTest extends TestCase
     /** @test */
     public function it_trims_currency_whitespace(): void
     {
-        $prefs = PreferenciasService::validatePreferences([
+        $prefs = PreferencesService::validatePreferences([
             'language' => 'pt',
             'currency' => ' EUR ',
             'date_format' => 'd/m/Y',
@@ -63,7 +63,7 @@ class PreferenciasServiceTest extends TestCase
     /** @test */
     public function it_uses_default_language_for_invalid(): void
     {
-        $prefs = PreferenciasService::validatePreferences([
+        $prefs = PreferencesService::validatePreferences([
             'language' => 'invalid-locale',
             'currency' => 'EUR',
             'date_format' => 'd/m/Y',
@@ -75,7 +75,7 @@ class PreferenciasServiceTest extends TestCase
     /** @test */
     public function it_uses_default_currency_for_invalid(): void
     {
-        $prefs = PreferenciasService::validatePreferences([
+        $prefs = PreferencesService::validatePreferences([
             'language' => 'pt',
             'currency' => 'XXX',
             'date_format' => 'd/m/Y',
@@ -87,7 +87,7 @@ class PreferenciasServiceTest extends TestCase
     /** @test */
     public function it_uses_default_date_format_for_invalid(): void
     {
-        $prefs = PreferenciasService::validatePreferences([
+        $prefs = PreferencesService::validatePreferences([
             'language' => 'pt',
             'currency' => 'EUR',
             'date_format' => 'invalid-format',
@@ -99,10 +99,10 @@ class PreferenciasServiceTest extends TestCase
     /** @test */
     public function it_accepts_all_supported_currencies(): void
     {
-        $supported = PreferenciasService::supportedCurrencies();
+        $supported = PreferencesService::supportedCurrencies();
 
         foreach ($supported as $currency) {
-            $prefs = PreferenciasService::validatePreferences([
+            $prefs = PreferencesService::validatePreferences([
                 'language' => 'pt',
                 'currency' => $currency,
                 'date_format' => 'd/m/Y',
@@ -115,10 +115,10 @@ class PreferenciasServiceTest extends TestCase
     /** @test */
     public function it_accepts_all_supported_date_formats(): void
     {
-        $supported = PreferenciasService::supportedDateFormats();
+        $supported = PreferencesService::supportedDateFormats();
 
         foreach ($supported as $format) {
-            $prefs = PreferenciasService::validatePreferences([
+            $prefs = PreferencesService::validatePreferences([
                 'language' => 'pt',
                 'currency' => 'EUR',
                 'date_format' => $format,
@@ -131,8 +131,8 @@ class PreferenciasServiceTest extends TestCase
     /** @test */
     public function it_has_correct_defaults(): void
     {
-        // Testar os defaults directly
-        $prefs = PreferenciasService::validatePreferences([
+        // Test defaults directly
+        $prefs = PreferencesService::validatePreferences([
             'language' => null,
             'currency' => null,
             'date_format' => null,
@@ -146,7 +146,7 @@ class PreferenciasServiceTest extends TestCase
     /** @test */
     public function it_handles_empty_array(): void
     {
-        $prefs = PreferenciasService::validatePreferences([]);
+        $prefs = PreferencesService::validatePreferences([]);
 
         $this->assertEquals('pt', $prefs['language']);
         $this->assertEquals('EUR', $prefs['currency']);
@@ -156,7 +156,7 @@ class PreferenciasServiceTest extends TestCase
     /** @test */
     public function it_preserves_valid_preferences(): void
     {
-        $prefs = PreferenciasService::validatePreferences([
+        $prefs = PreferencesService::validatePreferences([
             'language' => 'en-GB',
             'currency' => 'USD',
             'date_format' => 'm/d/Y',
@@ -170,9 +170,9 @@ class PreferenciasServiceTest extends TestCase
     /** @test */
     public function it_returns_only_supported_currencies(): void
     {
-        $currencies = PreferenciasService::supportedCurrencies();
+        $currencies = PreferencesService::supportedCurrencies();
 
-        // Verificar que todas são strings de 3 caracteres
+        // Verify all are 3-character strings
         foreach ($currencies as $currency) {
             $this->assertIsString($currency);
             $this->assertEquals(3, strlen($currency));

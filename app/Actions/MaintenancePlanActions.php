@@ -83,7 +83,7 @@ final readonly class MaintenancePlanActions
             }
 
             if ($quantity < 1) {
-                throw new InvalidArgumentException('A quantidade esperada de cada peça deve ser pelo menos 1.');
+                throw new InvalidArgumentException('The expected quantity for each part must be at least 1.');
             }
 
             $payload[$partId] = ['expected_quantity' => $quantity];

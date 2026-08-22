@@ -25,14 +25,11 @@ final readonly class CheckHigherPriorityAction
         }
         $currentWeight = $normalized->weight();
 
-        // Filtra prioridades estritamente superiores
         $higherPriorities = array_filter(
             TicketPriorityEnum::cases(),
             fn (TicketPriorityEnum $p) => $p->weight() > $currentWeight
         );
 
-        // Guard Clause: Se não existirem prioridades superiores (já é prioridade máxima),
-        // evita ir à base de dados e previne o bug do array vazio.
         if (empty($higherPriorities)) {
             return [
                 'total' => 0,
@@ -44,7 +41,6 @@ final readonly class CheckHigherPriorityAction
         $openStatusId = $this->statusService->getByName(TicketStatusEnum::Open);
         $priorityValues = array_map(fn (TicketPriorityEnum $p) => $p->value, $higherPriorities);
 
-        // Otimização: calcula o total geral e o total por técnico numa única query
         $result = Ticket::query()
             ->where('status_id', $openStatusId)
             ->where('id', '!=', $ticket->id)

@@ -20,7 +20,7 @@ final class TicketSearchService
     ) {}
 
     /**
-     * Executa a pesquisa e filtragem de tickets com paginação.
+     * Executes ticket search and filtering with pagination.
      *
      * @param TicketFilters $filters
      * @return LengthAwarePaginator<Ticket>
@@ -66,7 +66,7 @@ final class TicketSearchService
         }
 
         if ($filters->dateFrom !== null && $filters->dateTo !== null && $filters->dateFrom > $filters->dateTo) {
-            throw new \InvalidArgumentException('A data de início não pode ser posterior à data de fim.');
+            throw new \InvalidArgumentException('Start date cannot be after end date.');
         }
 
         $this->applyDateFilters(
@@ -82,7 +82,7 @@ final class TicketSearchService
     }
 
     /**
-     * Aplica os filtros de data à consulta de tickets de forma segura.
+     * Applies date filters to the ticket query safely.
      *
      * @param Builder $query
      * @param string|null $dateFrom

@@ -21,13 +21,11 @@ final readonly class CloseTicketAction
     ): bool {
         $closedStatusId = $this->statusService->getByName(TicketStatusEnum::Closed);
 
-        // Guard Clause: Se já estiver fechado, evita reescrever a data de encerramento
         if ($ticket->status_id === $closedStatusId) {
             return true;
         }
 
         return DB::transaction(function () use ($ticket, $closedStatusId, $cost, $report, $minutesSpent) {
-            // Prepara apenas os atributos fornecidos para evitar apagar valores existentes com null
             $attributes = [
                 'status_id' => $closedStatusId,
                 'closed_at' => $ticket->closed_at ?? now(),
@@ -46,9 +44,6 @@ final readonly class CloseTicketAction
             }
 
             $updated = $ticket->update($attributes);
-
-            // Exemplo de disparo de evento para histórico/notificações:
-            // TicketClosed::dispatch($ticket);
 
             return $updated;
         });

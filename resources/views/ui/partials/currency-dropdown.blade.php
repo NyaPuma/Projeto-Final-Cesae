@@ -9,7 +9,7 @@
         aria-haspopup="true" 
         aria-expanded="false">
         💰
-        <span class="ui-topbar__locale">{{ \App\Services\PreferenciasService::getCurrency(request()) }} - {{ \App\Services\LocaleService::currencyName(\App\Services\PreferenciasService::getCurrency(request())) }}</span>
+        <span class="ui-topbar__locale">{{ \App\Services\PreferencesService::getCurrency(request()) }} - {{ \App\Services\LocaleService::currencyName(\App\Services\PreferencesService::getCurrency(request())) }}</span>
     </x-ui.buttons.button>
     
     <div id="currencyDropdownPanel" class="ui-topbar__dropdown-panel" role="dialog" aria-label="{{ __('common.Selecionar moeda') }}" hidden>
@@ -26,7 +26,7 @@
                         <div class="locale-modal__grid" style="display: flex; flex-direction: column; gap: 0.25rem; padding: 0 0.5rem;">
                             @foreach($currencies as $currency)
                                 <button type="button" 
-                                    class="ui-topbar__dropdown-item{{ \App\Services\PreferenciasService::getCurrency(request()) === $currency ? ' ui-topbar__dropdown-item--active' : '' }}"
+                                    class="ui-topbar__dropdown-item{{ \App\Services\PreferencesService::getCurrency(request()) === $currency ? ' ui-topbar__dropdown-item--active' : '' }}"
                                     onclick="setPreference('{{ route("preferences.update_currency") }}', {currency: '{{ $currency }}'}, 'currencyDropdown')"
                                     data-currency="{{ $currency }}">
                                     {{ $currency }} - {{ \App\Services\LocaleService::currencyName($currency) }}

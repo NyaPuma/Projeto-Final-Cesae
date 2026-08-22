@@ -40,10 +40,6 @@ final readonly class CreatePartAction
                 'technical_notes' => $data->technicalNotes,
             ]);
 
-            /*
-             * O stock inicial é registado como movimento de entrada "inicial",
-             * garantindo a regra: qualquer alteração de stock passa por um movimento.
-             */
             if ($data->currentStock > 0) {
                 $this->stockMovementService->record(
                     part: $part,

@@ -19,7 +19,7 @@ final class NotificationService
     ) {}
 
     /**
-     * Notifica a submissão de um orçamento.
+     * Notifies budget submission.
      *
      * @param Ticket $ticket
      * @param string $message
@@ -30,7 +30,7 @@ final class NotificationService
     }
 
     /**
-     * Notifica a auto-aprovação de um orçamento.
+     * Notifies budget auto-approval.
      *
      * @param Ticket $ticket
      * @param string $message
@@ -41,7 +41,7 @@ final class NotificationService
     }
 
     /**
-     * Notifica a decisão sobre um orçamento.
+     * Notifies budget decision.
      *
      * @param Ticket $ticket
      * @param string $decision
@@ -53,7 +53,7 @@ final class NotificationService
     }
 
     /**
-     * Notifica o encerramento de um ticket.
+     * Notifies ticket closure.
      *
      * @param Ticket $ticket
      * @param string $message
@@ -64,7 +64,7 @@ final class NotificationService
     }
 
     /**
-     * Notifica a sobreposição de prioridade num técnico.
+     * Notifies priority override on a technician.
      *
      * @param Ticket $ticket
      * @param User $technician
@@ -76,7 +76,7 @@ final class NotificationService
     }
 
     /**
-     * Notifica a criação de um novo ticket.
+     * Notifies new ticket creation.
      *
      * @param Ticket $ticket
      */

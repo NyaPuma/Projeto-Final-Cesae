@@ -50,7 +50,7 @@ class PartitionAudits extends Command
         $existingPartitions = $this->getExistingPartitions();
 
         for ($i = 0; $i <= $monthsAhead; $i++) {
-            // Garante o início exato do mês para evitar bugs com meses de 28/30/31 dias
+            // Ensure exact month start to avoid bugs with 28/30/31-day months
             $date = now()->startOfMonth()->addMonths($i);
             $partitionName = 'p_' . $date->format('Y_m');
 
@@ -58,7 +58,7 @@ class PartitionAudits extends Command
                 continue;
             }
 
-            // O limite LESS THAN deve ser o primeiro dia do MÊS SEGUINTE às 00:00:00
+            // The LESS THAN boundary must be the first day of the NEXT month at 00:00:00
             $upperBound = $date->copy()->addMonth()->startOfMonth()->format('Y-m-d H:i:s');
 
             $sql = sprintf(
@@ -87,12 +87,12 @@ class PartitionAudits extends Command
         $existingPartitions = $this->getExistingPartitions();
 
         foreach ($existingPartitions as $partition) {
-            // Filtra partições que seguem o padrão de nome (p_YYYY_MM)
+            // Filter partitions that follow the naming pattern (p_YYYY_MM)
             if (! preg_match('/^p_(\d{4})_(\d{2})$/', $partition, $matches)) {
                 continue;
             }
 
-            // Se o nome da partição for estritamente menor que a partição do limite de retenção
+            // If the partition name is strictly less than the retention limit partition
             if ($partition < $cutoffPartitionName) {
                 $sql = "ALTER TABLE audits DROP PARTITION {$partition};";
 
@@ -107,7 +107,7 @@ class PartitionAudits extends Command
     }
 
     /**
-     * Obtém as partições ativas diretamente do repositório do MySQL.
+     * Fetches active partitions directly from the MySQL information schema.
      */
     private function getExistingPartitions(): array
     {

@@ -27,20 +27,20 @@ final readonly class UserObserver
     }
 
     /**
-     * Assegura que o utilizador possui um perfil válido, atribuindo o perfil padrão caso contrário.
+     * Ensures the user has a valid profile, assigning the default profile if missing.
      */
     private function ensureValidProfile(User $user): void
     {
         if ($user->profile_id) {
             $profileName = UserProfile::where('id', $user->profile_id)->value('name');
 
-            // Valida se o perfil existe e corresponde a um Enum válido
+            // Validate that the profile exists and maps to a valid enum case
             if ($profileName && UserRoleEnum::tryFrom($profileName) !== null) {
                 return;
             }
         }
 
-        // Garante a existência do perfil padrão e atribui o ID ao utilizador
+        // Ensure the default profile exists and assign its ID to the user
         $defaultProfile = UserProfile::firstOrCreate([
             'name' => UserRoleEnum::User->value,
         ]);

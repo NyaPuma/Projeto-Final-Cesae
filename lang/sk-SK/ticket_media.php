@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => 'Nenahrané žiadne dôkazy.',
+    'remove_photo' => 'Odstrániť fotografiu',
+    'remove_file' => 'Odstrániť súbor',
+    'load_error' => 'Chyba pri načítavaní fotografií.',
+    'confirm_remove' => 'Naozaj chcete odstrániť túto fotografiu?',
+    'remove_error' => 'Chyba pri odstraňovaní fotografie.',
+    'removed' => 'Fotografia úspešne odstránená.',
+    'sent' => 'Fotografia odoslaná!',
+    'file' => 'Súbor',
+    'Anexos' => 'Prílohy',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => 'Aktualizujte prihlasovacie údaje, fotografiu a oprávnenia prístupu profilu používateľa.',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => 'Nahrajte obrázok (PNG, JPG alebo WEBP do 2MB).',
+    'Emergência Imediata. Risco de acidente.' => 'Okamžitá pohotovosť. Riziko nehody.',
+    'Escolher Fotografia' => 'Vybrať fotografiu',
+    'Escolher ficheiro' => 'Vybrať súbor',
+    'Fotografia (Opcional)' => 'Fotografia (voliteľné)',
+    'Fotografia do Utilizador' => 'Fotografia používateľa',
+    'Imagem' => 'Obrázok',
+    'Inserir Imagem (Opcional)' => 'Vložiť obrázok (voliteľné)',
+    'Nenhum ficheiro' => 'Žiadny súbor',
+    'Nenhum ficheiro selecionado' => 'Žiadny vybraný súbor',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => 'Aktuálny profil: :profile. Prístup k modulom podľa oprávnení vašej roly.',
+    'Tipo de ficheiro não permitido.' => 'Nepovolený typ súboru.',
+];

@@ -17,7 +17,7 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 final class EventServiceProvider extends ServiceProvider
 {
     /**
-     * O mapeamento de eventos e os respetivos listeners da aplicação.
+     * The event to listener mappings for the application.
      *
      * @var array<class-string, array<int, class-string>>
      */
@@ -36,7 +36,7 @@ final class EventServiceProvider extends ServiceProvider
     ];
 
     /**
-     * Regista quaisquer eventos para a aplicação.
+     * Registers any events for the application.
      */
     public function boot(): void
     {
@@ -44,10 +44,10 @@ final class EventServiceProvider extends ServiceProvider
     }
 
     /**
-     * Determina se os eventos e listeners devem ser detetados automaticamente.
+     * Determines if events and listeners should be automatically discovered.
      */
     public function shouldDiscoverEvents(): bool
     {
-        return false; // Mantém o mapeamento explícito por razões de desempenho e controlo
+        return false; // Keeps explicit mapping for performance and control reasons
     }
 }

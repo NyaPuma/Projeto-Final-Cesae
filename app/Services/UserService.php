@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
 final class UserService
 {
     /**
-     * Retorna os papéis de utilizador disponíveis.
+     * Returns available user roles.
      *
      * @return array<int, string>
      */
@@ -24,7 +24,7 @@ final class UserService
     }
 
     /**
-     * Garante que o utilizador possui um perfil predefinido associado.
+     * Ensures the user has a default profile associated.
      *
      * @param User $user
      */
@@ -40,7 +40,7 @@ final class UserService
     }
 
     /**
-     * Gera um hash seguro para o token de API utilizando a chave da aplicação.
+     * Generates a secure hash for the API token using the application key.
      *
      * @param string $token
      * @return string
@@ -54,14 +54,14 @@ final class UserService
     }
 
     /**
-     * Cria e persiste um novo token de API para o utilizador e atualiza a sessão.
+     * Creates and persists a new API token for the user and updates the session.
      *
      * @param User $user
      * @param Request $request
-     * @param bool $withSession Quando false, o token não é ligado à sessão do pedido atual
-     *                          (necessário quando o registo é feito por outro utilizador,
-     *                          evitando que a sessão/cookies de quem regista sejam assumidos
-     *                          pelo novo utilizador).
+     * @param bool $withSession When false, the token is not linked to the current request session
+     *                          (needed when registration is done by another user,
+     *                          preventing the registrant's session/cookies from being assumed
+     *                          by the new user).
      * @return string
      */
     public function createToken(User $user, Request $request, bool $withSession = true): string
@@ -85,7 +85,7 @@ final class UserService
     }
 
     /**
-     * Constrói a resposta JSON de autenticação com os respetivos cookies de token.
+     * Builds the authentication JSON response with the respective token cookies.
      *
      * @param User $user
      * @param string $plainToken
@@ -103,7 +103,7 @@ final class UserService
     }
 
     /**
-     * Constrói a resposta JSON de término de sessão (logout), invalidando a sessão e removendo cookies.
+     * Builds the session termination (logout) JSON response, invalidating session and removing cookies.
      *
      * @param Request $request
      * @return JsonResponse
@@ -115,7 +115,7 @@ final class UserService
 
         $secure = $request->secure();
 
-        return response()->json(['message' => __('messages.Sessão terminada com sucesso.')])
+        return response()->json(['message' => __('messages.Session terminated successfully.')])
             ->withCookie(cookie('api_token', null, -1, '/', null, $secure, true, false, 'Lax'))
             ->withCookie(cookie('auth_token', null, -1, '/', null, $secure, false, false, 'Lax'));
     }

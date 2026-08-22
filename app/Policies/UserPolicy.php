@@ -9,7 +9,7 @@ use App\Models\User;
 final class UserPolicy
 {
     /**
-     * Determina se o utilizador pode listar os utilizadores.
+     * Determines whether the user can list users.
      */
     public function viewAny(User $user): bool
     {
@@ -17,7 +17,7 @@ final class UserPolicy
     }
 
     /**
-     * Determina se o utilizador pode visualizar um utilizador específico.
+     * Determines whether the user can view a specific user.
      */
     public function view(User $user, User $model): bool
     {
@@ -25,7 +25,7 @@ final class UserPolicy
     }
 
     /**
-     * Determina se o utilizador pode criar novos utilizadores.
+     * Determines whether the user can create new users.
      */
     public function create(User $user): bool
     {
@@ -33,7 +33,7 @@ final class UserPolicy
     }
 
     /**
-     * Determina se o utilizador pode atualizar os dados de um utilizador.
+     * Determines whether the user can update another user's data.
      */
     public function update(User $user, User $model): bool
     {
@@ -41,7 +41,7 @@ final class UserPolicy
     }
 
     /**
-     * Determina se o utilizador pode eliminar um utilizador.
+     * Determines whether the user can delete a user.
      */
     public function delete(User $user, User $model): bool
     {
@@ -49,7 +49,7 @@ final class UserPolicy
     }
 
     /**
-     * Determina se o utilizador pode atualizar o perfil.
+     * Determines whether the user can update the profile.
      */
     public function updateProfile(User $user, ?User $target = null): bool
     {
@@ -61,7 +61,7 @@ final class UserPolicy
     }
 
     /**
-     * Determina se o administrador pode inativar um utilizador.
+     * Determines whether the admin can inactivate a user.
      */
     public function inactivate(User $admin, User $target): bool
     {
@@ -71,7 +71,7 @@ final class UserPolicy
     }
 
     /**
-     * Método personalizado de gestão geral de utilizadores.
+     * Custom method for general user management.
      */
     public function manage(User $admin, ?User $target = null): bool
     {
@@ -83,7 +83,7 @@ final class UserPolicy
     }
 
     /**
-     * Método personalizado para verificar permissão ampla de gestão.
+     * Custom method to check broad management permission.
      */
     public function manageAny(User $user): bool
     {

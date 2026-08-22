@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 /*
 |--------------------------------------------------------------------------
-| Locales Suportados
+| Supported Locales
 |--------------------------------------------------------------------------
 |
-| Uma variante por língua, com exceção de Português e Inglês (PT/BR e GB/US).
-| Variantes redundantes (ex.: suíças) foram removidas.
+| One variant per language, except Portuguese and English (PT/BR and GB/US).
+| Redundant variants (e.g., Swiss) have been removed.
 |
-| `default_locale` → código de locale completo para formatação Intl.
-| `currencies`     → moedas comuns para este idioma.
-| `continent`      → agrupamento continental.
+| `default_locale` → full locale code for Intl formatting.
+| `currencies`     → common currencies for this language.
+| `continent`      → continental grouping.
 |
 */
 
@@ -569,6 +569,28 @@ return [
             'unit_system' => 'metric',
             'number_format' => ['decimal' => '.', 'thousand' => ','],
             'currencies' => ['IDR', 'EUR', 'USD'],
+        ],
+        'he-IL' => [
+            'name' => 'Hebraico',
+            'native' => 'עברית',
+            'flag' => 'il',
+            'rtl' => true,
+            'default_locale' => 'he-IL',
+            'continent' => 'asia',
+            'unit_system' => 'metric',
+            'number_format' => ['decimal' => '.', 'thousand' => ','],
+            'currencies' => ['ILS', 'EUR', 'USD'],
+        ],
+        'fa-IR' => [
+            'name' => 'Persa',
+            'native' => 'فارسی',
+            'flag' => 'ir',
+            'rtl' => true,
+            'default_locale' => 'fa-IR',
+            'continent' => 'asia',
+            'unit_system' => 'metric',
+            'number_format' => ['decimal' => '.', 'thousand' => ','],
+            'currencies' => ['IRR', 'EUR', 'USD'],
         ],
     ],
 ];

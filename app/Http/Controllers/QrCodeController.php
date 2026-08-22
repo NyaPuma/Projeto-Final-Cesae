@@ -17,7 +17,7 @@ final class QrCodeController extends Controller
     ) {}
 
     /**
-     * Página com o QR Code de um equipamento (pronto para imprimir).
+     * Page with a piece of equipment's QR Code (ready to print).
      */
     public function show(Equipment $equipment): View
     {
@@ -29,7 +29,7 @@ final class QrCodeController extends Controller
     }
 
     /**
-     * Download do QR Code de um equipamento em PNG.
+     * Download a piece of equipment's QR Code as PNG.
      */
     public function download(Equipment $equipment): Response
     {
@@ -42,7 +42,7 @@ final class QrCodeController extends Controller
     }
 
     /**
-     * Dispara a geração assíncrona dos QR Codes de todos os equipamentos ativos (PDF).
+     * Dispatches asynchronous generation of QR Codes for all active equipment (PDF).
      */
     public function exportPdf(Request $request): JsonResponse
     {

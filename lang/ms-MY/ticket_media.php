@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'empty' => 'Tiada bukti dimuat naik.',
+    'remove_photo' => 'Buang foto',
+    'remove_file' => 'Buang fail',
+    'load_error' => 'Ralat semasa memuatkan foto.',
+    'confirm_remove' => 'Adakah anda pasti mahu membuang foto ini?',
+    'remove_error' => 'Ralat semasa membuang foto.',
+    'removed' => 'Foto berjaya dibuang.',
+    'sent' => 'Foto berjaya dihantar!',
+    'file' => 'Fail',
+    'Anexos' => 'Lampiran',
+    'Atualize as credenciais, fotografia e permissões de acesso do perfil de utilizador.' => 'Kemas kini kelayakan, foto dan kebenaran akses profil pengguna.',
+    'Carregue uma imagem (PNG, JPG ou WEBP até 2MB).' => 'Muat naik imej (PNG, JPG atau WEBP sehingga 2MB).',
+    'Emergência Imediata. Risco de acidente.' => 'Kecemasan Segera. Risiko kemalangan.',
+    'Escolher Fotografia' => 'Pilih Foto',
+    'Escolher ficheiro' => 'Pilih fail',
+    'Fotografia (Opcional)' => 'Foto (Pilihan)',
+    'Fotografia do Utilizador' => 'Foto Pengguna',
+    'Imagem' => 'Imej',
+    'Inserir Imagem (Opcional)' => 'Masukkan Imej (Pilihan)',
+    'Nenhum ficheiro' => 'Tiada fail',
+    'Nenhum ficheiro selecionado' => 'Tiada fail dipilih',
+    'Perfil atual: :profile. Aceda aos módulos conforme as permissões do seu papel.' => 'Profil semasa: :profile. Akses modul mengikut kebenaran peranan anda.',
+    'Tipo de ficheiro não permitido.' => 'Jenis fail tidak dibenarkan.',
+];

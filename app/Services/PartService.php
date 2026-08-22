@@ -10,11 +10,11 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 final class PartService
 {
     /**
-     * Listagem paginada de peças com pesquisa e filtros.
+     * Paginated parts listing with search and filters.
      *
-     * @param  string|null  $search  pesquisa por sku, nome, marca ou referência
+     * @param  string|null  $search  search by sku, name, brand or reference
      * @param  string|null  $status  'low' | 'out' | 'all' | '' | null
-     * @param  int|null  $categoryId  filtro por categoria
+     * @param  int|null  $categoryId  filter by category
      */
     public function listPaginated(
         ?string $search = null,

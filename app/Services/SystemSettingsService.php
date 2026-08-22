@@ -7,18 +7,17 @@ use App\Services\LocaleService;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Configurações do sistema editáveis na página de definições.
+ * System settings editable on the settings page.
  *
- * Apenas uma lista curada de opções é exposta (nunca segredos nem drivers
- * de infraestrutura). Cada opção corresponde a uma chave `config()` real;
- * os valores escolhidos são guardados em `system_settings` e aplicados em
- * runtime por `applyOverrides()` (sobrepõem os ficheiros `config/*.php` sem
- * os alterar).
+ * Only a curated list of options is exposed (never secrets or infrastructure
+ * drivers). Each option corresponds to a real `config()` key; chosen values
+ * are stored in `system_settings` and applied at runtime by `applyOverrides()`
+ * (overrides `config/*.php` files without modifying them).
  */
 final class SystemSettingsService
 {
     /**
-     * Grupos de configuração apresentados na página, por ordem.
+     * Configuration groups shown on the page, in order.
      * `type`: text | number | float | select | bool
      */
     public function groups(): array
@@ -208,8 +207,8 @@ final class SystemSettingsService
     }
 
     /**
-     * Valor efetivo de uma chave: override guardado na BD se existir,
-     * senão o valor atual de config().
+     * Effective value of a key: DB-stored override if exists,
+     * otherwise the current config() value.
      */
     public function values(): array
     {
@@ -233,8 +232,8 @@ final class SystemSettingsService
     }
 
     /**
-     * Guarda um ou vários campos (validação + cast) e devolve os valores
-     * normalizados aplicados.
+     * Saves one or multiple fields (validation + cast) and returns the
+     * normalized applied values.
      *
      * @param  array<string, mixed>  $updates
      * @return array<string, mixed>
@@ -262,8 +261,8 @@ final class SystemSettingsService
     }
 
     /**
-     * Remove os overrides guardados de um grupo, repondo os valores dos
-     * ficheiros de configuração. Devolve os valores efetivos do grupo.
+     * Removes saved overrides from a group, restoring config file values.
+     * Returns the effective values of the group.
      *
      * @return array<string, mixed>
      */
@@ -297,8 +296,8 @@ final class SystemSettingsService
     }
 
     /**
-     * Aplica os overrides guardados ao repositório de config() em runtime.
-     * Chamado no boot do AppServiceProvider.
+     * Applies saved overrides to the config() repository at runtime.
+     * Called in AppServiceProvider boot.
      */
     public function applyOverrides(): void
     {

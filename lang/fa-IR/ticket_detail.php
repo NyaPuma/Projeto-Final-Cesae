@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => 'هیچ پیام ثبت شده‌ای وجود ندارد.',
+    'comments_error' => 'خطا در بارگذاری تاریخچه.',
+    'message_sent' => 'پیام ارسال شد!',
+    'incident_id' => 'شناسه حادثه',
+    'description' => 'توضیحات حادثه',
+    'priority_level' => 'سطح اولویت',
+    'equipment' => 'تجهیزات / دارایی',
+    'room' => 'اتاق / مکان',
+    'technician' => 'تکنسین تخصیص داده شده',
+    'pending_assignment' => 'در انتظار تخصیص',
+    'reported_by' => 'گزارش شده توسط',
+    'source' => 'منبع',
+    'qr_code' => 'کد QR',
+    'web' => 'وب',
+    'system' => 'سیستم',
+    'no_description' => 'توضیحاتی ارائه نشده است.',
+    'Data de abertura (De)' => 'تاریخ باز شدن (از)',
+    'Detalhe de um fornecedor' => 'جزئیات تأمین‌کننده',
+    'Detalhe de um fornecedor.' => 'جزئیات تأمین‌کننده.',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => 'مشکل پیش آمده، صداها، نشتی‌ها یا رفتارهای غیرعادی را شرح دهید...',
+    'Detalhes do Incidente' => 'جزئیات حادثه',
+];

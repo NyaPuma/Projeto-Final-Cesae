@@ -82,12 +82,12 @@ class FixTicketEncoding extends Command
     }
 
     /**
-     * Devolve os ids cujo texto está genuinamente dupla-codificado.
+     * Returns the IDs whose text is genuinely double-encoded.
      *
-     * A deteção é byte-preciso: apenas ocorrências de "Ã" (0xC3 0x83) ou
-     * "Â" (0xC2 0x82) seguidas de um byte de continuação (0xC2 0x80-0xBF).
-     * Um LIKE simples com collation accent-insensitive apanha qualquer vogal
-     * acentuada, o que causaria falsos positivos e corrupção de dados limpos.
+     * Detection is byte-precise: only occurrences of "Ã" (0xC3 0x83) or
+     * "Â" (0xC2 0x82) followed by a continuation byte (0xC2 0x80-0xBF).
+     * A simple LIKE with accent-insensitive collation would catch any accented
+     * vowel, causing false positives and corruption of clean data.
      */
     private function affectedIds(string $column): array
     {
@@ -112,7 +112,7 @@ class FixTicketEncoding extends Command
                 continue;
             }
 
-            // A reversão latin1 -> UTF-8 só é segura se produzir texto válido.
+            // The latin1 -> UTF-8 reversal is only safe if it produces valid text.
             $fixed = mb_convert_encoding($value, 'ISO-8859-1', 'UTF-8');
 
             if (! mb_check_encoding($fixed, 'UTF-8')) {

@@ -32,7 +32,7 @@ final class ProfileController extends Controller
     }
 
     /**
-     * Atualiza os dados do perfil do utilizador autenticado.
+     * Updates the profile data of the authenticated user.
      */
     public function updateProfile(UpdateProfileRequest $request): JsonResponse
     {

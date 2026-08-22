@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'no_comments' => 'Nei messages recorded.',
+    'comments_error' => 'Error loading klstistory.',
+    'message_sent' => 'Message sent!',
+    'incident_id' => 'Incident ID',
+    'description' => 'Incident Lýsing',
+    'priority_level' => 'Forganga Level',
+    'equipment' => 'Búnaður / Asset',
+    'room' => 'Room / Staðsetning',
+    'technician' => 'Assigned Tæknir',
+    'pending_assignment' => 'Assignment pending',
+    'reported_by' => 'Reported by',
+    'source' => 'Source',
+    'qr_code' => 'QR Code',
+    'web' => 'Web',
+    'system' => 'System',
+    'no_description' => 'Nei description provided.',
+    'Data de abertura (De)' => 'Opinning date (From)',
+    'Detalhe de um fornecedor' => 'Detail of a supplier',
+    'Detalhe de um fornecedor.' => 'Detail from a supplier.',
+    'Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...' => 'Detail tklste problem tklstat occurred, noises, leaks or unusual beklstavior...',
+    'Detalhes do Incidente' => 'Incident Details',
+];

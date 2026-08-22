@@ -23,9 +23,8 @@ final readonly class ApproveBudgetAction
 
     public function execute(Ticket $ticket, User $admin, BudgetDecisionData $data): Ticket
     {
-        // Guard Clause: Garante que existe um pedido de orçamento pendente
         if (! $ticket->budget_requested || $ticket->budget_status !== BudgetStatusEnum::Pending->value) {
-            throw new HttpException(422, 'Não existe pedido de orçamento pendente para este ticket.');
+            throw new HttpException(422, 'No pending budget request found for this ticket.');
         }
 
         $isApproved = $data->isApproved();
@@ -34,7 +33,7 @@ final readonly class ApproveBudgetAction
         $statusId = $this->statusService->getByName($targetTicketStatus);
 
         if ($statusId === null) {
-            throw new RuntimeException("O estado '{$targetTicketStatus->value}' não foi encontrado no sistema.");
+            throw new RuntimeException("Status '{$targetTicketStatus->value}' was not found in the system.");
         }
 
         $ticket = DB::transaction(function () use ($ticket, $admin, $data, $isApproved, $statusId) {
@@ -66,11 +65,11 @@ final readonly class ApproveBudgetAction
         $amountFormatted = number_format($ticket->budget_amount ?? 0, 2, ',', '.') . '€';
 
         $message = $isApproved
-            ? "O orçamento de {$amountFormatted} para o ticket #{$ticket->id} foi APROVADO."
-            : "O orçamento de {$amountFormatted} para o ticket #{$ticket->id} foi RECUSADO.";
+            ? "Budget of {$amountFormatted} for ticket #{$ticket->id} was APPROVED."
+            : "Budget of {$amountFormatted} for ticket #{$ticket->id} was REJECTED.";
 
         if (! $isApproved && ! empty($data->feedback)) {
-            $message .= " Motivo: {$data->feedback}";
+            $message .= " Reason: {$data->feedback}";
         }
 
         $this->notificationService->notifyBudgetDecision($ticket, $data->decision->value, $message);

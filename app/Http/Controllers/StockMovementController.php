@@ -23,7 +23,7 @@ final class StockMovementController extends Controller
     ) {}
 
     /**
-     * Lista paginada de movimentos, com filtros por peça e tipo.
+     * Paginated list of movements, with filters by part and type.
      */
     #[OA\Get(
         path: '/stock/movements',
@@ -72,13 +72,13 @@ final class StockMovementController extends Controller
     }
 
     /**
-     * Regista um movimento de stock (entrada/saída/ajuste/devolução).
+     * Registers a stock movement (in/out/adjust/return).
      */
     #[OA\Post(
         path: '/stock/movements',
         tags: ['Stock'],
-        summary: 'Registar movimento de stock',
-        description: 'Regista um movimento e atualiza atomicamente o stock da peça. Saídas usam quantidade positiva.',
+        summary: 'Register stock movement',
+        description: 'Registers a movement and atomically updates the part stock. Outflows use positive quantity.',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         requestBody: new OA\RequestBody(
             required: true,

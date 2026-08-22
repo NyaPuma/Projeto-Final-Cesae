@@ -17,7 +17,7 @@ final class BudgetNotificationService
     ) {}
 
     /**
-     * Notifica a submissão de um orçamento para administradores e criador do ticket.
+     * Notifies budget submission to administrators and ticket creator.
      *
      * @param Ticket $ticket
      * @param string $message
@@ -25,7 +25,7 @@ final class BudgetNotificationService
     public function notifyBudgetSubmitted(Ticket $ticket, string $message): void
     {
         $this->creator->createForAdmins(
-            title: NotificationTypeEnum::BudgetRequest->icon() . " Orçamento Pendente - Ticket #{$ticket->id}",
+            title: NotificationTypeEnum::BudgetRequest->icon() . " Pending Budget - Ticket #{$ticket->id}",
             message: $message,
             type: NotificationTypeEnum::BudgetRequest->value,
             link: "/ui/tickets/{$ticket->id}",
@@ -34,7 +34,7 @@ final class BudgetNotificationService
         if ($ticket->user_id) {
             $this->creator->createForUser(
                 userId: $ticket->user_id,
-                title: NotificationTypeEnum::BudgetSubmitted->icon() . " Orçamento Submetido - Ticket #{$ticket->id}",
+                title: NotificationTypeEnum::BudgetSubmitted->icon() . " Budget Submitted - Ticket #{$ticket->id}",
                 message: $message,
                 type: NotificationTypeEnum::BudgetSubmitted->value,
                 link: "/ui/tickets/{$ticket->id}",
@@ -43,7 +43,7 @@ final class BudgetNotificationService
     }
 
     /**
-     * Notifica a auto-aprovação de um orçamento para o técnico atribuído e criador do ticket.
+     * Notifies budget auto-approval to the assigned technician and ticket creator.
      *
      * @param Ticket $ticket
      * @param string $message
@@ -53,7 +53,7 @@ final class BudgetNotificationService
         if ($ticket->assigned_to) {
             $this->creator->createForUser(
                 userId: $ticket->assigned_to,
-                title: NotificationTypeEnum::BudgetAutoApproved->icon() . " Auto-Aprovado - Ticket #{$ticket->id}",
+                title: NotificationTypeEnum::BudgetAutoApproved->icon() . " Auto-Approved - Ticket #{$ticket->id}",
                 message: $message,
                 type: NotificationTypeEnum::BudgetAutoApproved->value,
                 link: "/ui/tickets/{$ticket->id}",
@@ -63,7 +63,7 @@ final class BudgetNotificationService
         if ($ticket->user_id) {
             $this->creator->createForUser(
                 userId: $ticket->user_id,
-                title: NotificationTypeEnum::BudgetAutoApproved->icon() . " Orçamento Auto-Aprovado - Ticket #{$ticket->id}",
+                title: NotificationTypeEnum::BudgetAutoApproved->icon() . " Budget Auto-Approved - Ticket #{$ticket->id}",
                 message: $message,
                 type: NotificationTypeEnum::BudgetAutoApproved->value,
                 link: "/ui/tickets/{$ticket->id}",
@@ -72,7 +72,7 @@ final class BudgetNotificationService
     }
 
     /**
-     * Notifica a decisão sobre um orçamento (aprovado ou rejeitado).
+     * Notifies budget decision (approved or rejected).
      *
      * @param Ticket $ticket
      * @param string $decision
@@ -84,10 +84,10 @@ final class BudgetNotificationService
         $icon = $type->icon();
 
         if ($ticket->assigned_to) {
-            $label = $decision === 'approve' ? 'Aprovado' : 'Recusado';
+            $label = $decision === 'approve' ? 'Approved' : 'Rejected';
             $this->creator->createForUser(
                 userId: $ticket->assigned_to,
-                title: "{$icon} Orçamento {$label} - Ticket #{$ticket->id}",
+                title: "{$icon} Budget {$label} - Ticket #{$ticket->id}",
                 message: $message,
                 type: $type->value,
                 link: "/ui/tickets/{$ticket->id}",
@@ -97,7 +97,7 @@ final class BudgetNotificationService
         if ($ticket->user_id) {
             $this->creator->createForUser(
                 userId: $ticket->user_id,
-                title: "{$icon} Decisão Orçamental - Ticket #{$ticket->id}",
+                title: "{$icon} Budget Decision - Ticket #{$ticket->id}",
                 message: $message,
                 type: $type->value,
                 link: "/ui/tickets/{$ticket->id}",
@@ -106,15 +106,15 @@ final class BudgetNotificationService
     }
 
     /**
-     * Notifica a criação de um novo ticket para os administradores.
+     * Notifies new ticket creation to administrators.
      *
      * @param Ticket $ticket
      */
     public function notifyTicketCreated(Ticket $ticket): void
     {
         $this->creator->createForAdmins(
-            title: NotificationTypeEnum::TicketCreated->icon() . " Novo Ticket - #{$ticket->id}",
-            message: "Novo ticket criado: {$ticket->title}",
+            title: NotificationTypeEnum::TicketCreated->icon() . " New Ticket - #{$ticket->id}",
+            message: "New ticket created: {$ticket->title}",
             type: NotificationTypeEnum::TicketCreated->value,
             link: "/ui/tickets/{$ticket->id}",
         );

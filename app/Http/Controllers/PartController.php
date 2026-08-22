@@ -26,7 +26,7 @@ final class PartController extends Controller
     ) {}
 
     /**
-     * Lista paginada de peças.
+     * Paginated listing of parts.
      */
     #[OA\Get(
         path: '/stock/parts',
@@ -68,7 +68,7 @@ final class PartController extends Controller
     }
 
     /**
-     * Detalhe de uma peça.
+     * Part detail view.
      */
     #[OA\Get(
         path: '/stock/parts/{part}',
@@ -93,7 +93,7 @@ final class PartController extends Controller
     }
 
     /**
-     * Cria uma nova peça.
+     * Creates a new part.
      */
     #[OA\Post(
         path: '/admin/parts',
@@ -144,7 +144,7 @@ final class PartController extends Controller
     }
 
     /**
-     * Atualiza uma peça.
+     * Updates a part.
      */
     #[OA\Patch(
         path: '/admin/parts/{part}',
@@ -196,7 +196,7 @@ final class PartController extends Controller
     }
 
     /**
-     * Elimina logicamente uma peça.
+     * Soft-deletes a part.
      */
     #[OA\Delete(
         path: '/admin/parts/{part}',
