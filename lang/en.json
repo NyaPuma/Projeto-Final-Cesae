@@ -297,5 +297,28 @@
   "Guardar": "Save",
   "Cancelar": "Cancel",
 
-  "Todas as Salas": "All Rooms"
+  "Todas as Salas": "All Rooms",
+
+  "Centro de Ajuda & Guia Operacional": "Help Center & Operational Guide",
+  "Guia de utilização adaptado ao perfil:": "Usage guide tailored for profile:",
+  "Guia da Plataforma": "Platform Guide",
+  "Monitorização Global & Analytics": "Global Monitoring & Analytics",
+  "Acompanhe no Dashboard e no Centro Analítico indicadores em tempo real como MTTR (tempo médio de resolução), taxa de SLA e custos acumulados por intervenção.": "Track real-time indicators on the Dashboard and Analytics Center such as MTTR (mean time to resolution), SLA compliance rate, and accumulated costs per intervention.",
+  "Controlo Orçamental": "Budget Control",
+  "Orçamentos submetidos por técnicos com valor superior a 100€ requerem aprovação explícita na secção de Orçamentos antes da reparação avançar.": "Budgets submitted by technicians exceeding €100 require explicit approval in the Budgets section before maintenance proceeds.",
+  "Gestão de Ativos & Auditoria": "Asset Management & Audit",
+  "Adicione e edite Equipamentos, Salas e Utilizadores. Consulte os registos de Auditoria para histórico detalhado de alterações no sistema.": "Add and edit Equipment, Rooms, and Users. Consult Audit logs for a detailed history of system modifications.",
+  "Gestão e Assunção de Tickets": "Ticket Management & Assignment",
+  "Assuma tickets abertos ou consulte as ocorrências que lhe foram atribuídas. Lembre-se de que tickets de prioridade Crítica não podem ser libertados voluntariamente.": "Claim open tickets or review incidents assigned to you. Note that Critical priority tickets cannot be voluntarily released.",
+  "Submissão de Orçamentos": "Budget Submission",
+  "Se a intervenção requerer custos adicionais, submeta a estimativa com discriminação de peças e mão-de-obra. Valores até 100€ são auto-aprovados instantaneamente.": "If the intervention requires extra costs, submit an estimate itemizing parts and labor. Amounts up to €100 are instantly auto-approved.",
+  "Conclusão de Intervenções": "Completing Interventions",
+  "Ao concluir uma reparação, anexe o relatório técnico, tempo despendido e confirme o encerramento do ticket.": "Upon completing a repair, attach the technical report, record the time spent, and confirm ticket closure.",
+  "Reportar Avarias": "Report Breakdowns",
+  "Clique em \"+ Criar Ticket\", descreva detalhadamente a avaria, selecione a sala e equipamento afetado e adicione uma fotografia se aplicável.": "Click \"+ Create Ticket\", describe the fault in detail, select the affected room and equipment, and attach a photo if applicable.",
+  "Acompanhamento de Estado": "Status Tracking",
+  "Verifique o progresso das suas ocorrências em tempo real na vista de Tickets. Receberá alertas quando um técnico for atribuído ou quando a intervenção for concluída.": "Track the progress of your incidents in real time on the Tickets view. You will receive alerts when a technician is assigned or when the intervention is closed.",
+  "Comentários & Cancelamento": "Comments & Cancellation",
+  "Pode trocar mensagens diretamente com a equipa técnica através dos comentários do ticket ou cancelar o pedido caso a situação se resolva.": "You can exchange messages directly with the technical team via ticket comments or cancel the request if the issue resolves itself.",
+  "Entendido": "Understood"
 }

@@ -355,10 +355,20 @@
                             </div>
                         </div>
 
+                        {{-- Botão de Alternar Tema --}}
                         <button type="button" onclick="toggleTheme()"
                             class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] text-sm shadow-sm transition-all hover:bg-[var(--surface-2)] cursor-pointer"
                             aria-label="{{ __('Alternar Tema') }}">
                             🌙
+                        </button>
+
+                        {{-- Botão de Ajuda Rápida / Guia da Plataforma --}}
+                        <button type="button" onclick="openQuickHelpModal()" title="{{ __('Guia da Plataforma') }}"
+                            class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] text-sm text-[var(--text-soft)] shadow-sm transition-all hover:text-[var(--text)] hover:bg-[var(--surface-2)] cursor-pointer"
+                            aria-label="{{ __('Guia da Plataforma') }}">
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M12 18h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
                         </button>
 
                         <div class="h-8 w-px bg-[var(--border)]"></div>
@@ -375,6 +385,9 @@
             </main>
         </div>
     </div>
+
+    {{-- Modal do Centro de Ajuda --}}
+    @include('ui.partials.help-modal')
 
     {{-- Core Auth & Layout Scripts --}}
     <script>
