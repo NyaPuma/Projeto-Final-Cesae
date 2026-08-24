@@ -117,7 +117,7 @@
 
         $userRole = strtolower($currentUser?->profile?->name ?? $currentUser?->role ?? '');
 
-        // Links de Navegação com função __()
+        // Links de Navegação Básicos
         $navItems = [
             ['href' => '/ui', 'active' => 'ui', 'label' => __('Dashboard'), 'icon' => '📊', 'exact' => true],
             ['href' => '/ui/tickets', 'active' => 'ui/tickets*', 'label' => __('Tickets'), 'icon' => '🎫', 'exact' => false],
@@ -148,6 +148,15 @@
                 ['href' => '/ui/budgets', 'active' => 'ui/budgets*', 'label' => __('Orçamentos'), 'icon' => '💰', 'exact' => false],
             ]);
         }
+
+        // Roadmap posicionado estritamente no final da lista
+        $navItems[] = [
+            'href' => '/ui/roadmap',
+            'active' => 'ui/roadmap*',
+            'label' => __('Roadmap'),
+            'icon' => '🚀',
+            'exact' => false,
+        ];
     @endphp
 
     <a href="#main-content"
@@ -388,6 +397,9 @@
 
     {{-- Modal do Centro de Ajuda --}}
     @include('ui.partials.help-modal')
+
+    {{-- Modal de QR Code --}}
+    @include('ui.partials.qr-modal')
 
     {{-- Core Auth & Layout Scripts --}}
     <script>

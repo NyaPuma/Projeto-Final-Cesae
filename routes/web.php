@@ -223,6 +223,10 @@ Route::middleware(['custom.auth'])->group(function () {
     // Rota de Agendamento Preventivo
     Route::post('/admin/maintenance/schedule', [AdminController::class, 'scheduleMaintenance']);
 
+    Route::get('/ui/roadmap', function () {
+    return view('ui.roadmap');
+})->name('ui.roadmap');
+
 
 
 });
