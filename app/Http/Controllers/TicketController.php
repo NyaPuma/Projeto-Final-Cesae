@@ -37,6 +37,10 @@ class TicketController extends Controller
             $query->where('title', 'like', '%' . $request->q . '%');
         }
 
+        if ($request->filled('room_id')) {
+            $query->where('room_id', $request->room_id);
+        }
+
         return response()->json([
             'tickets' => $query->latest()->paginate(15),
         ]);
@@ -149,7 +153,7 @@ class TicketController extends Controller
     }
 
     /**
-     * Pesquisa tickets por palavra-chave, prioridade ou intervalo de datas.
+     * Pesquisa tickets por palavra-chave, sala, prioridade ou intervalo de datas.
      */
     public function search(Request $request)
     {
@@ -163,6 +167,11 @@ class TicketController extends Controller
                 $sub->where('title', 'like', "%{$q}%")
                     ->orWhere('description', 'like', "%{$q}%");
             });
+        }
+
+        // Filtro por Sala adicionado
+        if ($request->filled('room_id')) {
+            $query->where('room_id', $request->room_id);
         }
 
         if ($request->filled('priority')) {
@@ -813,8 +822,8 @@ class TicketController extends Controller
             $user = $this->authenticatedUser($request);
 
             $request->validate([
-                'estimatedBudget'              => 'required|numeric|min:0.01',
-                'budget_details'               => 'nullable|array',
+                'estimatedBudget'            => 'required|numeric|min:0.01',
+                'budget_details'             => 'nullable|array',
                 'budget_details.*.description' => 'required_with:budget_details|string|max:255',
                 'budget_details.*.type'        => 'nullable|string|in:material,labor',
                 'budget_details.*.quantity'    => 'nullable|numeric|min:0',
@@ -1047,6 +1056,10 @@ class TicketController extends Controller
                 $q->where('title', 'like', "%{$searchTerm}%")
                     ->orWhere('description', 'like', "%{$searchTerm}%");
             });
+        }
+
+        if ($request->filled('room_id')) {
+            $query->where('room_id', $request->input('room_id'));
         }
 
         if ($request->filled('status')) {

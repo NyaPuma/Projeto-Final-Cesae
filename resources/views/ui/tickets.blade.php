@@ -21,16 +21,23 @@ window.requireAuthOnLoad = true;
         . '</div>'
 ])
 
-    {{-- Painel de Pesquisa --}}
+    {{-- Painel de Pesquisa Avançada Bento-Style --}}
     <div class="mb-6 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm animate-[fadeIn_0.2s_ease-out]">
-        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
 
-            <div class="sm:col-span-2 lg:col-span-3 xl:col-span-4">
+            <div class="sm:col-span-2 lg:col-span-3 xl:col-span-5">
                 <label for="filter_q" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Termo de Pesquisa') }}</label>
                 <div class="relative">
                     <input id="filter_q" placeholder="{{ __('Pesquisar em título e descrição do ticket...') }}"
                         class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2.5 text-xs text-[var(--text)] placeholder-[var(--text-soft)] outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all">
                 </div>
+            </div>
+
+            <div>
+                <label for="filter_room" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Sala') }}</label>
+                <select id="filter_room" class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2.5 text-xs text-[var(--text)] outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all">
+                    <option value="">{{ __('Todas as Salas') }}</option>
+                </select>
             </div>
 
             <div>
@@ -108,7 +115,7 @@ window.requireAuthOnLoad = true;
         </div>
     </div>
 
-    {{-- Paginação --}}
+    {{-- Área de Paginação --}}
     <div id="pagination" class="mt-5 flex items-center justify-between text-xs text-[var(--text-soft)] px-1"></div>
 
 @endcomponent
@@ -140,6 +147,10 @@ function formatDynamicText(text) {
         .replace(/Utilizador Sintético/gi, 'Synthetic User')
         .replace(/Equipamento Operacional/gi, 'Operational Equipment')
         .replace(/Linha de Montagem/gi, 'Assembly Line')
+        .replace(/Armazém Logístico/gi, 'Logistics Warehouse')
+        .replace(/Pavilhão Sul/gi, 'South Pavilion')
+        .replace(/Zona Norte/gi, 'North Zone')
+        .replace(/Setor/gi, 'Sector')
         .replace(/Técnico/gi, 'Technician')
         .replace(/Administrador/gi, 'Administrator');
 }
@@ -191,16 +202,54 @@ function authHeader(){
     return headers;
 }
 
+async function loadRoomsOptions() {
+    const select = document.getElementById('filter_room');
+    if (!select) return;
+
+    try {
+        let res = await fetch('/rooms', { headers: authHeader() });
+        if (!res.ok) {
+            res = await fetch('/api/rooms', { headers: authHeader() });
+        }
+        if (!res.ok) return;
+
+        const data = await res.json();
+        let rooms = [];
+        if (Array.isArray(data)) {
+            rooms = data;
+        } else if (data.rooms && Array.isArray(data.rooms)) {
+            rooms = data.rooms;
+        } else if (data.data && Array.isArray(data.data)) {
+            rooms = data.data;
+        } else if (data.rooms && data.rooms.data && Array.isArray(data.rooms.data)) {
+            rooms = data.rooms.data;
+        }
+
+        select.innerHTML = `<option value="">${__('Todas as Salas')}</option>`;
+
+        rooms.forEach(room => {
+            const opt = document.createElement('option');
+            opt.value = room.id;
+            opt.textContent = formatDynamicText(room.name || room.designation || `Room #${room.id}`);
+            select.appendChild(opt);
+        });
+    } catch (e) {
+        console.warn('Não foi possível carregar as salas para o filtro:', e);
+    }
+}
+
 async function loadTickets(page = 1) {
     currentPage = page;
     const params = new URLSearchParams();
     const q        = document.getElementById('filter_q').value.trim();
+    const roomId   = document.getElementById('filter_room')?.value;
     const status   = document.getElementById('filter_status').value;
     const priority = document.getElementById('filter_priority').value;
     const dateFrom = document.getElementById('filter_date_from').value;
     const dateTo   = document.getElementById('filter_date_to').value;
 
     if (q)        params.append('q', q);
+    if (roomId)   params.append('room_id', roomId);
     if (status)   params.append('status', status);
     if (priority) params.append('priority', priority);
     if (dateFrom) params.append('date_from', dateFrom);
@@ -303,7 +352,7 @@ function showFeedback(message, error = false) {
 document.getElementById('btnSearch').addEventListener('click', () => loadTickets(1));
 
 document.getElementById('btnClear').addEventListener('click', () => {
-    ['filter_q','filter_status','filter_priority','filter_date_from','filter_date_to'].forEach(id => {
+    ['filter_q','filter_room','filter_status','filter_priority','filter_date_from','filter_date_to'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.value = '';
     });
@@ -314,12 +363,14 @@ document.getElementById('filter_q').addEventListener('keydown', e => {
     if (e.key === 'Enter') loadTickets(1);
 });
 
+document.getElementById('filter_room')?.addEventListener('change', () => loadTickets(1));
 document.getElementById('filter_status')?.addEventListener('change', () => loadTickets(1));
 document.getElementById('filter_priority')?.addEventListener('change', () => loadTickets(1));
 document.getElementById('filter_date_from')?.addEventListener('change', () => loadTickets(1));
 document.getElementById('filter_date_to')?.addEventListener('change', () => loadTickets(1));
 
-window.addEventListener('load', () => {
+window.addEventListener('load', async () => {
+    await loadRoomsOptions();
     loadTickets(1);
 });
 </script>
