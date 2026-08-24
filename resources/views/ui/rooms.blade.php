@@ -9,10 +9,10 @@ window.requireAuthOnLoad = true;
     'title' => __('Salas'),
     'subtitle' => __('Consulte e organize as salas, equipamentos associados e estado de avarias em tempo real.'),
     'actions' => '<div class="flex items-center gap-2">'
-        . '<a href="/ui" class="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-slate-300 bg-slate-800/60 hover:bg-slate-700/80 border border-slate-700/80 rounded-full transition-all">'
+        . '<a href="/ui" class="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-[var(--text)] bg-[var(--surface-2)] hover:bg-[var(--border)] border border-[var(--border)] rounded-xl transition-all">'
             . '<span>←</span> ' . __('Voltar ao painel')
         . '</a>'
-        . '<button id="btnAddRoom" onclick="openNewRoomModal()" class="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-orange-500 hover:bg-orange-600 rounded-full shadow-sm transition-all cursor-pointer">+ ' . __('Nova sala') . '</button>'
+        . '<button id="btnAddRoom" onclick="openNewRoomModal()" class="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-orange-500 hover:bg-orange-600 rounded-xl shadow-sm transition-all cursor-pointer">+ ' . __('Nova sala') . '</button>'
         . '</div>'
 ])
 
@@ -43,7 +43,7 @@ window.requireAuthOnLoad = true;
                 <button id="btnSearch" type="button" onclick="fetchIsolatedRooms(1)" class="inline-flex items-center justify-center px-5 py-2 text-xs font-bold text-white bg-orange-500 hover:bg-orange-600 rounded-xl shadow-sm transition-all cursor-pointer min-h-[36px]">
                     {{ __('Pesquisar') }}
                 </button>
-                <button id="btnClear" type="button" onclick="resetRoomFilters()" class="inline-flex items-center justify-center px-5 py-2 text-xs font-semibold text-orange-500 bg-transparent border border-orange-500/40 hover:bg-orange-500/10 rounded-xl transition-all cursor-pointer min-h-[36px]">
+                <button id="btnClear" type="button" onclick="resetRoomFilters()" class="inline-flex items-center justify-center px-5 py-2 text-xs font-semibold text-[var(--text)] bg-transparent border border-[var(--border)] hover:bg-[var(--surface-2)] rounded-xl transition-all cursor-pointer min-h-[36px]">
                     {{ __('Limpar filtros') }}
                 </button>
             </div>
@@ -71,7 +71,7 @@ window.requireAuthOnLoad = true;
                         <td colspan="5" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]">
                             <div class="flex items-center justify-center gap-2">
                                 <span class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
-                                A carregar listagem de salas...
+                                {{ __('A carregar listagem de salas...') }}
                             </div>
                         </td>
                     </tr>
@@ -144,9 +144,9 @@ async function fetchIsolatedRooms(page = 1) {
     params.append('page', page);
 
     const tbody = document.getElementById('roomsTableContentBody');
-    if (tbody) tbody.innerHTML = '<tr><td colspan="5" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]">A carregar salas...</td></tr>';
+    if (tbody) tbody.innerHTML = `<tr><td colspan="5" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]">${__('A carregar salas...')}</td></tr>`;
 
-    const endpoints = [`/api/rooms?${params.toString()}`, `/rooms?${params.toString()}`, `/admin/rooms?${params.toString()}`];
+    const endpoints = [`/api/admin/rooms?${params.toString()}`, `/admin/rooms?${params.toString()}`, `/api/rooms?${params.toString()}`, `/rooms?${params.toString()}`];
     let resData = null;
 
     for (const url of endpoints) {
@@ -160,8 +160,8 @@ async function fetchIsolatedRooms(page = 1) {
     }
 
     if (!resData) {
-        document.getElementById('resultsCount').textContent = "Erro ao ligar ao servidor";
-        if (tbody) tbody.innerHTML = '<tr><td colspan="5" class="px-5 py-12 text-center text-xs text-red-400">Não foi possível obter dados das salas.</td></tr>';
+        document.getElementById('resultsCount').textContent = __('Erro ao ligar ao servidor');
+        if (tbody) tbody.innerHTML = `<tr><td colspan="5" class="px-5 py-12 text-center text-xs text-red-400">${__('Não foi possível obter dados das salas.')}</td></tr>`;
         return;
     }
 
@@ -169,29 +169,29 @@ async function fetchIsolatedRooms(page = 1) {
     const meta = resData.rooms?.meta ?? resData.meta ?? {};
     const total = meta.total ?? rooms.length;
 
-    document.getElementById('resultsCount').textContent = total > 0 ? `${total} registo(s) encontrado(s)` : "0 registos encontrados";
+    document.getElementById('resultsCount').textContent = total > 0 ? `${total} ${__('registo(s) encontrado(s)')}` : __('0 registos encontrados');
 
     if (!rooms || rooms.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]"><div class="mx-auto max-w-sm rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface-2)] p-5">Nenhuma sala encontrada.</div></td></tr>';
+        tbody.innerHTML = `<tr><td colspan="5" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]"><div class="mx-auto max-w-sm rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface-2)] p-5">${__('Nenhuma sala encontrada.')}</div></td></tr>`;
         document.getElementById('pagination').innerHTML = '';
         return;
     }
 
     tbody.innerHTML = rooms.map(r => {
         const equipmentCount = r.equipments_count ?? r.equipment_count ?? (r.equipments ? r.equipments.length : (r.equipment ? r.equipment.length : 0));
-        const eqLabel = equipmentCount === 1 ? "Equipamento" : "Equipamentos";
+        const eqLabel = equipmentCount === 1 ? __('Equipamento') : __('Equipamentos');
 
-        // Indicador em tempo real de Avarias
+        // Contagem atualizada de avarias ativas passada pelo controlador
         const openTickets = r.active_tickets_count ?? r.open_tickets_count ?? r.tickets_count ?? 0;
         const statusBadge = openTickets > 0
-            ? `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-rose-500/10 text-rose-500 border border-rose-500/20 uppercase tracking-wider">🔴 ${openTickets} ${openTickets === 1 ? 'Avaria Aberta' : 'Avarias Abertas'}</span>`
-            : `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 uppercase tracking-wider">🟢 Sem Avarias</span>`;
+            ? `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-rose-500/10 text-rose-500 border border-rose-500/20 uppercase tracking-wider">🔴 ${openTickets} ${openTickets === 1 ? __('Avaria Aberta') : __('Avarias Abertas')}</span>`
+            : `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 uppercase tracking-wider">🟢 ${__('Sem Avarias')}</span>`;
 
         return `<tr class="hover:bg-[var(--surface-2)]/50 transition-colors duration-150">
             <td class="px-5 py-4 font-bold text-xs text-[var(--text)]">${r.name}</td>
             <td class="px-5 py-4 text-[var(--text-soft)] font-medium">${r.building || '-'}</td>
             <td class="px-5 py-4">
-                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-slate-800 text-slate-300 border border-slate-700/80 uppercase tracking-wider">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-[var(--surface-2)] text-[var(--text)] border border-[var(--border)] uppercase tracking-wider">
                     ${equipmentCount} ${eqLabel}
                 </span>
             </td>
@@ -200,8 +200,8 @@ async function fetchIsolatedRooms(page = 1) {
             </td>
             <td class="px-5 py-4 text-right">
                 <button onclick='editRoom(${JSON.stringify(r)})'
-                    class="inline-flex items-center justify-center px-3 py-1.5 text-xs font-semibold text-slate-200 bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/80 rounded-xl transition-all cursor-pointer">
-                    Editar
+                    class="inline-flex items-center justify-center px-3 py-1.5 text-xs font-semibold text-[var(--text)] bg-[var(--surface-2)] hover:bg-[var(--border)] border border-[var(--border)] rounded-xl transition-all cursor-pointer">
+                    ${__('Editar')}
                 </button>
             </td>
         </tr>`;
@@ -218,10 +218,10 @@ async function fetchIsolatedRooms(page = 1) {
 
     pagEl.innerHTML = `
         <button onclick="fetchIsolatedRooms(${currPage - 1})" ${currPage <= 1 ? 'disabled' : ''}
-            class="px-3.5 py-2 text-xs font-semibold text-[var(--text)] bg-[var(--surface-2)] border border-[var(--border)] rounded-xl hover:bg-[var(--border)] transition-all disabled:opacity-40 disabled:cursor-not-allowed">← Anterior</button>
-        <span class="font-bold text-[var(--text-soft)]">Página ${currPage} de ${lastPage}</span>
+            class="px-3.5 py-2 text-xs font-semibold text-[var(--text)] bg-[var(--surface-2)] border border-[var(--border)] rounded-xl hover:bg-[var(--border)] transition-all disabled:opacity-40 disabled:cursor-not-allowed">← ${__('Anterior')}</button>
+        <span class="font-bold text-[var(--text-soft)]">${__('Página')} ${currPage} ${__('de')} ${lastPage}</span>
         <button onclick="fetchIsolatedRooms(${currPage + 1})" ${currPage >= lastPage ? 'disabled' : ''}
-            class="px-3.5 py-2 text-xs font-semibold text-[var(--text)] bg-[var(--surface-2)] border border-[var(--border)] rounded-xl hover:bg-[var(--border)] transition-all disabled:opacity-40 disabled:cursor-not-allowed">Próxima →</button>
+            class="px-3.5 py-2 text-xs font-semibold text-[var(--text)] bg-[var(--surface-2)] border border-[var(--border)] rounded-xl hover:bg-[var(--border)] transition-all disabled:opacity-40 disabled:cursor-not-allowed">${__('Próxima')} →</button>
     `;
 }
 
@@ -237,7 +237,7 @@ function openNewRoomModal() {
     const form = document.getElementById('roomForm');
     if (form) form.reset();
     document.getElementById('roomId').value = '';
-    document.getElementById('roomModalTitle').textContent = "Nova Sala";
+    document.getElementById('roomModalTitle').textContent = __('Nova sala');
 
     const modal = document.getElementById('roomModal');
     if (modal) {
@@ -260,7 +260,7 @@ function editRoom(room) {
     document.getElementById('roomId').value = room.id;
     document.getElementById('roomName').value = room.name || '';
     document.getElementById('roomBuilding').value = room.building || '';
-    document.getElementById('roomModalTitle').textContent = "Editar Sala";
+    document.getElementById('roomModalTitle').textContent = __('Editar Sala');
 
     const modal = document.getElementById('roomModal');
     if (modal) {
@@ -274,8 +274,8 @@ async function saveRoom(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
     const id = formData.get('id');
-    const method = id ? 'PUT' : 'POST';
-    const url = id ? `/api/rooms/${id}` : '/api/rooms';
+    const method = id ? 'PATCH' : 'POST';
+    const url = id ? `/api/admin/rooms/${id}` : '/api/admin/rooms';
 
     try {
         const res = await fetch(url, {
@@ -288,14 +288,13 @@ async function saveRoom(e) {
             closeModal('roomModal');
             fetchIsolatedRooms(currentRoomPage);
         } else {
-            alert("Ocorreu um erro ao guardar os dados da sala.");
+            alert(__('Ocorreu um erro ao guardar os dados da sala.'));
         }
     } catch (err) {
-        alert("Erro ao comunicar com o servidor.");
+        alert(__('Erro ao comunicar com o servidor.'));
     }
 }
 
-// Inicialização imediata
 fetchIsolatedRooms(1);
 </script>
 @endsection

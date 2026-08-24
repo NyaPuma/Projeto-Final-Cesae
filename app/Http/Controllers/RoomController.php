@@ -45,7 +45,6 @@ class RoomController extends Controller
 
             // 3. Cruzamento seguro de dados diretamente na coleção paginada
             $rooms->getCollection()->transform(function ($room) {
-                // Utiliza a contagem gerada pelo withCount ou calcula diretamente se vier nulo
                 $count = $room->equipments_count ?? $room->equipments()->count();
                 $location = $room->location ?? $room->building ?? '-';
 
@@ -54,12 +53,15 @@ class RoomController extends Controller
                 $room->building = $location;
                 $room->active_tickets_count = 0;
 
-                // Contagem de avarias ativas se a relação existir
-                if (method_exists($room, 'tickets')) {
-                    $room->active_tickets_count = $room->tickets()
-                        ->whereIn('status', ['aberto', 'aberta', 'em curso', 'pendente orçamento'])
-                        ->count();
-                }
+                // Contagem de avarias ativas (considerando room_id direto no ticket ou através dos equipamentos da sala)
+                $room->active_tickets_count = \App\Models\Ticket::where(function($sub) use ($room) {
+                        $sub->where('room_id', $room->id)
+                            ->orWhereIn('equipment_id', $room->equipments()->pluck('id'));
+                    })
+                    ->whereHas('status', function ($q) {
+                        $q->whereIn('name', ['aberta', 'aberto', 'em curso', 'in progress', 'pendente orçamento', 'pendente orcamento']);
+                    })
+                    ->count();
 
                 return $room;
             });
@@ -75,7 +77,14 @@ class RoomController extends Controller
                 $room->equipment_count = $count;
                 $room->equipments_count = $count;
                 $room->building = $room->location ?? $room->building ?? '-';
-                $room->active_tickets_count = 0;
+                $room->active_tickets_count = \App\Models\Ticket::where(function($sub) use ($room) {
+                        $sub->where('room_id', $room->id)
+                            ->orWhereIn('equipment_id', $room->equipments()->pluck('id'));
+                    })
+                    ->whereHas('status', function ($q) {
+                        $q->whereIn('name', ['aberta', 'aberto', 'em curso', 'in progress', 'pendente orçamento', 'pendente orcamento']);
+                    })
+                    ->count();
                 return $room;
             });
 
