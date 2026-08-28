@@ -87,7 +87,7 @@ return [
     'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.' => 'تعمیرهای فنی، نگهداری پیشگیرانه، بلیط‌های برنامه‌ریزی شده و وظایف عملیاتی را در یک رابط یکپارچه مشاهده کنید.',
     'Voltar aos tickets' => 'بازگشت به بلیط‌ها',
     'Últimas Ocorrências Registadas' => 'آخرین رویدادهای ثبت شده',
-    '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.' => '⚠️ :total بلیط با اولویت بالاتر در انتظار رسیدگی وجود دارد.',
+    'Existem :total ticket(s) de prioridade mais alta por atender.' => ':total بلیط با اولویت بالاتر در انتظار رسیدگی وجود دارد.',
     'Anexo adicionado' => 'پیوست اضافه شد',
     'Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.' => 'فقط بلیط‌هایی با وضعیت ‌در حال انجام‌ می‌توانند به سرعت بسته شوند.',
     'Apenas tickets no estado "Aberto" podem ser cancelados.' => 'فقط بلیط‌هایی با وضعیت ‌باز‌ می‌توانند لغو شوند.',

@@ -49,7 +49,7 @@ class TicketSearchTest extends TestCase
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
             ->getJson('/api/tickets/search?q=compressor&priority='.TicketPriorityEnum::High->value.'&date_from='.now()->subDays(7)->toDateString());
 
-        // CORRIGIDO: O método search() foi implementado - retorna 200 com resultados
+        // FIXED: The search() method has been implemented - returns 200 with results
         $response->assertOk();
         $response->assertJsonStructure(['tickets']);
     }
@@ -66,7 +66,7 @@ class TicketSearchTest extends TestCase
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
             ->getJson('/api/tickets/search?q=this-should-not-match-anything');
 
-        // CORRIGIDO: O método search() foi implementado - retorna 200 com lista vazia
+        // FIXED: The search() method has been implemented - returns 200 with an empty list
         $response->assertOk();
         $response->assertJsonStructure(['tickets']);
         $this->assertEmpty($response->json('tickets')['data'] ?? $response->json('tickets'));
@@ -84,7 +84,7 @@ class TicketSearchTest extends TestCase
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
             ->getJson('/api/tickets/search?date_from='.now()->toDateString().'&date_to='.now()->subDays(1)->toDateString());
 
-        // CORRIGIDO: O método search() agora valida o intervalo de datas e retorna 422
+        // FIXED: The search() method now validates the date range and returns 422
         $response->assertStatus(422);
         $response->assertJson(['message' => 'A data inicial (dateFrom) não pode ser posterior à data final (dateTo).']);
     }
@@ -101,7 +101,7 @@ class TicketSearchTest extends TestCase
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
             ->getJson('/api/tickets/search?priority=invalid-priority');
 
-        // CORRIGIDO: O método search() agora valida a prioridade e retorna 422
+        // FIXED: The search() method now validates the priority and returns 422
         $response->assertStatus(422);
         $response->assertJson(['message' => 'Prioridade inválida. Valores válidos: baixa, média, alta, crítica.']);
     }

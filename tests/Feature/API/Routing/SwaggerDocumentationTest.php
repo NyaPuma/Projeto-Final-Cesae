@@ -106,10 +106,10 @@ class SwaggerDocumentationTest extends TestCase
         UserProfile::create(['name' => UserRoleEnum::Technician->value]);
         UserProfile::create(['name' => UserRoleEnum::Admin->value]);
 
-        // Sem autenticação: redirecionado para o login
+        // Without authentication: redirected to login
         $this->get('/docs/openapi')->assertRedirect('/ui/login');
 
-        // Utilizador comum / técnico: acesso negado
+        // Regular user / technician: access denied
         $user = User::factory()->create([
             'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->first()->id,
             'api_token' => Str::random(60),
@@ -120,7 +120,7 @@ class SwaggerDocumentationTest extends TestCase
             ->get('/docs/openapi')
             ->assertRedirect('/ui');
 
-        // Admin: acesso permitido
+        // Admin: access allowed
         $admin = User::factory()->create([
             'profile_id' => UserProfile::where('name', UserRoleEnum::Admin->value)->first()->id,
             'api_token' => Str::random(60),

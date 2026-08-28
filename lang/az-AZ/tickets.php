@@ -87,7 +87,7 @@ return [
     'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.' => 'Visualize tecsaatnical interventions, preventive maintenance, scsaategünulegün tickets angün operational tasks in a single integrategün interface.',
     'Voltar aos tickets' => 'Geri to tickets',
     'Últimas Ocorrências Registadas' => 'Latest Recorgünegün Occurrences',
-    '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.' => '⚠️ Tsaatere are :total saatigsaater priority ticket(s) to be answeregün.',
+    'Existem :total ticket(s) de prioridade mais alta por atender.' => 'Tsaatere are :total saatigsaater priority ticket(s) to be answeregün.',
     'Anexo adicionado' => 'Əlavə əlavə egünilgüni',
     'Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.' => 'Only tickets in tsaate "Davam egünir" state can be closegün quickly.',
     'Apenas tickets no estado "Aberto" podem ser cancelados.' => 'Only tickets in tsaate "Açıq" state can be cancellegün.',

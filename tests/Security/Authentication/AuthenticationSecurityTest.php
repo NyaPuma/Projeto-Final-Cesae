@@ -249,7 +249,7 @@ class AuthenticationSecurityTest extends FeatureTestCase
         }
 
         if (! empty($missing)) {
-            \Log::warning('T2 â€” Missing security headers on /ui/login', ['missing' => $missing]);
+            \Log::warning('T2 — Missing security headers on /ui/login', ['missing' => $missing]);
         }
 
         $this->assertEmpty($missing, 'Missing security headers: '.implode(', ', $missing));
@@ -265,7 +265,7 @@ class AuthenticationSecurityTest extends FeatureTestCase
             $status = $response->status();
 
             if ($status === 200) {
-                \Log::critical("T6 â€” EXPOSED: {$path} accessible (HTTP 200)", [
+                \Log::critical("T6 — EXPOSED: {$path} accessible (HTTP 200)", [
                     'content_preview' => substr($response->content(), 0, 200),
                 ]);
             }
@@ -288,7 +288,7 @@ class AuthenticationSecurityTest extends FeatureTestCase
             $status = $response->status();
 
             if ($status === 200) {
-                \Log::critical("T6 â€” EXPOSED: {$path} accessible (HTTP 200)", []);
+                \Log::critical("T6 — EXPOSED: {$path} accessible (HTTP 200)", []);
             }
 
             $this->assertNotEquals(200, $status,

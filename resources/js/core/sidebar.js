@@ -1,6 +1,6 @@
 /**
  * Sidebar Management Module
- * Gestão do menu lateral (desktop/mobile)
+ * Sidebar management (desktop/mobile)
  */
 
 function setMobileNavExpanded(expanded) {
@@ -69,9 +69,9 @@ export function initSidebar() {
         document.body.classList.add('sidebar-collapsed');
     }
 
-    // O drawer mobile começa sempre fechado em qualquer navegação.
-    // Forçar o fecho aqui evita o flash/abertura indesejada na transição
-    // de página (e cobre o restore do bfcache, que preserva o DOM).
+    // The mobile drawer always starts closed on any navigation.
+    // Forcing close here prevents the flash/unwanted opening on page transition
+    // (and covers bfcache restore, which preserves the DOM).
     closeMobileNav();
 
     window.addEventListener('pageshow', (event) => {

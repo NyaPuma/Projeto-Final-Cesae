@@ -3,9 +3,9 @@
 | Page Actions Export Group
 |--------------------------------------------------------------------------
 |
-| Grupo de ações para exportação de dados (CSV, PDF, Excel).
-| • 100% livre de CSS ou JS inline.
-| • Indentação limpa e livre de carateres invisíveis.
+| Export actions group for data export (CSV, PDF, Excel).
+| • 100% free of inline CSS or JS.
+| • Clean indentation free of invisible characters.
 |
 --}}
 

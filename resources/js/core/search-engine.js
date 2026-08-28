@@ -2,14 +2,14 @@
 |--------------------------------------------------------------------------
 | Search Engine
 |--------------------------------------------------------------------------
-| Motor de pesquisa reutilizável e robusto.
+| Reusable and robust search engine.
 */
 
 export default class SearchEngine {
     constructor(options = {}) {
         this.endpoint = options.endpoint ?? null;
         this.items = options.items ?? [];
-        this.searchKey = options.searchKey ?? 'label'; // Agora configurável
+        this.searchKey = options.searchKey ?? 'label'; // Now configurable
         this.minLength = options.minLength ?? 2;
         this.maxResults = options.maxResults ?? 10;
         this.cache = new Map();
@@ -17,7 +17,7 @@ export default class SearchEngine {
     }
 
     /**
-     * Pesquisa local nos itens fornecidos.
+     * Local search on provided items.
      * @param {string} query
      */
     local(query) {
@@ -33,18 +33,18 @@ export default class SearchEngine {
     }
 
     /**
-     * Pesquisa remota via API com suporte a AbortController.
+     * Remote search via API with AbortController support.
      * @param {string} query
      */
     async remote(query) {
         if (!this.endpoint) return [];
 
-        // Verifica Cache
+        // Check cache
         if (this.cache.has(query)) {
             return this.cache.get(query);
         }
 
-        // Cancela pedido anterior
+        // Cancel previous request
         if (this.abortController) {
             this.abortController.abort();
         }
@@ -61,7 +61,7 @@ export default class SearchEngine {
 
             const data = await response.json();
 
-            // Grava no cache
+            // Save to cache
             this.cache.set(query, data);
             return data;
         } catch (error) {
@@ -70,12 +70,12 @@ export default class SearchEngine {
             } else {
                 console.error('Search engine error:', error);
             }
-            return []; // Retorna array vazio em caso de erro
+            return []; // Return empty array on error
         }
     }
 
     /**
-     * Método principal de busca.
+     * Main search method.
      * @param {string} query
      */
     async search(query) {
@@ -92,6 +92,6 @@ export default class SearchEngine {
 
     setItems(items) {
         this.items = items;
-        this.clearCache(); // Limpa cache se os dados locais mudarem
+        this.clearCache(); // Clear cache if local data changes
     }
 }

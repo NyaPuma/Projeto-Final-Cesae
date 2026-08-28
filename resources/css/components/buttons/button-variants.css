@@ -23,7 +23,7 @@
 .ui-button--outline {
     --button-bg: transparent;
     --button-border: var(--primary);
-    --button-color: var(--primary);
+    --button-color: color-mix(in srgb, var(--primary) 70%, #000);
     --button-hover-bg: var(--primary-light);
     --button-hover-border: var(--primary);
     --button-hover-color: var(--primary);
@@ -41,8 +41,8 @@
 .ui-button--success { --button-bg: #15803d; --button-border: #15803d; --button-color: #ffffff; }
 .dark .ui-button--success, [data-theme='dark'] .ui-button--success { --button-bg: #166534; --button-border: #166534; --button-color: #ffffff; }
 
-.ui-button--warning { --button-bg: #c2410c; --button-border: #c2410c; --button-color: #ffffff; }
-.dark .ui-button--warning, [data-theme='dark'] .ui-button--warning { --button-bg: #9a3412; --button-border: #9a3412; --button-color: #ffffff; }
+.ui-button--warning { --button-bg: #d97706; --button-border: #d97706; --button-color: #ffffff; }
+.dark .ui-button--warning, [data-theme='dark'] .ui-button--warning { --button-bg: #b45309; --button-border: #b45309; --button-color: #ffffff; }
 
 .ui-button--danger { --button-bg: #b91c1c; --button-border: #b91c1c; --button-color: #ffffff; }
 .dark .ui-button--danger, [data-theme='dark'] .ui-button--danger { --button-bg: #991b1b; --button-border: #991b1b; --button-color: #ffffff; }

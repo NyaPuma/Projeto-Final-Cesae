@@ -3,10 +3,10 @@
 | Submit Button with Icon Component
 |--------------------------------------------------------------------------
 |
-| Botão de submissão estruturado com seta indicativa e animação fluida no hover.
-| • 100% livre de CSS ou JS inline.
-| • Suporte híbrido via prop ($label) ou bloco estruturado ($slot).
-| • Compatibilidade nativa com layouts RTL.
+| Structured submit button with indicative arrow and smooth hover animation.
+| • 100% free of inline CSS or JS.
+| • Hybrid support via prop ($label) or structured block ($slot).
+| • Native RTL layout compatibility.
 |
 --}}
 

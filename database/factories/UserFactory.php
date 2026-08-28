@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 class UserFactory extends Factory
 {
     /**
-     * Palavra-passe actual usada pela factory.
+     * Current password used by the factory.
      */
     protected static ?string $password;
 
@@ -34,7 +34,7 @@ class UserFactory extends Factory
     }
 
     /**
-     * Indica que o email do modelo deve ficar por verificar.
+     * Indicates that the model email should remain unverified.
      */
     public function unverified(): static
     {

@@ -2,7 +2,7 @@ export function renderResultsFeedback(element, message, error = false) {
     if (!element) return;
 
     element.textContent = message;
-    element.className = `text-xs font-semibold ${error ? 'text-red-700 dark:text-red-400' : 'text-(--text-soft)'}`;
+    element.className = `text-xs font-semibold ${error ? 'text-danger' : 'text-(--text-soft)'}`;
 }
 
 export function renderResultsCount(element, total) {
@@ -22,7 +22,7 @@ export function renderTableEmptyState({ tbody, colspan, message }) {
 export function renderTableErrorState({ tbody, colspan, message }) {
     if (!tbody) return;
 
-    tbody.innerHTML = `<tr><td colspan="${colspan}" class="px-5 py-12 text-center text-xs font-medium text-(--color-danger)">⚠️ ${message}</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="${colspan}" class="px-5 py-12 text-center text-xs font-medium text-danger">${message}</td></tr>`;
 }
 
 export function getPaginationTranslations() {

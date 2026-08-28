@@ -40,6 +40,8 @@ class CalendarServiceTest extends FeatureTestCase
             'user_id' => $admin->id,
             'scheduled' => false,
             'scheduled_at' => null,
+            'opened_at' => null,
+            'resolved_at' => null,
         ]);
 
         $events = $this->service->getScheduledEventsForUser($admin);

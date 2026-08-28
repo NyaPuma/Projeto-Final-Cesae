@@ -71,13 +71,13 @@ class EquipmentAndRoomCrudFeatureTest extends TestCase
         $response = $this->withHeader('X-Auth-Token', $admin->api_token)
             ->actingAs($admin)
             ->postJson('/api/admin/equipment', [
-                'name' => 'Torno MecÃ¢nico X1',
+                'name' => 'Torno Mecânico X1',
                 'serial' => 'SN-99887766',
                 'room_id' => $room->id,
             ]);
 
         $response->assertStatus(201)
-            ->assertJsonPath('equipment.name', 'Torno MecÃ¢nico X1')
+            ->assertJsonPath('equipment.name', 'Torno Mecânico X1')
             ->assertJsonPath('equipment.room_id', $room->id);
 
         $equipId = $response->json('equipment.id');
@@ -124,22 +124,22 @@ class EquipmentAndRoomCrudFeatureTest extends TestCase
         $send = fn (array $payload) => $this->withHeader('X-Auth-Token', $admin->api_token)
             ->postJson('/api/admin/equipment', $payload);
 
-        // Campos obrigatórios em falta
+        // Missing required fields
         $send([])->assertStatus(422)
             ->assertJsonValidationErrors(['name', 'serial']);
 
-        // room_id inexistente
+        // Non-existent room_id
         $send(['name' => 'Impressora', 'serial' => 'SN-VALID-1', 'room_id' => 99999])
             ->assertStatus(422)
             ->assertJsonValidationErrors(['room_id']);
 
-        // serial duplicado
+        // duplicate serial
         Equipment::factory()->create(['serial' => 'SN-DUP-1', 'room_id' => $room->id]);
         $send(['name' => 'Impressora', 'serial' => 'SN-DUP-1'])
             ->assertStatus(422)
             ->assertJsonValidationErrors(['serial']);
 
-        // active não booleano
+        // Non-boolean active
         $send(['name' => 'Impressora', 'serial' => 'SN-VALID-2', 'active' => 'yes'])
             ->assertStatus(422)
             ->assertJsonValidationErrors(['active']);
@@ -156,19 +156,19 @@ class EquipmentAndRoomCrudFeatureTest extends TestCase
         $send = fn (array $payload) => $this->withHeader('X-Auth-Token', $admin->api_token)
             ->postJson('/api/admin/rooms', $payload);
 
-        // Campos obrigatórios em falta
+        // Missing required fields
         $send([])->assertStatus(422)->assertJsonValidationErrors(['name']);
 
-        // Nome duplicado
+        // Duplicate name
         Room::factory()->create(['name' => 'Sala Duplicada']);
         $send(['name' => 'Sala Duplicada'])
             ->assertStatus(422)
             ->assertJsonValidationErrors(['name']);
 
-        // Nome apenas com espaços colapsa para vazio
+        // Name with only spaces collapses to empty
         $send(['name' => '   '])->assertStatus(422)->assertJsonValidationErrors(['name']);
 
-        // location acima de 255 caracteres
+        // location above 255 characters
         $send(['name' => 'Sala Nova', 'location' => str_repeat('a', 256)])
             ->assertStatus(422)
             ->assertJsonValidationErrors(['location']);
@@ -188,15 +188,15 @@ class EquipmentAndRoomCrudFeatureTest extends TestCase
         $send = fn (array $payload) => $this->withHeader('X-Auth-Token', $admin->api_token)
             ->patchJson("/api/admin/rooms/{$room->id}", $payload);
 
-        // Manter o próprio nome é aceite (ignore funciona)
+        // Keeping its own name is accepted (ignore works)
         $send(['name' => 'Sala A'])->assertOk();
 
-        // Nome de outra sala → 422
+        // Name of another room → 422
         $send(['name' => 'Sala B'])
             ->assertStatus(422)
             ->assertJsonValidationErrors(['name']);
 
-        // location acima de 255 caracteres
+        // location above 255 characters
         $send(['location' => str_repeat('a', 256)])
             ->assertStatus(422)
             ->assertJsonValidationErrors(['location']);

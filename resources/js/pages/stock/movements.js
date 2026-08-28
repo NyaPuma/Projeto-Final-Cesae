@@ -55,13 +55,13 @@ function bindForm() {
             const data = await createMovement(payload);
 
             message.textContent = data.message || 'Movimento registado!';
-            message.className = 'text-xs font-medium text-emerald-600 dark:text-emerald-400';
+            message.className = 'text-xs font-medium text-success';
 
             form.reset();
             loadMovements(movementsState.currentPage);
         } catch (error) {
             message.textContent = error.message;
-            message.className = 'text-xs font-medium text-red-600 dark:text-red-400';
+            message.className = 'text-xs font-medium text-danger';
         } finally {
             submitBtn.disabled = false;
         }

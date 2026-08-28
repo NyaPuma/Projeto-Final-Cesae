@@ -39,10 +39,10 @@ enum StockMovementTypeEnum: string
     public function icon(): string
     {
         return match ($this) {
-            self::In => '📥',
-            self::Out => '📤',
-            self::Adjust => '🔧',
-            self::Return => '↩️',
+            self::In => 'heroicon-o-arrow-down-tray',
+            self::Out => 'heroicon-o-arrow-up-tray',
+            self::Adjust => 'heroicon-o-wrench-screwdriver',
+            self::Return => 'heroicon-o-arrow-uturn-left',
         };
     }
 

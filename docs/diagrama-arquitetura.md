@@ -1,11 +1,10 @@
-# Arquitetura de Dados - DER
+# Data Architecture - ER Diagram
 
-Este diagrama apresenta a modelação da base de dados relacional para o Sistema de Gestão de Manutenção.
+This diagram presents the relational database modeling for the Maintenance Management System.
 
-![Diagrama Entidade-Relacionamento](../docs/Diagrama_Base_Dados.drawio.svg)
+![Entity-Relationship Diagram](../docs/Diagrama_Base_Dados.drawio.svg)
 
-## Notas Técnicas
-* **Abordagem:** Modelo Relacional (MySQL).
-* **Integridade:** Foram aplicadas chaves estrangeiras (`Foreign Keys`) com restrições de integridade referencial (`ON DELETE RESTRICT`) para prevenir a eliminação acidental de dados associados.
-* **Telemetria:** O modelo foca-se na persistência de avarias e no histórico de manutenção, tratando a telemetria como um fluxo de exceções (Gestão por Exceção).
-
+## Technical Notes
+* **Approach:** Relational Model (MySQL).
+* **Integrity:** Foreign Keys with referential integrity constraints (`ON DELETE RESTRICT`) were applied to prevent accidental deletion of associated data.
+* **Telemetry:** The model focuses on fault persistence and maintenance history, treating telemetry as an exception flow (Management by Exception).

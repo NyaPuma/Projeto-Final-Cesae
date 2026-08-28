@@ -1,8 +1,8 @@
 {{--
 |--------------------------------------------------------------------------
-| Modal de Seleção de Formato de Data
+| Date Format Selection Modal
 |--------------------------------------------------------------------------
-| Modal para seleccionar apenas o formato de data, independente de língua e moeda
+| Modal to select only the date format, independent of language and currency
 --}}
 
 @php
@@ -10,7 +10,7 @@
     $currentDateFormat = \App\Services\PreferencesService::getDateFormat(request());
     $preferences = \App\Services\PreferencesService::current(request);
     
-    // Nomes amigáveis para os formatos
+    // Friendly names for formats
     $formatNames = [
         'd/m/Y' => '31/12/2024 (Dia/Mês/Ano)',
         'm/d/Y' => '12/31/2024 (Mês/Dia/Ano)',
@@ -21,7 +21,7 @@
         'm-d-Y' => '12-31-2024 (Mês-Dia-Ano)',
     ];
     
-    // Exemplo de data para pré-visualização
+    // Sample date for preview
     $sampleDate = now()->format('Y-m-d');
 @endphp
 
@@ -43,7 +43,7 @@
         <div class="preferences-modal__header">
             <div class="preferences-modal__header-row">
                 <h2 id="dateFormatModalTitle" class="preferences-modal__title">
-                    <span class="preferences-modal__title-icon">📅</span>
+                    <span class="preferences-modal__title-icon"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/></svg></span>
                     {{ __('preferences.Selecionar Formato de Data') }}
                 </h2>
                 <button type="button"
@@ -76,8 +76,7 @@
                                 class="preferences-modal__card dateformat-card{{ $format === $currentDateFormat ? ' preferences-modal__card--active' : '' }}"
                                 data-date-format="{{ $format }}"
                                 data-search="{{ strtolower($formatNames[$format] ?? $format) }}"
-                                aria-label="{{ $formatNames[$format] ?? $format }}"
-                                title="{{ $formatNames[$format] ?? $format }}">
+                                aria-label="{{ $formatNames[$format] ?? $format }}">
                             <span class="preferences-modal__format-example">{{ $formattedDate }}</span>
                             <div class="preferences-modal__info">
                                 <span class="preferences-modal__name">{{ $format }}</span>

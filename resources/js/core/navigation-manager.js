@@ -1,11 +1,11 @@
 /**
  * NavigationManager
- * Gestor reutilizável de navegação por teclado/índice.
- * * @param {Object} options - Configurações do gestor
- * @param {Function} options.count - Função que retorna o número total de itens
- * @param {boolean} [options.loop=true] - Se deve voltar ao início/fim
- * @param {number} [options.active=-1] - Índice inicial
- * @param {Function} [options.onNavigate] - Callback executado na mudança de índice (index) => void
+ * Reusable keyboard/index navigation manager.
+ * @param {Object} options - Manager configuration
+ * @param {Function} options.count - Function returning total item count
+ * @param {boolean} [options.loop=true] - Whether to wrap around to start/end
+ * @param {number} [options.active=-1] - Initial index
+ * @param {Function} [options.onNavigate] - Callback on index change (index) => void
  */
 export default class NavigationManager {
     constructor(options = {}) {
@@ -16,7 +16,7 @@ export default class NavigationManager {
     }
 
     /**
-     * Atualiza o estado interno e dispara o callback
+     * Updates internal state and fires the callback
      * @private
      */
     _update(index) {

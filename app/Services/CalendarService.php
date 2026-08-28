@@ -22,28 +22,41 @@ final class CalendarService
      */
     public function getScheduledEventsForUser(User $user): Collection
     {
-        $query = Ticket::with(['equipment', 'equipment.category', 'technician'])
-            ->whereNotNull('scheduled_at')
+        $baseQuery = Ticket::with(['equipment', 'equipment.category', 'technician'])
             ->whereNull('deleted_at');
 
         if ($user->isTechnician()) {
-            $query->where('assigned_to', $user->id);
+            $baseQuery->where('assigned_to', $user->id);
         } elseif (! $user->isAdmin()) {
-            $query->where('user_id', $user->id);
+            $baseQuery->where('user_id', $user->id);
         }
 
-        return $query->get()->map(fn (Ticket $ticket): array => [
-            'id' => $ticket->id,
-            'title' => $ticket->title ?: ($ticket->equipment->name ?? 'General Fault'),
-            'start' => $ticket->scheduled_at->toIso8601String(),
-            'end' => $ticket->scheduled_end?->toIso8601String(),
-            'description' => $ticket->description,
-            'url' => url("/ui/tickets/{$ticket->id}"),
-            'scheduled' => true,
-            'equipment' => $ticket->equipment?->name,
-            'technician' => $ticket->technician?->name,
-            'editable' => $user->isAdmin() || ($user->isTechnician() && $ticket->assigned_to === $user->id),
-        ]);
+        $tickets = $baseQuery->get();
+
+        return $tickets->map(function (Ticket $ticket) use ($user): array {
+            $start = $ticket->scheduled_at ?? $ticket->opened_at ?? $ticket->resolved_at;
+
+            if (! $start) {
+                return [];
+            }
+
+            $isScheduled = (bool) $ticket->scheduled_at;
+
+            return [
+                'id' => $ticket->id,
+                'title' => $ticket->title ?: ($ticket->equipment->name ?? 'General Fault'),
+                'start' => $start->toIso8601String(),
+                'end' => $isScheduled ? ($ticket->scheduled_end?->toIso8601String()) : null,
+                'extendedProps' => [
+                    'url' => url("/ui/tickets/{$ticket->id}"),
+                    'scheduled' => $isScheduled,
+                    'equipment' => $ticket->equipment?->name,
+                    'technician' => $ticket->technician?->name,
+                    'description' => $ticket->description,
+                ],
+                'editable' => $user->isAdmin() || ($user->isTechnician() && $ticket->assigned_to === $user->id),
+            ];
+        })->filter()->values();
     }
 
     /**

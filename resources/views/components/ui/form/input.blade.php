@@ -1,9 +1,9 @@
 {{--
 |-------------------------------------------------------------------------- |
-| Form Input Component (Otimizado)
+| Form Input Component (Optimized)
 |-------------------------------------------------------------------------- |
-| Campo de texto reutilizável com suporte a estados de validação (old),
-| acessibilidade e variáveis CSS do Design System.
+| Reusable text field with validation state support (old),
+| accessibility and Design System CSS variables.
 |--}}
 @props([
     'id' => null,
@@ -15,8 +15,12 @@
     'value' => null,
 ])
 
+@php
+    $fieldId = $id ?? str_replace(['.', '[', ']'], ['-', '', ''], $name);
+@endphp
+
 <input
-    @if($id) id="{{ $id }}" @endif
+    id="{{ $fieldId }}"
     name="{{ $name }}"
     type="{{ $type }}"
     @if($autocomplete) autocomplete="{{ $autocomplete }}" @endif

@@ -87,7 +87,7 @@ return [
     'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.' => 'Προβάλετε τεχνικές παρεμβάσεις, προληπτική συντήρηση, προγραμματισμένα δελτία και λειτουργικές εργασίες σε μια ενιαία ενοποιημένη διεπαφή.',
     'Voltar aos tickets' => 'Επιστροφή στα δελτία',
     'Últimas Ocorrências Registadas' => 'Τελευταία Καταχωρημένα Περιστατικά',
-    '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.' => '⚠️ Υπάρχουν :total δελτίο(α) υψηλότερης προτεραιότητας προς εξυπηρέτηση.',
+    'Existem :total ticket(s) de prioridade mais alta por atender.' => 'Υπάρχουν :total δελτίο(α) υψηλότερης προτεραιότητας προς εξυπηρέτηση.',
     'Anexo adicionado' => 'Το συνημμένο προστέθηκε',
     'Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.' => 'Μόνο δελτία με κατάσταση "Σε Εξέλιξη" μπορούν να κλείσουν γρήγορα.',
     'Apenas tickets no estado "Aberto" podem ser cancelados.' => 'Μόνο δελτία με κατάσταση "Ανοικτό" μπορούν να ακυρωθούν.',

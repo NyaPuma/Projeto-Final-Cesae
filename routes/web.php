@@ -278,6 +278,7 @@ Route::middleware(['custom.auth'])->group(function () {
         Route::get('/ui/audits', [UiController::class, 'audits'])->name('ui.audits');
         Route::get('/ui/users/create', [UiController::class, 'userCreate'])->name('ui.users.create');
         Route::get('/ui/users/{targetUser}/edit', [UiController::class, 'userEdit'])->name('ui.users.edit');
+        Route::get('/ui/users/{targetUser}', [UiController::class, 'userDetail'])->name('ui.users.show');
         Route::get('/ui/rooms/create', [UiController::class, 'roomCreate'])->name('ui.rooms.create');
         Route::get('/ui/rooms/{room}/edit', [UiController::class, 'roomEdit'])->name('ui.rooms.edit');
         Route::get('/ui/analytics', [UiController::class, 'analytics'])->name('ui.analytics');

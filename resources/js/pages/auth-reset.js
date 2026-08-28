@@ -12,8 +12,8 @@ function setMsg(message, type) {
     msg.classList.remove('hidden');
     msg.className = 'mb-6 min-h-[48px] items-center justify-center rounded-2xl border px-4 text-sm font-medium flex ' +
         (type === 'error'
-            ? 'border-red-300 bg-red-50 text-red-700 dark:border-red-800 dark:bg-red-950/30 dark:text-red-400'
-            : 'border-emerald-300 bg-emerald-50 text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950/30 dark:text-emerald-400');
+            ? 'border-danger/20 bg-danger/5 text-danger'
+            : 'border-success/20 bg-success/5 text-success');
     msg.textContent = message;
 }
 

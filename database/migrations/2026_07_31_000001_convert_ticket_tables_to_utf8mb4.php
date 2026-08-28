@@ -7,10 +7,10 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Converte as tabelas do módulo de tickets para utf8mb4/utf8mb4_unicode_ci.
+     * Converts the tickets module tables to utf8mb4/utf8mb4_unicode_ci.
      *
-     * Apenas corre em ligações MySQL (o ambiente de testes usa SQLite,
-     * onde esta sintaxe não é suportada).
+     * Only runs on MySQL connections (the testing environment uses SQLite,
+     * where this syntax is not supported).
      */
     public function up(): void
     {
@@ -35,7 +35,7 @@ return new class extends Migration
     }
 
     /**
-     * A conversão de dados não é revertível de forma segura.
+     * The data conversion cannot be safely reverted.
      */
     public function down(): void
     {

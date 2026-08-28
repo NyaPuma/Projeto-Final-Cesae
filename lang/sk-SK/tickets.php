@@ -87,7 +87,7 @@ return [
     'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.' => 'Prezrite si technické zásahy, preventívnu údržbu, naplánované lístky a prevádzkové úlohy v jednom integrovanom rozhraní.',
     'Voltar aos tickets' => 'Späť na lístky',
     'Últimas Ocorrências Registadas' => 'Najnovšie zaznamenané udalosti',
-    '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.' => '⚠️ Existuje :total lístkov s vyššou prioritou na vybavenie.',
+    'Existem :total ticket(s) de prioridade mais alta por atender.' => 'Existuje :total lístkov s vyššou prioritou na vybavenie.',
     'Anexo adicionado' => 'Príloha pridaná',
     'Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.' => 'Iba lístky v stave „Prebiehajúce“ môžu byť rýchlo zatvorené.',
     'Apenas tickets no estado "Aberto" podem ser cancelados.' => 'Iba lístky v stave „Otvorený“ môžu byť zrušené.',

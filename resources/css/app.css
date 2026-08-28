@@ -13,6 +13,7 @@
 ========================================================== */
 @import "./tokens.css";
 @import "./theme/variables.css";
+@import "./theme/accessibility.css";
 @import "./base.css";
 @import "./layout.css";
 
@@ -39,3 +40,4 @@
 @import "./pages/definicoes.css";
 @import "./pages/sistema-definicoes.css";
 @import "./pages/listing.css";
+@import "./pages/rooms.css";

@@ -29,14 +29,14 @@
 
     <section class="theme-settings__panel" aria-labelledby="presets-title">
         <div class="theme-settings__presets-heading">
-            <h3 id="presets-title">{{ __('ui.Temas pré-definidos') }}</h3>
+            <h2 id="presets-title">{{ __('ui.Temas pré-definidos') }}</h2>
             <p>{{ __('dashboard.Cada família tem um par claro/escuro com o mesmo matiz — o botão do painel alterna entre os dois.') }}</p>
         </div>
 
         <div class="theme-settings__presets">
             @foreach (['light' => __('common.Claro'), 'dark' => __('common.Escuro')] as $mode => $modeLabel)
                 <div class="theme-settings__presets-group" data-mode="{{ $mode }}">
-                    <h4 class="theme-settings__presets-group-title">{{ $modeLabel }}</h4>
+                    <h3 class="theme-settings__presets-group-title">{{ $modeLabel }}</h3>
                     <div class="theme-settings__presets-grid">
                         @foreach ($presets as $id => $preset)
                             @if (($preset['mode'] ?? 'light') !== $mode)
@@ -47,13 +47,13 @@
                                 class="theme-preset-card"
                                 data-preset="{{ $id }}"
                                 aria-pressed="false"
-                                title="{{ $preset['label'] }}"
+                                aria-label="{{ $preset['label'] }}"
                             >
                                 <span class="theme-preset-card__swatches">
-                                    <span style="background: {{ $preset['primary'] }}"></span>
-                                    <span style="background: {{ $preset['surface'] }}"></span>
-                                    <span style="background: {{ $preset['text'] }}"></span>
-                                    <span style="background: {{ $preset['text_soft'] }}"></span>
+                                    <span style="--swatch: {{ $preset['primary'] }}"></span>
+                                    <span style="--swatch: {{ $preset['surface'] }}"></span>
+                                    <span style="--swatch: {{ $preset['text'] }}"></span>
+                                    <span style="--swatch: {{ $preset['text_soft'] }}"></span>
                                 </span>
                                 <span class="theme-preset-card__name">{{ $preset['label'] }}</span>
                             </button>
@@ -90,7 +90,7 @@
 
 <section class="theme-settings__preview" aria-label="{{ __('ui.Pré-visualização de temas') }}">
     <div class="theme-settings__preview-heading">
-        <h3>{{ __('common.Pré-visualização em tempo real') }}</h3>
+        <h2>{{ __('common.Pré-visualização em tempo real') }}</h2>
         <p>{{ __('dashboard.Veja como as cores do tema aparecem em componentes reais do painel.') }}</p>
     </div>
 
@@ -99,7 +99,7 @@
             <div class="theme-settings__preview-card-header">
                 <div>
                     <p class="theme-settings__preview-label">{{ __('common.Componente') }}</p>
-                    <p class="theme-settings__preview-title">{{ __('common.Botões e ações') }}</p>
+                    <span class="theme-settings__preview-title">{{ __('common.Botões e ações') }}</span>
                 </div>
                 <span class="theme-badge theme-badge--active">{{ __('common.Primária') }}</span>
             </div>
@@ -114,7 +114,7 @@
             <div class="theme-settings__preview-card-header">
                 <div>
                     <p class="theme-settings__preview-label">{{ __('common.Estados') }}</p>
-                    <p class="theme-settings__preview-title">{{ __('tickets.Estado de ticket') }}</p>
+                    <span class="theme-settings__preview-title">{{ __('tickets.Estado de ticket') }}</span>
                 </div>
                 <span class="theme-badge theme-badge--urgent">{{ __('common.Prioridade') }}</span>
             </div>
@@ -130,12 +130,12 @@
             <div class="theme-settings__preview-card-header">
                 <div>
                     <p class="theme-settings__preview-label">{{ __('common.Tipografia') }}</p>
-                    <p class="theme-settings__preview-title">{{ __('common.Hierarquia de texto') }}</p>
+                    <span class="theme-settings__preview-title">{{ __('common.Hierarquia de texto') }}</span>
                 </div>
                 <span class="theme-badge theme-badge--active">{{ __('common.Legível') }}</span>
             </div>
             <div class="theme-settings__preview-typography">
-                <p class="theme-settings__typography-title">{{ __('common.Título da secção') }}</p>
+                <span class="theme-settings__typography-title">{{ __('common.Título da secção') }}</span>
                 <p class="theme-settings__typography-body">{{ __('dashboard.Este é o texto principal do painel, desenhado para leitura confortável no dia a dia.') }}</p>
                 <p class="theme-settings__typography-muted">{{ __('common.Texto secundário ou notas auxiliares com contraste acessível.') }}</p>
             </div>
@@ -145,7 +145,7 @@
             <div class="theme-settings__preview-card-header">
                 <div>
                     <p class="theme-settings__preview-label">{{ __('common.Superfícies') }}</p>
-                    <p class="theme-settings__preview-title">{{ __('common.Cartão e bordas') }}</p>
+                    <span class="theme-settings__preview-title">{{ __('common.Cartão e bordas') }}</span>
                 </div>
                 <span class="theme-badge theme-badge--active">{{ __('common.Contraste') }}</span>
             </div>

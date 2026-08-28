@@ -1,12 +1,12 @@
 /**
  * API Client Service
- * Serviço centralizado para comunicação com a API
+ * Centralized service for API communication
  */
 
 import axios from 'axios';
 
 /**
- * CONFIGURAÇÃO AXIOS
+ * AXIOS CONFIGURATION
  */
 const apiClient = axios.create({
     headers: {
@@ -21,7 +21,7 @@ if (csrfToken) {
     apiClient.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken;
 }
 
-// Intercetores
+// Interceptors
 apiClient.interceptors.request.use((config) => {
     const token = localStorage.getItem('api_token') || getCookie('api_token');
     if (token) {
@@ -40,7 +40,7 @@ apiClient.interceptors.response.use(
     }
 );
 
-// Expõe globalmente
+// Exposes globally
 window.axios = apiClient;
 
 /**
@@ -74,13 +74,13 @@ window.api = {
 };
 
 /**
- * MONITORIZAÇÃO DE REDE
+ * NETWORK MONITORING
  */
 window.addEventListener('offline', () => window.showToast?.('Modo offline ativo.', 'error'));
 window.addEventListener('online', () => window.showToast?.('Ligação restabelecida.', 'success'));
 
 /**
- * Converte um HTMLFormElement ou FormData num objeto JavaScript simples
+ * Converts an HTMLFormElement or FormData into a plain JavaScript object
  * @param {HTMLFormElement|FormData} form 
  * @returns {Object}
  */

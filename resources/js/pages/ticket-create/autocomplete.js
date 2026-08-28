@@ -38,9 +38,9 @@ function renderSuggestions(matches, suggestionsBox, searchInput, hiddenIdInput) 
                      data-id="${eq.id}" data-name="${eq.name}">
                     <div>
                         <span class="font-bold text-[var(--text)] block">${eq.name}</span>
-                        <span class="text-[10px] text-[var(--text-soft)]">${eq.serial ? ' • ' + eq.serial : ''}${eq.room?.name ? ' • ' + eq.room.name : ''}</span>
+                        <span class="text-xs text-[var(--text-soft)]">${eq.serial ? ' • ' + eq.serial : ''}${eq.room?.name ? ' • ' + eq.room.name : ''}</span>
                     </div>
-                    <span class="text-[10px] font-mono font-bold text-primary">#${eq.id}</span>
+                    <span class="text-xs font-mono font-bold text-primary">#${eq.id}</span>
                 </div>
             `
         )

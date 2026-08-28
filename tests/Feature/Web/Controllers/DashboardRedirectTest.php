@@ -39,23 +39,23 @@ class DashboardRedirectTest extends TestCase
             'password' => 'Password123!',
         ]);
 
-        // O login endpoint (API) retorna JSON + cookie, então a verificação de redirect deve ser feita
-        // para rotas UI que usam o dashboard.
-        // Mantém o teste focado no que é observável e estável: depois de login, o acesso ao dashboard deve funcionar.
+        // The login endpoint (API) returns JSON + cookie, so the redirect check must be done
+        // on UI routes that use the dashboard.
+        // Keeps the test focused on what is observable and stable: after login, dashboard access must work.
         $token = $response->json('token');
 
-        // UI dashboard (rotas baseadas em UiController)
+        // UI dashboard (routes based on UiController)
         $dashboard = $this
             ->withHeader('X-Auth-Token', $token)
             ->get('/ui');
 
         $dashboard->assertStatus(200);
 
-        // Conteúdo esperado (Blade layout do dashboard)
+        // Expected content (dashboard Blade layout)
         $dashboard->assertSee('Tickets');
 
-        // Verifica que os links do menu apontam para rotas reais (sem '*')
-        // e que conseguem renderizar sem erro.
+        // Checks that menu links point to real routes (without '*')
+        // and that they render without error.
         $dashboard->assertSee('http://localhost/ui/tickets"', false);
         $dashboard->assertSee('http://localhost/ui/equipments"', false);
         $dashboard->assertSee('http://localhost/calendar"', false);

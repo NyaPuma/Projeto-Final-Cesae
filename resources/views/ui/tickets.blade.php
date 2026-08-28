@@ -2,52 +2,13 @@
 
 @section('page_key', 'tickets')
 
-@php
-    $ticketTranslations = [
-        'priority' => [
-            'baixa' => __('tickets.Baixa'),
-            'média' => __('common.Média'),
-            'alta' => __('tickets.Alta'),
-            'crítica' => __('common.Crítica'),
-        ],
-        'status' => [
-            'aberta' => __('common.Aberta'),
-            'em curso' => __('common.Em Curso'),
-            'fechada' => __('common.Fechada'),
-            'cancelada' => __('ui.Cancelada'),
-            'pendente orçamento' => __('common.Pendente Orçamento'),
-            'recusada' => __('common.Recusada'),
-        ],
-        'id' => __('common.ID'),
-        'title' => __('common.Título'),
-        'priorityTitle' => __('common.Prioridade'),
-        'statusTitle' => __('common.Estado'),
-        'equipment' => __('equipment.Equipamento'),
-        'room' => __('room.Sala'),
-        'technician' => __('common.Técnico'),
-        'resultsCount' => __('ui.results_count'),
-        'noResults' => __('ui.no_results'),
-        'view' => __('common.Ver'),
-        'empty' => __('common.Nenhum ticket encontrado com os filtros aplicados.'),
-        'previous' => __('ui.Anterior'),
-        'next' => __('ui.Próxima'),
-        'page' => __('ui.Página'),
-        'of' => __('ui.de'),
-    ];
-@endphp
-
 @section('content')
-<script>
-    window.SGM_TICKETS_I18N = @json($ticketTranslations);
-</script>
-
 <x-ui.partials.page-header
     :title="__('tickets.Tickets')"
     :subtitle="__('tickets.Pesquise, filtre e consulte as ocorrências registadas.')"
 >
     <x-slot:actions>
         <x-ui.page-actions.group>
-            <x-ui.page-actions.back-button :href="'/ui'" :label="__('dashboard.Voltar ao painel')" />
             @auth
                 @if(auth()->user()->isAdmin() || auth()->user()->isCommonUser())
                     <x-ui.page-actions.create-link :href="'/ui/tickets/create'" :label="__('tickets.Criar Ticket')" />

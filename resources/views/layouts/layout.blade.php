@@ -47,7 +47,7 @@
 
     @stack('scripts')
 
-    @include('ui.partials.locale-modal')
+    @include('ui.partials.localization-modal')
 </body>
 
 </html>

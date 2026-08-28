@@ -244,16 +244,16 @@ class AdminManagementTest extends TestCase
         $send = fn (array $payload) => $this->withHeader('X-Auth-Token', $admin->api_token)
             ->postJson('/api/admin/preventive', $payload);
 
-        // Campos obrigatórios em falta
+        // Missing required fields
         $send([])->assertStatus(422)->assertJsonValidationErrors(['title', 'scheduled_at']);
 
-        // Data no passado
+        // Date in the past
         $send([
             'title' => 'Preventiva passada',
             'scheduled_at' => now()->subDay()->toDateTimeString(),
         ])->assertStatus(422)->assertJsonValidationErrors(['scheduled_at']);
 
-        // technician_id inexistente
+        // Non-existent technician_id
         $send([
             'title' => 'Preventiva',
             'scheduled_at' => now()->addWeek()->toDateTimeString(),

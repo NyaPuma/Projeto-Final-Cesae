@@ -448,16 +448,16 @@ class BudgetFeatureTest extends TestCase
         $send = fn (array $payload) => $this->withHeader('X-Auth-Token', $admin->api_token)
             ->patchJson("/api/admin/tickets/{$ticket->id}/approve-budget", $payload);
 
-        // Teste 1: decision em falta
+        // Test 1: missing decision
         $send([])->assertStatus(422)->assertJsonValidationErrors(['decision']);
 
-        // Teste 2: decision inválida
+        // Test 2: invalid decision
         $send(['decision' => 'maybe'])->assertStatus(422)->assertJsonValidationErrors(['decision']);
 
-        // Teste 3: rejeição sem feedback
+        // Test 3: rejection without feedback
         $send(['decision' => 'reject'])->assertStatus(422)->assertJsonValidationErrors(['feedback']);
 
-        // Teste 4: feedback acima de 5000 caracteres
+        // Test 4: feedback above 5000 characters
         $send(['decision' => 'approve', 'feedback' => str_repeat('a', 5001)])
             ->assertStatus(422)
             ->assertJsonValidationErrors(['feedback']);
@@ -483,7 +483,7 @@ class BudgetFeatureTest extends TestCase
         $send = fn (array $payload) => $this->withHeader('X-Auth-Token', $technician->api_token)
             ->putJson("/api/technician/tickets/{$ticket->id}/request-budget", $payload);
 
-        // Teste 1: soma dos itens não bate com budget_amount
+        // Test 1: sum of items does not match budget_amount
         $send([
             'budget_amount' => 100.00,
             'budget_details' => [
@@ -492,7 +492,7 @@ class BudgetFeatureTest extends TestCase
             ],
         ])->assertStatus(422)->assertJsonValidationErrors(['budget_amount']);
 
-        // Teste 2: item sem description
+        // Test 2: item without description
         $send([
             'budget_amount' => 40.00,
             'budget_details' => [
@@ -500,7 +500,7 @@ class BudgetFeatureTest extends TestCase
             ],
         ])->assertStatus(422)->assertJsonValidationErrors(['budget_details.0.description']);
 
-        // Teste 3: quantidade inválida
+        // Test 3: invalid quantity
         $send([
             'budget_amount' => 40.00,
             'budget_details' => [
@@ -508,7 +508,7 @@ class BudgetFeatureTest extends TestCase
             ],
         ])->assertStatus(422)->assertJsonValidationErrors(['budget_details.0.quantity']);
 
-        // Teste 4: preço unitário negativo
+        // Test 4: negative unit price
         $send([
             'budget_amount' => 40.00,
             'budget_details' => [
@@ -516,7 +516,7 @@ class BudgetFeatureTest extends TestCase
             ],
         ])->assertStatus(422)->assertJsonValidationErrors(['budget_details.0.unit_price']);
 
-        // Teste 5: soma correta é aceite
+        // Test 5: correct sum is accepted
         $send([
             'budget_amount' => 40.00,
             'budget_details' => [
@@ -544,7 +544,7 @@ class BudgetFeatureTest extends TestCase
         $send = fn (array $payload) => $this->withHeader('X-Auth-Token', $technician->api_token)
             ->postJson('/tickets/'.$ticket->id.'/budget', $payload);
 
-        // Teste 1: item material sem quantity
+        // Test 1: material item without quantity
         $send([
             'estimated_budget' => 40.00,
             'budget_details' => [
@@ -552,7 +552,7 @@ class BudgetFeatureTest extends TestCase
             ],
         ])->assertStatus(422)->assertJsonValidationErrors(['budget_details.0.quantity']);
 
-        // Teste 2: item labor sem hours
+        // Test 2: labor item without hours
         $send([
             'estimated_budget' => 40.00,
             'budget_details' => [
@@ -560,7 +560,7 @@ class BudgetFeatureTest extends TestCase
             ],
         ])->assertStatus(422)->assertJsonValidationErrors(['budget_details.0.hours']);
 
-        // Teste 3: tipo inválido
+        // Test 3: invalid type
         $send([
             'estimated_budget' => 40.00,
             'budget_details' => [
@@ -568,7 +568,7 @@ class BudgetFeatureTest extends TestCase
             ],
         ])->assertStatus(422)->assertJsonValidationErrors(['budget_details.0.type']);
 
-        // Teste 4: soma não bate com o total
+        // Test 4: sum does not match the total
         $send([
             'estimated_budget' => 100.00,
             'budget_details' => [
@@ -577,7 +577,7 @@ class BudgetFeatureTest extends TestCase
             ],
         ])->assertStatus(422)->assertJsonValidationErrors(['estimated_budget']);
 
-        // Teste 5: soma correta (material + labor) é aceite
+        // Test 5: correct sum (material + labor) is accepted
         $send([
             'estimated_budget' => 70.00,
             'budget_details' => [

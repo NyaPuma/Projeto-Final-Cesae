@@ -1,24 +1,23 @@
 /**
  * Sidebar Component Styles
- * Estilos do menu lateral (desktop)
  */
 
 /*
- * Anti-flash de estado: enquanto o JS deferred não corre, o marcador
- * `pre-collapsed` (colocado no <html> por early-theme.js antes do paint)
- * aplica o mesmo aspeto do estado colapsado para que não haja salto
- * "maximizado -> minimizado" na navegação entre páginas.
+ * State anti-flash: while the deferred JS hasn't run, the `pre-collapsed`
+ * marker (placed on <html> by early-theme.js before paint) applies the
+ * same appearance as the collapsed state so there's no "maximized ->
+ * minimized" jump when navigating between pages.
  */
 @media (min-width: 1024px) {
   html.pre-collapsed .page-wrapper {
-    padding-left: 5rem;
+    padding-left: var(--sidebar-collapsed-width);
   }
 }
 
 /* Desktop Sidebar Animations */
 html.pre-collapsed #desktopSidebar,
 #desktopSidebar.collapsed {
-    width: 5rem !important;
+    width: var(--sidebar-collapsed-width) !important;
 }
 
 html.pre-collapsed #desktopSidebar .sidebar-text,
@@ -28,8 +27,8 @@ html.pre-collapsed #desktopSidebar .sidebar-text,
 
 html.pre-collapsed #desktopSidebar nav,
 #desktopSidebar.collapsed nav {
-    padding-left: 0.5rem !important;
-    padding-right: 0.5rem !important;
+    padding-left: var(--space-2) !important;
+    padding-right: var(--space-2) !important;
 }
 
 html.pre-collapsed #desktopSidebar nav a,
@@ -42,8 +41,8 @@ html.pre-collapsed #desktopSidebar nav a,
 
 html.pre-collapsed #desktopSidebar #desktopBranding,
 #desktopSidebar.collapsed #desktopBranding {
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
+    padding-left: var(--space-4) !important;
+    padding-right: var(--space-4) !important;
     justify-content: center !important;
 }
 

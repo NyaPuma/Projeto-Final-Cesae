@@ -3,10 +3,10 @@
 | Dashboard Hero Component
 |--------------------------------------------------------------------------
 |
-| Secção de destaque superior com efeitos visuais, introdução e estado operacional.
-| • 100% livre de CSS ou JS inline.
-| • Sintaxe de variáveis CSS corrigida e segura para o Tailwind.
-| • Altamente parametrizável via props para máxima reutilização.
+| Top highlight section with visual effects, introduction and operational status.
+| • 100% free of inline CSS or JS.
+| • CSS variable syntax corrected and safe for Tailwind.
+| • Highly parameterizable via props for maximum reusability.
 |
 --}}
 
@@ -20,15 +20,15 @@
 ])
 
 <section {{ $attributes->class(['relative overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--surface)]']) }}>
-    {{-- Efeitos Visuais de Fundo (Glow) --}}
+    {{-- Background Visual Effects (Glow) --}}
     <div class="pointer-events-none absolute inset-0" aria-hidden="true">
         <div class="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-primary/10 blur-[120px]"></div>
-        <div class="absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-blue-500/5 blur-[90px]"></div>
+        <div class="absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-info/5 blur-[90px]"></div>
     </div>
 
     <div class="relative p-8 lg:p-10">
         <div class="grid gap-10 xl:grid-cols-[1.5fr_0.5fr]">
-            {{-- Informações Principais --}}
+            {{-- Main Information --}}
             <div>
                 <x-ui.text.pill tone="primary" size="sm" class="gap-2 px-4 py-2">
                     <span class="h-2.5 w-2.5 animate-pulse rounded-full bg-primary" aria-hidden="true"></span>
@@ -39,12 +39,12 @@
                     {{ $title }}
                 </h1>
 
-                <p class="mt-5 max-w-3xl text-[15px] leading-8 text-[var(--text-soft)]">
+                <p class="mt-5 max-w-3xl text-base leading-8 text-[var(--text-soft)]">
                     {{ $description }}
                 </p>
             </div>
 
-            {{-- Cartão de Estado Operacional --}}
+            {{-- Operational Status Card --}}
             <div class="flex flex-col justify-between rounded-3xl border border-[var(--border)] bg-[var(--surface-2)] p-7">
                 <div>
                     <x-ui.text.eyebrow as="p">{{ __('common.Estado') }}</x-ui.text.eyebrow>
@@ -53,8 +53,8 @@
                 </div>
 
                 <div class="mt-10 inline-flex items-center gap-3">
-                    <span class="h-3 w-3 animate-pulse rounded-full bg-emerald-500" aria-hidden="true"></span>
-                    <span class="font-semibold text-emerald-500">{{ $statusLabel }}</span>
+                    <span class="h-3 w-3 animate-pulse rounded-full bg-success" aria-hidden="true"></span>
+                    <span class="font-semibold text-success">{{ $statusLabel }}</span>
                 </div>
             </div>
         </div>

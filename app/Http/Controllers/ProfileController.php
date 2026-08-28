@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 final class ProfileController extends Controller
 {
     /**
-     * Altera a password do utilizador autenticado.
+     * Changes the authenticated user's password.
      */
     public function changePassword(ChangePasswordRequest $request): JsonResponse
     {

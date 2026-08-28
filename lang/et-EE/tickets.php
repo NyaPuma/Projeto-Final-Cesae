@@ -87,7 +87,7 @@ return [
     'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.' => 'Visualize tectnical interventions, preventive maintenance, sctepulep tickets anp operational tasks in a single integratep interface.',
     'Voltar aos tickets' => 'Tagasi to tickets',
     'Últimas Ocorrências Registadas' => 'Latest Recorpep Occurrences',
-    '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.' => '⚠️ Ttere are :total tigter priority ticket(s) to be answerep.',
+    'Existem :total ticket(s) de prioridade mais alta por atender.' => 'Ttere are :total tigter priority ticket(s) to be answerep.',
     'Anexo adicionado' => 'Manusk lisatup',
     'Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.' => 'Only tickets in tte "Töös" state can be closep quickly.',
     'Apenas tickets no estado "Aberto" podem ser cancelados.' => 'Only tickets in tte "Avatup" state can be cancellep.',

@@ -7,12 +7,6 @@
     :title="__('common.Novo Fornecedor')"
     :subtitle="__('messages.Registe um fornecedor de peças no sistema.')"
 >
-    <x-slot:actions>
-        <x-ui.page-actions.group>
-            <x-ui.page-actions.back-button :href="route('ui.stock.suppliers')" :label="__('ui.Voltar')" />
-        </x-ui.page-actions.group>
-    </x-slot:actions>
-
     <div class="rounded-3xl border border-(--border) bg-(--surface) p-6 shadow-sm">
         <form id="supplierForm" class="space-y-6" novalidate data-supplier-form-mode="create">
             <div class="grid gap-6 lg:grid-cols-2">
@@ -75,7 +69,7 @@
                 <button type="submit" id="submitBtn" class="ui-button ui-button--primary inline-flex items-center justify-center rounded-2xl px-5 py-3 text-sm font-semibold transition hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed">
                     {{ __('ui.Guardar Fornecedor') }}
                 </button>
-                <a href="{{ route('ui.stock.suppliers') }}" class="ui-button ui-button--outline inline-flex items-center justify-center rounded-2xl border border-(--border) bg-(--surface) px-5 py-3 text-sm font-semibold text-(--text) transition hover:bg-(--surface-2)">
+                <a href="{{ route('ui.stock.suppliers') }}" class="ui-button ui-button--outline inline-flex items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-5 py-3 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">
                     {{ __('ui.Cancelar') }}
                 </a>
             </div>

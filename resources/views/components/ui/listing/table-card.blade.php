@@ -1,9 +1,9 @@
 {{--
 |-------------------------------------------------------------------------- |
-| Data Table Container Component (Otimizado)
+| Data Table Container Component (Optimized)
 |-------------------------------------------------------------------------- |
-| Tabela de dados responsiva com suporte a estado de carregamento inicial,
-| gestão de variáveis do Design System e acessibilidade (A11y).
+| Responsive data table with initial loading state support,
+| Design System variable management and accessibility (A11y).
 |--}}
 @props([
     'table_id' => null,
@@ -15,8 +15,8 @@
 
 <div {{ $attributes->merge(['class' => 'ui-listing-table w-full overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-sm']) }} role="region" aria-live="polite" aria-label="{{ $aria_label }}">
     <div class="overflow-x-auto">
-        <table @if($table_id) id="{{ $table_id }}" @endif class="min-w-full divide-y divide-[var(--border)] text-left text-xs">
-            <thead class="bg-[var(--surface-2)] text-[var(--text)] uppercase tracking-wider font-bold text-[10px]">
+        <table @if($table_id) id="{{ $table_id }}" @endif class="min-w-full divide-y divide-[var(--border)] text-left text-sm">
+            <thead class="bg-[var(--surface-2)] text-[var(--text)] uppercase tracking-wider font-bold text-xs">
                 {{ $head }}
             </thead>
             <tbody @if($body_id) id="{{ $body_id }}" @endif class="divide-y divide-[var(--border)] text-[var(--text)]">

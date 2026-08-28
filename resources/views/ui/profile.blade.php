@@ -30,9 +30,6 @@
     :title="__('common.Perfil')"
     :subtitle="__('common.Consulte e atualize os seus dados pessoais e preferências de acesso.')"
 >
-    <x-slot:actions>
-        <x-ui.page-actions.back-button href="/ui" :label="__('dashboard.Voltar ao painel')" />
-    </x-slot:actions>
 
     <div class="grid gap-6 xl:grid-cols-2 items-start">
         <div class="space-y-6">

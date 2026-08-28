@@ -2,9 +2,9 @@
 |-------------------------------------------------------------------------- |
 Profile Security Form Card Component
 |-------------------------------------------------------------------------- |
-| Card com o formulário de alteração de palavra-passe.
-| • Campos reutilizando os componentes de formulário do Design System (label + input).
-| • Checklist de requisitos e medidor de força via Alpine.js, sem CSS ou JS inline.
+| Card with the password-change form.
+| • Fields reuse Design System form components (label + input).
+| • Requirements checklist and strength meter via Alpine.js, without inline CSS or JS.
 | --}}
 @props([])
 
@@ -46,7 +46,7 @@ Profile Security Form Card Component
 
             <ul class="mt-3 space-y-1.5" aria-label="{{ __('auth.Requisitos da palavra-passe') }}">
                 <li
-                    :class="lengthOk ? 'text-emerald-600 dark:text-emerald-400' : 'text-zinc-500 dark:text-zinc-400'"
+                    :class="lengthOk ? 'text-success' : 'text-muted'"
                     class="flex items-center gap-2 text-xs"
                 >
                     <svg class="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -56,7 +56,7 @@ Profile Security Form Card Component
                 </li>
 
                 <li
-                    :class="caseOk ? 'text-emerald-600 dark:text-emerald-400' : 'text-zinc-500 dark:text-zinc-400'"
+                    :class="caseOk ? 'text-success' : 'text-muted'"
                     class="flex items-center gap-2 text-xs"
                 >
                     <svg class="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -66,7 +66,7 @@ Profile Security Form Card Component
                 </li>
 
                 <li
-                    :class="symbolNumberOk ? 'text-emerald-600 dark:text-emerald-400' : 'text-zinc-500 dark:text-zinc-400'"
+                    :class="symbolNumberOk ? 'text-success' : 'text-muted'"
                     class="flex items-center gap-2 text-xs"
                 >
                     <svg class="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -86,15 +86,15 @@ Profile Security Form Card Component
                         :aria-valuenow="score"
                     >
                         <span
-                            :class="[score >= 1 ? barColor : 'bg-zinc-200 dark:bg-zinc-800', 'h-1.5 flex-1 rounded-full transition-colors']"
+                            :class="[score >= 1 ? barColor : 'bg-[var(--border)]', 'h-1.5 flex-1 rounded-full transition-colors']"
                             aria-hidden="true"
                         ></span>
                         <span
-                            :class="[score >= 2 ? barColor : 'bg-zinc-200 dark:bg-zinc-800', 'h-1.5 flex-1 rounded-full transition-colors']"
+                            :class="[score >= 2 ? barColor : 'bg-[var(--border)]', 'h-1.5 flex-1 rounded-full transition-colors']"
                             aria-hidden="true"
                         ></span>
                         <span
-                            :class="[score >= 3 ? barColor : 'bg-zinc-200 dark:bg-zinc-800', 'h-1.5 flex-1 rounded-full transition-colors']"
+                            :class="[score >= 3 ? barColor : 'bg-[var(--border)]', 'h-1.5 flex-1 rounded-full transition-colors']"
                             aria-hidden="true"
                         ></span>
                     </div>
@@ -103,7 +103,7 @@ Profile Security Form Card Component
                         x-show="score > 0"
                         x-cloak
                         x-text="levelLabel"
-                        :class="[score > 0 ? levelClass : '', 'min-w-12 text-right text-xs font-medium text-zinc-500 dark:text-zinc-400']"
+                        :class="[score > 0 ? levelClass : '', 'min-w-12 text-right text-xs font-medium text-muted']"
                     ></span>
                 </div>
             </div>

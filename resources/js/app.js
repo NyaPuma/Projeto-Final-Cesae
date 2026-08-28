@@ -1,7 +1,6 @@
 import './api-client';
 import './analytics';
 import './alpine';
-import { initLocaleModal } from './components/locale-modal';
 import { initLocalizationModal } from './components/localization-modal';
 import { initLayout } from './core/layout';
 import { initLogin as initAuthLogin } from './auth/login';
@@ -64,7 +63,6 @@ function initApp() {
     initDropdowns();
     initTooltips(document);
     initAnimations(document);
-    initLocaleModal();
     initLocalizationModal();
     bootPageModules(document);
 }

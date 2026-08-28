@@ -18,10 +18,10 @@ function renderStatusBadge(user) {
     const translations = window.SGM_USER_MANAGEMENT_I18N || {};
 
     if (isUserActive(user)) {
-        return `<span class="inline-flex items-center gap-1.5 rounded-lg bg-emerald-500/10 px-2 py-0.5 text-[11px] font-bold uppercase tracking-tight text-emerald-600 dark:text-emerald-400"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>${translations.active || 'Active'}</span>`;
+        return `<span class="inline-flex items-center gap-1.5 rounded-lg bg-success/10 px-2 py-0.5 text-xs font-bold uppercase tracking-tight text-success"><span class="h-1.5 w-1.5 rounded-full bg-success"></span>${translations.active || 'Active'}</span>`;
     }
 
-    return `<span class="inline-flex items-center gap-1.5 rounded-lg bg-[var(--text-soft)]/10 px-2 py-0.5 text-[11px] font-bold uppercase tracking-tight text-[var(--text-soft)]"><span class="h-1.5 w-1.5 rounded-full bg-[var(--text-soft)]"></span>${translations.inactive || 'Inactive'}</span>`;
+    return `<span class="inline-flex items-center gap-1.5 rounded-lg bg-[var(--text-soft)]/10 px-2 py-0.5 text-xs font-bold uppercase tracking-tight text-[var(--text-soft)]"><span class="h-1.5 w-1.5 rounded-full bg-[var(--text-soft)]"></span>${translations.inactive || 'Inactive'}</span>`;
 }
 
 function escapeHtml(value) {
@@ -42,13 +42,12 @@ function renderUserRow(user) {
         <td class="px-6 py-4 font-semibold text-[var(--text)]" data-label="Nome">${escapeHtml(user.name)}</td>
         <td class="px-6 py-4 font-semibold text-[var(--text-soft)]" data-label="Email">${escapeHtml(user.email)}</td>
         <td class="px-6 py-4" data-label="Perfil">
-            <span class="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-2 py-0.5 text-[11px] font-bold uppercase tracking-tight text-[var(--text)] shadow-sm">${escapeHtml(getUserRole(user))}</span>
+            <span class="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-2 py-0.5 text-xs font-bold uppercase tracking-tight text-[var(--text)] shadow-sm">${escapeHtml(getUserRole(user))}</span>
         </td>
         <td class="px-6 py-4" data-label="Estado">${renderStatusBadge(user)}</td>
         <td class="ui-listing-actions px-6 py-4 text-right whitespace-nowrap">
             <div class="inline-flex items-center justify-end gap-1.5">
-                <a href="/ui/users/${user.id}/edit" class="inline-flex min-h-[28px] items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-1.5 text-[11px] font-semibold text-[var(--text)] shadow-sm transition-all hover:bg-[var(--surface-2)]">${translations.edit || 'Edit'}</a>
-                <button type="button" data-action="delete-user" data-id="${user.id}" data-name="${escapeHtml(user.name)}" class="inline-flex min-h-[28px] items-center justify-center rounded-lg border border-red-500/30 bg-[var(--surface)] px-3 py-1.5 text-[11px] font-semibold text-red-600 dark:text-red-400 shadow-sm transition-all hover:bg-red-500/10 cursor-pointer">${translations.delete || 'Delete'}</button>
+                <a href="/ui/users/${user.id}" class="inline-flex min-h-[28px] items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-1.5 text-xs font-semibold text-[var(--text)] shadow-sm transition-all hover:bg-[var(--surface-2)]">${translations.details || 'Ver detalhes'}</a>
             </div>
         </td>
     </tr>`;
@@ -59,7 +58,7 @@ export function showFeedback(message, error = false) {
     if (!element) return;
 
     element.textContent = message;
-    element.className = `text-xs font-semibold ${error ? 'text-red-700 dark:text-red-400' : 'text-[var(--text-soft)]'}`;
+    element.className = `text-xs font-semibold ${error ? 'text-danger' : 'text-[var(--text-soft)]'}`;
 }
 
 export function renderResultsCount(total) {
@@ -82,7 +81,7 @@ export function renderErrorState() {
     const tbody = getUsersTableBody();
     if (!tbody) return;
 
-    tbody.innerHTML = '<tr><td colspan="6" class="px-6 py-12 text-center text-xs font-medium text-[var(--color-danger)]">⚠️ Não foi possível carregar os utilizadores.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="6" class="px-6 py-12 text-center text-xs font-medium text-danger">Não foi possível carregar os utilizadores.</td></tr>';
 }
 
 export function renderUsers(users) {

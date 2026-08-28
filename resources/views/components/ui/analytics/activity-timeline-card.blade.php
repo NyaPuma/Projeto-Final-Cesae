@@ -3,10 +3,10 @@
 | Activity Timeline Component
 |--------------------------------------------------------------------------
 |
-| Linha de tempo de atividades reativa com suporte a AJAX, loading e estados vazios.
-| • 100% livre de CSS ou JS inline.
-| • Integração com Alpine.js para carregamento dinâmico de dados.
-| • Acessibilidade WCAG avançada (aria-busy, aria-live, role="feed").
+| Reactive activity timeline with AJAX support, loading and empty states.
+| • 100% free of inline CSS or JS.
+| • Alpine.js integration for dynamic data loading.
+| • Advanced WCAG accessibility (aria-busy, aria-live, role="feed").
 |
 --}}
 
@@ -31,18 +31,18 @@
                     'X-Requested-With': 'XMLHttpRequest'
                 };
 
-                // Integração opcional com a store de autenticação se disponível
+                // Optional integration with the auth store if available
                 if (window.Alpine && Alpine.store('auth') && typeof Alpine.store('auth').authHeader === 'function') {
                     Object.assign(headers, Alpine.store('auth').authHeader());
                 }
 
                 const response = await fetch(@js($endpoint), { headers });
-                if (!response.ok) throw new Error('Erro na resposta do servidor');
+                if (!response.ok) throw new Error('Server response error');
 
                 const data = await response.json();
                 this.activities = Array.isArray(data) ? data : (data.data || []);
             } catch (e) {
-                console.error('Erro ao buscar atividades:', e);
+                console.error('Error fetching activities:', e);
                 this.error = @js($errorMessage);
             } finally {
                 this.loading = false;
@@ -54,11 +54,11 @@
     aria-live="polite"
 >
     <div class="divide-y divide-[var(--border)]">
-        {{-- Estado de Carregamento (Skeleton / Loading State) --}}
+        {{-- Loading State (Skeleton) --}}
         <template x-if="loading">
             <div class="flex items-start gap-5 p-6 animate-pulse">
-                <div class="mt-1 flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/10" aria-hidden="true">
-                    <div class="h-3 w-3 rounded-full bg-emerald-500"></div>
+                <div class="mt-1 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10" aria-hidden="true">
+                    <div class="h-3 w-3 rounded-full bg-primary"></div>
                 </div>
                 <div class="flex-1">
                     <div class="flex flex-wrap items-center justify-between gap-3">
@@ -70,32 +70,32 @@
             </div>
         </template>
 
-        {{-- Estado de Erro --}}
+        {{-- Error State --}}
         <template x-if="!loading && error">
             <div class="flex items-start gap-5 p-6">
-                <div class="mt-1 flex h-12 w-12 items-center justify-center rounded-2xl bg-red-500/10" aria-hidden="true">
-                    <div class="h-3 w-3 rounded-full bg-red-500"></div>
+                <div class="mt-1 flex h-12 w-12 items-center justify-center rounded-2xl bg-danger/10" aria-hidden="true">
+                    <div class="h-3 w-3 rounded-full bg-danger"></div>
                 </div>
                 <div class="flex-1">
-                    <h3 class="font-semibold text-red-600 dark:text-red-400" x-text="error"></h3>
+                    <h3 class="font-semibold text-danger" x-text="error"></h3>
                     <p class="mt-2 text-sm text-[var(--text-soft)]">{{ __('common.Por favor, tente novamente mais tarde.') }}</p>
                 </div>
             </div>
         </template>
 
-        {{-- Estado Vazio --}}
+        {{-- Empty State --}}
         <template x-if="!loading && !error && activities.length === 0">
             <div class="p-8 text-center">
                 <p class="text-sm text-[var(--text-soft)]">{{ $emptyMessage }}</p>
             </div>
         </template>
 
-        {{-- Lista de Atividades Dinâmicas --}}
+        {{-- Dynamic Activity List --}}
         <template x-if="!loading && !error && activities.length > 0">
             <template x-for="activity in activities" :key="activity.id ?? activity.created_at">
                 <article class="flex items-start gap-5 p-6 transition-colors hover:bg-[var(--surface-2)]">
-                    <div class="mt-1 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl" :class="activity.icon_bg || 'bg-emerald-500/10'" aria-hidden="true">
-                        <div class="h-3 w-3 rounded-full" :class="activity.dot_color || 'bg-emerald-500'"></div>
+                    <div class="mt-1 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl" :class="activity.icon_bg || 'bg-primary/10'" aria-hidden="true">
+                        <div class="h-3 w-3 rounded-full" :class="activity.dot_color || 'bg-primary'"></div>
                     </div>
                     <div class="flex-1 min-w-0">
                         <div class="flex flex-wrap items-center justify-between gap-3">

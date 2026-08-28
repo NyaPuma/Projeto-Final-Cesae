@@ -3,9 +3,9 @@
 | Submit Button Component Wrapper
 |--------------------------------------------------------------------------
 |
-| Botão wrapper de submissão otimizado com suporte a variantes, tamanhos e pesos.
-| • 100% livre de CSS ou JS inline.
-| • Tipo de botão pré-definido como submissão ('submit').
+| Optimized submit button wrapper with variant, size and weight support.
+| • 100% free of inline CSS or JS.
+| • Button type pre-set to 'submit'.
 |
 --}}
 

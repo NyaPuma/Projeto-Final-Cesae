@@ -20,11 +20,11 @@
     <div class="locale-trigger-wrapper fixed right-4 top-4 z-40">
         @include('ui.partials.locale-trigger')
     </div>
-    {{-- Efeitos Visuais de Fundo (Glow) --}}
+    {{-- Background Visual Effects (Glow) --}}
     <div class="pointer-events-none fixed inset-0 -z-10" aria-hidden="true">
         <div class="absolute inset-0 bg-[var(--bg)]"></div>
-        <div class="absolute left-1/2 top-0 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-emerald-500/10 blur-[160px]"></div>
-        <div class="absolute bottom-0 right-0 h-[500px] w-[500px] rounded-full bg-blue-500/10 blur-[160px]"></div>
+        <div class="absolute left-1/2 top-0 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-success/10 blur-[160px]"></div>
+        <div class="absolute bottom-0 right-0 h-[500px] w-[500px] rounded-full bg-info/10 blur-[160px]"></div>
     </div>
 
     <div class="min-h-screen px-4 py-6 sm:px-6 lg:px-8">
@@ -32,7 +32,9 @@
             <div class="ui-card overflow-hidden rounded-[32px] border border-[var(--border)] bg-[var(--surface)] shadow-2xl shadow-black/10 backdrop-blur-xl">
 
                 <div class="flex flex-col items-center p-8 text-center sm:p-10">
-                    <span class="flex h-16 w-16 items-center justify-center rounded-3xl border border-emerald-500/25 bg-emerald-500/10 text-3xl">✅</span>
+                    <span class="flex h-16 w-16 items-center justify-center rounded-3xl border border-success/25 bg-success/10">
+                    <svg class="h-8 w-8 shrink-0 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </span>
 
                     <h1 class="mt-6 text-2xl font-black tracking-tight text-[var(--text)]">{{ __('messages.Pedido Registado com Sucesso') }}</h1>
                     <p class="mt-3 text-sm leading-7 text-[var(--text-soft)]">
@@ -40,7 +42,7 @@
                     </p>
 
                     <div class="mt-6 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4">
-                        <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">{{ __('common.Número de Referência') }}</p>
+                        <p class="text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">{{ __('common.Número de Referência') }}</p>
                         <p class="mt-1 font-mono text-xl font-black tracking-tight text-[var(--text)]">{{ $ticket->reference }}</p>
                     </div>
 
@@ -69,6 +71,6 @@
             </div>
         </div>
     </div>
-    @include('ui.partials.locale-modal')
+    @include('ui.partials.localization-modal')
 </body>
 </html>

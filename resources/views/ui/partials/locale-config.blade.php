@@ -1,4 +1,4 @@
-{{-- Configuração de locale disponibilizada ao JavaScript (formatação intl). --}}
+{{-- Locale configuration exposed to JavaScript (intl formatting). --}}
 @php
     $authTranslations = [
         'profile' => __('auth_box.profile'),
@@ -9,6 +9,35 @@
     $uiTranslations = [
         'resultsCount' => __('ui.results_count'),
         'noResults' => __('ui.no_results'),
+    ];
+    $ticketsTranslations = [
+        'priority' => [
+            'baixa' => __('tickets.Baixa'),
+            'média' => __('common.Média'),
+            'alta' => __('tickets.Alta'),
+            'crítica' => __('common.Crítica'),
+        ],
+        'status' => [
+            'aberta' => __('common.Aberta'),
+            'em curso' => __('common.Em Curso'),
+            'fechada' => __('common.Fechada'),
+            'cancelada' => __('ui.Cancelada'),
+            'pendente orçamento' => __('common.Pendente Orçamento'),
+            'recusada' => __('common.Recusada'),
+        ],
+        'id' => __('common.ID'),
+        'title' => __('common.Título'),
+        'priorityTitle' => __('common.Prioridade'),
+        'statusTitle' => __('common.Estado'),
+        'equipment' => __('equipment.Equipamento'),
+        'room' => __('room.Sala'),
+        'technician' => __('common.Técnico'),
+        'view' => __('common.Ver'),
+        'empty' => __('common.Nenhum ticket encontrado com os filtros aplicados.'),
+        'previous' => __('ui.Anterior'),
+        'next' => __('ui.Próxima'),
+        'page' => __('ui.Página'),
+        'of' => __('ui.de'),
     ];
     $equipmentTranslations = [
         'code' => __('common.Código / Nº Série'),
@@ -112,14 +141,14 @@
         'empty' => __('maintenance_plan.empty'),
     ];
     $userManagementTranslations = [
-        'edit' => __('ui.Editar'),
-        'delete' => __('ui.Eliminar'),
+        'details' => __('common.Ver detalhes'),
         'active' => __('equipment.Ativo'),
         'inactive' => __('equipment.Inativo'),
         'admin' => __('common.Administrador'),
         'technician' => __('common.Técnico'),
         'user' => __('common.Utilizador'),
         'profileLoading' => __('ui.A carregar perfis...'),
+        'passwordMismatch' => __('common.As palavras-passe não coincidem.'),
     ];
     $auditTranslations = [
         'allEvents' => __('common.Todas as Ações'),
@@ -179,6 +208,21 @@
         'attachment_added' => __('analytics_data.attachment_added'),
         'budget_request' => __('analytics_data.budget_request'),
     ];
+    $dashboardTranslations = [
+        'resolution' => __('common.Tempo Médio de Resolução'),
+        'waiting' => __('common.Tempo Médio de Espera'),
+        'open' => __('dashboard.Tickets Abertos'),
+        'closed' => __('tickets.Tickets Fechados'),
+        'metricsAdminOnly' => __('dashboard.Métricas disponíveis apenas para Administrador.'),
+        'loadingMetrics' => __('dashboard.A ler indicadores analíticos em tempo real...'),
+        'loadError' => __('dashboard.Não foi possível carregar os indicadores analíticos do servidor.'),
+        'noRecent' => __('common.Nenhuma ocorrência recente registada.'),
+        'title' => __('common.Título'),
+        'priority' => __('common.Prioridade'),
+        'action' => __('common.Ação'),
+        'view' => __('common.Ver'),
+        'minutes' => __('common.min'),
+    ];
 @endphp
 <script>
     window.SGM_LOCALE = {
@@ -189,7 +233,7 @@
         rtl: @json(\App\Services\LocaleService::isRtl(app()->getLocale())),
     };
     window.SGM_AUTH_I18N = @json($authTranslations);
-    window.SGM_TICKETS_I18N = Object.assign(window.SGM_TICKETS_I18N || {}, @json($uiTranslations));
+    window.SGM_TICKETS_I18N = Object.assign(window.SGM_TICKETS_I18N || {}, @json($uiTranslations), @json($ticketsTranslations));
     window.SGM_EQUIPMENT_I18N = @json($equipmentTranslations);
     window.SGM_TICKET_MEDIA_I18N = @json($ticketMediaTranslations);
     window.SGM_TICKET_DETAIL_I18N = @json($ticketDetailTranslations);
@@ -203,4 +247,5 @@
     window.SGM_ANALYTICS_I18N = @json($analyticsTranslations);
     window.SGM_ENUM_I18N = @json($enumTranslations);
     window.SGM_ANALYTICS_DATA_I18N = @json($analyticsDataTranslations);
+    window.SGM_DASHBOARD_I18N = @json($dashboardTranslations);
 </script>

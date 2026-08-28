@@ -87,7 +87,7 @@ return [
     'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.' => 'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.',
     'Voltar aos tickets' => 'Voltar aos tickets',
     'Últimas Ocorrências Registadas' => 'Últimas Ocorrências Registradas',
-    '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.' => '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.',
+    'Existem :total ticket(s) de prioridade mais alta por atender.' => 'Existem :total ticket(s) de prioridade mais alta por atender.',
     'Anexo adicionado' => 'Anexo adicionado',
     'Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.' => 'Apenas tickets com o estado "Em Andamento" podem ser fechados rapidamente.',
     'Apenas tickets no estado "Aberto" podem ser cancelados.' => 'Apenas tickets no estado "Aberto" podem ser cancelados.',

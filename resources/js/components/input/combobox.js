@@ -3,13 +3,13 @@
 | Combobox Component
 |--------------------------------------------------------------------------
 |
-| Otimizado para Alpine.js 3.x
+| Optimized for Alpine.js 3.x
 |
-| Melhorias:
-| - $watch para reatividade limpa
-| - Gestão de estado de sincronização
-| - Event dispatching para validação
-| - UX Profissional (auto-clear, focus)
+| Enhancements:
+| - $watch for clean reactivity
+| - Synchronization state management
+| - Event dispatching for validation
+| - Professional UX (auto-clear, focus)
 */
 
 import AutocompleteService from '../../services/autocomplete-service';
@@ -34,7 +34,7 @@ export default function comboboxComponent(options = {}) {
                 minLength: options.minLength ?? 2
             });
 
-            // Reatividade: Observa mudanças no input
+            // Reactivity: observe input changes
             this.$watch('query', (value) => {
                 if (!value) {
                     this.selected = null;
@@ -54,7 +54,7 @@ export default function comboboxComponent(options = {}) {
                 this.opened = this.results.length > 0;
                 this.active = -1;
             } catch (error) {
-                console.error("Erro na pesquisa do Combobox:", error);
+                console.error("Combobox search error:", error);
                 this.results = [];
             } finally {
                 this.loading = false;
@@ -67,7 +67,7 @@ export default function comboboxComponent(options = {}) {
             this.query = item.label;
             this.opened = false;
 
-            // Notificar outros componentes da mudança
+            // Notify other components of the change
             this.$dispatch('input', this.selected);
             this.$dispatch('change', { value: this.selected, label: this.query });
         },

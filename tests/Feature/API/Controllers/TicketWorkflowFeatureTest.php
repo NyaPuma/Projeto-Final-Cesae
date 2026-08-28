@@ -468,21 +468,21 @@ class TicketWorkflowFeatureTest extends TestCase
         $send = fn (array $payload) => $this->withHeader('X-Auth-Token', $technician->api_token)
             ->putJson("/api/technician/tickets/{$ticket->id}/close-final", $payload);
 
-        // Teste 1: actual_cost em falta
+        // Test 1: missing actual_cost
         $send([])->assertStatus(422)->assertJsonValidationErrors(['actual_cost']);
 
-        // Teste 2: actual_cost não numérico
+        // Test 2: non-numeric actual_cost
         $send(['actual_cost' => 'abc'])->assertStatus(422)->assertJsonValidationErrors(['actual_cost']);
 
-        // Teste 3: actual_cost negativo
+        // Test 3: negative actual_cost
         $send(['actual_cost' => -5])->assertStatus(422)->assertJsonValidationErrors(['actual_cost']);
 
-        // Teste 4: report acima de 5000 caracteres
+        // Test 4: report longer than 5000 characters
         $send(['actual_cost' => 10, 'report' => str_repeat('a', 5001)])
             ->assertStatus(422)
             ->assertJsonValidationErrors(['report']);
 
-        // Teste 5: force não booleano
+        // Test 5: non-boolean force
         $send(['actual_cost' => 10, 'force' => 'yes'])
             ->assertStatus(422)
             ->assertJsonValidationErrors(['force']);

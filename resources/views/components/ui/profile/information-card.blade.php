@@ -2,10 +2,10 @@
 |-------------------------------------------------------------------------- |
 Profile Information Form Card Component
 |-------------------------------------------------------------------------- |
-| Card com o formulário de informações pessoais (nome e email).
-| • Padronizado com as variáveis CSS oficiais do Design System.
-| • Cabeçalho com ícone de utilizador para identificação rápida.
-| • 100% livre de CSS ou JS inline.
+| Card with the personal information form (name and email).
+| • Standardized with official Design System CSS variables.
+| • Header with user icon for quick identification.
+| • 100% free of inline CSS or JS.
 | --}}
 @props([
     'user',

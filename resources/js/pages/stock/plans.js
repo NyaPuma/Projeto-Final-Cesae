@@ -76,7 +76,7 @@ function resetForm() {
     firstRow.querySelector('[data-part-id]').value = '';
     firstRow.querySelector('[data-expected-qty]').value = '';
 
-    document.getElementById('planFormTitle').textContent = '➕ Novo plano de manutenção';
+    document.getElementById('planFormTitle').textContent = 'Novo plano de manutenção';
     document.getElementById('plMessage').textContent = '';
 }
 
@@ -84,8 +84,8 @@ function showMessage(text, isError) {
     const message = document.getElementById('plMessage');
     message.textContent = text;
     message.className = 'text-xs font-medium ' + (isError
-        ? 'text-red-600 dark:text-red-400'
-        : 'text-emerald-600 dark:text-emerald-400');
+        ? 'text-danger'
+        : 'text-success');
 }
 
 function bindForm() {
@@ -165,7 +165,7 @@ async function handleEdit(id) {
         const form = document.getElementById('planForm');
         form.dataset.planFormMode = 'edit';
         form.dataset.planId = String(id);
-        document.getElementById('planFormTitle').textContent = '✏️ Editar plano de manutenção';
+        document.getElementById('planFormTitle').textContent = 'Editar plano de manutenção';
         message.textContent = '';
     } catch (error) {
         showMessage(error.message, true);

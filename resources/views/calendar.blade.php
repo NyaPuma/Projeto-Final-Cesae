@@ -17,7 +17,7 @@
                 </a>
                 @auth
                     @if(auth()->user()->isAdmin())
-                        <button data-action="schedule" class="w-full sm:w-auto inline-flex items-center justify-center px-5 py-2.5 bg-primary hover:bg-primary-hover text-sm font-bold text-white rounded-xl shadow-md transition-all min-h-[44px] cursor-pointer">
+                        <button data-action="schedule" class="w-full sm:w-auto inline-flex items-center justify-center px-5 py-2.5 bg-primary hover:bg-primary-hover text-sm font-bold text-(--on-primary) rounded-xl shadow-md transition-all min-h-[44px] cursor-pointer">
                             + {{ __('maintenance_plan.Agendar Preventiva') }}
                         </button>
                     @endif
@@ -38,9 +38,9 @@
                                 <span class="h-2 w-2 rounded-full bg-primary" aria-hidden="true"></span>
                                 {{ __('common.Agenda Inteligente') }}
                             </span>
-                            <h3 id="summary-title" class="mt-4 text-lg font-bold text-[var(--text)]">
+                            <h2 id="summary-title" class="mt-4 text-lg font-bold text-[var(--text)]">
                                 {{ __('common.Resumo Operacional') }}
-                            </h3>
+                            </h2>
                             <p class="text-xs text-[var(--text-soft)] mt-1.5">{{ __('dashboard.Métricas da agenda atual') }}</p>
                         </div>
                         <div class="flex items-center gap-3">
@@ -62,18 +62,18 @@
                             <p class="text-[var(--text-soft)] text-xs font-semibold uppercase tracking-wider">
                                 {{ __('common.Total de Eventos') }}
                             </p>
-                            <p class="text-4xl font-black text-[var(--text)] mt-2" id="eventsTotal" aria-live="polite">
+                            <div class="text-4xl font-black text-[var(--text)] mt-2" id="eventsTotal" aria-live="polite">
                                 --
-                            </p>
+                            </div>
                         </div>
 
                         <div class="p-6 bg-[var(--surface-2)] border border-[var(--border)] rounded-2xl">
                             <p class="text-[var(--text-soft)] text-xs font-semibold uppercase tracking-wider">
                                 {{ __('common.Este Mês') }}
                             </p>
-                            <p class="text-4xl font-black text-[var(--text)] mt-2" id="monthTotal" aria-live="polite">
+                            <div class="text-4xl font-black text-[var(--text)] mt-2" id="monthTotal" aria-live="polite">
                                 --
-                            </p>
+                            </div>
                         </div>
 
                         <div class="p-6 border border-[var(--border)] rounded-2xl bg-[var(--surface-2)]">
@@ -111,16 +111,17 @@
 
                     <div class="flex flex-wrap items-center gap-3 mt-6 pt-6 border-t border-[var(--border)]">
                         <span class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-xs font-semibold text-primary">
-                            <span class="text-sm leading-none">🛡️</span>
+                            <span class="flex h-4 w-4 items-center justify-center shrink-0"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg></span>
                             {{ __('maintenance_plan.Manutenção Preventiva') }}
                         </span>
                         <span class="inline-flex items-center gap-2 rounded-full border border-info/20 bg-info/10 px-4 py-1.5 text-xs font-semibold text-info">
-                            <span class="text-sm leading-none">🔧</span>
+                            <span class="flex h-4 w-4 items-center justify-center shrink-0"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z"/></svg></span>
                             {{ __('common.Intervenção') }}
                         </span>
                         @if(auth()->user()->isAdmin() || auth()->user()->isTechnician())
                             <span class="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface-2)] px-4 py-1.5 text-xs font-semibold text-[var(--text-soft)]">
-                                🖱️ {{ __('common.Arraste para reagendar') }}
+                                <svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zm-7.518-.267A8.25 8.25 0 1120.25 10.5M8.084 20.405A5.25 5.25 0 019.75 15.75"/></svg>
+                                {{ __('common.Arraste para reagendar') }}
                             </span>
                         @endif
                     </div>
@@ -135,7 +136,7 @@
         role="dialog" aria-modal="true" aria-labelledby="modalTitle">
         <div class="relative w-full max-w-md bg-[var(--surface)] border border-[var(--border)] rounded-3xl p-8 shadow-2xl animate-[fadeIn_0.15s_ease-out]"
             id="modalContent">
-            <h3 id="modalTitle" class="text-lg font-bold text-[var(--text)] mb-2"></h3>
+            <h2 id="modalTitle" class="text-lg font-bold text-[var(--text)] mb-2">{{ __('common.Detalhes do Evento') }}</h2>
 
             <div class="space-y-4 my-6">
                 <div>
@@ -158,7 +159,7 @@
 
             <div class="flex justify-end gap-3 mt-8">
                 <a id="modalTicketLink" href="#"
-                    class="hidden px-5 py-2.5 bg-primary hover:bg-primary-hover text-sm font-bold text-white rounded-xl transition-all cursor-pointer min-h-[44px]">
+                    class="hidden px-5 py-2.5 bg-primary hover:bg-primary-hover text-sm font-bold text-(--on-primary) rounded-xl transition-all cursor-pointer min-h-[44px]">
                     {{ __('tickets.Abrir Ticket') }}
                 </a>
                 <button data-action="close-modal" id="closeModalBtn"
@@ -175,9 +176,10 @@
         <div class="relative w-full max-w-lg bg-[var(--surface)] border border-[var(--border)] rounded-3xl p-8 shadow-2xl animate-[fadeIn_0.15s_ease-out]">
             <div class="flex items-center justify-between pb-4 border-b border-[var(--border)]">
                 <div>
-                    <h3 id="scheduleModalTitle" class="text-lg font-bold text-[var(--text)]">
-                        🛡️ {{ __('maintenance_plan.Agendar Manutenção Preventiva') }}
-                    </h3>
+                    <h2 id="scheduleModalTitle" class="flex items-center gap-2 text-lg font-bold text-[var(--text)]">
+                        <svg class="h-5 w-5 shrink-0 text-[var(--text-soft)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
+                        {{ __('maintenance_plan.Agendar Manutenção Preventiva') }}
+                    </h2>
                     <p class="text-xs text-[var(--text-soft)] mt-0.5">{{ __('equipment.Crie um agendamento proativo de rotina para os técnicos.') }}</p>
                 </div>
                 <button data-action="close-schedule" class="text-[var(--text-soft)] hover:text-[var(--text)] p-1 rounded-lg">✕</button>
@@ -203,7 +205,7 @@
                             <ul id="equipmentSuggestionsList" class="equipment-search__list"></ul>
                         </div>
                     </div>
-                    <p id="equipmentSearchEmpty" class="hidden mt-1 text-[10px] font-semibold text-[var(--text-soft)]">
+                    <p id="equipmentSearchEmpty" class="hidden mt-1 text-xs font-semibold text-[var(--text-soft)]">
                         {{ __('equipment.Selecione um equipamento da lista de sugestões.') }}
                     </p>
                 </div>
@@ -232,7 +234,7 @@
 
                 <div id="schedFeedback"
                      data-err-message="{{ __('messages.Erro ao agendar manutenção preventiva.') }}"
-                     class="hidden text-xs font-bold text-red-500 p-2 rounded-lg bg-red-500/10"></div>
+                     class="hidden text-xs font-bold text-danger p-2 rounded-lg bg-danger/10"></div>
 
                 <div class="flex justify-end gap-3 pt-4 border-t border-[var(--border)]">
                     <button type="button" data-action="close-schedule"
@@ -242,7 +244,7 @@
                     <button type="submit" id="btnSubmitSched"
                         data-label-scheduling="{{ __('common.A agendar...') }}"
                         data-label-confirm="{{ __('ui.Confirmar Agendamento') }}"
-                        class="px-5 py-2.5 bg-primary hover:bg-primary-hover text-xs font-bold text-white rounded-xl shadow-md transition-all cursor-pointer min-h-[40px]">
+                        class="px-5 py-2.5 bg-primary hover:bg-primary-hover text-xs font-bold text-(--on-primary) rounded-xl shadow-md transition-all cursor-pointer min-h-[40px]">
                         {{ __('ui.Confirmar Agendamento') }}
                     </button>
                 </div>

@@ -87,7 +87,7 @@ return [
     'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.' => '単一の統合インターフェースで、技術修理、予防メンテナンス、計画チケット、運用タスクを確認します。',
     'Voltar aos tickets' => 'チケットに戻る',
     'Últimas Ocorrências Registadas' => '最近記録されたインシデント',
-    '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.' => '⚠️ 優先度の高いチケット :total 件が未対応です。',
+    'Existem :total ticket(s) de prioridade mais alta por atender.' => '優先度の高いチケット :total 件が未対応です。',
     'Anexo adicionado' => '添付ファイルが追加されました',
     'Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.' => '「進行中」ステータスのチケットのみをすばやくクローズできます。',
     'Apenas tickets no estado "Aberto" podem ser cancelados.' => '「オープン」ステータスのチケットのみをキャンセルできます。',

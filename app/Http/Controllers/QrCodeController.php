@@ -19,9 +19,10 @@ final class QrCodeController extends Controller
     /**
      * Page with a piece of equipment's QR Code (ready to print).
      */
-    public function show(Equipment $equipment): View
+    public function show(Request $request, Equipment $equipment): View
     {
         return view('ui.equipments.qr', [
+            'user' => $request->user(),
             'equipment' => $equipment,
             'qrDataUri' => $this->qrCodeService->pngDataUri($equipment),
             'ticketUrl' => $this->qrCodeService->urlFor($equipment),

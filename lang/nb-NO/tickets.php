@@ -87,7 +87,7 @@ return [
     'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.' => 'Se tekniske intervensjoner, forebyggende vedlikehold, planlagte billetter og driftsoppgaver i én integrert grensesnitt.',
     'Voltar aos tickets' => 'Tilbake til billetter',
     'Últimas Ocorrências Registadas' => 'Nylig registrerte hendelser',
-    '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.' => '⚠️ Det finnes :total billett(er) med høyere prioritet som må håndteres.',
+    'Existem :total ticket(s) de prioridade mais alta por atender.' => 'Det finnes :total billett(er) med høyere prioritet som må håndteres.',
     'Anexo adicionado' => 'Vedlegg lagt til',
     'Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.' => 'Bare billetter med status «Pågående» kan lukkes raskt.',
     'Apenas tickets no estado "Aberto" podem ser cancelados.' => 'Bare billetter med status «Åpen» kan avbrytes.',

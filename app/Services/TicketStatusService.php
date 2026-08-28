@@ -64,7 +64,7 @@ final class TicketStatusService
     }
 
     /**
-     * Limpa todo o cache estático em memória e o cache persistente relacionado aos estados dos tickets.
+     * Clears all static in-memory cache and persistent cache related to ticket statuses.
      */
     public function flush(): void
     {

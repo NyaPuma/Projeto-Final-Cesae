@@ -1,11 +1,11 @@
 {{--
 |-------------------------------------------------------------------------- |
-Page Actions Container Component (Otimizado)
+Page Actions Container Component (Optimized)
 |-------------------------------------------------------------------------- |
-| Contentor flexível para alinhamento e espaçamento de botões e ações.
-| • Padronizado com utilitários flex nativos do Tailwind.
-| • 100% livre de CSS ou JS inline.
-| --}}
+| Flexible container for aligning and spacing buttons and actions.
+| • Standardized with native Tailwind flex utilities.
+| • 100% free of inline CSS or JS.
+|--}}
 <div {{ $attributes->merge(['class' => 'flex flex-wrap items-center gap-2']) }}>
     {{ $slot }}
 </div>

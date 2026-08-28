@@ -87,7 +87,7 @@ return [
     'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.' => 'Xem bảo trì kỹ thuật, bảo trì phòng ngừa, yêu cầu đã lên lịch và nhiệm vụ vận hành trong một giao diện tích hợp duy nhất.',
     'Voltar aos tickets' => 'Quay lại danh sách yêu cầu',
     'Últimas Ocorrências Registadas' => 'Sự cố gần đây đã đăng ký',
-    '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.' => '⚠️ Có :total yêu cầu ưu tiên cao hơn đang chờ xử lý.',
+    'Existem :total ticket(s) de prioridade mais alta por atender.' => 'Có :total yêu cầu ưu tiên cao hơn đang chờ xử lý.',
     'Anexo adicionado' => 'Đã thêm đính kèm',
     'Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.' => 'Chỉ yêu cầu có trạng thái "Đang thực hiện" mới có thể đóng nhanh.',
     'Apenas tickets no estado "Aberto" podem ser cancelados.' => 'Chỉ yêu cầu có trạng thái "Đã mở" mới có thể hủy.',

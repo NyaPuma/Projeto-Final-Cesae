@@ -370,7 +370,13 @@ function initCalendar() {
         editable: false,
         selectable: true,
         expandRows: true,
-        dayMaxEvents: true,
+        dayMaxEvents: 3,
+        slotEventOverlap: false,
+        moreLinkText: (num) => `+ ${num} detalhes`,
+        moreLinkClick: () => {
+            document.querySelector('.fc-popover')?.remove();
+            return undefined;
+        },
         weekends: true,
 
         buttonText: {
@@ -403,7 +409,9 @@ function initCalendar() {
 
         eventContent: function (arg) {
             const isScheduled = arg.event.extendedProps?.scheduled !== false;
-            const icon = isScheduled ? '🛡️' : '🔧';
+            const iconShield = '<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>';
+            const iconWrench = '<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z"/></svg>';
+            const icon = isScheduled ? iconShield : iconWrench;
             const title = arg.event.title;
             const time = arg.timeText;
 
@@ -473,7 +481,6 @@ function initCalendar() {
             const isScheduled = info.event.extendedProps?.scheduled !== false;
             info.el.classList.add(isScheduled ? 'fc-event--scheduled' : 'fc-event--regular');
             info.el.style.cursor = 'pointer';
-            info.el.title = info.event.title;
             info.el.setAttribute('tabindex', '0');
             info.el.setAttribute('role', 'button');
             info.el.setAttribute('aria-label', `${info.event.title}, clique para ver detalhes`);
@@ -518,10 +525,43 @@ function initCalendar() {
     });
 
     calendarInstance.render();
+
+    calendarEl.querySelectorAll('table').forEach(t => {
+        if (t.closest('.fc-timegrid')) return;
+        t.setAttribute('role', 'presentation');
+    });
+    calendarEl.querySelectorAll('.fc-more-link').forEach(el => el.removeAttribute('title'));
+    calendarEl.querySelectorAll('.fc-button').forEach(el => el.removeAttribute('title'));
+    const prevBtn = calendarEl.querySelector('.fc-prev-button');
+    const nextBtn = calendarEl.querySelector('.fc-next-button');
+    if (prevBtn) prevBtn.setAttribute('aria-label', 'Anterior');
+    if (nextBtn) nextBtn.setAttribute('aria-label', 'Seguinte');
+
+    const popoverObserver = new MutationObserver(() => {
+        calendarEl.querySelectorAll('table:not([role])').forEach(t => {
+            if (t.closest('.fc-timegrid')) return;
+            t.setAttribute('role', 'presentation');
+        });
+        document.querySelectorAll('.fc-more-link[title]').forEach(el => el.removeAttribute('title'));
+        document.querySelectorAll('.fc-button[title]').forEach(el => el.removeAttribute('title'));
+        const popover = document.querySelector('.fc-popover');
+        if (!popover) return;
+        popover.querySelectorAll('.fc-event').forEach(ev => {
+            if (ev.dataset.popoverBound) return;
+            ev.dataset.popoverBound = '1';
+            ev.addEventListener('click', () => popover.remove());
+        });
+    });
+    popoverObserver.observe(document.body, { childList: true, subtree: true });
 }
 
 function init() {
     initCalendar();
+
+    const modalTitle = document.getElementById('modalTitle');
+    if (modalTitle && !modalTitle.textContent.trim()) {
+        modalTitle.textContent = 'Detalhes do Evento';
+    }
 
     initEquipmentSearch();
 

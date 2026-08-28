@@ -25,7 +25,7 @@ final class BudgetNotificationService
     public function notifyBudgetSubmitted(Ticket $ticket, string $message): void
     {
         $this->creator->createForAdmins(
-            title: NotificationTypeEnum::BudgetRequest->icon() . " Pending Budget - Ticket #{$ticket->id}",
+            title: "Pending Budget - Ticket #{$ticket->id}",
             message: $message,
             type: NotificationTypeEnum::BudgetRequest->value,
             link: "/ui/tickets/{$ticket->id}",
@@ -34,7 +34,7 @@ final class BudgetNotificationService
         if ($ticket->user_id) {
             $this->creator->createForUser(
                 userId: $ticket->user_id,
-                title: NotificationTypeEnum::BudgetSubmitted->icon() . " Budget Submitted - Ticket #{$ticket->id}",
+                title: "Budget Submitted - Ticket #{$ticket->id}",
                 message: $message,
                 type: NotificationTypeEnum::BudgetSubmitted->value,
                 link: "/ui/tickets/{$ticket->id}",
@@ -53,7 +53,7 @@ final class BudgetNotificationService
         if ($ticket->assigned_to) {
             $this->creator->createForUser(
                 userId: $ticket->assigned_to,
-                title: NotificationTypeEnum::BudgetAutoApproved->icon() . " Auto-Approved - Ticket #{$ticket->id}",
+                title: "Auto-Approved - Ticket #{$ticket->id}",
                 message: $message,
                 type: NotificationTypeEnum::BudgetAutoApproved->value,
                 link: "/ui/tickets/{$ticket->id}",
@@ -63,7 +63,7 @@ final class BudgetNotificationService
         if ($ticket->user_id) {
             $this->creator->createForUser(
                 userId: $ticket->user_id,
-                title: NotificationTypeEnum::BudgetAutoApproved->icon() . " Budget Auto-Approved - Ticket #{$ticket->id}",
+                title: "Budget Auto-Approved - Ticket #{$ticket->id}",
                 message: $message,
                 type: NotificationTypeEnum::BudgetAutoApproved->value,
                 link: "/ui/tickets/{$ticket->id}",
@@ -81,13 +81,12 @@ final class BudgetNotificationService
     public function notifyBudgetDecision(Ticket $ticket, string $decision, string $message): void
     {
         $type = $decision === 'approve' ? NotificationTypeEnum::BudgetApproved : NotificationTypeEnum::BudgetRejected;
-        $icon = $type->icon();
 
         if ($ticket->assigned_to) {
             $label = $decision === 'approve' ? 'Approved' : 'Rejected';
             $this->creator->createForUser(
                 userId: $ticket->assigned_to,
-                title: "{$icon} Budget {$label} - Ticket #{$ticket->id}",
+                title: "Budget {$label} - Ticket #{$ticket->id}",
                 message: $message,
                 type: $type->value,
                 link: "/ui/tickets/{$ticket->id}",
@@ -97,7 +96,7 @@ final class BudgetNotificationService
         if ($ticket->user_id) {
             $this->creator->createForUser(
                 userId: $ticket->user_id,
-                title: "{$icon} Budget Decision - Ticket #{$ticket->id}",
+                title: "Budget Decision - Ticket #{$ticket->id}",
                 message: $message,
                 type: $type->value,
                 link: "/ui/tickets/{$ticket->id}",
@@ -113,7 +112,7 @@ final class BudgetNotificationService
     public function notifyTicketCreated(Ticket $ticket): void
     {
         $this->creator->createForAdmins(
-            title: NotificationTypeEnum::TicketCreated->icon() . " New Ticket - #{$ticket->id}",
+            title: "New Ticket - #{$ticket->id}",
             message: "New ticket created: {$ticket->title}",
             type: NotificationTypeEnum::TicketCreated->value,
             link: "/ui/tickets/{$ticket->id}",

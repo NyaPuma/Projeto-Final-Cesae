@@ -13,12 +13,12 @@
         </x-ui.page-actions.group>
     </x-slot:actions>
 
-    {{-- Formulário de registo rápido --}}
+    {{-- Quick registration form --}}
     <div class="mb-6 rounded-2xl border border-(--border) bg-(--surface) p-5 shadow-sm">
-        <h3 class="mb-4 text-xs font-black uppercase tracking-wider text-(--text)">➕ {{ __('common.Registar movimento') }}</h3>
+        <h2 class="mb-4 text-xs font-black uppercase tracking-wider text-(--text)">{{ __('common.Registar movimento') }}</h2>
         <form id="movementForm" class="grid gap-4 md:grid-cols-2 lg:grid-cols-5" novalidate>
             <div>
-                <label class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-(--text-soft)" for="mvPart">
+                <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-(--text-soft)" for="mvPart">
                     {{ __('stock.Peça') }} <span class="text-danger">*</span>
                 </label>
                 <select id="mvPart" name="part_id" required
@@ -30,19 +30,19 @@
                 </select>
             </div>
             <div>
-                <label class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-(--text-soft)" for="mvType">
+                <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-(--text-soft)" for="mvType">
                     {{ __('common.Tipo') }} <span class="text-danger">*</span>
                 </label>
                 <select id="mvType" name="movement_type" required
                     class="w-full rounded-xl border border-(--border) bg-(--surface-2) px-3 py-2.5 text-xs text-(--text) outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
-                    <option value="in">📥 {{ __('common.Entrada') }}</option>
-                    <option value="out">📤 {{ __('common.Saída') }}</option>
-                    <option value="adjust">🔧 {{ __('common.Ajuste') }}</option>
-                    <option value="return">↩️ {{ __('common.Devolução') }}</option>
+                    <option value="in">{{ __('common.Entrada') }}</option>
+                    <option value="out">{{ __('common.Saída') }}</option>
+                    <option value="adjust">{{ __('common.Ajuste') }}</option>
+                    <option value="return">{{ __('common.Devolução') }}</option>
                 </select>
             </div>
             <div>
-                <label class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-(--text-soft)" for="mvQty">
+                <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-(--text-soft)" for="mvQty">
                     {{ __('common.Quantidade') }} <span class="text-danger">*</span>
                 </label>
                 <input id="mvQty" name="quantity" type="number" step="1" required
@@ -50,7 +50,7 @@
                     class="w-full rounded-xl border border-(--border) bg-(--surface-2) px-3 py-2.5 text-xs text-(--text) placeholder-(--text-soft) outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
             </div>
             <div class="lg:col-span-2">
-                <label class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-(--text-soft)" for="mvReason">
+                <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-(--text-soft)" for="mvReason">
                     {{ __('common.Motivo') }}
                 </label>
                 <input id="mvReason" name="reason" type="text"

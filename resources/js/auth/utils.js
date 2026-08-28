@@ -1,19 +1,19 @@
 /*
 |--------------------------------------------------------------------------
-| Authentication Utilities (Otimizado)
+| Authentication Utilities
 |--------------------------------------------------------------------------
 |
-| Funções auxiliares para API, DOM e Estado da UI.
+| Helper functions for API, DOM, and UI State.
 |
 */
 
-// Configurações
-const STORAGE_PREFIX = '';  // Compatível com auth_token (sem prefixo) usado no login
-const FETCH_TIMEOUT = 10000; // 10 segundos
+// Configuration
+const STORAGE_PREFIX = '';  // Compatible with auth_token (no prefix) used in login
+const FETCH_TIMEOUT = 10000; // 10 seconds
 
 /*
 |--------------------------------------------------------------------------
-| Seletores
+| Selectors
 |--------------------------------------------------------------------------
 */
 
@@ -49,7 +49,7 @@ export const getHeaders = (customHeaders = {}) => {
 
 /*
 |--------------------------------------------------------------------------
-| Fetch Wrapper (Com Timeout)
+| Fetch Wrapper (With Timeout)
 |--------------------------------------------------------------------------
 */
 
@@ -137,7 +137,7 @@ export const toggle = (element, state) => element?.classList.toggle('hidden', !s
 
 /*
 |--------------------------------------------------------------------------
-| Button State (Com Acessibilidade Aumentada)
+| Button State (With Enhanced Accessibility)
 |--------------------------------------------------------------------------
 */
 
@@ -147,7 +147,7 @@ export function setButtonLoading(button, loading = true) {
     const text = button.querySelector('.button-text');
     const loader = button.querySelector('.button-loader');
 
-    // Acessibilidade WCAG
+    // WCAG Accessibility
     button.disabled = loading;
     button.setAttribute('aria-busy', loading);
     button.setAttribute('aria-disabled', loading);

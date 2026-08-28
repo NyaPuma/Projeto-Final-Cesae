@@ -39,7 +39,7 @@ class UserPreferencesTest extends TestCase
 
         $prefs = PreferencesService::forUser($this->user);
 
-        $this->assertEquals('pt', $prefs['language']);
+        $this->assertEquals('pt-PT', $prefs['language']);
         $this->assertEquals('EUR', $prefs['currency']);
         $this->assertEquals('d/m/Y', $prefs['date_format']);
     }
@@ -143,7 +143,7 @@ class UserPreferencesTest extends TestCase
             'date_format' => 'd/m/Y',
         ]);
 
-        $this->assertEquals('pt', $prefs['language']); // Should be default
+        $this->assertEquals('pt-PT', $prefs['language']); // Should be default
         $this->assertEquals('EUR', $prefs['currency']);
         $this->assertEquals('d/m/Y', $prefs['date_format']);
     }
@@ -223,7 +223,7 @@ class UserPreferencesTest extends TestCase
 
         $prefs = PreferencesService::forUser($this->user);
 
-        $this->assertEquals('pt', $prefs['language']);
+        $this->assertEquals('pt-PT', $prefs['language']);
         $this->assertEquals('EUR', $prefs['currency']);
         $this->assertEquals('d/m/Y', $prefs['date_format']);
     }
@@ -250,7 +250,7 @@ class UserPreferencesTest extends TestCase
 
         $prefs = PreferencesService::forUser($this->user);
 
-        $this->assertEquals('pt', $prefs['language']); // Kept
+        $this->assertEquals('pt-PT', $prefs['language']); // Kept
         $this->assertEquals('GBP', $prefs['currency']); // Updated
         $this->assertEquals('d/m/Y', $prefs['date_format']); // Kept
     }

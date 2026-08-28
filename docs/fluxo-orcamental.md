@@ -1,24 +1,24 @@
-# Especificação Técnica: Fluxo Orçamental (System Workflow)
-**Projeto:** Gestão e Aprovação Financeira de Avarias     
-**Arquitetura:** In-House (Corporativo Interno)
+# Technical Specification: Budget Workflow (System Workflow)
+**Project:** Financial Management and Approval of Repairs     
+**Architecture:** In-House (Internal Corporate)
 
 ---
 
-## 1. Visão Geral do Conceito
-No sistema **ACCEPT**, o Fluxo Orçamental é um mecanismo de controlo de custos e governação operacional. Permite regrar as intervenções técnicas que exigem investimento financeiro relevante, garantindo que reparações dispendiosas não arrancam sem o aval e aprovação prévia da Administração.
+## 1. Concept Overview
+In the **ACCEPT** system, the Budget Workflow is a cost control and operational governance mechanism. It regulates technical interventions that require significant financial investment, ensuring that costly repairs do not start without prior review and approval by the Administration.
 
-A lógica baseia-se num **Limiar Financeiro (*Threshold*)** parametrizado na plataforma:
-- **Custo Estimado ≤ Threshold:** O Técnico tem autonomia para prosseguir imediatamente com a reparação.
-- **Custo Estimado > Threshold:** O ticket é automaticamente trancado pelo sistema no estado **`Pendente Orçamento`**, aguardando decisão administrativa.
+The logic is based on a **Financial Threshold (*Threshold*)** parameterized on the platform:
+- **Estimated Cost ≤ Threshold:** The Technician has the autonomy to proceed immediately with the repair.
+- **Estimated Cost > Threshold:** The ticket is automatically locked by the system in the **`Pendente Orçamento`** (Pending Budget) status, awaiting an administrative decision.
 
 ---
 
-## 2. Diagrama de Sequência (Mermaid)
+## 2. Sequence Diagram (Mermaid)
 
 ```mermaid
 sequenceDiagram
     autonumber
-    actor T as Técnico de Campo
+    actor T as Field Technician
     participant S as Sistema (Laravel Back-End)
     participant DB as Base de Dados (MySQL)
     actor A as Administrador
@@ -28,24 +28,24 @@ sequenceDiagram
 
     alt Valor Dentro da Autonomia (≤ Threshold)
         S->>DB: Atualiza status_id = "Em Curso"
-        S-->>T: Permissão concedida (Reparação Prossegue)
+        S-->>T: Permission granted (Repair Proceeds)
     else Excede Limiar Financeiro (> Threshold)
-        S->>DB: Atualiza status_id = "Pendente Orçamento"
+        S->>DB: Updates status_id = "Pending Budget"
         S->>DB: Define budget_requested = true & budget_amount = $estimatedBudget
-        S-->>T: Ticket Bloqueado (Aguardar Aprovação)
-        S->>A: Dispara Alerta / Notificação no Painel
+        S-->>T: Ticket Locked (Awaiting Approval)
+        S->>A: Dispatches Alert / Notification on Dashboard
     end
 
-    opt Decisão do Administrador
+    opt Administrator Decision
         alt Caso Aprovado
-            A->>S: Clique em [Aprovar Orçamento]
+            A->>S: Click [Approve Budget]
             S->>DB: Define budget_status = "approved" & budget_approved_by = Admin_ID
             S->>DB: Altera status_id = "Em Curso"
-            S-->>T: Ticket Desbloqueado para Intervenção
+            S-->>T: Ticket Unlocked for Intervention
         else Caso Recusado
-            A->>S: Clique em [Recusar Orçamento] + Inserir Justificação (Feedback)
+            A->>S: Click [Reject Budget] + Enter Justification (Feedback)
             S->>DB: Define budget_status = "rejected" & technical_report = Feedback
             S->>DB: Altera status_id = "Recusada"
-            S-->>T: Ticket Encerrado (Reparação Abortada)
+            S-->>T: Ticket Closed (Repair Aborted)
         end
     end

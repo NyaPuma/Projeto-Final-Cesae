@@ -2,9 +2,9 @@
 |-------------------------------------------------------------------------- |
 Profile Delete Account Card Component
 |-------------------------------------------------------------------------- |
-| Card de zona de perigo para eliminação da conta, com modal de confirmação.
-| • Padronizado com as variáveis CSS oficiais do Tailwind.
-| • Interatividade via Alpine.js (x-data / x-show) sem CSS ou JS inline.
+| Danger-zone card for account deletion, with confirmation modal.
+| • Standardized with official Tailwind CSS variables.
+| • Interactivity via Alpine.js (x-data / x-show) without inline CSS or JS.
 | --}}
 @props([])
 
@@ -35,7 +35,7 @@ Profile Delete Account Card Component
             aria-labelledby="delete-account-modal-title"
             class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
         >
-            <div class="w-full max-w-md rounded-2xl border border-red-500/20 bg-[var(--surface)] p-6 shadow-xl">
+            <div class="w-full max-w-md rounded-2xl border border-danger/20 bg-[var(--surface)] p-6 shadow-xl">
                 <h3 id="delete-account-modal-title" class="text-lg font-bold text-[var(--text)]">{{ __('ui.Eliminar Conta') }}</h3>
                 <p class="mt-3 text-sm text-[var(--text-soft)]">{{ __('ui.Para eliminar a sua conta, contacte um administrador. Esta ação não pode ser revertida.') }}</p>
 

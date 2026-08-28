@@ -1,10 +1,10 @@
 {{--
 |-------------------------------------------------------------------------- |
-| Page Header Component (sem card)
+| Page Header Component (no card)
 |-------------------------------------------------------------------------- |
-| Componente estrutural de cabeçalho de página, sem contentor agrupador.
-| • Cabeçalho: badge, título, subtítulo e ações.
-| • O conteúdo é renderizado por baixo em secções independentes (space-y-6).
+| Structural page-header component without a grouping container.
+| • Header: badge, title, subtitle and actions.
+| • Content is rendered below in independent sections (space-y-6).
 | --}}
 @props([
     'title' => null,
@@ -19,9 +19,9 @@
             @if($badge)
                 <div class="flex items-center gap-3">
                     @if($animate)
-                        <span class="relative flex h-3 w-3">
-                            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-500 opacity-50"></span>
-                            <span class="relative inline-flex h-3 w-3 rounded-full bg-amber-500"></span>
+                        <span class="relative flex h-3 w-3" aria-hidden="true">
+                            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-warning/50"></span>
+                            <span class="relative inline-flex h-3 w-3 rounded-full bg-warning"></span>
                         </span>
                     @endif
 

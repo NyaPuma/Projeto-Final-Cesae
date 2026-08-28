@@ -87,7 +87,7 @@ return [
     'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.' => 'Sehen Sie technische Einsätze, vorbeugende Wartung, geplante Tickets und operative Aufgaben in einer einzigen integrierten Oberfläche.',
     'Voltar aos tickets' => 'Zurück zu den Tickets',
     'Últimas Ocorrências Registadas' => 'Letzte erfasste Vorkommnisse',
-    '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.' => '⚠️ Es gibt :total Ticket(s) mit höherer Priorität, die bearbeitet werden müssen.',
+    'Existem :total ticket(s) de prioridade mais alta por atender.' => 'Es gibt :total Ticket(s) mit höherer Priorität, die bearbeitet werden müssen.',
     'Anexo adicionado' => 'Anhang hinzugefügt',
     'Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.' => 'Nur Tickets mit Status "In Bearbeitung" können schnell geschlossen werden.',
     'Apenas tickets no estado "Aberto" podem ser cancelados.' => 'Nur Tickets mit Status "Offen" können storniert werden.',

@@ -209,7 +209,7 @@ class ServicesTest extends FeatureTestCase
         $this->assertCount(1, $this->calendar->getScheduledEventsForUser($tech));
     }
 
-    // --- AnalyticsDashboardService (regressão do bug das prioridades) ---
+    // --- AnalyticsDashboardService (priority bucket bug regression) ---
 
     public function test_dashboard_priority_buckets_include_critical_tickets(): void
     {

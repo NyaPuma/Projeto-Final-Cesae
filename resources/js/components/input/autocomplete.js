@@ -2,7 +2,7 @@
 |--------------------------------------------------------------------------
 | Autocomplete Component (Enhanced)
 |--------------------------------------------------------------------------
-| Melhorias: AbortController, A11y, UX de Limpeza e Event Dispatching.
+| Enhancements: AbortController, A11y, Clear UX, and Event Dispatching.
 */
 
 export default function autocompleteComponent(options = {}) {
@@ -34,7 +34,7 @@ export default function autocompleteComponent(options = {}) {
         search() {
             clearTimeout(this.timer);
 
-            // Se o utilizador limpar o input, garantimos que o estado é limpo
+            // If the user clears the input, ensure state is cleaned
             if (this.query.length === 0) {
                 this.selected = null;
                 this.reset();
@@ -65,7 +65,7 @@ export default function autocompleteComponent(options = {}) {
         },
 
         async remoteSearch() {
-            // Cancela pedido anterior para evitar race conditions
+            // Cancel previous request to prevent race conditions
             if (this.abortController) {
                 this.abortController.abort();
             }
@@ -107,7 +107,7 @@ export default function autocompleteComponent(options = {}) {
             this.query = item.label;
             this.close();
 
-            // Dispatch evento para o Alpine/Formulário saber que o valor mudou
+            // Dispatch event so Alpine/Form knows the value changed
             this.$dispatch('input', { value: this.selected });
         },
 

@@ -1,10 +1,10 @@
 {{--
 |-------------------------------------------------------------------------- |
-User Profile Card Component (Otimizado)
+User Profile Card Component (Optimized)
 |-------------------------------------------------------------------------- |
-| Componente para exibição de detalhes, avatar e metadados do perfil de utilizador.
-| • Padronizado com as variáveis CSS oficiais do Tailwind.
-| • 100% livre de CSS ou JS inline.
+| Component for displaying user profile details, avatar and metadata.
+| • Standardized with official Tailwind CSS variables.
+| • 100% free of inline CSS or JS.
 | --}}
 @props([
     'user',

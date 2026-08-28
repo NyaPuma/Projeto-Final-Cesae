@@ -1,15 +1,29 @@
 /**
  * Analytics Export Actions
- * Intercepta os botões de exportação assíncrona (CSV/PDF) para:
- *  • evitar a navegação para o endpoint (que responde com JSON);
- *  • mostrar feedback de "a processar" e a mensagem devolvida pelo servidor;
- *  • permitir que o utilizador descarregue o ficheiro assim que a notificação estiver pronta.
+ * Intercepts async export buttons (CSV/PDF) to:
+ *  • prevent navigation to the endpoint (which responds with JSON);
+ *  • show "processing" feedback and the message returned by the server;
+ *  • allow the user to download the file once the notification is ready.
  */
 
 import { authHeader } from '../../utils/api.js';
 import { showMessage } from './helpers.js';
 
 let initialized = false;
+let printInitialized = false;
+
+/**
+ * Binds [data-action="print"] buttons to window.print().
+ * Keeps the handler out of the markup (no inline onclick).
+ */
+export function initPrintActions() {
+    if (printInitialized) return;
+    printInitialized = true;
+
+    document.querySelectorAll('[data-action="print"]').forEach((button) => {
+        button.addEventListener('click', () => window.print());
+    });
+}
 
 export function initExportActions() {
     if (initialized) return;

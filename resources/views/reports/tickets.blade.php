@@ -15,7 +15,7 @@
             padding: 0;
         }
 
-        /* ---- Marca / cabeçalho ---- */
+        /* ---- Brand / header ---- */
         .brand-bar {
             height: 6px;
             background: linear-gradient(90deg, #ea580c 0%, #ea580c 40%, #14213d 100%);
@@ -35,7 +35,7 @@
         }
         .report-meta strong { color: #14213d; }
 
-        /* ---- Cartões de resumo ---- */
+        /* ---- Summary cards ---- */
         .summary { width: 100%; border-collapse: collapse; margin-bottom: 18px; }
         .summary td {
             width: 20%; padding: 12px 14px; border: 1px solid #e2e8f0; border-radius: 8px;
@@ -45,7 +45,7 @@
         .summary .label { font-size: 8px; text-transform: uppercase; letter-spacing: 0.1em; color: #64748b; }
         .summary .value { font-size: 16px; font-weight: 700; color: #14213d; margin-top: 3px; }
 
-        /* ---- Tabela ---- */
+        /* ---- Table ---- */
         table.data-table { width: 100%; border-collapse: collapse; }
         table.data-table thead th {
             background: #14213d; color: #ffffff;
@@ -67,6 +67,8 @@
         .text-muted { color: #94a3b8; }
         .font-mono { font-family: 'DejaVu Sans Mono', monospace; font-size: 8.5px; color: #475569; }
         .title-cell { font-weight: 600; color: #0f172a; }
+        .unit-min { font-size: 9px; color: #64748b; }
+        .empty-row { padding: 28px; }
 
         /* ---- Badges ---- */
         .badge {
@@ -93,7 +95,7 @@
 
         .badge-urgent { color: #dc2626; font-weight: 800; font-size: 9px; }
 
-        /* ---- Rodapé ---- */
+        /* ---- Footer ---- */
         .page-footer {
             position: fixed; bottom: -36px; left: 32px; right: 32px;
             border-top: 1px solid #e2e8f0; padding-top: 6px;
@@ -120,7 +122,7 @@
                 </div>
             </td>
             <td class="report-meta">
-                <div><strong>Emissão:</strong> (now())</div>
+                <div><strong>Emissão:</strong> {{ now() }}</div>
                 <div><strong>Registos:</strong> {{ $tickets->count() }}</div>
                 <div><strong>Gerado automaticamente</strong></div>
             </td>
@@ -135,15 +137,15 @@
             </td>
             <td>
                 <div class="label">{{ __('common.Duração Total') }}</div>
-                <div class="value">($tickets->sum('minutes_spent'))<span style="font-size:9px;color:#64748b;"> min</span></div>
+                <div class="value">{{ $tickets->sum('minutes_spent') }}<span class="unit-min"> min</span></div>
             </td>
             <td>
                 <div class="label">{{ __('common.Custo Total') }}</div>
-                <div class="value">($tickets->sum('actual_cost'))</div>
+                <div class="value">{{ $tickets->sum('actual_cost') }}</div>
             </td>
             <td>
                 <div class="label">{{ __('common.Orçamento Total') }}</div>
-                <div class="value">($tickets->sum('budget_amount'))</div>
+                <div class="value">{{ $tickets->sum('budget_amount') }}</div>
             </td>
             <td>
                 <div class="label">{{ __('common.Fechados') }}</div>
@@ -196,13 +198,13 @@
                     <td class="font-mono">{{ app(\App\Services\LocalizationService::class)->formatDateTime($t->closed_at) ?: '—' }}</td>
                     <td class="text-right font-mono">
                         @if($t->minutes_spent)
-                            ($t->minutes_spent) <span class="text-muted">m</span>
+                            {{ $t->minutes_spent }} <span class="text-muted">m</span>
                         @else
                             <span class="text-muted">—</span>
                         @endif
                     </td>
                     <td class="text-right font-mono">
-                        ((float) $t->actual_cost)
+                        {{ (float) $t->actual_cost }}
                     </td>
                     <td>
                         <span class="badge badge-{{ (string) ($t->budget_status ?? 'default') }}">
@@ -211,7 +213,7 @@
                     </td>
                     <td class="text-right font-mono">
                         @if($t->budget_amount !== null)
-                            ((float) $t->budget_amount)
+                            {{ (float) $t->budget_amount }}
                         @else
                             <span class="text-muted">—</span>
                         @endif
@@ -219,7 +221,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="12" class="text-center text-muted" style="padding: 28px;">
+                    <td colspan="12" class="text-center text-muted empty-row">
                         Nenhum registo de ticket encontrado para os parâmetros selecionados.
                     </td>
                 </tr>
@@ -230,10 +232,10 @@
             <tfoot>
                 <tr>
                     <td colspan="8">{{ __('common.Total Consolidado') }}</td>
-                    <td class="text-right">($tickets->sum('minutes_spent')) m</td>
-                    <td class="text-right">($tickets->sum('actual_cost'))</td>
+                    <td class="text-right">{{ $tickets->sum('minutes_spent') }} m</td>
+                    <td class="text-right">{{ $tickets->sum('actual_cost') }}</td>
                     <td></td>
-                    <td class="text-right">($tickets->sum('budget_amount'))</td>
+                    <td class="text-right">{{ $tickets->sum('budget_amount') }}</td>
                 </tr>
             </tfoot>
         @endif

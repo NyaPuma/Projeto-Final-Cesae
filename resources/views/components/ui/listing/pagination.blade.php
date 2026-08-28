@@ -1,9 +1,9 @@
 {{--
 |-------------------------------------------------------------------------- |
-| Pagination Container Component (Otimizado)
+| Pagination Container Component (Optimized)
 |-------------------------------------------------------------------------- |
-| Contentor semântico para a paginação (dinâmica via JS ou Blade) com suporte
-| a variáveis do Design System e encaminhamento flexível de atributos.
+| Semantic container for pagination (dynamic via JS or Blade) with Design
+| System variable support and flexible attribute forwarding.
 |--}}
 @props([
     'id' => 'pagination',

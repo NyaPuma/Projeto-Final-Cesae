@@ -93,7 +93,7 @@ final class SupplierController extends Controller
     }
 
     /**
-     * Cria um novo fornecedor.
+     * Creates a new supplier.
      */
     #[OA\Post(
         path: '/admin/suppliers',

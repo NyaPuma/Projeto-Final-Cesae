@@ -170,6 +170,21 @@ final class UiController extends Controller
     }
 
     /**
+     * Renders the detail view for a specific user.
+     */
+    public function userDetail(Request $request, User $targetUser): View
+    {
+        $user = $request->user();
+
+        $targetUser->loadMissing('profile');
+
+        return view('ui.users.show', [
+            'user' => $user,
+            'targetUser' => $targetUser,
+        ]);
+    }
+
+    /**
      * Renders the room management view.
      */
     public function rooms(Request $request): View

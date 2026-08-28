@@ -1,20 +1,25 @@
 {{--
 |-------------------------------------------------------------------------- |
-| Form Field Wrapper Component (Otimizado)
+| Form Field Wrapper Component (Optimized)
 |-------------------------------------------------------------------------- |
-| Envolve campos de formulário gerindo rótulos, estados de obrigatoriedade
-| e espaçamentos de forma totalmente acessível e semântica.
+| Wraps form fields managing labels, required states
+| and spacing in a fully accessible and semantic way.
 |--}}
 @props([
     'id' => null,
+    'name' => null,
     'label' => null,
     'required' => false,
 ])
 
+@php
+    $fieldId = $id ?? ($name ? str_replace(['.', '[', ']'], ['-', '', ''], $name) : null);
+@endphp
+
 <div {{ $attributes->merge(['class' => 'space-y-1.5']) }}>
     @if($label)
         <label
-            {{ $id ? 'for="' . e($id) . '"' : '' }}
+            @if($fieldId) for="{{ $fieldId }}" @endif
             class="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]"
         >
             {{ $label }}

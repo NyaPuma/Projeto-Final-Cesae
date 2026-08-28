@@ -1,56 +1,56 @@
-# Lista de Requisitos do Sistema
+# System Requirements List
 
-### 1. Requisitos Funcionais (RF)
+### 1. Functional Requirements (FR)
 
-#### 1.1 Autenticação, Perfis e Segurança de Identidade
-* **RF01:** O sistema deve suportar três perfis de utilizador distintos e isolados: Operador (Operário), Técnico e Administrador.
-* **RF02:** Qualquer utilizador devidamente autenticado e validado na plataforma (seja Operário, Técnico ou Administrador) deve possuir autonomia para submeter novas avarias operacionais no sistema (**Fluxo Omnicanal In-House**).
-* **RF14 (Requisito de Segurança Crítico):** O sistema deve bloquear o auto-registo público e anónimo de contas. A criação, cadastro e atribuição de perfis (*Roles*) de novos colaboradores na empresa deve ser uma funcionalidade restrita e exclusiva do Administrador através da rota `/admin/users/register`.
+#### 1.1 Authentication, Roles and Identity Security
+* **RF01:** The system must support three distinct and isolated user profiles: Operator (operative), Technician and Administrator.
+* **RF02:** Any duly authenticated and validated platform user (whether operative, technician or administrator) must have the autonomy to submit new operational faults to the system (**In-House Omnichannel Flow**).
+* **RF14 (Critical Security Requirement):** The system must block public, anonymous account self-registration. Creation, enrollment and role assignment (*Roles*) of new company employees must be a restricted feature exclusive to the Administrator via the `/admin/users/register` route.
 
-#### 1.2 Gestão de Ativos e Infraestrutura
-* **RF03:** CRUD completo (Criar, Ler, Atualizar, Eliminar) de equipamentos, categorias e salas pelo Administrador, com suporte a *Soft Deletes* no Eloquent ORM.
-* **RF04:** O sistema deve permitir associar um equipamento a uma sala específica (associação opcional/nullable na base de dados).
+#### 1.2 Asset and Infrastructure Management
+* **RF03:** Full CRUD (Create, Read, Update, Delete) of equipment, categories and rooms by the Administrator, with support for *Soft Deletes* in the Eloquent ORM.
+* **RF04:** The system must allow associating an equipment item with a specific room (optional/nullable association in the database).
 
-#### 1.3 Workflow de Avarias (Core Business)
-* **RF05:** O utilizador deve preencher um registo detalhado (Equipamento, Sala e Descrição por texto livre) ao abrir uma avaria, permitindo opcionalmente o upload de ficheiros de imagem como evidência.
-* **RF06:** Após a abertura, o ticket deve ser encaminhado automaticamente para uma fila global e painel de triagem visível para os técnicos e administradores.
-* **RF07:** O ciclo de vida de uma avaria deve passar obrigatoriamente por 3 estados lógicos imutáveis: Aberto, Em Curso e Fechado.
-* **RF08:** O sistema deve capturar e registar automaticamente no MySQL o *timestamp* de transição entre cada um dos três estados através do horário do servidor (`NOW()`).
-* **RF09:** Ao encerrar um ticket, o técnico é obrigado a introduzir o relatório técnico final, os minutos despendidos e o registo de **peças consumidas do stock interno** da fábrica para cálculo automático de custos.
+#### 1.3 Fault Workflow (Core Business)
+* **RF05:** The user must fill in a detailed record (Equipment, Room and free-text Description) when opening a fault, optionally allowing image file uploads as evidence.
+* **RF06:** After intake, the ticket must be automatically routed to a global queue and triage panel visible to technicians and administrators.
+* **RF07:** The life cycle of a fault must necessarily pass through 3 immutable logical states: Open (`Aberto`), In Progress (`Em Curso`) and Closed (`Fechado`).
+* **RF08:** The system must automatically capture and record in MySQL the *timestamp* of each transition between the three states using server time (`NOW()`).
+* **RF09:** When closing a ticket, the technician is required to enter the final technical report, minutes spent and the record of **parts consumed from internal stock** of the factory for automatic cost calculation.
 
-#### 1.4 Inteligência de Dados, IA e Reatividade
-* **RF10:** Disponibilizar dados estatísticos e gráficos analíticos (MTTR, MTBF e custos) atualizados de forma reativa no ecrã do Administrador (via WebSockets e Laravel Echo) sempre que um ticket for fechado.
-* **RF11:** Motor de IA (`AIService`) integrado como um Sistema de Apoio à Decisão (SAD) para recomendação automática do técnico ideal com base no cruzamento semântico de especialidades e menor volumetria de carga de trabalho atual no MySQL.
-* **RF12:** Triagem e classificação automática da categoria técnica (Mecânica, Elétrica, Informática) através do Processamento de Linguagem Natural (NLP) aplicado ao texto livre digitado na descrição da avaria.
-* **RF13:** Fornecimento de diagnósticos prescritivos baseados no histórico de manutenção e relatórios passados do ativo, exibindo sugestões de peças standard para o técnico.
-
----
-
-### 2. Requisitos Não-Funcionais (RNF)
-
-#### 2.1 Segurança e Auditoria
-* **RNF01:** Todas as palavras-passe dos utilizadores devem ser encriptadas de forma unidirecional com *hashing* seguro utilizando o algoritmo padrão Bcrypt.
-* **RNF02:** Registo imutável de logs de auditoria (`audits`) de todas as alterações estruturais do sistema, armazenando em formato JSON os payloads correspondentes aos estados modificados (`old_values` e `new_values`).
-* **RNF03:** Controlo de acessos baseado em funções (RBAC) através de middlewares injetados no barramento de rotas do Laravel, garantindo o isolamento completo entre perfis.
-
-#### 2.2 Desempenho e Disponibilidade
-* **RNF04:** O tempo de resposta do processamento do `AIService` nas chamadas à API da OpenAI (modelo `gpt-4o-mini`) para geração do JSON de triagem e recomendação técnica não deve exceder 2 segundos.
-* **RNF05:** O sistema deve garantir integridade e persistência transacional completa no banco de dados MySQL, prevenindo perdas de dados em submissões concorrentes através de restrições de chaves estrangeiras.
-
-#### 2.3 Usabilidade e Manutenibilidade
-* **RNF06:** Interface responsiva desenvolvida em Blade/CSS, totalmente adaptada a navegadores modernos e otimizada para o VS Code/ambiente de desenvolvimento escolar.
-* **RNF07:** Conformidade do código-fonte PHP com os padrões PSR do ecossistema Laravel, utilizando o padrão MVC e injeção de dependências para desacoplamento de serviços.
-* **RNF08:** Base de dados MySQL otimizada com indexação eficiente nas chaves estrangeiras e campos de busca frequentes (`status_id`, `assigned_to`, `email`), prevenindo o problema de *N+1 queries* através de *Eager Loading* (`with()`).
+#### 1.4 Data Intelligence, AI and Reactivity
+* **RF10:** Provide statistical data and analytical charts (MTTR, MTBF and costs) updated reactively on the Administrator's screen (via WebSockets and Laravel Echo) whenever a ticket is closed.
+* **RF11:** AI engine (`AIService`) integrated as a Decision Support System (DSS) for automatic recommendation of the ideal technician based on semantic cross-referencing of specialties and the lowest current workload volume in MySQL.
+* **RF12:** Automatic triage and classification of the technical category (Mechanical, Electrical, IT) through Natural Language Processing (NLP) applied to the free text typed in the fault description.
+* **RF13:** Provision of prescriptive diagnoses based on the asset's maintenance history and past reports, displaying standard parts suggestions to the technician.
 
 ---
 
-### 3. Regras de Negócio e Fluxo Operacional
+### 2. Non-Functional Requirements (NFR)
 
-### 3.1 Reatividade e Distribuição In-House
-* O sistema opera num circuito fechado departamental. A criação ou encerramento de qualquer ticket dispara transmissões assíncronas (*Broadcasts*) via WebSockets para atualizar de imediato os ecrãs de gestão e contadores de alertas sem recarregar a página.
-* O encerramento do ticket exige a dedução e contabilização de peças do stock interno, cujo impacto financeiro é somado ao custo de mão de obra para atualização imediata dos KPIs analíticos do Administrador.
+#### 2.1 Security and Auditing
+* **RNF01:** All user passwords must be encrypted one-way with secure *hashing* using the standard Bcrypt algorithm.
+* **RNF02:** Immutable audit log records (`audits`) of all structural changes to the system, storing in JSON format the payloads corresponding to the modified states (`old_values` and `new_values`).
+* **RNF03:** Role-Based Access Control (RBAC) through middlewares injected into the Laravel route bus, ensuring complete isolation between profiles.
 
-### 3.2 Regras de Transição de Estado e SLA
-* **Início de Intervenção:** O técnico assume a propriedade do ticket movendo o estado para `Em Curso`, o que tranca a rota de edição e armazena a timestamp `in_progress_at` via Back-End para início da contagem cronológica de paragem do ativo.
-* **Aprovação Orçamental Excecional:** Caso uma reparação exija componentes dispendiosos, o técnico solicita autorização. O ticket transita para o estado de pausa e suspende o cálculo do SLA até que o Administrador aprove (`approveBudget`) ou rejeite a requisição financeira.
-* **Cancelamento:** A operação de cancelamento de um ticket é estritamente condicional; só é permitida ao operador que o criou e apenas se o registo ainda se encontrar no estado original `Aberto`.
+#### 2.2 Performance and Availability
+* **RNF04:** The response time of `AIService` processing in calls to the OpenAI API (`gpt-4o-mini` model) for generating the triage and technical recommendation JSON must not exceed 2 seconds.
+* **RNF05:** The system must ensure full transactional integrity and persistence in the MySQL database, preventing data loss in concurrent submissions through foreign key constraints.
+
+#### 2.3 Usability and Maintainability
+* **RNF06:** Responsive interface developed in Blade/CSS, fully adapted to modern browsers and optimized for the VS Code/school development environment.
+* **RNF07:** PHP source code compliance with PSR standards of the Laravel ecosystem, using the MVC pattern and dependency injection for service decoupling.
+* **RNF08:** MySQL database optimized with efficient indexing on foreign keys and frequently searched fields (`status_id`, `assigned_to`, `email`), preventing the *N+1 queries* problem through *Eager Loading* (`with()`).
+
+---
+
+### 3. Business Rules and Operational Flow
+
+### 3.1 Reactivity and In-House Distribution
+* The system operates in a closed departmental circuit. The creation or closure of any ticket triggers asynchronous broadcasts (*Broadcasts*) via WebSockets to immediately update management screens and alert counters without reloading the page.
+* Ticket closure requires deduction and accounting of parts from internal stock, whose financial impact is added to labor costs for immediate update of the Administrator's analytical KPIs.
+
+### 3.2 Status Transition Rules and SLA
+* **Start of Intervention:** The technician takes ownership of the ticket by moving the status to `Em Curso`, which locks the editing route and stores the `in_progress_at` timestamp via the Back-End to start the chronological downtime count of the asset.
+* **Exceptional Budget Approval:** If a repair requires expensive components, the technician requests authorization. The ticket transitions to the paused status and suspends SLA calculation until the Administrator approves (`approveBudget`) or rejects the financial request.
+* **Cancellation:** The ticket cancellation operation is strictly conditional; it is only allowed to the operator who created it and only if the record is still in its original `Aberto` state.

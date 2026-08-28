@@ -15,7 +15,6 @@ import { init as initRoomsForm } from '../pages/rooms-form.js';
 import { init as initAnalytics } from '../pages/analytics/index.js';
 import { init as initThemeAppearance } from '../pages/definicoes-aparencia.js';
 import { init as initSystemSettings } from '../pages/definicoes-sistema.js';
-import { init as initErrorPage } from '../pages/error-page.js';
 import { init as initStockDashboard } from '../pages/stock/dashboard.js';
 import { init as initStockParts } from '../pages/stock/parts.js';
 import { init as initStockPartsForm } from '../pages/stock/parts-form.js';
@@ -25,7 +24,8 @@ import { init as initStockMovements } from '../pages/stock/movements.js';
 import { init as initStockTaxRates } from '../pages/stock/tax-rates.js';
 import { init as initStockCategories } from '../pages/stock/categories.js';
 import { init as initStockPlans } from '../pages/stock/plans.js';
-import { initExportActions } from '../pages/analytics/export.js';
+import { initExportActions, initPrintActions } from '../pages/analytics/export.js';
+import { initPublicTicketForm } from '../pages/ticket-public.js';
 import { init as initSwagger } from '../pages/swagger.js';
 
 const pageRegistry = {
@@ -40,6 +40,7 @@ const pageRegistry = {
     users: initUsersManagement,
     'users-create': initUsersForm,
     'users-edit': initUsersForm,
+    'user-detail': initUsersForm,
     'equipments-create': initEquipmentsForm,
     'equipments-edit': initEquipmentsForm,
     'rooms-create': initRoomsForm,
@@ -49,7 +50,6 @@ const pageRegistry = {
     'definicoes-aparencia': initThemeAppearance,
     'definicoes-sistema': initSystemSettings,
     'auth-reset': initAuthReset,
-    error: initErrorPage,
     'stock-dashboard': initStockDashboard,
     'stock-parts': initStockParts,
     'stock-parts-create': initStockPartsForm,
@@ -66,6 +66,8 @@ const pageRegistry = {
 
 export function bootPageModules(root = document) {
     initExportActions();
+    initPrintActions();
+    initPublicTicketForm();
 
     const page = root.body?.dataset.page;
 

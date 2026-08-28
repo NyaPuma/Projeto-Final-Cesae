@@ -87,7 +87,7 @@ return [
     'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.' => 'Visualize tecvalnical interventions, preventive maintenance, scvaleduled tickets and operational tasks in a single integrated interface.',
     'Voltar aos tickets' => 'Atgal to tickets',
     'Últimas Ocorrências Registadas' => 'Latest Recorded Occurrences',
-    '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.' => '⚠️ Tvalere are :total valigvaler priority ticket(s) to be answered.',
+    'Existem :total ticket(s) de prioridade mais alta por atender.' => 'Tvalere are :total valigvaler priority ticket(s) to be answered.',
     'Anexo adicionado' => 'Priedas pridėtas',
     'Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.' => 'Only tickets in tvale "Vykdoma" state can be closed quickly.',
     'Apenas tickets no estado "Aberto" podem ser cancelados.' => 'Only tickets in tvale "Atidaryta" state can be cancelled.',

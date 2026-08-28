@@ -292,17 +292,17 @@ class AuthenticationTest extends TestCase
             'active' => true,
         ]);
 
-        // Email inválido
+        // Invalid email
         $this->postJson('/api/login', ['email' => 'not-an-email', 'password' => 'Password123!'])
             ->assertStatus(422)
             ->assertJsonValidationErrors(['email']);
 
-        // Password em falta
+        // Missing password
         $this->postJson('/api/login', ['email' => $user->email])
             ->assertStatus(422)
             ->assertJsonValidationErrors(['password']);
 
-        // Login com email em maiúsculas + espaços é normalizado para minúsculas
+        // Login with uppercase email + spaces is normalized to lowercase
         $this->post('/api/login', [
             'email' => '  '.strtoupper($user->email).'  ',
             'password' => 'Password123!',

@@ -1,108 +1,108 @@
-# Dashboard Centro Analítico — Dados de Seed & Correções
+# Analytical Center Dashboard — Seed Data & Fixes
 
-Relatório do trabalho de povoamento do dashboard analítico com dados
-realistas e internamente coerentes, e das correções de bugs que produziam
-KPIs a zero (SLA, custos) e a secção "Atividade Recente" vazia.
+Report on the work of populating the analytical dashboard with realistic and
+internally coherent data, and on bug fixes for issues that produced
+KPIs at zero (SLA, costs) and an empty "Recent Activity" section.
 
-## Problema
+## Problem
 
-- `Tempo Médio de Resolução`, `SLA` e `Custo Mensal` apareciam a zero.
-- A "Atividade Recente" nunca mostrava eventos.
+- `Average Resolution Time`, `SLA` and `Monthly Cost` showed up as zero.
+- "Recent Activity" never displayed events.
 
-### Causas-raiz confirmadas
+### Confirmed root causes
 
-1. **Dados**, não queries: as queries analíticas (`TicketKpiQuery`,
-   `MonthlyTicketsQuery`, `costByEquipment`) só somam tickets com
-   `closed_at` + `actual_cost` não-nulos e SLA com `opened_at→closed_at`
-   ≤ 480 min. Os seeders anteriores não gravavam estes campos, logo tudo
-   ficava a zero.
-2. **Atividade Recente**: o componente `activity-timeline-card.blade.php`
-   usava o endpoint `/api/activities` (rota inexistente → 404) e os
-   seeders raw não criavam auditorias (a trait `Auditable` só dispara via
-   Eloquent), pelo que `audits` ficava vazio.
+1. **Data**, not queries: the analytical queries (`TicketKpiQuery`,
+   `MonthlyTicketsQuery`, `costByEquipment`) only sum tickets with non-null
+   `closed_at` + `actual_cost` and SLA with `opened_at→closed_at`
+   ≤ 480 min. The previous seeders did not write these fields, so everything
+   stayed at zero.
+2. **Recent Activity**: the `activity-timeline-card.blade.php`
+   component used the `/api/activities` endpoint (non-existent route → 404) and the
+   raw seeders did not create audits (the `Auditable` trait only fires via
+   Eloquent), so `audits` stayed empty.
 
-## Regras de coerência aplicadas (aprovadas)
+## Coherence rules applied (approved)
 
-- **Volume**: ~1500 tickets ao longo dos últimos 6 meses, com tendência
-  crescente (~150 → ~400/mês).
-- **Estados**: fechada 62%, em curso 18%, aberta 12%, pendente de
-  orçamento 5%, cancelada 2%, recusada 1%.
-- **Prioridades**: baixa 30%, média 40%, alta 25%, crítica 5%.
-- **Origem**: web 55%, QR 25%, telefone 10%, API 7%, mobile 3%.
-- **SLA**: ~80% dos tickets fechados cumprem o SLA de 480 min
-  (MTTR médio ≈ 350 min).
-- **Custos**: apenas em tickets fechados; `actual_cost` ≥ `estimated_cost`;
-  mão-de-obra a 35 €/h × `minutes_spent` + peças.
-- **Horário**: 90% dos tickets entre as 8h e as 18h, de segunda a sexta.
-- **Pareto**: o catálogo de equipamentos tem `weight` de avaria; as salas
-  seguem um peso decrescente (as primeiras 40 com mais ocorrências).
-- **Stock**: movimentos com `stock_after` em cadeia e ~12–18 peças em
+- **Volume**: ~1500 tickets over the last 6 months, with a growing
+  trend (~150 → ~400/month).
+- **Statuses**: closed 62%, in progress 18%, open 12%, pending
+  budget 5%, cancelled 2%, rejected 1%.
+- **Priorities**: low 30%, medium 40%, high 25%, critical 5%.
+- **Origin**: web 55%, QR 25%, phone 10%, API 7%, mobile 3%.
+- **SLA**: ~80% of closed tickets meet the 480-min SLA
+  (average MTTR ≈ 350 min).
+- **Costs**: only on closed tickets; `actual_cost` ≥ `estimated_cost`;
+  labor at €35/h × `minutes_spent` + parts.
+- **Schedule**: 90% of tickets between 8 a.m. and 6 p.m., Monday to Friday.
+- **Pareto**: the equipment catalog has a breakdown `weight`; rooms
+  follow a decreasing weight (the first 40 with the most occurrences).
+- **Stock**: movements with chained `stock_after` and ~12–18 parts in
   low stock.
 
 ## Seeders
 
-| Ficheiro | Descrição |
+| File | Description |
 | --- | --- |
-| `database/seeders/Data/OperationalData.php` | Domínio industrial PT: 40 salas, 30 equipamentos (pesos/descrições), cenários de avaria por categoria, peças com `manufacturer_ref` e faixas de custo, nomes de técnicos/reportantes. |
-| `database/seeders/Data/TicketDataset.php` | Motor determinístico (`mt_srand(20260701)`) que gera 1500 tickets com as regras acima. |
-| `database/seeders/TicketsSeeder.php` | Carga via `DB::insertOrIgnore` em chunks de 500; aborta em produção. |
-| `database/seeders/RoomsSeeder.php` | 3 salas manuais + 40 do catálogo + zonas genéricas (100 salas). |
-| `database/seeders/EquipmentsSeeder.php` | 4 manuais + catálogo com `notes` + genéricos `EQ-NNN-NNNN` (100). |
-| `database/seeders/UsersSeeder.php` | Técnicos com nomes PT reais; perfis admin/technician/user. |
-| `database/seeders/ActivityFeedSeeder.php` | ~40 auditorias nos últimos ~22h (marcador `url='seed:operational'`), idempotente. |
-| `database/seeders/NotificationSeeder.php` | 600 notificações ponderadas por tipo/prioridade. |
-| `database/seeders/StockDataSeeder.php` | Peças por categoria (sem lorem), movimentos `stock_after` em cadeia, low-stock coerente, planos de manutenção. |
+| `database/seeders/Data/OperationalData.php` | PT industrial domain: 40 rooms, 30 pieces of equipment (weights/descriptions), breakdown scenarios by category, parts with `manufacturer_ref` and cost ranges, technician/reporter names. |
+| `database/seeders/Data/TicketDataset.php` | Deterministic engine (`mt_srand(20260701)`) that generates 1500 tickets following the rules above. |
+| `database/seeders/TicketsSeeder.php` | Load via `DB::insertOrIgnore` in chunks of 500; aborts in production. |
+| `database/seeders/RoomsSeeder.php` | 3 manual rooms + 40 from the catalog + generic zones (100 rooms). |
+| `database/seeders/EquipmentsSeeder.php` | 4 manual + catalog entries with `notes` + generic `EQ-NNN-NNNN` (100). |
+| `database/seeders/UsersSeeder.php` | Technicians with real PT names; admin/technician/user profiles. |
+| `database/seeders/ActivityFeedSeeder.php` | ~40 audits within the last ~22h (`url='seed:operational'` marker), idempotent. |
+| `database/seeders/NotificationSeeder.php` | 600 notifications weighted by type/priority. |
+| `database/seeders/StockDataSeeder.php` | Parts by category (no lorem), chained `stock_after` movements, coherent low-stock, maintenance plans. |
 
-Ordem no `DatabaseSeeder`:
+Order in `DatabaseSeeder`:
 `TicketLookupSeeder` → `BulkOperationalDataSeeder`
 (→ `UserProfilesSeeder`, `UsersSeeder`, `RoomsSeeder`,
 `EquipmentCategoriesSeeder`, `EquipmentsSeeder`, `TicketsSeeder`)
 → `StockDataSeeder` → `ActivityFeedSeeder` → `NotificationSeeder`.
 
-## Correções de código
+## Code fixes
 
-- **`routes/api.php`**: registada a rota `GET /api/activities`
-  (`ActivityFeedController@index`), que alimenta o componente
-  `activity-timeline-card`.
-- **`app/Http/Controllers/ActivityFeedController.php`**: novo — feed JSON
-  (`title`, `description`, `time_ago`, `icon_bg`, `dot_color`) a partir de
+- **`routes/api.php`**: registered the `GET /api/activities` route
+  (`ActivityFeedController@index`), which feeds the
+  `activity-timeline-card` component.
+- **`app/Http/Controllers/ActivityFeedController.php`**: new — JSON feed
+  (`title`, `description`, `time_ago`, `icon_bg`, `dot_color`) built from
   `audits`.
-- **`app/Domain/Ticket/Queries/TicketKpiQuery.php`**: `avg_waiting` passa a
-  `diff(opened_at→assigned_at)` com `assigned_at` não-nulo (era
-  `diff(opened_at→NOW)`, distorcido com dados de 6 meses); removida a
-  expressão `nowExpression` agora não usada.
+- **`app/Domain/Ticket/Queries/TicketKpiQuery.php`**: `avg_waiting` now uses
+  `diff(opened_at→assigned_at)` with non-null `assigned_at` (it was
+  `diff(opened_at→NOW)`, skewed by 6 months of data); removed the now-unused
+  `nowExpression`.
 - **`app/Services/AnalyticsDashboardService.php`**:
-  - `system_availability` lido de `services.analytics.*` (a chave antiga
-    `services.custom.analytics.*` não existia);
-  - `sla_target_minutes` da config passado ao `TicketKpiQuery` e usado em
+  - `system_availability` read from `services.analytics.*` (the old key
+    `services.custom.analytics.*` did not exist);
+  - `sla_target_minutes` from config passed to `TicketKpiQuery` and used in
     `monthlyPerformanceData`.
-- **`database/seeders/NotificationSeeder.php`**: prioridade `urgent` →
-  `critical` (valor aceite pelo enum da coluna `notifications.priority`).
+- **`database/seeders/NotificationSeeder.php`**: priority `urgent` →
+  `critical` (value accepted by the enum of the `notifications.priority` column).
 
-## Melhorias de design
+## Design improvements
 
-- **`resources/js/pages/analytics/charts.js`**: empty states "Sem dados
-  para apresentar" em todos os gráficos quando os datasets estão vazios.
-- **`resources/js/pages/analytics/kpi.js`**: formatação pt-PT
-  (`Intl.NumberFormat`) e minutos legíveis (`5h 50m`, `3d 4h`).
+- **`resources/js/pages/analytics/charts.js`**: "No data to display"
+  empty states in all charts when datasets are empty.
+- **`resources/js/pages/analytics/kpi.js`**: pt-PT formatting
+  (`Intl.NumberFormat`) and readable minutes (`5h 50m`, `3d 4h`).
 - **`resources/views/components/ui/analytics/equipment-distribution-card.blade.php`**:
-  título/descrição corrigidos para refletirem o conteúdo real (prioridade
-  dos tickets) em vez de "Equipamentos".
+  title/description corrected to reflect the actual content (ticket
+  priorities) instead of "Equipment".
 
-## Validação
+## Validation
 
-Ambiente sem `php`/`composer`/`npm` executáveis — a validação foi estática:
+Environment without executable `php`/`composer`/`npm` — validation was static:
 
-- Confronto de todas as colunas usadas pelos seeders com as migrações
+- Cross-checked every column used by the seeders against the migrations
   (`tickets`, `audits`, `notifications`, `parts`, `stock_movements`,
   `equipments`, `rooms`).
-- Confronto dos enums (estados, prioridades, orçamento, stock, notificações)
-  com os valores gerados.
-- Balanceamento de chavetas/parênteses dos ficheiros alterados.
-- A rota `/api/activities` foi adicionada fora do grupo `custom.auth`
-  (o componente envia `authHeader()` quando a store existe).
+- Cross-checked the enums (statuses, priorities, budget, stock, notifications)
+  against the generated values.
+- Brace/parenthesis balancing of the changed files.
+- The `/api/activities` route was added outside the `custom.auth` group
+  (the component sends `authHeader()` when the store exists).
 
-Comandos para validar localmente:
+Commands to validate locally:
 
 ```bash
 php artisan migrate:fresh --seed

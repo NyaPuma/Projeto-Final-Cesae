@@ -87,7 +87,7 @@ return [
     'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.' => 'Teknik müdahaleleri, koruyucu bakımı, planlanan ticketları ve operasyonel görevleri tek bir entegre arayüzde görüntüleyin.',
     'Voltar aos tickets' => 'Ticketlara geri dön',
     'Últimas Ocorrências Registadas' => 'Kayıtlı Son Oluşumlar',
-    '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.' => '⚠️ Daha yüksek öncelikli :total ticket var ve bunların işleme alınması gerekiyor.',
+    'Existem :total ticket(s) de prioridade mais alta por atender.' => 'Daha yüksek öncelikli :total ticket var ve bunların işleme alınması gerekiyor.',
     'Anexo adicionado' => 'Ek eklendi',
     'Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.' => 'Yalnızca "Devam Ediyor" durumundaki ticketlar hızlıca kapatılabilir.',
     'Apenas tickets no estado "Aberto" podem ser cancelados.' => 'Yalnızca "Açık" durumundaki ticketlar iptal edilebilir.',

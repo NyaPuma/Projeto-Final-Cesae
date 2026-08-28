@@ -202,13 +202,13 @@ class CommentOperationFeatureTest extends TestCase
         $send = fn (string $comment) => $this->withHeader('X-Auth-Token', $technician->api_token)
             ->postJson("/tickets/{$ticket->id}/comments", ['comment' => $comment]);
 
-        // Comentário com menos de 3 caracteres
+        // Comment with fewer than 3 characters
         $send('ab')->assertStatus(422)->assertJsonValidationErrors(['comment']);
 
-        // Comentário acima de 2000 caracteres
+        // Comment above 2000 characters
         $send(str_repeat('a', 2001))->assertStatus(422)->assertJsonValidationErrors(['comment']);
 
-        // Exatamente 2000 caracteres é aceite
+        // Exactly 2000 characters is accepted
         $send(str_repeat('a', 2000))->assertCreated();
     }
 }

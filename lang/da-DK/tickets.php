@@ -87,7 +87,7 @@ return [
     'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.' => 'Visualisér tekniske indsatser, forebyggende vedligeholdelse, planlagte sager og operationelle opgaver i en enkelt integreret grænseflade.',
     'Voltar aos tickets' => 'Tilbage til sager',
     'Últimas Ocorrências Registadas' => 'Seneste Registrerede Hændelser',
-    '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.' => '⚠️ Der er :total sag(er) med højere prioritet at håndtere.',
+    'Existem :total ticket(s) de prioridade mais alta por atender.' => 'Der er :total sag(er) med højere prioritet at håndtere.',
     'Anexo adicionado' => 'Vedhæftning tilføjet',
     'Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.' => 'Kun sager med status "I Gang" kan lukkes hurtigt.',
     'Apenas tickets no estado "Aberto" podem ser cancelados.' => 'Kun sager med status "Åben" kan annulleres.',

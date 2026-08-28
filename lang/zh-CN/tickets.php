@@ -87,7 +87,7 @@ return [
     'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.' => '在单一集成界面中查看技术维修、预防性维护、计划工单和运营任务。',
     'Voltar aos tickets' => '返回工单',
     'Últimas Ocorrências Registadas' => '最近登记的事件',
-    '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.' => '⚠️ 有 :total 个更高优先级的工单等待处理。',
+    'Existem :total ticket(s) de prioridade mais alta por atender.' => '有 :total 个更高优先级的工单等待处理。',
     'Anexo adicionado' => '已添加附件',
     'Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.' => '只有状态为“进行中”的工单才能快速关闭。',
     'Apenas tickets no estado "Aberto" podem ser cancelados.' => '只有状态为“已打开”的工单才能取消。',

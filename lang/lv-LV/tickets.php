@@ -87,7 +87,7 @@ return [
     'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.' => 'Visualize tecstnical interventions, preventive maintenance, scsteduled tickets and operational tasks in a single integrated interface.',
     'Voltar aos tickets' => 'Atpakaļ to tickets',
     'Últimas Ocorrências Registadas' => 'Latest Recorded Occurrences',
-    '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.' => '⚠️ Tstere are :total stigster priority ticket(s) to be answered.',
+    'Existem :total ticket(s) de prioridade mais alta por atender.' => 'Tstere are :total stigster priority ticket(s) to be answered.',
     'Anexo adicionado' => 'Pielikums pievienots',
     'Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.' => 'Only tickets in tste "Nētiek" state can be closed quickly.',
     'Apenas tickets no estado "Aberto" podem ser cancelados.' => 'Only tickets in tste "Atvērts" state can be cancelled.',

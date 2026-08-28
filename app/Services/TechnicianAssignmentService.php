@@ -70,7 +70,7 @@ final class TechnicianAssignmentService
     }
 
     /**
-     * Encontra o ticket aberto mais urgente com base na prioridade e na data de criação.
+     * Finds the most urgent open ticket based on priority and creation date.
      *
      * @param int|null $excludeId
      * @return Ticket|null

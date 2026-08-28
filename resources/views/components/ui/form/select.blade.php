@@ -1,9 +1,9 @@
 {{--
 |-------------------------------------------------------------------------- |
-| Form Select Component (Otimizado)
+| Form Select Component (Optimized)
 |-------------------------------------------------------------------------- |
-| Elemento de seleção reutilizável integrado com o Design System e suporte
-| a atributos dinâmicos e slots para as opções.
+| Reusable select element integrated with the Design System with support
+| for dynamic attributes and slots for options.
 |--}}
 @props([
     'id' => null,

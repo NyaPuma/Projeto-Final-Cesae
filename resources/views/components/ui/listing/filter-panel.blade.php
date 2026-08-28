@@ -1,9 +1,9 @@
 {{--
 |-------------------------------------------------------------------------- |
-| Filter / Listing Panel Component (Otimizado)
+| Filter / Listing Panel Component (Optimized)
 |-------------------------------------------------------------------------- |
-| Contentor de grelha para filtros e ações de pesquisa com suporte a
-| variáveis do Design System e secções modulares.
+| Grid container for filters and search actions with Design System
+| variable support and modular sections.
 |--}}
 @props([
     'results_id' => 'resultsCount',

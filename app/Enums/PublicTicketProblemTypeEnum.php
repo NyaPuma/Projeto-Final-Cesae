@@ -44,15 +44,15 @@ enum PublicTicketProblemTypeEnum: string
     }
 
     /**
-     * Indicative emoji for the public ticket form selector.
+     * Icon identifier for the problem type (Heroicons outline naming).
      */
     public function icon(): string
     {
         return match ($this) {
-            self::Breakdown => '⚙️',
-            self::Preventive => '🔧',
-            self::Consumables => '🧰',
-            self::Other => '📝',
+            self::Breakdown => 'heroicon-o-wrench-screwdriver',
+            self::Preventive => 'heroicon-o-shield-check',
+            self::Consumables => 'heroicon-o-shopping-cart',
+            self::Other => 'heroicon-o-document-text',
         };
     }
 

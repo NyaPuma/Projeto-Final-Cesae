@@ -1,10 +1,10 @@
 {{--
 |--------------------------------------------------------------------------
-| Theme meta (modo, tema ativo, presets)
+| Theme meta (mode, active theme, presets)
 |--------------------------------------------------------------------------
-| Fornece ao JS (early-theme.js / core/theme.js) o modo claro/escuro
-| autoritativo (vem do tema guardado) e a lista de presets para o botão
-| de alternância trocar para o equivalente da mesma família.
+| Provides JS (early-theme.js / core/theme.js) with the authoritative
+| light/dark mode (from saved theme) and the list of presets for the
+| toggle button to switch to the equivalent in the same family.
 | --}}
 @php
     $themePresets = app(\App\Services\ThemePresetService::class);
@@ -18,7 +18,7 @@
         $themeMode = $themeActive['mode'] === 'dark' ? 'dark' : 'light';
         $themeActiveId = $themeActive['id'] ?? $themeActiveId;
     } catch (\Throwable $e) {
-        // theme_settings ainda não disponível (ex.: migrações por correr)
+        // theme_settings not yet available (e.g. migrations pending)
     }
 @endphp
 <meta name="theme-mode" content="{{ $themeMode }}">

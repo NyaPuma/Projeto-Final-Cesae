@@ -3,9 +3,8 @@
 | Autocomplete Service
 |--------------------------------------------------------------------------
 |
-| Orquestra SearchEngine, NavigationManager e DropdownManager.
-| Responsável por gerir o estado da pesquisa e a lógica de navegação.
-|
+| Refactored to use our standard ApiClient, handling
+| errors and response formatting centrally.
 */
 
 import SearchEngine from '../core/search-engine';
@@ -17,7 +16,7 @@ export default class AutocompleteService {
         this.results = [];
         this.loading = false;
 
-        // Callbacks para a UI reagir às mudanças
+        // Callbacks for the UI to react to changes
         this.onResults = options.onResults ?? (() => {});
         this.onNavigate = options.onNavigate ?? (() => {});
 
@@ -26,7 +25,7 @@ export default class AutocompleteService {
         this.navigation = new NavigationManager({
             count: () => this.results.length,
             loop: true,
-            // O NavigationManager notifica a UI quando o índice muda
+            // NavigationManager notifies the UI when the index changes
             onNavigate: (index) => this.onNavigate(this.results[index], index)
         });
 
@@ -94,9 +93,9 @@ export default class AutocompleteService {
         return index > -1 ? this.results[index] : null;
     }
 
-    // Importante para evitar Memory Leaks em Single Page Applications
+    // Important to prevent Memory Leaks in Single Page Applications
     destroy() {
-        this.dropdown.destroy?.(); // Se o dropdown tiver um método destroy
+        this.dropdown.destroy?.(); // If the dropdown has a destroy method
         this.results = [];
         this.navigation.reset();
     }

@@ -1,12 +1,12 @@
 /**
  * Theme Management Module
- * Gestão de temas emparelhados por família de cor (14 claros + 14 escuros).
+ * Theme management paired by color family (14 light + 14 dark).
  *
- * O modo claro/escuro autoritativo vem do tema guardado no servidor
- * (meta `theme-mode`). Em contas admin, o botão do painel troca para o
- * equivalente da mesma família (ex.: laranja claro <-> laranja escuro) e
- * guarda-o automaticamente em theme_settings. Em contas não-admin a
- * alternância é local (CSS + localStorage).
+ * The authoritative light/dark mode comes from the theme saved on the server
+ * (meta `theme-mode`). In admin accounts, the panel button switches to the
+ * equivalent of the same family (e.g., light orange <-> dark orange) and
+ * saves it automatically in theme_settings. In non-admin accounts,
+ * the toggle is local (CSS + localStorage).
  */
 
 const THEME_COLOR_KEYS = {
@@ -43,8 +43,8 @@ function isAdmin() {
 }
 
 /**
- * Modo inicial: o servidor manda (meta theme-mode). Para admins, uma
- * preferência antiga no localStorage que contradiga o servidor é limpa.
+ * Initial mode: the server sends (meta theme-mode). For admins, an
+ * old localStorage preference that contradicts the server is cleared.
  * @returns {boolean}
  */
 export function isDarkModeDefault() {
@@ -60,7 +60,7 @@ export function isDarkModeDefault() {
 }
 
 /**
- * Initialize theme based on the server theme mode (or localStorage p/ não-admin)
+ * Initialize theme based on the server theme mode (or localStorage for non-admin)
  */
 export function initTheme() {
     const isDark = isDarkModeDefault();
@@ -75,8 +75,8 @@ export function initTheme() {
 }
 
 /**
- * Lista de presets (28: 14 claros + 14 escuros) partilhada com a página
- * de definições. Usa o JSON embebido no layout, cacheado em window.
+ * Preset list (28: 14 light + 14 dark) shared with the settings page.
+ * Uses the JSON embedded in the layout, cached in window.
  */
 export function getThemePresets() {
     if (Array.isArray(window.uiThemePresets)) {
@@ -91,7 +91,7 @@ export function getThemePresets() {
             window.uiThemePresets = list;
             return list;
         } catch (e) {
-            // presets inválidos — segue sem dados
+            // invalid presets — continue without data
         }
     }
 
@@ -152,7 +152,7 @@ function darkenHex(hex, amount = 0.12) {
 }
 
 /**
- * Aplica um preset às variáveis CSS (mesmo resultado que o /theme/custom.css).
+ * Applies a preset to CSS variables (same result as /theme/custom.css).
  */
 export function applyThemePreset(preset) {
     const root = document.documentElement;
@@ -172,9 +172,9 @@ export function applyThemePreset(preset) {
 }
 
 /**
- * Identifica o preset ativo. Para admins, o servidor (meta active-theme) manda
- * e reconcilia uma preferência local divergente; para não-admins manda o
- * localStorage. Em último caso reconhece pelos valores CSS aplicados.
+ * Identifies the active preset. For admins, the server (meta active-theme)
+ * takes precedence and reconciles a divergent local preference; for non-admins
+ * localStorage takes precedence. As a last resort, matches by applied CSS values.
  */
 function findActivePreset(presets) {
     const metaActive = getMeta('active-theme');
@@ -253,13 +253,13 @@ function persistThemeSwitch(themeId) {
         },
         body: JSON.stringify({ theme: themeId }),
     }).catch(() => {
-        // falha silenciosa: a alteração local mantém-se até ao próximo carregamento
+        // silent failure: the local change persists until the next load
     });
 }
 
 /**
- * Alterna para o equivalente claro/escuro da mesma família e guarda (admin).
- * @returns {boolean} Estado dark após a alternância (síncrono)
+ * Toggles to the light/dark equivalent of the same family and saves (admin).
+ * @returns {boolean} Dark state after the toggle (synchronous)
  */
 export function toggleTheme() {
     const presets = getThemePresets();

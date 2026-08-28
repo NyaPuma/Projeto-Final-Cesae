@@ -3,11 +3,11 @@
 | Metric Card Component
 |--------------------------------------------------------------------------
 |
-| Cartão estatístico para exibição de métricas com título, valor, ícone e descrição.
-| • 100% livre de CSS ou JS inline.
-| • Sintaxe de variáveis CSS corrigida e segura para o Tailwind.
-| • Suporte a atributos globais via $attributes.
-| • Verificações defensivas para elementos opcionais.
+| Statistical card for displaying metrics with title, value, icon and description.
+| • 100% free of inline CSS or JS.
+| • CSS variable syntax corrected and safe for Tailwind.
+| • Global attribute support via $attributes.
+| • Defensive checks for optional elements.
 |
 --}}
 
@@ -16,7 +16,7 @@
     'value_id' => null,
     'default_value' => '--',
     'description' => null,
-    'icon_bg_class' => 'bg-emerald-500/10',
+    'icon_bg_class' => 'bg-primary/10',
     'icon_color_class' => null,
     'icon' => null,
 ])

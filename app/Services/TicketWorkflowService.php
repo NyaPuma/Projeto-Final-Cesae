@@ -81,7 +81,7 @@ final class TicketWorkflowService
     }
 
     /**
-     * Verifica se o ticket pode ser auto-fechado com base no limiar de custo definido.
+     * Checks if the ticket can be auto-closed based on the configured cost threshold.
      *
      * @param Ticket $ticket
      * @param float $threshold

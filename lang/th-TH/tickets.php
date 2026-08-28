@@ -87,7 +87,7 @@ return [
     'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.' => 'ดูการซ่อมแซมทางเทคนิค การบำรุงรักษาเชิงป้องกัน ตั๋วที่กำหนดเวลา และงานปฏิบัติการในอินเทอร์เฟซแบบรวมเดียว',
     'Voltar aos tickets' => 'กลับไปยังตั๋ว',
     'Últimas Ocorrências Registadas' => 'เหตุการณ์ล่าสุดที่บันทึกไว้',
-    '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.' => '⚠️ มี :total ตั๋วที่มีความสำคัญสูงกว่ารอการจัดการ',
+    'Existem :total ticket(s) de prioridade mais alta por atender.' => 'มี :total ตั๋วที่มีความสำคัญสูงกว่ารอการจัดการ',
     'Anexo adicionado' => 'เพิ่มไฟล์แนบแล้ว',
     'Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.' => 'เฉพาะตั๋วที่มีสถานะ "กำลังดำเนินการ" เท่านั้นที่สามารถปิดได้อย่างรวดเร็ว',
     'Apenas tickets no estado "Aberto" podem ser cancelados.' => 'เฉพาะตั๋วที่มีสถานะ "เปิดแล้ว" เท่านั้นที่สามารถยกเลิกได้',

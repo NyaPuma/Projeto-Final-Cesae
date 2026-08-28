@@ -87,7 +87,7 @@ return [
     'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.' => 'View technical interventions, preventative maintenance, scheduled tickets and operational tasks in a single integrated interface.',
     'Voltar aos tickets' => 'Back to tickets',
     'Últimas Ocorrências Registadas' => 'Latest Recorded Occurrences',
-    '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.' => '⚠️ There are :total higher priority ticket(s) to be answered.',
+    'Existem :total ticket(s) de prioridade mais alta por atender.' => 'There are :total higher priority ticket(s) to be answered.',
     'Anexo adicionado' => 'Attachment added',
     'Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.' => 'Only tickets in the "In Progress" state can be closed quickly.',
     'Apenas tickets no estado "Aberto" podem ser cancelados.' => 'Only tickets in the "Open" state can be cancelled.',

@@ -1,39 +1,39 @@
-## Workflow & Regras de Transição de Estados e Auditoria
+## Workflow & State Transition Rules and Auditing
 
-O ciclo de vida de uma avaria é gerido de forma estrita via Eloquent ORM. Todas as ações operacionais disparam eventos que alimentam o histórico em background através da infraestrutura de migrações e tabelas de auditoria do sistema, registando na tabela `audits` os utilizadores, os payloads estruturados em JSON com os campos modificados (`old_values` e `new_values`) e os timestamps automáticos de controlo (`created_at`, `in_progress_at`, `closed_at`). 
+The lifecycle of a fault is strictly managed via Eloquent ORM. All operational actions dispatch events that feed the background history through the system's migration infrastructure and audit tables, recording in the `audits` table the users, JSON-structured payloads with modified fields (`old_values` and `new_values`), and automatic control timestamps (`created_at`, `in_progress_at`, `closed_at`).
 
-Cada transição de estado ou novo comentário introduzido dispara adicionalmente um **Job assíncrono** na fila (*Queue*) para despachar notificações em tempo real via **WebSockets** (através do Laravel Echo / Pusher) e e-mails formatados.
+Each state transition or new comment additionally dispatches an **asynchronous Job** in the Queue to send real-time notifications via **WebSockets** (through Laravel Echo / Pusher) and formatted emails.
 
-### Detalhe das Transições e Comportamento Esperado
+### Transition Details and Expected Behavior
 
-#### 1. De [Aberto] para [Em Curso]
-* **Gatilho:** O Administrador aprova e submete a alocação técnica na interface assistida por IA (`PATCH /admin/tickets/{id}/atribuir`) ou o Técnico clica em "Iniciar Reparação" no seu painel exclusivo (`PUT /technician/tickets/{id}/start`).
-* **Regra de Negócio:**
-  - O sistema associa o ID do técnico ao campo `assigned_to` na tabela `tickets`.
-  - O servidor injeta automaticamente o carimbo de data/hora atual na coluna `in_progress_at` via macro `now()`.
-  - O ticket fica bloqueado para edição ou reatribuição por outros utilizadores.
-  - **Notificação:** O criador do ticket (`user_id`) recebe um alerta em tempo real via WebSockets e uma notificação por e-mail a avisar que a intervenção começou.
+#### 1. From [Open] to [In Progress]
+* **Trigger:** The Administrator approves and submits the technical allocation in the AI-assisted interface (`PATCH /admin/tickets/{id}/atribuir`) or the Technician clicks "Start Repair" on their exclusive panel (`PUT /technician/tickets/{id}/start`).
+* **Business Rule:**
+  - The system associates the technician ID to the `assigned_to` field in the `tickets` table.
+  - The server automatically injects the current timestamp into the `in_progress_at` column via the `now()` macro.
+  - The ticket is locked for editing or reassignment by other users.
+  - **Notification:** The ticket creator (`user_id`) receives a real-time alert via WebSockets and an email notification warning that the intervention has started.
 
-#### 2. De [Em Curso] para [Pendente de Orçamento] (Fluxo Excecional)
-* **Gatilho:** O Técnico deteta a necessidade de adquirir componentes externos de alto custo e dispara a rota `PUT /technician/tickets/{id}/request-budget`.
-* **Regra de Negócio:**
-  - A inclusão da estimativa financeira (`budget_amount`) e a justificação técnica tornam-se campos obrigatórios no formulário.
-  - O estado do ticket muda para o identificador de pausa orçamental e o cronómetro operacional de resolução (SLA) é **suspenso**.
-  - **Notificação:** O Administrador recebe um aviso instantâneo no seu dashboard e os contadores reativos incrementam o alerta.
+#### 2. From [In Progress] to [Pending Budget] (Exceptional Workflow)
+* **Trigger:** The Technician detects the need to acquire high-cost external components and dispatches route `PUT /technician/tickets/{id}/request-budget`.
+* **Business Rule:**
+  - The financial estimate (`budget_amount`) and technical justification become mandatory fields in the form.
+  - The ticket state changes to the budget pause identifier and the operational resolution timer (SLA) is **suspended**.
+  - **Notification:** The Administrator receives an instant warning on their dashboard and reactive counters increment the alert.
 
-#### 3. De [Pendente de Orçamento] para [Em Curso] ou [Cancelado]
-* **Gatilho:** O Administrador toma uma ação de decisão financeira sobre o orçamento na rota protegida `PATCH /admin/tickets/{id}/approve-budget`.
-* **Regra de Negócio:**
-  - **Se Aprovado:** O ticket regressa ao estado `Em Curso`, o campo `budget_approved_by` grava o ID do administrador, o SLA é reativado no servidor e o técnico recebe um push em tempo real para prosseguir com a reparação.
-  - **Se Rejeitado:** O ticket é movido para o estado `Cancelado`, exigindo feedback do Administrador. A timestamp `closed_at` é preenchida.
+#### 3. From [Pending Budget] to [In Progress] or [Cancelled]
+* **Trigger:** The Administrator takes a financial decision action on the budget at the protected route `PATCH /admin/tickets/{id}/approve-budget`.
+* **Business Rule:**
+  - **If Approved:** The ticket returns to the `In Progress` state, the `budget_approved_by` field records the administrator ID, the SLA is reactivated on the server, and the technician receives a real-time push to proceed with the repair.
+  - **If Rejected:** The ticket is moved to the `Cancelled` state, requiring Administrator feedback. The `closed_at` timestamp is filled.
 
-#### 4. De [Em Curso] para [Fechado]
-* **Gatilho:** O Técnico conclui a reparação mecânica/elétrica física na fábrica e clica em "Encerrar Ticket" (`PUT /technician/tickets/{id}/close`).
-* **Regra de Negócio:**
-  - O *Form Request* obriga à introdução descritiva do relatório técnico final, dos minutos gastos (`minutes_spent`) e do registo das peças consumidas do stock interno.
-  - O sistema grava a timestamp final na coluna `closed_at` e atualiza reativamente os dashboards estatísticos (`Chart.js`) via WebSockets. O ticket é trancado, impedindo a inserção de novos comentários operacionais.
+#### 4. From [In Progress] to [Closed]
+* **Trigger:** The Technician completes the physical mechanical/electrical repair in the factory and clicks "Close Ticket" (`PUT /technician/tickets/{id}/close`).
+* **Business Rule:**
+  - The *Form Request* requires descriptive entry of the final technical report, minutes spent (`minutes_spent`), and a record of parts consumed from internal stock.
+  - The system records the final timestamp in the `closed_at` column and reactively updates statistical dashboards (`Chart.js`) via WebSockets. The ticket is locked, preventing insertion of new operational comments.
 
-#### 5. De [Aberto] para [Cancelado]
-* **Gatilho:** O operador decide anular o alerta por erro de registo ou duplicação via rota `POST /tickets/{id}/cancel`.
-* **Regra de Negócio:**
-  - **Condição Estrita de Segurança:** A operação só é validada pelo controlador se o ticket permanecer com o estado original `Aberto` e se o `user_id` corresponder ao criador do registo. Se o ticket já tiver sido assumido por um técnico (`Em Curso`), o controlador bloqueia a requisição e devolve uma exceção HTTP `403 Access Denied`.
+#### 5. From [Open] to [Cancelled]
+* **Trigger:** The operator decides to cancel the alert due to a registration error or duplication via route `POST /tickets/{id}/cancel`.
+* **Business Rule:**
+  - **Strict Security Condition:** The operation is only validated by the controller if the ticket remains in the original `Open` state and the `user_id` matches the record creator. If the ticket has already been claimed by a technician (`In Progress`), the controller blocks the request and returns an HTTP `403 Access Denied` exception.

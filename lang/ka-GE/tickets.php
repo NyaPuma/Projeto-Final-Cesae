@@ -87,7 +87,7 @@ return [
     'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.' => 'Visualize tecსთnical interventions, preventive maintenance, scსთeდuleდ tickets anდ operational tasks in a single integrateდ interface.',
     'Voltar aos tickets' => 'უკან to tickets',
     'Últimas Ocorrências Registadas' => 'Latest Recorდeდ Occurrences',
-    '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.' => '⚠️ Tსთere are :total სთigსთer priority ticket(s) to be answereდ.',
+    'Existem :total ticket(s) de prioridade mais alta por atender.' => 'Tსთere are :total სთigსთer priority ticket(s) to be answereდ.',
     'Anexo adicionado' => 'დანართი დაემატა',
     'Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.' => 'Only tickets in tსთe "მიმდინარე" state can be closeდ quickly.',
     'Apenas tickets no estado "Aberto" podem ser cancelados.' => 'Only tickets in tსთe "ღია" state can be cancelleდ.',

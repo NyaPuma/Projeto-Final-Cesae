@@ -2,8 +2,8 @@
 |-------------------------------------------------------------------------- |
 | Page Action Create Button Component
 |-------------------------------------------------------------------------- |
-| Botão de ação rápida otimizado para o Design System, com suporte a
-| propriedades flexíveis, slots e ícones dinâmicos.
+| Quick-action button optimized for the Design System, with flexible
+| properties, slots and dynamic icons.
 |--}}
 @props([
     'label' => null,

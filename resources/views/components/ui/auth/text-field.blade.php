@@ -3,10 +3,10 @@
 | Form Input Component Wrapper
 |--------------------------------------------------------------------------
 |
-| Componente wrapper para campos de formulário padrão com suporte a rótulos e validação.
-| • 100% livre de CSS ou JS inline.
-| • Preservação automática de dados via função old() em falhas de validação.
-| • Limpeza de carateres invisíveis para perfeita compilação no motor Blade.
+| Wrapper component for standard form fields with label and validation support.
+| • 100% free of inline CSS or JS.
+| • Automatic data preservation via old() function on validation failures.
+| • Invisible character cleanup for perfect Blade engine compilation.
 |
 --}}
 
@@ -21,7 +21,7 @@
     'value' => null,
 ])
 
-<x-ui.form.field :id="$id" :label="$label" :required="$required">
+<x-ui.form.field :id="$id" :name="$name" :label="$label" :required="$required">
     <x-ui.form.input
         :id="$id"
         :name="$name"

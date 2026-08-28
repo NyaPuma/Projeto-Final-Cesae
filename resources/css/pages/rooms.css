@@ -1,0 +1,3 @@
+.room-capacity-fill {
+    width: var(--capacity, 0%);
+}

@@ -34,7 +34,7 @@ function buildPayload() {
 function showMessage(element, text, isError) {
     element.textContent = text;
     element.className = 'min-h-6 text-sm font-medium ' + (isError
-        ? 'text-red-600 dark:text-red-400'
+        ? 'text-danger'
         : 'text-[var(--text-soft)]');
 }
 
@@ -69,7 +69,7 @@ function handleSubmit(e) {
             showMessage(message, mode === 'edit'
                 ? 'Equipamento atualizado com sucesso!'
                 : 'Equipamento criado com sucesso!', false);
-            message.className = 'min-h-6 text-sm font-medium text-emerald-600 dark:text-emerald-400';
+            message.className = 'min-h-6 text-sm font-medium text-success';
             setTimeout(() => { window.location.href = '/ui/equipments'; }, 1500);
         })
         .catch(err => {

@@ -1,0 +1,232 @@
+/*
+|--------------------------------------------------------------------------
+| Color-Blindness Accessibility Themes
+|--------------------------------------------------------------------------
+| Overrides for the design tokens defined in tokens.css and variables.css.
+| Activated via data-theme attribute on <html>:
+|   data-theme="protanopia"   — red cones absent/reduced (types 1–2)
+|   data-theme="deuteranopia" — green cones absent/reduced (types 3–4, most prevalent)
+|   data-theme="tritanopia"   — blue cones absent/reduced (types 5–6)
+|   data-theme="acromatopsia" — no color perception (types 7–8)
+|
+| Dark mode: use class="dark" on <html> (not data-theme="dark"):
+|   <html class="dark" data-theme="protanopia">
+|
+| Strategy per group:
+|   Protan/Deutan — axis shifts from red↔green to purple↔teal; yellow for warning
+|   Tritan        — red/green preserved; info shifts to purple; warning to orange
+|   Acromatopsia  — full luminance separation (0.02 → 0.59)
+|
+| Only --color-* tokens and --*-rgb aliases are overridden.
+| Grayscale tokens (surfaces, text, borders) require no changes.
+*/
+
+
+/* =========================================================================
+   Group A — Protanopia / Deuteranopia
+   Red-green confusion resolved: success→teal, danger→purple, warning→yellow
+========================================================================= */
+
+[data-theme="protanopia"],
+[data-theme="deuteranopia"] {
+
+    /* --- Success (teal, outside red-green zone) --- */
+    --color-success: #0891b2;
+    --color-success-light: rgba(8, 145, 178, 0.12);
+    --success-rgb: 8, 145, 178;
+
+    /* --- Warning (pure yellow, highest luminance) --- */
+    --color-warning: #eab308;
+    --color-warning-hover: #ca8a04;
+    --color-warning-light: rgba(234, 179, 8, 0.12);
+    --warning-rgb: 234, 179, 8;
+
+    /* --- Danger (purple, fully distinct from teal) --- */
+    --color-danger: #7c3aed;
+    --color-danger-light: rgba(124, 58, 237, 0.12);
+    --danger-rgb: 124, 58, 237;
+
+    /* --- Ticket states mirror their semantic counterparts --- */
+    --color-ticket-resolved: #0891b2;
+    --color-ticket-in-progress: #eab308;
+    --color-ticket-urgent: #7c3aed;
+
+    /* --- RGB aliases for components using rgba() --- */
+    --primary-rgb: 194, 65, 12;
+}
+
+/* Dark mode: activate via class="dark" (not data-theme="dark") when combined
+   with a color-blind theme, e.g. <html class="dark" data-theme="protanopia"> */
+[data-theme="protanopia"].dark,
+[data-theme="deuteranopia"].dark {
+
+    --color-success: #22d3ee;
+    --color-success-light: rgba(34, 211, 238, 0.12);
+    --success-rgb: 34, 211, 238;
+
+    --color-warning: #fde047;
+    --color-warning-hover: #eab308;
+    --color-warning-light: rgba(253, 224, 71, 0.12);
+    --warning-rgb: 253, 224, 71;
+
+    --color-danger: #a78bfa;
+    --color-danger-light: rgba(167, 139, 250, 0.12);
+    --danger-rgb: 167, 139, 250;
+
+    --color-info: #60a5fa;
+    --color-info-light: rgba(96, 165, 250, 0.12);
+    --info-rgb: 96, 165, 250;
+
+    --color-ticket-resolved: #22d3ee;
+    --color-ticket-in-progress: #fde047;
+    --color-ticket-urgent: #a78bfa;
+    --color-ticket-open: #60a5fa;
+}
+
+
+/* =========================================================================
+   Group B — Tritanopia / Tritanomalia
+   Blue-green confusion resolved: info→purple, warning→orange;
+   red (danger) and green (success) preserved.
+========================================================================= */
+
+[data-theme="tritanopia"] {
+
+    /* --- Success (green, preserved — clear for tritanopes) --- */
+    --color-success: #16a34a;
+    --color-success-light: rgba(22, 163, 74, 0.12);
+    --success-rgb: 22, 163, 74;
+
+    /* --- Warning (orange, avoids yellow→pink confusion) --- */
+    --color-warning: #f97316;
+    --color-warning-hover: #ea580c;
+    --color-warning-light: rgba(249, 115, 22, 0.12);
+    --warning-rgb: 249, 115, 22;
+
+    /* --- Danger (red, preserved — clear for tritanopes) --- */
+    --color-danger: #b91c1c;
+    --color-danger-light: rgba(185, 28, 28, 0.12);
+    --danger-rgb: 185, 28, 28;
+
+    /* --- Info (purple, avoids blue→green confusion) --- */
+    --color-info: #7c3aed;
+    --color-info-light: rgba(124, 58, 237, 0.12);
+    --info-rgb: 124, 58, 237;
+
+    /* --- Ticket states --- */
+    --color-ticket-open: #7c3aed;
+    --color-ticket-in-progress: #f97316;
+    --color-ticket-resolved: #16a34a;
+    --color-ticket-urgent: #b91c1c;
+
+    --primary-rgb: 194, 65, 12;
+}
+
+[data-theme="tritanopia"].dark {
+
+    --color-success: #4ade80;
+    --color-success-light: rgba(74, 222, 128, 0.12);
+    --success-rgb: 74, 222, 128;
+
+    --color-warning: #fb923c;
+    --color-warning-hover: #f97316;
+    --color-warning-light: rgba(251, 146, 60, 0.12);
+    --warning-rgb: 251, 146, 60;
+
+    --color-danger: #f87171;
+    --color-danger-light: rgba(248, 113, 113, 0.12);
+    --danger-rgb: 248, 113, 113;
+
+    --color-info: #a78bfa;
+    --color-info-light: rgba(167, 139, 250, 0.12);
+    --info-rgb: 167, 139, 250;
+
+    --color-ticket-open: #a78bfa;
+    --color-ticket-in-progress: #fb923c;
+    --color-ticket-resolved: #4ade80;
+    --color-ticket-urgent: #f87171;
+}
+
+
+/* =========================================================================
+   Group C — Acromatopsia / Acromatomalia
+   No color perception — all meaning conveyed via luminance.
+
+   Luminance separation (light mode):
+     Danger  0.02 ▓▓▓▓▓▓▓▓▓▓ (darkest)
+     Info    0.07 ▓▓▓▓▓▓▓▓░░
+     Primary 0.17 ▓▓▓▓▓▓░░░░
+     Success 0.30 ▓▓▓▓░░░░░░
+     Warning 0.59 ░░░░░░░░░░ (lightest)
+========================================================================= */
+
+[data-theme="acromatopsia"] {
+
+    /* --- Primary (mid-dark, between info and success) --- */
+    --color-primary: #c2410c;
+    --color-primary-hover: #9a3412;
+    --color-primary-light: rgba(194, 65, 12, 0.12);
+    --primary-rgb: 194, 65, 12;
+
+    /* --- Success (medium-light, L≈0.30) --- */
+    --color-success: #15803d;
+    --color-success-light: rgba(21, 128, 61, 0.12);
+    --success-rgb: 21, 128, 61;
+
+    /* --- Warning (lightest, L≈0.59) --- */
+    --color-warning: #facc15;
+    --color-warning-hover: #eab308;
+    --color-warning-light: rgba(250, 204, 21, 0.12);
+    --warning-rgb: 250, 204, 21;
+
+    /* --- Danger (darkest, L≈0.02) --- */
+    --color-danger: #450a0a;
+    --color-danger-light: rgba(69, 10, 10, 0.12);
+    --danger-rgb: 69, 10, 10;
+
+    /* --- Info (dark-medium, L≈0.07) --- */
+    --color-info: #1e40af;
+    --color-info-light: rgba(30, 64, 175, 0.12);
+    --info-rgb: 30, 64, 175;
+
+    /* --- Ticket states --- */
+    --color-ticket-open: #1e40af;
+    --color-ticket-in-progress: #facc15;
+    --color-ticket-resolved: #15803d;
+    --color-ticket-urgent: #450a0a;
+
+    /* --- On-primary: white still passes AA on dark orange --- */
+    --color-on-primary: #ffffff;
+}
+
+[data-theme="acromatopsia"].dark {
+
+    --color-primary: #fb923c;
+    --color-primary-hover: #f97316;
+    --color-primary-light: rgba(251, 146, 60, 0.12);
+    --primary-rgb: 251, 146, 60;
+
+    --color-success: #4ade80;
+    --color-success-light: rgba(74, 222, 128, 0.12);
+    --success-rgb: 74, 222, 128;
+
+    --color-warning: #fef08a;
+    --color-warning-hover: #facc15;
+    --color-warning-light: rgba(254, 240, 138, 0.12);
+    --warning-rgb: 254, 240, 138;
+
+    --color-danger: #fca5a5;
+    --color-danger-light: rgba(252, 165, 165, 0.12);
+    --danger-rgb: 252, 165, 165;
+
+    --color-info: #60a5fa;
+    --color-info-light: rgba(96, 165, 250, 0.12);
+    --info-rgb: 96, 165, 250;
+
+    --color-ticket-open: #60a5fa;
+    --color-ticket-in-progress: #fef08a;
+    --color-ticket-resolved: #4ade80;
+    --color-ticket-urgent: #fca5a5;
+
+    --color-on-primary: #000000;
+}

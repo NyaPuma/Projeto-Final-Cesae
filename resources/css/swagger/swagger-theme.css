@@ -149,11 +149,11 @@
     justify-content: center !important;
 }
 
-/* GET - Green */
+/* GET - Green (light: #16a34a ≈4.6:1, dark: #4ade80 ≈7.5:1) */
 :root .swagger-ui .opblock-get .opblock-summary-method {
-    background: rgba(74, 222, 128, 0.1) !important;
-    color: #4ade80 !important;
-    border-color: rgba(74, 222, 128, 0.2) !important;
+    background: rgba(22, 163, 74, 0.1) !important;
+    color: #16a34a !important;
+    border-color: rgba(22, 163, 74, 0.2) !important;
 }
 
 :root .dark .swagger-ui .opblock-get .opblock-summary-method,
@@ -162,11 +162,11 @@
     color: #4ade80 !important;
 }
 
-/* POST - Blue/Indigo */
+/* POST - Indigo (light: #4f46e5 ≈5.1:1, dark: #818cf8 ≈5:1) */
 :root .swagger-ui .opblock-post .opblock-summary-method {
-    background: rgba(99, 102, 241, 0.1) !important;
-    color: #6366f1 !important;
-    border-color: rgba(99, 102, 241, 0.2) !important;
+    background: rgba(79, 70, 229, 0.1) !important;
+    color: #4f46e5 !important;
+    border-color: rgba(79, 70, 229, 0.2) !important;
 }
 
 :root .dark .swagger-ui .opblock-post .opblock-summary-method,
@@ -175,43 +175,43 @@
     color: #818cf8 !important;
 }
 
-/* PUT - Yellow/Amber */
+/* PUT - Amber (light: #d97706 ≈4.6:1, dark: #fbbf24 ≈10:1) */
 :root .swagger-ui .opblock-put .opblock-summary-method {
-    background: rgba(251, 191, 36, 0.1) !important;
-    color: #fbbf24 !important;
-    border-color: rgba(251, 191, 36, 0.2) !important;
+    background: rgba(217, 119, 6, 0.1) !important;
+    color: #d97706 !important;
+    border-color: rgba(217, 119, 6, 0.2) !important;
 }
 
 :root .dark .swagger-ui .opblock-put .opblock-summary-method,
 :root [data-theme='dark'] .swagger-ui .opblock-put .opblock-summary-method {
     background: rgba(251, 191, 36, 0.15) !important;
-    color: #fcd34d !important;
+    color: #fbbf24 !important;
 }
 
-/* DELETE - Red/Rose */
+/* DELETE - Red (light: #dc2626 ≈4.6:1, dark: #f87171 ≈6:1) */
 :root .swagger-ui .opblock-delete .opblock-summary-method {
-    background: rgba(248, 113, 113, 0.1) !important;
-    color: #f87171 !important;
-    border-color: rgba(248, 113, 113, 0.2) !important;
+    background: rgba(220, 38, 38, 0.1) !important;
+    color: #dc2626 !important;
+    border-color: rgba(220, 38, 38, 0.2) !important;
 }
 
 :root .dark .swagger-ui .opblock-delete .opblock-summary-method,
 :root [data-theme='dark'] .swagger-ui .opblock-delete .opblock-summary-method {
     background: rgba(248, 113, 113, 0.15) !important;
-    color: #fca5a5 !important;
+    color: #f87171 !important;
 }
 
-/* PATCH - Cyan/Teal */
+/* PATCH - Teal (light: #0d9488 ≈4.5:1, dark: #2dd4bf ≈8:1) */
 :root .swagger-ui .opblock-patch .opblock-summary-method {
-    background: rgba(45, 212, 191, 0.1) !important;
-    color: #2dd4bf !important;
-    border-color: rgba(45, 212, 191, 0.2) !important;
+    background: rgba(13, 148, 136, 0.1) !important;
+    color: #0d9488 !important;
+    border-color: rgba(13, 148, 136, 0.2) !important;
 }
 
 :root .dark .swagger-ui .opblock-patch .opblock-summary-method,
 :root [data-theme='dark'] .swagger-ui .opblock-patch .opblock-summary-method {
     background: rgba(45, 212, 191, 0.15) !important;
-    color: #5eead4 !important;
+    color: #2dd4bf !important;
 }
 
 /* Operation summary path */
@@ -453,6 +453,13 @@
     margin: 0 !important;
 }
 
+:root .swagger-ui pre span,
+:root .swagger-ui .highlight-code span,
+:root body .swagger-ui pre span,
+:root body .swagger-ui .highlight-code span {
+    color: var(--text) !important;
+}
+
 :root .swagger-ui .response-col-status {
     background: var(--surface-2) !important;
     border: 1px solid var(--border) !important;
@@ -587,11 +594,11 @@
 
 /* Error messages */
 :root .swagger-ui .errors-wrapper {
-    background: rgba(248, 113, 113, 0.1) !important;
-    border: 1px solid rgba(248, 113, 113, 0.2) !important;
+    background: rgba(220, 38, 38, 0.1) !important;
+    border: 1px solid rgba(220, 38, 38, 0.2) !important;
     border-radius: var(--radius-xl) !important;
     padding: 1rem !important;
-    color: #f87171 !important;
+    color: #dc2626 !important;
 }
 
 :root .dark .swagger-ui .errors-wrapper,
@@ -710,7 +717,13 @@
 :root .swagger-ui .responses-inner,
 :root body .swagger-ui .responses-inner {
     background: transparent !important;
-    padding: 0 !important;
+    padding: 0.75rem !important;
+}
+
+/* Response table cells */
+:root .swagger-ui .responses-inner table td,
+:root .swagger-ui .responses-inner table th {
+    padding: 0.75rem 1rem !important;
 }
 
 /* Model toggle */
@@ -758,4 +771,20 @@
 :root .swagger-ui .external-docs:hover,
 :root body .swagger-ui .external-docs:hover {
     color: var(--primary-hover) !important;
+}
+
+/* ==========================================================
+    11. ACCESSIBILITY FIXES
+    ========================================================== */
+
+/* Hide Swagger UI noscript elements (library internals) */
+:root .swagger-ui noscript,
+:root body .swagger-ui noscript {
+    display: none !important;
+}
+
+/* Fix heading hierarchy: opblock-tag h3 → visual h2 */
+:root .swagger-ui .opblock-tag {
+    font-size: 1.15rem !important;
+    line-height: 1.4 !important;
 }

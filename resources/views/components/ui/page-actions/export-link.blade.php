@@ -1,11 +1,11 @@
 {{--
 |-------------------------------------------------------------------------- |
-Download Link Component (Otimizado)
+Download Link Component (Optimized)
 |-------------------------------------------------------------------------- |
-| Componente especializado para ações de download em página.
-| • Padronizado com as variáveis CSS oficiais do Tailwind.
-| • Suporte flexível a slots e ícones customizáveis.
-| • 100% livre de CSS ou JS inline.
+| Specialized component for page-level download actions.
+| • Standardized with official Tailwind CSS variables.
+| • Flexible slot and customizable icon support.
+| • 100% free of inline CSS or JS.
 | --}}
 @props([
     'href',

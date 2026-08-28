@@ -51,11 +51,11 @@ function renderAlertRow(part) {
     return `<a href="/ui/stock/parts/${part.id}" class="flex items-center justify-between gap-3 px-5 py-3.5 transition-colors hover:bg-(--surface-2)">
         <div class="min-w-0">
             <p class="truncate text-xs font-bold text-(--text)">${escapeHtml(part.name)}</p>
-            <p class="mt-0.5 font-mono text-[10px] text-(--text-soft)">${escapeHtml(part.sku ?? '')} · ${escapeHtml(part.category?.name ?? '—')}</p>
+            <p class="mt-0.5 font-mono text-xs text-(--text-soft)">${escapeHtml(part.sku ?? '')} · ${escapeHtml(part.category?.name ?? '—')}</p>
         </div>
         <div class="shrink-0 text-right">
-            <p class="text-xs font-black ${stock <= 0 ? 'text-rose-600 dark:text-rose-400' : 'text-amber-600 dark:text-amber-400'}">${stock} / ${min}</p>
-            <p class="text-[10px] text-(--text-soft)">${translations().currentStock} / ${translations().minimumStock}</p>
+            <p class="text-xs font-black ${stock <= 0 ? 'text-danger' : 'text-warning'}">${stock} / ${min}</p>
+            <p class="text-xs text-(--text-soft)">${translations().currentStock} / ${translations().minimumStock}</p>
         </div>
     </a>`;
 }
@@ -76,7 +76,7 @@ async function loadSummary() {
     if (totalParts) totalParts.textContent = data.total_parts ?? '—';
     if (lowStock) {
         lowStock.textContent = data.low_stock_count ?? '—';
-        lowStock.className = 'mt-2 text-2xl font-black ' + ((Number(data.low_stock_count) || 0) > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-(--text)');
+        lowStock.className = 'mt-2 text-2xl font-black ' + ((Number(data.low_stock_count) || 0) > 0 ? 'text-warning' : 'text-(--text)');
     }
 
     const lowStockList = document.getElementById('lowStockList');
@@ -102,11 +102,11 @@ async function loadTopConsumed() {
                 <a href="/ui/stock/parts/${item.part_id}" class="flex items-center justify-between gap-3 px-5 py-3.5 transition-colors hover:bg-(--surface-2)">
                     <div class="min-w-0">
                         <p class="truncate text-xs font-bold text-(--text)">${escapeHtml(item.part_name)}</p>
-                        <p class="mt-0.5 font-mono text-[10px] text-(--text-soft)">${escapeHtml(item.sku ?? '')}</p>
+                        <p class="mt-0.5 font-mono text-xs text-(--text-soft)">${escapeHtml(item.sku ?? '')}</p>
                     </div>
                     <div class="shrink-0 text-right">
                         <p class="text-xs font-black text-(--text)">${item.total_quantity}</p>
-                        <p class="text-[10px] text-(--text-soft)">${formatEur(item.total_value)}</p>
+                        <p class="text-xs text-(--text-soft)">${formatEur(item.total_value)}</p>
                     </div>
                 </a>`).join('')
             : renderEmpty('Sem consumos registados.');
@@ -129,11 +129,11 @@ async function loadRunout() {
                 <a href="/ui/stock/parts/${item.part_id}" class="flex items-center justify-between gap-3 px-5 py-3.5 transition-colors hover:bg-(--surface-2)">
                     <div class="min-w-0">
                         <p class="truncate text-xs font-bold text-(--text)">${escapeHtml(item.part_name)}</p>
-                        <p class="mt-0.5 font-mono text-[10px] text-(--text-soft)">${escapeHtml(item.sku ?? '')} · ${item.current_stock} ${translations().inStock}</p>
+                        <p class="mt-0.5 font-mono text-xs text-(--text-soft)">${escapeHtml(item.sku ?? '')} · ${item.current_stock} ${translations().inStock}</p>
                     </div>
                     <div class="shrink-0 text-right">
-                        <p class="text-xs font-black ${item.est_months_of_stock < 1 ? 'text-rose-600 dark:text-rose-400' : 'text-amber-600 dark:text-amber-400'}">${item.est_months_of_stock} ${Number(item.est_months_of_stock) === 1 ? translations().month : translations().months}</p>
-                        <p class="text-[10px] text-(--text-soft)">${translations().consumption} ${item.avg_monthly_usage}/${translations().month}</p>
+                        <p class="text-xs font-black ${item.est_months_of_stock < 1 ? 'text-danger' : 'text-warning'}">${item.est_months_of_stock} ${Number(item.est_months_of_stock) === 1 ? translations().month : translations().months}</p>
+                        <p class="text-xs text-(--text-soft)">${translations().consumption} ${item.avg_monthly_usage}/${translations().month}</p>
                     </div>
                 </a>`).join('')
             : renderEmpty('Sem previsões de rutura no período.');

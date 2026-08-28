@@ -11,7 +11,7 @@ function extractError(data) {
 function showMessage(element, text, isError) {
     element.textContent = text;
     element.className = 'text-xs font-medium ' + (isError
-        ? 'text-red-600 dark:text-red-400'
+        ? 'text-danger'
         : 'text-(--text-soft)');
 }
 
@@ -22,7 +22,7 @@ function resetForm(form) {
     document.getElementById('trPercent').value = '';
     document.getElementById('trDefault').checked = false;
     document.getElementById('trActive').checked = true;
-    document.getElementById('taxRateFormTitle').textContent = '➕ Nova taxa de IVA';
+    document.getElementById('taxRateFormTitle').textContent = 'Nova taxa de IVA';
     document.getElementById('trMessage').textContent = '';
 }
 
@@ -54,7 +54,7 @@ async function submitHandler(e) {
         if (!response.ok) throw new Error(extractError(data));
 
         showMessage(message, data.message || 'Guardado com sucesso!');
-        message.className = 'text-xs font-medium text-emerald-600 dark:text-emerald-400';
+        message.className = 'text-xs font-medium text-success';
         resetForm(form);
         window.location.reload();
     } catch (err) {
@@ -73,7 +73,7 @@ async function handleEdit(button) {
     const form = document.getElementById('taxRateForm');
     form.dataset.taxRateFormMode = 'edit';
     form.dataset.taxRateId = button.dataset.taxRateEdit;
-    document.getElementById('taxRateFormTitle').textContent = '✏️ Editar taxa de IVA';
+    document.getElementById('taxRateFormTitle').textContent = 'Editar taxa de IVA';
     document.getElementById('trMessage').textContent = '';
 }
 

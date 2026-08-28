@@ -1,15 +1,15 @@
-## Tecnologias Utilizadas
+## Technologies Used
 
-- **Laravel (Framework MVC)** - Núcleo da aplicação e APIs.
-- **PHP** - Linguagem de programação Back-End.
-- **Composer** - Gestão de dependências PHP.
-- **MySQL** - Base de dados relacional.
-- **Pusher / Laravel Echo** - Infraestrutura para notificações e atualizações em tempo real via WebSockets.
-- **Laravel MediaLibrary / Storage** - Gestão e processamento do upload de fotografias.
-- **DomPDF & Laravel Excel** - Motores de geração e exportação de ficheiros PDF e folhas de cálculo.
-- **L5-Swagger (OpenAPI)** - Gerador automático de documentação interativa para a API.
-- **Chart.js** - Biblioteca JavaScript para renderização dos gráficos nos Dashboards.
-- **PHPUnit** - Testes automatizados unitários e de integração.
-- **NPM / Vite** - Compilação de Assets Frontend e scripts em tempo real.
+- **Laravel (MVC Framework)** - Core of the application and APIs.
+- **PHP** - Back-End programming language.
+- **Composer** - PHP dependency management.
+- **MySQL** - Relational database.
+- **Pusher / Laravel Echo** - Infrastructure for real-time notifications and updates via WebSockets.
+- **Laravel MediaLibrary / Storage** - Photo upload management and processing.
+- **DomPDF & Laravel Excel** - PDF and spreadsheet file generation and export engines.
+- **L5-Swagger (OpenAPI)** - Automatic interactive API documentation generator.
+- **Chart.js** - JavaScript library for Dashboard chart rendering.
+- **PHPUnit** - Automated unit and integration testing.
+- **NPM / Vite** - Frontend asset compilation and real-time scripts.
 - **Interface:** Blade Templates + Tailwind CSS.
-- **IA:** Motor interno de triagem (NLP) e suporte à decisão (SAD).
+- **AI:** Internal triage engine (NLP) and decision support (DSS).

@@ -1,9 +1,9 @@
 {{--
 |-------------------------------------------------------------------------- |
-| Helper / Description Text Component (Otimizado)
+| Helper / Description Text Component (Optimized)
 |-------------------------------------------------------------------------- |
-| Contentor semântico para textos de ajuda, descrições ou mensagens de erro
-| com suporte a variáveis do Design System e atributos dinâmicos.
+| Semantic container for help text, descriptions or error messages
+| with Design System variable support and dynamic attributes.
 |--}}
 @props([
     'id' => null,

@@ -37,7 +37,7 @@ class AdminCrudFeatureTest extends TestCase
         ]);
     }
 
-    // â”€â”€â”€ User CRUD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ─── User CRUD ───────────────────────────────────────────────────────
 
     public function test_admin_can_create_user(): void
     {
@@ -150,7 +150,7 @@ class AdminCrudFeatureTest extends TestCase
         ]);
     }
 
-    // â”€â”€â”€ Equipment CRUD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ─── Equipment CRUD ──────────────────────────────────────────────────
 
     public function test_admin_can_create_equipment(): void
     {
@@ -215,7 +215,7 @@ class AdminCrudFeatureTest extends TestCase
         $this->assertSoftDeleted('equipments', ['id' => $equipment->id]);
     }
 
-    // â”€â”€â”€ Room CRUD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ─── Room CRUD ───────────────────────────────────────────────────────
 
     public function test_admin_can_create_room(): void
     {
@@ -286,20 +286,20 @@ class AdminCrudFeatureTest extends TestCase
         $send = fn (array $payload) => $this->withHeader('X-Auth-Token', $admin->api_token)
             ->patchJson("/api/admin/equipment/{$equipment->id}", $payload);
 
-        // Manter o próprio serial é aceite (ignore funciona)
+        // Keeping its own serial is accepted (ignore works)
         $send(['serial' => 'PRN-UPD-1'])->assertOk();
 
-        // Serial de outro equipamento → 422
+        // Serial from another equipment → 422
         $send(['serial' => 'PRN-OTHER-1'])
             ->assertStatus(422)
             ->assertJsonValidationErrors(['serial']);
 
-        // room_id inexistente → 422
+        // Non-existent room_id → 422
         $send(['room_id' => 99999])
             ->assertStatus(422)
             ->assertJsonValidationErrors(['room_id']);
 
-        // active não booleano → 422
+        // Non-boolean active → 422
         $send(['active' => 'maybe'])
             ->assertStatus(422)
             ->assertJsonValidationErrors(['active']);
@@ -320,11 +320,11 @@ class AdminCrudFeatureTest extends TestCase
         $send = fn (array $payload) => $this->withHeader('X-Auth-Token', $admin->api_token)
             ->postJson('/api/admin/users', $payload);
 
-        // Campos obrigatórios em falta
+        // Missing required fields
         $send([])->assertStatus(422)
             ->assertJsonValidationErrors(['name', 'email', 'password', 'profile_id']);
 
-        // Email duplicado
+        // Duplicate email
         $userProfile2 = UserProfile::where('name', UserRoleEnum::User->value)->first();
         User::factory()->create([
             'profile_id' => $userProfile2->id,
@@ -335,17 +335,17 @@ class AdminCrudFeatureTest extends TestCase
             ->assertStatus(422)
             ->assertJsonValidationErrors(['email']);
 
-        // profile_id inexistente
+        // Non-existent profile_id
         $send(array_merge($base, ['profile_id' => 99999]))
             ->assertStatus(422)
             ->assertJsonValidationErrors(['profile_id']);
 
-        // Password fraca
+        // Weak password
         $send(array_merge($base, ['password' => 'short']))
             ->assertStatus(422)
             ->assertJsonValidationErrors(['password']);
 
-        // active não booleano
+        // Non-boolean active
         $send(array_merge($base, ['active' => 'yes']))
             ->assertStatus(422)
             ->assertJsonValidationErrors(['active']);
@@ -360,28 +360,28 @@ class AdminCrudFeatureTest extends TestCase
         $send = fn (array $payload) => $this->withHeader('X-Auth-Token', $admin->api_token)
             ->patchJson("/api/admin/users/{$target->id}", $payload);
 
-        // Email de outro utilizador → 422
+        // Email of another user → 422
         $other = $this->createUserWithToken(UserRoleEnum::User->value);
         $send(['email' => $other->email])
             ->assertStatus(422)
             ->assertJsonValidationErrors(['email']);
 
-        // profile_id inexistente → 422
+        // Non-existent profile_id → 422
         $send(['profile_id' => 99999])
             ->assertStatus(422)
             ->assertJsonValidationErrors(['profile_id']);
 
-        // password fraca → 422
+        // weak password → 422
         $send(['password' => 'short'])
             ->assertStatus(422)
             ->assertJsonValidationErrors(['password']);
 
-        // active não booleano → 422
+        // Non-boolean active → 422
         $send(['active' => 'yes'])
             ->assertStatus(422)
             ->assertJsonValidationErrors(['active']);
 
-        // name só-espaços → 422
+        // name with only spaces → 422
         $send(['name' => '   '])
             ->assertStatus(422)
             ->assertJsonValidationErrors(['name']);

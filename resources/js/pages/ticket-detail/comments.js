@@ -35,13 +35,13 @@ export async function fetchComments() {
             <div class="space-y-1 border-b border-(--border)/50 py-2">
                 <div class="flex justify-between font-bold text-(--text)">
                     <span>${comment.user ? comment.user.name : translations().system}</span>
-                    <span class="font-mono text-[10px] text-(--text-soft)">${comment.created_at ? formatDateTime(comment.created_at) : ''}</span>
+                    <span class="font-mono text-xs text-(--text-soft)">${comment.created_at ? formatDateTime(comment.created_at) : ''}</span>
                 </div>
                 <p class="text-(--text-soft)">${comment.comment || comment.message || ''}</p>
             </div>
         `).join('');
     } catch {
-        section.innerHTML = `<p class="py-1 italic text-rose-500">${translations().commentsError}</p>`;
+        section.innerHTML = `<p class="py-1 italic text-danger">${translations().commentsError}</p>`;
     }
 }
 

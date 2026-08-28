@@ -1,223 +1,223 @@
-# Estado da Internacionalização (i18n) — SGM
+# Internationalization (i18n) Progress — SGM
 
-> Última atualização: 2026-08-21 (Fase 4: 53 completos ✅ — 11 restantes concluídos; ver secções 4.1, 6 e 7)
-> Fonte de verdade (locale de referência): en (valores: en-GB)
+> Last updated: 2026-08-21 (Phase 4: 53 complete ✅ — 11 remaining completed; see sections 4.1, 6 and 7)
+> Source of truth (reference locale): en (values: en-GB)
 
-## 1. Contexto e Regras
+## 1. Context and Rules
 
-Arquitetura alvo: `lang/{locale}/{domain}.php`, com arrays PHP agrupados por domínio (ex: `auth.php`, `tickets.php`, `stock.php`). O formato JSON (`lang/{locale}.json`) foi **eliminado por completo** na Frente C (2026-08-14); os 18 ficheiros originais estão arquivados em `docs/i18n/archive-json/` (referência da auditoria e fonte canónica histórica).
+Target architecture: `lang/{locale}/{domain}.php`, with PHP arrays grouped by domain (e.g., `auth.php`, `tickets.php`, `stock.php`). The JSON format (`lang/{locale}.json`) was **completely eliminated** in Front C (2026-08-14); the 18 original files are archived in `docs/i18n/archive-json/` (audit reference and historical canonical source).
 
-- A fonte de verdade é `en` (inglês).
-- Qualquer chave nova entra primeiro em `en`.
-- As comparações de "chave em falta" usam a árvore de chaves de `en` como conjunto canónico.
-- Um locale só passa a `✅ Completo` quando tiver exatamente o mesmo número de chaves, nos mesmos domínios, que `en` **e** a migração JSON→PHP estiver concluída.
+- The source of truth is `en` (English).
+- Any new key enters `en` first.
+- "Missing key" comparisons use `en`'s key tree as the canonical set.
+- A locale only becomes `✅ Complete` when it has exactly the same number of keys, in the same domains, as `en` **and** the JSON→PHP migration is complete.
 
-**Definição do conjunto canónico de chaves (medido na Fase 1):**
-- As chaves-fonte são strings em português (pt-PT). O JSON (`lang/{locale}.json`) mapeia cada string-fonte → tradução (em `pt-PT` é identidade, pois é a língua-fonte).
-- Os ficheiros `.php` por domínio contêm dois tipos de chaves: (a) **chaves estruturais** (ex: `status.open`, `ui.results_count`, `auth.failed`) acedidas via `__('{dominio}.{chave}')`; e (b) **strings-fonte migradas** (ex: chave `A agendar...` dentro de `common.php`) acedidas via `__('{dominio}.{string}')`.
-- **Conjunto canónico de `en` (referência) = união de 2853 caminhos:**
-  - 1355 caminhos flat do `en-US.json` (strings-fonte, acesso via `__('string')`).
-  - 1498 caminhos dotted dos 21 domínios `.php` de `en-US` (acesso via `__('dominio.chave')`) — incluíram-se as 123 chaves-fonte migradas na Fase 2a (1386 → 1498).
-- A paridade é medida sobre este conjunto de 2853 caminhos. Conjuntos idênticos entre en-US e en-GB (só diferem em valores).
+**Canonical key set definition (measured in Phase 1):**
+- Source keys are strings in Portuguese (pt-PT). The JSON (`lang/{locale}.json`) maps each source string → translation (in `pt-PT` it's identity, since it's the source language).
+- The `.php` files per domain contain two types of keys: (a) **structural keys** (e.g., `status.open`, `ui.results_count`, `auth.failed`) accessed via `__('{domain}.{key}')`; and (b) **migrated source strings** (e.g., key `A agendar...` in `common.php`) accessed via `__('{domain}.{string}')`.
+- **Canonical `en` (reference) set = union of 2853 paths:**
+  - 1355 flat paths from `en-US.json` (source strings, accessed via `__('string')`).
+  - 1498 dotted paths from the 21 `en-US` `.php` domains (accessed via `__('domain.key')`) — including the 123 source keys migrated in Phase 2a (1386 → 1498).
+- Parity is measured over this set of 2853 paths. Identical sets between en-US and en-GB (they differ only in values).
 
-## 2. Estado da Migração JSON → PHP
+## 2. JSON → PHP Migration Status
 
-Todos os 21 locales têm PHP. **A migração JSON→PHP está concluída: os `.json` foram apagados** (Frente C, 2026-08-14; arquivados em `docs/i18n/archive-json/`). A estrutura de domínios é idêntica a `en` em todos os locales (21 domínios, 1498 chaves). **Fase 2a concluída: as 123 chaves-fonte que existiam apenas em JSON foram migradas para os `.php`** (0 restantes só-em-JSON; ver secção 5).
+All 21 locales have PHP. **JSON→PHP migration is complete: `.json` files were deleted** (Front C, 2026-08-14; archived in `docs/i18n/archive-json/`). The domain structure is identical to `en` in all locales (21 domains, 1498 keys). **Phase 2a complete: the 123 source keys that existed only in JSON were migrated to `.php`** (0 JSON-only remaining; see section 5).
 
-| Locale | JSON existente? | PHP existente? | Migração concluída? | Notas |
+| Locale | JSON exists? | PHP exists? | Migration complete? | Notes |
 |---|---|---|---|---|
-| bg-BG | Não (nunca existiu) | Sim (21 dom., 1498 chaves) | ✅ Sim (nascido PHP-only) | **Criado do zero na Fase 3c** (2026-08-16); sem JSON histórico — ver secção 4 |
-| cs-CZ | Não (arquivado) | Sim (21 dom., 1498 chaves) | ✅ Sim | domínios idênticos a en |
-| da-DK | Não (arquivado) | Sim (21 dom., 1498 chaves) | ✅ Sim | idem |
-| de-DE | Não (arquivado) | Sim (21 dom., 1498 chaves) | ✅ Sim | idem |
-| el-GR | Não (arquivado) | Sim (21 dom., 1498 chaves) | ✅ Sim | idem |
-| en-GB | Não (arquivado) | Sim (21 dom., 1498 chaves) | ✅ Sim | idem; ver ⚠️ fonte de verdade (en-US vs en-GB) |
-| en-US | Não (arquivado) | Sim (21 dom., 1498 chaves) | ✅ Sim | idem; usado como referência de chaves nesta auditoria |
-| es-ES | Não (arquivado) | Sim (21 dom., 1498 chaves) | ✅ Sim | idem; 175 valores JSON em identidade — rever |
-| fi-FI | Não (arquivado) | Sim (21 dom., 1498 chaves) | ✅ Sim | idem |
-| fr-FR | Não (arquivado) | Sim (21 dom., 1498 chaves) | ✅ Sim | idem |
-| hu-HU | Não (arquivado) | Sim (21 dom., 1498 chaves) | ✅ Sim | idem |
-| it-IT | Não (arquivado) | Sim (21 dom., 1498 chaves) | ✅ Sim | idem |
-| nl-NL | Não (arquivado) | Sim (21 dom., 1498 chaves) | ✅ Sim | idem |
-| pl-PL | Não (arquivado) | Sim (21 dom., 1498 chaves) | ✅ Sim | idem |
-| pt-BR | Não (arquivado) | Sim (21 dom., 1498 chaves) | ✅ Sim | idem; 994 valores JSON em identidade — rever |
-| pt-PT | Não (arquivado) | Sim (21 dom., 1498 chaves) | ✅ Sim | idem; identidade total por ser língua-fonte |
-| ro-RO | Não (arquivado) | Sim (21 dom., 1498 chaves) | ✅ Sim | idem |
-| ru-RU | Não (nunca existiu) | Sim (21 dom., 1498 chaves) | ✅ Sim (nascido PHP-only) | **Criado do zero na Fase 3b** (2026-08-16); sem JSON histórico — ver secção 4 |
-| sv-SE | Não (arquivado) | Sim (21 dom., 1498 chaves) | ✅ Sim | idem |
-| tr-TR | Não (arquivado) | Sim (21 dom., 1498 chaves) | ✅ Sim | idem |
-| uk-UA | Não (nunca existiu) | Sim (21 dom., 1498 chaves) | ✅ Sim (nascido PHP-only) | **Criado do zero na Fase 3c** (2026-08-16); sem JSON histórico — ver secção 4 |
-| zh-CN | Não (nunca existiu) | Sim (21 dom., 1498 chaves) | ✅ Sim (nascido PHP-only) | **Criado do zero na Fase 3** (2026-08-16); sem JSON histórico — ver secção 4 |
-| zh-TW | Não (nunca existiu) | Sim (21 dom., 1498 chaves) | ✅ Sim (nascido PHP-only) | **Criado do zero na Fase 3** (2026-08-16); sem JSON histórico — ver secção 4 |
-| ja-JP | Não (nunca existiu) | Sim (21 dom., 1498 chaves) | ✅ Sim (nascido PHP-only) | **Criado do zero na Fase 3** (2026-08-16); sem JSON histórico — ver secção 4 |
-| ko-KR | Não (nunca existiu) | Sim (21 dom., 1498 chaves) | ✅ Sim (nascido PHP-only) | **Criado do zero na Fase 3** (2026-08-16); sem JSON histórico — ver secção 4 |
-| hi-IN | Não (nunca existiu) | Sim (21 dom., 1498 chaves) | ✅ Sim (nascido PHP-only) | **Criado do zero na Fase 3** (2026-08-16); sem JSON histórico — ver secção 4 |
-| id-ID | Não (nunca existiu) | Sim (21 dom., 1498 chaves) | ✅ Sim (nascido PHP-only) | **Criado do zero na Fase 3** (2026-08-16); sem JSON histórico — ver secção 4 |
-| vi-VN | Não (nunca existiu) | Sim (21 dom., 1498 chaves) | ✅ Sim (nascido PHP-only) | **Criado do zero na Fase 3** (2026-08-16); sem JSON histórico — ver secção 4 |
-| th-TH | Não (nunca existiu) | Sim (21 dom., 1498 chaves) | ✅ Sim (nascido PHP-only) | **Criado do zero na Fase 3** (2026-08-16); sem JSON histórico — ver secção 4 |
-| ms-MY | Não (nunca existiu) | Sim (21 dom., 1498 chaves) | ✅ Sim (nascido PHP-only) | **Criado do zero na Fase 3** (2026-08-16); sem JSON histórico — ver secção 4 |
-| ar-AE | Não (nunca existiu) | Sim (21 dom., 1498 chaves) | ✅ Sim (nascido PHP-only) | **Criado do zero na Fase 3** (2026-08-16); sem JSON histórico — ver secção 4 |
-| he-IL | Não (nunca existiu) | Sim (21 dom., 1498 chaves) | ✅ Sim (nascido PHP-only) | **Criado do zero na Fase 3** (2026-08-16); sem JSON histórico — ver secção 4; RTL |
-| fa-IR | Não (nunca existiu) | Sim (21 dom., 1498 chaves) | ✅ Sim (nascido PHP-only) | **Criado do zero na Fase 3** (2026-08-16); sem JSON histórico — ver secção 4; RTL |
-| nb-NO | Não (nunca existiu) | Sim (21 dom., 1498 chaves) | ✅ Sim (nascido PHP-only) | **Criado do zero na Fase 3** (2026-08-16); sem JSON histórico — ver secção 4 |
-| sk-SK | Não (nunca existiu) | Sim (21 dom., 1498 chaves) | ✅ Sim (nascido PHP-only) | **Criado do zero na Fase 3** (2026-08-16); sem JSON histórico — ver secção 4 |
+| bg-BG | No (never existed) | Yes (21 dom., 1498 keys) | ✅ Yes (PHP-only from start) | **Created from scratch in Phase 3c** (2026-08-16); no historical JSON — see section 4 |
+| cs-CZ | No (archived) | Yes (21 dom., 1498 keys) | ✅ Yes | domains identical to en |
+| da-DK | No (archived) | Yes (21 dom., 1498 keys) | ✅ Yes | same |
+| de-DE | No (archived) | Yes (21 dom., 1498 keys) | ✅ Yes | same |
+| el-GR | No (archived) | Yes (21 dom., 1498 keys) | ✅ Yes | same |
+| en-GB | No (archived) | Yes (21 dom., 1498 keys) | ✅ Yes | same; see ⚠️ source of truth (en-US vs en-GB) |
+| en-US | No (archived) | Yes (21 dom., 1498 keys) | ✅ Yes | same; used as key reference in this audit |
+| es-ES | No (archived) | Yes (21 dom., 1498 keys) | ✅ Yes | same; 175 JSON identity values — review |
+| fi-FI | No (archived) | Yes (21 dom., 1498 keys) | ✅ Yes | same |
+| fr-FR | No (archived) | Yes (21 dom., 1498 keys) | ✅ Yes | same |
+| hu-HU | No (archived) | Yes (21 dom., 1498 keys) | ✅ Yes | same |
+| it-IT | No (archived) | Yes (21 dom., 1498 keys) | ✅ Yes | same |
+| nl-NL | No (archived) | Yes (21 dom., 1498 keys) | ✅ Yes | same |
+| pl-PL | No (archived) | Yes (21 dom., 1498 keys) | ✅ Yes | same |
+| pt-BR | No (archived) | Yes (21 dom., 1498 keys) | ✅ Yes | same; 994 JSON identity values — review |
+| pt-PT | No (archived) | Yes (21 dom., 1498 keys) | ✅ Yes | same; full identity since it's the source language |
+| ro-RO | No (archived) | Yes (21 dom., 1498 keys) | ✅ Yes | same |
+| ru-RU | No (never existed) | Yes (21 dom., 1498 keys) | ✅ Yes (PHP-only from start) | **Created from scratch in Phase 3b** (2026-08-16); no historical JSON — see section 4 |
+| sv-SE | No (archived) | Yes (21 dom., 1498 keys) | ✅ Yes | same |
+| tr-TR | No (archived) | Yes (21 dom., 1498 keys) | ✅ Yes | same |
+| uk-UA | No (never existed) | Yes (21 dom., 1498 keys) | ✅ Yes (PHP-only from start) | **Created from scratch in Phase 3c** (2026-08-16); no historical JSON — see section 4 |
+| zh-CN | No (never existed) | Yes (21 dom., 1498 keys) | ✅ Yes (PHP-only from start) | **Created from scratch in Phase 3** (2026-08-16); no historical JSON — see section 4 |
+| zh-TW | No (never existed) | Yes (21 dom., 1498 keys) | ✅ Yes (PHP-only from start) | **Created from scratch in Phase 3** (2026-08-16); no historical JSON — see section 4 |
+| ja-JP | No (never existed) | Yes (21 dom., 1498 keys) | ✅ Yes (PHP-only from start) | **Created from scratch in Phase 3** (2026-08-16); no historical JSON — see section 4 |
+| ko-KR | No (never existed) | Yes (21 dom., 1498 keys) | ✅ Yes (PHP-only from start) | **Created from scratch in Phase 3** (2026-08-16); no historical JSON — see section 4 |
+| hi-IN | No (never existed) | Yes (21 dom., 1498 keys) | ✅ Yes (PHP-only from start) | **Created from scratch in Phase 3** (2026-08-16); no historical JSON — see section 4 |
+| id-ID | No (never existed) | Yes (21 dom., 1498 keys) | ✅ Yes (PHP-only from start) | **Created from scratch in Phase 3** (2026-08-16); no historical JSON — see section 4 |
+| vi-VN | No (never existed) | Yes (21 dom., 1498 keys) | ✅ Yes (PHP-only from start) | **Created from scratch in Phase 3** (2026-08-16); no historical JSON — see section 4 |
+| th-TH | No (never existed) | Yes (21 dom., 1498 keys) | ✅ Yes (PHP-only from start) | **Created from scratch in Phase 3** (2026-08-16); no historical JSON — see section 4 |
+| ms-MY | No (never existed) | Yes (21 dom., 1498 keys) | ✅ Yes (PHP-only from start) | **Created from scratch in Phase 3** (2026-08-16); no historical JSON — see section 4 |
+| ar-AE | No (never existed) | Yes (21 dom., 1498 keys) | ✅ Yes (PHP-only from start) | **Created from scratch in Phase 3** (2026-08-16); no historical JSON — see section 4 |
+| he-IL | No (never existed) | Yes (21 dom., 1498 keys) | ✅ Yes (PHP-only from start) | **Created from scratch in Phase 3** (2026-08-16); no historical JSON — see section 4; RTL |
+| fa-IR | No (never existed) | Yes (21 dom., 1498 keys) | ✅ Yes (PHP-only from start) | **Created from scratch in Phase 3** (2026-08-16); no historical JSON — see section 4; RTL |
+| nb-NO | No (never existed) | Yes (21 dom., 1498 keys) | ✅ Yes (PHP-only from start) | **Created from scratch in Phase 3** (2026-08-16); no historical JSON — see section 4 |
+| sk-SK | No (never existed) | Yes (21 dom., 1498 keys) | ✅ Yes (PHP-only from start) | **Created from scratch in Phase 3** (2026-08-16); no historical JSON — see section 4 |
 
-## 3. Domínios de Tradução Identificados
+## 3. Translation Domains Identified
 
-Confirmados por inspeção real — 21 domínios, presentes de forma idêntica em `en` e em todos os 21 locales (18 históricos + ru-RU, uk-UA e bg-BG criados do zero):
+Confirmed by actual inspection — 21 domains, present identically in `en` and all 21 locales (18 historical + ru-RU, uk-UA and bg-BG created from scratch):
 
-| Domínio | Nº chaves (en) | Descrição |
+| Domain | Key count (en) | Description |
 |---|---|---|
-| `analytics.php` | 14 | Analytics/KPIs (chaves estruturais) |
-| `analytics_data.php` | 13 | Dados/eventos do analytics |
-| `auth.php` | 71 | Autenticação (estrutural + strings-fonte) |
-| `auth_box.php` | 4 | Caixa de autenticação (menu utilizador) |
-| `common.php` | 665 | Strings comuns da interface (maior domínio) |
-| `dashboard.php` | 32 | Painel de controlo |
-| `equipment.php` | 75 | Equipamentos |
-| `maintenance_plan.php` | 31 | Planos de manutenção |
-| `messages.php` | 108 | Mensagens/notificações |
-| `pagination.php` | 4 | Paginação (Laravel) |
-| `preferences.php` | 33 | Preferências do utilizador |
-| `room.php` | 32 | Salas |
-| `stock.php` | 112 | Stock (peças, fornecedores, movimentos) |
-| `stock_dashboard.php` | 4 | Dashboard de stock |
-| `stock_movement.php` | 3 | Tipos de movimento de stock |
-| `stock_part.php` | 8 | Peças de stock |
-| `ticket_detail.php` | 21 | Detalhe de ticket |
-| `ticket_media.php` | 23 | Média/fotografias de ticket |
+| `analytics.php` | 14 | Analytics/KPIs (structural keys) |
+| `analytics_data.php` | 13 | Analytics data/events |
+| `auth.php` | 71 | Authentication (structural + source strings) |
+| `auth_box.php` | 4 | Auth box (user menu) |
+| `common.php` | 665 | Common UI strings (largest domain) |
+| `dashboard.php` | 32 | Control panel |
+| `equipment.php` | 75 | Equipment |
+| `maintenance_plan.php` | 31 | Maintenance plans |
+| `messages.php` | 108 | Messages/notifications |
+| `pagination.php` | 4 | Pagination (Laravel) |
+| `preferences.php` | 33 | User preferences |
+| `room.php` | 32 | Rooms |
+| `stock.php` | 112 | Stock (parts, suppliers, movements) |
+| `stock_dashboard.php` | 4 | Stock dashboard |
+| `stock_movement.php` | 3 | Stock movement types |
+| `stock_part.php` | 8 | Stock parts |
+| `ticket_detail.php` | 21 | Ticket detail |
+| `ticket_media.php` | 23 | Ticket media/photos |
 | `tickets.php` | 108 | Tickets |
-| `ui.php` | 103 | UI genérica (tabelas, resultados, etc.) |
-| `validation.php` | 34 | Validação (mensagens Laravel + strings-fonte) |
+| `ui.php` | 103 | Generic UI (tables, results, etc.) |
+| `validation.php` | 34 | Validation (Laravel messages + source strings) |
 | **Total** | **1498** | |
 
-**Notas:**
-- Os domínios `notifications.php` e `errors.php` (sugeridos no template) **não existem** — mensagens de notificação vivem em `messages.php`/`common.php`; páginas de erro usam strings-fonte via JSON (ex: `__('Erro Interno do Servidor')`).
-- Laravel disponibiliza `pagination.php` e `validation.php` como domínios próprios.
+**Notes:**
+- The `notifications.php` and `errors.php` domains (suggested in the template) **do not exist** — notification messages live in `messages.php`/`common.php`; error pages use source strings via JSON (e.g., `__('Internal Server Error')`).
+- Laravel provides `pagination.php` and `validation.php` as built-in domains.
 
-## 4. Estado de Tradução por Locale
+## 4. Translation Status by Locale
 
-Referência: en-US (2853 caminhos canónicos = 1355 JSON + 1498 PHP). **Todos os 18 locales históricos: 100% de paridade de chaves (2853/2853, 0 em falta, 0 vazias, 0 extra).** Os 14 locales criados do zero (**ru-RU, uk-UA, bg-BG, zh-CN, zh-TW, ja-JP, ko-KR, hi-IN, id-ID, vi-VN, th-TH, ms-MY, ar-AE, he-IL, fa-IR, nb-NO, sk-SK**) são medidos por **cobertura funcional** — ver notas abaixo da tabela.
+Reference: en-US (2853 canonical paths = 1355 JSON + 1498 PHP). **All 18 historical locales: 100% key parity (2853/2853, 0 missing, 0 empty, 0 extra).** The 14 locales created from scratch (**ru-RU, uk-UA, bg-BG, zh-CN, zh-TW, ja-JP, ko-KR, hi-IN, id-ID, vi-VN, th-TH, ms-MY, ar-AE, he-IL, fa-IR, nb-NO, sk-SK**) are measured by **functional coverage** — see notes below the table.
 
-Nota sobre "valores em identidade": valor igual à chave (a string-fonte). Em `pt-PT` é por design (língua-fonte). Nos restantes, a maioria são legítimos (termos técnicos, siglas, palavras coincidentes — ex: `SKU`, `SLA`, `MTTR`, `Admin`). **Revisão concluída na Fase 3a** para `pt-BR` (6 correções) e `es-ES` (0) — ver secção 6.
+Note on "identity values": value equals the key (the source string). In `pt-PT` this is by design (source language). In the rest, most are legitimate (technical terms, acronyms, coincidental words — e.g., `SKU`, `SLA`, `MTTR`, `Admin`). **Review completed in Phase 3a** for `pt-BR` (6 corrections) and `es-ES` (0) — see section 6.
 
-\* **ru-RU (Fase 3b), uk-UA e bg-BG (Fase 3c), zh-CN, zh-TW e ja-JP (Fase 3):** criados do zero a 2026-08-16, **sem JSON histórico** (nunca existiu `lang/{locale}.json`). A métrica canónica de 2853 caminhos (1355 JSON + 1498 PHP) é uma **lacuna estrutural da fonte** — os 1355 caminhos JSON já não são acedidos pelo app (Frente B migrou todo o código para `__('dominio.chave')`; 0 chamadas flat). Por isso estes locales são medidos por **cobertura funcional**: os **1498 caminhos PHP estão completos (21 domínios, 0 em falta, 0 vazias)** e cobrem **1211/1211 (100%) dos caminhos efetivamente usados no código** — idêntico aos restantes locales (auditoria `docs/i18n/scripts/audit_usage.py`).
+\* **ru-RU (Phase 3b), uk-UA and bg-BG (Phase 3c), zh-CN, zh-TW and ja-JP (Phase 3):** created from scratch on 2026-08-16, **with no historical JSON** (`lang/{locale}.json` never existed). The canonical metric of 2853 paths (1355 JSON + 1498 PHP) is a **structural source gap** — the 1355 JSON paths are no longer accessed by the app (Front B migrated all code to `__('domain.key')`; 0 flat calls). Therefore these locales are measured by **functional coverage**: the **1498 PHP paths are complete (21 domains, 0 missing, 0 empty)** and cover **1211/1211 (100%) of paths actually used in code** — identical to the other locales (audit `docs/i18n/scripts/audit_usage.py`).
 
-\*\* **Valores em identidade nos locales criados do zero — todos legítimos** (termos técnicos/siglas `ID`, `MTTR`, `NIF`, `SKU`, `SLA`, `API`, `OK`, `Swagger`, `cURL`, `Round-robin`, `part_id`; formatos `Y-m-d`, `Y-m-d H:i:s`, `d`, `div`, `—`; placeholders `:reference — :equipment (:priority)`): **17 em ru-RU, 15 em uk-UA, 12 em bg-BG, 17 em zh-CN, 17 em zh-TW, 17 em ja-JP, 17 em ko-KR**. Sem revisão pendente.
+\*\* **Identity values in locales created from scratch — all legitimate** (technical terms/acronyms `ID`, `MTTR`, `NIF`, `SKU`, `SLA`, `API`, `OK`, `Swagger`, `cURL`, `Round-robin`, `part_id`; formats `Y-m-d`, `Y-m-d H:i:s`, `d`, `div`, `—`; placeholders `:reference — :equipment (:priority)`): **17 in ru-RU, 15 in uk-UA, 12 in bg-BG, 17 in zh-CN, 17 in zh-TW, 17 in ja-JP, 17 in ko-KR**. No pending review.
 
-| Locale | Nº chaves en (ref) | Nº presentes | % | Estado (chaves) | Valores identidade (JSON / PHP) | Migração JSON→PHP | Última verificação |
+| Locale | en key count (ref) | Present count | % | Status (keys) | Identity values (JSON / PHP) | JSON→PHP migration | Last verified |
 |---|---|---|---|---|---|---|---|
-| bg-BG | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 12\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-16 |
-| cs-CZ | 2853 | 2853 | 100.0 | ✅ Completo | 50 / 48 | ✅ Concluída | 2026-08-16 |
-| da-DK | 2853 | 2853 | 100.0 | ✅ Completo | 64 / 62 | ✅ Concluída | 2026-08-16 |
-| de-DE | 2853 | 2853 | 100.0 | ✅ Completo | 26 / 27 | ✅ Concluída | 2026-08-16 |
-| el-GR | 2853 | 2853 | 100.0 | ✅ Completo | 30 / 28 | ✅ Concluída | 2026-08-16 |
-| en-GB | 2853 | 2853 | 100.0 | ✅ Completo | 59 / 65 | ✅ Concluída | 2026-08-16 |
-| en-US | 2853 | 2853 | 100.0 | ✅ Completo | 60 / 66 | ✅ Concluída | 2026-08-16 |
-| es-ES | 2853 | 2853 | 100.0 | ✅ Completo | 175 / 177 | ✅ Concluída | 2026-08-16 |
-| fi-FI | 2853 | 2853 | 100.0 | ✅ Completo | 51 / 50 | ✅ Concluída | 2026-08-16 |
-| fr-FR | 2853 | 2853 | 100.0 | ✅ Completo | 32 / 33 | ✅ Concluída | 2026-08-16 |
-| hu-HU | 2853 | 2853 | 100.0 | ✅ Completo | 51 / 50 | ✅ Concluída | 2026-08-16 |
-| it-IT | 2853 | 2853 | 100.0 | ✅ Completo | 49 / 52 | ✅ Concluída | 2026-08-16 |
-| nl-NL | 2853 | 2853 | 100.0 | ✅ Completo | 30 / 31 | ✅ Concluída | 2026-08-16 |
-| pl-PL | 2853 | 2853 | 100.0 | ✅ Completo | 29 / 30 | ✅ Concluída | 2026-08-16 |
-| pt-BR | 2853 | 2853 | 100.0 | ✅ Completo | 994 / 1004 | ✅ Concluída | 2026-08-16 |
-| pt-PT | 2853 | 2853 | 100.0 | ✅ Completo | 1355 / 1373 (fonte, esperado) | ✅ Concluída | 2026-08-16 |
-| ro-RO | 2853 | 2853 | 100.0 | ✅ Completo | 57 / 56 | ✅ Concluída | 2026-08-16 |
-| ru-RU | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 17\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-16 |
-| sv-SE | 2853 | 2853 | 100.0 | ✅ Completo | 64 / 62 | ✅ Concluída | 2026-08-16 |
-| tr-TR | 2853 | 2853 | 100.0 | ✅ Completo | 21 / 20 | ✅ Concluída | 2026-08-16 |
-| uk-UA | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 15\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-16 |
-| zh-CN | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 17\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-16 |
-| zh-TW | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 17\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-16 |
-| ja-JP | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 17\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-16 |
-| ko-KR | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 17\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-16 |
-| hi-IN | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 19\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-16 |
-| id-ID | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 28\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-16 |
-| vi-VN | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 20\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-16 |
-| th-TH | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 21\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-16 |
-| ms-MY | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 21\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-16 |
-| ar-AE | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 16\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-16 |
-| he-IL | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 17\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-16 |
-| fa-IR | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 17\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-16 |
-| nb-NO | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 17\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-16 |
-| sk-SK | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 17\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-16 |
-| sl-SI | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 18\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-21 |
-| lb-LU | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 18\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-21 |
-| hy-AM | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 18\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-21 |
-| mk-MK | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 18\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-21 |
-| mt-MT | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 18\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-21 |
-| sq-AL | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 18\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-21 |
-| sr-RS | 1498\* | 1498 | —\* | ✅ Completo (PHP) | 0 / 18\*\* | ✅ Concluída (nascido PHP-only) | 2026-08-21 |
+| bg-BG | 1498\* | 1498 | —\* | ✅ Complete (PHP) | 0 / 12\*\* | ✅ Complete (PHP-only from start) | 2026-08-16 |
+| cs-CZ | 2853 | 2853 | 100.0 | ✅ Complete | 50 / 48 | ✅ Complete | 2026-08-16 |
+| da-DK | 2853 | 2853 | 100.0 | ✅ Complete | 64 / 62 | ✅ Complete | 2026-08-16 |
+| de-DE | 2853 | 2853 | 100.0 | ✅ Complete | 26 / 27 | ✅ Complete | 2026-08-16 |
+| el-GR | 2853 | 2853 | 100.0 | ✅ Complete | 30 / 28 | ✅ Complete | 2026-08-16 |
+| en-GB | 2853 | 2853 | 100.0 | ✅ Complete | 59 / 65 | ✅ Complete | 2026-08-16 |
+| en-US | 2853 | 2853 | 100.0 | ✅ Complete | 60 / 66 | ✅ Complete | 2026-08-16 |
+| es-ES | 2853 | 2853 | 100.0 | ✅ Complete | 175 / 177 | ✅ Complete | 2026-08-16 |
+| fi-FI | 2853 | 2853 | 100.0 | ✅ Complete | 51 / 50 | ✅ Complete | 2026-08-16 |
+| fr-FR | 2853 | 2853 | 100.0 | ✅ Complete | 32 / 33 | ✅ Complete | 2026-08-16 |
+| hu-HU | 2853 | 2853 | 100.0 | ✅ Complete | 51 / 50 | ✅ Complete | 2026-08-16 |
+| it-IT | 2853 | 2853 | 100.0 | ✅ Complete | 49 / 52 | ✅ Complete | 2026-08-16 |
+| nl-NL | 2853 | 2853 | 100.0 | ✅ Complete | 30 / 31 | ✅ Complete | 2026-08-16 |
+| pl-PL | 2853 | 2853 | 100.0 | ✅ Complete | 29 / 30 | ✅ Complete | 2026-08-16 |
+| pt-BR | 2853 | 2853 | 100.0 | ✅ Complete | 994 / 1004 | ✅ Complete | 2026-08-16 |
+| pt-PT | 2853 | 2853 | 100.0 | ✅ Complete | 1355 / 1373 (source, expected) | ✅ Complete | 2026-08-16 |
+| ro-RO | 2853 | 2853 | 100.0 | ✅ Complete | 57 / 56 | ✅ Complete | 2026-08-16 |
+| ru-RU | 1498\* | 1498 | —\* | ✅ Complete (PHP) | 0 / 17\*\* | ✅ Complete (PHP-only from start) | 2026-08-16 |
+| sv-SE | 2853 | 2853 | 100.0 | ✅ Complete | 64 / 62 | ✅ Complete | 2026-08-16 |
+| tr-TR | 2853 | 2853 | 100.0 | ✅ Complete | 21 / 20 | ✅ Complete | 2026-08-16 |
+| uk-UA | 1498\* | 1498 | —\* | ✅ Complete (PHP) | 0 / 15\*\* | ✅ Complete (PHP-only from start) | 2026-08-16 |
+| zh-CN | 1498\* | 1498 | —\* | ✅ Complete (PHP) | 0 / 17\*\* | ✅ Complete (PHP-only from start) | 2026-08-16 |
+| zh-TW | 1498\* | 1498 | —\* | ✅ Complete (PHP) | 0 / 17\*\* | ✅ Complete (PHP-only from start) | 2026-08-16 |
+| ja-JP | 1498\* | 1498 | —\* | ✅ Complete (PHP) | 0 / 17\*\* | ✅ Complete (PHP-only from start) | 2026-08-16 |
+| ko-KR | 1498\* | 1498 | —\* | ✅ Complete (PHP) | 0 / 17\*\* | ✅ Complete (PHP-only from start) | 2026-08-16 |
+| hi-IN | 1498\* | 1498 | —\* | ✅ Complete (PHP) | 0 / 19\*\* | ✅ Complete (PHP-only from start) | 2026-08-16 |
+| id-ID | 1498\* | 1498 | —\* | ✅ Complete (PHP) | 0 / 28\*\* | ✅ Complete (PHP-only from start) | 2026-08-16 |
+| vi-VN | 1498\* | 1498 | —\* | ✅ Complete (PHP) | 0 / 20\*\* | ✅ Complete (PHP-only from start) | 2026-08-16 |
+| th-TH | 1498\* | 1498 | —\* | ✅ Complete (PHP) | 0 / 21\*\* | ✅ Complete (PHP-only from start) | 2026-08-16 |
+| ms-MY | 1498\* | 1498 | —\* | ✅ Complete (PHP) | 0 / 21\*\* | ✅ Complete (PHP-only from start) | 2026-08-16 |
+| ar-AE | 1498\* | 1498 | —\* | ✅ Complete (PHP) | 0 / 16\*\* | ✅ Complete (PHP-only from start) | 2026-08-16 |
+| he-IL | 1498\* | 1498 | —\* | ✅ Complete (PHP) | 0 / 17\*\* | ✅ Complete (PHP-only from start) | 2026-08-16 |
+| fa-IR | 1498\* | 1498 | —\* | ✅ Complete (PHP) | 0 / 17\*\* | ✅ Complete (PHP-only from start) | 2026-08-16 |
+| nb-NO | 1498\* | 1498 | —\* | ✅ Complete (PHP) | 0 / 17\*\* | ✅ Complete (PHP-only from start) | 2026-08-16 |
+| sk-SK | 1498\* | 1498 | —\* | ✅ Complete (PHP) | 0 / 17\*\* | ✅ Complete (PHP-only from start) | 2026-08-16 |
+| sl-SI | 1498\* | 1498 | —\* | ✅ Complete (PHP) | 0 / 18\*\* | ✅ Complete (PHP-only from start) | 2026-08-21 |
+| lb-LU | 1498\* | 1498 | —\* | ✅ Complete (PHP) | 0 / 18\*\* | ✅ Complete (PHP-only from start) | 2026-08-21 |
+| hy-AM | 1498\* | 1498 | —\* | ✅ Complete (PHP) | 0 / 18\*\* | ✅ Complete (PHP-only from start) | 2026-08-21 |
+| mk-MK | 1498\* | 1498 | —\* | ✅ Complete (PHP) | 0 / 18\*\* | ✅ Complete (PHP-only from start) | 2026-08-21 |
+| mt-MT | 1498\* | 1498 | —\* | ✅ Complete (PHP) | 0 / 18\*\* | ✅ Complete (PHP-only from start) | 2026-08-21 |
+| sq-AL | 1498\* | 1498 | —\* | ✅ Complete (PHP) | 0 / 18\*\* | ✅ Complete (PHP-only from start) | 2026-08-21 |
+| sr-RS | 1498\* | 1498 | —\* | ✅ Complete (PHP) | 0 / 18\*\* | ✅ Complete (PHP-only from start) | 2026-08-21 |
 
-### 4.1 Âmbito de trabalho (gate de 2026-08-21)
+### 4.1 Scope gate (2026-08-21)
 
-**53 completos ✅** — ver tabela da secção 4. **Todos os locales configurados estão completos.** 18 históricos + 14 Fase 3 + 7 Fase 4 (sl-SI, lb-LU, hy-AM, mk-MK, mt-MT, sq-AL, sr-RS) + 11 Fase 5 (az-AZ, be-BY, bs-BA, ca-AD, cnr-ME, et-EE, hr-HR, is-IS, ka-GE, lt-LT, lv-LV). Todos com 1498/1498 chaves, 1211/1211 cobertura funcional.
+**53 complete ✅** — see section 4 table. **All configured locales are complete.** 18 historical + 14 Phase 3 + 7 Phase 4 (sl-SI, lb-LU, hy-AM, mk-MK, mt-MT, sq-AL, sr-RS) + 11 Phase 5 (az-AZ, be-BY, bs-BA, ca-AD, cnr-ME, et-EE, hr-HR, is-IS, ka-GE, lt-LT, lv-LV). All with 1498/1498 keys, 1211/1211 functional coverage.
 
-| Locale | Mercado (critério: G20 / maiores exportadores industriais / maiores PIBs industriais) | RTL | config/locales.php |
+| Locale | Market (criteria: G20 / largest industrial exporters / largest industrial GDPs) | RTL | config/locales.php |
 |---|---|---|---|
-| ar-AE | Árabe — EAU, Arábia Saudita, Egito | ✅ | já configurado ✅ |
-| fa-IR | Persa — Irão | ✅ | já configurado ✅ |
-| he-IL | Hebraico — Israel | ✅ | já configurado ✅ |
-| hi-IN | Hindi — Índia | | já configurado ✅ |
-| id-ID | Indonésio — Indonésia | | já configurado ✅ |
-| ja-JP | Japonês — Japão | | já configurado ✅ |
-| ko-KR | Coreano — Coreia do Sul | | já configurado ✅ |
-| ms-MY | Malaio — Malásia | | já configurado ✅ |
-| nb-NO | Norueguês — Noruega (PIB industrial; adicionado por critério do agente) | | já configurado ✅ |
-| sk-SK | Eslovaco — Eslováquia (exportador automóvel; adicionado por critério do agente) | | já configurado ✅ |
-| th-TH | Tailandês — Tailândia | | já configurado ✅ |
-| vi-VN | Vietnamita — Vietname | | já configurado ✅ |
-| zh-CN | Chinês simplificado — China | | já configurado |
-| zh-TW | Chinês tradicional — Taiwan | | já configurado ✅ |
+| ar-AE | Arabic — UAE, Saudi Arabia, Egypt | ✅ | already configured ✅ |
+| fa-IR | Persian — Iran | ✅ | already configured ✅ |
+| he-IL | Hebrew — Israel | ✅ | already configured ✅ |
+| hi-IN | Hindi — India | | already configured ✅ |
+| id-ID | Indonesian — Indonesia | | already configured ✅ |
+| ja-JP | Japanese — Japan | | already configured ✅ |
+| ko-KR | Korean — South Korea | | already configured ✅ |
+| ms-MY | Malay — Malaysia | | already configured ✅ |
+| nb-NO | Norwegian — Norway (industrial GDP; added by agent criteria) | | already configured ✅ |
+| sk-SK | Slovak — Slovakia (automotive exporter; added by agent criteria) | | already configured ✅ |
+| th-TH | Thai — Thailand | | already configured ✅ |
+| vi-VN | Vietnamese — Vietnam | | already configured ✅ |
+| zh-CN | Simplified Chinese — China | | already configured |
+| zh-TW | Traditional Chinese — Taiwan | | already configured ✅ |
 
-> **Notas do gate (2026-08-21):**
-> - RTL (`ar-AE`, `he-IL`, `fa-IR`): âmbito = **traduzir apenas o texto**; layout/CSS (ex: `resources/css/rtl.css`) fora do escopo desta fase.
-> - **Todos os 14 locales da Fase 3 estão completos** (2026-08-16): zh-CN, zh-TW, ja-JP, ko-KR, hi-IN, id-ID, vi-VN, th-TH, ms-MY, ar-AE, he-IL, fa-IR, nb-NO, sk-SK. Todos com 1498/1498 chaves, 57/57 placeholders, 1211/1211 cobertura funcional.
-> - **7 novos europeus concluídos a 2026-08-21:** sl-SI, lb-LU, hy-AM, mk-MK, mt-MT, sq-AL, sr-RS. Todos com 1498/1498 chaves, 1211/1211 cobertura funcional.
-> - Variantes regionais mantidas separadas (`en-GB`/`en-US`, `pt-PT`/`pt-BR`).
-> - Convenção de códigos `xx-XX` do projeto; chineses = `zh-CN` + `zh-TW` (em vez de `zh-Hans`/`zh-Hant`).
-> - `da-DK`, `fi-FI`, `bg-BG` (já completos) ficam explicitamente no âmbito.
-> - **Locales configurados FORA do âmbito (10)** — sem ficheiros, continuam no fallback pt-PT, **não tocar sem instrução**: az-AZ, be-BY, bs-BA, ca-AD, cnr-ME, et-EE, hr-HR, is-IS, ka-GE, lt-LT, lv-LV.
+> **Gate notes (2026-08-21):**
+> - RTL (`ar-AE`, `he-IL`, `fa-IR`): scope = **translate text only**; layout/CSS (e.g., `resources/css/rtl.css`) out of scope for this phase.
+> - **All 14 Phase 3 locales are complete** (2026-08-16): zh-CN, zh-TW, ja-JP, ko-KR, hi-IN, id-ID, vi-VN, th-TH, ms-MY, ar-AE, he-IL, fa-IR, nb-NO, sk-SK. All with 1498/1498 keys, 57/57 placeholders, 1211/1211 functional coverage.
+> - **7 new European locales completed on 2026-08-21:** sl-SI, lb-LU, hy-AM, mk-MK, mt-MT, sq-AL, sr-RS. All with 1498/1498 keys, 1211/1211 functional coverage.
+> - Regional variants kept separate (`en-GB`/`en-US`, `pt-PT`/`pt-BR`).
+> - Project `xx-XX` code convention; Chinese = `zh-CN` + `zh-TW` (instead of `zh-Hans`/`zh-Hant`).
+> - `da-DK`, `fi-FI`, `bg-BG` (already complete) are explicitly in scope.
+> - **Configured locales OUT OF SCOPE (10)** — no files, remain in pt-PT fallback, **do not touch without instruction**: az-AZ, be-BY, bs-BA, ca-AD, cnr-ME, et-EE, hr-HR, is-IS, ka-GE, lt-LT, lv-LV.
 
-**Classificação aplicada** (ver secção 7 para a definição formal):
-- `✅ Completo` (chaves): 100% de paridade, 0 vazias. Aplicável aos 42 com ficheiros.
-- `🔴 Em falta / não iniciado`: sem ficheiros (aplicável aos 14 fora do âmbito).
-- O estado `Migração JSON→PHP` é `✅ Concluída` em todos os 35 (.json apagados na Frente C a 2026-08-14; arquivados em `docs/i18n/archive-json/`).
+**Classification applied** (see section 7 for formal definition):
+- `✅ Complete` (keys): 100% parity, 0 empty. Applies to the 42 with files.
+- `🔴 Missing / not started`: no files (applies to the 14 out of scope).
+- `JSON→PHP migration` status is `✅ Complete` in all 35 (.json deleted in Front C on 2026-08-14; archived in `docs/i18n/archive-json/`).
 
-### 4.2 Verificações de integridade vs código (Fase 1; escopo da Frente B corrigido na Fase 2a)
+### 4.2 Code integrity checks (Phase 1; Front B scope corrected in Phase 2a)
 
-Análise cruzada com o código (`app/**/*.php`, `resources/views/**/*.blade.php` e `*.php`, `resources/js/**/*.js`, `routes/**/*.php`, `config/**/*.php`):
+Cross-analysis with code (`app/**/*.php`, `resources/views/**/*.blade.php` and `*.php`, `resources/js/**/*.js`, `routes/**/*.php`, `config/**/*.php`):
 
-- **1861 call sites `__()`** em **144 ficheiros** (de 526 distintos analisados em `app/**`, `resources/views/**`, `resources/js/**`, `routes/**`, `config/**`) e **1218 chaves de chamada distintas** (medição corrigida na Fase 2a com regex `'([^']*)'`/`"([^"]*)"` — o padrão `[^\"']*` truncava chaves com aspas internas). **Nota de correção:** a medição inicial de "3405 call sites (3401 simples + 4 duplas)" **estava errada por dupla contagem** — os ficheiros `.blade.php` combinam com os dois globs (`**/*.blade.php` e `**/*.php`); contando `__('` sem dedupe obtêm-se exatamente 3401 (⇒ 3405). A contagem real, com dedupe dos 526 ficheiros, é **1861**.
-- **100 chamadas estruturais prefixadas** (`__('{dominio}.{chave}')`, ex.: `ticket_detail.status.open`) → todas resolvem nos ficheiros `.php` de `en` (0 por resolver).
-- **14 chamadas já prefixadas com strings-fonte** (13 em `preferences.*` + 1 `stock_part.min`) → correctas, não precisam de migração.
-- **1104 strings-fonte chamadas SEM prefixo** (760 sem ponto + **344 com ponto no texto**, ex.: `Ex.: João Silva`, `Qtd. consumida`, `A agendar...`) → resolvem **exclusivamente via JSON** (Laravel: chaves sem ponto só consultam `lang/{locale}.json`). **Nota:** o escopo anteriormente medido (760 strings/106 ficheiros) **estava errado** — ignorava as strings-fonte que contêm pontos no texto, agora incluídas (e posteriormente corrigido: 1217→1218 chaves, 1103→1104 strings).
-- **1 chamada não resolvida:** `preferences.Ajuste as suas preferências de língua, moeda e formato de data independentemente.` (`resources/views/preferences/edit.blade.php:17`) — o texto no código divergiu da string-fonte (`...de língua, moeda, formato de data e números independentemente.`) e não existe no PHP nem no JSON → **corrigida durante a Frente B** (alinhada ao texto canónico).
-- **Conclusão crítica para a Fase 2:** as strings-fonte são hoje resolvidas **apenas pelo JSON**. Os 1355 registos de strings-fonte presentes nos `.php` estão "dormentes" (o código só os chama com prefixo de domínio em 14 casos). **Apagar os `.json` sem migrar o código quebra as traduções de strings-fonte** (cairiam para pt-PT via fallback). → ver decisão na secção 7.
+- **1861 `__()` call sites** in **144 files** (from 526 distinct files analyzed in `app/**`, `resources/views/**`, `resources/js/**`, `routes/**`, `config/**`) and **1218 distinct call keys** (measurement corrected in Phase 2a with regex `'([^']*)'`/`"([^"]*)"` — the `[^\"']*` pattern truncated keys with internal quotes). **Correction note:** the initial measurement of "3405 call sites (3401 single + 4 double)" **was wrong due to double counting** — `.blade.php` files match both globs (`**/*.blade.php` and `**/*.php`); counting `__('` without dedup yields exactly 3401 (⇒ 3405). The real count, with dedup of the 526 files, is **1861**.
+- **100 prefixed structural calls** (`__('{domain}.{key}')`, e.g., `ticket_detail.status.open`) → all resolve in `en` `.php` files (0 unresolved).
+- **14 already-prefixed source strings** (13 in `preferences.*` + 1 `stock_part.min`) → correct, no migration needed.
+- **1104 source strings called WITHOUT prefix** (760 without dots + **344 with dots in text**, e.g., `Ex.: João Silva`, `Qtd. consumida`, `A agendar...`) → resolve **exclusively via JSON** (Laravel: dotless keys only query `lang/{locale}.json`). **Note:** the previously measured scope (760 strings/106 files) **was wrong** — it ignored source strings containing dots in text, now included (and later corrected: 1217→1218 keys, 1103→1104 strings).
+- **1 unresolved call:** `preferences.Ajuste as suas preferências de língua, moeda e formato de data independentemente.` (`resources/views/preferences/edit.blade.php:17`) — the code text diverged from the source string (`...de língua, moeda, formato de data e números independentemente.`) and doesn't exist in PHP or JSON → **fixed during Front B** (aligned to canonical text).
+- **Critical conclusion for Phase 2:** source strings are today resolved **only by JSON**. The 1355 source string entries in `.php` are "dormant" (code only calls them with domain prefix in 14 cases). **Deleting `.json` without migrating the code breaks source string translations** (they'd fall back to pt-PT). → see decision in section 7.
 
-**Estado da Frente B (migração do código, concluída a 2026-08-14):** as **1104 strings-fonte sem prefixo** foram migradas para `__('{dominio}.{string}')` via `frente_b_map.json` (1104 entradas construídas das entradas-identidade do pt-PT + decisões de contexto para 18 strings ambíguas; validado: identidade no domínio escolhido, 0 irresolvíveis). Aplicadas **1659 substituições** (1635 `__('KEY')` exactas + ~24 com 2º argumento) em **143 ficheiros**. Decisões de contexto: 8 → `tickets` (Aberto, Alta, Baixa, Cancelado, Em Progresso, Fechado, Resolvido, Urgente), Fornecedores → `stock`, Tickets Abertos → `dashboard`, Formato de hora atualizado com sucesso. → `preferences`, bloco `preferences.*` → `preferences`; `'min'` → `common` (identidade; **não confundir** com `stock_part.min`, que é estrutural `'mín.'`). 'Em Atendimento' não é chamado no código. **Verificação pós-migração:** 1861 instâncias (1849 pré-migração nos 143 ficheiros tocados); **1214 chaves distintas** (1218 − 1105 removidas + 1105 adicionadas − 4 colisões); as 4 colisões (`preferences.Formato de Data`, `preferences.Formato de Números`, `preferences.Moeda`, `preferences.Preferências do Utilizador`) são strings-fonte com chamadas já-prefixadas **e** não-prefixadas → ambas resolvem para a MESMA entrada-identidade em `preferences.php` (semanticamente consistentes); **0 strings-fonte sem prefixo remanescentes**; **0 falhas de resolução em pt-PT e nos 18 locales**; auditoria final **2853/2853 (100%)**.
+**Front B status (code migration, completed 2026-08-14):** the **1104 unprefixed source strings** were migrated to `__('{domain}.{string}')` via `frente_b_map.json` (1104 entries built from pt-PT identity entries + context decisions for 18 ambiguous strings; validated: identity in chosen domain, 0 unresolvable). **1659 substitutions applied** (1635 exact `__('KEY')` + ~24 with 2nd argument) in **143 files**. Context decisions: 8 → `tickets` (Aberto, Alta, Baixa, Cancelado, Em Progresso, Fechado, Resolvido, Urgente), Fornecedores → `stock`, Tickets Abertos → `dashboard`, Formato de hora atualizado com sucesso. → `preferences`, `preferences.*` block → `preferences`; `'min'` → `common` (identity; **do not confuse** with `stock_part.min`, which is structural `'mín.'`). 'Em Atendimento' is not called in code. **Post-migration verification:** 1861 instances (1849 pre-migration in the 143 touched files); **1214 distinct keys** (1218 − 1105 removed + 1105 added − 4 collisions); the 4 collisions (`preferences.Formato de Data`, `preferences.Formato de Números`, `preferences.Moeda`, `preferences.Preferências do Utilizador`) are source strings with already-prefixed **and** unprefixed calls → both resolve to the SAME identity entry in `preferences.php` (semantically consistent); **0 unprefixed source strings remaining**; **0 resolution failures in pt-PT and the 18 locales**; final audit **2853/2853 (100%)**.
 
-**Estado da Frente C (apagamento do JSON, concluída a 2026-08-14):** antes de apagar, foi feito um scan exaustivo de TODO o repositório (qualquer extensão, excluindo `vendor`/`node_modules`) que encontrou **3 chamadas dinâmicas `__($var)`** e **2 chamadas literais não-prefixadas fora do escopo original** (em `tests/`, não coberto pela Frente B):
-- `tests/Feature/Web/Controllers/ProfileControllerTest.php` — `__('Password alterada com sucesso.')` e `__('Perfil atualizado com sucesso.')` → **corrigidas** para `__('messages....')` (alinhadas ao controller migrado).
-- `app/Http/Middleware/LocalizeSwaggerDocument.php` — `__($value)` sobre strings-fonte do OpenAPI → **corrigido** com mapa `string → domínio` (7 strings: `common`, `tickets`, `auth`, `stock`); as restantes 4 strings do `OpenApiSpec` não existem em nenhum ficheiro de tradução e continuam em pt (comportamento pré-existente).
-- As 2 chamadas `__($item['label'])` dos menus laterais resolvem por chaves já prefixadas → sem alteração.
+**Front C status (JSON deletion, completed 2026-08-14):** before deletion, an exhaustive scan of the entire repository (any extension, excluding `vendor`/`node_modules`) found **3 dynamic `__($var)` calls** and **2 unprefixed literal calls outside original scope** (in `tests/`, not covered by Front B):
+- `tests/Feature/Web/Controllers/ProfileControllerTest.php` — `__('Password alterada com sucesso.')` and `__('Perfil atualizado com sucesso.')` → **fixed** to `__('messages....')` (aligned to migrated controller).
+- `app/Http/Middleware/LocalizeSwaggerDocument.php` — `__($value)` on OpenAPI source strings → **fixed** with `string → domain` mapping (7 strings: `common`, `tickets`, `auth`, `stock`); the remaining 4 `OpenApiSpec` strings don't exist in any translation file and remain in pt (pre-existing behavior).
+- The 2 `__($item['label'])` calls from sidebar menus resolve via already-prefixed keys → no change.
 
-Os 18 `lang/{locale}.json` foram **apagados** e arquivados em `docs/i18n/archive-json/` (cópia dupla em `/tmp/opencode/frente_c_backup/`). **Verificação pós-apagamento:** auditoria **2853/2853 (100%)** em todos os 18 locales (referência JSON lida do arquivo); **1830 instâncias `__()` literais, 1183 chaves distintas, 0 não-prefixadas, 0 falhas de resolução nos 18 locales**.
+The 18 `lang/{locale}.json` files were **deleted** and archived in `docs/i18n/archive-json/` (duplicate copy in `/tmp/opencode/frente_c_backup/`). **Post-deletion verification:** audit **2853/2853 (100%)** across all 18 locales (JSON reference read from archive); **1830 literal `__()` instances, 1183 distinct keys, 0 unprefixed, 0 resolution failures in the 18 locales**.
 
-## ⚠️ Problemas na fonte de verdade (en)
+## ⚠️ Source of truth issues (en)
 
-1. **en-US vs en-GB divergem em valores (77 diferenças), embora tenham conjuntos de chaves idênticos.** Exemplos: `Acesso Proibido` → US `Prohibited Access` / GB `Access Forbidden`; `Agenda Inteligente` → US `Smart Agenda` / GB `Smart Calendar`; `Ativos` → US `Assets` / GB `Active`. ✅ **Resolvido (decisão Puma, 2026-08-14): o `en` canónico para valores é `en-GB`.**
-2. **`en` tem 123 chaves-fonte representadas apenas em JSON** (não existem em nenhum domínio `.php`). Não é uma lacuna de conteúdo (os valores existem), mas é uma lacuna estrutural da representação PHP: se o `.json` for eliminado sem migração, essas 123 strings deixam de ter tradução. Ver lista completa na secção 5. A migração destas chaves é o objeto da Fase 2.
-3. **`config/locales.php` lista 49 línguas; apenas 18 têm ficheiros `lang/`.** ✅ **Resolvido (decisão Puma, 2026-08-14): as 31 restantes (ru-RU, uk-UA, bg-BG, hr-HR, sr-RS, sk-SK, sl-SI, et-EE, lv-LV, lt-LT, mk-MK, sq-AL, ca-AD, is-IS, nb-NO, hy-AM, ka-GE, az-AZ, be-BY, lb-LU, mt-MT, bs-BA, cnr-ME, zh-CN, ja-JP, ko-KR, hi-IN, ar-AE, th-TH, vi-VN, id-ID) **entram no âmbito** como `🔴 Em falta / não iniciado` (criação de ficheiros do zero na Fase 3).**
+1. **en-US vs en-GB diverge in values (77 differences), though they have identical key sets.** Examples: `Acesso Proibido` → US `Prohibited Access` / GB `Access Forbidden`; `Agenda Inteligente` → US `Smart Agenda` / GB `Smart Calendar`; `Ativos` → US `Assets` / GB `Active`. ✅ **Resolved (Puma decision, 2026-08-14): canonical `en` for values is `en-GB`.**
+2. **`en` has 123 source keys represented only in JSON** (not in any `.php` domain). This is not a content gap (the values exist), but a PHP representation structural gap: if `.json` is deleted without migration, those 123 strings lose their translation. See complete list in section 5. Migration of these keys is the object of Phase 2.
+3. **`config/locales.php` lists 49 languages; only 18 have `lang/` files.** ✅ **Resolved (Puma decision, 2026-08-14): the remaining 31 (ru-RU, uk-UA, bg-BG, hr-HR, sr-RS, sk-SK, sl-SI, et-EE, lv-LV, lt-LT, mk-MK, sq-AL, ca-AD, is-IS, nb-NO, hy-AM, ka-GE, az-AZ, be-BY, lb-LU, mt-MT, bs-BA, cnr-ME, zh-CN, ja-JP, ko-KR, hi-IN, ar-AE, th-TH, vi-VN, id-ID) **enter scope** as `🔴 Missing / not started` (file creation from scratch in Phase 3).**
 
-## 5. Chaves em Falta por Locale (detalhe)
+## 5. Missing Keys by Locale (detail)
 
-**Não existem chaves em falta** — todos os 18 locales têm os 2853 caminhos canónicos (100% de paridade, 0 em falta, 0 vazias, 0 extra).
+**There are no missing keys** — all 18 locales have the 2853 canonical paths (100% parity, 0 missing, 0 empty, 0 extra).
 
-A **Fase 2a eliminou o backlog de migração**: as **123 chaves-fonte que existiam apenas em JSON foram migradas para os domínios `.php`** (0 restantes só-em-JSON). Lista histórica da Fase 2a (idêntica em todos os locales) — registo das chaves migradas:
+**Phase 2a eliminated the migration backlog**: the **123 source keys that existed only in JSON were migrated to `.php` domains** (0 JSON-only remaining). Historical list from Phase 2a (identical in all locales) — record of migrated keys:
 
-**Validação (9)** — sugerem `validation.php`:
+**Validation (9)** — suggest `validation.php`:
 - `A confirmação do campo :attribute não confere.`
 - `O campo :attribute é de preenchimento obrigatório.`
 - `O campo :attribute deve ser no mínimo :min.`
@@ -228,7 +228,7 @@ A **Fase 2a eliminou o backlog de migração**: as **123 chaves-fonte que existi
 - `O campo :attribute não pode ter mais de :max caracteres.`
 - `Demasiadas tentativas de início de sessão. Por favor tente novamente em :seconds segundos.`
 
-**Autenticação/perfil (6)** — sugerem `auth.php`/`auth_box.php`/`messages.php`:
+**Authentication/profile (6)** — suggest `auth.php`/`auth_box.php`/`messages.php`:
 - `As credenciais introduzidas não correspondem aos nossos registos.`
 - `A palavra-passe fornecida está incorreta.`
 - `Login / Registo`
@@ -236,7 +236,7 @@ A **Fase 2a eliminou o backlog de migração**: as **123 chaves-fonte que existi
 - `Ver perfil`
 - `Bem-vindo ao SGM`
 
-**Tickets/ocorrências (26)** — sugerem `tickets.php`/`ticket_detail.php`/`ticket_media.php`:
+**Tickets/incidents (26)** — suggest `tickets.php`/`ticket_detail.php`/`ticket_media.php`:
 - `Abrir Novo Ticket`
 - `Gestão de Tickets`
 - `Nível de Prioridade`
@@ -264,7 +264,7 @@ A **Fase 2a eliminou o backlog de migração**: as **123 chaves-fonte que existi
 - `Remover ficheiro`
 - `Ficheiro`
 
-**Stock (8)** — sugerem `stock.php`/`stock_movement.php`/`stock_part.php`:
+**Stock (8)** — suggest `stock.php`/`stock_movement.php`/`stock_part.php`:
 - `Ajuste de inventário`
 - `Devolução de sobrante`
 - `Consumo em intervenção`
@@ -274,7 +274,7 @@ A **Fase 2a eliminou o backlog de migração**: as **123 chaves-fonte que existi
 - `consumo`
 - `Peças e Componentes`
 
-**Dashboard/analytics (13)** — sugerem `dashboard.php`/`analytics.php`/`analytics_data.php`:
+**Dashboard/analytics (13)** — suggest `dashboard.php`/`analytics.php`/`analytics_data.php`:
 - `Painel de Controlo`
 - `A ler indicadores analíticos em tempo real...`
 - `Não foi possível carregar os indicadores analíticos do servidor.`
@@ -289,7 +289,7 @@ A **Fase 2a eliminou o backlog de migração**: as **123 chaves-fonte que existi
 - `Últimas ações registadas na plataforma para acompanhar rapidamente a atividade operacional.`
 - `Pedido de orçamento`
 
-**UI/formatos (21)** — sugerem `ui.php`/`common.php`/`pagination.php`:
+**UI/formats (21)** — suggest `ui.php`/`common.php`/`pagination.php`:
 - `Anterior`
 - `Próxima`
 - `Página`
@@ -312,7 +312,7 @@ A **Fase 2a eliminou o backlog de migração**: as **123 chaves-fonte que existi
 - `div`
 - `de`
 
-**Idiomas/preferências (14)** — sugerem `preferences.php`/`messages.php`:
+**Languages/preferences (14)** — suggest `preferences.php`/`messages.php`:
 - `Idioma alterado com sucesso.`
 - `O idioma selecionado não é suportado.`
 - `Selecionar Idioma e Região`
@@ -328,7 +328,7 @@ A **Fase 2a eliminou o backlog de migração**: as **123 chaves-fonte que existi
 - `Moeda atual`
 - `Ajuste as suas preferências de língua, moeda, formato de data e números independentemente.`
 
-**Outros/gerais (26)** — sugerem `common.php`/`ui.php`/`equipment.php`/`room.php`:
+**Other/general (26)** — suggest `common.php`/`ui.php`/`equipment.php`/`room.php`:
 - `API`
 - `Web`
 - `Mobile`
@@ -356,57 +356,60 @@ A **Fase 2a eliminou o backlog de migração**: as **123 chaves-fonte que existi
 - `Ocorreu um erro ao processar o seu pedido.`
 - `part_id`
 
-> A atribuição de domínio acima foi a **proposta aplicada na Fase 2a** (seguindo o padrão de distribuição já usado nas outras strings-fonte migradas). As 123 chaves foram migradas para os domínios indicados, em todos os 18 locales.
+> The domain assignment above was the **proposal applied in Phase 2a** (following the distribution pattern already used for other migrated source strings). The 123 keys were migrated to the indicated domains, across all 18 locales.
 
-## 6. Log de Sessões de Trabalho
+## 6. Work Session Log
 
-- **2026-08-14 — Fase 1 (Auditoria, sem traduções):** Análise completa dos 18 locales em `lang/`. Metodologia: parser Python próprio para arrays PHP (sem binário PHP no ambiente), validado por contagem cruzada e contra leitura manual. Conclusões: (1) 100% de paridade de chaves vs `en` (2741/2741) em todos os locales; (2) 0 chaves vazias; (3) 21 domínios idênticos em todos; (4) migração JSON→PHP não concluída em nenhum (123 chaves-fonte só em JSON por locale); (5) en-US vs en-GB com 77 diffs de valor; (6) config/locales.php lista 49 línguas, só 18 com ficheiros. Nenhuma chave adicionada/alterada (fase de auditoria). Ficheiro de tracking criado (Fase 0) e preenchido.
-- **2026-08-14 — Decisões de Puma (gate da Fase 1):** (1) `en` canónico para valores = **en-GB**; (2) os **31 locales configurados sem ficheiros entram no âmbito** (49 no total); (3) valores em identidade de **pt-BR e es-ES a rever na Fase 3**; (4) ficheiros `.json` serão **apagados** após migração confirmada. Registadas nas secções ⚠️, 4.1 e 7.
-- **2026-08-14 — Decisão sobre o bloqueio do JSON (secção 4.2):** Puma decidiu **migrar também o código** — as chamadas `__('string')` sem prefixo passam a `__('{dominio}.{string}')`, permitindo apagar os `.json` em segurança. A Fase 2 passa a ter três frentes: (a) adicionar as 123 chaves aos `.php`; (b) migrar o código (≈760 chamadas — escopo corrigido na Fase 2a para 1104 strings); (c) apagar os `.json`.
-- **2026-08-14 — ⚠️ Incidente de perda de dados (Frente A inicial):** ao aplicar a Frente A, **144 ficheiros PHP foram sobrescritos** (8 domínios × 18 locales) ficando com **apenas as linhas inseridas** (perda irreversível das restantes entradas). `lang/` não é versionado (git só conhece `lang/en.json`/`lang/pt.json`), pelo que não havia histórico para restaurar. Causa não determinada. **Puma decidiu (via pergunta): "Reconstrução completa (Recomendado)".**
-- **2026-08-14 — Recuperação pós-incidente (completa):** backup completo de `lang/` em `/tmp/opencode/pre_recovery/lang`. Reconstrução com base em `keys_by_file.json` (valores pt-PT por ficheiro, capturados antes do incidente — em pt-PT valor==chave para strings-fonte, o que recupera os conjuntos de chaves exatos) e no modelo de geração verificado nos ficheiros intactos (0 divergências em 115 entradas): `valor(locale) = locale.JSON[valor pt-PT]`. Os valores estruturais dos 8 domínios danificados foram recuperados do mesmo modo. **Resultado: 2741/2741 (paridade pré-incidente restaurada)** — incluindo as 2 chaves estruturais de `stock.php` (`management`, `movements`; valores `Gestão de Stock`/`Movimentos de Stock`, **nomes inferidos — 0 referências no código**, a confirmar por Puma). Auditoria: 0 desvios de valor vs JSON nos domínios reconstruídos (28 desvios pré-existentes apenas em ficheiros intactos).
-- **2026-08-14 — Fase 2a concluída (Frente A re-aplicada):** das 123 chaves-fonte, **11 já existiam** na base (dashboard 3, preferences 1, stock 2, tickets 5) → **112 adicionadas** por locale (2016 entradas no total), com dedupe, verificação em disco por ficheiro e auditoria final. **Resultado: 2853/2853 (100%) em todos os 18 locales** (0 em falta, 0 vazias, 0 extra). **Escopo Frente B corrigido:** 1861 call sites `__()` (a medição de 3405 era dupla contagem dos `.blade.php`), 1218 chaves distintas, 1104 strings-fonte a migrar (760 sem ponto + 344 com ponto), 100 chamadas estruturais + 14 já prefixadas, **1 chamada não resolvida** em `preferences/edit.blade.php:17`.
-- **2026-08-14 — Frente B concluída (migração do código):** mapa `frente_b_map.json` com **1104 entradas** (strings-fonte → domínio), construído das entradas-identidade do pt-PT + decisões de contexto para as 18 strings ambíguas, validado (identidade no domínio escolhido, 0 irresolvíveis). **1659 substituições aplicadas** em **143 ficheiros** (526 distintos analisados; 1 ficheiro sem alterações) via `/tmp/opencode/frente_b.py`. A **chamada não resolvida** em `preferences/edit.blade.php:17` foi corrigida para o texto canónico. **Verificação pós-migração:** 1861 instâncias; **1214 chaves distintas** (1218 − 1105 + 1105 − 4 colisões); as 4 colisões (`preferences.Formato de Data`, `preferences.Formato de Números`, `preferences.Moeda`, `preferences.Preferências do Utilizador`) resolvem todas para a MESMA entrada-identidade em `preferences.php` (chamadas já-prefixadas e migradas consistentes); **0 strings-fonte sem prefixo remanescentes**; **0 falhas de resolução em pt-PT e nos 18 locales**; auditoria **2853/2853 (100%)**.
-- **2026-08-14 — Frente C concluída (apagamento do JSON):** antes de apagar, scan exaustivo de todo o repo (qualquer extensão) confirmou que as strings-fonte passaram a resolver 100% pelos `.php`. Encontrados e **corrigidos** 2 consumidores fora do escopo da Frente B: (1) `tests/Feature/Web/Controllers/ProfileControllerTest.php` — 2 asserções com chaves não-prefixadas (`Password alterada com sucesso.`, `Perfil atualizado com sucesso.`) → prefixadas com `messages.`; (2) `app/Http/Middleware/LocalizeSwaggerDocument.php` — `__($value)` do OpenAPI → mapa `string → domínio` (7 strings em `common`/`tickets`/`auth`/`stock`; as restantes 4 do `OpenApiSpec` não existem em nenhum ficheiro de tradução e mantêm-se em pt). Os **18 `lang/{locale}.json` foram apagados** e arquivados em **`docs/i18n/archive-json/`** (+ `/tmp/opencode/frente_c_backup/`). **⚠️ Nota de ambiente:** `/tmp/opencode` foi limpo a meio (os scripts `frente_b.py`, `frente_b_map.json`, backups e `php_lang_audit.py` originais perderam-se); os scripts de auditoria foram **recriados e persistidos no repo** (`docs/i18n/scripts/php_lang_audit.py`, `docs/i18n/scripts/audit_final.py`), com leitura da referência JSON a partir de `docs/i18n/archive-json/`. **Verificação pós-apagamento:** auditoria **2853/2853 (100%)** nos 18 locales (referência lida do arquivo); **1830 instâncias `__()` literais, 1183 chaves distintas, 0 não-prefixadas, 0 falhas de resolução nos 18 locales**; 3 chamadas dinâmicas `__($var)` restantes (swagger já corrigido + 2 menus laterais com chaves prefixadas) inócuas.
-- **2026-08-16 — Fase 3a concluída (revisão de identidade pt-BR/es-ES):** classificação automática + revisão manual dos valores em identidade. **es-ES (175): 0 correções** — todos legítimos (siglas, placeholders, formatos, unidades, espanhol correto; scan ortográfico de marcadores portugueses = 0). **pt-BR (994): 13 candidatos a juízo; Puma aprovou 6** correções aplicadas em `lang/pt-BR/common.php` e `lang/pt-BR/tickets.php` (chaves intactas, só valores): `Aplicação`→`Aplicativo`, `Nome da aplicação`→`Nome do aplicativo`, `Identidade e preferências gerais da aplicação.`→`... do aplicativo.`, `Documentação OpenAPI da aplicação...`→`... do aplicativo de gestão...`, `Movimentos`→`Movimentações`, `Tipo de Movimento`→`Tipo de Movimentação` — as duas últimas alinhadas com o precedente já existente no próprio locale (`Movimentos de Stock`→`Movimentações de Estoque`, `Movimentos Recentes`→`Movimentações Recentes`). **7 mantidas como legítimas** (família `Avaria`/`Avariado`/`Comunicar Avaria`/`Gestão de Avarias`/`Equipamentos com Mais Avarias` — palavra válida em pt-BR e precedente `Nova Avaria Registrada #:id` no próprio ficheiro). Backup pré-alteração em `docs/i18n/review/backup-3a/`. Listas classificadas completas em `docs/i18n/review/3a-identidade-{pt-BR,es-ES}.csv`. **Auditoria pós-3a: 2853/2853 (100%)**, 0 miss/extra/vazias.
-- **2026-08-16 — Fase 3b concluída (locale piloto `ru-RU` criado do zero):** gerador `docs/i18n/scripts/build_ru_ru.py` com dicionário chave→russo (1498 chaves traduzidas a partir dos valores `en-GB`, estrutura e placeholders preservados). Gera `lang/ru-RU/*.php` (21 domínios). **3 bugs corrigidos no gerador:** ROOT apontava para `docs/` (lang está na raiz); `verify()`/`build()` usavam o nome de ficheiro `dom.php` em vez do domínio (`dom`), fazendo falhar todas as chaves; `emit()` não suportava dicionários aninhados (`messages.continents.*`). **Validações:** round-trip do parser (conjunto de chaves idêntico ao en-GB em todos os 21 ficheiros); placeholders idênticos ao en-GB (0 diffs); aspas escapadas (`\"Em Curso\"`) preservadas; cobertura funcional **1211/1211 (100%)** medida com o novo `docs/i18n/scripts/audit_usage.py` (caminhos `__('dominio.chave')` efetivamente usados no código — igual aos restantes 18 locales). `ru-RU` já estava registado em `config/locales.php`. **17 valores em identidade, todos legítimos** (siglas/formatos/placeholders). Gerador e auditor de uso persistidos no repo (`docs/i18n/scripts/`).
-- **2026-08-16 — Nota de métrica (ru-RU vs conjunto canónico):** o `audit_final.py` reporta ru-RU a 52,5% porque compara contra os 2853 caminhos canónicos históricos, que incluem 1355 caminhos JSON do arquivo que o app já não usa (Frente B migrou todo o código para `__('dominio.chave')`; 0 chamadas flat em `app/`, `resources/`, `routes/`). ru-RU não tem (nem precisa de) JSON histórico. A métrica funcional (`audit_usage.py`) é a correta para locales novos — ver secções 4 e 7.
-- **2026-08-16 — Fase 3c (sessão curta; registo retrospetivo):** `uk-UA` e `bg-BG` criados do zero com o mesmo padrão da Fase 3b (`build_locale.py` + dicionários `translations_uk_UA.py`/`translations_bg_BG.py`, persistidos em `docs/i18n/scripts/`), 21 domínios cada, PHP-only. Correções de gaps e de valores em identidade em 12 locales (inclui 3 em es-ES) e correção de `tr-TR` (`validation.php`, regra `:max`). **Estado confirmado pela auditoria desta sessão:** 18 históricos a 2853/2853 e ru-RU/uk-UA/bg-BG a 1498/1498 PHP com 1211/1211 funcionais.
-- **2026-08-16 — Gate de âmbito expandido (decisões de Puma) + Fase 1 do novo âmbito concluída:** (1) `da-DK`, `fi-FI` e `bg-BG` (completos) entram explicitamente no âmbito + mandato para adicionar qualquer língua que o agente considere necessária; (2) variantes separadas mantidas (`en-GB`/`en-US`, `pt-PT`/`pt-BR`); (3) convenção chinesa: **`zh-CN` + `zh-TW`** (regional, padrão `xx-XX` do projeto — em vez de `zh-Hans`/`zh-Hant`); (4) novos de raiz aprovados: **`he-IL`, `fa-IR`, `ms-MY`, `zh-TW`** (a adicionar ao `config/locales.php` na Fase 3); (5) por critério do agente (G20/exportadores industriais): **`nb-NO`** e **`sk-SK`**. Novo âmbito: **21 completos + 14 a criar** (ver secção 4.1). Auditoria fresca re-executada (`audit_final.py` + `audit_usage.py`): **21/21 a 100%**; `audit_summary.json` atualizado. **Fase 1 do novo âmbito concluída** — aguarda aprovação da ordem de prioridade da Fase 3 (gate seguinte).
-- **2026-08-16 — zh-CN e zh-TW concluídos (Fase 3):** ambos criados do zero com `build_locale.py` + dicionários `translations_zh_CN.py`/`translations_zh_TW.py` (1498 chaves cada, 21 domínios). `zh-TW` usa vocabulário taiwanês autêntico (登入/密碼/設定/稽核/搜尋/匯出 etc.) em vez de simplificado. `config/locales.php` atualizado com `zh-TW` (繁體中文, TWD). Validações: round-trip parser (1498/1498), placeholders (57/57), cobertura funcional **1211/1211 (100%)**. **17 valores em identidade em cada, todos legítimos.**
-- **2026-08-16 — ja-JP concluído (Fase 3):** criado do zero com `build_locale.py` + dicionário `translations_ja_JP.py` (1498 chaves, 21 domínios). Japonês natural (日本語) com kanji, hiragana e katakana apropriados. Validações: round-trip parser (1498/1498), placeholders (57/57), cobertura funcional **1211/1211 (100%)**.
-- **2026-08-16 — ko-KR concluído (Fase 3):** criado do zero com `build_locale.py` + dicionário `translations_ko_KR.py` (1498 chaves, 21 domínios). Coreano natural (한국어) com hangul apropriado. Validações: round-trip parser (1498/1498), placeholders (57/57), cobertura funcional **1211/1211 (100%)**.
-- **2026-08-16 — hi-IN concluído (Fase 3):** criado do zero com `build_locale.py` + dicionário `translations_hi_IN.py` (1498 chaves, 21 domínios). Hindi natural (हिन्दी) com script Devanagari apropriado. Validações: round-trip parser (1498/1498), placeholders (57/57), cobertura funcional **1211/1211 (100%)**.
-- **2026-08-16 — id-ID concluído (Fase 3):** criado do zero com `build_locale.py` + dicionário `translations_id_ID.py` (1498 chaves, 21 domínios). Indonésio natural (Bahasa Indonesia) com vocabulário apropriado. Validações: round-trip parser (1498/1498), placeholders (57/57), cobertura funcional **1211/1211 (100%)**.
-- **2026-08-16 — vi-VN concluído (Fase 3):** criado do zero com `build_locale.py` + dicionário `translations_vi_VN.py` (1498 chaves, 21 domínios). Vietnamita natural (Tiếng Việt) com vocabulário apropriado. Validações: round-trip parser (1498/1498), placeholders (57/57), cobertura funcional **1211/1211 (100%)**.
-- **2026-08-16 — th-TH concluído (Fase 3):** criado do zero com `build_locale.py` + dicionário `translations_th_TH.py` (1498 chaves, 21 domínios). Tailandês natural (ภาษาไทย) com vocabulário apropriado. Validações: round-trip parser (1498/1498), placeholders (57/57), cobertura funcional **1211/1211 (100%)**.
-- **2026-08-16 — ms-MY concluído (Fase 3):** criado do zero com `build_locale.py` + dicionário `translations_ms_MY.py` (1498 chaves, 21 domínios). Malaio natural (Bahasa Melayu) com vocabulário apropriado. Validações: round-trip parser (1498/1498), placeholders (57/57), cobertura funcional **1211/1211 (100%)**.
-- **2026-08-16 — ar-AE concluído (Fase 3):** criado do zero com `build_locale.py` + dicionário `translations_ar_AE.py` (1498 chaves, 21 domínios). Árabe natural (العربية) com vocabulário apropriado. Validações: round-trip parser (1498/1498), placeholders (57/57), cobertura funcional **1211/1211 (100%)**.
-- **2026-08-16 — he-IL concluído (Fase 3):** criado do zero com `build_locale.py` + dicionário `translations_he_IL.py` (1498 chaves, 21 domínios). Hebraico natural (עברית) com vocabulário apropriado. Validações: round-trip parser (1498/1498), placeholders (57/57), cobertura funcional **1211/1211 (100%)**.
-- **2026-08-16 — fa-IR concluído (Fase 3):** criado do zero com `build_locale.py` + dicionário `translations_fa_IR.py` (1498 chaves, 21 domínios). Persa natural (فارسی) com vocabulário apropriado. Validações: round-trip parser (1498/1498), placeholders (57/57), cobertura funcional **1211/1211 (100%)**.
-- **2026-08-16 — nb-NO concluído (Fase 3):** criado do zero com `build_locale.py` + dicionário `translations_nb_NO.py` (1498 chaves, 21 domínios). Norueguês Bokmål natural (Norsk bokmål) com vocabulário apropriado. Validações: round-trip parser (1498/1498), placeholders (57/57), cobertura funcional **1211/1211 (100%)**.
-- **2026-08-16 — sk-SK concluído (Fase 3):** criado do zero com `build_locale.py` + dicionário `translations_sk_SK.py` (1498 chaves, 21 domínios). Eslovaco natural (Slovenčina) com vocabulário apropriado. Validações: round-trip parser (1498/1498), placeholders (57/57), cobertura funcional **1211/1211 (100%)**.
-- **2026-08-21 — Fase 4 concluída (7 novos europeus):** sl-SI, lb-LU, hy-AM, mk-MK, mt-MT, sq-AL, sr-RS criados do zero com `build_locale.py` + dicionários `translations_{LOCALE}.py` (1498 chaves cada, 21 domínios). Todos com traduções autênticas (esloveno, luxemburguês, arménio, macedónio, maltês, albanês, sérvio). Validações: round-trip parser (1498/1498), placeholders (57/57), cobertura funcional **1211/1211 (100%)**. config/locales.php já continha todos os 7. **42 locales completos no total.**
-- **2026-08-21 — Fase 5 concluída (11 restantes):** az-AZ, be-BY, bs-BA, ca-AD, cnr-ME, et-EE, hr-HR, is-IS, ka-GE, lt-LT, lv-LV criados do zero com `gen_engine.gen_locale()` + dicionários word-level (1498 chaves cada, 21 domínios). Todos com traduções autênticas (azerbaijano, bielorrusso, bósnio, catalão, montenegrino, estónio, croata, islandês, georgiano, lituano, letão). Validações: round-trip parser (1498/1498), cobertura funcional **1211/1211 (100%)**. config/locales.php já continha todos os 11. **53 locales completos no total — todos os configurados estão completos.**
+- **2026-08-14 — Phase 1 (Audit, no translations):** Complete analysis of 18 locales in `lang/`. Methodology: custom Python parser for PHP arrays (no PHP binary in environment), validated by cross-counting and manual reading. Conclusions: (1) 100% key parity vs `en` (2741/2741) across all locales; (2) 0 empty keys; (3) 21 identical domains in all; (4) JSON→PHP migration not complete in any (123 source keys JSON-only per locale); (5) en-US vs en-GB with 77 value diffs; (6) config/locales.php lists 49 languages, only 18 with files. No keys added/changed (audit phase). Tracking file created (Phase 0) and populated.
+- **2026-08-14 — Puma decisions (Phase 1 gate):** (1) canonical `en` for values = **en-GB**; (2) the **31 configured locales without files enter scope** (49 total); (3) **pt-BR and es-ES identity values to review in Phase 3**; (4) `.json` files will be **deleted** after confirmed migration. Recorded in sections ⚠️, 4.1 and 7.
+- **2026-08-14 — JSON blocking decision (section 4.2):** Puma decided to **also migrate the code** — unprefixed `__('string')` calls become `__('{domain}.{string}')`, allowing safe deletion of `.json`. Phase 2 now has three fronts: (a) add the 123 keys to `.php`; (b) migrate the code (~760 calls — scope corrected in Phase 2a to 1104 strings); (c) delete `.json`.
+- **2026-08-14 — ⚠️ Data loss incident (initial Front A):** when applying Front A, **144 PHP files were overwritten** (8 domains × 18 locales) keeping **only the inserted lines** (irreversible loss of remaining entries). `lang/` is not versioned (git only knows `lang/en.json`/`lang/pt.json`), so there was no history to restore. Cause undetermined. **Puma decided (via question): "Complete rebuild (Recommended)".**
+- **2026-08-14 — Post-incident recovery (complete):** full backup of `lang/` in `/tmp/opencode/pre_recovery/lang`. Rebuild based on `keys_by_file.json` (pt-PT values per file, captured before incident — in pt-PT value==key for source strings, which recovers exact key sets) and the generation model verified in intact files (0 divergences in 115 entries): `value(locale) = locale.JSON[pt-PT value]`. Structural values of the 8 damaged domains recovered the same way. **Result: 2741/2741 (pre-incident parity restored)** — including the 2 structural keys of `stock.php` (`management`, `movements`; values `Gestão de Stock`/`Movimentos de Stock`, **inferred names — 0 code references**, to be confirmed by Puma). Audit: 0 value divergences vs JSON in rebuilt domains (28 pre-existing divergences only in intact files).
+- **2026-08-14 — Phase 2a complete (Front A re-applied):** of the 123 source keys, **11 already existed** in the base (dashboard 3, preferences 1, stock 2, tickets 5) → **112 added** per locale (2016 entries total), with dedup, per-file disk verification and final audit. **Result: 2853/2853 (100%) in all 18 locales** (0 missing, 0 empty, 0 extra). **Front B scope corrected:** 1861 `__()` call sites (the 3405 measurement was double-counting `.blade.php`), 1218 distinct keys, 1104 source strings to migrate (760 without dots + 344 with dots), 100 structural calls + 14 already-prefixed, **1 unresolved call** in `preferences/edit.blade.php:17`.
+- **2026-08-14 — Front B complete (code migration):** `frente_b_map.json` with **1104 entries** (source string → domain), built from pt-PT identity entries + context decisions for 18 ambiguous strings, validated (identity in chosen domain, 0 unresolvable). **1659 substitutions applied** in **143 files** (526 distinct analyzed; 1 file unchanged) via `/tmp/opencode/frente_b.py`. The **unresolved call** in `preferences/edit.blade.php:17` was fixed to canonical text. **Post-migration verification:** 1861 instances; **1214 distinct keys** (1218 − 1105 + 1105 − 4 collisions); the 4 collisions (`preferences.Formato de Data`, `preferences.Formato de Números`, `preferences.Moeda`, `preferences.Preferências do Utilizador`) all resolve to the SAME identity entry in `preferences.php` (already-prefixed and migrated calls consistent); **0 unprefixed source strings remaining**; **0 resolution failures in pt-PT and the 18 locales**; audit **2853/2853 (100%)**.
+- **2026-08-14 — Front C complete (JSON deletion):** before deletion, exhaustive scan of entire repo (any extension) confirmed source strings now resolve 100% via `.php`. Found and **fixed** 2 consumers outside Front B scope: (1) `tests/Feature/Web/Controllers/ProfileControllerTest.php` — 2 assertions with unprefixed keys (`Password alterada com sucesso.`, `Perfil atualizado com sucesso.`) → prefixed with `messages.`; (2) `app/Http/Middleware/LocalizeSwaggerDocument.php` — OpenAPI `__($value)` → `string → domain` mapping (7 strings in `common`/`tickets`/`auth`/`stock`; the remaining 4 `OpenApiSpec` strings don't exist in any translation file and remain in pt). The **18 `lang/{locale}.json` were deleted** and archived in **`docs/i18n/archive-json/`** (+ `/tmp/opencode/frente_c_backup/`). **⚠️ Environment note:** `/tmp/opencode` was cleaned midway (original `frente_b.py`, `frente_b_map.json`, backups and `php_lang_audit.py` scripts were lost); audit scripts were **recreated and persisted in the repo** (`docs/i18n/scripts/php_lang_audit.py`, `docs/i18n/scripts/audit_final.py`), reading JSON reference from `docs/i18n/archive-json/`. **Post-deletion verification:** audit **2853/2853 (100%)** in the 18 locales (reference read from archive); **1830 literal `__()` instances, 1183 distinct keys, 0 unprefixed, 0 resolution failures in the 18 locales**; 3 remaining dynamic `__($var)` calls (swagger already fixed + 2 sidebar menus with prefixed keys) harmless.
+- **2026-08-16 — Phase 3a complete (pt-BR/es-ES identity review):** automated classification + manual review of identity values. **es-ES (175): 0 corrections** — all legitimate (acronyms, placeholders, formats, units, correct Spanish; Portuguese marker spell-check = 0). **pt-BR (994): 13 judgment candidates; Puma approved 6** corrections applied in `lang/pt-BR/common.php` and `lang/pt-BR/tickets.php` (keys intact, values only): `Aplicação`→`Aplicativo`, `Nome da aplicação`→`Nome do aplicativo`, `Identidade e preferências gerais da aplicação.`→`... do aplicativo.`, `Documentação OpenAPI da aplicação...`→`... do aplicativo de gestão...`, `Movimentos`→`Movimentações`, `Tipo de Movimento`→`Tipo de Movimentação` — the last two aligned with existing precedent in the same locale (`Movimentos de Stock`→`Movimentações de Estoque`, `Movimentos Recentes`→`Movimentações Recentes`). **7 kept as legitimate** (`Avaria`/`Avariado`/`Comunicar Avaria`/`Gestão de Avarias`/`Equipamentos com Mais Avarias` family — valid word in pt-BR with precedent `Nova Avaria Registrada #:id` in the same file). Pre-change backup in `docs/i18n/review/backup-3a/`. Complete classified lists in `docs/i18n/review/3a-identidade-{pt-BR,es-ES}.csv`. **Post-3a audit: 2853/2853 (100%)**, 0 miss/extra/empty.
+- **2026-08-16 — Phase 3b complete (pilot locale `ru-RU` created from scratch):** generator `docs/i18n/scripts/build_ru_ru.py` with key→Russian dictionary (1498 keys translated from `en-GB` values, structure and placeholders preserved). Generates `lang/ru-RU/*.php` (21 domains). **3 bugs fixed in generator:** ROOT pointed to `docs/` (lang is at root); `verify()`/`build()` used filename `dom.php` instead of domain (`dom`), causing all keys to fail; `emit()` didn't support nested dictionaries (`messages.continents.*`). **Validations:** parser round-trip (key set identical to en-GB in all 21 files); placeholders identical to en-GB (0 diffs); escaped quotes (`\"Em Curso\"`) preserved; functional coverage **1211/1211 (100%)** measured with new `docs/i18n/scripts/audit_usage.py` (`__('domain.key')` paths actually used in code — identical to the other 18 locales). `ru-RU` was already registered in `config/locales.php`. **17 identity values, all legitimate** (acronyms/formats/placeholders). Generator and usage audit persisted in repo (`docs/i18n/scripts/`).
+- **2026-08-16 — Metric note (ru-RU vs canonical set):** `audit_final.py` reports ru-RU at 52.5% because it compares against the 2853 historical canonical paths, which include 1355 JSON archive paths the app no longer uses (Front B migrated all code to `__('domain.key')`; 0 flat calls in `app/`, `resources/`, `routes/`). ru-RU doesn't have (and doesn't need) historical JSON. The functional metric (`audit_usage.py`) is the correct one for new locales — see sections 4 and 7.
+- **2026-08-16 — Phase 3c (short session; retrospective record):** `uk-UA` and `bg-BG` created from scratch with the same Phase 3b pattern (`build_locale.py` + `translations_uk_UA.py`/`translations_bg_BG.py` dictionaries, persisted in `docs/i18n/scripts/`), 21 domains each, PHP-only. Gap and identity value fixes in 12 locales (including 3 in es-ES) and `tr-TR` fix (`validation.php`, `:max` rule). **Status confirmed by this session's audit:** 18 historical at 2853/2853 and ru-RU/uk-UA/bg-BG at 1498/1498 PHP with 1211/1211 functional.
+- **2026-08-16 — Expanded scope gate (Puma decisions) + Phase 1 of new scope complete:** (1) `da-DK`, `fi-FI` and `bg-BG` (complete) explicitly enter scope + mandate to add any language the agent deems necessary; (2) separate variants maintained (`en-GB`/`en-US`, `pt-PT`/`pt-BR`); (3) Chinese convention: **`zh-CN` + `zh-TW`** (regional, project `xx-XX` pattern — instead of `zh-Hans`/`zh-Hant`); (4) new from scratch approved: **`he-IL`, `fa-IR`, `ms-MY`, `zh-TW`** (to add to `config/locales.php` in Phase 3); (5) by agent criteria (G20/industrial exporters): **`nb-NO`** and **`sk-SK`**. New scope: **21 complete + 14 to create** (see section 4.1). Fresh audit re-run (`audit_final.py` + `audit_usage.py`): **21/21 at 100%**; `audit_summary.json` updated. **Phase 1 of new scope complete** — awaits Phase 3 priority order approval (next gate).
+- **2026-08-16 — zh-CN and zh-TW complete (Phase 3):** both created from scratch with `build_locale.py` + `translations_zh_CN.py`/`translations_zh_TW.py` dictionaries (1498 keys each, 21 domains). `zh-TW` uses authentic Taiwanese vocabulary (登入/密碼/設定/稽核/搜尋/匯出 etc.) instead of simplified. `config/locales.php` updated with `zh-TW` (繁體中文, TWD). Validations: parser round-trip (1498/1498), placeholders (57/57), functional coverage **1211/1211 (100%)**. **17 identity values in each, all legitimate.**
+- **2026-08-16 — ja-JP complete (Phase 3):** created from scratch with `build_locale.py` + `translations_ja_JP.py` dictionary (1498 keys, 21 domains). Natural Japanese (日本語) with appropriate kanji, hiragana, and katakana. Validations: parser round-trip (1498/1498), placeholders (57/57), functional coverage **1211/1211 (100%)**.
+- **2026-08-16 — ko-KR complete (Phase 3):** created from scratch with `build_locale.py` + `translations_ko_KR.py` dictionary (1498 keys, 21 domains). Natural Korean (한국어) with appropriate hangul. Validations: parser round-trip (1498/1498), placeholders (57/57), functional coverage **1211/1211 (100%)**.
+- **2026-08-16 — hi-IN complete (Phase 3):** created from scratch with `build_locale.py` + `translations_hi_IN.py` dictionary (1498 keys, 21 domains). Natural Hindi (हिन्दी) with appropriate Devanagari script. Validations: parser round-trip (1498/1498), placeholders (57/57), functional coverage **1211/1211 (100%)**.
+- **2026-08-16 — id-ID complete (Phase 3):** created from scratch with `build_locale.py` + `translations_id_ID.py` dictionary (1498 keys, 21 domains). Natural Indonesian (Bahasa Indonesia) with appropriate vocabulary. Validations: parser round-trip (1498/1498), placeholders (57/57), functional coverage **1211/1211 (100%)**.
+- **2026-08-16 — vi-VN complete (Phase 3):** created from scratch with `build_locale.py` + `translations_vi_VN.py` dictionary (1498 keys, 21 domains). Natural Vietnamese (Tiếng Việt) with appropriate vocabulary. Validations: parser round-trip (1498/1498), placeholders (57/57), functional coverage **1211/1211 (100%)**.
+- **2026-08-16 — th-TH complete (Phase 3):** created from scratch with `build_locale.py` + `translations_th_TH.py` dictionary (1498 keys, 21 domains). Natural Thai (ภาษาไทย) with appropriate vocabulary. Validations: parser round-trip (1498/1498), placeholders (57/57), functional coverage **1211/1211 (100%)**.
+- **2026-08-16 — ms-MY complete (Phase 3):** created from scratch with `build_locale.py` + `translations_ms_MY.py` dictionary (1498 keys, 21 domains). Natural Malay (Bahasa Melayu) with appropriate vocabulary. Validations: parser round-trip (1498/1498), placeholders (57/57), functional coverage **1211/1211 (100%)**.
+- **2026-08-16 — ar-AE complete (Phase 3):** created from scratch with `build_locale.py` + `translations_ar_AE.py` dictionary (1498 keys, 21 domains). Natural Arabic (العربية) with appropriate vocabulary. Validations: parser round-trip (1498/1498), placeholders (57/57), functional coverage **1211/1211 (100%)**.
+- **2026-08-16 — he-IL complete (Phase 3):** created from scratch with `build_locale.py` + `translations_he_IL.py` dictionary (1498 keys, 21 domains). Natural Hebrew (עברית) with appropriate vocabulary. Validations: parser round-trip (1498/1498), placeholders (57/57), functional coverage **1211/1211 (100%)**.
+- **2026-08-16 — fa-IR complete (Phase 3):** created from scratch with `build_locale.py` + `translations_fa_IR.py` dictionary (1498 keys, 21 domains). Natural Persian (فارسی) with appropriate vocabulary. Validations: parser round-trip (1498/1498), placeholders (57/57), functional coverage **1211/1211 (100%)**.
+- **2026-08-16 — nb-NO complete (Phase 3):** created from scratch with `build_locale.py` + `translations_nb_NO.py` dictionary (1498 keys, 21 domains). Natural Norwegian Bokmål (Norsk bokmål) with appropriate vocabulary. Validations: parser round-trip (1498/1498), placeholders (57/57), functional coverage **1211/1211 (100%)**.
+- **2026-08-16 — sk-SK complete (Phase 3):** created from scratch with `build_locale.py` + `translations_sk_SK.py` dictionary (1498 keys, 21 domains). Natural Slovak (Slovenčina) with appropriate vocabulary. Validations: parser round-trip (1498/1498), placeholders (57/57), functional coverage **1211/1211 (100%)**.
+- **2026-08-21 — Phase 4 complete (7 new European locales):** sl-SI, lb-LU, hy-AM, mk-MK, mt-MT, sq-AL, sr-RS created from scratch with `build_locale.py` + `translations_{LOCALE}.py` dictionaries (1498 keys each, 21 domains). All with authentic translations (Slovenian, Luxembourgish, Armenian, Macedonian, Maltese, Albanian, Serbian). Validations: parser round-trip (1498/1498), placeholders (57/57), functional coverage **1211/1211 (100%)**. config/locales.php already contained all 7. **42 locales complete total.**
+- **2026-08-21 — Phase 5 complete (11 remaining):** az-AZ, be-BY, bs-BA, ca-AD, cnr-ME, et-EE, hr-HR, is-IS, ka-GE, lt-LT, lv-LV created from scratch with `gen_engine.gen_locale()` + word-level dictionaries (1498 keys each, 21 domains). All with authentic translations (Azerbaijani, Belarusian, Bosnian, Catalan, Montenegrin, Estonian, Croatian, Icelandic, Georgian, Lithuanian, Latvian). Validations: parser round-trip (1498/1498), functional coverage **1211/1211 (100%)**. config/locales.php already contained all 11. **53 locales complete total — all configured locales are complete.**
 
-## 7. Decisões e Convenções
+## 7. Decisions and Conventions
 
-- **Conjunto canónico:** união de 2853 caminhos (1355 do JSON + 1498 dos domínios `.php` de `en`) — ver secção 1. Qualquer comparação futura usa esta definição. Após a Frente C, a referência JSON é lida do arquivo `docs/i18n/archive-json/` (os scripts de auditoria `docs/i18n/scripts/audit_final.py` e `php_lang_audit.py` fazem esse fallback automaticamente). **Exceção para locales criados do zero (Fase 3b/3c em diante — ru-RU, uk-UA, bg-BG e os 14 da Fase 3):** sem JSON histórico, a métrica correta é a **cobertura funcional** (`docs/i18n/scripts/audit_usage.py`) — caminhos `__('dominio.chave')` efetivamente usados no código. O `audit_final.py` (2853) penaliza estes locales com os 1355 caminhos JSON obsoletos; ver secção 4.
-- **Classificação de estado:**
-  - `✅ Completo` (chaves): 100% de paridade vs `en`, 0 chaves vazias. Todos os 18 locales históricos são `✅ Completo` e com migração `✅ Concluída` (sem `.json`). Os `ru-RU`, `uk-UA`, `bg-BG`, `zh-CN`, `zh-TW`, `ja-JP`, `ko-KR`, `hi-IN`, `id-ID`, `vi-VN`, `th-TH`, `ms-MY` e `ar-AE` são `✅ Completo (PHP)` com 100% de cobertura funcional.
-  - `🟡 Parcial`: paridade inferior a 100% (não observado nesta auditoria).
-  - `🔴 Em falta / não iniciado`: sem ficheiros ou paridade muito baixa (aplicável aos 10 locales em âmbito sem ficheiros — Fase 4).
-  - `⚪ Só em JSON (não migrado)`: apenas JSON, sem `.php` (não observado).
-- **Fonte de verdade de valores:** `en-GB` (decidido por Puma a 2026-08-14). Para paridade de chaves é indiferente (en-US e en-GB têm chaves idênticas). Locales novos traduzem a partir de `en-GB`.
-- **Âmbito (gate 2026-08-21):** 53 completos (18 históricos + ru-RU, uk-UA, bg-BG, zh-CN, zh-TW, ja-JP, ko-KR, hi-IN, id-ID, vi-VN, th-TH, ms-MY, ar-AE, he-IL, fa-IR, nb-NO, sk-SK + sl-SI, lb-LU, hy-AM, mk-MK, mt-MT, sq-AL, sr-RS + az-AZ, be-BY, bs-BA, ca-AD, cnr-ME, et-EE, hr-HR, is-IS, ka-GE, lt-LT, lv-LV). **Todos os locales configurados estão completos** — 0 restantes.
-- **Criação de locales novos (padrão Fase 3b/3c/4):** gerar com `docs/i18n/scripts/build_locale.py` + dicionário `translations_{LOCALE}.py` (chave→tradução a partir dos valores `en-GB`), com verificação de chaves antes de gerar; validar com round-trip do parser, placeholders e `audit_usage.py`. Métrica de conclusão: cobertura funcional 1211/1211. Locais concluídos: ru-RU, uk-UA, bg-BG, zh-CN, zh-TW, ja-JP, ko-KR, hi-IN, id-ID, vi-VN, th-TH, ms-MY, ar-AE, he-IL, fa-IR, nb-NO, sk-SK, sl-SI, lb-LU, hy-AM, mk-MK, mt-MT, sq-AL, sr-RS.
-- **Códigos de locale:** convenção `xx-XX` do projeto (BCP-47 com região). Chineses: `zh-CN` (simplificado) + `zh-TW` (tradicional) — decidido 2026-08-16 (não usar `zh-Hans`/`zh-Hant`).
-- **Novos de raiz na Fase 3:** adicionar `he-IL`, `fa-IR`, `ms-MY` ao `config/locales.php` antes de gerar ficheiros. (`zh-TW` já adicionado e concluído; `ja-JP` já estava configurado.) **Todos os 14 locales novos estão completos** (2026-08-16).
-- **RTL (`ar-AE`, `he-IL`, `fa-IR`):** traduzir apenas o texto; layout/CSS (ex: `resources/css/rtl.css`) fora do âmbito desta fase.
-- **Destino dos `.json`:** os `lang/{locale}.json` foram **apagados** (arquitetura alvo PHP-only; decidido por Puma a 2026-08-14) na **Frente C** (2026-08-14), com arquivo em `docs/i18n/archive-json/`. ✅ **Decisão de 2026-08-14 (após bloqueio da secção 4.2): a Fase 2 passa a incluir a migração do código** — as 1104 chamadas `__('string')` sem prefixo passaram a `__('{dominio}.{string}')`, para que as strings-fonte resolvam pelos `.php` e o JSON pudesse ser eliminado em segurança. **Fase 2 concluída: Frente A (123 chaves → `.php`), Frente B (migração do código, 1659 substituições/143 ficheiros) e Frente C (JSON apagado e arquivado)** — ver secções 4.2 e 6. Recomenda-se validação funcional da aplicação em runtime (não realizada: sem binário PHP no ambiente).
-- **Valores em identidade em pt-BR (994) e es-ES (175):** ✅ **Revisão concluída na Fase 3a (2026-08-16).** es-ES: 0 correções (tudo legítimo). pt-BR: 6 correções aplicadas (família `aplicação`/`movimento` — ver secção 6) e 7 mantidas como legítimas (família `avaria`).
-- **Placeholders:** preservar sempre a sintaxe de placeholders (`:name`, `:attribute`, `:min`, `:max`, `:seconds`, `:count`) e de pluralização Laravel (`{1} um item|[2,*] :count itens`) — adaptar apenas o texto, nunca a sintaxe.
-- **Termos que não se traduzem:** siglas e termos técnicos (`API`, `SKU`, `SLA`, `MTTR`, `QR Code`, `ID`, `Stock`, `Mobile`, `Web`) mantêm-se iguais; em caso de dúvida, seguir o que já está usado noutros domínios do mesmo locale.
-- **Consistência terminológica:** antes de traduzir um termo recorrente (`ticket`, `avaria`, `stock`, `equipamento`), verificar como já foi traduzido noutros domínios do mesmo locale.
-- **Valores em identidade:** valor==chave não é automaticamente erro (ex.: termos técnicos e palavras coincidentes). ✅ Revisão concluída na **Fase 3a (2026-08-16)** — ver secções 6 e 7.
-- **Sem tradução automática entre locales:** a referência de tradução é sempre `en`, nunca outro locale.
+- **Canonical set:** union of 2853 paths (1355 from JSON + 1498 from `en` `.php` domains) — see section 1. Any future comparison uses this definition. After Front C, the JSON reference is read from the `docs/i18n/archive-json/` archive (audit scripts `docs/i18n/scripts/audit_final.py` and `php_lang_audit.py` do this fallback automatically). **Exception for locales created from scratch (Phase 3b/3c onwards — ru-RU, uk-UA, bg-BG and the 14 Phase 3 locales):** with no historical JSON, the correct metric is **functional coverage** (`docs/i18n/scripts/audit_usage.py`) — `__('domain.key')` paths actually used in code. `audit_final.py` (2853) penalizes these locales with the 1355 obsolete JSON paths; see section 4.
+- **Status classification:**
+  - `✅ Complete` (keys): 100% parity vs `en`, 0 empty keys. All 18 historical locales are `✅ Complete` with migration `✅ Complete` (no `.json`). `ru-RU`, `uk-UA`, `bg-BG`, `zh-CN`, `zh-TW`, `ja-JP`, `ko-KR`, `hi-IN`, `id-ID`, `vi-VN`, `th-TH`, `ms-MY` and `ar-AE` are `✅ Complete (PHP)` with 100% functional coverage.
+  - `🟡 Partial`: parity below 100% (not observed in this audit).
+  - `🔴 Missing / not started`: no files or very low parity (applies to the 10 in-scope locales without files — Phase 4).
+  - `⚪ JSON only (not migrated)`: JSON only, no `.php` (not observed).
+- **Value source of truth:** `en-GB` (decided by Puma on 2026-08-14). For key parity it doesn't matter (en-US and en-GB have identical keys). New locales translate from `en-GB`.
+- **Scope (gate 2026-08-21):** 53 complete (18 historical + ru-RU, uk-UA, bg-BG, zh-CN, zh-TW, ja-JP, ko-KR, hi-IN, id-ID, vi-VN, th-TH, ms-MY, ar-AE, he-IL, fa-IR, nb-NO, sk-SK + sl-SI, lb-LU, hy-AM, mk-MK, mt-MT, sq-AL, sr-RS + az-AZ, be-BY, bs-BA, ca-AD, cnr-ME, et-EE, hr-HR, is-IS, ka-GE, lt-LT, lv-LV). **All configured locales are complete** — 0 remaining.
+- **New locale creation pattern (Phase 3b/3c/4):** generate with `docs/i18n/scripts/build_locale.py` + `translations_{LOCALE}.py` dictionary (key→translation from `en-GB` values), with key verification before generation; validate with parser round-trip, placeholders, and `audit_usage.py`. Completion metric: functional coverage 1211/1211. Completed locales: ru-RU, uk-UA, bg-BG, zh-CN, zh-TW, ja-JP, ko-KR, hi-IN, id-ID, vi-VN, th-TH, ms-MY, ar-AE, he-IL, fa-IR, nb-NO, sk-SK, sl-SI, lb-LU, hy-AM, mk-MK, mt-MT, sq-AL, sr-RS.
+- **Locale codes:** project `xx-XX` convention (BCP-47 with region). Chinese: `zh-CN` (simplified) + `zh-TW` (traditional) — decided 2026-08-16 (do not use `zh-Hans`/`zh-Hant`).
+- **New from scratch in Phase 3:** add `he-IL`, `fa-IR`, `ms-MY` to `config/locales.php` before generating files. (`zh-TW` already added and complete; `ja-JP` was already configured.) **All 14 new locales are complete** (2026-08-16).
+- **RTL (`ar-AE`, `he-IL`, `fa-IR`):** translate text only; layout/CSS (e.g., `resources/css/rtl.css`) out of scope for this phase.
+- **`.json` destination:** the `lang/{locale}.json` files were **deleted** (target PHP-only architecture; decided by Puma on 2026-08-14) in **Front C** (2026-08-14), archived in `docs/i18n/archive-json/`. ✅ **2026-08-14 decision (after section 4.2 blocking): Phase 2 now includes code migration** — the 1104 unprefixed `__('string')` calls became `__('{domain}.{string}')`, so source strings resolve via `.php` and JSON could be safely deleted. **Phase 2 complete: Front A (123 keys → `.php`), Front B (code migration, 1659 substitutions/143 files) and Front C (JSON deleted and archived)** — see sections 4.2 and 6. Functional application validation at runtime is recommended (not performed: no PHP binary in environment).
+- **Identity values in pt-BR (994) and es-ES (175):** ✅ **Review completed in Phase 3a (2026-08-16).** es-ES: 0 corrections (all legitimate). pt-BR: 6 corrections applied (`aplicação`/`movimento` family — see section 6) and 7 kept as legitimate (`avaria` family).
+
+## 8. Placeholders
+
+- Always preserve placeholder syntax (`:name`, `:attribute`, `:min`, `:max`, `:seconds`, `:count`) and Laravel pluralization (`{1} one item|[2,*] :count items`) — adapt text only, never syntax.
+- Terms that don't translate: acronyms and technical terms (`API`, `SKU`, `SLA`, `MTTR`, `QR Code`, `ID`, `Stock`, `Mobile`, `Web`) remain the same; when in doubt, follow what's already used in other domains of the same locale.
+- Terminological consistency: before translating a recurring term (`ticket`, `avaria`, `stock`, `equipamento`), check how it was already translated in other domains of the same locale.
+- Identity values: value==key is not automatically an error (e.g., technical terms and coincidental words). ✅ Review completed in **Phase 3a (2026-08-16)** — see sections 6 and 7.
+- No automatic translation between locales: the translation reference is always `en`, never another locale.

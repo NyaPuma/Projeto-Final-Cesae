@@ -24,7 +24,7 @@ final class PreferencesService
      * Default values.
      */
     private const DEFAULTS = [
-        'language' => 'pt',
+        'language' => 'pt-PT',
         'currency' => 'EUR',
         'date_format' => 'd/m/Y',
         'time_format' => 'H:i',
@@ -122,10 +122,16 @@ final class PreferencesService
 
     /**
      * Gets active preferences (authenticated user or session).
+     *
+     * Resolves the user via the web guard first, then falls back to
+     * `AuthUserResolver` for api-token-authenticated users on web routes
+     * (where `CustomAuthMiddleware` sets the user on the `api` guard only).
      */
     public static function current(Request $request): array
     {
-        $user = $request->user();
+        $user = $request->user()
+            ?? \Illuminate\Support\Facades\Auth::guard('api')->user()
+            ?? \App\Services\AuthUserResolver::fromRequest($request);
 
         if ($user) {
             return self::forUser($user);

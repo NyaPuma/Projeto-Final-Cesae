@@ -87,7 +87,7 @@ return [
     'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.' => 'Visualisoi tekniset toimenpiteet, ennaltaehkäisevä huolto, aikataulutetut tiketit ja operatiiviset tehtävät yhdessä integroidussa käyttöliittymässä.',
     'Voltar aos tickets' => 'Takaisin tiketteihin',
     'Últimas Ocorrências Registadas' => 'Viimeisimmät rekisteröidyt tapahtumat',
-    '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.' => '⚠️ Odottamassa on :total korkeamman prioriteetin tiketti(ä).',
+    'Existem :total ticket(s) de prioridade mais alta por atender.' => 'Odottamassa on :total korkeamman prioriteetin tiketti(ä).',
     'Anexo adicionado' => 'Liite lisätty',
     'Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.' => 'Vain tiketit, joiden tila on "Käynnissä", voidaan sulkea nopeasti.',
     'Apenas tickets no estado "Aberto" podem ser cancelados.' => 'Vain tiketit, joiden tila on "Avoin", voidaan peruuttaa.',

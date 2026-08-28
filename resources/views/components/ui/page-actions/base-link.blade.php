@@ -1,11 +1,11 @@
 {{--
 |-------------------------------------------------------------------------- |
-Base Link Component (Otimizado)
+Base Link Component (Optimized)
 |-------------------------------------------------------------------------- |
-| Componente para âncoras estilizadas como botões do Design System.
-| • Padronizado com as variáveis CSS oficiais do Tailwind.
-| • 100% livre de CSS ou JS inline.
-| --}}
+| Component for anchors styled as Design System buttons.
+| • Standardized with official Tailwind CSS variables.
+| • 100% free of inline CSS or JS.
+|--}}
 @props([
     'href',
     'variant' => 'secondary',
@@ -20,10 +20,10 @@ Base Link Component (Otimizado)
         'primary' => 'ui-button ui-button--primary',
         'secondary' => 'ui-button border border-[var(--border)] bg-[var(--surface)] text-[var(--text)] shadow-sm hover:bg-[var(--surface-2)]',
         'accent' => 'ui-button ui-button--primary',
-        'success' => 'ui-button bg-emerald-600 text-white shadow-sm hover:bg-emerald-500 hover:text-white',
-        'danger' => 'ui-button border border-rose-500/30 bg-rose-500/10 text-rose-500 shadow-sm hover:bg-rose-500/20 hover:text-rose-500',
-        'warning' => 'ui-button bg-amber-500 text-black shadow-sm hover:bg-amber-400 hover:text-black',
-        'neutral' => 'ui-button bg-[var(--border)] text-[var(--text)] shadow-sm hover:border-rose-500/30 hover:bg-rose-500/10 hover:text-rose-500',
+        'success' => 'ui-button border border-success/30 bg-success/10 text-success shadow-sm hover:bg-success/20',
+        'danger' => 'ui-button border border-danger/30 bg-danger/10 text-danger shadow-sm hover:bg-danger/20',
+        'warning' => 'ui-button border border-warning/30 bg-warning/10 text-warning shadow-sm hover:bg-warning/20',
+        'neutral' => 'ui-button bg-[var(--border)] text-[var(--text)] shadow-sm hover:bg-[var(--surface-hover,var(--surface))]',
         'dark' => 'ui-button bg-[var(--text)] text-[var(--surface)] shadow-sm hover:opacity-90 hover:text-[var(--surface)]',
         default => 'ui-button border border-[var(--border)] bg-[var(--surface)] text-[var(--text)] shadow-sm hover:bg-[var(--surface-2)]',
     };
@@ -44,7 +44,7 @@ Base Link Component (Otimizado)
 
 <a href="{{ $href }}" {{ $attributes->merge(['class' => trim($variantClasses . ' ' . $sizeClasses . ' ' . $weightClasses)]) }}>
     @if($icon)
-        <span class="ui-button__icon {{ $iconClass }}">{!! $icon !!}</span>
+        <span class="ui-button__icon {{ $iconClass }}" aria-hidden="true">{!! $icon !!}</span>
     @endif
 
     <span class="ui-button__label">{{ $slot->isEmpty() ? '' : $slot }}</span>

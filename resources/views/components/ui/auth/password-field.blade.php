@@ -3,10 +3,10 @@
 | Password Input Component
 |--------------------------------------------------------------------------
 |
-| Input de palavra-passe com suporte a validação, preenchimento e toggle de visibilidade.
-| • 100% livre de CSS ou JS inline.
-| • Visibilidade reativa controlada via Alpine.js sem scripts globais.
-| • Prevenção de duplicação de IDs (essencial em formulários com múltiplos inputs).
+| Password input with validation support, auto-fill and visibility toggle.
+| • 100% free of inline CSS or JS.
+| • Reactive visibility controlled via Alpine.js without global scripts.
+| • ID duplication prevention (essential in forms with multiple inputs).
 |
 --}}
 
@@ -20,7 +20,7 @@
     'toggle' => false,
     'toggleLabel' => __('common.Mostrar'),
     'hideLabel' => __('common.Ocultar'),
-    'toggle_label' => null, // Retrocompatibilidade com snake_case
+    'toggle_label' => null, // Backward compatibility with snake_case
 ])
 
 @php

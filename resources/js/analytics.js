@@ -5,7 +5,7 @@
 
 import { init } from './pages/analytics/index.js';
 
-// Inicialização
+// Initialization
 document.addEventListener("DOMContentLoaded", () => {
     init();
 });

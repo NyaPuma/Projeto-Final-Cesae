@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recuperação de Credenciais</title>
     <style>
-        /* Reset e Regras de Renderização Segura */
+        /* Reset and Safe Rendering Rules */
         body {
             margin: 0;
             padding: 0;
@@ -23,7 +23,7 @@
             vertical-align: top;
         }
 
-        /* Contentor Centralizado */
+        /* Centered Container */
         .wrapper {
             width: 100%;
             background-color: #fafafa;
@@ -38,7 +38,7 @@
             padding: 32px;
         }
 
-        /* Tipografia Editorial Sóbria */
+        /* Sober Editorial Typography */
         .header-badge {
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
             font-size: 10px;
@@ -62,7 +62,7 @@
             line-height: 1.6;
         }
 
-        /* Botão de Ação Sólido Alinhado com o Tema */
+        /* Solid Action Button Aligned with Theme */
         .btn-container {
             margin: 28px 0;
             text-align: center;
@@ -79,7 +79,7 @@
             letter-spacing: -0.01em;
         }
 
-        /* Notas de Segurança e Telemetria */
+        /* Security Notes and Telemetry */
         .security-box {
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
             font-size: 11px;
@@ -96,7 +96,7 @@
             font-weight: 600;
         }
 
-        /* Fallback de URL Puro para Clientes Restritos */
+        /* Raw URL Fallback for Restricted Clients */
         .link-fallback {
             font-size: 11px;
             color: #706f6c;
@@ -109,7 +109,7 @@
             text-decoration: underline;
         }
 
-        /* Rodapé de Isenção */
+        /* Disclaimer Footer */
         .footer {
             margin-top: 32px;
             border-top: 1px solid #f0f0ef;
@@ -131,33 +131,33 @@
     <table role="presentation" class="container">
         <tr>
             <td>
-                {{-- Identificador de Contexto --}}
+                {{-- Context Identifier --}}
                 <div class="header-badge">{{ __('common.Segurança de Conta') }}</div>
                 <h1 class="title">{{ __('auth.Pedido de Nova Password') }}</h1>
 
                 <p class="text-body">{{ __('common.Olá,') }}</p>
                 <p class="text-body">{{ __('stock.Recebemos uma solicitação para redefinir as credenciais de acesso associadas à sua conta. Para prosseguir com a alteração, utilize o botão de verificação abaixo:') }}</p>
 
-                {{-- Ação Principal Segura --}}
+                {{-- Secure Action --}}
                 <div class="btn-container">
                     <a href="{{ $url ?? '#' }}" class="btn-action" target="_blank">
                         {{ __('auth.Redefinir Password') }}
                     </a>
                 </div>
 
-                {{-- Bloco de Segurança Normativo --}}
+                {{-- Regulatory Security Block --}}
                 <div class="security-box">
                     <span class="security-label">{{ __('common.VALIDADE DO LINK:') }}</span> {{ __('common.Este link expira em :minutes minutos.', ['minutes' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire') ?? 60]) }}<br>
                     <span class="security-label">{{ __('messages.AVISO:') }}</span> {{ __('auth.Se não solicitou esta alteração, nenhuma ação adicional é necessária e a sua password atual permanecerá segura.') }}
                 </div>
 
-                {{-- Fallback de URL Puro para Clientes Restritos --}}
+                {{-- Raw URL Fallback for Restricted Clients --}}
                 <p class="link-fallback">
                     {{ __('ui.Se tiver problemas com o botão acima, copie e cole o URL seguinte no seu navegador:') }}<br>
                     <a href="{{ $url ?? '#' }}">{{ $url ?? '#' }}</a>
                 </p>
 
-                {{-- Rodapé Sistémico --}}
+                {{-- System Footer --}}
                 <div class="footer">
                     <p class="footer-text">{{ __('common.Esta é uma notificação compulsória de segurança • Não responda') }}</p>
                 </div>

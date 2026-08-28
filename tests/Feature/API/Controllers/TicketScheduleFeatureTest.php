@@ -178,16 +178,16 @@ class TicketScheduleFeatureTest extends TestCase
         $send = fn (array $payload) => $this->withHeader('X-Auth-Token', $technician->api_token)
             ->postJson('/api/tickets/'.$ticket->id.'/schedule', $payload);
 
-        // Teste 1: scheduled_at em falta
+        // Test 1: missing scheduled_at
         $send([])->assertStatus(422)->assertJsonValidationErrors(['scheduled_at']);
 
-        // Teste 2: scheduled_end com formato inválido
+        // Test 2: scheduled_end with invalid format
         $send([
             'scheduled_at' => now()->addDays(2)->format('Y-m-d\TH:i'),
             'scheduled_end' => 'não-é-data',
         ])->assertStatus(422)->assertJsonValidationErrors(['scheduled_end']);
 
-        // Teste 3: scheduled_end igual a scheduled_at (deve ser posterior)
+        // Test 3: scheduled_end equal to scheduled_at (must be later)
         $at = now()->addDays(2)->format('Y-m-d\TH:i');
         $send([
             'scheduled_at' => $at,

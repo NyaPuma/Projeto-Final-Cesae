@@ -41,19 +41,19 @@ enum NotificationTypeEnum: string
     }
 
     /**
-     * Indicative emoji icon.
+     * Icon identifier for the notification type (Heroicons outline naming).
      */
     public function icon(): string
     {
         return match ($this) {
-            self::BudgetRequest => '💰',
-            self::BudgetSubmitted => '📋',
-            self::BudgetApproved, self::BudgetAutoApproved => '✅',
-            self::BudgetRejected => '❌',
-            self::TicketClosed => '🔧',
-            self::TicketCreated => '🎫',
-            self::PriorityOverride => '⚠️',
-            self::LowStock => '📦',
+            self::BudgetRequest => 'heroicon-o-banknotes',
+            self::BudgetSubmitted => 'heroicon-o-clipboard-document-list',
+            self::BudgetApproved, self::BudgetAutoApproved => 'heroicon-o-check-circle',
+            self::BudgetRejected => 'heroicon-o-x-circle',
+            self::TicketClosed => 'heroicon-o-wrench-screwdriver',
+            self::TicketCreated => 'heroicon-o-ticket',
+            self::PriorityOverride => 'heroicon-o-exclamation-triangle',
+            self::LowStock => 'heroicon-o-archive-box',
         };
     }
 

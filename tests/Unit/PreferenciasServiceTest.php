@@ -69,7 +69,7 @@ class PreferenciasServiceTest extends TestCase
             'date_format' => 'd/m/Y',
         ]);
 
-        $this->assertEquals('pt', $prefs['language']);
+        $this->assertEquals('pt-PT', $prefs['language']);
     }
 
     /** @test */
@@ -138,7 +138,7 @@ class PreferenciasServiceTest extends TestCase
             'date_format' => null,
         ]);
 
-        $this->assertEquals('pt', $prefs['language']);
+        $this->assertEquals('pt-PT', $prefs['language']);
         $this->assertEquals('EUR', $prefs['currency']);
         $this->assertEquals('d/m/Y', $prefs['date_format']);
     }
@@ -148,7 +148,7 @@ class PreferenciasServiceTest extends TestCase
     {
         $prefs = PreferencesService::validatePreferences([]);
 
-        $this->assertEquals('pt', $prefs['language']);
+        $this->assertEquals('pt-PT', $prefs['language']);
         $this->assertEquals('EUR', $prefs['currency']);
         $this->assertEquals('d/m/Y', $prefs['date_format']);
     }

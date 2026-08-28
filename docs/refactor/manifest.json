@@ -2014,487 +2014,487 @@
       "readme_status": "done"
     },
     "resources/views": {
-      "status": "pending",
+      "status": "done",
       "files": {
         "resources/views/calendar.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated 4 PT Blade comments to English"]
         },
         "resources/views/main.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Already clean — all strings use __()"]
         }
       },
-      "readme_status": "pending"
+      "readme_status": "done"
     },
     "resources/views/components/ui/analytics": {
-      "status": "pending",
+      "status": "done",
       "files": {
         "resources/views/components/ui/analytics/activity-timeline-card.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock, 4 Blade comments, 3 inline JS comments"]
         },
         "resources/views/components/ui/analytics/aside-card.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         },
         "resources/views/components/ui/analytics/aside-pill.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         },
         "resources/views/components/ui/analytics/chart-card.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         },
         "resources/views/components/ui/analytics/equipment-distribution-card.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         },
         "resources/views/components/ui/analytics/export-actions.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         },
         "resources/views/components/ui/analytics/hero.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock, 3 Blade comments"]
         },
         "resources/views/components/ui/analytics/list-card.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         },
         "resources/views/components/ui/analytics/metric-card.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         },
         "resources/views/components/ui/analytics/section-heading.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         }
       },
-      "readme_status": "pending"
+      "readme_status": "done"
     },
     "resources/views/components/ui/auth": {
-      "status": "pending",
+      "status": "done",
       "files": {
         "resources/views/components/ui/auth/form-header.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         },
         "resources/views/components/ui/auth/message.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         },
         "resources/views/components/ui/auth/password-field.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock, 1 inline comment"]
         },
         "resources/views/components/ui/auth/shell.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock, 3 Blade comments"]
         },
         "resources/views/components/ui/auth/submit-button.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         },
         "resources/views/components/ui/auth/text-field.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         }
       },
-      "readme_status": "pending"
+      "readme_status": "done"
     },
     "resources/views/components/ui/buttons": {
-      "status": "pending",
+      "status": "done",
       "files": {
         "resources/views/components/ui/buttons/button.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         },
         "resources/views/components/ui/buttons/icon-button.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         },
         "resources/views/components/ui/buttons/submit.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         }
       },
-      "readme_status": "pending"
+      "readme_status": "done"
     },
     "resources/views/components/ui/dashboard": {
-      "status": "pending",
+      "status": "done",
       "files": {
         "resources/views/components/ui/dashboard/welcome-panel.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         }
       },
-      "readme_status": "pending"
+      "readme_status": "done"
     },
     "resources/views/components/ui/form": {
-      "status": "pending",
+      "status": "done",
       "files": {
         "resources/views/components/ui/form/card.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         },
         "resources/views/components/ui/form/field.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         },
         "resources/views/components/ui/form/input.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         },
         "resources/views/components/ui/form/message.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         },
         "resources/views/components/ui/form/select.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         }
       },
-      "readme_status": "pending"
+      "readme_status": "done"
     },
     "resources/views/components/ui/listing": {
-      "status": "pending",
+      "status": "done",
       "files": {
         "resources/views/components/ui/listing/filter-field.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         },
         "resources/views/components/ui/listing/filter-panel.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         },
         "resources/views/components/ui/listing/pagination.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         },
         "resources/views/components/ui/listing/table-card.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         }
       },
-      "readme_status": "pending"
+      "readme_status": "done"
     },
     "resources/views/components/ui/page-actions": {
-      "status": "pending",
+      "status": "done",
       "files": {
         "resources/views/components/ui/page-actions/action-button.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         },
         "resources/views/components/ui/page-actions/back-button.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock + inline comment"]
         },
         "resources/views/components/ui/page-actions/base-button.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         },
         "resources/views/components/ui/page-actions/base-link.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         },
         "resources/views/components/ui/page-actions/create-link.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         },
         "resources/views/components/ui/page-actions/export-link.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         },
         "resources/views/components/ui/page-actions/group.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         }
       },
-      "readme_status": "pending"
+      "readme_status": "done"
     },
     "resources/views/components/ui/partials": {
-      "status": "pending",
+      "status": "done",
       "files": {
         "resources/views/components/ui/partials/page-header.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         }
       },
-      "readme_status": "pending"
+      "readme_status": "done"
     },
     "resources/views/components/ui/profile": {
-      "status": "pending",
+      "status": "done",
       "files": {
         "resources/views/components/ui/profile/delete-account-card.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         },
         "resources/views/components/ui/profile/information-card.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         },
         "resources/views/components/ui/profile/security-card.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         },
         "resources/views/components/ui/profile/summary-card.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         }
       },
-      "readme_status": "pending"
+      "readme_status": "done"
     },
     "resources/views/components/ui/text": {
-      "status": "pending",
+      "status": "done",
       "files": {
         "resources/views/components/ui/text/eyebrow.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         },
         "resources/views/components/ui/text/pill.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated header docblock"]
         }
       },
-      "readme_status": "pending"
+      "readme_status": "done"
     },
     "resources/views/emails": {
-      "status": "pending",
+      "status": "done",
       "files": {
         "resources/views/emails/passwordReset.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated CSS comments and Blade comments"]
         },
         "resources/views/emails/test-mail.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated CSS comments and Blade comments"]
         },
         "resources/views/emails/ticketCreated.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Already clean — no PT comments"]
         }
       },
-      "readme_status": "pending"
+      "readme_status": "done"
     },
     "resources/views/errors": {
-      "status": "pending",
+      "status": "done",
       "files": {
         "resources/views/errors/402.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Already clean — only __() calls"]
         },
         "resources/views/errors/403.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Already clean — only __() calls"]
         },
         "resources/views/errors/404.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Already clean — only __() calls"]
         },
         "resources/views/errors/500.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Already clean — only __() calls"]
         },
         "resources/views/errors/minimal.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated 5 PT Blade comments"]
         }
       },
-      "readme_status": "pending"
+      "readme_status": "done"
     },
     "resources/views/layouts": {
-      "status": "pending",
+      "status": "done",
       "files": {
         "resources/views/layouts/layout.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Already clean — only __() calls and @include directives"]
         }
       },
-      "readme_status": "pending"
+      "readme_status": "done"
     },
     "resources/views/preferences": {
-      "status": "pending",
+      "status": "done",
       "files": {
         "resources/views/preferences/edit.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated 5 HTML comments and 3 JS comments"]
         }
       },
-      "readme_status": "pending"
+      "readme_status": "done"
     },
     "resources/views/reports": {
-      "status": "pending",
+      "status": "done",
       "files": {
         "resources/views/reports/equipments-qr.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Already clean — no PT comments"]
         },
         "resources/views/reports/stock-costs-by-equipment.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Already clean — no PT comments"]
         },
         "resources/views/reports/tickets.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated 4 PT CSS section comments"]
         }
       },
-      "readme_status": "pending"
+      "readme_status": "done"
     },
     "resources/views/ui": {
-      "status": "pending",
+      "status": "done",
       "files": {
         "resources/views/ui/analytics.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Already clean"]
         },
         "resources/views/ui/audits.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated 3 PT Blade comments"]
         },
         "resources/views/ui/auth-reset.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Already clean"]
         },
         "resources/views/ui/auth.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Already clean"]
         },
         "resources/views/ui/equipments.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Already clean"]
         },
         "resources/views/ui/index.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Already clean"]
         },
         "resources/views/ui/layout.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated 4 PT comments (1 JS + 3 Blade)"]
         },
         "resources/views/ui/profile.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Already clean"]
         },
         "resources/views/ui/rooms.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Already clean"]
         },
         "resources/views/ui/ticket-create.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated 15 PT Blade comments"]
         },
         "resources/views/ui/ticket-detail.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Already clean"]
         },
         "resources/views/ui/tickets.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Already clean"]
         },
         "resources/views/ui/users-create.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Already clean"]
         },
         "resources/views/ui/users-edit.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated 1 PT Blade comment"]
         },
         "resources/views/ui/users.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Translated 3 PT Blade comments"]
         }
       },
-      "readme_status": "pending"
+      "readme_status": "done"
     },
     "resources/views/ui/definicoes": {
-      "status": "pending",
+      "status": "done",
       "files": {
         "resources/views/ui/definicoes/aparencia.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Already clean"]
         },
         "resources/views/ui/definicoes/sistema.blade.php": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["Already clean"]
         }
       },
-      "readme_status": "pending"
+      "readme_status": "done"
     },
     "resources/views/ui/equipments": {
       "status": "pending",
@@ -2729,156 +2729,156 @@
       "readme_status": "pending"
     },
     "resources/css": {
-      "status": "pending",
+      "status": "done",
       "files": {
         "resources/css/app.css": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["already clean"]
         },
         "resources/css/base.css": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["translated 3 PT comments"]
         },
         "resources/css/layout.css": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["already clean"]
         },
         "resources/css/rtl.css": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["translated 1 PT comment"]
         },
         "resources/css/tokens.css": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["translated 16 PT comments"]
         }
       },
-      "readme_status": "pending"
+      "readme_status": "done"
     },
     "resources/css/components": {
-      "status": "pending",
+      "status": "done",
       "files": {
         "resources/css/components/badges.css": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["already clean"]
         },
         "resources/css/components/forms.css": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["already clean"]
         },
         "resources/css/components/locale-modal.css": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["translated 1 PT docblock"]
         },
         "resources/css/components/localization-modal.css": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["already clean"]
         },
         "resources/css/components/navigation.css": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["translated 2 PT comments"]
         },
         "resources/css/components/sidebar.css": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["translated 2 PT comments"]
         }
       },
-      "readme_status": "pending"
+      "readme_status": "done"
     },
     "resources/css/components/buttons": {
-      "status": "pending",
+      "status": "done",
       "files": {
         "resources/css/components/buttons/button-base.css": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["already clean"]
         },
         "resources/css/components/buttons/button-variants.css": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["already clean"]
         }
       },
-      "readme_status": "pending"
+      "readme_status": "done"
     },
     "resources/css/components/cards": {
-      "status": "pending",
+      "status": "done",
       "files": {
         "resources/css/components/cards/card-base.css": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["already clean"]
         }
       },
-      "readme_status": "pending"
+      "readme_status": "done"
     },
     "resources/css/pages": {
-      "status": "pending",
+      "status": "done",
       "files": {
         "resources/css/pages/calendar.css": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["translated 17 PT comments"]
         },
         "resources/css/pages/definicoes.css": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["translated 2 PT comments"]
         },
         "resources/css/pages/listing.css": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["translated 9 PT comments"]
         },
         "resources/css/pages/login.css": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["already clean"]
         },
         "resources/css/pages/sistema-definicoes.css": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["translated 9 PT comments"]
         },
         "resources/css/pages/tickets.css": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["already clean"]
         }
       },
-      "readme_status": "pending"
+      "readme_status": "done"
     },
     "resources/css/swagger": {
-      "status": "pending",
+      "status": "done",
       "files": {
         "resources/css/swagger/swagger-theme.css": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["already clean"]
         }
       },
-      "readme_status": "pending"
+      "readme_status": "done"
     },
     "resources/css/theme": {
-      "status": "pending",
+      "status": "done",
       "files": {
         "resources/css/theme/variables.css": {
-          "status": "pending",
+          "status": "done",
           "new_path": null,
-          "notes": []
+          "notes": ["translated 9 PT comments"]
         }
       },
-      "readme_status": "pending"
+      "readme_status": "done"
     },
     "resources/js": {
       "status": "pending",

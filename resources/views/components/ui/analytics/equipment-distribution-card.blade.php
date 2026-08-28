@@ -3,10 +3,10 @@
 | Equipment Chart Card Component
 |--------------------------------------------------------------------------
 |
-| Cartão especializado para gráficos estatísticos com indicador central e legenda.
-| • 100% livre de CSS ou JS inline.
-| • Altamente parametrizável via props para títulos, IDs e legendas.
-| • Sintaxe de variáveis CSS corrigida e segura para o Tailwind.
+| Specialized card for statistical charts with central indicator and legend.
+| • 100% free of inline CSS or JS.
+| • Highly parameterizable via props for titles, IDs and legends.
+| • CSS variable syntax corrected and safe for Tailwind.
 |
 --}}
 

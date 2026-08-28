@@ -16,7 +16,7 @@ final readonly class AssignTechnicianData
     }
 
     /**
-     * Cria o DTO a partir de um Array ou FormRequest.
+     * Creates the DTO from an Array or FormRequest.
      */
     public static function fromRequest(FormRequest|array $data): self
     {
@@ -24,7 +24,7 @@ final readonly class AssignTechnicianData
 
         $rawId = $payload['technician_id'] ?? null;
 
-        // Trata strings vazias (''), null ou valores não numéricos como null
+        // Treats empty strings (''), null, or non-numeric values as null
         $technicianId = filter_var($rawId, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
 
         return new self(
@@ -33,7 +33,7 @@ final readonly class AssignTechnicianData
     }
 
     /**
-     * Converte o DTO para array para uso em Models ou Services.
+     * Converts the DTO to an array for use in Models or Services.
      */
     public function toArray(): array
     {

@@ -2,8 +2,8 @@ import { authHeaderJson } from '../utils/api.js';
 
 const MESSAGE_TONES = {
     neutral: 'min-h-6 text-sm font-medium text-[var(--text-soft)]',
-    success: 'min-h-6 text-sm font-medium text-emerald-600 dark:text-emerald-400',
-    error: 'min-h-6 text-sm font-medium text-red-600 dark:text-red-400',
+    success: 'min-h-6 text-sm font-medium text-success',
+    error: 'min-h-6 text-sm font-medium text-danger',
 };
 
 function setMessage(element, message, tone = 'neutral') {

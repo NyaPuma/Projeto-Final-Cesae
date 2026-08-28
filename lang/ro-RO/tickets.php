@@ -87,7 +87,7 @@ return [
     'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.' => 'Vizualizați intervențiile tehnice, întreținerea preventivă, tichetele programate și sarcinile operaționale într-o singură interfață integrată.',
     'Voltar aos tickets' => 'Înapoi la tichete',
     'Últimas Ocorrências Registadas' => 'Ultimele Incidente Înregistrate',
-    '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.' => '⚠️ Există :total tichet(e) cu prioritate mai mare de rezolvat.',
+    'Existem :total ticket(s) de prioridade mais alta por atender.' => 'Există :total tichet(e) cu prioritate mai mare de rezolvat.',
     'Anexo adicionado' => 'Atașament adăugat',
     'Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.' => 'Doar tichetele cu statusul "În Curs" pot fi închise rapid.',
     'Apenas tickets no estado "Aberto" podem ser cancelados.' => 'Doar tichetele cu statusul "Deschis" pot fi anulate.',

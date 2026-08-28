@@ -177,22 +177,22 @@ class AuthEdgeCasesTest extends TestCase
         $send(['current_password' => 'Password123!'])->assertStatus(422)
             ->assertJsonValidationErrors(['new_password']);
 
-        // Igual à atual
+        // Same as current
         $send(['current_password' => 'Password123!', 'new_password' => 'Password123!'])
             ->assertStatus(422)
             ->assertJsonValidationErrors(['new_password']);
 
-        // Falta símbolo
+        // Missing symbol
         $send(['current_password' => 'Password123!', 'new_password' => 'Password123'])
             ->assertStatus(422)
             ->assertJsonValidationErrors(['new_password']);
 
-        // Apenas minúsculas
+        // Only lowercase
         $send(['current_password' => 'Password123!', 'new_password' => 'onlylower123'])
             ->assertStatus(422)
             ->assertJsonValidationErrors(['new_password']);
 
-        // Sem números
+        // No numbers
         $send(['current_password' => 'Password123!', 'new_password' => 'NoNumbers!'])
             ->assertStatus(422)
             ->assertJsonValidationErrors(['new_password']);

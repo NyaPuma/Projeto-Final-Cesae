@@ -1,10 +1,10 @@
 {{--
 |-------------------------------------------------------------------------- |
-Text / Typography Component (Otimizado)
+Text / Typography Component (Optimized)
 |-------------------------------------------------------------------------- |
-| Componente dinâmico de texto/rótulo (Span, Heading, P, etc.).
-| • Corrigido o mapeamento de tons para sincronizar com as variáveis do tema.
-| • 100% livre de CSS ou JS inline.
+| Dynamic text/label component (Span, Heading, P, etc.).
+| • Fixed tone mapping to synchronize with theme variables.
+| • 100% free of inline CSS or JS.
 | --}}
 @props([
     'as' => 'span',
@@ -23,7 +23,7 @@ Text / Typography Component (Otimizado)
     };
 
     $sizeClasses = match ($size) {
-        'xs' => 'text-[10px]',
+        'xs' => 'text-xs',
         'sm' => 'text-xs',
         'md' => 'text-sm',
         default => 'text-xs',

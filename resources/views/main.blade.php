@@ -26,11 +26,11 @@
         </div>
 
         <div class="mt-16 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 max-w-lg mx-auto text-left flex items-start gap-4 shadow-sm">
-            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-500 font-bold text-sm">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-success/10 text-success font-bold text-sm">
                 ✓
             </div>
             <div>
-                <h3 class="font-bold text-sm text-[var(--text)]">{{ __('common.Ligação Segura SSL') }}</h3>
+                <p class="font-bold text-sm text-[var(--text)]">{{ __('common.Ligação Segura SSL') }}</p>
                 <p class="mt-1 text-xs text-[var(--text-soft)] leading-5">{{ __('auth.Toda a comunicação com a nossa API é encriptada e os acessos são geridos através de tokens de autenticação individuais.') }}</p>
             </div>
         </div>

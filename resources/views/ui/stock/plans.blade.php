@@ -13,19 +13,19 @@
         </x-ui.page-actions.group>
     </x-slot:actions>
 
-    {{-- Formulário de criação / edição --}}
+    {{-- Create / edit form --}}
     <div class="mb-6 rounded-2xl border border-(--border) bg-(--surface) p-5 shadow-sm">
-        <h3 id="planFormTitle" class="mb-4 text-xs font-black uppercase tracking-wider text-(--text)">➕ {{ __('maintenance_plan.Novo plano de manutenção') }}</h3>
+        <h2 id="planFormTitle" class="mb-4 text-xs font-black uppercase tracking-wider text-(--text)">{{ __('maintenance_plan.Novo plano de manutenção') }}</h2>
         <form id="planForm" class="grid gap-4 md:grid-cols-2 lg:grid-cols-5" novalidate data-plan-form-mode="create" data-plan-id="">
             <div>
-                <label class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-(--text-soft)" for="plName">
+                <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-(--text-soft)" for="plName">
                     {{ __('common.Nome') }} <span class="text-danger">*</span>
                 </label>
                 <input id="plName" name="name" type="text" required placeholder="{{ __('maintenance_plan.Ex: Manutenção trimestral') }}"
                     class="w-full rounded-xl border border-(--border) bg-(--surface-2) px-3 py-2.5 text-xs text-(--text) placeholder-(--text-soft) outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
             </div>
             <div>
-                <label class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-(--text-soft)" for="plEquipment">
+                <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-(--text-soft)" for="plEquipment">
                     {{ __('equipment.Equipamento') }} <span class="text-danger">*</span>
                 </label>
                 <select id="plEquipment" name="equipment_id" required
@@ -37,7 +37,7 @@
                 </select>
             </div>
             <div>
-                <label class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-(--text-soft)" for="plIntervalType">
+                <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-(--text-soft)" for="plIntervalType">
                     {{ __('common.Periodicidade') }} <span class="text-danger">*</span>
                 </label>
                 <select id="plIntervalType" name="interval_type" required
@@ -48,14 +48,14 @@
                 </select>
             </div>
             <div>
-                <label class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-(--text-soft)" for="plIntervalValue">
+                <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-(--text-soft)" for="plIntervalValue">
                     {{ __('common.Valor') }} <span class="text-danger">*</span>
                 </label>
                 <input id="plIntervalValue" name="interval_value" type="number" min="1" step="1" required placeholder="{{ __('common.Ex: 90') }}"
                     class="w-full rounded-xl border border-(--border) bg-(--surface-2) px-3 py-2.5 text-xs text-(--text) placeholder-(--text-soft) outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
             </div>
             <div>
-                <label class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-(--text-soft)" for="plDescription">
+                <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-(--text-soft)" for="plDescription">
                     {{ __('common.Descrição') }}
                 </label>
                 <input id="plDescription" name="description" type="text"
@@ -63,24 +63,24 @@
                     class="w-full rounded-xl border border-(--border) bg-(--surface-2) px-3 py-2.5 text-xs text-(--text) placeholder-(--text-soft) outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
             </div>
             <div class="md:col-span-2 lg:col-span-5">
-                <label class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-(--text-soft)" for="plParts">
+                <p class="mb-1.5 text-xs font-bold uppercase tracking-wider text-(--text-soft)">
                     {{ __('stock.Peças previstas (deixe em branco se não aplicável)') }}
-                </label>
+                </p>
                 <div id="plPartsContainer" class="space-y-2">
                     <div class="flex gap-2" data-part-row>
-                        <select name="parts[][part_id]" data-part-id class="w-full rounded-xl border border-(--border) bg-(--surface-2) px-3 py-2.5 text-xs text-(--text) outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
+                        <select name="parts[][part_id]" data-part-id aria-label="{{ __('stock.Peça') }}" class="w-full rounded-xl border border-(--border) bg-(--surface-2) px-3 py-2.5 text-xs text-(--text) outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
                             <option value="">{{ __('stock.Selecione peça...') }}</option>
                             @foreach($parts as $part)
                                 <option value="{{ $part->id }}">{{ $part->name }} ({{ $part->sku }})</option>
                             @endforeach
                         </select>
-                        <input type="number" min="1" step="1" placeholder="{{ __('common.Qtd') }}" data-expected-qty
+                        <input type="number" min="1" step="1" placeholder="{{ __('common.Qtd') }}" data-expected-qty aria-label="{{ __('common.Quantidade') }}"
                             class="w-28 rounded-xl border border-(--border) bg-(--surface-2) px-3 py-2.5 text-xs text-(--text) placeholder-(--text-soft) outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
-                        <button type="button" data-part-row-remove class="rounded-xl border border-rose-500/25 bg-rose-500/10 px-3 py-2.5 text-xs font-bold text-rose-700 transition hover:bg-rose-500/20 dark:text-rose-400">✕</button>
+                        <button type="button" data-part-row-remove class="rounded-xl border border-danger/25 bg-danger/10 px-3 py-2.5 text-xs font-bold text-danger transition hover:bg-danger/20">✕</button>
                     </div>
                 </div>
-                <button type="button" id="plAddPart" class="mt-2 inline-flex items-center gap-1 rounded-xl border border-(--border) bg-(--surface-2) px-3 py-1.5 text-[10px] font-bold text-(--text) transition hover:bg-(--border)">
-                    ➕ {{ __('stock.Adicionar peça') }}
+                <button type="button" id="plAddPart" class="mt-2 inline-flex items-center gap-1 rounded-xl border border-(--border) bg-(--surface-2) px-3 py-1.5 text-xs font-bold text-(--text) transition hover:bg-(--border)">
+                    {{ __('stock.Adicionar peça') }}
                 </button>
             </div>
             <div class="flex items-end gap-3 lg:col-span-5">

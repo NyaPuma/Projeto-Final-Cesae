@@ -87,7 +87,7 @@ return [
     'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.' => 'عرض الصيانات الفنية والصيانة الوقائية والتذاكر المخططة والمهام التشغيلية في واجهة متكاملة واحدة.',
     'Voltar aos tickets' => 'العودة إلى التذاكر',
     'Últimas Ocorrências Registadas' => 'آخر الحوادث المسجلة',
-    '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.' => '⚠️ هناك :total تذكرة (تذاكر) ذات أولوية أعلى بانتظار المعالجة.',
+    'Existem :total ticket(s) de prioridade mais alta por atender.' => 'هناك :total تذكرة (تذاكر) ذات أولوية أعلى بانتظار المعالجة.',
     'Anexo adicionado' => 'تمت إضافة مرفق',
     'Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.' => 'يمكن إغلاق التذاكر ذات حالة "قيد التنفيذ" فقط بسرعة.',
     'Apenas tickets no estado "Aberto" podem ser cancelados.' => 'يمكن إلغاء التذاكر ذات حالة "مفتوح" فقط.',

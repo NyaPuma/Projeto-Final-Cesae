@@ -1,9 +1,5 @@
 /* Layout utilities and page shell structure */
 
-:root {
-  --layout-max-width: 1200px;
-}
-
 body {
   min-height: 100vh;
   font-family: var(--font-sans);
@@ -40,7 +36,7 @@ body {
   background: var(--primary);
   color: var(--on-primary);
   z-index: 60;
-  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+  box-shadow: var(--shadow-md);
 }
 
 .page-wrapper {
@@ -51,7 +47,7 @@ body {
 }
 
 .sidebar-collapsed .page-wrapper {
-  padding-left: 5rem;
+  padding-left: var(--sidebar-collapsed-width);
 }
 
 .page-content {

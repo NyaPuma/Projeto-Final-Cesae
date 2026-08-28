@@ -1,13 +1,17 @@
 /**
  * Layout Initialization Module
- * Initializes all layout components: sidebar, theme, auth, notifications
+ * Initializes all layout components: sidebar, theme, auth, and
+ * the notifications modal.
  */
 
 import { initSidebar, toggleDesktopSidebar, toggleMobileNav, closeMobileNav } from './sidebar.js';
 import { initTheme, toggleTheme } from './theme.js';
 import { requireAuth } from './auth.js';
 import { renderAuthBox } from './auth-box.js';
-import { startNotificationPolling, setupNotificationDropdown, toggleNotifications } from './notifications.js';
+import { initNotificationsModal } from '../components/notifications-modal.js';
+
+const MOON_ICON = '<svg class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/></svg>';
+const SUN_ICON = '<svg class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/></svg>';
 
 export function initLayout(config = {}) {
     const {
@@ -17,36 +21,23 @@ export function initLayout(config = {}) {
         requireAuthOnLoad = false
     } = config;
 
-    // Initialize sidebar state
     initSidebar();
-
-    // Initialize theme
     initTheme();
 
-    // Check authentication if required
     if (requireAuthOnLoad) {
         requireAuth(loginUrl);
     }
 
-    // Render auth boxes
     renderAuthBox(profileUrl, loginUrl);
+    initNotificationsModal();
 
-    // Setup notifications
-    setupNotificationDropdown();
-    setTimeout(startNotificationPolling, 500);
-
-    // Setup event listeners for inline handlers
     setupEventListeners(logoutUrl);
-
-    // Sync the theme icon with the current mode
     syncThemeIcon();
 
-    // Expose functions globally for inline event handlers
     window.toggleDesktopSidebar = toggleDesktopSidebar;
     window.toggleMobileNav = toggleMobileNav;
     window.closeMobileNav = closeMobileNav;
     window.toggleTheme = toggleTheme;
-    window.toggleNotifications = toggleNotifications;
 }
 
 function syncThemeIcon() {
@@ -54,64 +45,10 @@ function syncThemeIcon() {
     if (!icon) return;
 
     const isDark = document.documentElement.classList.contains('dark');
-    icon.textContent = isDark ? '☀️' : '🌙';
-}
-
-function closeLanguageDropdown() {
-    const dropdown = document.getElementById('langDropdown');
-    const btn = document.getElementById('langDropdownBtn');
-
-    if (dropdown) {
-        dropdown.classList.remove('active');
-    }
-    if (btn) {
-        btn.setAttribute('aria-expanded', 'false');
-    }
-}
-
-function setupLanguageDropdown() {
-    const langSelector = document.getElementById('langSelectorDropdown');
-    const langBtn = document.getElementById('langDropdownBtn');
-    const dropdown = document.getElementById('langDropdown');
-
-    if (!langSelector || !langBtn || !dropdown) return;
-
-    // Toggle do painel de idiomas
-    langSelector.addEventListener('click', (e) => {
-        if (e.target.closest('[data-lang-switch]')) {
-            // Os links de idioma apenas navegam; fechar o painel sem tocar no aria do botão
-            dropdown.classList.remove('active');
-            return;
-        }
-
-        const isActive = dropdown.classList.contains('active');
-
-        // Fecha as notificações ao abrir o seletor de idioma
-        if (!isActive) {
-            const notifDropdown = document.getElementById('notificationDropdown');
-            const bellBtn = document.getElementById('notificationBellBtn');
-            if (notifDropdown) {
-                notifDropdown.classList.remove('active');
-            }
-            if (bellBtn) {
-                bellBtn.setAttribute('aria-expanded', 'false');
-            }
-        }
-
-        dropdown.classList.toggle('active', !isActive);
-        langBtn.setAttribute('aria-expanded', (!isActive).toString());
-    });
-
-    // Fechar ao clicar fora
-    document.addEventListener('click', (e) => {
-        if (!langSelector.contains(e.target)) {
-            closeLanguageDropdown();
-        }
-    });
+    icon.innerHTML = isDark ? SUN_ICON : MOON_ICON;
 }
 
 function setupEventListeners(logoutUrl) {
-    // Logout button delegation
     document.addEventListener('click', (e) => {
         const logoutBtn = e.target.closest('[data-action="logout"]');
         if (logoutBtn) {
@@ -119,53 +56,25 @@ function setupEventListeners(logoutUrl) {
             import('./auth.js').then(({ logout }) => logout(logoutUrl));
         }
 
-        // Close mobile nav (drawer links)
         const closeMobileNavBtn = e.target.closest('[data-action="close-mobile-nav"]');
         if (closeMobileNavBtn) {
             closeMobileNav();
         }
 
-        // Toggle mobile nav
         const toggleMobileNavBtn = e.target.closest('[data-action="toggle-mobile-nav"]');
         if (toggleMobileNavBtn) {
             import('./sidebar.js').then(({ toggleMobileNav }) => toggleMobileNav());
         }
 
-        // Toggle sidebar
         const toggleSidebarBtn = e.target.closest('[data-action="toggle-sidebar"]');
         if (toggleSidebarBtn) {
             import('./sidebar.js').then(({ toggleDesktopSidebar }) => toggleDesktopSidebar());
         }
 
-        // Toggle theme
         const toggleThemeBtn = e.target.closest('[data-action="toggle-theme"]');
         if (toggleThemeBtn) {
             toggleTheme();
             syncThemeIcon();
-        }
-
-        // Toggle notifications
-        const toggleNotificationsBtn = e.target.closest('[data-action="toggle-notifications"]');
-        if (toggleNotificationsBtn) {
-            toggleNotifications();
-        }
-    });
-
-    setupLanguageDropdown();
-
-    // Fechar painéis com Escape
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            closeLanguageDropdown();
-
-            const notifDropdown = document.getElementById('notificationDropdown');
-            const bellBtn = document.getElementById('notificationBellBtn');
-            if (notifDropdown) {
-                notifDropdown.classList.remove('active');
-            }
-            if (bellBtn) {
-                bellBtn.setAttribute('aria-expanded', 'false');
-            }
         }
     });
 }

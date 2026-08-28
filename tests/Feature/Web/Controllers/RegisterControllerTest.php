@@ -120,26 +120,26 @@ class RegisterControllerTest extends FeatureTestCase
         $send = fn (array $payload) => $this->withHeader('X-Auth-Token', $admin->api_token)
             ->postJson(self::REGISTER_URL, $payload);
 
-        // Campos obrigatórios em falta
+        // Missing required fields
         $send([])->assertStatus(422)
             ->assertJsonValidationErrors(['name', 'email', 'password']);
 
-        // Email mal formatado
+        // Malformed email
         $send($this->registerPayload(['email' => 'not-an-email']))
             ->assertStatus(422)
             ->assertJsonValidationErrors(['email']);
 
-        // Confirmação de password não coincide
+        // Password confirmation does not match
         $send($this->registerPayload(['password_confirmation' => 'Different123!']))
             ->assertStatus(422)
             ->assertJsonValidationErrors(['password']);
 
-        // Password fraca (sem símbolo)
+        // Weak password (no symbol)
         $send($this->registerPayload(['password' => 'WeakPass123', 'password_confirmation' => 'WeakPass123']))
             ->assertStatus(422)
             ->assertJsonValidationErrors(['password']);
 
-        // Name apenas com espaços colapsa para string vazia
+        // Name with only spaces collapses into an empty string
         $send($this->registerPayload(['name' => '   ']))
             ->assertStatus(422)
             ->assertJsonValidationErrors(['name']);

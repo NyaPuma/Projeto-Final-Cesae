@@ -62,8 +62,8 @@ function mixToward(hex, target, amount) {
 }
 
 /**
- * Preto ou branco puros — pelo menos um garante sempre contraste >= 4.5:1
- * contra qualquer cor de fundo (verifica qual produz o maior rácio).
+ * Pure black or white — at least one always guarantees contrast >= 4.5:1
+ * against any background color (checks which produces the highest ratio).
  */
 function readableOnColor(hex) {
     const lum = luminance(hex);
@@ -73,8 +73,8 @@ function readableOnColor(hex) {
 }
 
 /**
- * Ajusta a cor automaticamente (escurecendo ou clareando para o preto/branco
- * que melhor garante contraste) até cumprir o rácio mínimo contra o fundo.
+ * Automatically adjusts the color (darkening or lightening to the black/white
+ * that best guarantees contrast) until it meets the minimum ratio against the background.
  */
 function ensureContrast(hex, background, minRatio) {
     let current = normalizeColor(hex);
@@ -101,11 +101,11 @@ function applyVariable(input, value) {
 }
 
 /**
- * Garante automaticamente o contraste mínimo:
- *  - texto e texto secundário >= 4.5:1 sobre a superfície;
- *  - cor primária >= 3:1 sobre a superfície (destaques não-textuais);
- *  - texto dos botões (preto/branco) >= 4.5:1 sobre a primária.
- * Nunca bloqueia o guardar — ajusta as cores em falta.
+ * Automatically ensures minimum contrast:
+ *  - text and soft text >= 4.5:1 against surface;
+ *  - primary color >= 3:1 against surface (non-text highlights);
+ *  - button text (black/white) >= 4.5:1 against primary.
+ * Never blocks save — adjusts the missing colors.
  */
 function enforceContrastCompliance() {
     const inputs = {
@@ -214,9 +214,9 @@ function markActivePreset() {
 }
 
 /* ---------------------------------------------------------------------
-   Guardar automático — cada escolha é persistida de imediato (presets)
-   ou após uma pausa (edição de cores), para o tema guardado nunca
-   divergir do que está no ecrã (sem "temas híbridos").
+   Auto-save — each choice is persisted immediately (presets)
+   or after a pause (color editing), so the saved theme never
+   diverges from what is on screen (no "hybrid themes").
 --------------------------------------------------------------------- */
 function getCsrfToken() {
     const meta = document.querySelector('meta[name="csrf-token"]');
@@ -248,7 +248,7 @@ function persistThemeValues() {
         return;
     }
 
-    // Garante que o que é enviado corresponde ao que está no ecrã
+    // Ensure what is sent matches what is on screen
     enforceContrastCompliance();
 
     const payload = {};

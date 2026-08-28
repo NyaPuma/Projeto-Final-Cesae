@@ -3,11 +3,11 @@
 | Section Header Component
 |--------------------------------------------------------------------------
 |
-| Cabeçalho de secção reutilizável com eyebrow, título, descrição opcional e slot aside.
-| • 100% livre de CSS ou JS inline.
-| • Sintaxe de variáveis CSS corrigida e segura para o Tailwind.
-| • Layout responsivo otimizado (stack no mobile, row no desktop).
-| • Suporte a atributos globais via $attributes.
+| Reusable section header with eyebrow, title, optional description and aside slot.
+| • 100% free of inline CSS or JS.
+| • CSS variable syntax corrected and safe for Tailwind.
+| • Optimized responsive layout (stack on mobile, row on desktop).
+| • Global attribute support via $attributes.
 |
 --}}
 

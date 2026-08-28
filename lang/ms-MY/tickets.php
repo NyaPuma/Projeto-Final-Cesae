@@ -87,7 +87,7 @@ return [
     'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.' => 'Lihat pemeliharaan teknikal, penyelenggaraan pencegahan, tiket berjadual dan tugas operasi dalam satu antaramuka bersepadu.',
     'Voltar aos tickets' => 'Kembali ke tiket',
     'Últimas Ocorrências Registadas' => 'Insiden Terakhir yang Direkodkan',
-    '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.' => '⚠️ Terdapat :total tiket dengan keutamaan lebih tinggi yang belum diselesaikan.',
+    'Existem :total ticket(s) de prioridade mais alta por atender.' => 'Terdapat :total tiket dengan keutamaan lebih tinggi yang belum diselesaikan.',
     'Anexo adicionado' => 'Lampiran ditambah',
     'Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.' => 'Hanya tiket dengan status "Sedang Berjalan" boleh ditutup dengan pantas.',
     'Apenas tickets no estado "Aberto" podem ser cancelados.' => 'Hanya tiket dengan status "Dibuka" boleh dibatalkan.',

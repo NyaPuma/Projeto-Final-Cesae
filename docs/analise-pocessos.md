@@ -1,47 +1,47 @@
-# Análise de Processos: Mapeamento As-Is vs To-Be
+# Process Analysis: As-Is vs To-Be Mapping
 
-Este documento descreve a transição operacional entre o modelo de gestão reativo tradicional (manual) e o novo fluxo automatizado inteligente implementado na plataforma.
-
----
-
-## 1. O Processo Atual: Mapeamento "As-Is" (O Problema)
-No cenário analógico ou semi-digitalizado atual, o fluxo de correção de uma avaria é fragmentado e ineficiente:
-
-* **Deteção Reativa:** Um equipamento crítico falha (ex: uma máquina para por sobreaquecimento). O operário da sala pode demorar minutos ou horas a notar a quebra de rendimento.
-* **Reporte Disperso:** O operário tenta contactar a manutenção enviando um e-mail, telefonando ou deixando uma nota em papel. A informação perde-se frequentemente ou chega sem detalhes técnicos (ex: "a máquina não liga").
-* **Triagem Manual:** O Diretor de Operações recebe o alerta de forma informal. Precisa de consultar manualmente quais os técnicos que dominam aquela especialidade e quem tem menos trabalho acumulado na semana para efetuar o despacho.
-* **Diagnóstico às Cegas:** O técnico desloca-se ao local para perceber o problema. Descobre que precisa de uma peça específica, regressa ao armazém para validar o stock e, se for de alto custo, tem de procurar o administrador para pedir autorização verbal.
-* **Fecho Indocumentado:** Após a reparação, os tempos de paragem e os custos associados não são registados ou ficam guardados numa folha de Excel isolada, impedindo qualquer análise estatística futura.
-* **Vulnerabilidade de Identidade:** O sistema anterior ou os processos manuais não isolavam o registo de utilizadores, permitindo falhas na elevação de privilégios ou o auto-registo descontrolado de acessos à infraestrutura interna da organização.
+This document describes the operational transition between the traditional reactive (manual) management model and the new intelligent automated workflow implemented on the platform.
 
 ---
 
-## 2. O Processo Proposto: Mapeamento "To-Be" (A Solução)
-Com a introdução da plataforma integrada em PHP Laravel e persistência relacional em MySQL, o fluxo transforma-se numa operação otimizada, segura e inteligente:
+## 1. The Current Process: "As-Is" Mapping (The Problem)
+In the current analogue or semi-digitalized scenario, the fault repair workflow is fragmented and inefficient:
 
-### Fluxo de Abertura Omnicanal e Triagem Assistida por IA
-* **Autonomia de Submissão:** Qualquer utilizador devidamente autenticado na plataforma (seja Operário, Técnico ou Administrador) pode submeter um ticket de avaria imediatamente após detetar uma falha no terreno (POST /tickets). O formulário recolhe a seleção do equipamento, a sala/localização e a descrição do problema em texto livre, atribuindo o estado inicial "Aberto" e gravando a timestamp do servidor.
-
-* **Triagem e Alocação Inteligente (Módulo SAD Exclusivo do Admin):** Ao aceder ao detalhe da ocorrência no Backoffice, o Administrador é apoiado pelo Assistente de Alocação IA (AIService alimentado pelo modelo gpt-4o-mini). O motor analisa o texto livre da avaria por Processamento de Linguagem Natural (NLP), cruza a categoria do problema com as especialidades dos técnicos ativos e avalia a respetiva carga de trabalho atual. A IA exibe a sugestão do técnico ideal com uma justificação operacional fundamentada.
-
-* **Despacho em 1 Clique:** O Administrador valida a recomendação da IA (ou faz uma seleção manual alternativa) e efetua o despacho oficial com 1 clique (PATCH /admin/tickets/{id}/atribuir), transitando o estado da avaria e vinculando o técnico no MySQL.
-
-* **Segurança e Identidade Blindadas:** O auto-registo público foi totalmente eliminado (/register desativado). A criação de utilizadores e atribuição de perfis (Roles) é um processo estritamente restrito e centralizado no Backoffice do Administrador através da rota protegida /admin/users/register.
-
-### Fluxo de Resolução e Monitorização de KPIs (In-House)
-* **Diagnóstico Prescritivo no Terreno:** O Técnico assume o ticket na sua área exclusiva, movendo o estado para "Em Curso" com carimbo de tempo inviolável capturado pelo relógio do servidor (`NOW()`). O sistema fornece de imediato as sugestões de peças do armazém com base no histórico do ativo.
-* **Encerramento Estruturado:** Ao concluir a intervenção física na fábrica, o técnico insere o tempo despendido, os custos com materiais internos e a nota de fecho, atualizando a base de dados MySQL.
-* **Reatividade em Tempo Real:** O encerramento do ticket dispara eventos síncronos de transmissão (`[Broadcast]` via WebSockets). Sem necessidade de refrescar a página, o painel do Administrador recalcula as médias cronológicas de paragem de ativos industriais e atualiza reativamente os gráficos analíticos (`Chart.js`).
+* **Reactive Detection:** A critical piece of equipment fails (e.g. a machine stops due to overheating). The floor operator may take minutes or hours to notice the drop in performance.
+* **Scattered Reporting:** The operator tries to contact maintenance by sending an email, making a phone call or leaving a paper note. Information is frequently lost or arrives without technical details (e.g. "the machine won't turn on").
+* **Manual Triage:** The Operations Director receives the alert informally. They need to manually check which technicians master that specialty and who has less accumulated work in the week in order to dispatch.
+* **Blind Diagnosis:** The technician travels to the site to understand the problem. They discover they need a specific part, return to the warehouse to validate stock and, if it is high-cost, must find the administrator to request verbal authorization.
+* **Undocumented Closure:** After the repair, downtime and associated costs are not recorded or are kept in an isolated Excel spreadsheet, preventing any future statistical analysis.
+* **Identity Vulnerability:** The previous system or manual processes did not isolate user records, allowing privilege escalation failures or uncontrolled self-registration of access to the organization's internal infrastructure.
 
 ---
 
-## 3. Tabela Comparativa de Impacto Operacional
+## 2. The Proposed Process: "To-Be" Mapping (The Solution)
+With the introduction of the integrated PHP Laravel platform and relational persistence in MySQL, the workflow becomes an optimized, secure and intelligent operation:
 
-| Dimensão Analisada | Cenário Atual (As-Is) | Cenário Futuro (To-Be) |
+### Omnichannel Intake Workflow and AI-Assisted Triage
+* **Submission Autonomy:** Any duly authenticated platform user (whether Operator, Technician or Administrator) can submit a fault ticket immediately after detecting a failure in the field (POST /tickets). The form collects the equipment selection, the room/location and a free-text problem description, assigning the initial "Open" status and recording the server timestamp.
+
+* **Triage and Intelligent Allocation (SAD Module, Admin-Exclusive):** When accessing the occurrence details in the Backoffice, the Administrator is supported by the AI Allocation Assistant (AIService powered by the gpt-4o-mini model). The engine analyzes the free text of the fault using Natural Language Processing (NLP), cross-references the problem category with the specialties of active technicians and evaluates their current workload. The AI displays the ideal technician suggestion with a well-grounded operational justification.
+
+* **1-Click Dispatch:** The Administrator validates the AI recommendation (or makes an alternative manual selection) and performs the official dispatch with 1 click (PATCH /admin/tickets/{id}/atribuir), transitioning the fault status and linking the technician in MySQL.
+
+* **Hardened Security and Identity:** Public self-registration has been completely eliminated (/register disabled). User creation and role assignment (Roles) is a strictly restricted process, centralized in the Administrator's Backoffice through the protected route /admin/users/register.
+
+### Resolution Workflow and KPI Monitoring (In-House)
+* **Prescriptive On-Site Diagnosis:** The Technician takes over the ticket in their exclusive area, moving the status to "In Progress" with a tamper-proof timestamp captured by the server clock (`NOW()`). The system immediately provides warehouse part suggestions based on the asset's history.
+* **Structured Closure:** Upon completing the physical intervention at the factory, the technician enters the time spent, internal material costs and closing note, updating the MySQL database.
+* **Real-Time Reactivity:** Closing the ticket triggers synchronous broadcast events (`[Broadcast]` via WebSockets). Without needing to refresh the page, the Administrator's panel recalculates the chronological downtime averages of industrial assets and reactively updates the analytical charts (`Chart.js`).
+
+---
+
+## 3. Operational Impact Comparison Table
+
+| Analyzed Dimension | Current Scenario (As-Is) | Future Scenario (To-Be) |
 | :--- | :--- | :--- |
-| **Gestão de Identidade** | Acesso aberto ou descontrolado; riscos de elevação de privilégios. | **Apenas o Administrador** pode registar novos funcionários na empresa via Backoffice restrito. |
-| **Abertura de Incidentes** | Dispersa (e-mail, papel), lenta e restrita a processos burocráticos. | **Omnicanal e global** (qualquer Operário, Técnico ou Admin abre tickets na plataforma). |
-| **Triagem de Avarias** | Manual, tardia e sujeita a erros humanos de categorização. | **Assistida por IA** através de Processamento de Linguagem Natural (NLP) e tags automáticas. |
-| **Alocação de Técnicos** | Subjetiva, baseada no instinto ou em consultas demoradas. | **Otimizada por IA** (`AIService`), cruzando competências e volumetria de carga de trabalho atual. |
-| **Tempo de Diagnóstico** | Elevado (múltiplas deslocações e validações de stock às cegas). | **Prescritivo** (sugestão de peças standard baseada no histórico no terreno). |
-| **Auditoria e Métricas** | Inexistente. Perda de dados históricos de custos e de tempos. | **Imutável**. Logs globais de auditoria, carimbos do servidor e dashboards reativos. |
+| **Identity Management** | Open or uncontrolled access; privilege escalation risks. | **Only the Administrator** can register new company employees via the restricted Backoffice. |
+| **Incident Intake** | Scattered (email, paper), slow and restricted to bureaucratic processes. | **Omnichannel and global** (any Operator, Technician or Admin opens tickets on the platform). |
+| **Fault Triage** | Manual, late and prone to human categorization errors. | **AI-Assisted** through Natural Language Processing (NLP) and automatic tags. |
+| **Technician Allocation** | Subjective, based on instinct or time-consuming consultations. | **AI-Optimized** (`AIService`), cross-referencing skills and current workload volume. |
+| **Diagnosis Time** | High (multiple trips and blind stock validations). | **Prescriptive** (suggestion of standard parts based on field history). |
+| **Auditing and Metrics** | Nonexistent. Loss of historical cost and time data. | **Immutable**. Global audit logs, server timestamps and reactive dashboards. |

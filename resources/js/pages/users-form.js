@@ -57,6 +57,14 @@ function handleCreateSubmit(e) {
     const password = document.getElementById('userPassword').value;
     const profile_id = document.getElementById('userProfileId').value;
     const active = document.getElementById('userActive').checked;
+    const passwordConfirmation = document.getElementById('userPasswordConfirmation');
+
+    if (password && passwordConfirmation && password !== passwordConfirmation.value) {
+        const translations = window.SGM_USER_MANAGEMENT_I18N || {};
+        message.textContent = translations.passwordMismatch || 'As palavras-passe não coincidem.';
+        message.className = 'min-h-6 text-sm font-medium text-danger';
+        return;
+    }
 
     message.textContent = 'A guardar utilizador...';
     message.className = 'min-h-6 text-sm font-medium text-[var(--text-soft)]';
@@ -78,12 +86,12 @@ function handleCreateSubmit(e) {
         }
 
         message.textContent = 'Utilizador criado com sucesso!';
-        message.className = 'min-h-6 text-sm font-medium text-emerald-600 dark:text-emerald-400';
+        message.className = 'min-h-6 text-sm font-medium text-success';
         setTimeout(() => { window.location.href = '/ui/users'; }, 1500);
     })
     .catch(err => {
         message.textContent = err.message;
-        message.className = 'min-h-6 text-sm font-medium text-red-600 dark:text-red-400';
+        message.className = 'min-h-6 text-sm font-medium text-danger';
         submitBtn.disabled = false;
     });
 }
@@ -99,6 +107,14 @@ function handleEditSubmit(e) {
     const password = document.getElementById('userPassword').value;
     const profile_id = document.getElementById('userProfileId').value;
     const active = document.getElementById('userActive').checked;
+    const passwordConfirmation = document.getElementById('userPasswordConfirmation');
+
+    if (password && passwordConfirmation && password !== passwordConfirmation.value) {
+        const translations = window.SGM_USER_MANAGEMENT_I18N || {};
+        message.textContent = translations.passwordMismatch || 'As palavras-passe não coincidem.';
+        message.className = 'min-h-6 text-sm font-medium text-danger';
+        return;
+    }
 
     const payload = { name, email, profile_id, active };
 
@@ -126,12 +142,12 @@ function handleEditSubmit(e) {
         }
 
         message.textContent = 'Utilizador atualizado com sucesso! A redirecionar...';
-        message.className = 'min-h-6 text-sm font-medium text-emerald-600 dark:text-emerald-400';
+        message.className = 'min-h-6 text-sm font-medium text-success';
         setTimeout(() => { window.location.href = '/ui/users'; }, 1500);
     })
     .catch(err => {
         message.textContent = err.message;
-        message.className = 'min-h-6 text-sm font-medium text-red-600 dark:text-red-400';
+        message.className = 'min-h-6 text-sm font-medium text-danger';
         submitBtn.disabled = false;
     });
 }

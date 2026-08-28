@@ -1,28 +1,28 @@
 /*
 |--------------------------------------------------------------------------
-| Design System: Aliases semânticos
+| Design System: Semantic Aliases
 |--------------------------------------------------------------------------
-| Camada fina de aliases sobre os tokens em tokens.css. Nunca define valores
-| primários aqui — apenas referências a `--color-*`/`--space-*`/`--radius-*`
-| para que o tema personalizado e o dark mode fluam para os componentes.
+| Thin alias layer over the tokens in tokens.css. Never defines primary
+| values here — only references to `--color-*`/`--space-*`/`--radius-*`
+| so the custom theme and dark mode flow through to components.
 */
 
 :root {
-    /* Marca */
+    /* Brand */
     --primary: var(--color-primary);
     --primary-hover: var(--color-primary-hover);
     --primary-light: var(--color-primary-light);
     --primary-dark: var(--color-primary-hover);
-    --primary-rgb: 234, 88, 12;
+    --primary-rgb: 194, 65, 12;
     --on-primary: var(--color-on-primary);
 
-    /* Texto */
+    /* Text */
     --text: var(--color-text);
     --text-primary: var(--color-text);
     --text-soft: var(--color-text-soft);
     --text-muted: var(--color-text-muted);
 
-    /* Superfícies */
+    /* Surfaces */
     --background: var(--color-surface-2);
     --bg: var(--color-surface-2);
     --surface: var(--color-surface);
@@ -33,19 +33,19 @@
     --surface-hover: var(--color-surface-hover);
     --surface-muted: var(--color-surface-muted);
 
-    /* Bordas */
+    /* Borders */
     --border: var(--color-border);
     --border-strong: var(--color-border-strong);
     --border-color: var(--color-border);
     --border-hover: var(--color-border-hover);
 
-    /* Estados */
+    /* States */
     --success: var(--color-success);
     --success-hover: var(--color-success);
     --success-light: var(--color-success-light);
     --success-dark: var(--color-success);
     --success-text: var(--color-success);
-    --success-rgb: 22, 163, 74;
+    --success-rgb: 21, 128, 61;
     --success-border-color: color-mix(in srgb, var(--color-success) 30%, transparent);
 
     --warning: var(--color-warning);
@@ -84,11 +84,11 @@
     --space-xl: var(--space-7);
 }
 
-/* Dark Mode Overrides (apenas derivados estáticos que o tema custom não cobre) */
+/* Dark Mode Overrides (only static derivatives that the custom theme doesn't cover) */
 .dark, [data-theme='dark'] {
     --topbar: rgba(11, 15, 25, 0.85);
 
-    --primary-rgb: 249, 115, 22;
+    --primary-rgb: 251, 146, 60;
     --success-rgb: 74, 222, 128;
     --warning-rgb: 251, 191, 36;
     --danger-rgb: 248, 113, 113;

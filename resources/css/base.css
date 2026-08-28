@@ -23,7 +23,7 @@ body {
 }
 
 /* ==========================================================
-   HEADINGS — legibilidade e hierarquia sem saltos
+   HEADINGS — readability and hierarchy without jumps
 ========================================================== */
 h1, h2, h3, h4, h5, h6 {
   line-height: var(--leading-tight);
@@ -32,8 +32,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 { font-size: var(--text-5xl); font-weight: var(--font-weight-black); letter-spacing: var(--tracking-tight); }
-h2 { font-size: var(--text-4xl); font-weight: var(--font-weight-bold); letter-spacing: var(--tracking-tight); }
-h3 { font-size: var(--text-3xl); font-weight: var(--font-weight-bold); }
+h2 { font-size: var(--text-2xl); font-weight: var(--font-weight-bold); letter-spacing: var(--tracking-tight); }
+h3 { font-size: var(--text-xl); font-weight: var(--font-weight-bold); }
 h4 { font-size: var(--text-2xl); font-weight: var(--font-weight-semibold); }
 h5 { font-size: var(--text-xl); font-weight: var(--font-weight-semibold); }
 h6 { font-size: var(--text-lg); font-weight: var(--font-weight-semibold); }
@@ -52,13 +52,13 @@ p {
   font-feature-settings: "tnum";
 }
 
-/* Garante contraste e tamanho mínimo legível mesmo se algo escapar à escala */
+/* Ensures contrast and minimum legible size even if something escapes the scale */
 small, .text-tiny {
   font-size: max(var(--text-xs), 0.8rem);
 }
 
 /* ==========================================================
-   FOCUS — visível em toda a interface (WCAG 2.1 AA)
+   FOCUS — visible across the entire interface (WCAG 2.1 AA)
 ========================================================== */
 :focus-visible {
   outline: 2px solid var(--primary);
@@ -67,4 +67,10 @@ small, .text-tiny {
 
 [x-cloak] {
   display: none !important;
+}
+
+/* All solid primary-bg buttons use the JS-computed --on-primary color
+   for guaranteed WCAG AA contrast regardless of primary hue. */
+.bg-primary.text-white {
+  color: var(--on-primary) !important;
 }

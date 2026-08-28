@@ -56,6 +56,10 @@ export function isAuthenticated() {
  * @returns {boolean} True if user has admin role
  */
 export function isAdmin() {
+    const bodyDataset = document.body?.dataset || {};
+    if (bodyDataset.userAdmin !== undefined) return bodyDataset.userAdmin === '1' || bodyDataset.userAdmin === 'true';
+    if (localStorage.getItem('user_role') === 'admin') return true;
+
     try {
         const token = localStorage.getItem('auth_token');
         if (!token) return false;

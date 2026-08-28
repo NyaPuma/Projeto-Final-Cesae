@@ -1,60 +1,60 @@
-# Guia do Utilizador: Sistema Integrado de Gestão de Manutenção
+# User Guide: Integrated Maintenance Management System
 
-Este manual descreve as funcionalidades principais disponíveis na plataforma, organizadas pelos três perfis de utilizador.
-
----
-
-## 1. Perfil Operador (Operário)
-O foco deste perfil é a comunicação rápida de anomalias e falhas operacionais na fábrica.
-
-* **Submeter Avaria:**
-    1. Aceda ao menu "Novo Ticket".
-    2. Selecione o Equipamento e a Sala respetiva.
-    3. Descreva detalhadamente o problema (ex: ruído anormal, paragem súbita).
-    4. **Upload de Evidências:** Anexe fotografias da avaria para acelerar o diagnóstico inicial.
-* **Consultar Tickets:**
-    * Visualize o estado dos seus pedidos (Aberto, Em Curso ou Fechado) através da listagem "Os Meus Tickets".
-* **Comunicação:**
-    * Utilize o sistema de comentários dentro de cada ticket criado por si para esclarecer dúvidas ou fornecer atualizações ao técnico responsável.
+This manual describes the main features available on the platform, organized by the three user profiles.
 
 ---
 
-## 2. Perfil Técnico de Manutenção
-O foco deste perfil é a eficiência na reparação, controlo de stock e atualização do fluxo de trabalho.
+## 1. Operator Profile (Factory Worker)
+The focus of this profile is the quick reporting of anomalies and operational failures in the factory.
 
-* **Abertura em Campo:**
-    * Possui autonomia para abrir de imediato um ticket de avaria na plataforma caso detete uma falha mecânica ou elétrica durante as suas rondas pela fábrica.
-* **Painel de Avarias e Fila Global:**
-    * Consulte a lista de tickets pendentes atribuídos ou disponíveis para triagem, com suporte a filtros avançados por equipamento, estado ou localização física.
-* **Iniciar Reparação:**
-    * Ao assumir uma intervenção, clique em "Iniciar Reparação". O estado transita automaticamente para "Em Curso" e tranca a rota, iniciando a contagem de tempo com um carimbo do servidor (`NOW()`).
-* **Reportar Evolução & Comentários:**
-    * Adicione notas técnicas e faça o upload de fotos de componentes substituídos ao longo do ciclo de vida do ticket.
-* **Solicitação de Orçamento:**
-    * Caso a avaria exija componentes de alto custo, altere o estado para "Pendente de Orçamento" e anexe a respetiva justificação financeira para avaliação da Direção.
-* **Encerramento do Ticket:**
-    * Ao concluir a reparação física, submeta o relatório técnico, os minutos despendidos e o custo das peças consumidas do stock interno. O sistema calcula o MTTR e atualiza os indicadores estatísticos.
+* **Submit a Breakdown Report:**
+    1. Go to the "New Ticket" menu.
+    2. Select the Equipment and its respective Room.
+    3. Describe the problem in detail (e.g., abnormal noise, sudden stoppage).
+    4. **Evidence Upload:** Attach photographs of the breakdown to speed up the initial diagnosis.
+* **Consult Tickets:**
+    * View the status of your requests (Open, In Progress or Closed) through the "My Tickets" listing.
+* **Communication:**
+    * Use the comment system within each ticket you have created to clarify doubts or provide updates to the responsible technician.
 
 ---
 
-## 3. Perfil Administrador (Diretor de Operações)
-O foco deste perfil é a gestão de acessos, despacho inteligente, controlo analítico e decisão estratégica.
+## 2. Maintenance Technician Profile
+The focus of this profile is repair efficiency, stock control and workflow updating.
 
-* **Gestão de Utilizadores e Segurança (Exclusivo):**
-    * Retém o controlo absoluto sobre as credenciais e recursos humanos da empresa. O auto-registo público encontra-se desativado; a criação de novas contas e a atribuição de perfis (*Roles*) é efetuada obrigatoriamente através do menu de Backoffice restrito.
-* **Despacho Assistido por IA:**
-    * Ao triar um incidente, o Administrador é apoiado pelo assistente de Inteligência Artificial (`AIService`). O motor processa o texto livre (NLP), categoriza a falha e sugere o técnico ideal com base nas competências e na volumetria de trabalho atual, permitindo a alocação oficial com apenas 1 clique.
-* **Gestão de Inventário e Ativos:**
-    * Controlo total do backoffice para gerir (Criar, Editar, Inativar ou aplicar Soft Delete) a árvore de salas, pavilhões, marcas e equipamentos da fábrica.
-* **Gestão Orçamental:**
-    * Analisa as requisições financeiras submetidas pelos técnicos para reparações complexas, retendo o poder de aprovar ou rejeitar os orçamentos.
-* **Manutenção Preventiva:**
-    * Agenda proativamente intervenções periódicas em equipamentos antes que ocorra uma falha, injetando ordens de trabalho planeadas diretamente no calendário técnico.
-* **Dashboard Analítico e Auditoria:**
-    * Monitoriza os gráficos de KPI em tempo real (MTTR, custos e desempenho da equipa) atualizados via WebSockets e consulta os logs de auditoria imutáveis para rastrear qualquer alteração feita no sistema.
+* **Field Opening:**
+    * Has the autonomy to immediately open a breakdown ticket on the platform if a mechanical or electrical failure is detected during rounds around the factory.
+* **Breakdown Panel and Global Queue:**
+    * Consult the list of pending tickets assigned or available for triage, with support for advanced filters by equipment, status or physical location.
+* **Start Repair:**
+    * When taking over an intervention, click "Start Repair". The status automatically transitions to "In Progress" and locks the route, starting time counting with a server timestamp (`NOW()`).
+* **Report Progress & Comments:**
+    * Add technical notes and upload photos of replaced components throughout the ticket's life cycle.
+* **Budget Request:**
+    * If the breakdown requires high-cost components, change the status to "Pending Budget" and attach the respective financial justification for review by Management.
+* **Ticket Closure:**
+    * Upon completing the physical repair, submit the technical report, the minutes spent and the cost of parts consumed from internal stock. The system calculates the MTTR and updates the statistical indicators.
 
 ---
 
-## Dicas de Utilização
-* **Notificações em Tempo Real:** O sistema alerta-o instantaneamente no ecrã (através do Laravel Echo) sempre que um ticket muda de estado, recebe um comentário ou dispara um alerta reativo de telemetria.
-* **Pesquisa Avançada:** Em qualquer listagem, utilize a barra de pesquisa combinada com filtros para isolar rapidamente registos por ID, número de série, prioridade ou intervalo de datas.
+## 3. Administrator Profile (Operations Director)
+The focus of this profile is access management, intelligent dispatching, analytical control and strategic decision-making.
+
+* **User and Security Management (Exclusive):**
+    * Holds absolute control over the company's credentials and human resources. Public self-registration is disabled; the creation of new accounts and the assignment of profiles (*Roles*) is carried out exclusively through the restricted Backoffice menu.
+* **AI-Assisted Dispatch:**
+    * When triaging an incident, the Administrator is supported by the Artificial Intelligence assistant (`AIService`). The engine processes free text (NLP), categorizes the failure and suggests the ideal technician based on skills and current workload volume, allowing official allocation with just 1 click.
+* **Inventory and Asset Management:**
+    * Full backoffice control to manage (Create, Edit, Deactivate or apply Soft Delete) the tree of rooms, pavilions, brands and factory equipment.
+* **Budget Management:**
+    * Reviews the financial requisitions submitted by technicians for complex repairs, holding the power to approve or reject budgets.
+* **Preventive Maintenance:**
+    * Proactively schedules periodic interventions on equipment before a failure occurs, injecting planned work orders directly into the technician's calendar.
+* **Analytical Dashboard and Audit:**
+    * Monitors KPI charts in real time (MTTR, costs and team performance) updated via WebSockets and consults immutable audit logs to track any change made to the system.
+
+---
+
+## Usage Tips
+* **Real-Time Notifications:** The system alerts you instantly on screen (via Laravel Echo) whenever a ticket changes status, receives a comment or triggers a reactive telemetry alert.
+* **Advanced Search:** In any listing, use the search bar combined with filters to quickly isolate records by ID, serial number, priority or date range.

@@ -45,27 +45,27 @@ async function loadMetrics() {
 
         panel.innerHTML = `
             <div class="rounded-2xl border border-(--border) bg-(--surface) p-6 shadow-[0_1px_2px_rgba(0,0,0,0.01)] animate-[fadeIn_0.3s_ease-out] flex flex-col justify-between">
-                <p class="text-[10px] font-bold uppercase tracking-wider text-(--text-soft)">${i18n().resolution || 'Tempo Médio de Resolução'}</p>
-                <p class="mt-2 text-2xl font-black text-(--text)">${data.average_resolution_human ?? '0h 0m'}</p>
+                <p class="text-xs font-bold uppercase tracking-wider text-(--text-soft)">${i18n().resolution || 'Tempo Médio de Resolução'}</p>
+                <div class="mt-2 text-2xl font-black text-(--text)">${data.average_resolution_human ?? '0h 0m'}</div>
                 <p class="mt-0.5 text-xs font-semibold text-(--text-soft)">${data.average_resolution_minutes ?? 0} ${i18n().minutes || 'min'}</p>
             </div>
             <div class="rounded-2xl border border-(--border) bg-(--surface) p-6 shadow-[0_1px_2px_rgba(0,0,0,0.01)] animate-[fadeIn_0.3s_ease-out] flex flex-col justify-between">
-                <p class="text-[10px] font-bold uppercase tracking-wider text-(--text-soft)">${i18n().waiting || 'Tempo Médio de Espera'}</p>
-                <p class="mt-2 text-2xl font-black text-(--text)">${data.average_waiting_human ?? '0h 0m'}</p>
+                <p class="text-xs font-bold uppercase tracking-wider text-(--text-soft)">${i18n().waiting || 'Tempo Médio de Espera'}</p>
+                <div class="mt-2 text-2xl font-black text-(--text)">${data.average_waiting_human ?? '0h 0m'}</div>
                 <p class="mt-0.5 text-xs font-semibold text-(--text-soft)">${data.average_waiting_minutes ?? 0} ${i18n().minutes || 'min'}</p>
             </div>
             <div class="rounded-2xl border border-(--border) bg-(--surface) p-6 shadow-[0_1px_2px_rgba(0,0,0,0.01)] animate-[fadeIn_0.3s_ease-out] flex flex-col justify-between">
-                <p class="text-[10px] font-bold uppercase tracking-wider text-(--text-soft)">${i18n().open || 'Tickets Abertos'}</p>
-                <p class="mt-2 text-3xl font-black text-amber-500">${data.open_tickets ?? 0}</p>
+                <p class="text-xs font-bold uppercase tracking-wider text-(--text-soft)">${i18n().open || 'Tickets Abertos'}</p>
+                <div class="mt-2 text-3xl font-black text-warning">${data.open_tickets ?? 0}</div>
             </div>
             <div class="rounded-2xl border border-(--border) bg-(--surface) p-6 shadow-[0_1px_2px_rgba(0,0,0,0.01)] animate-[fadeIn_0.3s_ease-out] flex flex-col justify-between">
-                <p class="text-[10px] font-bold uppercase tracking-wider text-(--text-soft)">${i18n().closed || 'Tickets Fechados'}</p>
-                <p class="mt-2 text-3xl font-black text-emerald-500">${data.closed_tickets ?? 0}</p>
+                <p class="text-xs font-bold uppercase tracking-wider text-(--text-soft)">${i18n().closed || 'Tickets Fechados'}</p>
+                <div class="mt-2 text-3xl font-black text-success">${data.closed_tickets ?? 0}</div>
             </div>
         `;
     } catch (err) {
         panel.innerHTML = `
-            <div class="rounded-xl border border-red-500/20 bg-red-500/5 p-4 col-span-full text-xs text-red-600 dark:text-red-400">
+            <div class="rounded-xl border border-danger/20 bg-danger/5 p-4 col-span-full text-xs text-danger">
                 ${i18n().loadError || 'Não foi possível carregar os indicadores analíticos do servidor.'}
             </div>
         `;
@@ -100,7 +100,7 @@ async function loadRecentTickets() {
     tableContainer.innerHTML = `
         <table class="w-full text-left text-xs">
             <thead>
-                <tr class="text-(--text-soft) border-b border-(--border) text-[10px] uppercase tracking-wider">
+                <tr class="text-(--text-soft) border-b border-(--border) text-xs uppercase tracking-wider">
                     <th class="pb-2">ID</th>
                     <th class="pb-2">${i18n().title || 'Título'}</th>
                     <th class="pb-2">${i18n().priority || 'Prioridade'}</th>
@@ -113,9 +113,9 @@ async function loadRecentTickets() {
                         <td class="py-2.5 font-mono text-(--text-soft)">#${t.id}</td>
                         <td class="py-2.5 font-semibold truncate max-w-[180px]">${t.title}</td>
                         <td class="py-2.5">
-                            <span class="px-2 py-0.5 rounded text-[9px] font-bold uppercase ${
-                                t.priority === 'alta' ? 'bg-red-500/10 text-red-500' :
-                                t.priority === 'média' ? 'bg-amber-500/10 text-amber-500' : 'bg-emerald-500/10 text-emerald-500'
+                            <span class="px-2 py-0.5 rounded text-xs font-bold uppercase ${
+                                t.priority === 'alta' ? 'bg-danger/10 text-danger' :
+                                t.priority === 'média' ? 'bg-warning/10 text-warning' : 'bg-success/10 text-success'
                             }">${t.priority_label || t.priority || 'média'}</span>
                         </td>
                         <td class="py-2.5 text-right">

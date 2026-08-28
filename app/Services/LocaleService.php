@@ -743,6 +743,13 @@ final class LocaleService
                 return $meta['default_locale'];
             }
 
+            $base = strtolower(explode('-', $locale)[0]);
+            foreach (self::all() as $code => $meta) {
+                if (strtolower(explode('-', $code)[0]) === $base) {
+                    return $meta['default_locale'] ?? $code;
+                }
+            }
+
             return $locale;
         }
 

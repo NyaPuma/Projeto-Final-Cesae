@@ -9,7 +9,6 @@
 >
     <x-slot:actions>
         <x-ui.page-actions.group>
-            <x-ui.page-actions.back-button :href="route('ui.index')" :label="__('dashboard.Voltar ao painel')" />
             @if($user && $user->isAdmin())
                 <x-ui.page-actions.create-link :href="route('ui.equipments.create')" :label="__('equipment.Novo equipamento')" />
             @endif

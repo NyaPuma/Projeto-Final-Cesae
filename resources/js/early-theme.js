@@ -8,8 +8,8 @@ const root = document.documentElement;
 let isDark;
 
 if (isAdmin && saved && saved !== serverMode) {
-    // Preferência antiga/estranha do localStorage: o servidor é a fonte da
-    // verdade — limpa a chave para o tema guardado comandar sem flash.
+    // Stale/strange localStorage preference: the server is the source of
+    // truth — clear the key so the saved theme commands without flash.
     localStorage.removeItem('theme');
     isDark = serverMode === 'dark';
 } else if (saved) {
@@ -26,9 +26,9 @@ if (isDark) {
     root.removeAttribute('data-theme');
 }
 
-// Estado colapsado da sidebar aplicado antes do primeiro paint (anti-flash).
-// O initSidebar() (deferred, após o paint) aplica as classes finais e remove
-// o marcador pre-collapsed.
+// Collapsed sidebar state applied before first paint (anti-flash).
+// initSidebar() (deferred, after paint) applies final classes and removes
+// the pre-collapsed marker.
 if (localStorage.getItem('sidebar_collapsed') === 'true') {
     root.classList.add('pre-collapsed');
 }

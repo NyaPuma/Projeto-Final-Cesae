@@ -3,11 +3,11 @@
 | Dashboard Welcome Banner Component
 |--------------------------------------------------------------------------
 |
-| Banner de boas-vindas para o dashboard com indicação de utilizador e perfil ativo.
-| • 100% livre de CSS ou JS inline.
-| • Sintaxe de variáveis CSS corrigida e segura para o Tailwind.
-| • Suporte a atributos globais via $attributes.
-| • Verificações defensivas robustas para elementos opcionais.
+| Welcome banner for the dashboard with user name and active profile indicator.
+| • 100% free of inline CSS or JS.
+| • CSS variable syntax corrected and safe for Tailwind.
+| • Global attribute support via $attributes.
+| • Robust defensive checks for optional elements.
 |
 --}}
 
@@ -24,9 +24,9 @@
             </x-ui.text.eyebrow>
 
             @if($userName)
-                <h2 class="mt-2 text-lg font-semibold text-[var(--text)]">
+                <h1 class="mt-2 text-lg font-semibold text-[var(--text)]">
                     {{ __('common.Olá, :name.', ['name' => $userName]) }}
-                </h2>
+                </h1>
             @endif
 
             @if($profileLabel)

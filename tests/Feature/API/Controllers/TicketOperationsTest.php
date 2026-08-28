@@ -61,7 +61,7 @@ class TicketOperationsTest extends TestCase
             'active' => true,
         ]);
 
-        // Cria ticket via model (evita TicketController::store que não existe no controller atual)
+        // Create ticket via model (avoids TicketController::store, which does not exist in the current controller)
         $ticket = Ticket::create([
             'user_id' => $creator->id,
             'assigned_to' => $technician->id,
@@ -76,13 +76,13 @@ class TicketOperationsTest extends TestCase
 
         $ticketId = $ticket->id;
 
-        // Listar/detalhar (TicketController::show devolve JSON quando quer JSON)
+        // List/show details (TicketController::show returns JSON when JSON is requested)
         $this->withHeader('X-Auth-Token', $creator->api_token)
             ->getJson('/api/tickets/'.$ticketId)
             ->assertOk()
             ->assertJsonStructure(['ticket']);
 
-        // Comentário
+        // Comment
         $this->withHeader('X-Auth-Token', $technician->api_token)
             ->postJson('/api/tickets/'.$ticketId.'/comments', ['comment' => 'I am checking the paper feed.'])
             ->assertCreated()
@@ -93,7 +93,7 @@ class TicketOperationsTest extends TestCase
             ->assertOk()
             ->assertJsonStructure(['comments']);
 
-        // Upload foto
+        // Photo upload
         $this->withHeader('X-Auth-Token', $technician->api_token)
             ->post('/api/tickets/'.$ticketId.'/photos', [
                 'photo' => UploadedFile::fake()->image('paper-jam.jpg', 800, 600),
@@ -112,7 +112,7 @@ class TicketOperationsTest extends TestCase
             $photosResponse->assertJsonStructure(['attachments']);
         }
 
-        // Calendário: rota web devolve HTML para utilizador autenticado
+        // Calendar: web route returns HTML for the authenticated user
         $calendarResponse = $this->withHeader('X-Auth-Token', $technician->api_token)
             ->get('/calendar');
 
@@ -202,7 +202,7 @@ class TicketOperationsTest extends TestCase
             'active' => true,
         ]);
 
-        // Teste 1: Criar ticket com todos os campos válidos
+        // Test 1: Create ticket with all valid fields
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/api/tickets', [
                 'title' => 'Máquina com ruído anómalo',
@@ -222,10 +222,10 @@ class TicketOperationsTest extends TestCase
         $this->assertEquals($user->id, $ticketData['user_id']);
         $this->assertEquals($equipment->id, $ticketData['equipment_id']);
 
-        // A recomendação de técnico via IA é despachada em segundo plano após o commit
+        // The AI-based technician recommendation is dispatched in the background after the commit
         Queue::assertPushed(GenerateAiRecommendationJob::class);
 
-        // Teste 2: Criar ticket sem equipment_id (opcional)
+        // Test 2: Create ticket without equipment_id (optional)
         $response2 = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/api/tickets', [
                 'title' => 'Problema elétrico na sala de servidores',
@@ -236,7 +236,7 @@ class TicketOperationsTest extends TestCase
         $response2->assertStatus(201);
         $this->assertNull($response2->json('ticket.equipment_id'));
 
-        // Teste 3: Validar que 'media' é normalizado para 'média'
+        // Test 3: Validate that 'media' is normalized to 'média'
         $response3 = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/api/tickets', [
                 'title' => 'Teste prioridade media',
@@ -257,14 +257,14 @@ class TicketOperationsTest extends TestCase
             'active' => true,
         ]);
 
-        // Teste 1: Campos obrigatórios em falta
+        // Test 1: Missing required fields
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/api/tickets', []);
 
         $response->assertStatus(422)
             ->assertJsonValidationErrors(['title', 'description', 'priority']);
 
-        // Teste 2: Prioridade inválida
+        // Test 2: Invalid priority
         $response2 = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/api/tickets', [
                 'title' => 'Teste',
@@ -275,7 +275,7 @@ class TicketOperationsTest extends TestCase
         $response2->assertStatus(422)
             ->assertJsonValidationErrors(['priority']);
 
-        // Teste 3: Equipment_id inexistente
+        // Test 3: Non-existent equipment_id
         $response3 = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/api/tickets', [
                 'title' => 'Teste',
@@ -290,7 +290,7 @@ class TicketOperationsTest extends TestCase
 
     public function test_unauthenticated_user_cannot_create_ticket(): void
     {
-        // Sem token de autenticação
+        // Without authentication token
         $response = $this->postJson('/api/tickets', [
             'title' => 'Teste',
             'description' => 'Descrição',
@@ -309,7 +309,7 @@ class TicketOperationsTest extends TestCase
             'active' => true,
         ]);
 
-        // Teste 1: room_id inexistente
+        // Test 1: Non-existent room_id
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/api/tickets', [
                 'title' => 'Teste',
@@ -321,7 +321,7 @@ class TicketOperationsTest extends TestCase
         $response->assertStatus(422)
             ->assertJsonValidationErrors(['room_id']);
 
-        // Teste 2: IDs não numéricos
+        // Test 2: Non-numeric IDs
         $response2 = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/api/tickets', [
                 'title' => 'Teste',
@@ -334,7 +334,7 @@ class TicketOperationsTest extends TestCase
         $response2->assertStatus(422)
             ->assertJsonValidationErrors(['equipment_id', 'room_id']);
 
-        // Teste 3: title acima de 255 caracteres
+        // Test 3: title longer than 255 characters
         $response3 = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/api/tickets', [
                 'title' => str_repeat('a', 256),
@@ -345,7 +345,7 @@ class TicketOperationsTest extends TestCase
         $response3->assertStatus(422)
             ->assertJsonValidationErrors(['title']);
 
-        // Teste 4: description acima de 5000 caracteres
+        // Test 4: description longer than 5000 characters
         $response4 = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/api/tickets', [
                 'title' => 'Teste',
@@ -356,7 +356,7 @@ class TicketOperationsTest extends TestCase
         $response4->assertStatus(422)
             ->assertJsonValidationErrors(['description']);
 
-        // Teste 5: title apenas com espaços (trim origina string vazia)
+        // Test 5: title with only spaces (trim produces an empty string)
         $response5 = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/api/tickets', [
                 'title' => '   ',

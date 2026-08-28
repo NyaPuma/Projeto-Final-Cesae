@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Adiciona as colunas de recomendação automática de técnico (IA) à tabela tickets.
+     * Adds the automatic technician recommendation (AI) columns to the tickets table.
      */
     public function up(): void
     {

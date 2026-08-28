@@ -1,8 +1,8 @@
 /**
- * Localization Modal — controlador JS.
+ * Localization Modal — JS controller.
  *
- * Gere abertura/fecho, separadores (tabs), pesquisa e guarda automática
- * das preferências de localização.
+ * Manages open/close, tabs, search, and auto-save
+ * of localization preferences.
  */
 
 let modal, overlay, container;
@@ -132,7 +132,8 @@ async function selectLanguage(card) {
     try {
         await savePreference(modal.dataset.updateLanguageUrl, { language: locale });
         location.reload();
-    } catch {
+    } catch (err) {
+        console.error('[LocalizationModal] Failed to save language:', err);
         card.classList.remove('locale-modal__card--loading');
     }
 }
@@ -244,18 +245,7 @@ function handleKeydown(e) {
 
 export function initLocalizationModal() {
     modal = document.getElementById('localizationModal');
-    if (!modal) {
-        console.warn('[LocalizationModal] Modal not found in DOM');
-        return;
-    }
-    console.log('[LocalizationModal] Modal found', {
-        updateLanguageUrl: modal.dataset.updateLanguageUrl,
-        updateCurrencyUrl: modal.dataset.updateCurrencyUrl,
-        updateDateFormatUrl: modal.dataset.updateDateFormatUrl,
-        updateTimeFormatUrl: modal.dataset.updateTimeFormatUrl,
-        updateNumberFormatUrl: modal.dataset.updateNumberFormatUrl,
-    });
-
+    if (!modal) return;
     overlay = modal.querySelector('.locale-modal__overlay');
     container = modal.querySelector('.locale-modal__container');
     tabs = [...modal.querySelectorAll('.localization-modal__tab')];
@@ -279,23 +269,28 @@ export function initLocalizationModal() {
     cards.forEach(card => {
         card.addEventListener('click', () => {
             if (card.hasAttribute('data-locale')) {
-                console.log('[LocalizationModal] Language selected', card.getAttribute('data-locale'));
                 selectLanguage(card);
             } else if (card.hasAttribute('data-currency')) {
-                console.log('[LocalizationModal] Currency selected', card.getAttribute('data-currency'));
                 selectCurrency(card);
             } else if (card.hasAttribute('data-date-format')) {
-                console.log('[LocalizationModal] Date format selected', card.getAttribute('data-date-format'));
                 selectDateFormat(card);
             } else if (card.hasAttribute('data-time-format')) {
-                console.log('[LocalizationModal] Time format selected', card.getAttribute('data-time-format'));
                 selectTimeFormat(card);
             } else if (card.hasAttribute('data-number-format')) {
-                console.log('[LocalizationModal] Number format selected', card.getAttribute('data-number-format'));
                 selectNumberFormat(card);
             }
         });
     });
+
+    // Open triggers
+    document.querySelectorAll('[data-action="open-locale-modal"]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal(btn.dataset.tab || null, btn);
+        });
+    });
+
+    console.log('[LocalizationModal] Initialized', { cards: cards.length, tabs: tabs.length });
 
     // Keyboard
     document.addEventListener('keydown', handleKeydown);

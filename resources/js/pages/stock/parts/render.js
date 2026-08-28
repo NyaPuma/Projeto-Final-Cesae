@@ -35,14 +35,14 @@ function renderStockBadge(part) {
     const min = Number(part.min_stock) || 0;
 
     if (stock <= 0) {
-        return `<span class="inline-flex items-center gap-1 rounded-lg bg-red-500/10 px-2.5 py-1 text-[11px] font-bold uppercase tracking-tight text-red-700 dark:text-red-400">${translations().out}</span>`;
+        return `<span class="inline-flex items-center gap-1 rounded-lg bg-danger/10 px-2.5 py-1 text-xs font-bold uppercase tracking-tight text-danger">${translations().out}</span>`;
     }
 
     if (stock <= min) {
-        return `<span class="inline-flex items-center gap-1 rounded-lg bg-amber-500/10 px-2.5 py-1 text-[11px] font-bold uppercase tracking-tight text-amber-700 dark:text-amber-400">${translations().low}</span>`;
+        return `<span class="inline-flex items-center gap-1 rounded-lg bg-warning/10 px-2.5 py-1 text-xs font-bold uppercase tracking-tight text-warning">${translations().low}</span>`;
     }
 
-    return `<span class="inline-flex items-center gap-1 rounded-lg bg-emerald-500/10 px-2.5 py-1 text-[11px] font-bold uppercase tracking-tight text-emerald-700 dark:text-emerald-400">${translations().ok}</span>`;
+    return `<span class="inline-flex items-center gap-1 rounded-lg bg-success/10 px-2.5 py-1 text-xs font-bold uppercase tracking-tight text-success">${translations().ok}</span>`;
 }
 
 function renderPartRow(part) {
@@ -50,7 +50,7 @@ function renderPartRow(part) {
     const min = Number(part.min_stock) || 0;
     const location = part.location ?? '—';
     const actions = isAdmin()
-        ? `<a href="/ui/stock/parts/${part.id}/edit" class="inline-flex min-h-[28px] items-center justify-center rounded-lg border border-(--border) bg-(--surface) px-3 py-1.5 text-[11px] font-semibold text-(--text) shadow-sm transition-all hover:bg-(--surface-2)">${translations().edit}</a>`
+        ? `<a href="/ui/stock/parts/${part.id}/edit" class="inline-flex min-h-[28px] items-center justify-center rounded-lg border border-(--border) bg-(--surface) px-3 py-1.5 text-xs font-semibold text-(--text) shadow-sm transition-all hover:bg-(--surface-2)">${translations().edit}</a>`
         : '';
 
     return `<tr class="transition-colors duration-150 hover:bg-(--surface-2)/50">
@@ -58,12 +58,12 @@ function renderPartRow(part) {
         <td class="px-5 py-4" data-label="Peça">
             <div class="ui-listing-value">
                 <div class="font-semibold text-(--text)">${escapeHtml(part.name)}</div>
-                <div class="mt-0.5 text-[10px] uppercase tracking-wider text-(--text-soft)">${escapeHtml(part.brand ?? (part.category?.name ?? '—'))}</div>
+                <div class="mt-0.5 text-xs uppercase tracking-wider text-(--text-soft)">${escapeHtml(part.brand ?? (part.category?.name ?? '—'))}</div>
             </div>
         </td>
         <td class="px-5 py-4 font-semibold text-(--text)" data-label="Stock">
             <span class="font-black">${stock}</span>
-            <span class="text-[10px] text-(--text-soft)"> / ${translations().min} ${min}</span>
+            <span class="text-xs text-(--text-soft)"> / ${translations().min} ${min}</span>
         </td>
         <td class="px-5 py-4 font-semibold text-(--text-soft)" data-label="Preço">${formatPrice(part.cost_price)}</td>
         <td class="px-5 py-4 font-semibold text-(--text-soft)" data-label="Localização">${escapeHtml(location)}</td>
@@ -71,7 +71,7 @@ function renderPartRow(part) {
         <td class="ui-listing-actions px-5 py-4 text-right">
             <div class="inline-flex items-center justify-end gap-1.5">
                 ${actions}
-                <a href="/ui/stock/parts/${part.id}" class="inline-flex min-h-[28px] items-center justify-center rounded-lg border border-(--border) bg-(--surface) px-3 py-1.5 text-[11px] font-semibold text-(--text) shadow-sm transition-all hover:bg-(--surface-2)">${translations().details}</a>
+                <a href="/ui/stock/parts/${part.id}" class="inline-flex min-h-[28px] items-center justify-center rounded-lg border border-(--border) bg-(--surface) px-3 py-1.5 text-xs font-semibold text-(--text) shadow-sm transition-all hover:bg-(--surface-2)">${translations().details}</a>
             </div>
         </td>
     </tr>`;

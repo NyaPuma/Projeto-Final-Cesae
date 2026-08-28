@@ -7,7 +7,7 @@ import Chart from 'chart.js/auto';
 import { getThemeColors } from './helpers.js';
 
 /**
- * Determina se um conjunto de dados não tem valores apresentáveis.
+ * Determines if a dataset has no presentable values.
  */
 function isEmpty(data) {
     return !data || data.length === 0 || data.every(v => v === 0 || v === null || v === undefined);
@@ -34,7 +34,7 @@ function getAnalyticsDataTranslations() {
 }
 
 /**
- * Desenha um estado vazio legível no canvas quando não existem dados.
+ * Draws a readable empty state on the canvas when no data exists.
  */
 function drawEmptyMessage(canvas) {
     const colors = getThemeColors();
@@ -247,7 +247,7 @@ export function renderEquipmentChart(canvas, data, existingChart, totalElement, 
     if (totalElement) {
         totalElement.innerHTML = `
             <span class="text-4xl font-black text-(--text)">${total}</span>
-            <span class="mt-1 text-[9px] font-bold uppercase tracking-widest text-(--text-soft)">${ticketsLabel}</span>
+            <span class="mt-1 text-xs font-bold uppercase tracking-widest text-(--text-soft)">${ticketsLabel}</span>
         `;
     }
 
@@ -287,9 +287,9 @@ export function renderEquipmentChart(canvas, data, existingChart, totalElement, 
             const count = priority.data[idx];
             const pct = total > 0 ? Math.round((count / total) * 100) : 0;
             let colorClass = '';
-            if (idx === 0) colorClass = 'bg-emerald-500';
-            else if (idx === 1) colorClass = 'bg-amber-500';
-            else colorClass = 'bg-red-500';
+            if (idx === 0) colorClass = 'bg-success';
+            else if (idx === 1) colorClass = 'bg-warning';
+            else colorClass = 'bg-danger';
 
             return `
                 <div class="flex items-center justify-between text-xs font-semibold">
@@ -315,7 +315,7 @@ export function destroyChart(chart) {
 }
 
 // ============================================================
-// Novos gráficos
+// New charts
 // ============================================================
 
 function baseOptions(colors, legend = false) {
@@ -360,7 +360,7 @@ function horizontalAxesOptions(colors) {
 }
 
 /**
- * SLA mensal (%). Dados com null representam meses sem fechados.
+ * Monthly SLA (%). Null values represent months with no closed tickets.
  */
 export function renderSlaChart(canvas, data, existingChart) {
     if (!canvas) return null;
@@ -438,7 +438,7 @@ export function renderMttrChart(canvas, data, existingChart) {
 }
 
 /**
- * Tickets por urgência (doughnut).
+ * Tickets by urgency (doughnut).
  */
 export function renderUrgencyChart(canvas, data, existingChart) {
     if (!canvas) return null;
@@ -482,7 +482,7 @@ export function renderUrgencyChart(canvas, data, existingChart) {
 }
 
 /**
- * Tickets por sala (bar horizontal).
+ * Tickets by room (horizontal bar).
  */
 export function renderRoomChart(canvas, data, existingChart) {
     if (!canvas) return null;
@@ -516,7 +516,7 @@ export function renderRoomChart(canvas, data, existingChart) {
 }
 
 /**
- * Distribuição por estado de orçamento (doughnut).
+ * Budget status distribution (doughnut).
  */
 export function renderBudgetChart(canvas, data, existingChart) {
     if (!canvas) return null;
@@ -609,7 +609,7 @@ export function renderSourceChart(canvas, data, existingChart) {
 }
 
 /**
- * Custo de intervenção por equipamento (bar horizontal).
+ * Intervention cost by equipment (horizontal bar).
  */
 export function renderCostByEquipmentChart(canvas, data, existingChart) {
     if (!canvas) return null;
@@ -643,7 +643,7 @@ export function renderCostByEquipmentChart(canvas, data, existingChart) {
 }
 
 /**
- * Movimentação mensal de stock (entradas vs saídas).
+ * Monthly stock movement (entries vs exits).
  */
 export function renderStockMonthlyChart(canvas, data, existingChart) {
     if (!canvas) return null;
@@ -684,7 +684,7 @@ export function renderStockMonthlyChart(canvas, data, existingChart) {
 }
 
 /**
- * Peças com stock baixo (bar horizontal).
+ * Low stock parts (horizontal bar).
  */
 export function renderLowStockChart(canvas, data, existingChart) {
     if (!canvas) return null;
@@ -718,7 +718,7 @@ export function renderLowStockChart(canvas, data, existingChart) {
 }
 
 /**
- * Notificações por tipo (doughnut).
+ * Notifications by type (doughnut).
  */
 export function renderNotificationsChart(canvas, data, existingChart) {
     if (!canvas) return null;
@@ -772,7 +772,7 @@ export function renderNotificationsChart(canvas, data, existingChart) {
 }
 
 /**
- * Distribuição de utilizadores por perfil (doughnut).
+ * Users by role distribution (doughnut).
  */
 export function renderUsersByRoleChart(canvas, data, existingChart) {
     if (!canvas) return null;

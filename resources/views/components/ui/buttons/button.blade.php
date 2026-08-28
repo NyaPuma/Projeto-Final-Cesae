@@ -3,9 +3,9 @@
 | Page Actions Base Button Component Wrapper
 |--------------------------------------------------------------------------
 |
-| Componente wrapper para botões de ações de página com suporte a variantes, tamanhos e pesos.
-| • 100% livre de CSS ou JS inline.
-| • Encaminhamento dinâmico de props e atributos globais.
+| Wrapper component for page action buttons with variant, size and weight support.
+| • 100% free of inline CSS or JS.
+| • Dynamic prop forwarding and global attribute passthrough.
 |
 --}}
 

@@ -7,15 +7,15 @@ function getEventBadge(event) {
     const translations = getAuditTranslations();
 
     if (value.includes('create') || value.includes('criar') || value.includes('insert')) {
-        return `<span class="inline-flex items-center gap-1 rounded-lg border border-emerald-500/20 bg-emerald-500/10 px-2.5 py-1 text-[11px] font-bold uppercase tracking-tight text-emerald-700 dark:text-emerald-400">${translations.create || 'Created'}</span>`;
+        return `<span class="inline-flex items-center gap-1 rounded-lg border border-success/20 bg-success/10 px-2.5 py-1 text-xs font-bold uppercase tracking-tight text-success">${translations.create || 'Created'}</span>`;
     }
 
     if (value.includes('update') || value.includes('editar') || value.includes('atualizar')) {
-        return `<span class="inline-flex items-center gap-1 rounded-lg border border-amber-500/20 bg-amber-500/10 px-2.5 py-1 text-[11px] font-bold uppercase tracking-tight text-amber-800 dark:text-amber-400">${translations.update || 'Updated'}</span>`;
+        return `<span class="inline-flex items-center gap-1 rounded-lg border border-warning/20 bg-warning/10 px-2.5 py-1 text-xs font-bold uppercase tracking-tight text-warning">${translations.update || 'Updated'}</span>`;
     }
 
     if (value.includes('delete') || value.includes('eliminar') || value.includes('remover')) {
-        return `<span class="inline-flex items-center gap-1 rounded-lg border border-red-500/20 bg-red-500/10 px-2.5 py-1 text-[11px] font-bold uppercase tracking-tight text-red-700 dark:text-red-400">${translations.delete || 'Deleted'}</span>`;
+        return `<span class="inline-flex items-center gap-1 rounded-lg border border-danger/20 bg-danger/10 px-2.5 py-1 text-xs font-bold uppercase tracking-tight text-danger">${translations.delete || 'Deleted'}</span>`;
     }
 
     const eventLabels = {
@@ -23,7 +23,7 @@ function getEventBadge(event) {
         updated: translations.updated,
         deleted: translations.deleted,
     };
-    return `<span class="inline-flex items-center gap-1 rounded-lg border border-(--border) bg-(--surface-2) px-2.5 py-1 text-[11px] font-bold uppercase tracking-tight text-(--text-soft)">${eventLabels[value] || event}</span>`;
+    return `<span class="inline-flex items-center gap-1 rounded-lg border border-(--border) bg-(--surface-2) px-2.5 py-1 text-xs font-bold uppercase tracking-tight text-(--text-soft)">${eventLabels[value] || event}</span>`;
 }
 
 function getAuditTranslations() {
@@ -45,12 +45,12 @@ function formatStateData(state) {
     if (!state) return '<span class="font-mono text-(--text-soft)">-</span>';
 
     if (typeof state === 'object') {
-        return `<pre class="max-h-40 max-w-xs overflow-auto rounded-xl border border-(--border) bg-(--surface-2) p-2 text-[10px] leading-relaxed text-(--text-soft)">${JSON.stringify(state, null, 2)}</pre>`;
+        return `<pre class="max-h-40 max-w-xs overflow-auto rounded-xl border border-(--border) bg-(--surface-2) p-2 text-xs leading-relaxed text-(--text-soft)">${JSON.stringify(state, null, 2)}</pre>`;
     }
 
     try {
         const parsed = JSON.parse(state);
-        return `<pre class="max-h-40 max-w-xs overflow-auto rounded-xl border border-(--border) bg-(--surface-2) p-2 text-[10px] leading-relaxed text-(--text-soft)">${JSON.stringify(parsed, null, 2)}</pre>`;
+        return `<pre class="max-h-40 max-w-xs overflow-auto rounded-xl border border-(--border) bg-(--surface-2) p-2 text-xs leading-relaxed text-(--text-soft)">${JSON.stringify(parsed, null, 2)}</pre>`;
     } catch {
         return `<span class="line-clamp-2 break-all font-mono text-xs text-(--text-soft)" title="${state}">${state}</span>`;
     }

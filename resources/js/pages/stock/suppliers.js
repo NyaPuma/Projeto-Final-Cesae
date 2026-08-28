@@ -2,6 +2,7 @@ import { fetchSuppliers } from './suppliers/api.js';
 import { bindPagination, clearSupplierFilters, renderLoadingState } from './suppliers/dom.js';
 import { renderEmptyState, renderErrorState, renderPagination, renderResultsCount, renderSuppliers, showFeedback } from './suppliers/render.js';
 import { setCurrentPage, suppliersState } from './suppliers/state.js';
+import { authDelete } from '../../utils/api.js';
 
 async function loadSuppliers(page = 1) {
     setCurrentPage(page);
@@ -43,9 +44,36 @@ function bindFilters() {
     });
 }
 
+function bindDeleteActions() {
+    document.getElementById('suppliersTableBody')?.addEventListener('click', async (event) => {
+        const button = event.target.closest('[data-supplier-delete]');
+        if (!button) return;
+
+        const id = button.dataset.supplierDelete;
+        const name = button.dataset.name || '';
+
+        if (!window.confirm(`Tem a certeza que pretende eliminar o fornecedor "${name}"?`)) return;
+
+        button.disabled = true;
+
+        try {
+            const response = await authDelete(`/admin/suppliers/${id}`);
+            const data = await response.json().catch(() => ({}));
+
+            if (!response.ok) throw new Error(data.message || 'Não foi possível eliminar o fornecedor.');
+
+            loadSuppliers(suppliersState.currentPage);
+        } catch (error) {
+            showFeedback(error.message, true);
+            button.disabled = false;
+        }
+    });
+}
+
 function init() {
     bindFilters();
     bindPagination(loadSuppliers);
+    bindDeleteActions();
     loadSuppliers(suppliersState.currentPage);
 }
 

@@ -87,7 +87,7 @@ return [
     'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.' => 'צפו בתיקונים טכניים, תחזוקה מונעת, כרטיסים מתוזמנים ומשימות תפעוליות בממשק מאוחד.',
     'Voltar aos tickets' => 'חזרה לכרטיסים',
     'Últimas Ocorrências Registadas' => 'אירועים רשומים אחרונים',
-    '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.' => '⚠️ ישנם :total כרטיסים דחופים יותר שטרם טופלו.',
+    'Existem :total ticket(s) de prioridade mais alta por atender.' => 'ישנם :total כרטיסים דחופים יותר שטרם טופלו.',
     'Anexo adicionado' => 'קובץ מצורף נוסף',
     'Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.' => 'רק כרטיסים עם סטטוס "בביצוע" ניתן לסגור במהירות.',
     'Apenas tickets no estado "Aberto" podem ser cancelados.' => 'רק כרטיסים עם סטטוס "פתוח" ניתן לבטל.',

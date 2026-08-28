@@ -40,6 +40,9 @@
         }
         table.data-table tbody tr:nth-child(even) td { background: #f8fafc; }
         .right { text-align: right !important; }
+        .col-rank { width: 40px; }
+        .equipment-name { font-weight: 600; color: #0f172a; }
+        .font-mono { font-family: 'DejaVu Sans Mono', monospace; font-size: 10px; color: #475569; }
 
         .rank {
             display: inline-block; min-width: 20px; text-align: center;
@@ -99,7 +102,7 @@
                         Todo o histórico
                     @endif
                 </div>
-                <div><strong>Emissão:</strong> (now())</div>
+                <div><strong>Emissão:</strong> {{ now() }}</div>
                 <div><strong>Equipamentos:</strong> {{ $items->count() }}</div>
             </td>
         </tr>
@@ -113,7 +116,7 @@
         <table class="data-table">
             <thead>
                 <tr>
-                    <th style="width: 40px;">#</th>
+                    <th class="col-rank">#</th>
                     <th>{{ __('equipment.Equipamento') }}</th>
                     <th class="right">{{ __('common.Qtd. consumida') }}</th>
                     <th class="right">{{ __('common.Custo') }}</th>
@@ -125,12 +128,12 @@
                         <td>
                             <span class="rank rank-{{ $i < 3 ? $i + 1 : 'rest' }}">{{ $i + 1 }}</span>
                         </td>
-                        <td style="font-weight:600;color:#0f172a;">{{ $item['equipment_name'] ?? 'Sem equipamento' }}</td>
-                        <td class="right font-mono" style="font-family:'DejaVu Sans Mono',monospace;font-size:10px;color:#475569;">
-                            ((int) $item['total_quantity'])
+                        <td class="equipment-name">{{ $item['equipment_name'] ?? 'Sem equipamento' }}</td>
+                        <td class="right font-mono">
+                            {{ (int) $item['total_quantity'] }}
                         </td>
-                        <td class="right font-mono" style="font-family:'DejaVu Sans Mono',monospace;font-size:10px;color:#475569;">
-                            ((float) $item['total_value'])
+                        <td class="right font-mono">
+                            {{ (float) $item['total_value'] }}
                         </td>
                     </tr>
                 @endforeach
@@ -140,7 +143,7 @@
         <table class="footer-total">
             <tr>
                 <td><span class="label">{{ __('stock.Total de custos em peças') }}</span></td>
-                <td><span class="value">((float) $total)</span></td>
+                <td><span class="value">{{ (float) $total }}</span></td>
             </tr>
         </table>
     @endif

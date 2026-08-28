@@ -27,7 +27,7 @@ final class TicketNotificationService
         if ($ticket->user_id) {
             $this->creator->createForUser(
                 userId: $ticket->user_id,
-                title: NotificationTypeEnum::TicketClosed->icon() . " Ticket Closed - #{$ticket->id}",
+                title: "Ticket Closed - #{$ticket->id}",
                 message: $message,
                 type: NotificationTypeEnum::TicketClosed->value,
                 link: "/ui/tickets/{$ticket->id}",
@@ -44,7 +44,7 @@ final class TicketNotificationService
      */
     public function notifyPriorityOverride(Ticket $ticket, string $technicianName, int $urgentCount): void
     {
-        $title = NotificationTypeEnum::PriorityOverride->icon() . " Non-Priority Ticket - #{$ticket->id}";
+        $title = "Non-Priority Ticket - #{$ticket->id}";
         $message = "Technician {$technicianName} started ticket #{$ticket->id} ({$ticket->title}) with priority '{$ticket->priority}', ignoring {$urgentCount} more urgent pending ticket(s).";
 
         $this->creator->createForAdmins(

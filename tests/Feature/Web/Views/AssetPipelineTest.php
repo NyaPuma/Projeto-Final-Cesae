@@ -21,10 +21,10 @@ class AssetPipelineTest extends TestCase
     }
 
     /**
-     * As views de UI não podem conter CSS ou JS inline.
-     * São permitidos: <script src="..."> (CDN/externos), o bloco síncrono de
-     * prevenção de FOUC (tema dark/light) no <head> dos layouts, e ficheiros
-     * legítimos que necessitam de CSS embutido (emails, relatórios PDF, vendor).
+     * UI views must not contain inline CSS or JS.
+     * Allowed: <script src="..."> (CDN/external), the synchronous FOUC
+     * prevention block (dark/light theme) in layout <head>, and legitimate
+     * files that need embedded CSS (emails, PDF reports, vendor).
      */
     public function test_ui_views_contain_no_inline_scripts_or_styles(): void
     {
@@ -67,8 +67,8 @@ class AssetPipelineTest extends TestCase
     }
 
     /**
-     * Todos os page keys usados pelas views devem estar registados no
-     * page-registry para que o módulo da página arranque (ex.: users-create).
+     * All page keys used by views must be registered in the
+     * page-registry for the page module to bootstrap (e.g., users-create).
      */
     public function test_every_page_key_is_registered_for_bootstrap(): void
     {
@@ -92,7 +92,7 @@ class AssetPipelineTest extends TestCase
 
         $keys = array_values(array_unique($keys));
 
-        // Extrai chaves registadas (quoted e unquoted) do objeto pageRegistry
+        // Extract registered keys (quoted and unquoted) from the pageRegistry object
         preg_match_all('/^\s*(?:\'([^\']+)\'|([\w-]+))\s*:/m', $registry, $matches);
         $registered = array_values(array_unique(array_filter(array_merge($matches[1], $matches[2]))));
 
@@ -107,8 +107,8 @@ class AssetPipelineTest extends TestCase
     }
 
     /**
-     * O Alpine.js tem de estar no bundle e os componentes x-data registados,
-     * caso contrário as views com x-data deixam de funcionar.
+     * Alpine.js must be in the bundle and x-data components registered,
+     * otherwise views with x-data stop working.
      */
     public function test_alpine_is_bundled_in_built_assets(): void
     {
@@ -138,8 +138,8 @@ class AssetPipelineTest extends TestCase
     }
 
     /**
-     * As páginas autenticadas da UI devem renderizar o data-page correto
-     * (para o boot do módulo) e sem resíduos de scripts inline.
+     * Authenticated UI pages must render the correct data-page
+     * (for module bootstrap) and without inline script remnants.
      */
     public function test_authenticated_ui_pages_render_page_keys_without_inline_scripts(): void
     {
@@ -189,8 +189,8 @@ class AssetPipelineTest extends TestCase
     }
 
     /**
-     * O layout principal deve incluir o script síncrono anti-FOUC no <head>,
-     * para que o tema (dark/light) seja aplicado antes da primeira pintura.
+     * The main layout must include the synchronous anti-FOUC script in <head>,
+     * so the theme (dark/light) is applied before the first paint.
      */
     public function test_layouts_include_synchronous_anti_fouc_theme_script(): void
     {
@@ -207,8 +207,8 @@ class AssetPipelineTest extends TestCase
     }
 
     /**
-     * As views e JS não podem conter escapes unicode literais (ex.: \u00e9)
-     * que são apresentados ao utilizador como texto cru ("T\u00e9cnico").
+     * Views and JS must not contain literal unicode escapes (e.g., \u00e9)
+     * that are rendered to the user as raw text ("T\u00e9cnico").
      */
     public function test_views_and_js_contain_no_literal_unicode_escapes(): void
     {

@@ -8,8 +8,8 @@ use Illuminate\Database\Migrations\Migration;
 return new class extends Migration
 {
     /**
-     * Popula as preferências para utilizadores existentes.
-     * Define valores default: language=pt, currency=EUR, date_format=d/m/Y
+     * Populates preferences for existing users.
+     * Sets default values: language=pt, currency=EUR, date_format=d/m/Y
      */
     public function up(): void
     {

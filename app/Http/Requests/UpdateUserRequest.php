@@ -18,7 +18,7 @@ final class UpdateUserRequest extends FormRequest
     }
 
     /**
-     * Normaliza e higieniza os dados antes da validação.
+     * Normalizes and sanitizes data before validation.
      */
     protected function prepareForValidation(): void
     {
@@ -70,7 +70,7 @@ final class UpdateUserRequest extends FormRequest
     }
 
     /**
-     * Nomes amigáveis dos atributos para as mensagens de erro do Laravel.
+     * Friendly attribute names for Laravel error messages.
      */
     public function attributes(): array
     {

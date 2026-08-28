@@ -35,15 +35,15 @@ export function addBudgetItem(description = '', quantity = 1, price = 0, type = 
     item.className = 'budget-item grid grid-cols-[auto_1fr_80px_80px_60px_30px] items-center gap-2';
     item.dataset.index = index;
     item.innerHTML = `
-        <select class="item-type rounded-lg border border-(--border) bg-(--surface-2) px-1.5 py-1.5 text-[10px] font-bold uppercase tracking-wider text-(--text) outline-none transition-all focus:border-(--text) cursor-pointer">
-            <option value="material" ${type === 'material' ? 'selected' : ''}>🔩 Materiais</option>
-            <option value="labor" ${type === 'labor' ? 'selected' : ''}>👷 Mão de Obra</option>
+        <select class="item-type rounded-lg border border-(--border) bg-(--surface-2) px-1.5 py-1.5 text-xs font-bold uppercase tracking-wider text-(--text) outline-none transition-all focus:border-(--text) cursor-pointer">
+            <option value="material" ${type === 'material' ? 'selected' : ''}>Materiais</option>
+            <option value="labor" ${type === 'labor' ? 'selected' : ''}>Mão de Obra</option>
         </select>
-        <input type="text" class="item-desc rounded-lg border border-(--border) bg-(--surface-2) px-2.5 py-1.5 text-[11px] text-(--text) outline-none transition-all focus:border-(--text)" placeholder="Descrição" value="${description}">
-        <input type="number" class="item-qty rounded-lg border border-(--border) bg-(--surface-2) px-2.5 py-1.5 text-[11px] font-mono text-(--text) outline-none transition-all focus:border-(--text)" placeholder="Qtd/H" min="1" value="${quantity}">
-        <input type="number" step="0.01" class="item-price rounded-lg border border-(--border) bg-(--surface-2) px-2.5 py-1.5 text-[11px] font-mono text-(--text) outline-none transition-all focus:border-(--text)" placeholder="${pricePlaceholder}" min="0" value="${price}">
-        <span class="item-subtotal pt-2 text-right text-[11px] font-bold font-mono text-(--text)">${formatCurrency(quantity * price)}</span>
-        <button type="button" data-action="remove-budget-item" class="btn-remove-item p-1 text-rose-400 transition-all hover:text-rose-500 cursor-pointer" title="Remover item">
+        <input type="text" class="item-desc rounded-lg border border-(--border) bg-(--surface-2) px-2.5 py-1.5 text-xs text-(--text) outline-none transition-all focus:border-(--text)" placeholder="Descrição" value="${description}">
+        <input type="number" class="item-qty rounded-lg border border-(--border) bg-(--surface-2) px-2.5 py-1.5 text-xs font-mono text-(--text) outline-none transition-all focus:border-(--text)" placeholder="Qtd/H" min="1" value="${quantity}">
+        <input type="number" step="0.01" class="item-price rounded-lg border border-(--border) bg-(--surface-2) px-2.5 py-1.5 text-xs font-mono text-(--text) outline-none transition-all focus:border-(--text)" placeholder="${pricePlaceholder}" min="0" value="${price}">
+        <span class="item-subtotal pt-2 text-right text-xs font-bold font-mono text-(--text)">${formatCurrency(quantity * price)}</span>
+        <button type="button" data-action="remove-budget-item" class="btn-remove-item p-1 text-danger/80 transition-all hover:text-danger cursor-pointer" title="Remover item">
             <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
     `;
@@ -123,12 +123,14 @@ export function renderBudgetDetailsForAdmin(details) {
 
         totalAmount += subtotal;
 
-        const icon = type === 'labor' ? '👷' : '🔩';
+        const icon = type === 'labor'
+            ? '<svg class="h-3.5 w-3.5 inline-block align-[-2px] text-(--text-soft)" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>'
+            : '<svg class="h-3.5 w-3.5 inline-block align-[-2px] text-(--text-soft)" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg>';
 
         return `
-            <div class="flex items-center justify-between py-1 text-[11px] ${index > 0 ? 'border-t border-(--border)/50' : ''}">
+            <div class="flex items-center justify-between py-1 text-xs ${index > 0 ? 'border-t border-(--border)/50' : ''}">
                 <span class="mr-2 flex-1 truncate text-(--text)">${icon} ${item.description || 'Item'}</span>
-                <span class="mx-2 whitespace-nowrap text-[10px] text-(--text-soft)">${detail}</span>
+                <span class="mx-2 whitespace-nowrap text-xs text-(--text-soft)">${detail}</span>
                 <span class="whitespace-nowrap font-bold font-mono text-(--text)">${formatCurrency(subtotal)}</span>
             </div>
         `;
@@ -137,8 +139,8 @@ export function renderBudgetDetailsForAdmin(details) {
     if (materialTotal > 0 || laborTotal > 0) {
         list.innerHTML += `
             <div class="mt-2 space-y-1 border-t-2 border-(--border) pt-2">
-                ${materialTotal > 0 ? `<div class="flex items-center justify-between text-[10px]"><span class="font-medium text-(--text-soft)">🔩 Total Materiais</span><span class="font-bold font-mono text-(--text)">${formatCurrency(materialTotal)}</span></div>` : ''}
-                ${laborTotal > 0 ? `<div class="flex items-center justify-between text-[10px]"><span class="font-medium text-(--text-soft)">👷 Total Mão de Obra</span><span class="font-bold font-mono text-(--text)">${formatCurrency(laborTotal)}</span></div>` : ''}
+                ${materialTotal > 0 ? `<div class="flex items-center justify-between text-xs"><span class="inline-flex items-center gap-1.5 font-medium text-(--text-soft)"><svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg>Total Materiais</span><span class="font-bold font-mono text-(--text)">${formatCurrency(materialTotal)}</span></div>` : ''}
+                ${laborTotal > 0 ? `<div class="flex items-center justify-between text-xs"><span class="inline-flex items-center gap-1.5 font-medium text-(--text-soft)"><svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>Total Mão de Obra</span><span class="font-bold font-mono text-(--text)">${formatCurrency(laborTotal)}</span></div>` : ''}
             </div>
         `;
     }

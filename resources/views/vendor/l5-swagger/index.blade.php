@@ -1,6 +1,6 @@
 @php
-    // ui.layout espera $user para condicionar o menu lateral (ex.: só admin vê o item Swagger).
-    // A rota de docs é pública, pelo que o user pode ser null fora de sessão.
+    // ui.layout expects $user to conditionally render the sidebar menu (e.g., only admin sees the Swagger item).
+    // The docs route is public, so the user can be null outside of a session.
     $user = auth()->user() ?? (object) ['profile' => null];
 
     $swaggerTranslations = [
@@ -67,7 +67,7 @@
                 <circle cx="11" cy="11" r="7" />
                 <path d="M20 20L17 17" />
             </svg>
-        <input id="swaggerSearch" type="text" placeholder="{{ __('ui.Pesquisar endpoint...') }}" class="w-full pl-10 pr-4 py-2 text-xs rounded-xl border border-[var(--border)] bg-[var(--surface-2)] text-[var(--text)] outline-none focus:border-primary transition-all">
+        <input id="swaggerSearch" type="text" placeholder="{{ __('ui.Pesquisar endpoint...') }}" class="w-full pl-10 pr-4 py-2 text-xs rounded-xl border border-[var(--border)] bg-[var(--surface-2)] text-[var(--text)] outline-none focus:border-primary transition-all" aria-label="{{ __('ui.Pesquisar endpoint...') }}">
         </div>
 
         <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
@@ -99,7 +99,7 @@
         data-use-pkce="{{ (bool) config('l5-swagger.defaults.ui.authorization.oauth2.use_pkce_with_authorization_code_grant') ? 'true' : 'false' }}"
     ></div>
 
-    <button id="scrollTop" class="fixed bottom-6 right-6 h-10 w-10 rounded-xl bg-primary text-white font-bold shadow-lg flex items-center justify-center hover:bg-primary-hover transition cursor-pointer">
+    <button id="scrollTop" class="fixed bottom-6 right-6 h-10 w-10 rounded-xl bg-primary text-(--on-primary) font-bold shadow-lg flex items-center justify-center hover:bg-primary-hover transition cursor-pointer" aria-label="{{ __('common.Voltar ao topo') }}">
         ↑
     </button>
 @endsection
@@ -142,6 +142,16 @@
             });
 
             window.ui = ui;
+
+            setTimeout(() => {
+                document.querySelectorAll('.operation-filter-input').forEach(el => {
+                    if (!el.getAttribute('aria-label')) {
+                        el.setAttribute('aria-label', el.placeholder || 'Filtrar por etiqueta');
+                    }
+                });
+                document.querySelectorAll('noscript').forEach(el => el.setAttribute('aria-hidden', 'true'));
+                document.querySelectorAll('.responses-inner table').forEach(t => t.setAttribute('role', 'presentation'));
+            }, 2500);
         };
     </script>
 @endpush

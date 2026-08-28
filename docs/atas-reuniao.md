@@ -1,41 +1,41 @@
-# Atas de Reunião e Decisões Técnicas
+# Meeting Minutes and Technical Decisions
 
-Este documento regista as decisões cruciais, a evolução das *sprints* e a resolução de impedimentos técnicos encontrados durante o desenvolvimento do sistema.
-
----
-
-## Log de Reuniões
-
-### Reunião #01: Definição da Stack e Arquitetura
-* **Data:** [Inserir Data]
-* **Decisões:** 
-    * Escolha de Laravel 11 pelo ecossistema de segurança e facilidade em lidar com filas de espera.
-    * Decisão de usar Blade Templates + Tailwind CSS pela agilidade de *prototipagem*.
-* **Impedimentos:** Dificuldade inicial na configuração do `Laravel Echo` com o Pusher.
-* **Resolução:** Utilização de documentação oficial e revisão das variáveis de ambiente (`.env`).
-
-### Reunião #02: Refinamento dos Processos (As-Is vs To-Be)
-* **Data:** [Inserir Data]
-* **Decisões:** 
-    * Mapeamento do fluxo de manutenção para "Gestão por Exceção" (apenas eventos críticos disparam tickets).
-    * Definição dos três perfis (Operador, Técnico, Administrador) com isolamento estrito de rotas (RBAC).
-* **Notas:** Identificou-se a necessidade de um sistema de "Orçamento Excecional" para evitar paragens injustificadas por falta de peças.
-
-### Reunião #03: Desenvolvimento e Integração
-* **Data:** [Inserir Data]
-* **Decisões:**    
-    * Implementação dos *Service Providers* para o motor de IA (NLP) para manter os controladores limpos (*Slim Controllers*).
-* **Impedimentos:** Erros de permissão de escrita em diretórios de *storage*.
-* **Resolução:** Execução do comando `php artisan storage:link` e ajuste de permissões de pasta.
-
-### Reunião #04: Revisão de Qualidade e Documentação
-* **Data:** [Inserir Data]
-* **Decisões:**
-    * Padronização de toda a documentação na pasta `/docs` utilizando Markdown.
-    * Criação do guião de testes para garantir a robustez das funcionalidades críticas.
-* **Estado Final:** Sistema estável, documentado e com testes unitários configurados (`php artisan test`).
+This document records crucial decisions, sprint evolution, and resolution of technical impediments encountered during system development.
 
 ---
 
-## Dica de Equipa
-Sempre que encontrarem um erro complexo durante o código que vos tire 1 ou 2 horas de trabalho, adicionem uma pequena linha aqui nas Atas: *"Erro: X | Resolução: Y"*. 
+## Meeting Log
+
+### Meeting #01: Stack Definition and Architecture
+* **Date:** [Insert Date]
+* **Decisions:**
+    * Selection of Laravel 11 for its security ecosystem and ease of handling queues.
+    * Decision to use Blade Templates + Tailwind CSS for prototyping agility.
+* **Impediments:** Initial difficulty configuring `Laravel Echo` with Pusher.
+* **Resolution:** Use of official documentation and review of environment variables (`.env`).
+
+### Meeting #02: Process Refinement (As-Is vs To-Be)
+* **Date:** [Insert Date]
+* **Decisions:**
+    * Mapping of the maintenance workflow to "Management by Exception" (only critical events trigger tickets).
+    * Definition of three profiles (Operator, Technician, Administrator) with strict route isolation (RBAC).
+* **Notes:** The need for an "Exceptional Budget" system was identified to prevent unjustified shutdowns due to missing parts.
+
+### Meeting #03: Development and Integration
+* **Date:** [Insert Date]
+* **Decisions:**
+    * Implementation of Service Providers for the AI engine (NLP) to keep controllers slim (*Slim Controllers*).
+* **Impediments:** Write permission errors on storage directories.
+* **Resolution:** Execution of the `php artisan storage:link` command and folder permission adjustment.
+
+### Meeting #04: Quality and Documentation Review
+* **Date:** [Insert Date]
+* **Decisions:**
+    * Standardization of all documentation in the `/docs` folder using Markdown.
+    * Creation of the test script to ensure robustness of critical features.
+* **Final State:** System stable, documented, and with unit tests configured (`php artisan test`).
+
+---
+
+## Team Tip
+Whenever you encounter a complex bug during coding that takes 1 or 2 hours of work, add a short line here in the Meeting Minutes: *"Bug: X | Resolution: Y"*.

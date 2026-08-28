@@ -44,7 +44,7 @@ final class TicketStartController extends Controller
 
         // 3. Check for higher priority pending tickets
         if ($higherPriority['has_higher'] && ! $force) {
-            $msg = __("tickets.⚠️ Existem :total ticket(s) de prioridade mais alta por atender.", [
+            $msg = __("tickets.Existem :total ticket(s) de prioridade mais alta por atender.", [
                 'total' => $higherPriority['total'],
             ]);
 

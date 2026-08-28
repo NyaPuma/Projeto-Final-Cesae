@@ -1,67 +1,67 @@
-# Estrutura Geral do Fluxo e Integrações
+# Overall Workflow Structure and Integrations
 
 ```text
 ==========================================================================================
-1. FLUXO DE IDENTIDADE E SEGURANÇA (Exclusivo Backoffice)
+1. IDENTITY AND SECURITY WORKFLOW (Backoffice Exclusive)
 ==========================================================================================
 
-               Administrador (Menu Restrito Backoffice)
+               Administrator (Restricted Backoffice Menu)
                                   │
                                   ▼
                     POST /admin/users/register
                                   │
                                   ▼
-                  [Criação Controlada de Utilizadores]
+                  [Controlled User Creation]
 
 
 ==========================================================================================
-2. CICLO DE VIDA DO TICKET INTELIGENTE (Workflow In-House)
+2. SMART TICKET LIFE CYCLE (In-House Workflow)
 ==========================================================================================
 
-         Colaborador Autenticado (Operário, Técnico ou Admin)
+         Authenticated Employee (Factory Worker, Technician or Admin)
                                   │
                                   ▼
                             POST /tickets
                                   │
                                   ▼
-               [Upload Opcional de Fotos de Evidência]
+                [Optional Upload of Evidence Photos]
                                   │
                                   ▼
-                            Estado: Aberto
+                           Status: Open
                                   │
                                   ▼
-                 [Invocação Automática do AIService]
-             Classificação Categórica por NLP (OpenAI)
+                 [Automatic AIService Invocation]
+             Categorical Classification via NLP (OpenAI)
                                   │
                                   ▼
-             Administrador visualiza Recomendação da IA
-               PATCH /admin/tickets/{id}/atribuir
+              Administrator views the AI Recommendation
+                PATCH /admin/tickets/{id}/atribuir
                                   │
-                                  ├────────────────► [Notificação em Tempo Real via Laravel Echo]
+                                  ├────────────────► [Real-Time Notification via Laravel Echo]
                                   ▼
-                      Técnico Inicia Intervenção
+                      Technician Starts Intervention
                                   │
                                   ▼
-                           Estado: Em Curso ◄──────► [Sistema de Comentários / Notas Ativas]
+                        Status: In Progress ◄──────► [Comments System / Active Notes]
                                   │
-                                  ├────────────────► Pedido de Orçamento de Alto Custo (Opcional)
+                                  ├────────────────► High-Cost Budget Request (Optional)
                                   │                       │
                                   │                       ▼
-                                  │               SLA Suspenso Temporariamente pelo Servidor
+                                  │               SLA Temporarily Suspended by the Server
                                   │                       │
                                   │                       ▼
-                                  │               Administrador Decide (Aprovar / Recusar)
+                                  │               Administrator Decides (Approve / Reject)
                                   │                       │
                                   │                       ▼
                                   ▼ ◄─────────────────────┘
-                      Técnico Conclui Reparação 
-                (Registo de Horas e Consumo de Stock)
+                      Technician Completes Repair 
+                (Hours Log and Stock Consumption)
                                   │
                                   ▼
-                           Estado: Fechado ────────► [Gera Relatório PDF e Alerta por E-mail]
+                          Status: Closed ────────► [Generates PDF Report and Email Alert]
                                   │
                                   ▼
-                 [Broadcast Síncrono via WebSockets] ────► Atualização dos Gráficos (Chart.js)
+                 [Synchronous Broadcast via WebSockets] ────► Chart Updates (Chart.js)
                                   │
                                   ▼
-         [Registo Imutável com Histórico JSON no Audit Log Global]
+         [Immutable Record with JSON History in the Global Audit Log]

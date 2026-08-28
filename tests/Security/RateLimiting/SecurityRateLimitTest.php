@@ -81,7 +81,7 @@ class SecurityRateLimitTest extends TestCase
             'active' => true,
         ]);
 
-        // 5 attempts from IP 1 â€” all wrong password
+        // 5 attempts from IP 1 — all wrong password
         for ($i = 0; $i < 5; $i++) {
             $response = $this->withSession([])
                 ->withServerVariables(['REMOTE_ADDR' => '192.168.1.1'])
@@ -92,7 +92,7 @@ class SecurityRateLimitTest extends TestCase
             $response->assertStatus(401);
         }
 
-        // 6th attempt from IP 2 â€” same email is already rate-limited (email-based)
+        // 6th attempt from IP 2 — same email is already rate-limited (email-based)
         $response = $this->withSession([])
             ->withServerVariables(['REMOTE_ADDR' => '192.168.1.2'])
             ->postJson('/api/login', [

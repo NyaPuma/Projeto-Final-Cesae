@@ -192,7 +192,7 @@ class PasswordResetFlowTest extends FeatureTestCase
     #[Test]
     public function reset_password_validation_edge_cases(): void
     {
-        // Campos em falta
+        // Missing fields
         $this->postJson('/api/password/reset', [])
             ->assertStatus(422)
             ->assertJsonValidationErrors(['token', 'email', 'password']);
@@ -205,7 +205,7 @@ class PasswordResetFlowTest extends FeatureTestCase
             'password_confirmation' => 'Nova-password-1',
         ])->assertStatus(422)->assertJsonValidationErrors(['email']);
 
-        // Confirmação de password não coincide
+        // Password confirmation does not match
         $this->postJson('/api/password/reset', [
             'email' => 'reset@example.com',
             'token' => 'qualquer-token',

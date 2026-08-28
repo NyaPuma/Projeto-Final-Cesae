@@ -9,12 +9,6 @@
     :title="__('stock.Editar Peça')"
     :subtitle="__('stock.Atualize os dados da peça :sku.', ['sku' => $part->sku])"
 >
-    <x-slot:actions>
-        <x-ui.page-actions.group>
-            <x-ui.page-actions.back-button :href="route('ui.stock.parts.show', $part)" :label="__('ui.Voltar')" />
-        </x-ui.page-actions.group>
-    </x-slot:actions>
-
     <div class="rounded-3xl border border-(--border) bg-(--surface) p-6 shadow-sm">
         <form id="partForm" class="space-y-6" novalidate data-part-form-mode="edit" data-part-id="{{ $part->id }}">
             <div class="grid gap-6 lg:grid-cols-2">
@@ -131,7 +125,7 @@
                         </label>
                         <input id="partCurrentStock" type="number" disabled value="{{ old('current_stock', $part->current_stock) }}"
                             class="w-full cursor-not-allowed rounded-2xl border border-(--border) bg-(--surface-2) px-4 py-3 text-sm text-(--text-soft) outline-none opacity-70">
-                        <p class="mt-1 text-[10px] text-(--text-soft)">{{ __('stock.Edite o stock através de movimentos.') }}</p>
+                        <p class="mt-1 text-xs text-(--text-soft)">{{ __('stock.Edite o stock através de movimentos.') }}</p>
                     </div>
                     <div>
                         <label class="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-(--text-soft)" for="partMinStock">
@@ -178,7 +172,7 @@
                 <button type="submit" id="submitBtn" class="ui-button ui-button--primary inline-flex items-center justify-center rounded-2xl px-5 py-3 text-sm font-semibold transition hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed">
                     {{ __('ui.Guardar Alterações') }}
                 </button>
-                <a href="{{ route('ui.stock.parts.show', $part) }}" class="ui-button ui-button--outline inline-flex items-center justify-center rounded-2xl border border-(--border) bg-(--surface) px-5 py-3 text-sm font-semibold text-(--text) transition hover:bg-(--surface-2)">
+                <a href="{{ route('ui.stock.parts.show', $part) }}" class="ui-button ui-button--outline inline-flex items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-5 py-3 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">
                     {{ __('ui.Cancelar') }}
                 </a>
             </div>

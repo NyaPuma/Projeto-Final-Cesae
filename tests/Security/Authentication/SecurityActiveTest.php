@@ -35,9 +35,9 @@ class SecurityActiveTest extends TestCase
         ]);
     }
 
-    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-    // T2 â€” HTTP Security Headers Check
-    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ──────────────────────────────────────────────
+    // T2 — HTTP Security Headers Check
+    // ──────────────────────────────────────────────
     public function test_t2_security_headers_on_login_page(): void
     {
         $response = $this->get('/ui/login');
@@ -72,16 +72,16 @@ class SecurityActiveTest extends TestCase
 
         // Log findings for the report
         if (! empty($missing)) {
-            \Log::warning('T2 â€” Missing security headers on /ui/login', ['missing' => $missing]);
+            \Log::warning('T2 — Missing security headers on /ui/login', ['missing' => $missing]);
         }
 
-        // We record but don't fail â€” this is an audit test
+        // We record but don't fail — this is an audit test
         $this->assertEmpty($missing, 'Missing security headers: '.implode(', ', $missing));
     }
 
-    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-    // T3 â€” IDOR Test: User A accesses User B's ticket
-    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ──────────────────────────────────────────────
+    // T3 — IDOR Test: User A accesses User B's ticket
+    // ──────────────────────────────────────────────
     public function test_t3_idor_user_cannot_view_other_users_ticket(): void
     {
         $userA = $this->createUserWithToken(UserRoleEnum::User->value);
@@ -110,7 +110,7 @@ class SecurityActiveTest extends TestCase
         );
 
         if ($status === 200) {
-            \Log::critical('T3 â€” IDOR CONFIRMED: User A can view User B ticket via API', [
+            \Log::critical('T3 — IDOR CONFIRMED: User A can view User B ticket via API', [
                 'user_a' => $userA->id,
                 'user_b' => $userB->id,
                 'ticket_id' => $ticket->id,
@@ -147,7 +147,7 @@ class SecurityActiveTest extends TestCase
         );
 
         if ($status === 200) {
-            \Log::critical('T3 â€” IDOR CONFIRMED: User A can list photos of User B ticket', [
+            \Log::critical('T3 — IDOR CONFIRMED: User A can list photos of User B ticket', [
                 'user_a' => $userA->id,
                 'ticket_id' => $ticket->id,
             ]);
@@ -156,9 +156,9 @@ class SecurityActiveTest extends TestCase
         $this->assertTrue(true, 'T3 photos IDOR test completed with status: '.$status);
     }
 
-    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-    // T4 â€” Mass Assignment Test
-    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ──────────────────────────────────────────────
+    // T4 — Mass Assignment Test
+    // ──────────────────────────────────────────────
     public function test_t4_mass_assignment_cannot_set_user_id_on_ticket(): void
     {
         $userA = $this->createUserWithToken(UserRoleEnum::User->value);
@@ -182,7 +182,7 @@ class SecurityActiveTest extends TestCase
             $this->assertNotNull($createdTicket, 'Ticket should have been created');
 
             if ($createdTicket->user_id == $userB->id) {
-                \Log::critical('T4 â€” MASS ASSIGNMENT CONFIRMED', [
+                \Log::critical('T4 — MASS ASSIGNMENT CONFIRMED', [
                     'user_a' => $userA->id,
                     'ticket_user_id' => $createdTicket->user_id,
                 ]);
@@ -219,7 +219,7 @@ class SecurityActiveTest extends TestCase
         $user->refresh();
 
         if ($status === 404) {
-            // Endpoint doesn't exist â€” no privilege escalation vector here
+            // Endpoint doesn't exist — no privilege escalation vector here
             $this->assertEquals($originalProfileId, $user->profile_id,
                 'User profile_id should not have changed when endpoint is 404'
             );
@@ -228,7 +228,7 @@ class SecurityActiveTest extends TestCase
         }
 
         if ($user->profile_id == $adminProfile->id) {
-            \Log::critical('T4 â€” PRIVILEGE ESCALATION CONFIRMED', [
+            \Log::critical('T4 — PRIVILEGE ESCALATION CONFIRMED', [
                 'user_id' => $user->id,
                 'old_profile_id' => $originalProfileId,
                 'new_profile_id' => $user->profile_id,
@@ -241,9 +241,9 @@ class SecurityActiveTest extends TestCase
         );
     }
 
-    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-    // T6 â€” Webroot Exposure Check
-    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ──────────────────────────────────────────────
+    // T6 — Webroot Exposure Check
+    // ──────────────────────────────────────────────
     public function test_t6_dot_git_not_exposed_via_webroot(): void
     {
         $paths = ['/.git/config', '/.git/HEAD', '/.gitignore'];
@@ -253,7 +253,7 @@ class SecurityActiveTest extends TestCase
             $status = $response->status();
 
             if ($status === 200) {
-                \Log::critical("T6 â€” EXPOSED: {$path} accessible (HTTP 200)", [
+                \Log::critical("T6 — EXPOSED: {$path} accessible (HTTP 200)", [
                     'content_preview' => substr($response->content(), 0, 200),
                 ]);
             }
@@ -275,7 +275,7 @@ class SecurityActiveTest extends TestCase
             $status = $response->status();
 
             if ($status === 200) {
-                \Log::critical("T6 â€” EXPOSED: {$path} accessible (HTTP 200)", []);
+                \Log::critical("T6 — EXPOSED: {$path} accessible (HTTP 200)", []);
             }
 
             $this->assertNotEquals(200, $status,

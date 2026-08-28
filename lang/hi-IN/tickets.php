@@ -87,7 +87,7 @@ return [
     'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.' => 'एक ही एकीकृत इंटरफ़ेस में तकनीकी मरम्मत, निवारक रखरखाव, शेड्यूल किए गए टिकट और संचालन कार्य देखें।',
     'Voltar aos tickets' => 'टिकट पर वापस जाएँ',
     'Últimas Ocorrências Registadas' => 'हाल की दर्ज घटनाएँ',
-    '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.' => '⚠️ :total अधिक प्राथमिकता वाले टिकट अनसुलझे हैं।',
+    'Existem :total ticket(s) de prioridade mais alta por atender.' => ':total अधिक प्राथमिकता वाले टिकट अनसुलझे हैं।',
     'Anexo adicionado' => 'संलग्नक जोड़ा गया',
     'Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.' => 'केवल "प्रगति में" स्थिति वाले टिकट जल्दी बंद किए जा सकते हैं।',
     'Apenas tickets no estado "Aberto" podem ser cancelados.' => 'केवल "खुला" स्थिति वाले टिकट ही रद्द किए जा सकते हैं।',

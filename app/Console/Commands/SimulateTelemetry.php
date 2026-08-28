@@ -60,13 +60,13 @@ class SimulateTelemetry extends Command
         $probability = (int) $this->option('probability');
         $dryRun = (bool) $this->option('dry-run');
 
-        $this->info('🔬 A iniciar simulação de telemetria...');
+        $this->info('A iniciar simulação de telemetria...');
 
         // Find the system administrator user
         $systemUser = User::whereHas('profile', fn ($q) => $q->where('name', UserRoleEnum::Admin->value))->first();
 
         if (! $systemUser) {
-            $this->error('❌ Nenhum utilizador administrador encontrado para atribuir como autor dos tickets.');
+            $this->error('Nenhum utilizador administrador encontrado para atribuir como autor dos tickets.');
 
             return self::FAILURE;
         }
@@ -77,7 +77,7 @@ class SimulateTelemetry extends Command
         // Load active equipment with eager-loaded unresolved tickets to avoid N+1
         $equipments = Equipment::where('active', true)
             ->withExists(['tickets as has_open_ticket' => function ($query) use ($openStatusId) {
-                // Considera aberto se estiver em Open ou estados ativos não concluídos
+                // Considers it open if status is Open or active non-completed states
                 $query->where('status_id', $openStatusId);
             }])
             ->inRandomOrder()
@@ -85,7 +85,7 @@ class SimulateTelemetry extends Command
             ->get();
 
         if ($equipments->isEmpty()) {
-            $this->warn('⚠️  Nenhum equipamento ativo encontrado na base de dados.');
+            $this->warn('Nenhum equipamento ativo encontrado na base de dados.');
 
             return self::SUCCESS;
         }
@@ -102,7 +102,7 @@ class SimulateTelemetry extends Command
 
             // Anomaly probability test (0 to 100)
             if (random_int(1, 100) > $probability) {
-                $this->line("  ✅ Equipamento #{$equipment->id} ({$equipment->name}) sem anomalias detetadas.");
+                $this->line("  Equipamento #{$equipment->id} ({$equipment->name}) sem anomalias detetadas.");
 
                 continue;
             }
@@ -133,12 +133,12 @@ class SimulateTelemetry extends Command
                 ]);
 
                 $ticketsCreated++;
-                $this->info("  🚨 Ticket #{$ticket->id} criado para equip. #{$equipment->id} ({$equipment->name}): {$anomaly['title']}");
+                $this->info("  Ticket #{$ticket->id} criado para equip. #{$equipment->id} ({$equipment->name}): {$anomaly['title']}");
             });
         }
 
         $prefix = $dryRun ? '[DRY-RUN] ' : '';
-        $this->info("✅ Simulação concluída. {$prefix}{$ticketsCreated} ticket(s) de manutenção gerado(s).");
+        $this->info("Simulação concluída. {$prefix}{$ticketsCreated} ticket(s) de manutenção gerado(s).");
 
         return self::SUCCESS;
     }

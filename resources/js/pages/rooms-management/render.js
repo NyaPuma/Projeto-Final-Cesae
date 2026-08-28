@@ -6,7 +6,6 @@ function translations() {
 
     return {
         equipmentCount: window.SGM_ROOM_I18N?.equipmentCount || data.roomEquipmentCount || '',
-        edit: window.SGM_ROOM_I18N?.edit || data.roomEdit || '',
         details: window.SGM_ROOM_I18N?.details || data.roomDetails || '',
         empty: window.SGM_ROOM_I18N?.empty || data.roomEmpty || '',
     };
@@ -19,17 +18,16 @@ function renderRoomRow(room) {
         <td class="px-5 py-4" data-label="Nome da Sala">
             <div class="ui-listing-value">
                 <div class="font-semibold text-(--text)">${room.name}</div>
-                <div class="mt-0.5 font-mono text-[10px] text-(--text-soft)">${room.code || '—'}</div>
+                <div class="mt-0.5 font-mono text-xs text-(--text-soft)">${room.code || '—'}</div>
             </div>
         </td>
         <td class="px-5 py-4 font-semibold text-(--text-soft)" data-label="Localização">${room.location || '—'}</td>
         <td class="px-5 py-4" data-label="Equipamentos">
-            <span class="inline-flex items-center gap-1 rounded-lg bg-blue-500/10 px-2.5 py-1 text-[11px] font-bold uppercase tracking-tight text-blue-700 dark:text-blue-400">${equipmentCount} ${translations().equipmentCount || ''}</span>
+            <span class="inline-flex items-center gap-1 rounded-lg bg-info/10 px-2.5 py-1 text-xs font-bold uppercase tracking-tight text-info">${equipmentCount} ${translations().equipmentCount || ''}</span>
         </td>
         <td class="ui-listing-actions px-5 py-4 text-right">
             <div class="inline-flex items-center justify-end gap-1.5">
-                <a href="/ui/rooms/${room.id}/edit" class="inline-flex min-h-[28px] items-center justify-center rounded-lg border border-(--border) bg-(--surface) px-3 py-1.5 text-[11px] font-semibold text-(--text) shadow-sm transition-all hover:bg-(--surface-2)">${translations().edit || ''}</a>
-                <a href="/ui/rooms/${room.id}" class="inline-flex min-h-[28px] items-center justify-center rounded-lg border border-(--border) bg-(--surface) px-3 py-1.5 text-[11px] font-semibold text-(--text) shadow-sm transition-all hover:bg-(--surface-2)">${translations().details || ''}</a>
+                <a href="/ui/rooms/${room.id}" class="inline-flex min-h-[28px] items-center justify-center rounded-lg border border-(--border) bg-(--surface) px-3 py-1.5 text-xs font-semibold text-(--text) shadow-sm transition-all hover:bg-(--surface-2)">${translations().details || ''}</a>
             </div>
         </td>
     </tr>`;

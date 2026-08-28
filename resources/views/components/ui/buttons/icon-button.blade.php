@@ -3,9 +3,9 @@
 | Icon Button Component Wrapper
 |--------------------------------------------------------------------------
 |
-| Botão wrapper otimizado para ícones com suporte a formas e tamanhos dinâmicos.
-| • 100% livre de CSS ou JS inline.
-| • Eliminação de carateres invisíveis e resolução de conflitos de propriedades.
+| Button wrapper optimized for icons with dynamic shape and size support.
+| • 100% free of inline CSS or JS.
+| • Invisible character cleanup and property conflict resolution.
 |
 --}}
 

@@ -2,9 +2,9 @@
 |--------------------------------------------------------------------------
 | Password Strength Component
 |--------------------------------------------------------------------------
-| - Requisitos validados em tempo real (comprimento, maiúsculas/minúsculas, símbolo/número)
-| - Indicador visual de força com 3 segmentos (Fraca / Média / Forte)
-| - Acessibilidade: aria-valuenow progressivo na barra
+| - Requirements validated in real time (length, uppercase/lowercase, symbol/number)
+| - Visual strength indicator with 3 segments (Weak / Medium / Strong)
+| - Accessibility: progressive aria-valuenow on the bar
 */
 
 export default function passwordStrengthComponent() {
@@ -41,14 +41,14 @@ export default function passwordStrengthComponent() {
 
         get barColor() {
             if (this.score <= 1) {
-                return 'bg-rose-500';
+                return 'bg-danger';
             }
 
             if (this.score === 2) {
-                return 'bg-amber-500';
+                return 'bg-warning';
             }
 
-            return 'bg-emerald-500';
+            return 'bg-success';
         },
 
         get levelLabel() {
@@ -63,14 +63,14 @@ export default function passwordStrengthComponent() {
 
         get levelClass() {
             if (this.level === 'weak') {
-                return 'text-rose-500';
+                return 'text-danger';
             }
 
             if (this.level === 'medium') {
-                return 'text-amber-500';
+                return 'text-warning';
             }
 
-            return 'text-emerald-600 dark:text-emerald-400';
+            return 'text-success';
         },
     };
 }

@@ -22,7 +22,7 @@ final class LocalizeSwaggerDocument
         'description',
     ];
 
-    /** @var array<string, string> strings-fonte do OpenApiSpec → domínio */
+    /** @var array<string, string> Source strings from the OpenAPI spec → domain */
     private const SOURCE_DOMAINS = [
         'Gestão de Avarias API' => 'common',
         'Documentação OpenAPI da aplicação de gestão de tickets, equipamentos, auditoria e relatórios.' => 'tickets',

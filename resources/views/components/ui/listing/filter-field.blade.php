@@ -1,9 +1,9 @@
 {{--
 |-------------------------------------------------------------------------- |
-| Form Field Grid Wrapper Component (Otimizado)
+| Form Field Grid Wrapper Component (Optimized)
 |-------------------------------------------------------------------------- |
-| Contentor de campo com suporte a grelhas responsivas (span), rótulo
-| associado e gestão limpa de atributos e slots.
+| Field container with responsive grid (span) support, associated label
+| and clean attribute and slot management.
 |--}}
 @props([
     'for' => null,

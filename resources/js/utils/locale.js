@@ -1,9 +1,9 @@
 /**
- * Formatação localizada (Intl) partilhada pelo frontend.
+ * Localized formatting (Intl) shared by the frontend.
  *
- * O objeto `window.SGM_LOCALE` é injetado pelo partial
- * `ui.partials.locale-config` (locale, moeda e sistema de unidades
- * resolvidos no servidor). Sem o partial, assume pt-PT/EUR.
+ * The `window.SGM_LOCALE` object is injected by the partial
+ * `ui.partials.locale-config` (locale, currency and unit system
+ * resolved on the server). Without the partial, defaults to pt-PT/EUR.
  */
 
 const cfg = window.SGM_LOCALE || {
@@ -30,7 +30,7 @@ export function isRtl() {
 }
 
 /**
- * Formata um número segundo o locale atual.
+ * Formats a number according to the current locale.
  */
 export function formatNumber(value, options = {}) {
     const { maximumFractionDigits = 0, minimumFractionDigits = 0 } = options;
@@ -42,7 +42,7 @@ export function formatNumber(value, options = {}) {
 }
 
 /**
- * Formata um montante na moeda do locale atual.
+ * Formats an amount in the current locale's currency.
  */
 export function formatCurrency(value, options = {}) {
     const { maximumFractionDigits = 2, minimumFractionDigits = 2 } = options;
@@ -56,7 +56,7 @@ export function formatCurrency(value, options = {}) {
 }
 
 /**
- * Formata uma percentagem — o valor é a percentagem real (55 = "55%").
+ * Formats a percentage — the value is the actual percentage (55 = "55%").
  */
 export function formatPercent(value, options = {}) {
     const { maximumFractionDigits = 1 } = options;
@@ -68,7 +68,7 @@ export function formatPercent(value, options = {}) {
 }
 
 /**
- * Formata uma data (curta) segundo o locale atual. Devolve '' se inválida.
+ * Formats a date (short) according to the current locale. Returns '' if invalid.
  */
 export function formatDate(value) {
     const date = toDate(value);
@@ -81,7 +81,7 @@ export function formatDate(value) {
 }
 
 /**
- * Formata data e hora segundo o locale atual. Devolve '' se inválida.
+ * Formats date and time according to the current locale. Returns '' if invalid.
  */
 export function formatDateTime(value) {
     const date = toDate(value);
@@ -103,7 +103,7 @@ function toDate(value) {
 }
 
 /**
- * Converte unidades de medida segundo o sistema de unidades do locale atual.
+ * Converts measurement units according to the current locale's unit system.
  */
 export function convertUnit(value, type, fromUnit = '') {
     const numValue = Number(value) || 0;

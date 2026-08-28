@@ -479,1001 +479,1001 @@
 - [x] `providers.php`
 - Folder README: done
 
-### `resources/views` (2 files) — PENDING (0/2)
-- [ ] `calendar.blade.php`
-- [ ] `main.blade.php`
-- Folder README: pending
-
-### `resources/views/components/ui/analytics` (10 files) — PENDING (0/10)
-- [ ] `activity-timeline-card.blade.php`
-- [ ] `aside-card.blade.php`
-- [ ] `aside-pill.blade.php`
-- [ ] `chart-card.blade.php`
-- [ ] `equipment-distribution-card.blade.php`
-- [ ] `export-actions.blade.php`
-- [ ] `hero.blade.php`
-- [ ] `list-card.blade.php`
-- [ ] `metric-card.blade.php`
-- [ ] `section-heading.blade.php`
-- Folder README: pending
-
-### `resources/views/components/ui/auth` (6 files) — PENDING (0/6)
-- [ ] `form-header.blade.php`
-- [ ] `message.blade.php`
-- [ ] `password-field.blade.php`
-- [ ] `shell.blade.php`
-- [ ] `submit-button.blade.php`
-- [ ] `text-field.blade.php`
-- Folder README: pending
-
-### `resources/views/components/ui/buttons` (3 files) — PENDING (0/3)
-- [ ] `button.blade.php`
-- [ ] `icon-button.blade.php`
-- [ ] `submit.blade.php`
-- Folder README: pending
-
-### `resources/views/components/ui/dashboard` (1 files) — PENDING (0/1)
-- [ ] `welcome-panel.blade.php`
-- Folder README: pending
-
-### `resources/views/components/ui/form` (5 files) — PENDING (0/5)
-- [ ] `card.blade.php`
-- [ ] `field.blade.php`
-- [ ] `input.blade.php`
-- [ ] `message.blade.php`
-- [ ] `select.blade.php`
-- Folder README: pending
-
-### `resources/views/components/ui/listing` (4 files) — PENDING (0/4)
-- [ ] `filter-field.blade.php`
-- [ ] `filter-panel.blade.php`
-- [ ] `pagination.blade.php`
-- [ ] `table-card.blade.php`
-- Folder README: pending
-
-### `resources/views/components/ui/page-actions` (7 files) — PENDING (0/7)
-- [ ] `action-button.blade.php`
-- [ ] `back-button.blade.php`
-- [ ] `base-button.blade.php`
-- [ ] `base-link.blade.php`
-- [ ] `create-link.blade.php`
-- [ ] `export-link.blade.php`
-- [ ] `group.blade.php`
-- Folder README: pending
-
-### `resources/views/components/ui/partials` (1 files) — PENDING (0/1)
-- [ ] `page-header.blade.php`
-- Folder README: pending
-
-### `resources/views/components/ui/profile` (4 files) — PENDING (0/4)
-- [ ] `delete-account-card.blade.php`
-- [ ] `information-card.blade.php`
-- [ ] `security-card.blade.php`
-- [ ] `summary-card.blade.php`
-- Folder README: pending
-
-### `resources/views/components/ui/text` (2 files) — PENDING (0/2)
-- [ ] `eyebrow.blade.php`
-- [ ] `pill.blade.php`
-- Folder README: pending
-
-### `resources/views/emails` (3 files) — PENDING (0/3)
-- [ ] `passwordReset.blade.php`
-- [ ] `test-mail.blade.php`
-- [ ] `ticketCreated.blade.php`
-- Folder README: pending
-
-### `resources/views/errors` (5 files) — PENDING (0/5)
-- [ ] `402.blade.php`
-- [ ] `403.blade.php`
-- [ ] `404.blade.php`
-- [ ] `500.blade.php`
-- [ ] `minimal.blade.php`
-- Folder README: pending
-
-### `resources/views/layouts` (1 files) — PENDING (0/1)
-- [ ] `layout.blade.php`
-- Folder README: pending
-
-### `resources/views/preferences` (1 files) — PENDING (0/1)
-- [ ] `edit.blade.php`
-- Folder README: pending
-
-### `resources/views/reports` (3 files) — PENDING (0/3)
-- [ ] `equipments-qr.blade.php`
-- [ ] `stock-costs-by-equipment.blade.php`
-- [ ] `tickets.blade.php`
-- Folder README: pending
-
-### `resources/views/ui` (15 files) — PENDING (0/15)
-- [ ] `analytics.blade.php`
-- [ ] `audits.blade.php`
-- [ ] `auth-reset.blade.php`
-- [ ] `auth.blade.php`
-- [ ] `equipments.blade.php`
-- [ ] `index.blade.php`
-- [ ] `layout.blade.php`
-- [ ] `profile.blade.php`
-- [ ] `rooms.blade.php`
-- [ ] `ticket-create.blade.php`
-- [ ] `ticket-detail.blade.php`
-- [ ] `tickets.blade.php`
-- [ ] `users-create.blade.php`
-- [ ] `users-edit.blade.php`
-- [ ] `users.blade.php`
-- Folder README: pending
-
-### `resources/views/ui/definicoes` (2 files) — PENDING (0/2)
-- [ ] `aparencia.blade.php`
-- [ ] `sistema.blade.php`
-- Folder README: pending
-
-### `resources/views/ui/equipments` (4 files) — PENDING (0/4)
-- [ ] `create.blade.php`
-- [ ] `edit.blade.php`
-- [ ] `qr.blade.php`
-- [ ] `show.blade.php`
-- Folder README: pending
-
-### `resources/views/ui/partials` (17 files) — PENDING (0/17)
-- [ ] `background-effects.blade.php`
-- [ ] `currency-dropdown.blade.php`
-- [ ] `currency-modal.blade.php`
-- [ ] `date-format-dropdown.blade.php`
-- [ ] `date-format-modal.blade.php`
-- [ ] `desktop-sidebar.blade.php`
-- [ ] `language-dropdown.blade.php`
-- [ ] `language-modal.blade.php`
-- [ ] `locale-config.blade.php`
-- [ ] `locale-modal.blade.php`
-- [ ] `locale-trigger.blade.php`
-- [ ] `localization-modal.blade.php`
-- [ ] `mobile-nav.blade.php`
-- [ ] `number-format-dropdown.blade.php`
-- [ ] `preferences-dropdowns-js.blade.php`
-- [ ] `theme-meta.blade.php`
-- [ ] `topbar.blade.php`
-- Folder README: pending
-
-### `resources/views/ui/rooms` (3 files) — PENDING (0/3)
-- [ ] `create.blade.php`
-- [ ] `edit.blade.php`
-- [ ] `show.blade.php`
-- Folder README: pending
-
-### `resources/views/ui/stock` (7 files) — PENDING (0/7)
-- [ ] `categories.blade.php`
-- [ ] `dashboard.blade.php`
-- [ ] `movements.blade.php`
-- [ ] `parts.blade.php`
-- [ ] `plans.blade.php`
-- [ ] `suppliers.blade.php`
-- [ ] `tax-rates.blade.php`
-- Folder README: pending
-
-### `resources/views/ui/stock/parts` (3 files) — PENDING (0/3)
-- [ ] `create.blade.php`
-- [ ] `edit.blade.php`
-- [ ] `show.blade.php`
-- Folder README: pending
-
-### `resources/views/ui/stock/suppliers` (2 files) — PENDING (0/2)
-- [ ] `create.blade.php`
-- [ ] `edit.blade.php`
-- Folder README: pending
-
-### `resources/views/ui/tickets/public` (2 files) — PENDING (0/2)
-- [ ] `create.blade.php`
-- [ ] `success.blade.php`
-- Folder README: pending
-
-### `resources/css` (5 files) — PENDING (0/5)
-- [ ] `app.css`
-- [ ] `base.css`
-- [ ] `layout.css`
-- [ ] `rtl.css`
-- [ ] `tokens.css`
-- Folder README: pending
-
-### `resources/css/components` (6 files) — PENDING (0/6)
-- [ ] `badges.css`
-- [ ] `forms.css`
-- [ ] `locale-modal.css`
-- [ ] `localization-modal.css`
-- [ ] `navigation.css`
-- [ ] `sidebar.css`
-- Folder README: pending
-
-### `resources/css/components/buttons` (2 files) — PENDING (0/2)
-- [ ] `button-base.css`
-- [ ] `button-variants.css`
-- Folder README: pending
-
-### `resources/css/components/cards` (1 files) — PENDING (0/1)
-- [ ] `card-base.css`
-- Folder README: pending
-
-### `resources/css/pages` (6 files) — PENDING (0/6)
-- [ ] `calendar.css`
-- [ ] `definicoes.css`
-- [ ] `listing.css`
-- [ ] `login.css`
-- [ ] `sistema-definicoes.css`
-- [ ] `tickets.css`
-- Folder README: pending
-
-### `resources/css/swagger` (1 files) — PENDING (0/1)
-- [ ] `swagger-theme.css`
-- Folder README: pending
-
-### `resources/css/theme` (1 files) — PENDING (0/1)
-- [ ] `variables.css`
-- Folder README: pending
-
-### `resources/js` (5 files) — PENDING (0/5)
-- [ ] `alpine.js`
-- [ ] `analytics.js`
-- [ ] `api-client.js`
-- [ ] `app.js`
-- [ ] `early-theme.js`
-- Folder README: pending
-
-### `resources/js/auth` (2 files) — PENDING (0/2)
-- [ ] `login.js`
-- [ ] `utils.js`
-- Folder README: pending
-
-### `resources/js/bootstrap` (1 files) — PENDING (0/1)
-- [ ] `page-registry.js`
-- Folder README: pending
-
-### `resources/js/components` (2 files) — PENDING (0/2)
-- [ ] `locale-modal.js`
-- [ ] `localization-modal.js`
-- Folder README: pending
-
-### `resources/js/components/input` (4 files) — PENDING (0/4)
-- [ ] `autocomplete.js`
-- [ ] `combobox.js`
-- [ ] `otp.js`
-- [ ] `password-strength.js`
-- Folder README: pending
-
-### `resources/js/components/listing` (1 files) — PENDING (0/1)
-- [ ] `feedback.js`
-- Folder README: pending
-
-### `resources/js/components/modal` (1 files) — PENDING (0/1)
-- [ ] `base.js`
-- Folder README: pending
-
-### `resources/js/core` (9 files) — PENDING (0/9)
-- [ ] `auth-box.js`
-- [ ] `auth.js`
-- [ ] `dropdown-manager.js`
-- [ ] `layout.js`
-- [ ] `navigation-manager.js`
-- [ ] `notifications.js`
-- [ ] `search-engine.js`
-- [ ] `sidebar.js`
-- [ ] `theme.js`
-- Folder README: pending
-
-### `resources/js/pages` (18 files) — PENDING (0/18)
-- [ ] `audits.js`
-- [ ] `auth-reset.js`
-- [ ] `calendar.js`
-- [ ] `dashboard.js`
-- [ ] `definicoes-aparencia.js`
-- [ ] `definicoes-sistema.js`
-- [ ] `equipments-form.js`
-- [ ] `equipments-management.js`
-- [ ] `error-page.js`
-- [ ] `profile.js`
-- [ ] `rooms-form.js`
-- [ ] `rooms-management.js`
-- [ ] `swagger.js`
-- [ ] `ticket-create.js`
-- [ ] `ticket-detail.js`
-- [ ] `tickets-management.js`
-- [ ] `users-form.js`
-- [ ] `users-management.js`
-- Folder README: pending
-
-### `resources/js/pages/analytics` (6 files) — PENDING (0/6)
-- [ ] `activity.js`
-- [ ] `charts.js`
-- [ ] `export.js`
-- [ ] `helpers.js`
-- [ ] `index.js`
-- [ ] `kpi.js`
-- Folder README: pending
-
-### `resources/js/pages/audits` (5 files) — PENDING (0/5)
-- [ ] `api.js`
-- [ ] `dom.js`
-- [ ] `filters.js`
-- [ ] `render.js`
-- [ ] `state.js`
-- Folder README: pending
-
-### `resources/js/pages/equipments-management` (4 files) — PENDING (0/4)
-- [ ] `api.js`
-- [ ] `dom.js`
-- [ ] `render.js`
-- [ ] `state.js`
-- Folder README: pending
-
-### `resources/js/pages/rooms-management` (4 files) — PENDING (0/4)
-- [ ] `api.js`
-- [ ] `dom.js`
-- [ ] `render.js`
-- [ ] `state.js`
-- Folder README: pending
-
-### `resources/js/pages/stock` (9 files) — PENDING (0/9)
-- [ ] `categories.js`
-- [ ] `dashboard.js`
-- [ ] `movements.js`
-- [ ] `parts-form.js`
-- [ ] `parts.js`
-- [ ] `plans.js`
-- [ ] `suppliers-form.js`
-- [ ] `suppliers.js`
-- [ ] `tax-rates.js`
-- Folder README: pending
-
-### `resources/js/pages/stock/movements` (4 files) — PENDING (0/4)
-- [ ] `api.js`
-- [ ] `dom.js`
-- [ ] `render.js`
-- [ ] `state.js`
-- Folder README: pending
-
-### `resources/js/pages/stock/parts` (4 files) — PENDING (0/4)
-- [ ] `api.js`
-- [ ] `dom.js`
-- [ ] `render.js`
-- [ ] `state.js`
-- Folder README: pending
-
-### `resources/js/pages/stock/plans` (4 files) — PENDING (0/4)
-- [ ] `api.js`
-- [ ] `dom.js`
-- [ ] `render.js`
-- [ ] `state.js`
-- Folder README: pending
-
-### `resources/js/pages/stock/suppliers` (4 files) — PENDING (0/4)
-- [ ] `api.js`
-- [ ] `dom.js`
-- [ ] `render.js`
-- [ ] `state.js`
-- Folder README: pending
-
-### `resources/js/pages/ticket-create` (5 files) — PENDING (0/5)
-- [ ] `autocomplete.js`
-- [ ] `dom.js`
-- [ ] `file-upload.js`
-- [ ] `form.js`
-- [ ] `priority.js`
-- Folder README: pending
-
-### `resources/js/pages/ticket-detail` (10 files) — PENDING (0/10)
-- [ ] `assignment.js`
-- [ ] `budget.js`
-- [ ] `comments.js`
-- [ ] `details.js`
-- [ ] `photos.js`
-- [ ] `priority-modal.js`
-- [ ] `start-actions.js`
-- [ ] `state.js`
-- [ ] `ui.js`
-- [ ] `workflow.js`
-- Folder README: pending
-
-### `resources/js/pages/tickets-management` (4 files) — PENDING (0/4)
-- [ ] `api.js`
-- [ ] `dom.js`
-- [ ] `render.js`
-- [ ] `state.js`
-- Folder README: pending
-
-### `resources/js/pages/users-management` (4 files) — PENDING (0/4)
-- [ ] `api.js`
-- [ ] `dom.js`
-- [ ] `render.js`
-- [ ] `state.js`
-- Folder README: pending
-
-### `resources/js/services` (1 files) — PENDING (0/1)
-- [ ] `autocomplete-service.js`
-- Folder README: pending
-
-### `resources/js/utils` (2 files) — PENDING (0/2)
-- [ ] `api.js`
-- [ ] `locale.js`
-- Folder README: pending
-
-### `resources/docs` (1 files) — PENDING (0/1)
-- [ ] `design-notes.md`
-- Folder README: pending
-
-### `resources` (0 files) — PENDING (0/0)
-- Folder README: pending
-
-### `public` (4 files) — PENDING (0/4)
-- [ ] `.htaccess`
-- [ ] `favicon.ico`
-- [ ] `index.php`
-- [ ] `robots.txt`
-- Folder README: pending
-
-### `docs` (18 files) — PENDING (0/18)
-- [ ] `Plano-Testes.md`
-- [ ] `Requisitos.md`
-- [ ] `Workflow.md`
-- [ ] `analise-pocessos.md`
-- [ ] `api-endpoints.md`
-- [ ] `atas-reuniao.md`
-- [ ] `atribuicao-prioridades.md`
-- [ ] `dashboard-seed-report.md`
-- [ ] `diagrama-arquitetura.md`
-- [ ] `fase-13-final-report.md`
-- [ ] `fluxo-orcamental.md`
-- [ ] `guia-utilizador.md`
-- [ ] `i18n-progress.md`
-- [ ] `permissoes.md`
-- [ ] `plano-projeto.md`
-- [ ] `product-backlog.md`
-- [ ] `tecnologias.md`
-- [ ] `workflow-integracoes.md`
-- Folder README: pending
-
-### `docs/assets` (1 files) — PENDING (0/1)
-- [ ] `Diagrama_fluxo_inteligente_ticket.png`
-- Folder README: pending
-
-### `docs/i18n/archive-json` (18 files) — PENDING (0/18)
-- [ ] `cs-CZ.json`
-- [ ] `da-DK.json`
-- [ ] `de-DE.json`
-- [ ] `el-GR.json`
-- [ ] `en-GB.json`
-- [ ] `en-US.json`
-- [ ] `es-ES.json`
-- [ ] `fi-FI.json`
-- [ ] `fr-FR.json`
-- [ ] `hu-HU.json`
-- [ ] `it-IT.json`
-- [ ] `nl-NL.json`
-- [ ] `pl-PL.json`
-- [ ] `pt-BR.json`
-- [ ] `pt-PT.json`
-- [ ] `ro-RO.json`
-- [ ] `sv-SE.json`
-- [ ] `tr-TR.json`
-- Folder README: pending
-
-### `docs/i18n/review` (3 files) — PENDING (0/3)
-- [ ] `3a-identidade-es-ES.csv`
-- [ ] `3a-identidade-pt-BR.csv`
-- [ ] `audit_summary.json`
-- Folder README: pending
-
-### `docs/i18n/review/backup-3a` (2 files) — PENDING (0/2)
-- [ ] `common.php`
-- [ ] `tickets.php`
-- Folder README: pending
-
-### `docs/i18n/scripts` (19 files) — PENDING (0/19)
-- [ ] `audit_final.py`
-- [ ] `audit_usage.py`
-- [ ] `build_locale.py`
-- [ ] `build_ru_ru.py`
-- [ ] `php_lang_audit.py`
-- [ ] `th_part1.py`
-- [ ] `th_part2.py`
-- [ ] `th_part3.py`
-- [ ] `translations_bg_BG.py`
-- [ ] `translations_hi_IN.py`
-- [ ] `translations_id_ID.py`
-- [ ] `translations_ja_JP.py`
-- [ ] `translations_ko_KR.py`
-- [ ] `translations_ru_RU.py`
-- [ ] `translations_th_TH.py`
-- [ ] `translations_uk_UA.py`
-- [ ] `translations_vi_VN.py`
-- [ ] `translations_zh_CN.py`
-- [ ] `translations_zh_TW.py`
-- Folder README: pending
-
-### `.github` (1 files) — PENDING (0/1)
-- [ ] `dependabot.yml`
-- Folder README: pending
-
-### `.github/actions/setup-php-composer` (1 files) — PENDING (0/1)
-- [ ] `action.yml`
-- Folder README: pending
-
-### `.github/workflows` (4 files) — PENDING (0/4)
-- [ ] `ci.yml`
-- [ ] `docker.yml`
-- [ ] `release.yml`
-- [ ] `security.yml`
-- Folder README: pending
-
-### `tools` (1 files) — PENDING (0/1)
-- [ ] `generate_refactor_manifest.py`
-- Folder README: pending
-
-### `tests` (1 files) — PENDING (0/1)
-- [ ] `TestCase.php`
-- Folder README: pending
-
-### `tests/Authentication` (5 files) — PENDING (0/5)
-- [ ] `AuthEdgeCasesTest.php`
-- [ ] `AuthFlowTest.php`
-- [ ] `AuthenticationTest.php`
-- [ ] `LoginFlowTest.php`
-- [ ] `PasswordResetFlowTest.php`
-- Folder README: pending
-
-### `tests/Authorization` (1 files) — PENDING (0/1)
-- [ ] `UiAuthorizationTest.php`
-- Folder README: pending
-
-### `tests/Base` (3 files) — PENDING (0/3)
-- [ ] `DatabaseTestCase.php`
-- [ ] `FeatureTestCase.php`
-- [ ] `UnitTestCase.php`
-- Folder README: pending
-
-### `tests/Concerns` (10 files) — PENDING (0/10)
-- [ ] `CreatesEquipment.php`
-- [ ] `CreatesTickets.php`
-- [ ] `CreatesUsers.php`
-- [ ] `InteractsWithApi.php`
-- [ ] `InteractsWithEvents.php`
-- [ ] `InteractsWithMail.php`
-- [ ] `InteractsWithNotifications.php`
-- [ ] `InteractsWithQueue.php`
-- [ ] `InteractsWithStorage.php`
-- [ ] `SeedsLookupData.php`
-- Folder README: pending
-
-### `tests/Database/Constraints` (12 files) — PENDING (0/12)
-- [ ] `AttachmentPersistenceTest.php`
-- [ ] `AuditTrailTest.php`
-- [ ] `BudgetCalculationTest.php`
-- [ ] `CastIntegrityTest.php`
-- [ ] `ConcurrencyTest.php`
-- [ ] `DatabaseIntegrityTest.php`
-- [ ] `DatabaseOptimizationTest.php`
-- [ ] `ModelLifecycleTest.php`
-- [ ] `NotificationPersistenceTest.php`
-- [ ] `RelationshipIntegrityTest.php`
-- [ ] `TokenIntegrityTest.php`
-- [ ] `WorkflowPersistenceTest.php`
-- Folder README: pending
-
-### `tests/Database/Migrations` (1 files) — PENDING (0/1)
-- [ ] `DatabaseSchemaValidationTest.php`
-- Folder README: pending
-
-### `tests/Database/Seeders` (1 files) — PENDING (0/1)
-- [ ] `ComplianceSeedersTest.php`
-- Folder README: pending
-
-### `tests/Feature` (1 files) — PENDING (0/1)
-- [ ] `UserPreferencesTest.php`
-- Folder README: pending
-
-### `tests/Feature/API/Controllers` (25 files) — PENDING (0/25)
-- [ ] `AdminCrudFeatureTest.php`
-- [ ] `AdminManagementTest.php`
-- [ ] `AdminUserControllerTest.php`
-- [ ] `AiTriagingFeatureTest.php`
-- [ ] `AnalyticsFeatureTest.php`
-- [ ] `ApiAuthTest.php`
-- [ ] `AttachmentOperationFeatureTest.php`
-- [ ] `AuditEndpointsTest.php`
-- [ ] `AuditFeatureTest.php`
-- [ ] `BudgetFeatureTest.php`
-- [ ] `CalendarFeatureTest.php`
-- [ ] `CommentOperationFeatureTest.php`
-- [ ] `EquipmentAndRoomCrudFeatureTest.php`
-- [ ] `ErrorScenarioFeatureTest.php`
-- [ ] `NotificationFeatureTest.php`
-- [ ] `NotificationFlowTest.php`
-- [ ] `StockManagementFeatureTest.php`
-- [ ] `TicketAssignmentFeatureTest.php`
-- [ ] `TicketAuditLogTest.php`
-- [ ] `TicketAuthorizationFeatureTest.php`
-- [ ] `TicketOperationsTest.php`
-- [ ] `TicketPhotoUploadTest.php`
-- [ ] `TicketScheduleFeatureTest.php`
-- [ ] `TicketSearchTest.php`
-- [ ] `TicketWorkflowFeatureTest.php`
-- Folder README: pending
-
-### `tests/Feature/API/Routing` (1 files) — PENDING (0/1)
-- [ ] `SwaggerDocumentationTest.php`
-- Folder README: pending
-
-### `tests/Feature/Actions` (2 files) — PENDING (0/2)
-- [ ] `CreateTicketActionTest.php`
-- [ ] `CreateUserActionTest.php`
-- Folder README: pending
-
-### `tests/Feature/Console` (1 files) — PENDING (0/1)
-- [ ] `ConsoleCommandsTest.php`
-- Folder README: pending
-
-### `tests/Feature/Domain` (4 files) — PENDING (0/4)
-- [ ] `CheckHigherPriorityActionTest.php`
-- [ ] `TicketLifecycleActionsTest.php`
-- [ ] `TicketQueriesTest.php`
-- [ ] `TicketStatusCheckerTest.php`
-- Folder README: pending
-
-### `tests/Feature/Middleware` (6 files) — PENDING (0/6)
-- [ ] `CsrfMiddlewareTest.php`
-- [ ] `CustomAuthMiddlewareTest.php`
-- [ ] `MiddlewareAuthTest.php`
-- [ ] `RateLimitMiddlewareTest.php`
-- [ ] `RoleMiddlewareTest.php`
-- [ ] `SetLocaleMiddlewareTest.php`
-- Folder README: pending
-
-### `tests/Feature/Repositories` (1 files) — PENDING (0/1)
-- [ ] `TicketRepositoryTest.php`
-- Folder README: pending
-
-### `tests/Feature/Validation` (1 files) — PENDING (0/1)
-- [ ] `ValidationEdgeCaseTest.php`
-- Folder README: pending
-
-### `tests/Feature/Web` (1 files) — PENDING (0/1)
-- [ ] `LocaleControllerTest.php`
-- Folder README: pending
-
-### `tests/Feature/Web/Controllers` (6 files) — PENDING (0/6)
-- [ ] `DashboardRedirectTest.php`
-- [ ] `PageControllerTest.php`
-- [ ] `ProfileControllerTest.php`
-- [ ] `RegisterControllerTest.php`
-- [ ] `RoomControllerTest.php`
-- [ ] `UiControllerTest.php`
-- Folder README: pending
-
-### `tests/Feature/Web/Views` (4 files) — PENDING (0/4)
-- [ ] `AssetPipelineTest.php`
-- [ ] `DesignSystemComponentsTest.php`
-- [ ] `DesignSystemViewsTest.php`
-- [ ] `UiUsabilityTest.php`
-- Folder README: pending
-
-### `tests/Fixtures/Builders` (2 files) — PENDING (0/2)
-- [ ] `TicketBuilder.php`
-- [ ] `UserBuilder.php`
-- Folder README: pending
-
-### `tests/Fixtures/Datasets` (3 files) — PENDING (0/3)
-- [ ] `TicketPriorityDataset.php`
-- [ ] `TicketStatusDataset.php`
-- [ ] `UserRoleDataset.php`
-- Folder README: pending
-
-### `tests/Fixtures/Fakes` (1 files) — PENDING (0/1)
-- [ ] `FakeNotificationService.php`
-- Folder README: pending
-
-### `tests/Fixtures/Helpers` (1 files) — PENDING (0/1)
-- [ ] `TestHelper.php`
-- Folder README: pending
-
-### `tests/Integration/Broadcasting` (1 files) — PENDING (0/1)
-- [ ] `BroadcastAndQueueTest.php`
-- Folder README: pending
-
-### `tests/Integration/Database` (5 files) — PENDING (0/5)
-- [ ] `ForeignKeyIntegrityTest.php`
-- [ ] `MassAssignmentProtectionTest.php`
-- [ ] `ModelLifecycleTest.php`
-- [ ] `RelationshipIntegrityTest.php`
-- [ ] `SoftDeleteTest.php`
-- Folder README: pending
-
-### `tests/Integration/Mail` (1 files) — PENDING (0/1)
-- [ ] `MailgunTestEmailTest.php`
-- Folder README: pending
-
-### `tests/Performance` (1 files) — PENDING (0/1)
-- [ ] `PerformanceTestCase.php`
-- Folder README: pending
-
-### `tests/Performance/APIPerformance` (1 files) — PENDING (0/1)
-- [ ] `TicketEndpointPerformanceTest.php`
-- Folder README: pending
-
-### `tests/Performance/Authentication` (1 files) — PENDING (0/1)
-- [ ] `AuthPerformanceTest.php`
-- Folder README: pending
-
-### `tests/Performance/CachePerformance` (1 files) — PENDING (0/1)
-- [ ] `CachePerformanceTest.php`
-- Folder README: pending
-
-### `tests/Performance/Dashboard` (1 files) — PENDING (0/1)
-- [ ] `DashboardPerformanceTest.php`
-- Folder README: pending
-
-### `tests/Performance/DatabasePerformance` (5 files) — PENDING (0/5)
-- [ ] `DatabasePerformanceTest.php`
-- [ ] `LazyLoadingTest.php`
-- [ ] `NPlusOneQueryTest.php`
-- [ ] `PerformanceAndNPlusOneTest.php`
-- [ ] `QueryCountTest.php`
-- Folder README: pending
-
-### `tests/Performance/MemoryPerformance` (2 files) — PENDING (0/2)
-- [ ] `MemoryPerformanceTest.php`
-- [ ] `MemoryUsageTest.php`
-- Folder README: pending
-
-### `tests/Performance/ReportsPerformance` (1 files) — PENDING (0/1)
-- [ ] `ReportPerformanceTest.php`
-- Folder README: pending
-
-### `tests/Performance/ScalabilityPerformance` (1 files) — PENDING (0/1)
-- [ ] `ScalabilityPerformanceTest.php`
-- Folder README: pending
-
-### `tests/Performance/SearchPerformance` (1 files) — PENDING (0/1)
-- [ ] `SearchPerformanceTest.php`
-- Folder README: pending
-
-### `tests/Performance/UploadsPerformance` (1 files) — PENDING (0/1)
-- [ ] `UploadPerformanceTest.php`
-- Folder README: pending
-
-### `tests/Security/APITokens` (1 files) — PENDING (0/1)
-- [ ] `APITokenSecurityTest.php`
-- Folder README: pending
-
-### `tests/Security/Authentication` (3 files) — PENDING (0/3)
-- [ ] `AuthenticationSecurityTest.php`
-- [ ] `SecurityActiveTest.php`
-- [ ] `SecurityAuthTest.php`
-- Folder README: pending
-
-### `tests/Security/Authorization` (1 files) — PENDING (0/1)
-- [ ] `AuthorizationSecurityTest.php`
-- Folder README: pending
-
-### `tests/Security/CSRF` (2 files) — PENDING (0/2)
-- [ ] `CsrfProtectionTest.php`
-- [ ] `SecurityCsrfTest.php`
-- Folder README: pending
-
-### `tests/Security/FileUpload` (1 files) — PENDING (0/1)
-- [ ] `FileUploadSecurityTest.php`
-- Folder README: pending
-
-### `tests/Security/Headers` (1 files) — PENDING (0/1)
-- [ ] `SecurityHeadersTest.php`
-- Folder README: pending
-
-### `tests/Security/IDOR` (1 files) — PENDING (0/1)
-- [ ] `IDORTest.php`
-- Folder README: pending
-
-### `tests/Security/MassAssignment` (1 files) — PENDING (0/1)
-- [ ] `MassAssignmentTest.php`
-- Folder README: pending
-
-### `tests/Security/Password` (2 files) — PENDING (0/2)
-- [ ] `PasswordSecurityTest.php`
-- [ ] `SecurityPasswordPolicyTest.php`
-- Folder README: pending
-
-### `tests/Security/PathTraversal` (1 files) — PENDING (0/1)
-- [ ] `PathTraversalTest.php`
-- Folder README: pending
-
-### `tests/Security/PrivilegeEscalation` (1 files) — PENDING (0/1)
-- [ ] `PrivilegeEscalationTest.php`
-- Folder README: pending
-
-### `tests/Security/RateLimiting` (3 files) — PENDING (0/3)
-- [ ] `RateLimitingTest.php`
-- [ ] `SecurityBruteForceTest.php`
-- [ ] `SecurityRateLimitTest.php`
-- Folder README: pending
-
-### `tests/Security/SQLInjection` (2 files) — PENDING (0/2)
-- [ ] `SecurityVulnerabilitiesTest.php`
-- [ ] `SqlInjectionTest.php`
-- Folder README: pending
-
-### `tests/Security/Session` (2 files) — PENDING (0/2)
-- [ ] `SecuritySessionTest.php`
-- [ ] `SessionSecurityTest.php`
-- Folder README: pending
-
-### `tests/Security/Tokens` (2 files) — PENDING (0/2)
-- [ ] `SecurityTokenTest.php`
-- [ ] `TokenSecurityTest.php`
-- Folder README: pending
-
-### `tests/Security/UserEnumeration` (1 files) — PENDING (0/1)
-- [ ] `UserEnumerationTest.php`
-- Folder README: pending
-
-### `tests/Security/XSS` (2 files) — PENDING (0/2)
-- [ ] `SecurityInputValidationTest.php`
-- [ ] `XSSProtectionTest.php`
-- Folder README: pending
-
-### `tests/Unit` (1 files) — PENDING (0/1)
-- [ ] `PreferenciasServiceTest.php`
-- Folder README: pending
-
-### `tests/Unit/Actions` (10 files) — PENDING (0/10)
-- [ ] `ApproveBudgetActionTest.php`
-- [ ] `AssignTechnicianActionTest.php`
-- [ ] `CreateEquipmentActionTest.php`
-- [ ] `CreatePreventiveTicketActionTest.php`
-- [ ] `CreateRoomActionTest.php`
-- [ ] `ScheduleTicketActionTest.php`
-- [ ] `SubmitBudgetActionTest.php`
-- [ ] `UpdateEquipmentActionTest.php`
-- [ ] `UpdateRoomActionTest.php`
-- [ ] `UpdateUserActionTest.php`
-- Folder README: pending
-
-### `tests/Unit/Concerns` (1 files) — PENDING (0/1)
-- [ ] `BroadcastsTicketStatusTest.php`
-- Folder README: pending
-
-### `tests/Unit/Console` (1 files) — PENDING (0/1)
-- [ ] `TelemetryCommandTest.php`
-- Folder README: pending
-
-### `tests/Unit/DTOs` (16 files) — PENDING (0/16)
-- [ ] `AssignTechnicianDataTest.php`
-- [ ] `BudgetDecisionDataTest.php`
-- [ ] `BudgetSubmissionDataTest.php`
-- [ ] `CloseTicketDataTest.php`
-- [ ] `CommentDataTest.php`
-- [ ] `CreateTicketDataTest.php`
-- [ ] `PasswordChangeDataTest.php`
-- [ ] `ProfileUpdateDataTest.php`
-- [ ] `ScheduleTicketDataTest.php`
-- [ ] `StoreEquipmentDataTest.php`
-- [ ] `StoreRoomDataTest.php`
-- [ ] `StoreUserDataTest.php`
-- [ ] `TicketFiltersTest.php`
-- [ ] `UpdateEquipmentDataTest.php`
-- [ ] `UpdateRoomDataTest.php`
-- [ ] `UpdateUserDataTest.php`
-- Folder README: pending
-
-### `tests/Unit/Enums` (10 files) — PENDING (0/10)
-- [ ] `AuditEventEnumTest.php`
-- [ ] `BudgetDecisionEnumTest.php`
-- [ ] `BudgetStatusEnumTest.php`
-- [ ] `FileTypeEnumTest.php`
-- [ ] `NotificationPriorityEnumTest.php`
-- [ ] `NotificationTypeEnumTest.php`
-- [ ] `TicketPriorityEnumTest.php`
-- [ ] `TicketStatusEnumTest.php`
-- [ ] `TicketWorkflowStatusEnumTest.php`
-- [ ] `UserRoleEnumTest.php`
-- Folder README: pending
-
-### `tests/Unit/Events` (2 files) — PENDING (0/2)
-- [ ] `TicketStatusChangedTest.php`
-- [ ] `TicketStatusUpdatedBroadcastTest.php`
-- Folder README: pending
-
-### `tests/Unit/Exports` (1 files) — PENDING (0/1)
-- [ ] `TicketsExportTest.php`
-- Folder README: pending
-
-### `tests/Unit/Http/Resources` (1 files) — PENDING (0/1)
-- [ ] `ResourcesTest.php`
-- Folder README: pending
-
-### `tests/Unit/Jobs` (3 files) — PENDING (0/3)
-- [ ] `ExportJobsTest.php`
-- [ ] `ExportReportPdfJobsTest.php`
-- [ ] `GenerateAiRecommendationJobTest.php`
-- Folder README: pending
-
-### `tests/Unit/Listeners` (3 files) — PENDING (0/3)
-- [ ] `LogTicketStatusChangeTest.php`
-- [ ] `LogTicketWorkflowChangeTest.php`
-- [ ] `NotifyAssignedTechnicianTest.php`
-- Folder README: pending
-
-### `tests/Unit/Mail` (1 files) — PENDING (0/1)
-- [ ] `MailablesTest.php`
-- Folder README: pending
-
-### `tests/Unit/Middleware` (2 files) — PENDING (0/2)
-- [ ] `SecurityHeadersTest.php`
-- [ ] `SetLocaleMiddlewareTest.php`
-- Folder README: pending
-
-### `tests/Unit/Models` (16 files) — PENDING (0/16)
-- [ ] `AuditTest.php`
-- [ ] `CategoryTest.php`
-- [ ] `EquipmentCategoryTest.php`
-- [ ] `EquipmentTest.php`
-- [ ] `ModelAccessorsTest.php`
-- [ ] `NotificationModelTest.php`
-- [ ] `RoomTest.php`
-- [ ] `TicketAttachmentTest.php`
-- [ ] `TicketAttributesTest.php`
-- [ ] `TicketCommentTest.php`
-- [ ] `TicketStatusTest.php`
-- [ ] `TicketTypeTest.php`
-- [ ] `TicketWorkflowHistoryTest.php`
-- [ ] `TicketWorkflowTest.php`
-- [ ] `UserProfileTest.php`
-- [ ] `UserTest.php`
-- Folder README: pending
-
-### `tests/Unit/Observers` (1 files) — PENDING (0/1)
-- [ ] `ObserversTest.php`
-- Folder README: pending
-
-### `tests/Unit/Policies` (2 files) — PENDING (0/2)
-- [ ] `AccessPoliciesTest.php`
-- [ ] `TicketPolicyTest.php`
-- Folder README: pending
-
-### `tests/Unit/Providers` (1 files) — PENDING (0/1)
-- [ ] `ProvidersTest.php`
-- Folder README: pending
-
-### `tests/Unit/Repositories` (1 files) — PENDING (0/1)
-- [ ] `RepositoriesTest.php`
-- Folder README: pending
-
-### `tests/Unit/Services` (18 files) — PENDING (0/18)
-- [ ] `AIServiceTest.php`
-- [ ] `AnalyticsDashboardServiceTest.php`
-- [ ] `AnalyticsExportServiceTest.php`
-- [ ] `AnalyticsServiceTest.php`
-- [ ] `BudgetCalculatorServiceTest.php`
-- [ ] `BudgetNotificationServiceTest.php`
-- [ ] `CalendarServiceTest.php`
-- [ ] `EquipmentServiceTest.php`
-- [ ] `LocaleServiceTest.php`
-- [ ] `LocalizationServiceTest.php`
-- [ ] `NotificationCreatorServiceTest.php`
-- [ ] `NotificationServiceTest.php`
-- [ ] `PasswordResetServiceTest.php`
-- [ ] `ServicesTest.php`
-- [ ] `StockServicesTest.php`
-- [ ] `TechnicianAssignmentServiceTest.php`
-- [ ] `TicketNotificationServiceTest.php`
-- [ ] `TicketSearchServiceTest.php`
-- Folder README: pending
-
-### `tests/Unit/Traits` (1 files) — PENDING (0/1)
-- [ ] `AuditableTraitTest.php`
-- Folder README: pending
-
-### `tests/Unit/ValueObjects` (4 files) — PENDING (0/4)
-- [ ] `BudgetPauseMinutesTest.php`
-- [ ] `EmailTest.php`
-- [ ] `MoneyTest.php`
-- [ ] `SerialNumberTest.php`
-- Folder README: pending
+### `resources/views` (2 files) — DONE (2/2)
+- [x] `calendar.blade.php` — translated 4 PT Blade comments to English; i18n strings excluded
+- [x] `main.blade.php` — already clean (all strings use `__()`)
+- Folder README: done
+
+### `resources/views/components/ui/analytics` (10 files) — DONE (10/10)
+- [x] `activity-timeline-card.blade.php` — translated header docblock, 4 Blade comments, 3 inline JS comments to English
+- [x] `aside-card.blade.php` — translated header docblock to English
+- [x] `aside-pill.blade.php` — translated header docblock to English
+- [x] `chart-card.blade.php` — translated header docblock to English
+- [x] `equipment-distribution-card.blade.php` — translated header docblock to English; i18n strings excluded
+- [x] `export-actions.blade.php` — translated header docblock to English; i18n strings excluded
+- [x] `hero.blade.php` — translated header docblock, 3 Blade comments to English; i18n strings excluded
+- [x] `list-card.blade.php` — translated header docblock to English
+- [x] `metric-card.blade.php` — translated header docblock to English
+- [x] `section-heading.blade.php` — translated header docblock to English
+- Folder README: done
+
+### `resources/views/components/ui/auth` (6 files) — DONE (6/6)
+- [x] `form-header.blade.php` — translated header docblock to English
+- [x] `message.blade.php` — translated header docblock to English
+- [x] `password-field.blade.php` — translated header docblock + 1 inline comment to English
+- [x] `shell.blade.php` — translated header docblock + 3 Blade comments to English
+- [x] `submit-button.blade.php` — translated header docblock to English
+- [x] `text-field.blade.php` — translated header docblock to English
+- Folder README: done
+
+### `resources/views/components/ui/buttons` (3 files) — DONE (3/3)
+- [x] `button.blade.php` — translated header docblock to English
+- [x] `icon-button.blade.php` — translated header docblock to English
+- [x] `submit.blade.php` — translated header docblock to English
+- Folder README: done
+
+### `resources/views/components/ui/dashboard` (1 files) — DONE (1/1)
+- [x] `welcome-panel.blade.php` — translated header docblock to English
+- Folder README: done
+
+### `resources/views/components/ui/form` (5 files) — DONE (5/5)
+- [x] `card.blade.php` — translated header docblock to English
+- [x] `field.blade.php` — translated header docblock to English
+- [x] `input.blade.php` — translated header docblock to English
+- [x] `message.blade.php` — translated header docblock to English
+- [x] `select.blade.php` — translated header docblock to English
+- Folder README: done
+
+### `resources/views/components/ui/listing` (4 files) — DONE (4/4)
+- [x] `filter-field.blade.php` — translated header docblock to English
+- [x] `filter-panel.blade.php` — translated header docblock to English
+- [x] `pagination.blade.php` — translated header docblock to English
+- [x] `table-card.blade.php` — translated header docblock to English
+- Folder README: done
+
+### `resources/views/components/ui/page-actions` (7 files) — DONE (7/7)
+- [x] `action-button.blade.php` — translated header docblock to English
+- [x] `back-button.blade.php` — translated header docblock + inline comment
+- [x] `base-button.blade.php` — translated header docblock to English
+- [x] `base-link.blade.php` — translated header docblock to English
+- [x] `create-link.blade.php` — translated header docblock to English
+- [x] `export-link.blade.php` — translated header docblock to English
+- [x] `group.blade.php` — translated header docblock to English
+- Folder README: done
+
+### `resources/views/components/ui/partials` (1 files) — DONE (1/1)
+- [x] `page-header.blade.php` — translated header docblock to English
+- Folder README: done
+
+### `resources/views/components/ui/profile` (4 files) — DONE (4/4)
+- [x] `delete-account-card.blade.php` — translated header docblock to English
+- [x] `information-card.blade.php` — translated header docblock to English
+- [x] `security-card.blade.php` — translated header docblock to English
+- [x] `summary-card.blade.php` — translated header docblock to English
+- Folder README: done
+
+### `resources/views/components/ui/text` (2 files) — DONE (2/2)
+- [x] `eyebrow.blade.php` — translated header docblock to English
+- [x] `pill.blade.php` — translated header docblock to English
+- Folder README: done
+
+### `resources/views/emails` (3 files) — DONE (3/3)
+- [x] `passwordReset.blade.php` — translated CSS comments and Blade comments to English
+- [x] `test-mail.blade.php` — translated CSS comments and Blade comments to English
+- [x] `ticketCreated.blade.php` — already clean (no PT comments; match on PT DB values is business logic)
+- Folder README: done
+
+### `resources/views/errors` (5 files) — DONE (5/5)
+- [x] `402.blade.php` — already clean (only `__()` calls)
+- [x] `403.blade.php` — already clean (only `__()` calls)
+- [x] `404.blade.php` — already clean (only `__()` calls)
+- [x] `500.blade.php` — already clean (only `__()` calls)
+- [x] `minimal.blade.php` — translated 5 PT Blade comments to English
+- Folder README: done
+
+### `resources/views/layouts` (1 files) — DONE (1/1)
+- [x] `layout.blade.php` — already clean (only `__()` calls and `@include` directives)
+- Folder README: done
+
+### `resources/views/preferences` (1 files) — DONE (1/1)
+- [x] `edit.blade.php` — translated 5 HTML comments and 3 JS comments to English
+- Folder README: done
+
+### `resources/views/reports` (3 files) — DONE (3/3)
+- [x] `equipments-qr.blade.php` — already clean (no PT comments)
+- [x] `stock-costs-by-equipment.blade.php` — already clean (no PT comments)
+- [x] `tickets.blade.php` — translated 4 PT CSS section comments to English
+- Folder README: done
+
+### `resources/views/ui` (15 files) — DONE (15/15)
+- [x] `analytics.blade.php` — already clean
+- [x] `audits.blade.php` — translated 3 PT Blade comments
+- [x] `auth-reset.blade.php` — already clean
+- [x] `auth.blade.php` — already clean
+- [x] `equipments.blade.php` — already clean
+- [x] `index.blade.php` — already clean
+- [x] `layout.blade.php` — translated 4 PT comments (1 JS + 3 Blade)
+- [x] `profile.blade.php` — already clean
+- [x] `rooms.blade.php` — already clean
+- [x] `ticket-create.blade.php` — translated 15 PT Blade comments
+- [x] `ticket-detail.blade.php` — already clean
+- [x] `tickets.blade.php` — already clean
+- [x] `users-create.blade.php` — already clean
+- [x] `users-edit.blade.php` — translated 1 PT Blade comment
+- [x] `users.blade.php` — translated 3 PT Blade comments
+- Folder README: done
+
+### `resources/views/ui/definicoes` (2 files) — DONE (2/2)
+- [x] `aparencia.blade.php` — already clean
+- [x] `sistema.blade.php` — already clean
+- Folder README: done
+
+### `resources/views/ui/equipments` (4 files) — DONE (4/4)
+- [x] `create.blade.php` — already clean
+- [x] `edit.blade.php` — already clean
+- [x] `qr.blade.php` — translated 1 PT Blade comment
+- [x] `show.blade.php` — translated 8 PT comments (1 PHP + 7 Blade)
+- Folder README: done
+
+### `resources/views/ui/partials` (17 files) — DONE (17/17)
+- [x] `background-effects.blade.php` — already clean
+- [x] `currency-dropdown.blade.php` — already clean
+- [x] `currency-modal.blade.php` — translated PT docblock + 1 PHP comment
+- [x] `date-format-dropdown.blade.php` — already clean
+- [x] `date-format-modal.blade.php` — translated PT docblock + 2 PHP comments
+- [x] `desktop-sidebar.blade.php` — translated 3 PT Blade comments
+- [x] `language-dropdown.blade.php` — already clean
+- [x] `language-modal.blade.php` — translated PT docblock
+- [x] `locale-config.blade.php` — translated 1 PT Blade comment
+- [x] `locale-modal.blade.php` — translated PT docblock
+- [x] `locale-trigger.blade.php` — already clean
+- [x] `localization-modal.blade.php` — translated PT docblock
+- [x] `mobile-nav.blade.php` — translated 5 PT Blade comments
+- [x] `number-format-dropdown.blade.php` — already clean
+- [x] `preferences-dropdowns-js.blade.php` — translated 10 PT JS comments
+- [x] `theme-meta.blade.php` — translated PT docblock + 1 PHP comment
+- [x] `topbar.blade.php` — already clean
+- Folder README: done
+
+### `resources/views/ui/rooms` (3 files) — DONE (3/3)
+- [x] `create.blade.php` — already clean
+- [x] `edit.blade.php` — already clean
+- [x] `show.blade.php` — translated 9 PT comments (1 PHP + 8 Blade)
+- Folder README: done
+
+### `resources/views/ui/stock` (7 files) — DONE (7/7)
+- [x] `categories.blade.php` — translated 2 PT Blade comments
+- [x] `dashboard.blade.php` — translated 4 PT Blade comments
+- [x] `movements.blade.php` — translated 1 PT Blade comment
+- [x] `parts.blade.php` — already clean
+- [x] `plans.blade.php` — translated 1 PT Blade comment
+- [x] `suppliers.blade.php` — already clean
+- [x] `tax-rates.blade.php` — translated 2 PT Blade comments
+- Folder README: done
+
+### `resources/views/ui/stock/parts` (3 files) — DONE (3/3)
+- [x] `create.blade.php` — already clean
+- [x] `edit.blade.php` — already clean
+- [x] `show.blade.php` — translated 4 PT Blade comments
+- Folder README: done
+
+### `resources/views/ui/stock/suppliers` (2 files) — DONE (2/2)
+- [x] `create.blade.php` — already clean
+- [x] `edit.blade.php` — already clean
+- Folder README: done
+
+### `resources/views/ui/tickets/public` (2 files) — DONE (2/2)
+- [x] `create.blade.php` — translated 9 PT Blade comments
+- [x] `success.blade.php` — translated 1 PT Blade comment
+- Folder README: done
+
+### `resources/css` (5 files) — DONE (5/5)
+- [x] `app.css` — already clean
+- [x] `base.css` — translated 3 PT comments
+- [x] `layout.css` — already clean
+- [x] `rtl.css` — translated 1 PT comment
+- [x] `tokens.css` — translated 16 PT comments
+- Folder README: done
+
+### `resources/css/components` (6 files) — DONE (6/6)
+- [x] `badges.css` — already clean
+- [x] `forms.css` — already clean
+- [x] `locale-modal.css` — translated 1 PT docblock
+- [x] `localization-modal.css` — already clean
+- [x] `navigation.css` — translated 2 PT comments
+- [x] `sidebar.css` — translated 2 PT comments
+- Folder README: done
+
+### `resources/css/components/buttons` (2 files) — DONE (2/2)
+- [x] `button-base.css` — already clean
+- [x] `button-variants.css` — already clean
+- Folder README: done
+
+### `resources/css/components/cards` (1 files) — DONE (1/1)
+- [x] `card-base.css` — already clean
+- Folder README: done
+
+### `resources/css/pages` (6 files) — DONE (6/6)
+- [x] `calendar.css` — translated 17 PT comments
+- [x] `definicoes.css` — translated 2 PT comments
+- [x] `listing.css` — translated 9 PT comments
+- [x] `login.css` — already clean
+- [x] `sistema-definicoes.css` — translated 9 PT comments
+- [x] `tickets.css` — already clean
+- Folder README: done
+
+### `resources/css/swagger` (1 files) — DONE (1/1)
+- [x] `swagger-theme.css` — already clean
+- Folder README: done
+
+### `resources/css/theme` (1 files) — DONE (1/1)
+- [x] `variables.css` — translated 9 PT comments
+- Folder README: done
+
+### `resources/js` (5 files) — DONE (5/5)
+- [x] `alpine.js` — already clean
+- [x] `analytics.js` — 1 PT comment translated
+- [x] `api-client.js` — 5 PT comments translated
+- [x] `app.js` — already clean
+- [x] `early-theme.js` — 2 PT comment blocks translated
+- Folder README: done
+
+### `resources/js/auth` (2 files) — DONE (2/2)
+- [x] `login.js` — PT user-facing strings (i18n domain, not modified)
+- [x] `utils.js` — PT comments translated (header, config, Selectors, Fetch Wrapper, Button State sections)
+- Folder README: done
+
+### `resources/js/bootstrap` (1 files) — DONE (1/1)
+- [x] `page-registry.js` — already clean
+- Folder README: done
+
+### `resources/js/components` (2 files) — DONE (2/2)
+- [x] `locale-modal.js` — header docblock translated
+- [x] `localization-modal.js` — header docblock translated
+- Folder README: done
+
+### `resources/js/components/input` (4 files) — DONE (4/4)
+- [x] `autocomplete.js` — header + 3 inline comments translated
+- [x] `combobox.js` — header + 3 inline comments translated
+- [x] `otp.js` — header + 6 inline comments translated
+- [x] `password-strength.js` — header translated; PT strength labels (i18n domain, not modified)
+- Folder README: done
+
+### `resources/js/components/listing` (1 files) — DONE (1/1)
+- [x] `feedback.js` — already clean
+- Folder README: done
+
+### `resources/js/components/modal` (1 files) — DONE (1/1)
+- [x] `base.js` — already clean
+- Folder README: done
+
+### `resources/js/core` (9 files) — DONE (9/9)
+- [x] `auth-box.js` — no PT comments found
+- [x] `auth.js` — PT user-facing defaults (i18n domain, not modified)
+- [x] `dropdown-manager.js` — header + 7 inline comments translated
+- [x] `layout.js` — 5 inline comments translated
+- [x] `navigation-manager.js` — header docblock + private method doc translated
+- [x] `notifications.js` — 10 PT strings/comments translated (user-facing "unread", "more", error messages, empty states)
+- [x] `search-engine.js` — header + 9 inline comments/docblocks translated
+- [x] `sidebar.js` — header + 1 multi-line comment translated
+- [x] `theme.js` — 11 docblocks/comments translated (complex file with theme management logic)
+- Folder README: done
+
+### `resources/js/pages` (18 files) — DONE (18/18)
+- [x] `audits.js` — no PT comments
+- [x] `auth-reset.js` — PT user-facing strings only (i18n domain)
+- [x] `calendar.js` — PT user-facing strings only (i18n domain)
+- [x] `dashboard.js` — PT user-facing strings only (i18n domain)
+- [x] `definicoes-aparencia.js` — 6 PT docblocks/comments translated
+- [x] `definicoes-sistema.js` — PT user-facing strings only (i18n domain)
+- [x] `equipments-form.js` — PT user-facing strings only (i18n domain)
+- [x] `equipments-management.js` — no PT comments
+- [x] `error-page.js` — no PT comments
+- [x] `profile.js` — PT user-facing strings only (i18n domain)
+- [x] `rooms-form.js` — PT user-facing strings only (i18n domain)
+- [x] `rooms-management.js` — no PT comments
+- [x] `swagger.js` — header docblock translated
+- [x] `ticket-create.js` — no PT comments
+- [x] `ticket-detail.js` — PT user-facing strings + DB status comparisons only (i18n domain)
+- [x] `tickets-management.js` — no PT comments
+- [x] `users-form.js` — PT user-facing strings only (i18n domain)
+- [x] `users-management.js` — PT user-facing strings only (i18n domain)
+- Folder README: done
+
+### `resources/js/pages/analytics` (6 files) — DONE (6/6)
+- [x] `activity.js` — no PT comments found
+- [x] `charts.js` — 10 PT docblocks/comments translated
+- [x] `export.js` — header docblock translated
+- [x] `helpers.js` — no PT comments found
+- [x] `index.js` — 2 PT comments translated
+- [x] `kpi.js` — no PT comments found
+- Folder README: done
+
+### `resources/js/pages/audits` (5 files) — DONE (5/5)
+- [x] `api.js` — no PT comments found
+- [x] `dom.js` — no PT comments found
+- [x] `filters.js` — no PT comments found
+- [x] `render.js` — no PT comments found
+- [x] `state.js` — no PT comments found
+- Folder README: done
+
+### `resources/js/pages/equipments-management` (4 files) — DONE (4/4)
+- [x] `api.js` — no PT comments found
+- [x] `dom.js` — no PT comments found
+- [x] `render.js` — no PT comments found
+- [x] `state.js` — no PT comments found
+- Folder README: done
+
+### `resources/js/pages/rooms-management` (4 files) — DONE (4/4)
+- [x] `api.js` — no PT comments found
+- [x] `dom.js` — no PT comments found
+- [x] `render.js` — no PT comments found
+- [x] `state.js` — no PT comments found
+- Folder README: done
+
+### `resources/js/pages/stock` (9 files) — DONE (9/9)
+- [x] `categories.js` — no PT comments
+- [x] `dashboard.js` — PT user-facing strings only (i18n domain)
+- [x] `movements.js` — no PT comments
+- [x] `parts-form.js` — PT user-facing strings only (i18n domain)
+- [x] `parts.js` — no PT comments
+- [x] `plans.js` — PT user-facing strings only (i18n domain)
+- [x] `suppliers-form.js` — PT user-facing strings only (i18n domain)
+- [x] `suppliers.js` — no PT comments
+- [x] `tax-rates.js` — no PT comments
+- Folder README: done
+
+### `resources/js/pages/stock/movements` (4 files) — DONE (4/4)
+- [x] `api.js` — PT user-facing strings only (i18n domain)
+- [x] `dom.js` — no PT comments
+- [x] `render.js` — PT user-facing strings only (i18n domain)
+- [x] `state.js` — no PT comments
+- Folder README: done
+
+### `resources/js/pages/stock/parts` (4 files) — DONE (4/4)
+- [x] `api.js` — PT user-facing strings only (i18n domain)
+- [x] `dom.js` — no PT comments
+- [x] `render.js` — PT user-facing strings only (i18n domain)
+- [x] `state.js` — no PT comments
+- Folder README: done
+
+### `resources/js/pages/stock/plans` (4 files) — DONE (4/4)
+- [x] `api.js` — PT user-facing strings only (i18n domain)
+- [x] `dom.js` — no PT comments
+- [x] `render.js` — PT user-facing strings only (i18n domain)
+- [x] `state.js` — no PT comments
+- Folder README: done
+
+### `resources/js/pages/stock/suppliers` (4 files) — DONE (4/4)
+- [x] `api.js` — PT user-facing strings only (i18n domain)
+- [x] `dom.js` — no PT comments
+- [x] `render.js` — PT user-facing strings only (i18n domain)
+- [x] `state.js` — no PT comments
+- Folder README: done
+
+### `resources/js/pages/ticket-create` (5 files) — DONE (5/5)
+- [x] `autocomplete.js` — PT user-facing strings only (i18n domain)
+- [x] `dom.js` — no PT comments
+- [x] `file-upload.js` — no PT comments
+- [x] `form.js` — PT user-facing strings only (i18n domain)
+- [x] `priority.js` — PT DB value mappings only (i18n domain)
+- Folder README: done
+
+### `resources/js/pages/ticket-detail` (10 files) — DONE (10/10)
+- [x] `assignment.js` — PT user-facing strings only (i18n domain)
+- [x] `budget.js` — PT user-facing strings only (i18n domain)
+- [x] `comments.js` — no PT comments
+- [x] `details.js` — PT DB value keys only (i18n domain)
+- [x] `photos.js` — no PT comments
+- [x] `priority-modal.js` — PT user-facing strings + DB values only (i18n domain)
+- [x] `start-actions.js` — PT user-facing strings + DB values only (i18n domain)
+- [x] `state.js` — no PT comments
+- [x] `ui.js` — no PT comments
+- [x] `workflow.js` — PT user-facing strings only (i18n domain)
+- Folder README: done
+
+### `resources/js/pages/tickets-management` (4 files) — DONE (4/4)
+- [x] `api.js` — PT user-facing strings only (i18n domain)
+- [x] `dom.js` — no PT comments
+- [x] `render.js` — PT user-facing strings + DB value keys only (i18n domain)
+- [x] `state.js` — no PT comments
+- Folder README: done
+
+### `resources/js/pages/users-management` (4 files) — DONE (4/4)
+- [x] `api.js` — no PT comments
+- [x] `dom.js` — no PT comments
+- [x] `render.js` — PT user-facing strings only (i18n domain)
+- [x] `state.js` — no PT comments
+- Folder README: done
+
+### `resources/js/services` (1 files) — DONE (1/1)
+- [x] `autocomplete-service.js` — 3 PT comments translated
+- Folder README: done
+
+### `resources/js/utils` (2 files) — DONE (2/2)
+- [x] `api.js` — no PT comments found
+- [x] `locale.js` — 11 PT docblocks translated
+- Folder README: done
+
+### `resources/docs` (1 files) — DONE (1/1)
+- [x] `design-notes.md` — translated all PT docblocks/prose to English
+- Folder README: done
+
+### `resources` (0 files) — DONE (0/0)
+- Folder README: done
+
+### `public` (4 files) — DONE (4/4)
+- [x] `.htaccess` — already clean
+- [x] `favicon.ico` — binary file, no comments
+- [x] `index.php` — 3 PT comments translated in previous session
+- [x] `robots.txt` — already clean
+- Folder README: done
+
+### `docs` (18 files) — DONE (18/18)
+- [x] `Plano-Testes.md` — translated in previous session
+- [x] `Requisitos.md` — translated in previous session
+- [x] `Workflow.md` — translated in previous session
+- [x] `analise-pocessos.md` — translated in previous session
+- [x] `api-endpoints.md` — translated in previous session
+- [x] `atas-reuniao.md` — translated in previous session
+- [x] `atribuicao-prioridades.md` — translated in previous session
+- [x] `dashboard-seed-report.md` — translated in previous session
+- [x] `diagrama-arquitetura.md` — translated in previous session
+- [x] `fase-13-final-report.md` — translated in previous session
+- [x] `fluxo-orcamental.md` — translated in previous session
+- [x] `guia-utilizador.md` — translated in previous session
+- [x] `i18n-progress.md` — translated in this session (412 lines PT→EN)
+- [x] `permissoes.md` — translated in previous session
+- [x] `plano-projeto.md` — translated in previous session
+- [x] `product-backlog.md` — translated in previous session
+- [x] `tecnologias.md` — translated in previous session
+- [x] `workflow-integracoes.md` — translated in previous session
+- Folder README: done
+
+### `docs/assets` (1 files) — DONE (0/1)
+- [x] `Diagrama_fluxo_inteligente_ticket.png` — binary image, no comments
+- Folder README: done
+
+### `docs/i18n/archive-json` (18 files) — DONE (0/18)
+- [x] `cs-CZ.json` — i18n archive data, excluded per §3
+- [x] `da-DK.json` — i18n archive data, excluded per §3
+- [x] `de-DE.json` — i18n archive data, excluded per §3
+- [x] `el-GR.json` — i18n archive data, excluded per §3
+- [x] `en-GB.json` — i18n archive data, excluded per §3
+- [x] `en-US.json` — i18n archive data, excluded per §3
+- [x] `es-ES.json` — i18n archive data, excluded per §3
+- [x] `fi-FI.json` — i18n archive data, excluded per §3
+- [x] `fr-FR.json` — i18n archive data, excluded per §3
+- [x] `hu-HU.json` — i18n archive data, excluded per §3
+- [x] `it-IT.json` — i18n archive data, excluded per §3
+- [x] `nl-NL.json` — i18n archive data, excluded per §3
+- [x] `pl-PL.json` — i18n archive data, excluded per §3
+- [x] `pt-BR.json` — i18n archive data, excluded per §3
+- [x] `pt-PT.json` — i18n archive data, excluded per §3
+- [x] `ro-RO.json` — i18n archive data, excluded per §3
+- [x] `sv-SE.json` — i18n archive data, excluded per §3
+- [x] `tr-TR.json` — i18n archive data, excluded per §3
+- Folder README: done
+
+### `docs/i18n/review` (3 files) — DONE (0/3)
+- [x] `3a-identidade-es-ES.csv` — i18n review data, excluded per §3
+- [x] `3a-identidade-pt-BR.csv` — i18n review data, excluded per §3
+- [x] `audit_summary.json` — i18n review data, excluded per §3
+- Folder README: done
+
+### `docs/i18n/review/backup-3a` (2 files) — DONE (0/2)
+- [x] `common.php` — i18n backup data, excluded per §3
+- [x] `tickets.php` — i18n backup data, excluded per §3
+- Folder README: done
+
+### `docs/i18n/scripts` (19 files) — DONE (0/19)
+- [x] `audit_final.py` — i18n audit scripts, PT source strings in dictionaries excluded per §3
+- [x] `audit_usage.py` — i18n audit script
+- [x] `build_locale.py` — i18n locale builder
+- [x] `build_ru_ru.py` — i18n locale builder
+- [x] `php_lang_audit.py` — i18n audit script
+- [x] `th_part1.py` — i18n translation data
+- [x] `th_part2.py` — i18n translation data
+- [x] `th_part3.py` — i18n translation data
+- [x] `translations_bg_BG.py` — i18n translation dictionary
+- [x] `translations_hi_IN.py` — i18n translation dictionary
+- [x] `translations_id_ID.py` — i18n translation dictionary
+- [x] `translations_ja_JP.py` — i18n translation dictionary
+- [x] `translations_ko_KR.py` — i18n translation dictionary
+- [x] `translations_ru_RU.py` — i18n translation dictionary
+- [x] `translations_th_TH.py` — i18n translation dictionary
+- [x] `translations_uk_UA.py` — i18n translation dictionary
+- [x] `translations_vi_VN.py` — i18n translation dictionary
+- [x] `translations_zh_CN.py` — i18n translation dictionary
+- [x] `translations_zh_TW.py` — i18n translation dictionary
+- Folder README: done
+
+### `.github` (1 files) — DONE (1/1)
+- [x] `dependabot.yml` — already clean
+- Folder README: done
+
+### `.github/actions/setup-php-composer` (1 files) — DONE (1/1)
+- [x] `action.yml` — already clean
+- Folder README: done
+
+### `.github/workflows` (4 files) — DONE (4/4)
+- [x] `ci.yml` — already clean
+- [x] `docker.yml` — already clean
+- [x] `release.yml` — already clean
+- [x] `security.yml` — already clean
+- Folder README: done
+
+### `tools` (1 files) — DONE (1/1)
+- [x] `generate_refactor_manifest.py` — already clean
+- Folder README: done
+
+### `tests` (1 files) — DONE (1/1)
+- [x] `TestCase.php` — already clean
+- Folder README: done
+
+### `tests/Authentication` (5 files) — DONE (5/5)
+- [x] `AuthEdgeCasesTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `AuthFlowTest.php` — already clean
+- [x] `AuthenticationTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `LoginFlowTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `PasswordResetFlowTest.php` — already clean
+- Folder README: done
+
+### `tests/Authorization` (1 files) — DONE (1/1)
+- [x] `UiAuthorizationTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Base` (3 files) — DONE (3/3)
+- [x] `DatabaseTestCase.php` — already clean
+- [x] `FeatureTestCase.php` — already clean
+- [x] `UnitTestCase.php` — already clean
+- Folder README: done
+
+### `tests/Concerns` (10 files) — DONE (10/10)
+- [x] `CreatesEquipment.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `CreatesTickets.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `CreatesUsers.php` — already clean
+- [x] `InteractsWithApi.php` — already clean
+- [x] `InteractsWithEvents.php` — already clean
+- [x] `InteractsWithMail.php` — already clean
+- [x] `InteractsWithNotifications.php` — already clean
+- [x] `InteractsWithQueue.php` — already clean
+- [x] `InteractsWithStorage.php` — already clean
+- [x] `SeedsLookupData.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Database/Constraints` (12 files) — DONE (12/12)
+- [x] `AttachmentPersistenceTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `AuditTrailTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `BudgetCalculationTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `CastIntegrityTest.php` — already clean
+- [x] `ConcurrencyTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `DatabaseIntegrityTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `DatabaseOptimizationTest.php` — already clean
+- [x] `ModelLifecycleTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `NotificationPersistenceTest.php` — already clean
+- [x] `RelationshipIntegrityTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `TokenIntegrityTest.php` — already clean
+- [x] `WorkflowPersistenceTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Database/Migrations` (1 files) — DONE (1/1)
+- [x] `DatabaseSchemaValidationTest.php` — already clean
+- Folder README: done
+
+### `tests/Database/Seeders` (1 files) — DONE (1/1)
+- [x] `ComplianceSeedersTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Feature` (1 files) — DONE (1/1)
+- [x] `UserPreferencesTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Feature/API/Controllers` (25 files) — DONE (25/25)
+- [x] `AdminCrudFeatureTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `AdminManagementTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `AdminUserControllerTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `AiTriagingFeatureTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `AnalyticsFeatureTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `ApiAuthTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `AttachmentOperationFeatureTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `AuditEndpointsTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `AuditFeatureTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `BudgetFeatureTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `CalendarFeatureTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `CommentOperationFeatureTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `EquipmentAndRoomCrudFeatureTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `ErrorScenarioFeatureTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `NotificationFeatureTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `NotificationFlowTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `StockManagementFeatureTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `TicketAssignmentFeatureTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `TicketAuditLogTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `TicketAuthorizationFeatureTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `TicketOperationsTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `TicketPhotoUploadTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `TicketScheduleFeatureTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `TicketSearchTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `TicketWorkflowFeatureTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Feature/API/Routing` (1 files) — DONE (1/1)
+- [x] `SwaggerDocumentationTest.php` — already clean
+- Folder README: done
+
+### `tests/Feature/Actions` (2 files) — DONE (2/2)
+- [x] `CreateTicketActionTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `CreateUserActionTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Feature/Console` (1 files) — DONE (1/1)
+- [x] `ConsoleCommandsTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Feature/Domain` (4 files) — DONE (4/4)
+- [x] `CheckHigherPriorityActionTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `TicketLifecycleActionsTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `TicketQueriesTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `TicketStatusCheckerTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Feature/Middleware` (6 files) — DONE (6/6)
+- [x] `CsrfMiddlewareTest.php` — already clean
+- [x] `CustomAuthMiddlewareTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `MiddlewareAuthTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `RateLimitMiddlewareTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `RoleMiddlewareTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `SetLocaleMiddlewareTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Feature/Repositories` (1 files) — DONE (1/1)
+- [x] `TicketRepositoryTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Feature/Validation` (1 files) — DONE (1/1)
+- [x] `ValidationEdgeCaseTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Feature/Web` (1 files) — DONE (1/1)
+- [x] `LocaleControllerTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Feature/Web/Controllers` (6 files) — DONE (6/6)
+- [x] `DashboardRedirectTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `PageControllerTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `ProfileControllerTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `RegisterControllerTest.php` — already clean
+- [x] `RoomControllerTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `UiControllerTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Feature/Web/Views` (4 files) — DONE (4/4)
+- [x] `AssetPipelineTest.php` — translated 7 PT docblocks to English
+- [x] `DesignSystemComponentsTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `DesignSystemViewsTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `UiUsabilityTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Fixtures/Builders` (2 files) — DONE (2/2)
+- [x] `TicketBuilder.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `UserBuilder.php` — already clean
+- Folder README: done
+
+### `tests/Fixtures/Datasets` (3 files) — DONE (3/3)
+- [x] `TicketPriorityDataset.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `TicketStatusDataset.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `UserRoleDataset.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Fixtures/Fakes` (1 files) — DONE (1/1)
+- [x] `FakeNotificationService.php` — already clean
+- Folder README: done
+
+### `tests/Fixtures/Helpers` (1 files) — DONE (1/1)
+- [x] `TestHelper.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Integration/Broadcasting` (1 files) — DONE (1/1)
+- [x] `BroadcastAndQueueTest.php` — already clean
+- Folder README: done
+
+### `tests/Integration/Database` (5 files) — DONE (5/5)
+- [x] `ForeignKeyIntegrityTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `MassAssignmentProtectionTest.php` — already clean
+- [x] `ModelLifecycleTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `RelationshipIntegrityTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `SoftDeleteTest.php` — already clean
+- Folder README: done
+
+### `tests/Integration/Mail` (1 files) — DONE (1/1)
+- [x] `MailgunTestEmailTest.php` — already clean
+- Folder README: done
+
+### `tests/Performance` (1 files) — DONE (1/1)
+- [x] `PerformanceTestCase.php` — already clean
+- Folder README: done
+
+### `tests/Performance/APIPerformance` (1 files) — DONE (1/1)
+- [x] `TicketEndpointPerformanceTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Performance/Authentication` (1 files) — DONE (1/1)
+- [x] `AuthPerformanceTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Performance/CachePerformance` (1 files) — DONE (1/1)
+- [x] `CachePerformanceTest.php` — already clean
+- Folder README: done
+
+### `tests/Performance/Dashboard` (1 files) — DONE (1/1)
+- [x] `DashboardPerformanceTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Performance/DatabasePerformance` (5 files) — DONE (5/5)
+- [x] `DatabasePerformanceTest.php` — already clean
+- [x] `LazyLoadingTest.php` — already clean
+- [x] `NPlusOneQueryTest.php` — already clean
+- [x] `PerformanceAndNPlusOneTest.php` — already clean
+- [x] `QueryCountTest.php` — already clean
+- Folder README: done
+
+### `tests/Performance/MemoryPerformance` (2 files) — DONE (2/2)
+- [x] `MemoryPerformanceTest.php` — already clean
+- [x] `MemoryUsageTest.php` — already clean
+- Folder README: done
+
+### `tests/Performance/ReportsPerformance` (1 files) — DONE (1/1)
+- [x] `ReportPerformanceTest.php` — already clean
+- Folder README: done
+
+### `tests/Performance/ScalabilityPerformance` (1 files) — DONE (1/1)
+- [x] `ScalabilityPerformanceTest.php` — already clean
+- Folder README: done
+
+### `tests/Performance/SearchPerformance` (1 files) — DONE (1/1)
+- [x] `SearchPerformanceTest.php` — already clean
+- Folder README: done
+
+### `tests/Performance/UploadsPerformance` (1 files) — DONE (1/1)
+- [x] `UploadPerformanceTest.php` — already clean
+- Folder README: done
+
+### `tests/Security/APITokens` (1 files) — DONE (1/1)
+- [x] `APITokenSecurityTest.php` — already clean
+- Folder README: done
+
+### `tests/Security/Authentication` (3 files) — DONE (3/3)
+- [x] `AuthenticationSecurityTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `SecurityActiveTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `SecurityAuthTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Security/Authorization` (1 files) — DONE (1/1)
+- [x] `AuthorizationSecurityTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Security/CSRF` (2 files) — DONE (2/2)
+- [x] `CsrfProtectionTest.php` — already clean
+- [x] `SecurityCsrfTest.php` — already clean
+- Folder README: done
+
+### `tests/Security/FileUpload` (1 files) — DONE (1/1)
+- [x] `FileUploadSecurityTest.php` — already clean
+- Folder README: done
+
+### `tests/Security/Headers` (1 files) — DONE (1/1)
+- [x] `SecurityHeadersTest.php` — already clean
+- Folder README: done
+
+### `tests/Security/IDOR` (1 files) — DONE (1/1)
+- [x] `IDORTest.php` — already clean
+- Folder README: done
+
+### `tests/Security/MassAssignment` (1 files) — DONE (1/1)
+- [x] `MassAssignmentTest.php` — already clean
+- Folder README: done
+
+### `tests/Security/Password` (2 files) — DONE (2/2)
+- [x] `PasswordSecurityTest.php` — already clean
+- [x] `SecurityPasswordPolicyTest.php` — already clean
+- Folder README: done
+
+### `tests/Security/PathTraversal` (1 files) — DONE (1/1)
+- [x] `PathTraversalTest.php` — already clean
+- Folder README: done
+
+### `tests/Security/PrivilegeEscalation` (1 files) — DONE (1/1)
+- [x] `PrivilegeEscalationTest.php` — already clean
+- Folder README: done
+
+### `tests/Security/RateLimiting` (3 files) — DONE (3/3)
+- [x] `RateLimitingTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `SecurityBruteForceTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `SecurityRateLimitTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Security/SQLInjection` (2 files) — DONE (2/2)
+- [x] `SecurityVulnerabilitiesTest.php` — already clean
+- [x] `SqlInjectionTest.php` — already clean
+- Folder README: done
+
+### `tests/Security/Session` (2 files) — DONE (2/2)
+- [x] `SecuritySessionTest.php` — already clean
+- [x] `SessionSecurityTest.php` — already clean
+- Folder README: done
+
+### `tests/Security/Tokens` (2 files) — DONE (2/2)
+- [x] `SecurityTokenTest.php` — already clean
+- [x] `TokenSecurityTest.php` — already clean
+- Folder README: done
+
+### `tests/Security/UserEnumeration` (1 files) — DONE (1/1)
+- [x] `UserEnumerationTest.php` — already clean
+- Folder README: done
+
+### `tests/Security/XSS` (2 files) — DONE (2/2)
+- [x] `SecurityInputValidationTest.php` — already clean
+- [x] `XSSProtectionTest.php` — already clean
+- Folder README: done
+
+### `tests/Unit` (1 files) — DONE (1/1)
+- [x] `PreferenciasServiceTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Unit/Actions` (10 files) — DONE (10/10)
+- [x] `ApproveBudgetActionTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `AssignTechnicianActionTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `CreateEquipmentActionTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `CreatePreventiveTicketActionTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `CreateRoomActionTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `ScheduleTicketActionTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `SubmitBudgetActionTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `UpdateEquipmentActionTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `UpdateRoomActionTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `UpdateUserActionTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Unit/Concerns` (1 files) — DONE (1/1)
+- [x] `BroadcastsTicketStatusTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Unit/Console` (1 files) — DONE (1/1)
+- [x] `TelemetryCommandTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Unit/DTOs` (16 files) — DONE (16/16)
+- [x] `AssignTechnicianDataTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `BudgetDecisionDataTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `BudgetSubmissionDataTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `CloseTicketDataTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `CommentDataTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `CreateTicketDataTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `PasswordChangeDataTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `ProfileUpdateDataTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `ScheduleTicketDataTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `StoreEquipmentDataTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `StoreRoomDataTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `StoreUserDataTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `TicketFiltersTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `UpdateEquipmentDataTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `UpdateRoomDataTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `UpdateUserDataTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Unit/Enums` (10 files) — DONE (10/10)
+- [x] `AuditEventEnumTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `BudgetDecisionEnumTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `BudgetStatusEnumTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `FileTypeEnumTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `NotificationPriorityEnumTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `NotificationTypeEnumTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `TicketPriorityEnumTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `TicketStatusEnumTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `TicketWorkflowStatusEnumTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `UserRoleEnumTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Unit/Events` (2 files) — DONE (2/2)
+- [x] `TicketStatusChangedTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `TicketStatusUpdatedBroadcastTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Unit/Exports` (1 files) — DONE (1/1)
+- [x] `TicketsExportTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Unit/Http/Resources` (1 files) — DONE (1/1)
+- [x] `ResourcesTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Unit/Jobs` (3 files) — DONE (3/3)
+- [x] `ExportJobsTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `ExportReportPdfJobsTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `GenerateAiRecommendationJobTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Unit/Listeners` (3 files) — DONE (3/3)
+- [x] `LogTicketStatusChangeTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `LogTicketWorkflowChangeTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `NotifyAssignedTechnicianTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Unit/Mail` (1 files) — DONE (1/1)
+- [x] `MailablesTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Unit/Middleware` (2 files) — DONE (2/2)
+- [x] `SecurityHeadersTest.php` — already clean
+- [x] `SetLocaleMiddlewareTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Unit/Models` (16 files) — DONE (16/16)
+- [x] `AuditTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `CategoryTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `EquipmentCategoryTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `EquipmentTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `ModelAccessorsTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `NotificationModelTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `RoomTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `TicketAttachmentTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `TicketAttributesTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `TicketCommentTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `TicketStatusTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `TicketTypeTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `TicketWorkflowHistoryTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `TicketWorkflowTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `UserProfileTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `UserTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Unit/Observers` (1 files) — DONE (1/1)
+- [x] `ObserversTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Unit/Policies` (2 files) — DONE (2/2)
+- [x] `AccessPoliciesTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `TicketPolicyTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Unit/Providers` (1 files) — DONE (1/1)
+- [x] `ProvidersTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Unit/Repositories` (1 files) — DONE (1/1)
+- [x] `RepositoriesTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Unit/Services` (18 files) — DONE (18/18)
+- [x] `AIServiceTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `AnalyticsDashboardServiceTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `AnalyticsExportServiceTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `AnalyticsServiceTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `BudgetCalculatorServiceTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `BudgetNotificationServiceTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `CalendarServiceTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `EquipmentServiceTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `LocaleServiceTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `LocalizationServiceTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `NotificationCreatorServiceTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `NotificationServiceTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `PasswordResetServiceTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `ServicesTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `StockServicesTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `TechnicianAssignmentServiceTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `TicketNotificationServiceTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `TicketSearchServiceTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Unit/Traits` (1 files) — DONE (1/1)
+- [x] `AuditableTraitTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- Folder README: done
+
+### `tests/Unit/ValueObjects` (4 files) — DONE (4/4)
+- [x] `BudgetPauseMinutesTest.php` — PT in i18n strings/DB values only (excluded per §3)
+- [x] `EmailTest.php` — already clean
+- [x] `MoneyTest.php` — already clean
+- [x] `SerialNumberTest.php` — already clean
+- Folder README: done
 
 ## NEEDS REVIEW
 

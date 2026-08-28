@@ -10,9 +10,9 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
-        // O cache de estados (estático + Cache) persiste entre testes do mesmo processo,
-        // mas o RefreshDatabase repõe os auto-increments SQLite a cada rollback.
-        // Sem o flush, IDs em cache apontam para estados errados após um re-seed.
+        // The state cache (static + Cache) persists across tests within the same process,
+        // but RefreshDatabase resets SQLite auto-increments on every rollback.
+        // Without the flush, cached IDs point to wrong states after a re-seed.
         if (\Illuminate\Support\Facades\Schema::hasTable('ticket_statuses')) {
             app(\App\Services\TicketStatusService::class)->flush();
         }

@@ -1,11 +1,11 @@
 /*
 |--------------------------------------------------------------------------
-| OTP Component (Otimizado)
+| OTP Component
 |--------------------------------------------------------------------------
-| - Input de 1 digito por campo
-| - Auto-focus inteligente
-| - Paste inteligente
-| - Acessibilidade (A11y) preparada
+| - One digit per field input
+| - Smart auto-focus
+| - Smart paste
+| - Accessibility (A11y) ready
 */
 
 export default function otpComponent(config = {}) {
@@ -19,7 +19,7 @@ export default function otpComponent(config = {}) {
             this.sync();
         },
 
-        // Processa input manual
+        // Process manual input
         handleInput(index, event) {
             let val = event.target.value;
 
@@ -27,18 +27,18 @@ export default function otpComponent(config = {}) {
                 val = val.replace(/\D/g, '');
             }
 
-            // Pega apenas o último caractere digitado (caso o utilizador digite algo rápido)
+            // Take only the last typed character (in case the user types quickly)
             val = val.slice(-1);
             this.digits[index] = val;
             this.sync();
 
-            // Avança o foco se preenchido
+            // Advance focus if filled
             if (val && index < this.length - 1) {
                 this.focusInput(index + 1);
             }
         },
 
-        // Lida com teclas especiais
+        // Handle special keys
         handleKeydown(index, event) {
             switch (event.key) {
                 case 'Backspace':
@@ -55,7 +55,7 @@ export default function otpComponent(config = {}) {
             }
         },
 
-        // Melhoria no Paste
+        // Paste enhancement
         handlePaste(event) {
             event.preventDefault();
             let data = event.clipboardData.getData('text').trim();
@@ -74,7 +74,7 @@ export default function otpComponent(config = {}) {
             this.focusInput(Math.min(chars.length, this.length - 1));
         },
 
-        // Helper para focagem via DOM
+        // Helper for DOM focusing
         focusInput(index) {
             this.$nextTick(() => {
                 const inputs = this.$root.querySelectorAll('input[type="text"]');

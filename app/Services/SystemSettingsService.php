@@ -328,7 +328,7 @@ final class SystemSettingsService
                 date_default_timezone_set($timezone);
             }
         } catch (\Throwable $e) {
-            // base de dados indisponível durante o boot (instalação/manutenção)
+            // database unavailable during boot (installation/maintenance)
         }
     }
 
@@ -385,7 +385,7 @@ final class SystemSettingsService
     }
 
     /**
-     * Locais suportados pelo sistema, derivados de config('locales').
+     * Locales supported by the system, derived from config('locales').
      *
      * @return array<string, string>
      */
@@ -401,7 +401,7 @@ final class SystemSettingsService
     }
 
     /**
-     * Opções de e-mail disponíveis, derivadas dos transportes configurados.
+     * Available email options, derived from the configured mailers.
      */
     private function mailers(): array
     {
@@ -437,7 +437,7 @@ final class SystemSettingsService
     }
 
     /**
-     * Fuso horários mais comuns, com o UTC em primeiro lugar.
+     * Most common timezones, with UTC first.
      */
     private function timezones(): array
     {

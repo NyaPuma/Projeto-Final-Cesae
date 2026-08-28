@@ -87,7 +87,7 @@ return [
     'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.' => 'Tekintse meg a technikai beavatkozásokat, a megelőző karbantartást, a beütemezett jegyeket és az operatív feladatokat egyetlen integrált felületen.',
     'Voltar aos tickets' => 'Vissza a jegyekhez',
     'Últimas Ocorrências Registadas' => 'Legutóbb regisztrált események',
-    '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.' => '⚠️ :total magasabb prioritású jegy(ek) vár(ak) feldolgozásra.',
+    'Existem :total ticket(s) de prioridade mais alta por atender.' => ':total magasabb prioritású jegy(ek) vár(ak) feldolgozásra.',
     'Anexo adicionado' => 'Melléklet hozzáadva',
     'Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.' => 'Csak „Folyamatban” állapotú jegyek zárhatók le gyorsan.',
     'Apenas tickets no estado "Aberto" podem ser cancelados.' => 'Csak „Nyitott” állapotú jegyek törölhetők.',

@@ -3,15 +3,15 @@
 | Dropdown Manager (Robust & A11y Ready)
 |--------------------------------------------------------------------------
 |
-| Gestor reutilizável com foco em acessibilidade e estado CSS.
+| Reusable manager focused on accessibility and CSS state.
 |
 */
 
 export default class DropdownManager {
     constructor(options = {}) {
-        this.element = options.element ?? null; // Wrapper ou elemento principal
-        this.trigger = options.trigger ?? null; // Botão de disparo
-        this.menu = options.menu ?? null;       // O dropdown em si
+        this.element = options.element ?? null; // Wrapper or main element
+        this.trigger = options.trigger ?? null; // Trigger button
+        this.menu = options.menu ?? null;       // The dropdown itself
 
         this.opened = false;
         this.onOpen = options.onOpen ?? (() => {});
@@ -21,7 +21,7 @@ export default class DropdownManager {
         this.handleKeydown = this.handleKeydown.bind(this);
         this.handleOutsideClick = this.handleOutsideClick.bind(this);
 
-        // Estado inicial
+        // Initial state
         this.updateState();
     }
 
@@ -47,14 +47,14 @@ export default class DropdownManager {
         this.opened ? this.close() : this.open();
     }
 
-    // Atualiza atributos de Acessibilidade e Estado CSS
+    // Updates A11y attributes and CSS state
     updateState() {
         const state = this.opened ? 'open' : 'closed';
 
-        // Atualiza atributos de dados para o CSS
+        // Updates data attributes for CSS
         this.element?.setAttribute('data-state', state);
 
-        // Atualiza acessibilidade no trigger
+        // Updates accessibility on trigger
         if (this.trigger) {
             this.trigger.setAttribute('aria-expanded', this.opened);
             this.trigger.setAttribute('aria-haspopup', 'true');
@@ -74,7 +74,7 @@ export default class DropdownManager {
     handleKeydown(event) {
         if (event.key === 'Escape' && this.opened) {
             this.close();
-            this.trigger?.focus(); // Devolve o foco ao botão
+            this.trigger?.focus(); // Returns focus to the button
         }
     }
 

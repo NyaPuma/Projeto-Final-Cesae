@@ -1,33 +1,33 @@
-# 🔐 Matriz de Autorizações & Permissões (RBAC)
+# 🔐 Authorization & Permissions Matrix (RBAC)
 
-Este documento define de forma estrita o controlo de acessos baseado em funções (Role-Based Access Control) aplicado às rotas, controladores e middlewares do sistema para garantir a segurança dos dados.
+This document strictly defines the Role-Based Access Control (RBAC) applied to the system's routes, controllers, and middleware to ensure data security.
 
-## 1. Operador (Operário)
-* **Alterar Password:** Gestão autónoma da sua segurança de acesso à plataforma.
-* **Consultar Catálogo de Ativos (Apenas Leitura):** Listar salas e equipamentos ativos, utilizando a pesquisa e filtros avançados.
-* **Abrir Ticket (Manutenção Corretiva):** Reportar uma avaria real associando sala, máquina, descrição e upload de fotografias.
-* **Consultar os Seus Tickets:** Listagem restrita das suas avarias com suporte a filtros por estado, data e criticidade.
-* **Interação por Comentários:** Enviar e receber mensagens em formato de comentários nos tickets criados pelo próprio utilizador.
-* **Notificações:** Receção de alertas em tempo real e por e-mail quando o seu ticket mudar de estado.
-* **Cancelar Ticket (Condicional):** Capacidade de anular o próprio alerta, desde que este ainda se encontre no estado inicial "Aberto".
+## 1. Operator (Worker)
+* **Change Password:** Autonomous management of their platform access security.
+* **Consult Asset Catalog (Read-Only):** List active rooms and equipment, using search and advanced filters.
+* **Open Ticket (Corrective Maintenance):** Report an actual fault by associating room, machine, description, and photo uploads.
+* **View Your Tickets:** Restricted listing of your faults with support for filters by state, date, and criticality.
+* **Comment Interaction:** Send and receive messages in comment format on tickets created by the user themselves.
+* **Notifications:** Receive real-time and email alerts when your ticket changes state.
+* **Cancel Ticket (Conditional):** Ability to cancel your own alert, provided it is still in the initial "Open" state.
 
-## 2. Técnico de Manutenção
-* **Alterar Password:** Gestão autónoma da sua segurança de acesso.
-* **Abertura de Tickets em Campo:** Autonomia para registar uma nova ordem de avaria (`POST /tickets`) imediatamente caso detete uma falha mecânica ou elétrica em campo.
-* **Consultar Painel de Avarias Ativas:** Visualizar a fila global de tickets com ferramentas de pesquisa e filtros avançados.
-* **Consultar Histórico de Ativos:** Acesso à ficha técnica e ao registo histórico de intervenções passadas de qualquer máquina.
-* **Iniciar Reparação:** Assumir a responsabilidade de um ticket (muda o estado para "Em Curso", inicia o cronómetro operacional do servidor e envia notificação).
-* **Upload de Evidências:** Adicionar fotos do decorrer da reparação ou de componentes danificados para o relatório técnico.
-* **Pedir Autorização Orçamental (Fluxo Excecional):** Move o ticket para "Pendente de Orçamento", suspende o SLA e anexa uma justificação financeira.
-* **Encerrar Ticket:** Submeter o encerramento (estado "Fechada"), com preenchimento obrigatório dos minutos de mão de obra despendidos, relatório técnico final, registo de consumos de peças do stock interno e geração do relatório individual.
+## 2. Maintenance Technician
+* **Change Password:** Autonomous management of their access security.
+* **Open Tickets in the Field:** Autonomy to register a new fault order (`POST /tickets`) immediately when detecting a mechanical or electrical fault in the field.
+* **View Active Faults Panel:** View the global ticket queue with search tools and advanced filters.
+* **View Asset History:** Access the technical record and historical log of past interventions for any machine.
+* **Start Repair:** Take responsibility for a ticket (changes state to "In Progress", starts the server operational timer, and sends notification).
+* **Upload Evidence:** Add photos from the repair process or damaged components to the technical report.
+* **Request Budget Authorization (Exceptional Workflow):** Moves the ticket to "Pending Budget", suspends the SLA, and attaches a financial justification.
+* **Close Ticket:** Submit closure (state "Closed"), with mandatory fields for minutes of labor spent, final technical report, internal stock parts consumption record, and individual report generation.
 
-## 3. Administrador (Diretor de Operações)
-* **Gestão Exclusiva de Utilizadores e Recursos Humanos:** Controlo absoluto (CRUD) sobre a criação de contas e atribuição de Perfis (Roles) no Backoffice corporativo. O auto-registo público foi desativado; a introdução de novos utilizadores é restrita à administração.
-* **Despacho Assistido por IA:** Acesso à interface de decisão onde visualiza a avaria cruzada com a recomendação em tempo real do `AIService` (NLP), gravando a alocação do técnico sugerido com 1 clique.
-* **Gestão Total de Inventário, Ativos & Infraestrutura:** Operações estruturais (CRUD) sobre Equipamentos, Salas, Categorias e Localizações físicas com suporte a Soft Deletes.
-* **Agendar Manutenções Preventivas:** Gerar ordens de trabalho proativas e planeadas cronologicamente diretamente no calendário.
-* **Aprovar/Rejeitar Orçamentos:** Decidir sobre os pedidos de alto valor submetidos pelos técnicos para libertação da reparação.
-* **Consultar Dashboard Analítico Reativo com Gráficos:** Acesso exclusivo a gráficos dinâmicos (Chart.js) que demonstram o MTTR, MTBF, eficiência da equipa técnica e custos gerais atualizados automaticamente via WebSockets.
-* **Consultar Audit Log Global:** Visualizar o histórico completo e imutável de alterações do sistema (quem alterou que campo, o valor antigo e o novo valor armazenados em JSON).
-* **Exportação de Relatórios Avançados:** Descarregar relatórios consolidados em formato Excel (.xlsx) ou PDF com base em filtros temporais e operacionais.
-* **Aceder à Documentação Interativa:** Consulta e teste dos endpoints através da interface Swagger UI.
+## 3. Administrator (Operations Director)
+* **Exclusive User & Human Resources Management:** Absolute control (CRUD) over account creation and role assignment in the corporate Backoffice. Public self-registration has been disabled; new user entry is restricted to administration.
+* **AI-Assisted Dispatch:** Access to the decision interface where the fault is cross-referenced with real-time `AIService` (NLP) recommendations, saving the suggested technician allocation with 1 click.
+* **Total Inventory, Assets & Infrastructure Management:** Structural operations (CRUD) on Equipment, Rooms, Categories, and Physical Locations with Soft Delete support.
+* **Schedule Preventive Maintenance:** Generate proactive and chronologically planned work orders directly on the calendar.
+* **Approve/Reject Budgets:** Decide on high-value requests submitted by technicians for repair release.
+* **View Reactive Analytics Dashboard with Charts:** Exclusive access to dynamic charts (Chart.js) showing MTTR, MTBF, technical team efficiency, and overall costs updated automatically via WebSockets.
+* **View Global Audit Log:** View the complete and immutable system change history (who changed which field, old and new values stored in JSON).
+* **Advanced Report Export:** Download consolidated reports in Excel (.xlsx) or PDF format based on temporal and operational filters.
+* **Access Interactive Documentation:** Browse and test endpoints through the Swagger UI interface.

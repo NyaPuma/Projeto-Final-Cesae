@@ -39,7 +39,7 @@ class AnalyticsDashboard {
         this.lastData = null;
         this.elements = this.getElements();
 
-        // Expor para a janela global apenas o necessário para triggers externos
+        // Expose to the global window only what is needed for external triggers
         window.refreshAnalyticsDashboard = () => this.refresh();
 
         this.init();
@@ -162,7 +162,7 @@ class AnalyticsDashboard {
     }
 }
 
-// Inicialização
+// Initialization
 export function init() {
     initExportActions();
     if (document.getElementById("kpiPanel")) {

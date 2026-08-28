@@ -15,7 +15,7 @@ use Illuminate\Http\JsonResponse;
 final class ActivityFeedController extends Controller
 {
     /**
-     * Feed de atividade recente no formato esperado pelo componente
+     * Recent activity feed in the format expected by the component
      * x-ui.analytics.activity-timeline-card.
      */
     public function index(): JsonResponse

@@ -78,7 +78,7 @@ final class TicketCloseController extends Controller
             if ($higherPriority['has_higher']) {
                 return response()->json([
                     'warning' => true,
-                    'message' => __("tickets.⚠️ Existem :total ticket(s) de prioridade mais alta por atender.", [
+                    'message' => __("tickets.Existem :total ticket(s) de prioridade mais alta por atender.", [
                         'total' => $higherPriority['total'],
                     ]),
                     'urgent_tickets_count' => $higherPriority['total'],

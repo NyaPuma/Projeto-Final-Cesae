@@ -359,8 +359,8 @@ class CustomAuthMiddlewareTest extends TestCase
         $response = $this->withCookie('api_token', bin2hex(random_bytes(32)))
             ->getJson('/protected-auth');
 
-        // Em alguns contextos de teste, o middleware pode falhar por falta de session store;
-        // neste cenário queremos apenas validar que o token inválido é recusado.
+        // In some test contexts, the middleware may fail due to a missing session store;
+        // in this scenario we only want to validate that the invalid token is rejected.
         if ($response->getStatusCode() === 500) {
             $this->markTestIncomplete('Falha por ausência de session store no request de teste.');
 

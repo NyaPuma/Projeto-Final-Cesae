@@ -1,11 +1,11 @@
 {{--
 |-------------------------------------------------------------------------- |
-Page Action Add Link Component (Otimizado)
+Page Action Add Link Component (Optimized)
 |-------------------------------------------------------------------------- |
-| Componente de ação rápida para criação/adicionamento de registos.
-| • Substitui o caractere estático por um ícone SVG profissional.
-| • Suporta rótulo via atributo ou slot.
-| • 100% livre de CSS ou JS inline.
+| Quick-action component for record creation/addition.
+| • Replaces the static character with a professional SVG icon.
+| • Supports label via attribute or slot.
+| • 100% free of inline CSS or JS.
 | --}}
 @props([
     'href',

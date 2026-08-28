@@ -87,7 +87,7 @@ return [
     'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.' => 'Наблюдавайте технически интервенции, превантивна поддръжка, планирани заявки и оперативни задачи в един единствен интегриран интерфейс.',
     'Voltar aos tickets' => 'Обратно към заявките',
     'Últimas Ocorrências Registadas' => 'Последни регистрирани инциденти',
-    '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.' => '⚠️ Има :total заявки с по-висок приоритет, които чакат отговор.',
+    'Existem :total ticket(s) de prioridade mais alta por atender.' => 'Има :total заявки с по-висок приоритет, които чакат отговор.',
     'Anexo adicionado' => 'Приложението е добавено',
     'Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.' => 'Само заявки със статус "В процес" могат да бъдат бързо затворени.',
     'Apenas tickets no estado "Aberto" podem ser cancelados.' => 'Само заявки със статус "Отворена" могат да бъдат отменени.',

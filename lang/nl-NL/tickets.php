@@ -87,7 +87,7 @@ return [
     'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.' => 'Bekijk technische interventies, preventief onderhoud, geplande tickets en operationele taken in één geïntegreerde interface.',
     'Voltar aos tickets' => 'Terug naar de tickets',
     'Últimas Ocorrências Registadas' => 'Laatste geregistreerde meldingen',
-    '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.' => '⚠️ Er zijn :total ticket(s) met hogere prioriteit die behandeld moeten worden.',
+    'Existem :total ticket(s) de prioridade mais alta por atender.' => 'Er zijn :total ticket(s) met hogere prioriteit die behandeld moeten worden.',
     'Anexo adicionado' => 'Bijlage toegevoegd',
     'Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.' => 'Alleen tickets met status "In behandeling" kunnen snel worden gesloten.',
     'Apenas tickets no estado "Aberto" podem ser cancelados.' => 'Alleen tickets met status "Open" kunnen worden geannuleerd.',

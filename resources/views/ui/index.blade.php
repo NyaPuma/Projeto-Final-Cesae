@@ -11,27 +11,7 @@
         'technician' => __('common.Técnico'),
         default => __('common.Funcionário'),
     };
-
-    $dashboardTranslations = [
-        'resolution' => __('common.Tempo Médio de Resolução'),
-        'waiting' => __('common.Tempo Médio de Espera'),
-        'open' => __('dashboard.Tickets Abertos'),
-        'closed' => __('tickets.Tickets Fechados'),
-        'metricsAdminOnly' => __('dashboard.Métricas disponíveis apenas para Administrador.'),
-        'loadingMetrics' => __('dashboard.A ler indicadores analíticos em tempo real...'),
-        'loadError' => __('dashboard.Não foi possível carregar os indicadores analíticos do servidor.'),
-        'noRecent' => __('common.Nenhuma ocorrência recente registada.'),
-        'title' => __('common.Título'),
-        'priority' => __('common.Prioridade'),
-        'action' => __('common.Ação'),
-        'view' => __('common.Ver'),
-        'minutes' => __('common.min'),
-    ];
 @endphp
-
-<script>
-    window.SGM_DASHBOARD_I18N = @json($dashboardTranslations);
-</script>
 
 @section('content')
     <div class="space-y-6">
@@ -54,7 +34,7 @@
                 <div class="mb-4 flex items-center justify-between border-b border-(--border) pb-3">
                     <div>
                         <x-ui.text.eyebrow as="p" size="xs" tracking="widest" class="font-bold">{{ __('dashboard.Atividade Recente') }}</x-ui.text.eyebrow>
-                        <h3 class="text-base font-bold text-(--text)">{{ __('tickets.Últimas Ocorrências Registadas') }}</h3>
+                        <h2 class="text-base font-bold text-(--text)">{{ __('tickets.Últimas Ocorrências Registadas') }}</h2>
                     </div>
                     <a href="/ui/tickets" class="text-xs font-bold text-primary hover:underline flex items-center gap-1">
                         {{ __('common.Ver todos') }} &rarr;
@@ -73,30 +53,30 @@
             <div>
                 <div class="mb-4 border-b border-(--border) pb-3">
                     <x-ui.text.eyebrow as="p" size="xs" tracking="widest" class="font-bold">{{ __('common.Operações') }}</x-ui.text.eyebrow>
-                    <h3 class="text-base font-bold text-(--text)">{{ __('equipment.Piquete Técnico Ativo') }}</h3>
+                    <h2 class="text-base font-bold text-(--text)">{{ __('equipment.Piquete Técnico Ativo') }}</h2>
                 </div>
 
                 <div id="picketList" class="space-y-3 mt-2">
                     <div class="flex items-center justify-between text-xs py-1.5 border-b border-(--border)/50">
                         <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            <span class="w-2 h-2 rounded-full bg-success"></span>
                             <span class="font-semibold text-(--text)">Emanuel Silva</span>
                         </div>
-                        <span class="text-[10px] font-bold text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded-full">2 {{ __('common.em curso') }}</span>
+                        <span class="text-xs font-bold text-warning bg-warning/10 px-2 py-0.5 rounded-full">2 {{ __('common.em curso') }}</span>
                     </div>
                     <div class="flex items-center justify-between text-xs py-1.5 border-b border-(--border)/50">
                         <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            <span class="w-2 h-2 rounded-full bg-success"></span>
                             <span class="font-semibold text-(--text)">João Pires</span>
                         </div>
-                        <span class="text-[10px] font-bold text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded-full">1 {{ __('common.em curso') }}</span>
+                        <span class="text-xs font-bold text-success bg-success/10 px-2 py-0.5 rounded-full">1 {{ __('common.em curso') }}</span>
                     </div>
                     <div class="flex items-center justify-between text-xs py-1.5">
                         <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-slate-500"></span>
+                            <span class="w-2 h-2 rounded-full bg-[var(--border)]"></span>
                             <span class="font-semibold text-(--text-soft)">Carlos Costa</span>
                         </div>
-                        <span class="text-[10px] font-semibold text-(--text-soft)">Off-line</span>
+                        <span class="text-xs font-semibold text-(--text-soft)">Off-line</span>
                     </div>
                 </div>
             </div>

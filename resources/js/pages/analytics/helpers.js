@@ -42,7 +42,7 @@ export async function fetchAnalytics() {
 export function showMessage(element, message, type = "success") {
     if (!element) return;
     const box = element;
-    box.className = `mt-6 rounded-2xl border px-5 py-4 text-sm font-medium ${type === 'error' ? 'border-red-300 bg-red-50 text-red-700' : 'border-emerald-300 bg-emerald-50 text-emerald-700'}`;
+    box.className = `mt-6 rounded-2xl border px-5 py-4 text-sm font-medium ${type === 'error' ? 'border-danger/20 bg-danger/5 text-danger' : 'border-success/20 bg-success/5 text-success'}`;
     box.textContent = message;
 }
 

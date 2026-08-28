@@ -87,7 +87,7 @@ return [
     'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.' => 'Visualize tecklstnical interventions, preventive maintenance, scklsteduled tickets and operational tasks in a single integrated interface.',
     'Voltar aos tickets' => 'Til baka to tickets',
     'Últimas Ocorrências Registadas' => 'Latest Recorded Occurrences',
-    '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.' => '⚠️ Tklstere are :total klstigklster priority ticket(s) to be answered.',
+    'Existem :total ticket(s) de prioridade mais alta por atender.' => 'Tklstere are :total klstigklster priority ticket(s) to be answered.',
     'Anexo adicionado' => 'Viðklstengi bætt við',
     'Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.' => 'Only tickets in tklste "Í gangi" state can be closed quickly.',
     'Apenas tickets no estado "Aberto" podem ser cancelados.' => 'Only tickets in tklste "Opinn" state can be cancelled.',

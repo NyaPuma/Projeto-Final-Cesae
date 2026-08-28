@@ -1,56 +1,56 @@
-## 1. Âmbito e Objetivos Gerais
+## 1. Scope and General Objectives
 
-O objetivo principal deste projeto é transformar processos reativos ou manuais numa operação industrial totalmente otimizada e integrada através de:
-* **Comunicação Centralizada e Omnicanal:** Canal direto e reativo entre quem deteta a avaria (Operário), quem a repara (Técnico) e quem gere a infraestrutura (Administrador), permitindo que qualquer perfil autenticado reporte falhas em campo.
-* **Inteligência Operacional Assistida (SAD):** Integração do motor `AIService` (OpenAI `gpt-4o-mini`) como um Sistema de Apoio à Decisão para triagem categórica automática por NLP e recomendação analítica de alocação de técnicos com base em especialidades e volume de carga de trabalho.
-* **Segurança, Auditoria e Controlo:** Remoção do auto-registo público de utilizadores para blindagem da infraestrutura corporativa. Registo automático de *timestamps* invioláveis pelo servidor (`NOW()`) em cada mudança de estado do ticket, armazenamento de logs em JSON com os estados modificados (`old_values` e `new_values`) e dashboards reativos via WebSockets para monitorização de custos e KPIs da Direção.
-
----
-
-## 2. Divisão de Papéis da Equipa Técnica
-
-Para simular a dinâmica de uma equipa real de desenvolvimento de software, os 4 elementos do grupo assumem focos de liderança no Trello:
-
-* **Team Leader & Product Owner:** Gestão de projeto, planeamento ágil (Sprints), controlo de requisitos, versionamento semântico no Git e interface pedagógica.
-* **Dev-End Developer (Frontend Lead):** Construção das interfaces responsivas em Blade, compilação de assets via Vite, calendarização na Agenda (FullCalendar v6) e componentes reativos de gráficos (Chart.js).
-* **Back-End Developer (Core Engineer):** Orquestração das rotas de API/Web, isolamento de permissões via middlewares de controlo de acessos baseado em perfis (RBAC), controladores refinados e injeção do serviço de Inteligência Artificial.
-* **Database Administrator (DBA):** Modelação de dados relacional no MySQL, desenho do DER, indexação avançada de chaves para performance de queries complexas e execução física via Laravel Migrations.
+The main objective of this project is to transform reactive or manual processes into a fully optimized, integrated industrial operation through:
+* **Centralized and Omnichannel Communication:** Direct, reactive channel between whoever detects the fault (operative), whoever repairs it (Technician) and whoever manages the infrastructure (Administrator), allowing any authenticated profile to report failures in the field.
+* **Assisted Operational Intelligence (DSS):** Integration of the `AIService` engine (OpenAI `gpt-4o-mini`) as a Decision Support System for automatic categorical triage via NLP and analytical recommendation of technician allocation based on specialties and workload volume.
+* **Security, Auditing and Control:** Removal of public user self-registration to shield the corporate infrastructure. Automatic recording of tamper-proof server *timestamps* (`NOW()`) on each ticket status change, storage of logs in JSON with the modified states (`old_values` and `new_values`) and reactive dashboards via WebSockets for monitoring costs and Management KPIs.
 
 ---
 
-## 3. Cronograma de Desenvolvimento (Estrutura de Sprints)
+## 2. Division of Roles in the Technical Team
 
-O projeto foi planeado num ciclo de **4 Sprints Semanais** para garantir entregas incrementais e estáveis:
+To simulate the dynamics of a real software development team, the 4 group members take on leadership focuses in Trello:
 
-### Sprint 1: Engenharia de Requisitos e Modelação de Dados
-* Levantamento completo de Requisitos Funcionais (RF) e Não-Funcionais (RNF).
-* Desenho e fecho do Diagrama Entidade-Relacionamento (DER) ajustado ao modelo *In-House* departamental.
-* Configuração do repositório Git corporativo e criação do quadro de tarefas no Trello (Product Backlog e Sprint Backlog).
-* Execução física da base de dados relacional no MySQL usando **Laravel Migrations**.
-
-### Sprint 2: Core do Workflow, Rotas Globais e Segurança RBAC
-* Implementação do sistema de autenticação customizado e proteção de rotas com base em middlewares de perfis (`role:user,technician,admin`).
-* **Blindagem de Identity:** Remoção do endpoint público `/register` e implementação da criação restrita de utilizadores no Backoffice do Administrador (`/admin/users/register`).
-* **Fluxo Global In-House:** Criação da lógica de abertura de tickets omnicanal (`POST /tickets`), permitindo o registo detalhado de avarias por qualquer colaborador autenticado em campo.
-* Desenvolvimento da transição de estados dos tickets com registo automático de carimbos temporais no servidor.
-
-### Sprint 3: Layer de Inteligência Artificial e Agenda Operacional
-* Injeção de dependência e desacoplamento do `AIService` no controlador central (`TicketController`).
-* Construção do prompt contextualizado em português (NLP) para classificação automática e sugestão fundamentada do mecânico ideal com menor volumetria de tarefas ativas.
-* Integração da interface visual da **Agenda** utilizando o **FullCalendar v6** para leitura dinâmica e síncrona de ordens de trabalho agendadas a partir do MySQL.
-
-### Sprint 4: Painel Analítico Reativo, Relatórios e Fecho
-* Desenvolvimento do Dashboard de Gestão do Administrador com gráficos analíticos reativos (`Chart.js`) alimentados em tempo real via eventos de transmissão (`[Broadcast]` via WebSockets) no fecho das intervenções.
-* Implementação do módulo de carregamento de evidências fotográficas (`Storage`) e comentários operacionais com restrições lógicas por utilizador.
-* Execução do Plano de Testes global (validação de concorrência, mitigação de erros de variáveis no servidor e tratamento de exceções na API) e compilação do manual técnico do utilizador.
+* **Team Leader & Product Owner:** Project management, agile planning (Sprints), requirements control, semantic versioning in Git and pedagogical interface.
+* **Dev-End Developer (Frontend Lead):** Building responsive interfaces in Blade, asset compilation via Vite, scheduling in the Agenda (FullCalendar v6) and reactive chart components (Chart.js).
+* **Back-End Developer (Core Engineer):** Orchestration of API/Web routes, permission isolation via role-based access control middlewares (RBAC), refined controllers and injection of the Artificial Intelligence service.
+* **Database Administrator (DBA):** Relational data modeling in MySQL, ERD design, advanced key indexing for complex query performance and physical execution via Laravel Migrations.
 
 ---
 
-## 4. Matriz de Riscos e Mitigação Operacional
+## 3. Development Schedule (Sprint Structure)
 
-| Risco Identificado | Impacto | Estratégia de Mitigação Técnica |
+The project was planned in a cycle of **4 Weekly Sprints** to ensure incremental and stable deliveries:
+
+### Sprint 1: Requirements Engineering and Data Modeling
+* Complete gathering of Functional Requirements (FR) and Non-Functional Requirements (NFR).
+* Design and finalization of the Entity-Relationship Diagram (ERD) adjusted to the departmental *In-House* model.
+* Configuration of the corporate Git repository and creation of the task board in Trello (Product Backlog and Sprint Backlog).
+* Physical execution of the relational database in MySQL using **Laravel Migrations**.
+
+### Sprint 2: Workflow Core, Global Routes and RBAC Security
+* Implementation of the customized authentication system and route protection based on role middlewares (`role:user,technician,admin`).
+* **Identity Hardening:** Removal of the public `/register` endpoint and implementation of restricted user creation in the Administrator's Backoffice (`/admin/users/register`).
+* **Global In-House Flow:** Creation of the omnichannel ticket intake logic (`POST /tickets`), allowing detailed fault reporting by any authenticated employee in the field.
+* Development of ticket status transitions with automatic recording of temporal stamps on the server.
+
+### Sprint 3: Artificial Intelligence Layer and Operational Agenda
+* Dependency injection and decoupling of `AIService` in the central controller (`TicketController`).
+* Construction of the context-aware prompt in Portuguese (NLP) for automatic classification and well-grounded suggestion of the ideal mechanic with the lowest active task volume.
+* Integration of the **Agenda** visual interface using **FullCalendar v6** for dynamic, synchronous reading of scheduled work orders from MySQL.
+
+### Sprint 4: Reactive Analytical Panel, Reports and Closure
+* Development of the Administrator's Management Dashboard with reactive analytical charts (`Chart.js`) fed in real time via broadcast events (`[Broadcast]` via WebSockets) upon intervention closure.
+* Implementation of the photographic evidence upload module (`Storage`) and operational comments with logical restrictions per user.
+* Execution of the global Test Plan (concurrency validation, mitigation of variable errors on the server and exception handling in the API) and compilation of the technical user manual.
+
+---
+
+## 4. Risk Matrix and Operational Mitigation
+
+| Identified Risk | Impact | Technical Mitigation Strategy |
 | :--- | :---: | :--- |
-| **Erros de Integridade de Dados** (Ex: eliminar uma sala ou categoria com equipamentos ativamente vinculados) | Alto | Configuração rigorosa de chaves estrangeiras com restrição de eliminação física (`onDelete('restrict')` ou `nullOnDelete()`) nas migrations do MySQL. |
-| **Elevação de Privilégios ou Contas Fantasma** (Ex: criação descontrolada de perfis administrativos por utilizadores externos) | Alto | **Auto-registo desativado.** Eliminação de rotas de registo públicas e isolamento do controlador de criação de identidade estritamente atrás do middleware de barramento do Administrador. |
-| **Falha de Sessão / Token Expirado** (Avisos de autenticação em requisições AJAX do calendário ou submissão de formulários) | Médio | Tratamento de exceções HTTP nos controladores do Laravel e isenção controlada de CSRF em rotas de API específicas (`withoutMiddleware`), garantindo resiliência visual e fallbacks limpos. |
-| **Gargalo Administrativo na Distribuição de Tarefas** (Erros humanos ou atrasos na alocação manual de incidentes na fábrica) | Alto | **Módulo de Decisão por IA.** Triagem assistida no `AIService`, que tritura o texto livre e automatiza a recomendação do técnico ideal, reduzindo o tempo médio de resposta (SLA) através de um despacho em 1 clique. |
+| **Data Integrity Errors** (e.g. deleting a room or category with actively linked equipment) | High | Rigorous configuration of foreign keys with physical deletion restriction (`onDelete('restrict')` or `nullOnDelete()`) in MySQL migrations. |
+| **Privilege Escalation or Ghost Accounts** (e.g. uncontrolled creation of administrative profiles by external users) | High | **Self-registration disabled.** Elimination of public registration routes and isolation of the identity creation controller strictly behind the Administrator's bus middleware. |
+| **Session Failure / Expired Token** (authentication warnings in AJAX requests from the calendar or form submissions) | Medium | HTTP exception handling in Laravel controllers and controlled CSRF exemption on specific API routes (`withoutMiddleware`), ensuring visual resilience and clean fallbacks. |
+| **Administrative Bottleneck in Task Distribution** (human errors or delays in manual incident allocation at the factory) | High | **AI Decision Module.** Assisted triage in `AIService`, which processes the free text and automates the recommendation of the ideal technician, reducing average response time (SLA) through a 1-click dispatch. |

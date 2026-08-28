@@ -3,10 +3,10 @@
 | Page Header Component
 |--------------------------------------------------------------------------
 |
-| Cabeçalho modular para secções com eyebrow, título de grande destaque e descrição.
-| • 100% livre de CSS ou JS inline.
-| • Suporte a atributos globais e customização de margens via $attributes.
-| • Verificações defensivas robustas para elementos opcionais.
+| Modular header for sections with eyebrow, prominent title and description.
+| • 100% free of inline CSS or JS.
+| • Global attribute support and margin customization via $attributes.
+| • Robust defensive checks for optional elements.
 |
 --}}
 

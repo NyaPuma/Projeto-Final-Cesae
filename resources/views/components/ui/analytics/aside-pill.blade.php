@@ -3,10 +3,10 @@
 | Pill / Badge Component Wrapper
 |--------------------------------------------------------------------------
 |
-| Componente wrapper para exibição de pílulas, badges ou etiquetas.
-| • 100% livre de CSS ou JS inline.
-| • Suporte híbrido a propriedades e slots para máxima flexibilidade.
-| • Exposição parametrizada de tons e tamanhos.
+| Wrapper component for displaying pills, badges or labels.
+| • 100% free of inline CSS or JS.
+| • Hybrid property and slot support for maximum flexibility.
+| • Parameterized tone and size exposure.
 |
 --}}
 

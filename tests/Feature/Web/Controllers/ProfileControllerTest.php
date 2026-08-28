@@ -149,21 +149,21 @@ class ProfileControllerTest extends FeatureTestCase
         $send = fn (array $payload) => $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/profile/update', $payload);
 
-        // Confirmação de password não coincide
+        // Password confirmation does not match
         $send([
             'current_password' => 'Password123!',
             'password' => 'Nova-password-1',
             'password_confirmation' => 'Outra-password-1',
         ])->assertStatus(422)->assertJsonValidationErrors(['password']);
 
-        // Password fraca
+        // Weak password
         $send([
             'current_password' => 'Password123!',
             'password' => 'short',
             'password_confirmation' => 'short',
         ])->assertStatus(422)->assertJsonValidationErrors(['password']);
 
-        // Name apenas com espaços
+        // Name containing only spaces
         $send(['name' => '   '])->assertStatus(422)->assertJsonValidationErrors(['name']);
     }
 }

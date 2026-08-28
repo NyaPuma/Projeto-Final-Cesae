@@ -13,12 +13,12 @@
         </x-ui.page-actions.group>
     </x-slot:actions>
 
-    {{-- Formulário de criação / edição --}}
+    {{-- Create / edit form --}}
     <div class="mb-6 rounded-2xl border border-(--border) bg-(--surface) p-5 shadow-sm">
-        <h3 id="categoryFormTitle" class="mb-4 text-xs font-black uppercase tracking-wider text-(--text)">➕ {{ __('common.Nova categoria') }}</h3>
+        <h2 id="categoryFormTitle" class="mb-4 text-xs font-black uppercase tracking-wider text-(--text)">{{ __('common.Nova categoria') }}</h2>
         <form id="categoryForm" class="grid gap-4 md:grid-cols-2 lg:grid-cols-4" novalidate data-category-form-mode="create" data-category-id="">
             <div>
-                <label class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-(--text-soft)" for="catName">
+                <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-(--text-soft)" for="catName">
                     {{ __('common.Nome') }} <span class="text-danger">*</span>
                 </label>
                 <input id="catName" name="name" type="text" required placeholder="{{ __('common.Ex: Rolamentos') }}"
@@ -43,7 +43,7 @@
         </form>
     </div>
 
-    {{-- Tabela de categorias --}}
+    {{-- Categories table --}}
     <div class="overflow-hidden rounded-2xl border border-(--border) bg-(--surface) shadow-sm">
         <table class="w-full text-left text-sm">
             <thead class="border-b border-(--border) bg-(--surface-2)">
@@ -59,19 +59,19 @@
                         <td class="px-5 py-4 text-xs font-bold text-(--text)">{{ $category->name }}</td>
                         <td class="px-5 py-4 text-xs font-semibold">
                             @if($category->active)
-                                <span class="inline-block rounded-lg bg-emerald-500/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">{{ __('common.Ativa') }}</span>
+                                <span class="inline-block rounded-lg bg-success/10 px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-success">{{ __('common.Ativa') }}</span>
                             @else
-                                <span class="inline-block rounded-lg bg-slate-500/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-slate-500">{{ __('common.Inativa') }}</span>
+                                <span class="inline-block rounded-lg bg-(--surface-2) px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-muted">{{ __('common.Inativa') }}</span>
                             @endif
                         </td>
-                        <td class="px-5 py-4 text-right">
-                            <div class="inline-flex items-center gap-2">
-                                <button type="button" data-category-edit="{{ $category->id }}" data-name="{{ $category->name }}" data-active="{{ $category->active ? '1' : '' }}"
-                                    class="rounded-lg border border-(--border) bg-(--surface-2) px-2.5 py-1 text-[10px] font-bold text-(--text) transition hover:bg-(--border)">✏️ {{ __('ui.Editar') }}</button>
-                                <button type="button" data-category-delete="{{ $category->id }}"
-                                    class="rounded-lg border border-rose-500/25 bg-rose-500/10 px-2.5 py-1 text-[10px] font-bold text-rose-700 transition hover:bg-rose-500/20 dark:text-rose-400">🗑️</button>
-                            </div>
-                        </td>
+            <td class="ui-listing-actions px-5 py-4 text-right">
+                <div class="inline-flex items-center justify-end gap-1.5">
+                    <button type="button" data-category-edit="{{ $category->id }}" data-name="{{ $category->name }}" data-active="{{ $category->active ? '1' : '' }}"
+                        class="inline-flex min-h-[28px] items-center justify-center rounded-lg border border-(--border) bg-(--surface) px-3 py-1.5 text-xs font-semibold text-(--text) shadow-sm transition-all hover:bg-(--surface-2)">{{ __('ui.Editar') }}</button>
+                    <button type="button" data-category-delete="{{ $category->id }}"
+                        class="inline-flex min-h-[28px] items-center justify-center rounded-lg border border-danger/25 bg-danger/10 px-3 py-1.5 text-xs font-semibold text-danger shadow-sm transition-all hover:bg-danger/20">{{ __('ui.Eliminar') }}</button>
+                </div>
+            </td>
                     </tr>
                 @endforeach
             </tbody>

@@ -23,12 +23,12 @@ class TicketPhotoUploadTest extends TestCase
     {
         parent::setUp();
 
-        // Criar perfis necessários para os testes
+        // Create profiles needed for the tests
         UserProfile::create(['name' => UserRoleEnum::User->value]);
         UserProfile::create(['name' => UserRoleEnum::Technician->value]);
         UserProfile::create(['name' => UserRoleEnum::Admin->value]);
 
-        // Criar estados de ticket
+        // Create ticket statuses
         $this->artisan('db:seed', ['--class' => 'TicketLookupSeeder', '--force' => true]);
     }
 
@@ -89,7 +89,7 @@ class TicketPhotoUploadTest extends TestCase
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->postJson('/api/tickets/'.$ticket->id.'/photos', [
-                // sem photo
+                // without photo
             ]);
 
         $response->assertStatus(422);

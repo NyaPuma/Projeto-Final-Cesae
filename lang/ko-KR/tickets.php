@@ -87,7 +87,7 @@ return [
     'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.' => '단일 통합 인터페이스에서 기술 수리, 예방 유지보수, 예정된 티켓 및 운영 작업을 확인하세요.',
     'Voltar aos tickets' => '티켓으로 돌아가기',
     'Últimas Ocorrências Registadas' => '최근 기록된 이벤트',
-    '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.' => '⚠️ :total개의 더 높은 우선순위 티켓이 처리 대기 중입니다.',
+    'Existem :total ticket(s) de prioridade mais alta por atender.' => ':total개의 더 높은 우선순위 티켓이 처리 대기 중입니다.',
     'Anexo adicionado' => '첨부파일이 추가되었습니다',
     'Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.' => '"진행 중" 상태의 티켓만 빠르게 마감할 수 있습니다.',
     'Apenas tickets no estado "Aberto" podem ser cancelados.' => '"열림" 상태의 티켓만 취소할 수 있습니다.',

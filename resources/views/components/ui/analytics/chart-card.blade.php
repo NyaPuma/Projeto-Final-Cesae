@@ -3,10 +3,10 @@
 | Chart Card Component
 |--------------------------------------------------------------------------
 |
-| Cartão estruturado para exibição de gráficos com canvas, cabeçalho e slot de ações.
-| • 100% livre de CSS ou JS inline.
-| • Eliminação de duplicação de código no cabeçalho com suporte a slot auxiliar ($aside).
-| • Sintaxe de variáveis CSS corrigida e segura para o Tailwind.
+| Structured card for displaying charts with canvas, header and actions slot.
+| • 100% free of inline CSS or JS.
+| • Header code duplication eliminated with auxiliary slot ($aside) support.
+| • CSS variable syntax corrected and safe for Tailwind.
 |
 --}}
 

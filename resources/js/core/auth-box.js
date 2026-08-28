@@ -31,7 +31,7 @@ export function renderAuthBox(profileUrl, loginUrl) {
                     </a>
                     <button
                         data-action="logout"
-                        class="w-full inline-flex items-center justify-center rounded-xl bg-(--border) hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-400 px-4 py-2.5 text-xs font-semibold text-(--text) border border-transparent hover:border-red-500/20 transition-all duration-200 cursor-pointer"
+                        class="w-full inline-flex items-center justify-center rounded-xl bg-(--border) hover:bg-danger/10 hover:text-danger px-4 py-2.5 text-xs font-semibold text-(--text) border border-transparent hover:border-danger/20 transition-all duration-200 cursor-pointer"
                     >
                         ${translations.logout || ''}
                     </button>
@@ -47,7 +47,7 @@ export function renderAuthBox(profileUrl, loginUrl) {
                     </a>
                     <button
                         data-action="logout"
-                        class="w-full inline-flex items-center justify-center rounded-xl bg-(--border) hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-400 px-4 py-2.5 text-xs font-semibold text-(--text) border border-transparent hover:border-red-500/20 transition-all duration-200 cursor-pointer"
+                        class="w-full inline-flex items-center justify-center rounded-xl bg-(--border) hover:bg-danger/10 hover:text-danger px-4 py-2.5 text-xs font-semibold text-(--text) border border-transparent hover:border-danger/20 transition-all duration-200 cursor-pointer"
                     >
                         ${translations.logout || ''}
                     </button>
@@ -63,7 +63,7 @@ export function renderAuthBox(profileUrl, loginUrl) {
                     </div>
                     <div class="hidden md:block">
                         <div class="text-sm font-semibold text-(--text) leading-none">${name}</div>
-                        <div class="mt-1.5 text-[9px] font-bold uppercase tracking-wider text-(--text-soft)">${role}</div>
+                        <div class="mt-1.5 text-xs font-bold uppercase tracking-wider text-(--text-soft)">${role}</div>
                     </div>
                 </a>
             `;

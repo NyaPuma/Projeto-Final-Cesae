@@ -6,13 +6,7 @@
     :title="__('tickets.Criar Ticket')"
     :subtitle="__('tickets.Registe uma nova ocorrência de manutenção com contexto técnico e prioridade.')"
 >
-    <x-slot:actions>
-        <x-ui.page-actions.group>
-            <x-ui.page-actions.back-button :href="'/ui/tickets'" :label="__('tickets.Voltar aos tickets')" />
-        </x-ui.page-actions.group>
-    </x-slot:actions>
-
-    {{-- Contentor Principal do Formulário --}}
+    {{-- Main Form Container --}}
     <div class="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-sm">
 
         <div class="mb-6 border-b border-[var(--border)] pb-4">
@@ -22,83 +16,83 @@
 
         <form id="createTicketForm" class="space-y-6">
 
-            {{-- Título do Pedido --}}
+            {{-- Request Title --}}
             <div>
-                <label class="mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">{{ __('common.Título do Pedido *') }}</label>
+                <label for="ticketTitle" class="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">{{ __('common.Título do Pedido *') }}</label>
                 <input type="text" id="ticketTitle" name="title" required class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-xs text-[var(--text)] outline-none focus:border-primary focus:ring-4 focus:ring-primary/15 transition-all" placeholder="{{ __('common.Ex.: Ruído anómalo no motor principal do torno') }}">
             </div>
 
-            {{-- Descrição Detalhada --}}
+            {{-- Detailed Description --}}
             <div>
-                <label class="mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">{{ __('common.Descrição Detalhada *') }}</label>
+                <label for="ticketDescription" class="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">{{ __('common.Descrição Detalhada *') }}</label>
                 <textarea id="ticketDescription" name="description" rows="4" required class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-xs text-[var(--text)] outline-none focus:border-primary focus:ring-4 focus:ring-primary/15 resize-none transition-all" placeholder="{{ __('ticket_detail.Detalhe o problema ocorrido, ruídos, fugas ou comportamentos fora do normal...') }}"></textarea>
             </div>
 
-            {{-- Nível de Urgência / Prioridade (Cards Interativos) --}}
+            {{-- Urgency / Priority Level (Interactive Cards) --}}
             <div>
                 <div class="flex items-center justify-between mb-2">
-                    <label class="block text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">{{ __('common.Nível de Urgência / Prioridade *') }}</label>
-                    <span class="text-[10px] text-[var(--text-soft)]">{{ __('common.Selecione o impacto real na produção') }}</span>
+                    <span id="ticketPriority-label" class="block text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">{{ __('common.Nível de Urgência / Prioridade *') }}</span>
+                    <span class="text-xs text-[var(--text-soft)]">{{ __('common.Selecione o impacto real na produção') }}</span>
                 </div>
 
                 <input type="hidden" id="ticketPriority" name="priority" value="média" required>
 
-                <div class="grid gap-4 md:grid-cols-4">
-                    {{-- Card Baixa --}}
-                    <div type="button" data-priority="baixa"
-                        class="priority-card cursor-pointer rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4 transition-all hover:border-emerald-500/50">
+                <div class="grid gap-4 md:grid-cols-4" role="radiogroup" aria-labelledby="ticketPriority-label">
+                    {{-- Low Card --}}
+                    <div role="radio" tabindex="0" aria-checked="false" data-priority="baixa"
+                        class="priority-card cursor-pointer rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4 transition-all hover:border-success/50">
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center gap-2">
-                                <span class="text-xs font-bold text-emerald-400">{{ __('tickets.Baixa') }}</span>
+                                <span class="text-xs font-bold text-success">{{ __('tickets.Baixa') }}</span>
                             </div>
-                            <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                            <span class="h-2 w-2 rounded-full bg-success"></span>
                         </div>
-                        <p class="text-[11px] leading-relaxed text-[var(--text-soft)]">{{ __('maintenance_plan.Manutenção Ligeira. Anomalia menor sem risco imediato.') }}</p>
+                        <p class="text-xs leading-relaxed text-[var(--text-soft)]">{{ __('maintenance_plan.Manutenção Ligeira. Anomalia menor sem risco imediato.') }}</p>
                     </div>
 
-                    {{-- Card Média (Selecionado por defeito) --}}
-                    <div type="button" data-priority="média"
-                        class="priority-card cursor-pointer rounded-2xl border-2 border-amber-500 bg-[var(--surface-2)] p-4 transition-all shadow-sm">
+                    {{-- Medium Card (Selected by default) --}}
+                    <div role="radio" tabindex="0" aria-checked="true" data-priority="média"
+                        class="priority-card cursor-pointer rounded-2xl border-2 border-warning bg-[var(--surface-2)] p-4 transition-all shadow-sm">
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center gap-2">
-                                <span class="text-xs font-bold text-amber-400">{{ __('common.Média') }}</span>
+                                <span class="text-xs font-bold text-warning">{{ __('common.Média') }}</span>
                             </div>
-                            <span class="h-2 w-2 rounded-full bg-amber-500"></span>
+                            <span class="h-2 w-2 rounded-full bg-warning"></span>
                         </div>
-                        <p class="text-[11px] leading-relaxed text-[var(--text-soft)]">{{ __('common.Degradação Parcial. Funcionamento condicionado.') }}</p>
+                        <p class="text-xs leading-relaxed text-[var(--text-soft)]">{{ __('common.Degradação Parcial. Funcionamento condicionado.') }}</p>
                     </div>
 
-                    {{-- Card Alta --}}
-                    <div type="button" data-priority="alta"
-                        class="priority-card cursor-pointer rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4 transition-all hover:border-red-500/50">
+                    {{-- High Card --}}
+                    <div role="radio" tabindex="0" aria-checked="false" data-priority="alta"
+                        class="priority-card cursor-pointer rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4 transition-all hover:border-danger/50">
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center gap-2">
-                                <span class="text-xs font-bold text-orange-400">{{ __('tickets.Alta') }}</span>
+                                <span class="text-xs font-bold text-danger">{{ __('tickets.Alta') }}</span>
                             </div>
-                            <span class="h-2 w-2 rounded-full bg-orange-500"></span>
+                            <span class="h-2 w-2 rounded-full bg-danger"></span>
                         </div>
-                        <p class="text-[11px] leading-relaxed text-[var(--text-soft)]">{{ __('common.Paragem Crítica. Linha ou máquina inoperacional.') }}</p>
+                        <p class="text-xs leading-relaxed text-[var(--text-soft)]">{{ __('common.Paragem Crítica. Linha ou máquina inoperacional.') }}</p>
                     </div>
 
-                    {{-- Card Crítica --}}
-                    <div type="button" data-priority="crítica"
+                    {{-- Critical Card --}}
+                    <div role="radio" tabindex="0" aria-checked="false" data-priority="crítica"
                         class="priority-card cursor-pointer rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] p-4 transition-all hover:border-purple-600/50">
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center gap-2">
-                                <span class="text-xs font-bold text-rose-500">{{ __('common.Crítica') }}</span>
+                                <span class="text-xs font-bold text-purple-600">{{ __('common.Crítica') }}</span>
                             </div>
-                            <span class="h-2 w-2 rounded-full bg-rose-500"></span>
+                            <span class="h-2 w-2 rounded-full bg-purple-600"></span>
                         </div>
-                        <p class="text-[11px] leading-relaxed text-[var(--text-soft)]">{{ __('ticket_media.Emergência Imediata. Risco de acidente.') }}</p>
+                        <p class="text-xs leading-relaxed text-[var(--text-soft)]">{{ __('ticket_media.Emergência Imediata. Risco de acidente.') }}</p>
                     </div>
                 </div>
             </div>
 
-            {{-- Equipamento (Autocomplete) & Imagem --}}
+            {{-- Equipment (Autocomplete) & Image --}}
             <div class="grid gap-6 lg:grid-cols-2">
-                {{-- AUTOCOMPLETAR EQUIPAMENTO --}}
+                {{-- EQUIPMENT AUTOCOMPLETE --}}
                 <div class="relative">
-                    <label class="mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">
+                    <label for="equipmentSearchInput" class="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">
                         {{ __('equipment.Equipamento / Ativo Afetado *') }}
                     </label>
 
@@ -107,17 +101,17 @@
                             class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-xs text-[var(--text)] outline-none focus:border-primary transition-all">
                     </div>
 
-                    {{-- ID escondido para submissão --}}
+                    {{-- Hidden ID for submission --}}
                     <input type="hidden" id="selectedEquipmentId" name="equipment_id" required>
 
-                    {{-- Caixa de Sugestões / Dropdown de Autocomplete --}}
+                    {{-- Suggestions Box / Autocomplete Dropdown --}}
                     <div id="equipmentSuggestions" class="hidden absolute z-50 mt-1 w-full max-h-52 overflow-y-auto rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-2xl divide-y divide-[var(--border)]/50">
                     </div>
                 </div>
 
-                {{-- Inserir Imagem --}}
+                {{-- Upload Image --}}
                 <div>
-                    <label class="mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">{{ __('ticket_media.Inserir Imagem (Opcional)') }}</label>
+                    <span class="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">{{ __('ticket_media.Inserir Imagem (Opcional)') }}</span>
                     <div class="flex items-center gap-3 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-2">
                         <label for="ticketImage" class="cursor-pointer rounded-xl bg-[var(--surface)] border border-[var(--border)] px-3 py-1.5 text-xs font-semibold text-[var(--text)] hover:bg-[var(--surface-2)] transition">
                             {{ __('ticket_media.Escolher ficheiro') }}
@@ -128,14 +122,17 @@
                 </div>
             </div>
 
-            {{-- Mensagem de Feedback --}}
+            {{-- Feedback Message --}}
             <div id="formMessage" class="min-h-6 text-xs font-medium text-[var(--text-soft)]"></div>
 
-            {{-- Botão de Submissão --}}
-            <div class="mt-6">
-                <button type="submit" id="submitBtn" class="inline-flex items-center justify-center rounded-xl px-6 py-3 text-xs font-black uppercase tracking-wider transition hover:opacity-90 disabled:opacity-50 shadow-lg shadow-primary/20 bg-primary text-white cursor-pointer">
+            {{-- Submit Button --}}
+            <div class="mt-6 flex flex-wrap items-center gap-3">
+                <button type="submit" id="submitBtn" class="inline-flex items-center justify-center rounded-xl px-6 py-3 text-xs font-black uppercase tracking-wider transition hover:opacity-90 disabled:opacity-50 shadow-lg shadow-primary/20 bg-primary text-[var(--on-primary)] cursor-pointer">
                     {{ __('tickets.Guardar Ticket') }}
                 </button>
+                <a href="/ui/tickets" class="ui-button ui-button--outline inline-flex items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-5 py-3 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-2)]">
+                    {{ __('ui.Cancelar') }}
+                </a>
             </div>
         </form>
     </div>

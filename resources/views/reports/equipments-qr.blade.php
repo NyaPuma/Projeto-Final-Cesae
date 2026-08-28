@@ -82,7 +82,7 @@
                 </div>
             </td>
             <td class="report-meta">
-                <div><strong>Emissão:</strong> (now())</div>
+                <div><strong>Emissão:</strong> {{ now() }}</div>
                 <div><strong>Equipamentos:</strong> {{ $items->count() }}</div>
             </td>
         </tr>

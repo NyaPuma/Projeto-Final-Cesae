@@ -3,10 +3,10 @@
 | Stat Card Component
 |--------------------------------------------------------------------------
 |
-| Cartão modular para exibição de métricas, KPIs ou estatísticas rápidas.
-| • 100% livre de CSS ou JS inline.
-| • Suporte híbrido a valores via propriedade ou slot flexível.
-| • Sintaxe de variáveis CSS corrigida para o Tailwind.
+| Modular card for displaying metrics, KPIs or quick statistics.
+| • 100% free of inline CSS or JS.
+| • Hybrid value support via property or flexible slot.
+| • CSS variable syntax corrected for Tailwind.
 |
 --}}
 
@@ -22,7 +22,7 @@
         </x-ui.text.eyebrow>
     @endif
 
-    <p class="mt-2 text-lg font-bold text-[var(--text)]">
+    <div class="mt-2 text-lg font-bold text-[var(--text)]">
         {{ $value ?? $slot }}
-    </p>
+    </div>
 </div>

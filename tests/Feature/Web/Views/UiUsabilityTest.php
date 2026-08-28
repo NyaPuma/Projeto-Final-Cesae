@@ -20,26 +20,26 @@ class UiUsabilityTest extends TestCase
 
         $content = (string) $response->getContent();
 
-        // Strings podem variar por idioma/branding. Aceita PT ou EN.
+        // Strings may vary by language/branding. Accepts either PT or EN.
         $this->assertTrue(
             str_contains($content, 'Centro de Controlo') || str_contains($content, 'Fault Management'),
             'Expected homepage to contain either "Centro de Controlo" (PT) or "Fault Management" (EN).'
         );
 
-        // A homepage pode variar bastante por idioma/versão de UI.
-        // Valida elementos estáveis/centrais.
+        // The homepage can vary considerably by language/UI version.
+        // Validates stable/core elements.
         $this->assertTrue(
             str_contains($content, 'Welcome to the System') || str_contains($content, 'Bem-vindo') || str_contains($content, 'Welcome to the System'),
             'Expected homepage to contain a stable welcome heading.'
         );
 
-        // Validações mínimas: título/heading principal e algum item de navegação.
+        // Minimal validations: main title/heading and at least one navigation item.
         $this->assertTrue(
             str_contains($content, 'Fault Management') || str_contains($content, 'Welcome to the System'),
             'Expected homepage to contain the main application heading.'
         );
 
-        // Não exigir strings específicas de módulos na homepage (pode variar por rota/idioma).
+        // Do not require module-specific strings on the homepage (they may vary by route/language).
         $response->assertSee('Skip to content', false);
     }
 
@@ -55,8 +55,8 @@ class UiUsabilityTest extends TestCase
             str_contains($content, 'Iniciar Sessão') || str_contains($content, 'Login'),
             'Expected login page to contain either "Iniciar Sessão" or "Login".'
         );
-        // Signup/conta pode não existir na view de login (ou estar noutra rota).
-        // Não exigir texto de "Criar Conta" nesta suite de usabilidade.
+        // Signup/account may not exist in the login view (or may live under another route).
+        // Do not require "Create Account" text in this usability suite.
 
         $response->assertSee('name="email"', false);
         $response->assertSee('name="password"', false);

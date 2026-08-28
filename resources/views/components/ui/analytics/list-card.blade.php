@@ -3,10 +3,10 @@
 | Container Card Component
 |--------------------------------------------------------------------------
 |
-| Cartão estruturado com cabeçalho e corpo dinâmico (ideal para listagens AJAX).
-| • 100% livre de CSS ou JS inline.
-| • Sintaxe de variáveis CSS corrigida e segura para o Tailwind.
-| • Suporte a ID opcional e conteúdos estáticos via slot.
+| Structured card with header and dynamic body (ideal for AJAX listings).
+| • 100% free of inline CSS or JS.
+| • CSS variable syntax corrected and safe for Tailwind.
+| • Optional ID support and static content via slot.
 |
 --}}
 

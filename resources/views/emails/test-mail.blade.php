@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teste de Configuração de Email</title>
     <style>
-        /* Reset e Regras de Renderização Segura */
+        /* Reset and Safe Rendering Rules */
         body {
             margin: 0;
             padding: 0;
@@ -23,7 +23,7 @@
             vertical-align: top;
         }
 
-        /* Estrutura de Contentor Fluido */
+        /* Fluid Container Structure */
         .wrapper {
             width: 100%;
             background-color: #fafafa;
@@ -38,7 +38,7 @@
             padding: 32px;
         }
 
-        /* Tipografia de Alta Precisão */
+        /* High-Precision Typography */
         .header-badge {
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
             font-size: 10px;
@@ -64,7 +64,7 @@
             margin-bottom: 0;
         }
 
-        /* Bloco de Telemetria e Diagnóstico */
+        /* Telemetry and Diagnostics Block */
         .telemetry-box {
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
             font-size: 11px;
@@ -81,7 +81,7 @@
             font-weight: 600;
         }
 
-        /* Rodapé de Isenção */
+        /* Disclaimer Footer */
         .footer {
             margin-top: 24px;
             border-top: 1px solid #f0f0ef;
@@ -103,21 +103,21 @@
     <table role="presentation" class="container">
         <tr>
             <td>
-                {{-- Identificador de Contexto --}}
+                {{-- Context Identifier --}}
                 <div class="header-badge">Verificação de Serviço</div>
                 <h1 class="title">Ligação Estabelecida com Sucesso</h1>
 
                 <p class="text-body">Olá, {{ $recipientName ?? 'Utilizador' }}.</p>
                 <p class="text-body text-body--no-margin">Este é um disparo de validação estrutural enviado para confirmar a correta integração, credenciação e entrega de mensagens na plataforma.</p>
 
-                {{-- Metadados de Diagnóstico do Sistema --}}
+                {{-- System Diagnostics Metadata --}}
                 <div class="telemetry-box">
                     <span class="telemetry-label">CANAL TRÁFEGO:</span> Mailgun API Driver<br>
                     <span class="telemetry-label">ESTADO:</span> Conexão Ativa / Válida<br>
                     <span class="telemetry-label">DATA EMISSÃO:</span> {{ now()->format('Y-m-d H:i:s') }} UTC
                 </div>
 
-                {{-- Rodapé Sistémico --}}
+                {{-- System Footer --}}
                 <div class="footer">
                     <p class="footer-text">Mensagem automática de diagnóstico • Não responda a este endereço</p>
                 </div>

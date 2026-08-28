@@ -8,24 +8,28 @@ function updateMsg(message, type) {
     const msg = getMsgEl();
     if (!msg) return;
     msg.classList.remove('hidden');
-    msg.className = 'mt-5 min-h-[42px] rounded-2xl text-center text-sm font-medium flex items-center justify-center transition-all ' +
+    msg.className = 'mb-6 min-h-[48px] items-center justify-center rounded-2xl border px-4 text-sm font-medium transition-all ' +
         (type === 'error'
-            ? 'text-red-600 dark:text-red-400 bg-red-500/5 border border-red-500/10'
+            ? 'border-danger/20 bg-danger/5 text-danger'
             : type === 'loading'
-                ? 'text-amber-600 dark:text-amber-400 animate-pulse'
-                : 'text-emerald-600 dark:text-emerald-400 bg-emerald-500/5 border border-emerald-500/10');
+                ? 'text-warning animate-pulse'
+                : 'border-success/20 bg-success/5 text-success');
     msg.textContent = message;
 }
+
+const SPINNER_HTML = '<svg class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" class="opacity-20"></circle><path fill="currentColor" class="opacity-90" d="M4 12a8 8 0 018-8V0A12 12 0 000 12h4z"></path></svg>';
 
 function setButtonLoading(btn, loading) {
     if (!btn) return;
     btn.disabled = loading;
-    btn.classList.toggle('opacity-80', loading);
-    btn.classList.toggle('cursor-not-allowed', loading);
+    btn.setAttribute('aria-busy', String(loading));
     if (loading) {
-        btn.innerHTML = '<span class="inline-flex items-center gap-2"><svg class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" class="opacity-20"></circle><path fill="currentColor" class="opacity-90" d="M4 12a8 8 0 018-8V0A12 12 0 000 12h4z"></path></svg> A autenticar...</span>';
+        if (btn.dataset.originalContent === undefined) {
+            btn.dataset.originalContent = btn.innerHTML;
+        }
+        btn.innerHTML = `<span class="inline-flex items-center gap-2">${SPINNER_HTML} A autenticar...</span>`;
     } else {
-        btn.innerHTML = 'Entrar no Sistema <svg class="w-4 h-4 transition group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>';
+        btn.innerHTML = btn.dataset.originalContent || '';
     }
 }
 

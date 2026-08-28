@@ -7,8 +7,8 @@ function setFormMessage(text, state = 'neutral') {
 
     const classes = {
         neutral: 'min-h-6 text-xs font-medium text-[var(--text-soft)]',
-        success: 'min-h-6 text-xs font-medium text-emerald-400',
-        error: 'min-h-6 text-xs font-medium text-red-400',
+        success: 'min-h-6 text-xs font-medium text-success',
+        error: 'min-h-6 text-xs font-medium text-danger',
     };
 
     message.textContent = text;

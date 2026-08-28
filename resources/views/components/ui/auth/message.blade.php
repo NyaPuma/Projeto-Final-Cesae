@@ -3,10 +3,10 @@
 | Message / Alert Container Component
 |--------------------------------------------------------------------------
 |
-| Container dinâmico para exibição de mensagens de feedback e alertas com A11y.
-| • 100% livre de CSS ou JS inline.
-| • Sintaxe de variáveis CSS corrigida e segura para o Tailwind.
-| • Gestão idiomática de classes e estados condicionais via $attributes.
+| Dynamic container for displaying feedback messages and alerts with A11y.
+| • 100% free of inline CSS or JS.
+| • CSS variable syntax corrected and safe for Tailwind.
+| • Idiomatic class management and conditional states via $attributes.
 |
 --}}
 

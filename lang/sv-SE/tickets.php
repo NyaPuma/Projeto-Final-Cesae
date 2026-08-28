@@ -87,7 +87,7 @@ return [
     'Visualize intervenções técnicas, manutenção preventiva, tickets programados e tarefas operacionais numa única interface integrada.' => 'Visualisera tekniska åtgärder, förebyggande underhåll, schemalagda ärenden och operativa uppgifter i ett enda integrerat gränssnitt.',
     'Voltar aos tickets' => 'Tillbaka till ärenden',
     'Últimas Ocorrências Registadas' => 'Senaste Registrerade Händelser',
-    '⚠️ Existem :total ticket(s) de prioridade mais alta por atender.' => '⚠️ Det finns :total ärende(n) med högre prioritet att hantera.',
+    'Existem :total ticket(s) de prioridade mais alta por atender.' => 'Det finns :total ärende(n) med högre prioritet att hantera.',
     'Anexo adicionado' => 'Bilaga tillagd',
     'Apenas tickets com o estado "Em Curso" podem ser fechados rapidamente.' => 'Endast ärenden med status "Pågår" kan stängas snabbt.',
     'Apenas tickets no estado "Aberto" podem ser cancelados.' => 'Endast ärenden med status "Öppen" kan avbrytas.',
