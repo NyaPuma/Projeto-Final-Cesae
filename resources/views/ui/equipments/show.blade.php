@@ -18,6 +18,9 @@
         'tag' => '<svg class="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"/><path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6z"/></svg>',
         'pin' => '<svg class="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>',
         'pinLg' => '<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>',
+        'tag5' => '<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3zM6 6h.008v.008H6V6z"/></svg>',
+        'pin5' => '<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>',
+        'check5' => '<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
         'shield' => '<svg class="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>',
         'shieldWarn' => '<svg class="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>',
         'shield5' => '<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>',
@@ -66,33 +69,49 @@
     {{-- =================================================================== --}}
     {{-- Equipment status bar --}}
     {{-- =================================================================== --}}
-    <div class="mb-6 flex flex-wrap items-center gap-3">
-        <span class="inline-flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3.5 py-2 text-xs font-bold text-[var(--text)]">
-            <span class="relative flex h-2.5 w-2.5">
-                <span class="absolute inline-flex h-full w-full animate-ping rounded-full opacity-50 {{ $equipment->active ? 'bg-success' : 'bg-[var(--border)]' }}"></span>
-                <span class="relative inline-flex h-2.5 w-2.5 rounded-full {{ $equipment->active ? 'bg-success' : 'bg-[var(--border)]' }}"></span>
-            </span>
-            {{ $equipment->active ? __('equipment.Ativo') : __('equipment.Inativo') }}
-        </span>
+    <div class="mb-6 overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-sm">
+        <div class="grid gap-px bg-[var(--border)] sm:grid-cols-2 xl:grid-cols-4">
+            <div class="flex items-center gap-4 bg-[var(--surface)] px-5 py-4">
+                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl {{ $equipment->active ? 'bg-success/10 text-success' : 'bg-[var(--surface-2)] text-[var(--text-soft)]' }}" aria-hidden="true">{!! $icon['check5'] !!}</span>
+                <div class="min-w-0">
+                    <p class="truncate text-xs font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('common.Estado') }}</p>
+                    <p class="mt-1 flex items-center gap-1.5 text-sm font-bold text-[var(--text)]">
+                        <span class="relative flex h-2 w-2" aria-hidden="true">
+                            <span class="absolute inline-flex h-full w-full animate-ping rounded-full opacity-50 {{ $equipment->active ? 'bg-success' : 'bg-[var(--border)]' }}"></span>
+                            <span class="relative inline-flex h-2 w-2 rounded-full {{ $equipment->active ? 'bg-success' : 'bg-[var(--border)]' }}"></span>
+                        </span>
+                        {{ $equipment->active ? __('equipment.Ativo') : __('equipment.Inativo') }}
+                    </p>
+                    <x-ui.text.badge kind="equipmentStatus" :value="$equipment->status" size="badge" class="mt-1.5" />
+                </div>
+            </div>
 
-        <x-ui.text.badge kind="equipmentStatus" :value="$equipment->status" size="md" />
+            <div class="flex items-center gap-4 bg-[var(--surface)] px-5 py-4">
+                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary" aria-hidden="true">{!! $icon['tag5'] !!}</span>
+                <div class="min-w-0">
+                    <p class="truncate text-xs font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('common.Categoria') }}</p>
+                    <p class="mt-1 truncate text-sm font-bold text-[var(--text)]">{{ $equipment->category?->name ?? __('common.Sem categoria') }}</p>
+                </div>
+            </div>
 
-        <span class="inline-flex items-center gap-1.5 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3.5 py-2 text-xs font-semibold text-[var(--text-soft)]">
-            <span aria-hidden="true" class="text-[var(--text-soft)]">{!! $icon['tag'] !!}</span>
-            {{ __('common.Categoria') }}: <b class="text-[var(--text)]">{{ $equipment->category?->name ?? __('common.Sem categoria') }}</b>
-        </span>
+            <div class="flex items-center gap-4 bg-[var(--surface)] px-5 py-4">
+                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary" aria-hidden="true">{!! $icon['pin5'] !!}</span>
+                <div class="min-w-0">
+                    <p class="truncate text-xs font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('room.Sala') }}</p>
+                    <p class="mt-1 truncate text-sm font-bold text-[var(--text)]">{{ $equipment->room?->name ?? __('common.Não associada') }}</p>
+                </div>
+            </div>
 
-        <span class="inline-flex items-center gap-1.5 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3.5 py-2 text-xs font-semibold text-[var(--text-soft)]">
-            <span aria-hidden="true" class="text-[var(--text-soft)]">{!! $icon['pin'] !!}</span>
-            {{ __('room.Sala') }}: <b class="text-[var(--text)]">{{ $equipment->room?->name ?? __('common.Não associada') }}</b>
-        </span>
-
-        @if($equipment->warranty_until)
-            <span class="inline-flex items-center gap-1.5 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3.5 py-2 text-xs font-semibold {{ $warrantyExpired ? 'text-danger' : 'text-success' }}">
-                <span aria-hidden="true">{!! $warrantyExpired ? $icon['shieldWarn'] : $icon['shield'] !!}</span>
-                {{ __('common.Garantia') }}: <b>{{ app(\App\Services\LocalizationService::class)->formatDate($equipment->warranty_until) }}</b>
-            </span>
-        @endif
+            <div class="flex items-center gap-4 bg-[var(--surface)] px-5 py-4">
+                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl {{ $warrantyExpired ? 'bg-danger/10 text-danger' : 'bg-success/10 text-success' }}" aria-hidden="true">{!! $icon['shield5'] !!}</span>
+                <div class="min-w-0">
+                    <p class="truncate text-xs font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('common.Garantia') }}</p>
+                    <p class="mt-1 text-sm font-bold {{ $warrantyExpired ? 'text-danger' : 'text-[var(--text)]' }}">
+                        {{ $equipment->warranty_until ? (app(\App\Services\LocalizationService::class)->formatDate($equipment->warranty_until) ?: '—') : '—' }}
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 
     {{-- =================================================================== --}}

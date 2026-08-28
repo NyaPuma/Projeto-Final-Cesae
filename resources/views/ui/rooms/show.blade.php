@@ -42,6 +42,7 @@
         'ticketLg' => '<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9.75-3v.75m3-3v.75m0 3v.75M4.5 21h15a2.25 2.25 0 002.25-2.25V5.25A2.25 2.25 0 0019.5 3h-15A2.25 2.25 0 002.25 5.25v13.5A2.25 2.25 0 004.5 21z"/></svg>',
         'doc' => '<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>',
         'shieldWarn' => '<svg class="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>',
+        'check5' => '<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
         'pencil' => '<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487zm0 0L19.5 7.125"/></svg>',
     ];
 @endphp
@@ -69,31 +70,49 @@
     {{-- =================================================================== --}}
     {{-- Room status bar --}}
     {{-- =================================================================== --}}
-    <div class="mb-6 flex flex-wrap items-center gap-3">
-        <span class="inline-flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3.5 py-2 text-xs font-bold text-[var(--text)]">
-            <span class="relative flex h-2.5 w-2.5">
-                <span class="absolute inline-flex h-full w-full animate-ping rounded-full opacity-50 {{ $room->active ? 'bg-success' : 'bg-[var(--border)]' }}"></span>
-                <span class="relative inline-flex h-2.5 w-2.5 rounded-full {{ $room->active ? 'bg-success' : 'bg-[var(--border)]' }}"></span>
-            </span>
-            {{ $room->active ? __('room.Sala Ativa') : __('room.Sala Inativa') }}
-        </span>
+    <div class="mb-6 overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-sm">
+        <div class="grid gap-px bg-[var(--border)] sm:grid-cols-2 xl:grid-cols-4">
+            <div class="flex items-center gap-4 bg-[var(--surface)] px-5 py-4">
+                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl {{ $room->active ? 'bg-success/10 text-success' : 'bg-[var(--surface-2)] text-[var(--text-soft)]' }}" aria-hidden="true">{!! $icon['check5'] !!}</span>
+                <div class="min-w-0">
+                    <p class="truncate text-xs font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('common.Estado') }}</p>
+                    <p class="mt-1 flex items-center gap-1.5 text-sm font-bold text-[var(--text)]">
+                        <span class="relative flex h-2 w-2" aria-hidden="true">
+                            <span class="absolute inline-flex h-full w-full animate-ping rounded-full opacity-50 {{ $room->active ? 'bg-success' : 'bg-[var(--border)]' }}"></span>
+                            <span class="relative inline-flex h-2 w-2 rounded-full {{ $room->active ? 'bg-success' : 'bg-[var(--border)]' }}"></span>
+                        </span>
+                        {{ $room->active ? __('room.Sala Ativa') : __('room.Sala Inativa') }}
+                    </p>
+                </div>
+            </div>
 
-        @if($room->capacity)
-            <span class="inline-flex items-center gap-1.5 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3.5 py-2 text-xs font-semibold text-[var(--text-soft)]">
-                <span aria-hidden="true" class="text-[var(--text-soft)]">{!! $icon['users'] !!}</span>
-                {{ __('common.Capacidade') }}: <b class="text-[var(--text)]">{{ $room->capacity }}</b>
-            </span>
-        @endif
+            <div class="flex items-center gap-4 bg-[var(--surface)] px-5 py-4">
+                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary" aria-hidden="true">{!! $icon['users5'] !!}</span>
+                <div class="min-w-0">
+                    <p class="truncate text-xs font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('common.Capacidade') }}</p>
+                    <p class="mt-1 text-sm font-bold text-[var(--text)]">
+                        {{ $room->capacity ?? '—' }}
+                        @if($room->capacity)<span class="text-xs font-medium text-[var(--text-soft)]">{{ __('common.lugares') }}</span>@endif
+                    </p>
+                </div>
+            </div>
 
-        <span class="inline-flex items-center gap-1.5 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3.5 py-2 text-xs font-semibold text-[var(--text-soft)]">
-            <span aria-hidden="true" class="text-[var(--text-soft)]">{!! $icon['monitor'] !!}</span>
-            {{ __('equipment.Equipamentos') }}: <b class="text-[var(--text)]">{{ $equipments->count() }}</b>
-        </span>
+            <div class="flex items-center gap-4 bg-[var(--surface)] px-5 py-4">
+                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary" aria-hidden="true">{!! $icon['monitor5'] !!}</span>
+                <div class="min-w-0">
+                    <p class="truncate text-xs font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('equipment.Equipamentos') }}</p>
+                    <p class="mt-1 text-sm font-bold text-[var(--text)]">{{ $equipments->count() }}</p>
+                </div>
+            </div>
 
-        <span class="inline-flex items-center gap-1.5 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3.5 py-2 text-xs font-semibold text-[var(--text-soft)]">
-            <span aria-hidden="true" class="text-[var(--text-soft)]">{!! $icon['ticket'] !!}</span>
-            {{ __('tickets.Tickets') }}: <b class="text-[var(--text)]">{{ $tickets->count() }}</b>
-        </span>
+            <div class="flex items-center gap-4 bg-[var(--surface)] px-5 py-4">
+                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary" aria-hidden="true">{!! $icon['ticket5'] !!}</span>
+                <div class="min-w-0">
+                    <p class="truncate text-xs font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('tickets.Tickets') }}</p>
+                    <p class="mt-1 text-sm font-bold text-[var(--text)]">{{ $tickets->count() }}</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     {{-- =================================================================== --}}
@@ -141,9 +160,9 @@
     {{-- =================================================================== --}}
     {{-- Body: Info + Equipment (left) | Status + Tickets + Audit (right) --}}
     {{-- =================================================================== --}}
-    <div class="grid items-start gap-6 xl:grid-cols-[1.5fr_1fr]">
+    <div class="grid items-start gap-6 xl:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
 
-        <div class="space-y-6">
+        <div class="min-w-0 space-y-6">
 
             {{-- Room Information --}}
             <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm">
@@ -281,7 +300,7 @@
 
         </div>
 
-        <div class="space-y-6">
+        <div class="min-w-0 space-y-6">
 
             {{-- Recent Tickets --}}
             <div class="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-sm">
