@@ -1,13 +1,13 @@
 const metaMode = document.querySelector('meta[name="theme-mode"]');
 const metaRole = document.querySelector('meta[name="user-role"]');
 const serverMode = metaMode ? metaMode.getAttribute('content') : 'light';
-const isAdmin = metaRole ? metaRole.getAttribute('content') === 'admin' : false;
+const isAuthenticated = !!metaRole; // any authenticated user has a role meta
 const saved = localStorage.getItem('theme');
 const root = document.documentElement;
 
 let isDark;
 
-if (isAdmin && saved && saved !== serverMode) {
+if (isAuthenticated && saved && saved !== serverMode) {
     // Stale/strange localStorage preference: the server is the source of
     // truth — clear the key so the saved theme commands without flash.
     localStorage.removeItem('theme');

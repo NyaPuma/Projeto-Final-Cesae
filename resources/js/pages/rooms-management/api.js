@@ -1,6 +1,8 @@
 import { authHeader } from '../../utils/api.js';
 import { getRoomFilters } from './dom.js';
 
+const loadError = () => (window.SGM_UI_I18N?.loadError || 'Unable to load the data at the moment.');
+
 function buildSearchParams(page) {
     const filters = getRoomFilters();
     const params = new URLSearchParams();
@@ -24,7 +26,7 @@ export async function fetchRooms(page) {
 
     if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || 'Não foi possível carregar as salas de momento.');
+        throw new Error(errorData.message || loadError());
     }
 
     return response.json().catch(() => ({}));

@@ -50,7 +50,7 @@ function handleSubmit(e) {
     const mode = form.dataset.partFormMode;
     const id = form.dataset.partId || null;
 
-    showMessage(message, mode === 'edit' ? 'A guardar alterações...' : 'A guardar peça...', false);
+    showMessage(message, mode === 'edit' ? (window.SGM_UI_I18N?.saving || 'Saving...') : (window.SGM_UI_I18N?.saving || 'Saving part...'), false);
     submitBtn.disabled = true;
 
     const payload = buildPayload(mode);
@@ -70,8 +70,8 @@ function handleSubmit(e) {
             }
 
             showMessage(message, mode === 'edit'
-                ? 'Peça atualizada com sucesso!'
-                : 'Peça criada com sucesso!', false);
+                ? (window.SGM_UI_I18N?.updatedSuccess || 'Part updated successfully!')
+                : (window.SGM_UI_I18N?.createdSuccess || 'Part created successfully!'), false);
             message.className = 'min-h-6 text-sm font-medium text-success';
             setTimeout(() => { window.location.href = '/ui/stock/parts'; }, 1500);
         })

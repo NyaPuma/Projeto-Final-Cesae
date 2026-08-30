@@ -35,7 +35,7 @@ async function loadUsers(page = 1) {
         renderUsers(users);
         renderPagination(meta, page);
     } catch {
-        showFeedback('Erro ao carregar', true);
+        showFeedback((window.SGM_UI_I18N?.loadError || 'Error loading.'), true);
         renderErrorState();
     }
 }

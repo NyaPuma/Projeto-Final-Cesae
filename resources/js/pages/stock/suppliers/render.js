@@ -57,7 +57,7 @@ export function renderEmptyState() {
     renderTableEmptyState({
         tbody: getSupplierTableBody(),
         colspan: 5,
-        message: 'Nenhum fornecedor encontrado com os filtros aplicados.',
+        message: (window.SGM_STOCK_SUPPLIER_I18N?.empty || 'No supplier found matching the applied filters.'),
     });
 
     const pagination = getPagination();

@@ -14,7 +14,7 @@ async function loadProfiles() {
     
     try {
         const res = await fetch('/admin/profiles', { headers: authHeader() });
-        if (!res.ok) throw new Error('Não foi possível carregar os perfis.');
+        if (!res.ok) throw new Error(window.SGM_UI_I18N?.loadError || 'Unable to load the data at the moment.');
 
         const data = await res.json();
         const profiles = data.profiles || [];
@@ -41,8 +41,8 @@ async function loadProfiles() {
             select.appendChild(opt);
         });
     } catch (e) {
-        console.error('Erro ao carregar perfis:', e);
-        select.innerHTML = '<option value="">Erro ao carregar perfis de acesso</option>';
+        console.error((window.SGM_UI_I18N?.loadError || 'Error loading profiles:'), e);
+        select.innerHTML = '<option value="">' + (window.SGM_USER_MANAGEMENT_I18N?.loadProfilesError || 'Error loading access profiles') + '</option>';
     }
 }
 
@@ -66,7 +66,7 @@ function handleCreateSubmit(e) {
         return;
     }
 
-    message.textContent = 'A guardar utilizador...';
+    message.textContent = (window.SGM_UI_I18N?.saving || 'Saving user...');
     message.className = 'min-h-6 text-sm font-medium text-[var(--text-soft)]';
     submitBtn.disabled = true;
 
@@ -74,7 +74,7 @@ function handleCreateSubmit(e) {
     .then(res => res.json().catch(() => ({})))
     .then(data => {
         if (!data.ok && data.status !== undefined) {
-            let errorText = data.message || 'Erro ao criar utilizador.';
+            let errorText = data.message || (window.SGM_UI_I18N?.genericError || 'Error creating user.');
             if (data.errors) {
                 errorText = Object.values(data.errors).flat().join(' ');
             }
@@ -85,7 +85,7 @@ function handleCreateSubmit(e) {
             throw new Error(data.message);
         }
 
-        message.textContent = 'Utilizador criado com sucesso!';
+        message.textContent = (window.SGM_UI_I18N?.createdSuccess || 'User created successfully!');
         message.className = 'min-h-6 text-sm font-medium text-success';
         setTimeout(() => { window.location.href = '/ui/users'; }, 1500);
     })
@@ -122,7 +122,7 @@ function handleEditSubmit(e) {
         payload.password = password;
     }
 
-    message.textContent = 'A guardar alterações...';
+    message.textContent = (window.SGM_UI_I18N?.saving || 'Saving changes...');
     message.className = 'min-h-6 text-sm font-medium text-[var(--text-soft)]';
     submitBtn.disabled = true;
 
@@ -130,7 +130,7 @@ function handleEditSubmit(e) {
     .then(res => res.json().catch(() => ({})))
     .then(data => {
         if (!data.ok && data.status !== undefined) {
-            let errorText = data.message || 'Erro ao editar utilizador.';
+            let errorText = data.message || (window.SGM_UI_I18N?.genericError || 'Error updating user.');
             if (data.errors) {
                 errorText = Object.values(data.errors).flat().join(' ');
             }
@@ -141,7 +141,7 @@ function handleEditSubmit(e) {
             throw new Error(data.message);
         }
 
-        message.textContent = 'Utilizador atualizado com sucesso! A redirecionar...';
+        message.textContent = (window.SGM_UI_I18N?.updatedSuccess || 'User updated successfully! Redirecting...');
         message.className = 'min-h-6 text-sm font-medium text-success';
         setTimeout(() => { window.location.href = '/ui/users'; }, 1500);
     })
@@ -157,7 +157,7 @@ function initAvatarPreview() {
     const label = document.getElementById('avatarFileName');
     if (!input || !label) return;
     input.addEventListener('change', () => {
-        label.textContent = input.files?.[0]?.name || 'Nenhum ficheiro selecionado';
+        label.textContent = input.files?.[0]?.name || (window.SGM_TICKET_MEDIA_I18N?.noFileSelected || 'No file selected');
     });
 }
 

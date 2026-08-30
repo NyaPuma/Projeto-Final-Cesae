@@ -30,7 +30,7 @@ final class PasswordResetMail extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Recuperação de Credenciais',
+            subject: __('notifications.mail_password_reset_subject'),
         );
     }
 

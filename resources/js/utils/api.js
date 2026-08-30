@@ -93,6 +93,13 @@ export function getCurrentUser() {
  */
 export function logout() {
     localStorage.removeItem('auth_token');
+    localStorage.removeItem('api_token');
+    localStorage.removeItem('user_name');
+    localStorage.removeItem('user_role');
+    localStorage.removeItem('theme');
+    localStorage.removeItem('theme_name');
+    document.cookie = 'auth_token=; path=/; max-age=0; SameSite=Lax';
+    document.cookie = 'api_token=; path=/; max-age=0; SameSite=Lax';
     window.location.href = '/ui/login';
 }
 

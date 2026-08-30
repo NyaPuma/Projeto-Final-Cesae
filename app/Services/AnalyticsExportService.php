@@ -19,22 +19,29 @@ final class AnalyticsExportService
 
     private const CSV_DELIMITER = ';';
 
-    /** @var list<string> */
-    private const CSV_HEADERS = [
-        'ID',
-        'Código',
-        'Título',
-        'Estado',
-        'Prioridade',
-        'Urgente',
-        'Abertura',
-        'Em Curso',
-        'Fecho',
-        'Duração (min)',
-        'Custo (€)',
-        'Estado Orçamento',
-        'Montante Orçamento (€)',
-    ];
+    /**
+     * Localized header labels for the ticket analytics CSV.
+     *
+     * @return list<string>
+     */
+    private function csvHeaders(): array
+    {
+        return [
+            __('exports.csv_id'),
+            __('exports.csv_code'),
+            __('exports.csv_title'),
+            __('exports.csv_status'),
+            __('exports.csv_priority'),
+            __('exports.csv_urgent'),
+            __('exports.csv_opened'),
+            __('exports.csv_in_progress'),
+            __('exports.csv_closed'),
+            __('exports.csv_duration_min'),
+            __('exports.csv_cost'),
+            __('exports.csv_budget_status'),
+            __('exports.csv_budget_amount'),
+        ];
+    }
 
     /** @var list<string> */
     private const PDF_SELECT = [
@@ -139,7 +146,7 @@ final class AnalyticsExportService
     {
         fwrite($handle, "\xEF\xBB\xBF");
 
-        fputcsv($handle, self::CSV_HEADERS, self::CSV_DELIMITER);
+        fputcsv($handle, $this->csvHeaders(), self::CSV_DELIMITER);
 
         Ticket::select(self::PDF_SELECT)
             ->with('status')
@@ -164,7 +171,7 @@ final class AnalyticsExportService
             $ticket->title,
             $this->statusLabel($ticket),
             $this->priorityLabel($ticket->priority),
-            $ticket->urgent ? 'Sim' : 'Não',
+            $ticket->urgent ? __('exports.yes') : __('exports.no'),
             $this->localization()->formatDateTime($ticket->opened_at),
             $this->localization()->formatDateTime($ticket->in_progress_at),
             $this->localization()->formatDateTime($ticket->closed_at),

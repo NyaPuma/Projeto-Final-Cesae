@@ -52,7 +52,7 @@ function bindDeleteActions() {
         const id = button.dataset.supplierDelete;
         const name = button.dataset.name || '';
 
-        if (!window.confirm(`Tem a certeza que pretende eliminar o fornecedor "${name}"?`)) return;
+        if (!window.confirm((window.SGM_UI_I18N?.confirmDeleteSupplier || 'Are you sure you want to delete the supplier') + ` "${name}"?`)) return;
 
         button.disabled = true;
 
@@ -60,7 +60,7 @@ function bindDeleteActions() {
             const response = await authDelete(`/admin/suppliers/${id}`);
             const data = await response.json().catch(() => ({}));
 
-            if (!response.ok) throw new Error(data.message || 'Não foi possível eliminar o fornecedor.');
+            if (!response.ok) throw new Error(data.message || (window.SGM_UI_I18N?.genericError || 'Unable to delete the supplier.'));
 
             loadSuppliers(suppliersState.currentPage);
         } catch (error) {

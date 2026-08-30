@@ -3,10 +3,10 @@
  * Theme management paired by color family (14 light + 14 dark).
  *
  * The authoritative light/dark mode comes from the theme saved on the server
- * (meta `theme-mode`). In admin accounts, the panel button switches to the
- * equivalent of the same family (e.g., light orange <-> dark orange) and
- * saves it automatically in theme_settings. In non-admin accounts,
- * the toggle is local (CSS + localStorage).
+ * (meta `theme-mode` / `active-theme`). For authenticated users, the panel
+ * button switches to the equivalent of the same family (e.g., light orange <->
+ * dark orange) and saves the choice on the user's record (per-user). For
+ * guests, the toggle is local (CSS + localStorage).
  */
 
 const THEME_COLOR_KEYS = {
@@ -38,20 +38,21 @@ function metaMode() {
     return getMeta('theme-mode') || 'light';
 }
 
-function isAdmin() {
-    return getMeta('user-role') === 'admin';
+function isAuthenticated() {
+    return !!getMeta('user-role');
 }
 
 /**
- * Initial mode: the server sends (meta theme-mode). For admins, an
- * old localStorage preference that contradicts the server is cleared.
+ * Initial mode: for authenticated users, the server (meta theme-mode) is the
+ * source of truth and clears any stale/contradictory localStorage preference;
+ * for guests, a local preference (if any) is respected.
  * @returns {boolean}
  */
 export function isDarkModeDefault() {
     const serverMode = metaMode();
     const saved = localStorage.getItem('theme');
 
-    if (isAdmin() && saved && saved !== serverMode) {
+    if (isAuthenticated() && saved && saved !== serverMode) {
         localStorage.removeItem('theme');
         return serverMode === 'dark';
     }
@@ -60,7 +61,7 @@ export function isDarkModeDefault() {
 }
 
 /**
- * Initialize theme based on the server theme mode (or localStorage for non-admin)
+ * Initialize theme based on the server theme mode (or localStorage for guests)
  */
 export function initTheme() {
     const isDark = isDarkModeDefault();
@@ -172,15 +173,16 @@ export function applyThemePreset(preset) {
 }
 
 /**
- * Identifies the active preset. For admins, the server (meta active-theme)
- * takes precedence and reconciles a divergent local preference; for non-admins
- * localStorage takes precedence. As a last resort, matches by applied CSS values.
+ * Identifies the active preset. For authenticated users, the server
+ * (meta active-theme) takes precedence and reconciles a divergent local
+ * preference; for guests localStorage takes precedence. As a last resort,
+ * matches by applied CSS values.
  */
 function findActivePreset(presets) {
     const metaActive = getMeta('active-theme');
     const localName = localStorage.getItem('theme_name');
 
-    if (isAdmin()) {
+    if (isAuthenticated()) {
         if (metaActive && localName && localName !== metaActive) {
             localStorage.setItem('theme_name', metaActive);
             const serverPreset = presets.find((p) => p.id === metaActive);
@@ -238,7 +240,7 @@ function setThemeMode(isDark) {
 }
 
 function persistThemeSwitch(themeId) {
-    if (!isAdmin()) {
+    if (!isAuthenticated()) {
         return;
     }
 
@@ -258,7 +260,9 @@ function persistThemeSwitch(themeId) {
 }
 
 /**
- * Toggles to the light/dark equivalent of the same family and saves (admin).
+ * Toggles to the light/dark equivalent of the same family and saves it on
+ * the authenticated user's record (per-user). For guests, only applies
+ * locally.
  * @returns {boolean} Dark state after the toggle (synchronous)
  */
 export function toggleTheme() {

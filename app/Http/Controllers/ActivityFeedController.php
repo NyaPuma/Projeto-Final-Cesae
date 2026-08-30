@@ -30,7 +30,7 @@ final class ActivityFeedController extends Controller
             'id' => $audit->id,
             'title' => $this->titleFor($audit),
             'description' => $this->descriptionFor($audit),
-            'time_ago' => $audit->created_at?->diffForHumans() ?? 'recentemente',
+            'time_ago' => $audit->created_at?->diffForHumans() ?? __('activity.time_ago'),
             'icon_bg' => $this->iconBgFor($audit),
             'dot_color' => $this->dotColorFor($audit),
         ]);
@@ -42,38 +42,43 @@ final class ActivityFeedController extends Controller
     {
         return match ($audit->auditable_type) {
             Ticket::class => match ($audit->event) {
-                'created' => 'Novo ticket registado',
-                'updated' => 'Ticket atualizado',
-                'deleted' => 'Ticket removido',
-                default => 'Ticket alterado',
+                'created' => __('activity.title_ticket_created'),
+                'updated' => __('activity.title_ticket_updated'),
+                'deleted' => __('activity.title_ticket_deleted'),
+                default => __('activity.title_ticket_changed'),
             },
-            Part::class => 'Peça catalogada',
-            Equipment::class => 'Equipamento adicionado',
-            Room::class => 'Sala registada',
-            User::class => 'Utilizador criado',
-            default => 'Ação registada',
+            Part::class => __('activity.title_part'),
+            Equipment::class => __('activity.title_equipment'),
+            Room::class => __('activity.title_room'),
+            User::class => __('activity.title_user'),
+            default => __('activity.title_default'),
         };
     }
 
     private function descriptionFor(Audit $audit): string
     {
-        $user = optional($audit->user)->name ?? 'Sistema';
+        $user = optional($audit->user)->name ?? __('activity.system');
         $subject = $this->subjectName($audit);
 
         $subjectPart = $subject !== null ? sprintf('«%s»', $subject) : null;
 
+        $args = [
+            'subject' => $subjectPart ?? '',
+            'user' => $user,
+        ];
+
         return match ($audit->auditable_type) {
             Ticket::class => match ($audit->event) {
-                'created' => sprintf('Novo ticket %s registado por %s.', $subjectPart ?? '', $user),
-                'updated' => sprintf('Ticket %s atualizado por %s.', $subjectPart ?? '', $user),
-                'deleted' => sprintf('Ticket %s removido por %s.', $subjectPart ?? '', $user),
-                default => sprintf('Ticket %s alterado por %s.', $subjectPart ?? '', $user),
+                'created' => __('activity.desc_ticket_created', ['subject' => $args['subject'], 'user' => $user]),
+                'updated' => __('activity.desc_ticket_updated', ['subject' => $args['subject'], 'user' => $user]),
+                'deleted' => __('activity.desc_ticket_deleted', ['subject' => $args['subject'], 'user' => $user]),
+                default => __('activity.desc_ticket_changed', ['subject' => $args['subject'], 'user' => $user]),
             },
-            Part::class => sprintf('Peça %s adicionada ao catálogo por %s.', $subjectPart ?? '', $user),
-            Equipment::class => sprintf('Equipamento %s adicionado por %s.', $subjectPart ?? '', $user),
-            Room::class => sprintf('Sala %s registada por %s.', $subjectPart ?? '', $user),
-            User::class => sprintf('Novo utilizador criado por %s.', $user),
-            default => sprintf('Ação registada na auditoria por %s.', $user),
+            Part::class => __('activity.desc_part', $args),
+            Equipment::class => __('activity.desc_equipment', $args),
+            Room::class => __('activity.desc_room', $args),
+            User::class => __('activity.desc_user', ['user' => $user]),
+            default => __('activity.desc_default', ['user' => $user]),
         };
     }
 

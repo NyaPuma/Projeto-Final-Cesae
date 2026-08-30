@@ -66,7 +66,7 @@
             @endphp
 
             <section class="system-settings__group" id="group-{{ $groupId }}">
-                <form data-group-form="{{ $groupId }}" action="{{ route('ui.definicoes.sistema.update') }}" method="POST" class="system-settings__group-inner">
+                <form data-group-form="{{ $groupId }}" action="{{ route('ui.settings.system.update') }}" method="POST" class="system-settings__group-inner">
                     @csrf
 
                     <div class="system-settings__group-heading">

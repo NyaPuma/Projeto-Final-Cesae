@@ -1,6 +1,9 @@
 import { authDelete, authHeader, authPatch, authPost } from '../../../utils/api.js';
 import { getPlanFilters } from './dom.js';
 
+const loadError = () => (window.SGM_UI_I18N?.loadError || 'Unable to load the data at the moment.');
+const genericError = () => (window.SGM_UI_I18N?.genericError || 'An error occurred.');
+
 function buildSearchParams(page) {
     const filters = getPlanFilters();
     const params = new URLSearchParams();
@@ -23,7 +26,7 @@ export async function fetchPlans(page) {
 
     if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || 'Não foi possível carregar os planos de momento.');
+        throw new Error(errorData.message || loadError());
     }
 
     return response.json().catch(() => ({}));
@@ -41,7 +44,7 @@ export async function fetchPlan(id) {
 
     if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || 'Não foi possível carregar o plano.');
+        throw new Error(errorData.message || loadError());
     }
 
     return response.json().catch(() => ({}));
@@ -66,7 +69,7 @@ async function handleResponse(response) {
     const data = await response.json().catch(() => ({}));
 
     if (!response.ok) {
-        const errorText = data.message || 'Ocorreu um erro.';
+        const errorText = data.message || genericError();
         const errors = data.errors ? Object.values(data.errors).flat().join(' ') : '';
         throw new Error(errors ? `${errorText} ${errors}` : errorText);
     }

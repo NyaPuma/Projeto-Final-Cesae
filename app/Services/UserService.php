@@ -99,7 +99,7 @@ final class UserService
 
         return response()->json(['user' => $user, 'token' => $plainToken], $statusCode)
             ->cookie('api_token', $plainToken, 60 * 24 * 30, '/', null, $secure, true, false, 'Lax')
-            ->cookie('auth_token', $plainToken, 60 * 24 * 30, '/', null, $secure, false, false, 'Lax');
+            ->cookie('auth_token', $plainToken, 60 * 24 * 30, '/', null, $secure, true, false, 'Lax');
     }
 
     /**

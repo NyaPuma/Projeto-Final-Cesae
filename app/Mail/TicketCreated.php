@@ -28,7 +28,7 @@ final class TicketCreated extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "Nova avaria registada [#{$this->ticket->id}]",
+            subject: __('notifications.mail_ticket_created_subject', ['id' => $this->ticket->id]),
         );
     }
 

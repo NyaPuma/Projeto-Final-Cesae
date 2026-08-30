@@ -71,7 +71,7 @@ export function renderEmptyState() {
     const pagination = getPagination();
 
     if (tbody) {
-        tbody.innerHTML = '<tr><td colspan="6" class="px-6 py-12 text-center text-xs italic text-[var(--text-soft)]">Nenhum utilizador encontrado com os filtros selecionados.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="6" class="px-6 py-12 text-center text-xs italic text-[var(--text-soft)]">' + (window.SGM_USER_MANAGEMENT_I18N?.noUsersFound || 'No users found matching the selected filters.') + '</td></tr>';
     }
 
     if (pagination) pagination.innerHTML = '';
@@ -81,7 +81,7 @@ export function renderErrorState() {
     const tbody = getUsersTableBody();
     if (!tbody) return;
 
-    tbody.innerHTML = '<tr><td colspan="6" class="px-6 py-12 text-center text-xs font-medium text-danger">Não foi possível carregar os utilizadores.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="6" class="px-6 py-12 text-center text-xs font-medium text-danger">' + (window.SGM_UI_I18N?.loadError || 'Unable to load the data at the moment.') + '</td></tr>';
 }
 
 export function renderUsers(users) {

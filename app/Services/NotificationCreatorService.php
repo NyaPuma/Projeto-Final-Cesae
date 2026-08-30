@@ -49,10 +49,69 @@ final class NotificationCreatorService
      */
     public function createForAdmins(string $title, string $message, string $type, string $link): void
     {
-        $admins = User::whereHas('profile', fn ($q) => $q->where('name', UserRoleEnum::Admin->value))->get();
+        $this->createForAdminsMany([
+            ['title' => $title, 'message' => $message, 'type' => $type, 'link' => $link],
+        ]);
+    }
 
-        foreach ($admins as $admin) {
-            $this->createForUser($admin->id, $title, $message, $type, $link);
+    /**
+     * Creates a single bulk notification per payload entry, addressed to every
+     * Administrator. Resolves the admin list once and uses a single insert per
+     * entry instead of one query per admin.
+     *
+     * @param array<int, array{title: string, message: string, type: string, link: string}> $entries
+     * @return int number of notifications created
+     */
+    public function createForAdminsMany(array $entries): int
+    {
+        if ($entries === []) {
+            return 0;
         }
+
+        try {
+            $admins = User::query()
+                ->whereHas('profile', fn ($q) => $q->where('name', UserRoleEnum::Admin->value))
+                ->pluck('id');
+        } catch (Throwable $e) {
+            Log::warning('Failed to resolve admin recipients', [
+                'error' => $e->getMessage(),
+            ]);
+
+            return 0;
+        }
+
+        if ($admins->isEmpty()) {
+            return 0;
+        }
+
+        $now = now();
+        $created = 0;
+
+        foreach ($entries as $entry) {
+            $rows = [];
+
+            foreach ($admins as $adminId) {
+                $rows[] = [
+                    'user_id' => $adminId,
+                    'title' => $entry['title'],
+                    'message' => $entry['message'],
+                    'type' => $entry['type'],
+                    'link' => $entry['link'],
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ];
+            }
+
+            try {
+                Notification::insert($rows);
+                $created += count($rows);
+            } catch (Throwable $e) {
+                Log::warning('Failed to bulk create notifications', [
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
+
+        return $created;
     }
 }

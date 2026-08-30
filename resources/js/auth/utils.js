@@ -89,7 +89,7 @@ export async function request(url, options = {}) {
             ok: false,
             status: error.name === 'AbortError' ? 408 : 500,
             data: {
-                message: error.message || 'Erro de ligação',
+                message: error.message || (window.SGM_AUTH_I18N?.connectionError) || 'Connection error.',
             },
         };
     }

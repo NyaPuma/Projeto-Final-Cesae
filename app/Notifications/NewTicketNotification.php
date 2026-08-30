@@ -36,13 +36,13 @@ final class NewTicketNotification extends Notification implements ShouldQueue
         $ticketUrl = url("/ui/tickets/{$this->ticket->id}");
 
         return (new MailMessage)
-            ->subject("Novo Ticket Registado [#{$this->ticket->id}]")
-            ->greeting("Olá, {$notifiable->name}!")
-            ->line("Um novo ticket de manutenção foi registado com o título: **{$this->ticket->title}**.")
-            ->line("Prioridade: **" . ucfirst((string) $this->ticket->priority) . "**")
-            ->action('Ver Ticket', $ticketUrl)
-            ->line('Aceda ao painel de controlo para atribuir ou acompanhar o progresso deste chamado.')
-            ->salutation('Cumprimentos, Sistema de Gestão de Manutenção');
+            ->subject(__('notifications.subject_new_ticket', ['id' => $this->ticket->id]))
+            ->greeting(__('notifications.greeting', ['name' => $notifiable->name]))
+            ->line(__('notifications.new_ticket_line', ['title' => $this->ticket->title]))
+            ->line(__('notifications.priority_line', ['priority' => ucfirst((string) $this->ticket->priority)]))
+            ->action(__('notifications.action_view_ticket'), $ticketUrl)
+            ->line(__('notifications.follow_up_line'))
+            ->salutation(__('notifications.salutation'));
     }
 
     /**
@@ -54,8 +54,11 @@ final class NewTicketNotification extends Notification implements ShouldQueue
     {
         return [
             'ticket_id' => $this->ticket->id,
-            'title'     => 'Novo chamado registado',
-            'message'   => "Foi criado o ticket #{$this->ticket->id}: {$this->ticket->title}",
+            'title'     => __('notifications.db_new_ticket_title'),
+            'message'   => __('notifications.db_new_ticket_message', [
+                'id' => $this->ticket->id,
+                'title' => $this->ticket->title,
+            ]),
             'type'      => 'info',
             'link'      => "/ui/tickets/{$this->ticket->id}",
         ];

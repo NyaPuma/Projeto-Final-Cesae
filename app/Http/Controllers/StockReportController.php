@@ -34,31 +34,39 @@ final class StockReportController extends Controller
     {
         $this->authorize('viewAny', Part::class);
 
-        $parts = Part::query()
-            ->with('category')
-            ->lowStock()
-            ->orderBy('name')
-            ->get();
-
-        return response()->streamDownload(function () use ($parts): void {
+        return response()->streamDownload(function (): void {
             $handle = fopen('php://output', 'w');
             fwrite($handle, "\xEF\xBB\xBF");
-            fputcsv($handle, ['SKU', 'Nome', 'Marca', 'Categoria', 'Stock atual', 'Stock mínimo', 'Localização'], ';');
+            fputcsv($handle, [
+                __('exports.csv_sku'),
+                __('exports.csv_name'),
+                __('exports.csv_brand'),
+                __('exports.csv_category'),
+                __('exports.csv_stock_current'),
+                __('exports.csv_stock_min'),
+                __('exports.csv_location'),
+            ], ';');
 
-            foreach ($parts as $part) {
-                fputcsv($handle, [
-                    $part->sku,
-                    $part->name,
-                    $part->brand,
-                    $part->category?->name,
-                    $part->current_stock,
-                    $part->min_stock,
-                    $part->location,
-                ], ';');
-            }
+            Part::query()
+                ->select(['id', 'sku', 'name', 'brand', 'category_id', 'current_stock', 'min_stock', 'location'])
+                ->with('category')
+                ->lowStock()
+                ->orderBy('name')
+                ->lazy()
+                ->each(function (Part $part) use ($handle): void {
+                    fputcsv($handle, [
+                        $part->sku,
+                        $part->name,
+                        $part->brand,
+                        $part->category?->name,
+                        $part->current_stock,
+                        $part->min_stock,
+                        $part->location,
+                    ], ';');
+                });
 
             fclose($handle);
-        }, 'stock-baixo.csv', ['Content-Type' => 'text/csv; charset=UTF-8']);
+        }, __('exports.csv_low_stock'), ['Content-Type' => 'text/csv; charset=UTF-8']);
     }
 
     /**
@@ -77,33 +85,44 @@ final class StockReportController extends Controller
     {
         $this->authorize('viewAny', Part::class);
 
-        $parts = Part::query()
-            ->with(['category', 'taxRate'])
-            ->orderBy('name')
-            ->get();
-
-        return response()->streamDownload(function () use ($parts): void {
+        return response()->streamDownload(function (): void {
             $handle = fopen('php://output', 'w');
             fwrite($handle, "\xEF\xBB\xBF");
-            fputcsv($handle, ['SKU', 'Nome', 'Marca', 'Categoria', 'Stock atual', 'Preço custo', 'IVA', 'Preço c/ IVA', 'Valor stock', 'Localização'], ';');
+            fputcsv($handle, [
+                __('exports.csv_sku'),
+                __('exports.csv_name'),
+                __('exports.csv_brand'),
+                __('exports.csv_category'),
+                __('exports.csv_stock_current'),
+                __('exports.csv_price_cost'),
+                __('exports.csv_tax'),
+                __('exports.csv_price_with_tax'),
+                __('exports.csv_stock_value'),
+                __('exports.csv_location'),
+            ], ';');
 
-            foreach ($parts as $part) {
-                fputcsv($handle, [
-                    $part->sku,
-                    $part->name,
-                    $part->brand,
-                    $part->category?->name,
-                    $part->current_stock,
-                    $this->localization->formatDecimal((float) $part->cost_price),
-                    $part->taxRate?->percent . '%',
-                    $this->localization->formatDecimal((float) $part->priceWithVat()),
-                    $this->localization->formatDecimal((float) $part->stockValue()),
-                    $part->location,
-                ], ';');
-            }
+            Part::query()
+                ->select(['id', 'sku', 'name', 'brand', 'category_id', 'current_stock', 'cost_price', 'tax_rate_id', 'location'])
+                ->with(['category', 'taxRate'])
+                ->orderBy('name')
+                ->lazy()
+                ->each(function (Part $part) use ($handle): void {
+                    fputcsv($handle, [
+                        $part->sku,
+                        $part->name,
+                        $part->brand,
+                        $part->category?->name,
+                        $part->current_stock,
+                        $this->localization->formatDecimal((float) $part->cost_price),
+                        $part->taxRate?->percent . '%',
+                        $this->localization->formatDecimal((float) $part->priceWithVat()),
+                        $this->localization->formatDecimal((float) $part->stockValue()),
+                        $part->location,
+                    ], ';');
+                });
 
             fclose($handle);
-        }, 'inventario-stock.csv', ['Content-Type' => 'text/csv; charset=UTF-8']);
+        }, __('exports.csv_inventory'), ['Content-Type' => 'text/csv; charset=UTF-8']);
     }
 
     /**

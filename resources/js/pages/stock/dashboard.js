@@ -11,7 +11,7 @@ async function fetchJson(url) {
 
     if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || 'Não foi possível carregar os dados de momento.');
+        throw new Error(errorData.message || translations().loadError);
     }
 
     return response.json().catch(() => ({}));
@@ -41,6 +41,10 @@ function translations() {
         month: configured.month || body.stockDashboardMonth || 'month',
         months: configured.months || body.stockDashboardMonths || 'months',
         consumption: configured.consumption || body.stockDashboardConsumption || 'consumption',
+        noLowStock: configured.noLowStock || body.stockDashboardNoLowStock || 'No parts on low stock alert.',
+        noConsumption: configured.noConsumption || body.stockDashboardNoConsumption || 'No consumption recorded.',
+        noRunout: configured.noRunout || body.stockDashboardNoRunout || 'No stock-out forecasts in the period.',
+        loadError: configured.loadError || body.stockDashboardLoadError || 'Unable to load the data at the moment.',
     };
 }
 
@@ -84,7 +88,7 @@ async function loadSummary() {
         const parts = data.parts_in_alert ?? [];
         lowStockList.innerHTML = parts.length
             ? parts.map(renderAlertRow).join('')
-            : renderEmpty('Sem peças em alerta de stock baixo.');
+            : renderEmpty(translations().noLowStock);
     }
 }
 
@@ -109,7 +113,7 @@ async function loadTopConsumed() {
                         <p class="text-xs text-(--text-soft)">${formatEur(item.total_value)}</p>
                     </div>
                 </a>`).join('')
-            : renderEmpty('Sem consumos registados.');
+            : renderEmpty(translations().noConsumption);
     } catch (e) {
         list.innerHTML = renderEmpty(e.message);
     }
@@ -136,7 +140,7 @@ async function loadRunout() {
                         <p class="text-xs text-(--text-soft)">${translations().consumption} ${item.avg_monthly_usage}/${translations().month}</p>
                     </div>
                 </a>`).join('')
-            : renderEmpty('Sem previsões de rutura no período.');
+            : renderEmpty(translations().noRunout);
     } catch (e) {
         list.innerHTML = renderEmpty(e.message);
     }

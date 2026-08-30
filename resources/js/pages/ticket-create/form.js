@@ -1,6 +1,8 @@
 import { authHeader } from '../../utils/api.js';
 import { getForm, getFormData, getMessage, getSubmitButton, getFileInput } from './dom.js';
 
+const translations = () => window.SGM_TICKET_DETAIL_I18N || {};
+
 function setFormMessage(text, state = 'neutral') {
     const message = getMessage();
     if (!message) return;
@@ -22,12 +24,12 @@ async function submitForm(event) {
     const { title, description, priority, equipmentId } = getFormData();
 
     if (!equipmentId) {
-        setFormMessage('Por favor, selecione um equipamento válido a partir da lista de sugestões.', 'error');
+        setFormMessage(translations().invalidEquipment || 'Please select a valid equipment from the suggestions list.', 'error');
         document.getElementById('equipmentSearchInput')?.focus();
         return;
     }
 
-    setFormMessage('A guardar ticket...');
+    setFormMessage(translations().ticketSaving || 'Saving ticket...');
     if (submitButton) submitButton.disabled = true;
 
     try {
@@ -64,14 +66,14 @@ async function submitForm(event) {
         const data = await response.json().catch(() => ({}));
 
         if (!response.ok) {
-            let errorText = data.message || 'Erro ao criar ticket.';
+            let errorText = data.message || translations().ticketCreateError || 'Error creating ticket.';
             if (data.errors) {
                 errorText = Object.values(data.errors).flat().join(' ');
             }
             throw new Error(errorText);
         }
 
-        setFormMessage('Ticket criado com sucesso!', 'success');
+        setFormMessage(translations().ticketCreated || 'Ticket created successfully!', 'success');
         window.setTimeout(() => {
             window.location.href = '/ui/tickets';
         }, 1500);

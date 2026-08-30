@@ -10,15 +10,13 @@
     $themePresets = app(\App\Services\ThemePresetService::class);
     $themeUser = $user ?? auth()->user();
     $themeRole = $themeUser?->profile?->name ?? null;
-    $themeActiveId = 'claro-laranja';
+    $themeActiveId = $themePresets->effectiveThemeId($themeUser?->theme);
     $themeMode = 'light';
 
     try {
-        $themeActive = $themePresets->active();
-        $themeMode = $themeActive['mode'] === 'dark' ? 'dark' : 'light';
-        $themeActiveId = $themeActive['id'] ?? $themeActiveId;
+        $themeMode = $themePresets->mode($themeUser?->theme);
     } catch (\Throwable $e) {
-        // theme_settings not yet available (e.g. migrations pending)
+        // theme preset data not yet available (e.g. migrations pending)
     }
 @endphp
 <meta name="theme-mode" content="{{ $themeMode }}">

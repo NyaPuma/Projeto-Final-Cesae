@@ -30,6 +30,7 @@ class User extends Authenticatable
         'name',
         'email',
         'locale',
+        'theme',
         'password',
         'profile_id',
         'active',

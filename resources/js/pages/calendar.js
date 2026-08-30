@@ -98,7 +98,7 @@ async function loadScheduleFormData() {
                 list.map(t => `<option value="${t.id}">${t.name}</option>`).join('');
         }
     } catch (err) {
-        console.error('Erro ao carregar dados do formulário:', err);
+        console.error((window.SGM_UI_I18N?.loadError || 'Error loading form data:'), err);
     }
 }
 
@@ -238,7 +238,7 @@ async function submitPreventiveMaintenance(e) {
     const endpoint = modal.dataset.scheduleUrl || '/calendar/maintenance';
     const labelScheduling = btn.dataset.labelScheduling || 'A agendar...';
     const labelConfirm = btn.dataset.labelConfirm || 'Confirmar Agendamento';
-    const errMessage = feedback.dataset.errMessage || 'Erro ao agendar manutenção preventiva.';
+    const errMessage = feedback.dataset.errMessage || (window.SGM_UI_I18N?.genericError || 'Error scheduling preventive maintenance.');
 
     const payload = {
         title: document.getElementById('sched_title').value.trim(),
@@ -316,7 +316,7 @@ function saveEventMove(info) {
                 return null;
             }
             if (!response.ok) {
-                throw new Error('Erro ao reagendar o evento.');
+                throw new Error((window.SGM_UI_I18N?.genericError || 'Error rescheduling the event.'));
             }
             return response.json();
         })
@@ -439,7 +439,7 @@ function initCalendar() {
                         return null;
                     }
                     if (!response.ok) {
-                        throw new Error('Erro ao carregar eventos da infraestrutura.');
+                        throw new Error((window.SGM_UI_I18N?.loadError || 'Error loading infrastructure events.'));
                     }
                     return response.json();
                 })

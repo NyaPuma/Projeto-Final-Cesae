@@ -15,6 +15,7 @@ use App\Models\Part;
 use App\Services\PartService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use OpenApi\Attributes as OA;
 
 final class PartController extends Controller
@@ -136,6 +137,7 @@ final class PartController extends Controller
 
         $data = StorePartData::fromRequest($request->validated());
         $part = $this->createPartAction->execute($data);
+        Cache::forget('stock_dashboard_summary');
 
         return response()->json([
             'message' => __('messages.Peça criada com sucesso.'),
@@ -188,6 +190,7 @@ final class PartController extends Controller
 
         $data = UpdatePartData::fromRequest($request->validated());
         $part = $this->updatePartAction->execute($part, $data);
+        Cache::forget('stock_dashboard_summary');
 
         return response()->json([
             'message' => __('messages.Peça atualizada com sucesso.'),
@@ -216,6 +219,7 @@ final class PartController extends Controller
         $this->authorize('delete', $part);
 
         $part->delete();
+        Cache::forget('stock_dashboard_summary');
 
         return response()->json([
             'message' => __('messages.Peça eliminada com sucesso.'),

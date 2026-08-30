@@ -33,7 +33,7 @@ export function renderLoadingState() {
     const tbody = getAuditsTableBody();
     if (!tbody) return;
 
-    tbody.innerHTML = '<tr><td colspan="8" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]">A carregar registos de auditoria...</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="8" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]">' + (window.SGM_AUDIT_I18N?.loading || 'Loading audit records...') + '</td></tr>';
 }
 
 export function bindPagination(handler) {

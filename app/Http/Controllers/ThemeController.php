@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
-use App\Models\ThemeSetting;
+use App\Models\User;
 use App\Services\ThemePresetService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -17,8 +19,8 @@ final class ThemeController extends Controller
 
     public function customCss(Request $request): Response
     {
-        $settings = ThemeSetting::query()->pluck('value', 'key')->toArray();
-        $values = array_merge($this->themeDefaults(), $settings);
+        $themeId = $this->effectiveThemeId($this->resolveCssUser($request));
+        $values = $this->themePresets->valuesFor($themeId);
         $css = $this->buildCss($values);
         $etag = '"' . sha1($css) . '"';
 
@@ -37,7 +39,8 @@ final class ThemeController extends Controller
 
     /**
      * Switches to the equivalent preset (light <-> dark of the same family)
-     * and saves it — used by the panel's mode button.
+     * and persists it as the current user's personal theme — used by the
+     * panel's mode button. Available to any authenticated user.
      */
     public function switchTheme(Request $request): JsonResponse
     {
@@ -45,7 +48,7 @@ final class ThemeController extends Controller
             'theme' => ['required', 'string', Rule::in(array_keys($this->themePresets->all()))],
         ]);
 
-        $preset = $this->themePresets->apply($validated['theme']);
+        $preset = $this->themePresets->applyForUser($request->user(), $validated['theme']);
 
         return response()->json([
             'ok' => true,
@@ -56,36 +59,78 @@ final class ThemeController extends Controller
     }
 
     /**
-     * Hash of saved theme values, used as a cache-buster (?v=) in the
-     * dynamic CSS link — ensures a theme change is fetched immediately,
-     * without being stuck to old browser caches.
+     * Effective preset id for a given user (or guest default).
      */
-    public static function cacheBuster(): string
+    private function effectiveThemeId(?User $user): string
     {
+        return $this->themePresets->effectiveThemeId($user?->theme);
+    }
+
+    /**
+     * Resolves the authenticated user for the public CSS route.
+     *
+     * `/theme/custom.css` is intentionally public (the guest/auth pages link
+     * it), so it bypasses `custom.auth`. To still serve the correct per-user
+     * theme we resolve the user from the same token candidates without a
+     * redirect: bearer/X-Auth-Token header, api/auth cookies, or session.
+     */
+    private function resolveCssUser(Request $request): ?User
+    {
+        $candidates = [];
+
+        if ($request->header('X-Auth-Token')) {
+            $candidates[] = $request->header('X-Auth-Token');
+        }
+        if ($request->bearerToken()) {
+            $candidates[] = $request->bearerToken();
+        }
+        if ($request->cookie('api_token')) {
+            $candidates[] = $request->cookie('api_token');
+        }
+        if ($request->cookie('auth_token')) {
+            $candidates[] = $request->cookie('auth_token');
+        }
         try {
-            $raw = ThemeSetting::query()->pluck('value', 'key')->implode('');
+            if ($request->session()->get('api_token')) {
+                $candidates[] = (string) $request->session()->get('api_token');
+            }
+        } catch (\Throwable $e) {
+            // session unavailable — continue with the other candidates
+        }
+
+        foreach (array_unique(array_filter($candidates)) as $token) {
+            $tokenHash = User::hashToken($token);
+            $found = User::with('profile')
+                ->where('api_token', $tokenHash)
+                ->where('active', true)
+                ->whereNull('deleted_at')
+                ->first();
+
+            if ($found) {
+                return $found;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Cache-buster for the dynamic CSS link. Because the css is now per-user
+     * (derived from `users.theme`), the busting value must be computed from
+     * the effective theme id — pass the id resolved in the blade template.
+     */
+    public static function cacheBuster(?string $themeId = null): string
+    {
+        $service = app(ThemePresetService::class);
+        $id = $service->effectiveThemeId($themeId);
+
+        try {
+            $raw = implode('', $service->valuesFor($id));
         } catch (\Throwable $e) {
             return 'default';
         }
 
-        return substr(sha1($raw), 0, 12);
-    }
-
-    private function themeDefaults(): array
-    {
-        return [
-            '--color-primary' => '#ea580c',
-            '--color-secondary' => '#14213d',
-            '--color-text' => '#0f172a',
-            '--color-text-soft' => '#475569',
-            '--color-surface' => '#ffffff',
-            '--color-surface-alt' => '#e2e8f0',
-            '--color-border' => '#cbd5e1',
-            '--color-ticket-open' => '#2563eb',
-            '--color-ticket-in-progress' => '#f59e0b',
-            '--color-ticket-resolved' => '#10b981',
-            '--color-ticket-urgent' => '#dc2626',
-        ];
+        return substr(sha1($id . $raw), 0, 12);
     }
 
     private function buildCss(array $settings): string

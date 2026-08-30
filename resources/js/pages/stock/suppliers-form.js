@@ -35,7 +35,7 @@ function handleSubmit(e) {
     const mode = form.dataset.supplierFormMode;
     const id = form.dataset.supplierId || null;
 
-    showMessage(message, mode === 'edit' ? 'A guardar alterações...' : 'A guardar fornecedor...', false);
+    showMessage(message, mode === 'edit' ? (window.SGM_UI_I18N?.saving || 'Saving...') : (window.SGM_UI_I18N?.saving || 'Saving supplier...'), false);
     submitBtn.disabled = true;
 
     const payload = buildPayload();
@@ -55,8 +55,8 @@ function handleSubmit(e) {
             }
 
             showMessage(message, mode === 'edit'
-                ? 'Fornecedor atualizado com sucesso!'
-                : 'Fornecedor criado com sucesso!', false);
+                ? (window.SGM_UI_I18N?.updatedSuccess || 'Supplier updated successfully!')
+                : (window.SGM_UI_I18N?.createdSuccess || 'Supplier created successfully!'), false);
             message.className = 'min-h-6 text-sm font-medium text-success';
             setTimeout(() => { window.location.href = '/ui/stock/suppliers'; }, 1500);
         })

@@ -13,7 +13,7 @@
 
     @vite('resources/js/early-theme.js')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link rel="stylesheet" href="{{ route('theme.custom') }}?v={{ \App\Http\Controllers\ThemeController::cacheBuster() }}">
+    <link rel="stylesheet" href="{{ route('theme.custom') }}?v={{ \App\Http\Controllers\ThemeController::cacheBuster(request()->user()?->theme) }}">
 
     @include('ui.partials.theme-meta')
 
@@ -125,6 +125,13 @@
             ['href' => 'ui/rooms', 'active' => 'ui/rooms*', 'label' => __('room.Salas'), 'icon' => $icon['door'], 'exact' => false],
             ['href' => 'calendar', 'active' => 'calendar*', 'label' => __('common.Agenda'), 'icon' => $icon['calendar'], 'exact' => false],
             ['href' => 'ui/stock', 'active' => 'ui/stock*', 'label' => __('stock.Stock'), 'icon' => $icon['box'], 'exact' => false],
+            [
+                'href' => 'ui/settings/appearance',
+                'active' => 'ui/settings/appearance*',
+                'label' => __('ui.Tema'),
+                'icon' => $icon['swatch'],
+                'exact' => false,
+            ],
         ];
 
         if ($userRole === 'admin') {
@@ -145,15 +152,8 @@
                     'exact' => false,
                 ],
                 [
-                    'href' => 'ui/definicoes/aparencia',
-                    'active' => 'ui/definicoes/aparencia*',
-                    'label' => __('ui.Tema'),
-                    'icon' => $icon['swatch'],
-                    'exact' => false,
-                ],
-                [
-                    'href' => 'ui/definicoes/sistema',
-                    'active' => 'ui/definicoes/sistema*',
+                    'href' => 'ui/settings/system',
+                    'active' => 'ui/settings/system*',
                     'label' => __('common.Definições'),
                     'icon' => $icon['gear'],
                     'exact' => false,

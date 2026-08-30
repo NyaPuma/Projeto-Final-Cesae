@@ -63,12 +63,12 @@ function init() {
             const j = await res.json().catch(() => ({}));
 
             if (res.status !== 200) {
-                setMsg(j.message || j.errors?.password?.[0] || "Erro ao repor password.", 'error');
+                setMsg(j.message || j.errors?.password?.[0] || (window.SGM_UI_I18N?.genericError || "Error resetting password."), 'error');
                 setLoading(false);
                 return;
             }
 
-            setMsg("Password reposta com sucesso! A redirecionar para o login...", 'success');
+            setMsg((window.SGM_UI_I18N?.updatedSuccess || 'Password reset successfully! Redirecting to login...'), 'success');
             setLoading(false);
             setTimeout(() => { window.location.href = '/ui/login'; }, 2000);
         } catch (err) {

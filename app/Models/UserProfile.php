@@ -28,6 +28,13 @@ final class UserProfile extends Model
         'active',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'active' => 'boolean',
+        ];
+    }
+
     // --- RELATIONSHIPS ---
 
     /**

@@ -111,14 +111,14 @@ function bindForm() {
         };
 
         submitBtn.disabled = true;
-        showMessage('A guardar plano...', false);
+        showMessage((window.SGM_UI_I18N?.saving || 'Saving plan...'), false);
 
         try {
             const data = mode === 'edit' && id
                 ? await updatePlan(id, payload)
                 : await createPlan(payload);
 
-            showMessage(data.message || 'Plano guardado com sucesso!', false);
+            showMessage(data.message || (window.SGM_UI_I18N?.savedSuccess || 'Plan saved successfully!'), false);
             resetForm();
             loadPlans(plansState.currentPage);
         } catch (error) {
@@ -177,7 +177,7 @@ async function handleDelete(id) {
 
     try {
         const data = await deletePlan(id);
-        showMessage(data.message || 'Plano eliminado com sucesso!', false);
+        showMessage(data.message || (window.SGM_UI_I18N?.deletedSuccess || 'Plan deleted successfully!'), false);
         loadPlans(plansState.currentPage);
     } catch (error) {
         showMessage(error.message, true);
@@ -196,7 +196,7 @@ function bindTableActions() {
         }
 
         const deleteButton = event.target.closest('[data-plan-delete]');
-        if (deleteButton && window.confirm('Tem a certeza que pretende eliminar este plano de manutenção?')) {
+        if (deleteButton && window.confirm((window.SGM_UI_I18N?.confirmDeletePlan || 'Are you sure you want to delete this maintenance plan?'))) {
             handleDelete(deleteButton.dataset.planDelete);
         }
     });

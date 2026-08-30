@@ -45,9 +45,6 @@ Route::post('/login', [AuthController::class, 'login'])
     ->name('api.login')
     ->middleware(['rate.limit:5,1']);
 
-Route::get('/activities', [ActivityFeedController::class, 'index'])
-    ->name('api.activities');
-
 Route::post('/password/email', [PasswordResetController::class, 'sendResetLink'])
     ->name('api.password.email')
     ->middleware(['rate.limit:3,1']);
@@ -66,21 +63,32 @@ Route::post('/password/reset', [PasswordResetController::class, 'resetPassword']
 */
 Route::middleware(['custom.auth'])->group(function () {
 
+    // Activity feed (authenticated only — exposes internal entity names and staff users)
+    Route::get('/activities', [ActivityFeedController::class, 'index'])->name('api.activities');
+
     // Authentication
-    Route::post('/password/change', [\App\Http\Controllers\ProfileController::class, 'changePassword'])->name('api.password.change');
+    Route::post('/password/change', [\App\Http\Controllers\ProfileController::class, 'changePassword'])
+        ->name('api.password.change')
+        ->middleware('rate.limit:10,1');
 
     // Tickets
     Route::get('/tickets', [TicketController::class, 'index'])->name('api.tickets.index');
     Route::get('/tickets/search', [TicketController::class, 'search'])->name('api.tickets.search');
-    Route::post('/tickets', [TicketController::class, 'store'])->name('api.tickets.store');
+    Route::post('/tickets', [TicketController::class, 'store'])
+        ->name('api.tickets.store')
+        ->middleware('rate.limit:30,1');
     Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('api.tickets.show');
 
     // Comments
-    Route::post('/tickets/{ticket}/comments', [TicketCommentController::class, 'store'])->name('api.tickets.comments.store');
+    Route::post('/tickets/{ticket}/comments', [TicketCommentController::class, 'store'])
+        ->name('api.tickets.comments.store')
+        ->middleware('rate.limit:30,1');
     Route::get('/tickets/{ticket}/comments', [TicketCommentController::class, 'index'])->name('api.tickets.comments.index');
 
     // Photos
-    Route::post('/tickets/{ticket}/photos', [TicketAttachmentController::class, 'store'])->name('api.tickets.photos.store');
+    Route::post('/tickets/{ticket}/photos', [TicketAttachmentController::class, 'store'])
+        ->name('api.tickets.photos.store')
+        ->middleware('rate.limit:30,1');
     Route::get('/tickets/{ticket}/photos', [TicketAttachmentController::class, 'index'])->name('api.tickets.photos.index');
     Route::delete('/tickets/{ticket}/photos/{attachment}', [TicketAttachmentController::class, 'destroy'])->name('api.tickets.photos.destroy');
 
@@ -91,10 +99,18 @@ Route::middleware(['custom.auth'])->group(function () {
 
     // Technician
     Route::middleware(['role:technician'])->group(function () {
-        Route::put('/technician/tickets/{ticket}/start', TicketStartController::class)->name('api.technician.tickets.start');
-        Route::put('/technician/tickets/{ticket}/close', [TicketCloseController::class, 'simpleClose'])->name('api.technician.tickets.close');
-        Route::put('/technician/tickets/{ticket}/close-final', [TicketCloseController::class, 'closeFinal'])->name('api.technician.tickets.close-final');
-        Route::put('/technician/tickets/{ticket}/request-budget', [TicketBudgetController::class, 'requestAuthorization'])->name('api.technician.tickets.request-budget');
+        Route::put('/technician/tickets/{ticket}/start', TicketStartController::class)
+            ->name('api.technician.tickets.start')
+            ->middleware('rate.limit:20,1');
+        Route::put('/technician/tickets/{ticket}/close', [TicketCloseController::class, 'simpleClose'])
+            ->name('api.technician.tickets.close')
+            ->middleware('rate.limit:20,1');
+        Route::put('/technician/tickets/{ticket}/close-final', [TicketCloseController::class, 'closeFinal'])
+            ->name('api.technician.tickets.close-final')
+            ->middleware('rate.limit:20,1');
+        Route::put('/technician/tickets/{ticket}/request-budget', [TicketBudgetController::class, 'requestAuthorization'])
+            ->name('api.technician.tickets.request-budget')
+            ->middleware('rate.limit:20,1');
     });
 
     // Stock: read and movements (admins and technicians)
@@ -141,7 +157,9 @@ Route::middleware(['custom.auth'])->group(function () {
         // Budget and Preventive Maintenance
         Route::post('/admin/preventive', [AdminController::class, 'storePreventive'])->name('api.admin.preventive.store');
         Route::patch('/admin/tickets/{ticket}/approve-budget', [AdminController::class, 'approveBudget'])->name('api.admin.tickets.approve-budget');
-        Route::patch('/admin/tickets/{ticket}/atribuir', TicketAssignmentController::class)->name('api.admin.tickets.atribuir');
+        Route::patch('/admin/tickets/{ticket}/assign', TicketAssignmentController::class)
+        ->name('api.admin.tickets.assign')
+        ->middleware('rate.limit:20,1');
 
         // Stock: management (admin)
         Route::post('/admin/parts', [PartController::class, 'store'])->name('api.admin.stock.parts.store');

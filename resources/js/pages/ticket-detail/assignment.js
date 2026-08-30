@@ -2,6 +2,8 @@ import { authHeader } from '../../utils/api.js';
 import { state } from './state.js';
 import { showMessage } from './ui.js';
 
+const translations = () => window.SGM_TICKET_DETAIL_I18N || {};
+
 function getAssignmentPayload(technicianId) {
     return {
         technician_id: technicianId,
@@ -18,11 +20,11 @@ async function assignTechnician(technicianId, onSuccess) {
     const data = await response.json().catch(() => ({}));
 
     if (!response.ok) {
-        showMessage(data.message || 'Erro ao atribuir técnico.', true);
+        showMessage(data.message || translations().assignError || 'Error assigning technician.', true);
         return;
     }
 
-    showMessage(data.message || 'Técnico atribuído com sucesso.');
+    showMessage(data.message || translations().assignSuccess || 'Technician assigned successfully.');
     await onSuccess();
 }
 
@@ -35,7 +37,7 @@ export function bindAssignmentActions(onSuccess) {
         const technicianId = parseInt(technicianInput?.value || '', 10);
 
         if (!technicianId) {
-            showMessage('Introduza um ID de técnico válido.', true);
+            showMessage(translations().assignInvalidId || 'Enter a valid technician ID.', true);
             return;
         }
 

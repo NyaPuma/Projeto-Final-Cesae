@@ -31,7 +31,7 @@ export function requireAuth(loginUrl) {
 
 export function logout(logoutUrl) {
     const token = localStorage.getItem('auth_token');
-    if (!token) return;
+    const loginUrl = document.body?.dataset?.loginUrl || '/ui/login';
 
     fetch(logoutUrl, {
         method: 'POST',
@@ -39,11 +39,19 @@ export function logout(logoutUrl) {
             'Content-Type': 'application/json'
         }, authHeader())
     })
+    .catch(() => {
+        // proceed to local cleanup even if the server call fails,
+        // so the user is never left logged in
+    })
     .finally(() => {
         localStorage.removeItem('auth_token');
+        localStorage.removeItem('api_token');
         localStorage.removeItem('user_name');
         localStorage.removeItem('user_role');
+        localStorage.removeItem('theme');
+        localStorage.removeItem('theme_name');
         document.cookie = 'auth_token=; path=/; max-age=0; SameSite=Lax';
+        document.cookie = 'api_token=; path=/; max-age=0; SameSite=Lax';
         window.location = loginUrl;
     });
 }

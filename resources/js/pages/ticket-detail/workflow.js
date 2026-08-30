@@ -3,6 +3,8 @@ import { state, setPendingAction, resetPendingAction } from './state.js';
 import { showMessage } from './ui.js';
 import { getBudgetDetails } from './budget.js';
 
+const translations = () => window.SGM_TICKET_DETAIL_I18N || {};
+
 export function showPriorityWarning(urgentCount, currentPriority, ticketId, actionType = 'start', myUrgentCount = 0) {
     const modal = document.getElementById('priorityWarningModal');
     const countElement = document.getElementById('priorityWarningCount');
@@ -45,7 +47,7 @@ export async function submitBudget(onSuccess) {
     const budgetDetails = getBudgetDetails();
 
     if (estimatedBudget <= 0) {
-        showMessage('Por favor, introduza um custo estimado válido.', true);
+        showMessage(translations().invalidCost || 'Please enter a valid estimated cost.', true);
         return;
     }
 
@@ -63,11 +65,11 @@ export async function submitBudget(onSuccess) {
     const data = await response.json();
 
     if (!response.ok) {
-        showMessage(data.message || 'Erro ao submeter orçamento detalhado.', true);
+        showMessage(data.message || translations().budgetSubmitError || 'Error submitting detailed budget.', true);
         return;
     }
 
-    showMessage(data.message || 'Orçamento detalhado processado no sistema!');
+    showMessage(data.message || translations().budgetProcessed || 'Detailed budget processed in the system!');
     await onSuccess();
 }
 
@@ -76,7 +78,7 @@ export async function finishTicket(onSuccess) {
     const report = document.getElementById('techFinalReport')?.value.trim();
 
     if (cost <= 0) {
-        showMessage('Por favor, introduza o custo final da intervenção.', true);
+        showMessage(translations().invalidFinalCost || 'Please enter the final intervention cost.', true);
         return;
     }
 
@@ -89,11 +91,11 @@ export async function finishTicket(onSuccess) {
     const data = await response.json();
 
     if (!response.ok) {
-        showMessage(data.message || 'Erro ao fechar ticket.', true);
+        showMessage(data.message || translations().closeError || 'Error closing ticket.', true);
         return;
     }
 
-    showMessage('Intervenção concluída e ticket fechado!');
+    showMessage(translations().interventionClosed || 'Intervention completed and ticket closed!');
     await onSuccess();
 }
 
@@ -101,7 +103,7 @@ export async function handleBudgetAction(action, onSuccess) {
     const feedback = document.getElementById('budgetFeedback')?.value.trim();
 
     if (action === 'reject' && !feedback) {
-        showMessage('Ao recusar o orçamento, é obrigatório inserir uma justificação/feedback.', true);
+        showMessage(translations().budgetRefuseRequiresFeedback || 'To refuse the budget, you must enter a justification/feedback.', true);
         return;
     }
 
@@ -114,11 +116,13 @@ export async function handleBudgetAction(action, onSuccess) {
     const data = await response.json();
 
     if (!response.ok) {
-        showMessage(data.message || 'Erro ao processar decisão orçamental.', true);
+        showMessage(data.message || translations().budgetDecisionError || 'Error processing budget decision.', true);
         return;
     }
 
-    showMessage(action === 'approve' ? 'Orçamento Aprovado! Ticket desbloqueado para Em Curso.' : 'Orçamento Recusado. Reparação Abortada.');
+    showMessage(action === 'approve'
+        ? (translations().budgetApproved || 'Budget Approved! Ticket unlocked for In Progress.')
+        : (translations().budgetRefused || 'Budget Refused. Repair Aborted.'));
     const feedbackField = document.getElementById('budgetFeedback');
     if (feedbackField) feedbackField.value = '';
     await onSuccess();

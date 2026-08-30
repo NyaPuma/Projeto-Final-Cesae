@@ -5,7 +5,7 @@ export function updateFileName() {
     const label = getFileNameLabel();
     if (!label) return;
 
-    const defaultLabel = label.dataset.defaultLabel || 'Nenhum ficheiro selecionado';
+    const defaultLabel = label.dataset.defaultLabel || (window.SGM_TICKET_MEDIA_I18N?.noFileSelected || 'No file selected');
     label.textContent = input?.files?.[0]?.name || defaultLabel;
 }
 

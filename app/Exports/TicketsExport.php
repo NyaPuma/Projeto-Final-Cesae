@@ -121,7 +121,7 @@ final class TicketsExport implements
             $ticket->title,
             $statusLabel,
             $priorityLabel,
-            $ticket->urgent ? 'Sim' : 'Não',
+            $ticket->urgent ? __('exports.yes') : __('exports.no'),
             $ticket->opened_at?->format('d/m/Y H:i') ?? '-',
             $ticket->in_progress_at?->format('d/m/Y H:i') ?? '-',
             $ticket->closed_at?->format('d/m/Y H:i') ?? '-',

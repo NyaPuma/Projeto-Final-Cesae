@@ -45,7 +45,7 @@ function handleSubmit(e) {
     const mode = form.dataset.roomFormMode;
     const id = form.dataset.roomId || null;
 
-    showMessage(message, mode === 'edit' ? 'A guardar alterações...' : 'A guardar sala...', false);
+    showMessage(message, mode === 'edit' ? (window.SGM_UI_I18N?.saving || 'Saving changes...') : (window.SGM_UI_I18N?.saving || 'Saving room...'), false);
     submitBtn.disabled = true;
 
     const payload = buildPayload();
@@ -65,8 +65,8 @@ function handleSubmit(e) {
             }
 
             showMessage(message, mode === 'edit'
-                ? 'Sala atualizada com sucesso!'
-                : 'Sala criada com sucesso!', false);
+                ? (window.SGM_UI_I18N?.updatedSuccess || 'Room updated successfully!')
+                : (window.SGM_UI_I18N?.createdSuccess || 'Room created successfully!'), false);
             message.className = 'min-h-6 text-sm font-medium text-success';
             setTimeout(() => { window.location.href = '/ui/rooms'; }, 1500);
         })

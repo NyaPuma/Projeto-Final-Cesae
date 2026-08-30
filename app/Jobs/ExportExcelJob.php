@@ -52,8 +52,8 @@ final class ExportExcelJob implements ShouldQueue
 
         Notification::create([
             'user_id' => $this->userId,
-            'title' => 'Exportação Excel concluída',
-            'message' => "O ficheiro {$filename} está pronto para download.",
+            'title' => __('exports.excel_completed'),
+            'message' => __('exports.file_ready', ['file' => $filename]),
             'type' => 'system',
             'is_read' => false,
             'link' => '/storage/exports/'.$filename,
@@ -67,8 +67,8 @@ final class ExportExcelJob implements ShouldQueue
     {
         Notification::create([
             'user_id' => $this->userId,
-            'title' => 'Falha na exportação Excel',
-            'message' => 'Não foi possível gerar o relatório pretendido. Por favor, tente novamente.',
+            'title' => __('exports.excel_failed'),
+            'message' => __('exports.report_failed_generic'),
             'type' => 'system',
             'is_read' => false,
             'link' => null,

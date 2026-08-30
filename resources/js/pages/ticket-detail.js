@@ -52,8 +52,8 @@ async function fetchTicket() {
             const completionCard = document.getElementById('techCompletionCard');
             approvedCard.classList.remove('hidden');
             completionCard.classList.add('hidden');
-            approvedCard.querySelector('h3').textContent = 'Reparação Concluída';
-            approvedCard.querySelector('p').textContent = 'O ticket foi fechado com sucesso.';
+            approvedCard.querySelector('h3').textContent = (window.SGM_TICKET_DETAIL_I18N?.repairCompleted) || 'Repair Completed';
+            approvedCard.querySelector('p').textContent = (window.SGM_TICKET_DETAIL_I18N?.closedSuccessfully) || 'The ticket was closed successfully.';
         } else if (budgetIsApproved || budgetWasAutoApproved) {
             document.getElementById('techApprovedCard').classList.remove('hidden');
             document.getElementById('techCompletionCard').classList.remove('hidden');

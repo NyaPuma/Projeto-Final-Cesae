@@ -22,7 +22,7 @@ final class TestMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Teste de Envio de E-mail',
+            subject: __('notifications.mail_test_subject'),
         );
     }
 

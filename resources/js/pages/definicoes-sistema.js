@@ -10,10 +10,10 @@ function setSaveStatus(form, state, message = '') {
     }
 
     const messages = {
-        saving: 'A guardar…',
+        saving: (window.SGM_UI_I18N?.saving || 'Saving...'),
         saved: 'Guardado',
         dirty: 'Alterações por guardar',
-        error: message || 'Erro ao guardar — tente novamente.',
+        error: message || (window.SGM_UI_I18N?.saveError || 'Error saving — please try again.'),
         idle: '',
     };
 

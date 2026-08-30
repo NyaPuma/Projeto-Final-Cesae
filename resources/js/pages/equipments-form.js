@@ -47,7 +47,7 @@ function handleSubmit(e) {
     const mode = form.dataset.equipmentFormMode;
     const id = form.dataset.equipmentId || null;
 
-    showMessage(message, mode === 'edit' ? 'A guardar alterações...' : 'A guardar equipamento...', false);
+    showMessage(message, mode === 'edit' ? (window.SGM_UI_I18N?.saving || 'Saving changes...') : (window.SGM_UI_I18N?.saving || 'Saving equipment...'), false);
     submitBtn.disabled = true;
 
     const payload = buildPayload();
@@ -67,8 +67,8 @@ function handleSubmit(e) {
             }
 
             showMessage(message, mode === 'edit'
-                ? 'Equipamento atualizado com sucesso!'
-                : 'Equipamento criado com sucesso!', false);
+                ? (window.SGM_UI_I18N?.updatedSuccess || 'Equipment updated successfully!')
+                : (window.SGM_UI_I18N?.createdSuccess || 'Equipment created successfully!'), false);
             message.className = 'min-h-6 text-sm font-medium text-success';
             setTimeout(() => { window.location.href = '/ui/equipments'; }, 1500);
         })

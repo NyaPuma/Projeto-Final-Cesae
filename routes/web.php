@@ -105,9 +105,11 @@ Route::middleware(['custom.auth'])->group(function () {
         ->name('auth.logout')
         ->withoutMiddleware([ValidateCsrfToken::class]);
     Route::post('/password/change', [ProfileController::class, 'changePassword'])
-        ->name('auth.password.change');
+        ->name('auth.password.change')
+        ->middleware('rate.limit:10,1');
     Route::post('/profile/update', [ProfileController::class, 'updateProfile'])
-        ->name('auth.profile.update');
+        ->name('auth.profile.update')
+        ->middleware('rate.limit:10,1');
 
     // --- Notifications ---
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
@@ -129,6 +131,15 @@ Route::middleware(['custom.auth'])->group(function () {
     Route::get('/ui/tickets/{id}', [UiController::class, 'ticketDetail'])->name('ui.tickets.show');
     Route::get('/ui/equipments', [UiController::class, 'equipments'])->name('ui.equipments');
     Route::get('/equipments', [UiController::class, 'getEquipments'])->name('equipments.list');
+
+    // --- Theme / appearance: available to any authenticated user ---
+    Route::get('/ui/settings/appearance', [UiController::class, 'themeAppearance'])->name('ui.settings.appearance');
+    Route::post('/ui/settings/appearance', [UiController::class, 'themeAppearanceUpdate'])
+        ->name('ui.settings.appearance.update')
+        ->withoutMiddleware([ValidateCsrfToken::class]);
+    Route::post('/theme/switch', [ThemeController::class, 'switchTheme'])
+        ->name('theme.switch')
+        ->withoutMiddleware([ValidateCsrfToken::class]);
 
     // --- Equipment: create, detail, and edit pages ---
     Route::get('/ui/equipments/create', [UiController::class, 'equipmentCreate'])
@@ -198,18 +209,21 @@ Route::middleware(['custom.auth'])->group(function () {
     Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
     Route::post('/tickets', [TicketController::class, 'store'])
         ->name('tickets.store')
-        ->withoutMiddleware([ValidateCsrfToken::class]);
+        ->withoutMiddleware([ValidateCsrfToken::class])
+        ->middleware('rate.limit:30,1');
 
     // --- Tickets: Comments ---
     Route::post('/tickets/{ticket}/comments', [TicketCommentController::class, 'store'])
         ->name('tickets.comments.store')
-        ->withoutMiddleware([ValidateCsrfToken::class]);
+        ->withoutMiddleware([ValidateCsrfToken::class])
+        ->middleware('rate.limit:30,1');
     Route::get('/tickets/{ticket}/comments', [TicketCommentController::class, 'index'])->name('tickets.comments.index');
 
     // --- Tickets: Photos ---
     Route::post('/tickets/{ticket}/photos', [TicketAttachmentController::class, 'store'])
         ->name('tickets.photos.store')
-        ->withoutMiddleware([ValidateCsrfToken::class]);
+        ->withoutMiddleware([ValidateCsrfToken::class])
+        ->middleware('rate.limit:30,1');
     Route::get('/tickets/{ticket}/photos', [TicketAttachmentController::class, 'index'])->name('tickets.photos.index');
     Route::delete('/tickets/{ticket}/photos/{attachment}', [TicketAttachmentController::class, 'destroy'])
         ->name('tickets.photos.destroy')
@@ -243,13 +257,16 @@ Route::middleware(['custom.auth'])->group(function () {
     Route::middleware(['role:technician'])->group(function () {
         Route::put('/technician/tickets/{ticket}/start', TicketStartController::class)
             ->name('technician.tickets.start')
-            ->withoutMiddleware([ValidateCsrfToken::class]);
+            ->withoutMiddleware([ValidateCsrfToken::class])
+            ->middleware('rate.limit:20,1');
         Route::put('/technician/tickets/{ticket}/close', [TicketCloseController::class, 'simpleClose'])
             ->name('technician.tickets.close')
-            ->withoutMiddleware([ValidateCsrfToken::class]);
+            ->withoutMiddleware([ValidateCsrfToken::class])
+            ->middleware('rate.limit:20,1');
         Route::put('/technician/tickets/{ticket}/request-budget', [TicketBudgetController::class, 'requestAuthorization'])
             ->name('technician.tickets.request-budget')
-            ->withoutMiddleware([ValidateCsrfToken::class]);
+            ->withoutMiddleware([ValidateCsrfToken::class])
+            ->middleware('rate.limit:20,1');
     });
 
     // --- Stock: read and register movements (admins and technicians) ---
@@ -282,18 +299,16 @@ Route::middleware(['custom.auth'])->group(function () {
         Route::get('/ui/rooms/create', [UiController::class, 'roomCreate'])->name('ui.rooms.create');
         Route::get('/ui/rooms/{room}/edit', [UiController::class, 'roomEdit'])->name('ui.rooms.edit');
         Route::get('/ui/analytics', [UiController::class, 'analytics'])->name('ui.analytics');
-        Route::get('/ui/definicoes/aparencia', [UiController::class, 'themeAppearance'])->name('ui.definicoes.aparencia');
-        Route::post('/ui/definicoes/aparencia', [UiController::class, 'themeAppearanceUpdate'])->name('ui.definicoes.aparencia.update');
-        Route::get('/ui/definicoes/sistema', [SystemSettingsController::class, 'index'])->name('ui.definicoes.sistema');
-        Route::post('/ui/definicoes/sistema', [SystemSettingsController::class, 'update'])->name('ui.definicoes.sistema.update');
+        Route::get('/ui/settings/system', [SystemSettingsController::class, 'index'])->name('ui.settings.system');
+        Route::post('/ui/settings/system', [SystemSettingsController::class, 'update'])->name('ui.settings.system.update');
         Route::post('/calendar/maintenance', [CalendarController::class, 'scheduleMaintenance'])->name('calendar.maintenance');
-        Route::post('/theme/switch', [ThemeController::class, 'switchTheme'])->name('theme.switch');
 
         // Open tickets
         Route::get('/technician/tickets/open', [TicketController::class, 'openTickets'])->name('technician.tickets.open');
         Route::post('/tickets/{ticket}/assign-technician', [TicketAssignmentController::class, '__invoke'])
             ->name('tickets.assign-technician')
-            ->withoutMiddleware([ValidateCsrfToken::class]);
+            ->withoutMiddleware([ValidateCsrfToken::class])
+            ->middleware('rate.limit:20,1');
 
         // Analytics
         Route::get('/analytics', [AnalyticsController::class, 'stats'])->name('analytics.stats');
@@ -308,8 +323,8 @@ Route::middleware(['custom.auth'])->group(function () {
 
         // AI
         Route::get('/admin/tickets/{ticket}', [TicketController::class, 'show'])->name('admin.tickets.show');
-        Route::patch('/admin/tickets/{ticket}/atribuir', [TicketAssignmentController::class, '__invoke'])
-            ->name('admin.tickets.atribuir')
+        Route::patch('/admin/tickets/{ticket}/assign', [TicketAssignmentController::class, '__invoke'])
+            ->name('admin.tickets.assign')
             ->withoutMiddleware([ValidateCsrfToken::class]);
 
         // Audit

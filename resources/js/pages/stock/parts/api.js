@@ -1,6 +1,8 @@
 import { authHeader } from '../../../utils/api.js';
 import { getPartFilters } from './dom.js';
 
+const loadError = () => (window.SGM_UI_I18N?.loadError || 'Unable to load the data at the moment.');
+
 function buildSearchParams(page) {
     const filters = getPartFilters();
     const params = new URLSearchParams();
@@ -25,7 +27,7 @@ export async function fetchParts(page) {
 
     if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || 'Não foi possível carregar as peças de momento.');
+        throw new Error(errorData.message || loadError());
     }
 
     return response.json().catch(() => ({}));

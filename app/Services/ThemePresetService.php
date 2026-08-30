@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\ThemeSetting;
+use App\Models\User;
 
 /**
  * Single source of truth for preset themes (14 families × light/dark = 28 themes).
@@ -13,6 +14,11 @@ use App\Models\ThemeSetting;
  */
 final class ThemePresetService
 {
+    /**
+     * Default theme applied to guests and to users without a saved preference.
+     */
+    public const DEFAULT_THEME = 'claro-laranja';
+
     /**
      * Color keys stored in theme_settings (form field names).
      */
@@ -556,38 +562,37 @@ final class ThemePresetService
     }
 
     /**
-     * Currently active theme: uses `theme_name` if valid, otherwise tries
-     * to recognize by stored colors; falls back to default.
+     * Resolves the effective theme id for a given user preference.
      *
+     * Guests and users without a saved (or invalid) preference always fall
+     * back to the default preset (Laranja Industrial).
+     */
+    public function effectiveThemeId(?string $preference = null): string
+    {
+        if ($preference !== null && $this->find($preference) !== null) {
+            return $preference;
+        }
+
+        return self::DEFAULT_THEME;
+    }
+
+    /**
+     * Active preset for the active user (per-user) or the default for guests.
+     *
+     * @param  string|null  $preference  the user's stored `users.theme` value
      * @return array<string, string>
      */
-    public function active(): array
+    public function active(?string $preference = null): array
     {
-        $settings = ThemeSetting::query()->pluck('value', 'key')->toArray();
-
-        if (isset($settings['theme_name']) && ($preset = $this->find($settings['theme_name']))) {
-            return $preset;
-        }
-
-        $values = [];
-
-        foreach (self::TOKENS as $field => $token) {
-            if (isset($settings[$token])) {
-                $values[$field] = $settings[$token];
-            }
-        }
-
-        $id = $this->findByValues($values);
-
-        return $id !== null ? $this->find($id) : $this->find('claro-laranja');
+        return $this->find($this->effectiveThemeId($preference));
     }
 
     /**
      * Light/dark mode of the active theme.
      */
-    public function mode(): string
+    public function mode(?string $preference = null): string
     {
-        return $this->active()['mode'] === 'dark' ? 'dark' : 'light';
+        return $this->active($preference)['mode'] === 'dark' ? 'dark' : 'light';
     }
 
     /**
@@ -611,6 +616,25 @@ final class ThemePresetService
         }
 
         ThemeSetting::updateOrCreate(['key' => 'theme_name'], ['value' => $id]);
+
+        return $preset;
+    }
+
+    /**
+     * Persists a preset as the user's personal theme.
+     *
+     * @return array<string, string> the applied preset
+     */
+    public function applyForUser(User $user, string $id): array
+    {
+        $preset = $this->find($id);
+
+        if ($preset === null) {
+            throw new \InvalidArgumentException("Tema desconhecido: {$id}");
+        }
+
+        $user->theme = $id;
+        $user->save();
 
         return $preset;
     }

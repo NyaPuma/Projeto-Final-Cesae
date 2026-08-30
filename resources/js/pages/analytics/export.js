@@ -9,6 +9,8 @@
 import { authHeader } from '../../utils/api.js';
 import { showMessage } from './helpers.js';
 
+const translations = () => window.SGM_ANALYTICS_I18N || {};
+
 let initialized = false;
 let printInitialized = false;
 
@@ -47,7 +49,7 @@ async function triggerExport(button, labelEl, originalLabel, messageEl) {
     if (button.dataset.busy === 'true') return;
 
     const url = button.getAttribute('href');
-    const processingLabel = button.dataset.processingLabel || 'A gerar...';
+    const processingLabel = button.dataset.processingLabel || translations().exportProcessing || 'Generating...';
 
     button.dataset.busy = 'true';
     button.classList.add('opacity-50', 'pointer-events-none');
@@ -65,10 +67,10 @@ async function triggerExport(button, labelEl, originalLabel, messageEl) {
         if (response.ok && data.message) {
             showMessage(messageEl, data.message, 'success');
         } else {
-            showMessage(messageEl, data.message || 'Falha ao iniciar a exportação.', 'error');
+            showMessage(messageEl, data.message || translations().exportStartError || 'Failed to start the export.', 'error');
         }
     } catch (error) {
-        showMessage(messageEl, 'Erro de rede ao iniciar a exportação. Tente novamente.', 'error');
+        showMessage(messageEl, translations().exportNetworkError || 'Network error while starting the export. Please try again.', 'error');
     } finally {
         button.dataset.busy = 'false';
         button.classList.remove('opacity-50', 'pointer-events-none');

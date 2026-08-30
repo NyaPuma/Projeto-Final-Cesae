@@ -6,6 +6,8 @@ import { state } from './state.js';
 import { showPriorityWarning } from './workflow.js';
 import { showMessage } from './ui.js';
 
+const translations = () => window.SGM_TICKET_DETAIL_I18N || {};
+
 export function bindRepairStartActions(fetchTicket) {
     document.getElementById('btnStartRepair')?.addEventListener('click', async () => {
         const startButton = document.getElementById('btnStartRepair');
@@ -26,7 +28,7 @@ export function bindRepairStartActions(fetchTicket) {
             const data = await response.json();
 
             if (response.ok) {
-                showMessage('Reparação iniciada com sucesso!');
+                showMessage(translations().repairStarted || 'Repair started successfully!');
                 await fetchTicket();
                 return;
             }
@@ -39,13 +41,13 @@ export function bindRepairStartActions(fetchTicket) {
                     startButton?.classList.add('hidden');
                 }
 
-                showMessage(data.message || 'Existem tickets mais prioritários por atender.', true);
+                showMessage(data.message || translations().higherPriorityWaiting || 'There are higher priority tickets waiting to be handled.', true);
                 return;
             }
 
-            showMessage(data.message || 'Erro ao iniciar reparação.', true);
+            showMessage(data.message || translations().startError || 'Error starting repair.', true);
         } catch {
-            showMessage('Erro de conexão ao iniciar reparação.', true);
+            showMessage(translations().startConnectionError || 'Connection error while starting repair.', true);
         } finally {
             if (startButton && forceButton?.classList.contains('hidden')) {
                 startButton.disabled = false;
@@ -73,15 +75,15 @@ export function bindRepairStartActions(fetchTicket) {
             const data = await response.json();
 
             if (!response.ok) {
-                showMessage(data.message || 'Erro ao forçar início da reparação.', true);
+                showMessage(data.message || translations().forceStartError || 'Error forcing the start of the repair.', true);
                 return;
             }
 
-            showMessage('Reparação iniciada com sucesso (prioridades ignoradas)! O administrador foi notificado.');
+            showMessage(translations().forceStarted || 'Repair started successfully (priorities ignored)! The administrator has been notified.');
             document.getElementById('priorityWarningModal')?.classList.add('hidden');
             await fetchTicket();
         } catch {
-            showMessage('Erro de conexão.', true);
+            showMessage(translations().connectionError || 'Connection error.', true);
         } finally {
             if (forceButton) {
                 forceButton.disabled = false;

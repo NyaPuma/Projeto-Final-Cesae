@@ -48,8 +48,8 @@ final class ExportCsvJob implements ShouldQueue
 
         Notification::create([
             'user_id' => $this->userId,
-            'title' => 'Exportação CSV concluída',
-            'message' => "O ficheiro {$filename} está pronto para download.",
+            'title' => __('exports.csv_completed'),
+            'message' => __('exports.file_ready', ['file' => $filename]),
             'type' => 'system',
             'is_read' => false,
             'link' => '/storage/exports/'.$filename,
@@ -63,8 +63,8 @@ final class ExportCsvJob implements ShouldQueue
     {
         Notification::create([
             'user_id' => $this->userId,
-            'title' => 'Falha na exportação CSV',
-            'message' => 'Não foi possível gerar o relatório pretendido. Por favor, tente novamente.',
+            'title' => __('exports.csv_failed'),
+            'message' => __('exports.report_failed_generic'),
             'type' => 'system',
             'is_read' => false,
             'link' => null,

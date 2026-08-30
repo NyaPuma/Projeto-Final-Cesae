@@ -16,7 +16,7 @@
         'resources/css/app.css',
         'resources/js/app.js'
     ])
-    <link rel="stylesheet" href="{{ route('theme.custom') }}?v={{ \App\Http\Controllers\ThemeController::cacheBuster() }}">
+    <link rel="stylesheet" href="{{ route('theme.custom') }}?v={{ \App\Http\Controllers\ThemeController::cacheBuster(request()->user()?->theme) }}">
 
     @include('ui.partials.theme-meta')
 

@@ -1,6 +1,8 @@
 import { authHeader } from '../../utils/api.js';
 import { getTicketFilters } from './dom.js';
 
+const loadError = () => (window.SGM_UI_I18N?.loadError || 'Unable to load the data at the moment.');
+
 function buildSearchParams(page) {
     const filters = getTicketFilters();
     const params = new URLSearchParams();
@@ -27,7 +29,7 @@ export async function fetchTickets(page) {
 
     if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || 'Não foi possível carregar os tickets de momento.');
+        throw new Error(errorData.message || loadError());
     }
 
     return response.json().catch(() => ({}));

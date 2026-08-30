@@ -28,6 +28,10 @@ return Application::configure(basePath: dirname(__DIR__))
             SecurityHeaders::class,
         ]);
 
+        $middleware->api(append: [
+            SecurityHeaders::class,
+        ]);
+
         // Register aliases for clean usage in route files
         $middleware->alias([
             'custom.auth' => CustomAuthMiddleware::class,

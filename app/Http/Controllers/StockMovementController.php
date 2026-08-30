@@ -12,6 +12,7 @@ use App\Models\StockMovement;
 use App\Services\StockMovementService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use OpenApi\Attributes as OA;
 use Throwable;
@@ -123,6 +124,7 @@ final class StockMovementController extends Controller
                 user: $request->user(),
                 unitPriceSnapshot: isset($validated['unit_price_snapshot']) ? (float) $validated['unit_price_snapshot'] : null,
             );
+            Cache::forget('stock_dashboard_summary');
         } catch (\InvalidArgumentException $e) {
             return response()->json([
                 'message' => $e->getMessage(),

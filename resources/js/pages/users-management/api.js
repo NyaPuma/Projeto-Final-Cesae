@@ -35,7 +35,7 @@ export async function fetchUsers(page) {
     }
 
     if (!response.ok) {
-        throw new Error('Erro ao carregar');
+        throw new Error((window.SGM_UI_I18N?.loadError || 'Error loading.'));
     }
 
     return response.json();

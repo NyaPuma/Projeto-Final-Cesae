@@ -115,6 +115,21 @@ final class Ticket extends Model
         return $this->belongsTo(User::class, 'budget_approved_by');
     }
 
+    public function resolvedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'resolved_by');
+    }
+
+    public function closedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'closed_by');
+    }
+
+    public function recommendedTechnician(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'recommended_technician_id');
+    }
+
     public function workflowHistory(): HasMany
     {
         return $this->hasMany(TicketWorkflowHistory::class);

@@ -99,7 +99,7 @@ class AnalyticsDashboard {
                 this.lastData = data;
                 this.updateUI(data);
             } else {
-                showMessage(this.elements.analyticsMessage, "Erro ao carregar dados analíticos.", "error");
+                showMessage(this.elements.analyticsMessage, (window.SGM_ANALYTICS_I18N?.loadError) || 'Error loading analytics data.', "error");
             }
         } finally {
             this.setLoading(false);

@@ -60,7 +60,7 @@ export function renderEmptyState() {
     renderTableEmptyState({
         tbody: getMovementTableBody(),
         colspan: 5,
-        message: 'Nenhum movimento encontrado com os filtros aplicados.',
+        message: 'No movement found matching the applied filters.',
     });
 
     const pagination = getPagination();

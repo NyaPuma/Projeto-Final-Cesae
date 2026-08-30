@@ -48,7 +48,7 @@ final class ExportEquipmentQrPdfJob implements ShouldQueue
                 'qrDataUri' => $qrCodeService->pngDataUri($equipment),
             ]);
 
-        $filename = 'qrcodes-equipamentos_'.now()->format('Ymd_His').'.pdf';
+        $filename = 'qrcodes-equipment_'.now()->format('Ymd_His').'.pdf';
 
         Storage::disk('public')->makeDirectory('exports');
 
@@ -59,8 +59,8 @@ final class ExportEquipmentQrPdfJob implements ShouldQueue
 
         Notification::create([
             'user_id' => $this->userId,
-            'title' => 'Exportação PDF concluída',
-            'message' => "O ficheiro {$filename} está pronto para download.",
+            'title' => __('exports.pdf_completed'),
+            'message' => __('exports.file_ready', ['file' => $filename]),
             'type' => 'system',
             'is_read' => false,
             'link' => '/storage/exports/'.$filename,
@@ -74,8 +74,8 @@ final class ExportEquipmentQrPdfJob implements ShouldQueue
     {
         Notification::create([
             'user_id' => $this->userId,
-            'title' => 'Falha na exportação PDF',
-            'message' => 'Não foi possível gerar os QR Codes. Por favor, tente novamente.',
+            'title' => __('exports.pdf_failed'),
+            'message' => __('exports.qr_failed'),
             'type' => 'system',
             'is_read' => false,
             'link' => null,

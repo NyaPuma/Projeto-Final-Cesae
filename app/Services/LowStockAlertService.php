@@ -6,9 +6,6 @@ namespace App\Services;
 
 use App\Enums\NotificationTypeEnum;
 use App\Models\Part;
-use App\Models\User;
-use Illuminate\Support\Facades\Log;
-use Throwable;
 
 /**
  * Detects parts with low stock and triggers in-app notifications.
@@ -50,30 +47,21 @@ final class LowStockAlertService
             return 0;
         }
 
-        $created = 0;
+        $entries = [];
 
         foreach ($parts as $part) {
-            try {
-                $this->notificationCreatorService->createForAdmins(
-                    title: __('stock.Low Stock'),
-                    message: __('stock.:part — current stock :current (minimum :min)', [
-                        'part' => $part->name,
-                        'current' => $part->current_stock,
-                        'min' => $part->min_stock,
-                    ]),
-                    type: NotificationTypeEnum::LowStock->value,
-                    link: route('ui.stock.parts.show', $part),
-                );
-
-                $created++;
-            } catch (Throwable $e) {
-                Log::warning('Failed to notify low stock', [
-                    'part_id' => $part->id,
-                    'error' => $e->getMessage(),
-                ]);
-            }
+            $entries[] = [
+                'title' => __('stock.Low Stock'),
+                'message' => __('stock.:part — current stock :current (minimum :min)', [
+                    'part' => $part->name,
+                    'current' => $part->current_stock,
+                    'min' => $part->min_stock,
+                ]),
+                'type' => NotificationTypeEnum::LowStock->value,
+                'link' => route('ui.stock.parts.show', $part),
+            ];
         }
 
-        return $created;
+        return $this->notificationCreatorService->createForAdminsMany($entries);
     }
 }

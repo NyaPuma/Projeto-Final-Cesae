@@ -6,6 +6,8 @@ import { state } from './state.js';
 import { hidePriorityWarning } from './workflow.js';
 import { showMessage } from './ui.js';
 
+const translations = () => window.SGM_TICKET_DETAIL_I18N || {};
+
 export function bindPriorityModalActions(fetchTicket) {
     const viewUrgentButton = document.getElementById('btnViewUrgentTickets');
     const forceActionButton = document.getElementById('btnForceStartTicket');
@@ -58,14 +60,16 @@ export function bindPriorityModalActions(fetchTicket) {
             const data = await response.json();
 
             if (!response.ok) {
-                showMessage(data.message || 'Erro de conexão.', true);
+                showMessage(data.message || translations().connectionError || 'Connection error.', true);
                 return;
             }
 
-            showMessage(state.pendingActionType === 'close' ? 'Intervenção concluída e ticket fechado!' : 'Reparação iniciada com sucesso!');
+            showMessage(state.pendingActionType === 'close'
+                ? (translations().interventionClosed || 'Intervention completed and ticket closed!')
+                : (translations().repairStarted || 'Repair started successfully!'));
             await fetchTicket();
         } catch {
-            showMessage('Erro de conexão.', true);
+            showMessage(translations().connectionError || 'Connection error.', true);
         }
     });
 }

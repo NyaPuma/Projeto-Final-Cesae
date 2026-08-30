@@ -93,7 +93,7 @@ export function renderEmptyState() {
     renderTableEmptyState({
         tbody: getAuditsTableBody(),
         colspan: 8,
-        message: 'Nenhum registo de auditoria encontrado com os filtros aplicados.',
+        message: (window.SGM_AUDIT_I18N?.empty || 'No audit records found matching the applied filters.'),
     });
 }
 

@@ -26,7 +26,7 @@ async function fetchEquipments() {
 
 function renderSuggestions(matches, suggestionsBox, searchInput, hiddenIdInput) {
     if (matches.length === 0) {
-        suggestionsBox.innerHTML = '<div class="p-3 text-xs text-[var(--text-soft)] italic">Nenhum equipamento encontrado.</div>';
+        suggestionsBox.innerHTML = '<div class="p-3 text-xs text-[var(--text-soft)] italic">' + (window.SGM_TICKET_DETAIL_I18N?.noEquipmentFound || 'No equipment found.') + '</div>';
         suggestionsBox.classList.remove('hidden');
         return;
     }

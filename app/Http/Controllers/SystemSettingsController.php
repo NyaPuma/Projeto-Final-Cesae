@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Services\SystemSettingsService;
@@ -18,7 +20,7 @@ final class SystemSettingsController extends Controller
      */
     public function index(Request $request): View
     {
-        return view('ui.definicoes.sistema', [
+        return view('ui.settings.system', [
             'user' => $request->user(),
             'groups' => $this->settings->groups(),
             'values' => $this->settings->values(),

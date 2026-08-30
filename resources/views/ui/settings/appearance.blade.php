@@ -2,30 +2,16 @@
 
 @section('page_key', 'definicoes-aparencia')
 
-@php
-    $fieldNames = [
-        '--color-primary' => 'primary',
-        '--color-text' => 'text',
-        '--color-text-soft' => 'text_soft',
-        '--color-surface' => 'surface',
-        '--color-surface-alt' => 'surface_alt',
-        '--color-border' => 'border',
-        '--color-ticket-open' => 'ticket_open',
-        '--color-ticket-in-progress' => 'ticket_in_progress',
-        '--color-ticket-resolved' => 'ticket_resolved',
-        '--color-ticket-urgent' => 'ticket_urgent',
-    ];
-@endphp
-
 @section('content')
 <x-ui.partials.page-header
     :title="__('dashboard.Aparência do Painel')"
-    :subtitle="__('messages.Escolha um tema pré-definido — as cores do sistema são apresentadas e guardadas com contraste garantido.')"
-    badge="Administração"
+    :subtitle="__('messages.Escolha um tema pré-definido — a sua preferência é guardada por utilizador e aplicada nos próximos acessos.')"
+    badge="{{ __('common.Aparência') }}"
 />
 
-<form id="themeAppearanceForm" action="{{ route('ui.definicoes.aparencia.update') }}" method="POST" class="space-y-6" novalidate>
+<form id="themeAppearanceForm" action="{{ route('ui.settings.appearance.update') }}" method="POST" class="space-y-6" novalidate>
     @csrf
+    <input type="hidden" name="theme" value="{{ $activeTheme['id'] }}">
 
     <section class="theme-settings__panel" aria-labelledby="presets-title">
         <div class="theme-settings__presets-heading">
@@ -34,7 +20,7 @@
         </div>
 
         <div class="theme-settings__presets">
-            @foreach (['light' => __('common.Claro'), 'dark' => __('common.Escuro')] as $mode => $modeLabel)
+            @foreach (['light' => __('common.Modo Claro'), 'dark' => __('common.Modo Escuro')] as $mode => $modeLabel)
                 <div class="theme-settings__presets-group" data-mode="{{ $mode }}">
                     <h3 class="theme-settings__presets-group-title">{{ $modeLabel }}</h3>
                     <div class="theme-settings__presets-grid">
@@ -44,9 +30,9 @@
                             @endif
                             <button
                                 type="button"
-                                class="theme-preset-card"
+                                class="theme-preset-card{{ $activeTheme['id'] === $id ? ' is-active' : '' }}"
                                 data-preset="{{ $id }}"
-                                aria-pressed="false"
+                                aria-pressed="{{ $activeTheme['id'] === $id ? 'true' : 'false' }}"
                                 aria-label="{{ $preset['label'] }}"
                             >
                                 <span class="theme-preset-card__swatches">
@@ -63,25 +49,12 @@
             @endforeach
         </div>
 
-        @foreach ($fieldNames as $token => $name)
-            <input
-                type="hidden"
-                name="{{ $name }}"
-                value="{{ old($name, $settings[$token]) }}"
-                data-theme-var="{{ $token }}"
-            >
-        @endforeach
-
         <div class="theme-settings__actions theme-settings__actions--divider">
             <div>
                 @if (session('status'))
                     <p class="text-sm font-semibold text-[var(--color-success)]">{{ session('status') }}</p>
                 @endif
-                @if ($errors->any())
-                    <p id="themeMessage" aria-live="polite" class="theme-settings__notice theme-settings__notice--danger">{{ __('ui.Corrija os campos assinalados antes de guardar.') }}</p>
-                @else
-                    <p id="themeMessage" aria-live="polite" class="theme-settings__notice">{{ __('common.As escolhas são guardadas automaticamente — as cores são ajustadas para garantir contraste acessível.') }}</p>
-                @endif
+                <p id="themeMessage" aria-live="polite" class="theme-settings__notice">{{ __('common.As escolhas são guardadas automaticamente — o tema é aplicado em toda a aplicação.') }}</p>
             </div>
             <p id="themeSaveStatus" class="theme-settings__save-status" aria-live="polite" role="status"></p>
         </div>

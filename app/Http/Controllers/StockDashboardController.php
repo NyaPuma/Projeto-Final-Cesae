@@ -9,6 +9,7 @@ use App\Services\LowStockAlertService;
 use App\Services\StockDashboardService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use OpenApi\Attributes as OA;
 
 final class StockDashboardController extends Controller
@@ -35,12 +36,14 @@ final class StockDashboardController extends Controller
     {
         $this->authorize('viewAny', Part::class);
 
-        return response()->json([
-            'total_stock_value' => $this->dashboardService->totalStockValue(),
-            'total_parts' => $this->dashboardService->totalParts(),
-            'low_stock_count' => $this->dashboardService->lowStockCount(),
-            'parts_in_alert' => $this->lowStockAlertService->partsInAlert(),
-        ]);
+        return response()->json(Cache::remember('stock_dashboard_summary', 60, function (): array {
+            return [
+                'total_stock_value' => $this->dashboardService->totalStockValue(),
+                'total_parts' => $this->dashboardService->totalParts(),
+                'low_stock_count' => $this->dashboardService->lowStockCount(),
+                'parts_in_alert' => $this->lowStockAlertService->partsInAlert(),
+            ];
+        }));
     }
 
     /**
@@ -178,10 +181,12 @@ final class StockDashboardController extends Controller
     {
         $this->authorize('viewAny', Part::class);
 
-        return response()->json([
-            'items' => $this->dashboardService->stockRunoutForecast(
-                months: (int) ($request->query('months') ?? 3),
-            ),
-        ]);
+        $months = (int) ($request->query('months') ?? 3);
+
+        return response()->json(Cache::remember("stock_dashboard_runout:{$months}", 60, function () use ($months): array {
+            return [
+                'items' => $this->dashboardService->stockRunoutForecast(months: $months),
+            ];
+        }));
     }
 }

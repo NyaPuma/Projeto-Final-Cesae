@@ -5,10 +5,22 @@
         'logout' => __('auth_box.logout'),
         'signin' => __('auth_box.signin'),
         'loginRegister' => __('auth_box.login_register'),
+        'connectionError' => __('auth_box.connection_error'),
     ];
     $uiTranslations = [
         'resultsCount' => __('ui.results_count'),
         'noResults' => __('ui.no_results'),
+        'loadError' => __('ui.load_error'),
+        'saveError' => __('ui.save_error'),
+        'genericError' => __('ui.generic_error'),
+        'savedSuccess' => __('ui.saved_success'),
+        'createdSuccess' => __('ui.created_success'),
+        'updatedSuccess' => __('ui.updated_success'),
+        'deletedSuccess' => __('ui.deleted_success'),
+        'confirmDeleteSupplier' => __('ui.confirm_delete_supplier'),
+        'saving' => __('ui.saving'),
+        'validationNameRequired' => __('ui.validation_name_required'),
+        'updateFailed' => __('ui.update_failed'),
     ];
     $ticketsTranslations = [
         'priority' => [
@@ -86,6 +98,33 @@
         'noComments' => __('ticket_detail.no_comments'),
         'commentsError' => __('ticket_detail.comments_error'),
         'messageSent' => __('ticket_detail.message_sent'),
+        'assignInvalidId' => __('ticket_detail.assign_invalid_id'),
+        'assignError' => __('ticket_detail.assign_error'),
+        'assignSuccess' => __('ticket_detail.assign_success'),
+        'invalidEquipment' => __('ticket_detail.invalid_equipment'),
+        'ticketCreateError' => __('ticket_detail.ticket_create_error'),
+        'ticketSaving' => __('ticket_detail.ticket_saving'),
+        'ticketCreated' => __('ticket_detail.ticket_created'),
+        'noEquipmentFound' => __('ticket_detail.no_equipment_found'),
+        'connectionError' => __('ticket_detail.connection_error'),
+        'repairStarted' => __('ticket_detail.repair_started'),
+        'higherPriorityWaiting' => __('ticket_detail.higher_priority_waiting'),
+        'startError' => __('ticket_detail.start_error'),
+        'startConnectionError' => __('ticket_detail.start_connection_error'),
+        'forceStartError' => __('ticket_detail.force_start_error'),
+        'forceStarted' => __('ticket_detail.force_started'),
+        'invalidCost' => __('ticket_detail.invalid_cost'),
+        'budgetSubmitError' => __('ticket_detail.budget_submit_error'),
+        'budgetProcessed' => __('ticket_detail.budget_processed'),
+        'invalidFinalCost' => __('ticket_detail.invalid_final_cost'),
+        'closeError' => __('ticket_detail.close_error'),
+        'interventionClosed' => __('ticket_detail.intervention_closed'),
+        'repairCompleted' => __('ticket_detail.repair_completed'),
+        'closedSuccessfully' => __('ticket_detail.closed_successfully'),
+        'budgetRefuseRequiresFeedback' => __('ticket_detail.budget_refuse_requires_feedback'),
+        'budgetDecisionError' => __('ticket_detail.budget_decision_error'),
+        'budgetApproved' => __('ticket_detail.budget_approved'),
+        'budgetRefused' => __('ticket_detail.budget_refused'),
         'incidentId' => __('ticket_detail.incident_id'),
         'description' => __('ticket_detail.description'),
         'priorityLevel' => __('ticket_detail.priority_level'),
@@ -122,6 +161,10 @@
         'month' => __('stock_dashboard.month'),
         'months' => __('stock_dashboard.months'),
         'consumption' => __('stock_dashboard.consumption'),
+        'noLowStock' => __('stock_dashboard.no_low_stock'),
+        'noConsumption' => __('stock_dashboard.no_consumption'),
+        'noRunout' => __('stock_dashboard.no_runout'),
+        'loadError' => __('ui.load_error'),
     ];
     $paginationTranslations = [
         'previous' => __('pagination.previous'),
@@ -149,6 +192,7 @@
         'user' => __('common.Utilizador'),
         'profileLoading' => __('ui.A carregar perfis...'),
         'passwordMismatch' => __('common.As palavras-passe não coincidem.'),
+        'noUsersFound' => __('common.Nenhum utilizador encontrado com os filtros selecionados.'),
     ];
     $auditTranslations = [
         'allEvents' => __('common.Todas as Ações'),
@@ -158,6 +202,7 @@
         'created' => __('auth.Registo Criado'),
         'updated' => __('auth.Registo Atualizado'),
         'deleted' => __('auth.Registo Eliminado'),
+        'loading' => __('ui.A carregar...'),
     ];
     $analyticsTranslations = [
         'resolution' => __('analytics.resolution'),
@@ -175,6 +220,10 @@
         'day' => __('analytics.day'),
         'days' => __('analytics.days'),
         'tickets' => __('tickets.Tickets'),
+        'loadError' => __('analytics.load_error'),
+        'exportProcessing' => __('analytics.export_processing'),
+        'exportStartError' => __('analytics.export_start_error'),
+        'exportNetworkError' => __('analytics.export_network_error'),
     ];
     $enumTranslations = [
         'movement' => [
@@ -233,6 +282,7 @@
         rtl: @json(\App\Services\LocaleService::isRtl(app()->getLocale())),
     };
     window.SGM_AUTH_I18N = @json($authTranslations);
+    window.SGM_UI_I18N = @json($uiTranslations);
     window.SGM_TICKETS_I18N = Object.assign(window.SGM_TICKETS_I18N || {}, @json($uiTranslations), @json($ticketsTranslations));
     window.SGM_EQUIPMENT_I18N = @json($equipmentTranslations);
     window.SGM_TICKET_MEDIA_I18N = @json($ticketMediaTranslations);

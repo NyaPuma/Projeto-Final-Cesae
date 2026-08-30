@@ -17,10 +17,10 @@ function setMessage(element, message, tone = 'neutral') {
 
 function getMessages(form) {
     return {
-        validation: form?.dataset.validationMessage || 'Introduza um nome para continuar.',
-        saving: form?.dataset.savingMessage || 'A guardar alterações...',
-        success: form?.dataset.successMessage || 'Perfil atualizado com sucesso.',
-        error: form?.dataset.errorMessage || 'Não foi possível atualizar o perfil.',
+        validation: form?.dataset.validationMessage || (window.SGM_UI_I18N?.validationNameRequired || 'Enter a name to continue.'),
+        saving: form?.dataset.savingMessage || (window.SGM_UI_I18N?.saving || 'Saving changes...'),
+        success: form?.dataset.successMessage || (window.SGM_UI_I18N?.updatedSuccess || 'Profile updated successfully.'),
+        error: form?.dataset.errorMessage || (window.SGM_UI_I18N?.updateFailed || 'Unable to update the profile.'),
     };
 }
 
@@ -103,7 +103,7 @@ function init() {
         buildPayload: () => ({
             name: document.getElementById('profileName')?.value.trim() || '',
         }),
-        validate: (payload) => (payload.name ? null : 'Introduza um nome para continuar.'),
+        validate: (payload) => (payload.name ? null : (window.SGM_UI_I18N?.validationNameRequired || 'Enter a name to continue.')),
         onSuccess: (data) => {
             if (data.user?.name) {
                 localStorage.setItem('user_name', data.user.name);

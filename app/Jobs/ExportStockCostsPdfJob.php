@@ -47,7 +47,7 @@ final class ExportStockCostsPdfJob implements ShouldQueue
 
         $total = $items->sum('total_value');
 
-        $filename = 'custo-pecas-por-equipamento_'.now()->format('Ymd_His').'.pdf';
+        $filename = 'cost-parts-per-equipment_'.now()->format('Ymd_His').'.pdf';
 
         Storage::disk('public')->makeDirectory('exports');
 
@@ -64,8 +64,8 @@ final class ExportStockCostsPdfJob implements ShouldQueue
 
         Notification::create([
             'user_id' => $this->userId,
-            'title' => 'Exportação PDF concluída',
-            'message' => "O ficheiro {$filename} está pronto para download.",
+            'title' => __('exports.pdf_completed'),
+            'message' => __('exports.file_ready', ['file' => $filename]),
             'type' => 'system',
             'is_read' => false,
             'link' => '/storage/exports/'.$filename,
@@ -79,8 +79,8 @@ final class ExportStockCostsPdfJob implements ShouldQueue
     {
         Notification::create([
             'user_id' => $this->userId,
-            'title' => 'Falha na exportação PDF',
-            'message' => 'Não foi possível gerar o relatório de custos. Por favor, tente novamente.',
+            'title' => __('exports.pdf_failed'),
+            'message' => __('exports.costs_failed'),
             'type' => 'system',
             'is_read' => false,
             'link' => null,

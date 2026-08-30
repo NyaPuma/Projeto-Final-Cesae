@@ -39,7 +39,7 @@ async function submitHandler(e) {
     };
 
     submitBtn.disabled = true;
-    showMessage(message, 'A guardar...', false);
+    showMessage(message, (window.SGM_UI_I18N?.saving || 'Saving...'), false);
 
     try {
         const response = mode === 'edit' && id
@@ -49,7 +49,7 @@ async function submitHandler(e) {
 
         if (!response.ok) throw new Error(extractError(data));
 
-        showMessage(message, data.message || 'Guardado com sucesso!');
+        showMessage(message, data.message || (window.SGM_UI_I18N?.savedSuccess || 'Saved successfully!'));
         message.className = 'text-xs font-medium text-success';
         resetForm(form);
         window.location.reload();
@@ -99,7 +99,7 @@ function init() {
 
     document.querySelectorAll('[data-category-delete]').forEach((button) => {
         button.addEventListener('click', () => {
-            if (window.confirm('Tem a certeza que pretende desativar esta categoria?')) {
+            if (window.confirm((window.SGM_UI_I18N?.confirmDeactivateCategory || 'Are you sure you want to deactivate this category?'))) {
                 handleDelete(button.dataset.categoryDelete);
             }
         });
