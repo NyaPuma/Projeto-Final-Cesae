@@ -51,7 +51,7 @@ export async function submitBudget(onSuccess) {
         return;
     }
 
-    const payload = { estimatedBudget };
+    const payload = { estimated_budget: estimatedBudget };
     if (budgetDetails.length > 0) {
         payload.budget_details = budgetDetails;
     }
@@ -110,7 +110,7 @@ export async function handleBudgetAction(action, onSuccess) {
     const response = await fetch(`/admin/tickets/${state.ticketId}/approve-budget`, {
         method: 'PATCH',
         headers: { ...authHeader(), 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action, feedback }),
+        body: JSON.stringify({ decision: action, feedback }),
     });
 
     const data = await response.json();

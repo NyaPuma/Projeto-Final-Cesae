@@ -1,29 +1,43 @@
 import { nextBudgetItemIndex } from './state.js';
 import { formatCurrency } from '../../utils/locale.js';
+import { authHeader } from '../../utils/api.js';
 
-export function recalcBudgetTotal() {
-    let total = 0;
+let partsAbortController = null;
 
-    document.querySelectorAll('.budget-item').forEach((item) => {
-        const quantity = parseFloat(item.querySelector('.item-qty')?.value) || 0;
-        const price = parseFloat(item.querySelector('.item-price')?.value) || 0;
-        const subtotal = quantity * price;
+async function fetchParts(query = '', pageSize = 100) {
+    if (partsAbortController) partsAbortController.abort();
+    partsAbortController = new AbortController();
 
-        const subtotalElement = item.querySelector('.item-subtotal');
-        if (subtotalElement) subtotalElement.textContent = formatCurrency(subtotal);
+    const params = new URLSearchParams({ per_page: String(pageSize) });
+    if (query.trim()) params.set('q', query.trim());
 
-        total += subtotal;
+    const response = await fetch(`/stock/parts?${params.toString()}`, {
+        headers: authHeader(),
+        signal: partsAbortController.signal,
     });
+    if (!response.ok) return [];
+    const data = await response.json().catch(() => ({}));
 
-    const totalDisplay = document.getElementById('techTotalEstimatedDisplay');
-    const totalInput = document.getElementById('techEstimatedCostInput');
+    // The web route nests the collection under `parts`. Laravel serialises an
+    // embedded `PartResource::collection()` as a flat array (no `data` wrapper),
+    // but be defensive and unwrap either shape.
+    const parts = Array.isArray(data.parts)
+        ? data.parts
+        : Array.isArray(data.parts?.data) ? data.parts.data : [];
 
-    if (totalDisplay) totalDisplay.textContent = formatCurrency(total);
-    if (totalInput) totalInput.value = total.toFixed(2);
-
-    return total;
+    return parts.map((part) => part?.data ?? part);
 }
 
+function partUnitPrice(part) {
+    const price = Number(part.sale_price);
+    if (price > 0) return price;
+    const vat = Number(part.price_with_vat);
+    return vat > 0 ? vat : 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Budget item row
+--------------------------------------------------------------------------- */
 export function addBudgetItem(description = '', quantity = 1, price = 0, type = 'material') {
     const container = document.getElementById('budgetItemsContainer');
     if (!container) return;
@@ -32,31 +46,283 @@ export function addBudgetItem(description = '', quantity = 1, price = 0, type = 
     const pricePlaceholder = type === 'labor' ? '€/Hora' : 'P. Unit';
     const item = document.createElement('div');
 
-    item.className = 'budget-item grid grid-cols-[auto_1fr_80px_80px_60px_30px] items-center gap-2';
+    item.className = 'budget-item';
     item.dataset.index = index;
+    item.dataset.type = type;
     item.innerHTML = `
-        <select class="item-type rounded-lg border border-(--border) bg-(--surface-2) px-1.5 py-1.5 text-xs font-bold uppercase tracking-wider text-(--text) outline-none transition-all focus:border-(--text) cursor-pointer">
-            <option value="material" ${type === 'material' ? 'selected' : ''}>Materiais</option>
-            <option value="labor" ${type === 'labor' ? 'selected' : ''}>Mão de Obra</option>
-        </select>
-        <input type="text" class="item-desc rounded-lg border border-(--border) bg-(--surface-2) px-2.5 py-1.5 text-xs text-(--text) outline-none transition-all focus:border-(--text)" placeholder="Descrição" value="${description}">
-        <input type="number" class="item-qty rounded-lg border border-(--border) bg-(--surface-2) px-2.5 py-1.5 text-xs font-mono text-(--text) outline-none transition-all focus:border-(--text)" placeholder="Qtd/H" min="1" value="${quantity}">
-        <input type="number" step="0.01" class="item-price rounded-lg border border-(--border) bg-(--surface-2) px-2.5 py-1.5 text-xs font-mono text-(--text) outline-none transition-all focus:border-(--text)" placeholder="${pricePlaceholder}" min="0" value="${price}">
-        <span class="item-subtotal pt-2 text-right text-xs font-bold font-mono text-(--text)">${formatCurrency(quantity * price)}</span>
-        <button type="button" data-action="remove-budget-item" class="btn-remove-item p-1 text-danger/80 transition-all hover:text-danger cursor-pointer" title="Remover item">
-            <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
-        </button>
+        <div class="flex items-center gap-2">
+            <span class="item-type-badge rounded-md px-1.5 py-1 text-[10px] font-bold uppercase tracking-wider ${type === 'labor' ? 'bg-primary/15 text-primary' : 'bg-(--surface-2) text-(--text-soft)'}">${type === 'labor' ? 'Mão de Obra' : 'Material'}</span>
+            <input type="text" class="item-desc flex-1 min-w-0 rounded-lg border border-(--border) bg-(--surface-2) px-2.5 py-1.5 text-xs text-(--text) outline-none transition-all focus:border-(--text)" placeholder="Descrição" value="${description}">
+            <input type="number" class="item-qty w-16 rounded-lg border border-(--border) bg-(--surface-2) px-2 py-1.5 text-xs font-mono text-(--text) outline-none transition-all focus:border-(--text)" placeholder="${type === 'labor' ? 'Horas' : 'Qtd'}" min="1" value="${quantity}">
+            <input type="number" step="0.01" class="item-price w-24 rounded-lg border border-(--border) bg-(--surface-2) px-2 py-1.5 text-xs font-mono text-(--text) outline-none transition-all focus:border-(--text)" placeholder="${pricePlaceholder}" min="0" value="${price}">
+            <button type="button" data-action="remove-budget-item" class="btn-remove-item p-1 text-danger/80 transition-all hover:text-danger cursor-pointer" title="Remover item">
+                <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
     `;
 
     container.appendChild(item);
     recalcBudgetTotal();
 }
 
+/* ---------------------------------------------------------------------------
+   "Adicionar Item" modal — pick parts already in stock (and optional labour).
+   The budget list stays empty until the technician confirms a selection, which
+   is exactly what the user requested.
+--------------------------------------------------------------------------- */
+const modal = {
+    overlay: null,
+    parts: [],
+    selectedParts: new Map(),
+    searchDebounce: null,
+};
+
+export async function openBudgetItemModal() {
+    // Render the modal first so the click gives immediate feedback, then load
+    // the parts from stock asynchronously.
+    if (modal.overlay) closeBudgetItemModal();
+    modal.selectedParts = new Map();
+    modal.parts = [];
+    renderBudgetItemModal();
+    loadPartsIntoModal('');
+}
+
+function renderBudgetItemModal() {
+    const existing = document.getElementById('budgetItemModal');
+    if (existing) existing.remove();
+
+    const overlay = document.createElement('div');
+    overlay.id = 'budgetItemModal';
+    overlay.className = 'fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4';
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) closeBudgetItemModal();
+    });
+
+    overlay.innerHTML = `
+        <div class="flex max-h-[85vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-(--border) bg-(--surface) shadow-2xl">
+            <div class="flex items-center justify-between border-b border-(--border) px-4 py-3">
+                <h3 class="text-sm font-bold uppercase tracking-wider text-(--text)">Adicionar Itens</h3>
+                <button type="button" data-bm-close class="p-1 text-(--text-soft) transition-all hover:text-danger cursor-pointer">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+
+            <div class="flex-1 min-h-0 overflow-y-auto px-4 py-3 space-y-4">
+                <div>
+                    <div class="mb-2 flex items-center gap-2">
+                        <span class="rounded-md bg-(--surface-2) px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-(--text-soft)">Materiais (Stock)</span>
+                    </div>
+                    <input type="text" data-bm-search class="w-full rounded-lg border border-(--border) bg-(--surface-2) px-3 py-2 text-xs text-(--text) outline-none transition-all focus:border-primary" placeholder="Procurar material em stock...">
+                    <div data-bm-list class="mt-2 space-y-1 max-h-64 overflow-y-auto">
+                        ${renderPartsList(modal.parts)}
+                    </div>
+                </div>
+
+                <div class="border-t border-(--border) pt-3">
+                    <div class="mb-2 flex items-center justify-between">
+                        <span class="rounded-md bg-primary/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">Mão de Obra</span>
+                        <button type="button" data-bm-add-labor class="inline-flex items-center gap-1 px-2 py-1 text-[11px] font-bold text-primary bg-primary/10 border border-primary/30 rounded-lg hover:bg-primary/20 transition cursor-pointer">+ Adicionar</button>
+                    </div>
+                    <div data-bm-labor class="space-y-2"></div>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between gap-3 border-t border-(--border) px-4 py-3">
+                <span data-bm-count class="text-xs text-(--text-soft)">0 itens selecionados</span>
+                <div class="flex items-center gap-2">
+                    <button type="button" data-bm-cancel class="px-3 py-2 text-xs font-bold text-(--text-soft) border border-(--border) rounded-lg hover:bg-(--surface-2) transition cursor-pointer">Cancelar</button>
+                    <button type="button" data-bm-confirm class="px-4 py-2 text-xs font-bold text-[var(--on-primary)] bg-primary hover:bg-primary-hover rounded-lg shadow-sm transition cursor-pointer">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(overlay);
+    modal.overlay = overlay;
+
+    overlay.querySelector('[data-bm-close]').addEventListener('click', closeBudgetItemModal);
+    overlay.querySelector('[data-bm-cancel]').addEventListener('click', closeBudgetItemModal);
+    overlay.querySelector('[data-bm-add-labor]').addEventListener('click', addLaborRow);
+    overlay.querySelector('[data-bm-search]').addEventListener('input', onSearch);
+    overlay.querySelector('[data-bm-confirm]').addEventListener('click', confirmSelection);
+
+    // Toggle part selection (event delegation on the list)
+    overlay.querySelector('[data-bm-list]').addEventListener('change', (e) => {
+        const input = e.target.closest('[data-bm-part]');
+        if (!input) return;
+        const part = modal.parts.find((p) => String(p.id) === input.dataset.bmPart);
+        if (!part) return;
+        if (input.checked) modal.selectedParts.set(String(part.id), part);
+        else modal.selectedParts.delete(String(part.id));
+        updateCount();
+    });
+
+    updateCount();
+}
+
+function renderPartsList(parts) {
+    if (!parts || parts.length === 0) {
+        return '<div class="py-6 text-center text-xs text-(--text-soft)">Nenhum material em stock.</div>';
+    }
+
+    return parts.map((part) => {
+        const price = formatCurrency(partUnitPrice(part));
+        const stock = part.current_stock ?? 0;
+        const unit = part.unit_of_measure || 'un';
+        const id = String(part.id);
+        const checked = modal.selectedParts.has(id) ? 'checked' : '';
+        return `
+            <label class="flex items-center gap-3 p-2.5 rounded-xl border border-(--border) bg-(--surface-2)/60 hover:bg-(--surface-2) transition cursor-pointer">
+                <input type="checkbox" data-bm-part="${id}" ${checked} class="h-4 w-4 accent-primary shrink-0 cursor-pointer">
+                <span class="min-w-0 flex-1">
+                    <span class="block truncate text-xs font-semibold text-(--text)">${part.name || ''}</span>
+                    <span class="block truncate text-[11px] text-(--text-soft)">${part.sku || ''}</span>
+                </span>
+                <span class="shrink-0 text-right">
+                    <span class="block font-mono text-xs font-bold text-(--text)">${price}</span>
+                    <span class="block text-[11px] text-(--text-soft)">${stock} ${unit}</span>
+                </span>
+            </label>
+        `;
+    }).join('');
+}
+
+function updatePartRowState() {
+    const list = modal.overlay?.querySelector('[data-bm-list]');
+    if (!list) return;
+    list.querySelectorAll('[data-bm-part]').forEach((cb) => {
+        cb.checked = modal.selectedParts.has(cb.dataset.bmPart);
+    });
+}
+
+async function loadPartsIntoModal(query, setLoading = true) {
+    const list = modal.overlay?.querySelector('[data-bm-list]');
+    if (!list) return;
+
+    if (setLoading) {
+        list.innerHTML = '<div class="py-6 text-center text-xs text-(--text-soft)">A carregar materiais...</div>';
+    }
+
+    try {
+        modal.parts = await fetchParts(query);
+    } catch (error) {
+        // A newer search aborted this request — do nothing, the new one is loading.
+        if (error?.name === 'AbortError') return;
+        modal.parts = [];
+        if (modal.overlay?.contains(list)) {
+            list.innerHTML = '<div class="py-6 text-center text-xs text-danger">Erro ao carregar materiais.</div>';
+            return;
+        }
+    }
+
+    if (modal.overlay?.contains(list)) {
+        list.innerHTML = renderPartsList(modal.parts);
+        updatePartRowState();
+    }
+}
+
+const onSearch = () => {
+    const search = modal.overlay?.querySelector('[data-bm-search]');
+    if (!search) return;
+    clearTimeout(modal.searchDebounce);
+    modal.searchDebounce = setTimeout(() => loadPartsIntoModal(search.value.trim()), 250);
+};
+
+function updateCount() {
+    const el = modal.overlay?.querySelector('[data-bm-count]');
+    if (!el) return;
+    const texts = modal.overlay.querySelectorAll('[data-bm-labor-row]');
+    const laborCount = Array.from(texts).filter((row) => row.dataset.valid === '1').length;
+    const total = modal.selectedParts.size + laborCount;
+    el.textContent = `${total} ${total === 1 ? 'item selecionado' : 'itens selecionados'}`;
+}
+
+function addLaborRow() {
+    const container = modal.overlay?.querySelector('[data-bm-labor]');
+    if (!container) return;
+
+    const row = document.createElement('div');
+    row.className = 'flex items-center gap-2';
+    row.dataset.laborRow = '';
+
+    row.innerHTML = `
+        <input type="text" data-labor-desc class="flex-1 min-w-0 rounded-lg border border-(--border) bg-(--surface-2) px-2.5 py-1.5 text-xs text-(--text) outline-none focus:border-primary" placeholder="Descrição do trabalho">
+        <input type="number" data-labor-hours class="w-16 rounded-lg border border-(--border) bg-(--surface-2) px-2 py-1.5 text-xs font-mono text-(--text) outline-none focus:border-primary" placeholder="Horas" min="0.5" step="0.5" value="1">
+        <input type="number" step="0.01" data-labor-rate class="w-24 rounded-lg border border-(--border) bg-(--surface-2) px-2 py-1.5 text-xs font-mono text-(--text) outline-none focus:border-primary" placeholder="€/hora" min="0" value="0">
+        <button type="button" data-labor-remove class="p-1 text-danger/80 hover:text-danger transition cursor-pointer">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+    `;
+
+    container.appendChild(row);
+
+    row.querySelector('[data-labor-remove]').addEventListener('click', () => {
+        row.remove();
+        updateCount();
+    });
+    row.querySelectorAll('input').forEach((input) => {
+        input.addEventListener('input', () => {
+            const desc = row.querySelector('[data-labor-desc]').value.trim();
+            const hours = parseFloat(row.querySelector('[data-labor-hours]').value) || 0;
+            const rate = parseFloat(row.querySelector('[data-labor-rate]').value) || 0;
+            row.dataset.valid = desc && hours > 0 && rate > 0 ? '1' : '0';
+            updateCount();
+        });
+    });
+
+    updateCount();
+}
+
+function confirmSelection() {
+    // Materials — from the selectedParts map (persists across searches)
+    modal.selectedParts.forEach((part) => addBudgetItem(part.name, 1, partUnitPrice(part), 'material'));
+
+    // Labour rows
+    modal.overlay?.querySelectorAll('[data-labor-row]').forEach((row) => {
+        const desc = row.querySelector('[data-labor-desc]')?.value.trim();
+        const hours = parseFloat(row.querySelector('[data-labor-hours]')?.value) || 0;
+        const rate = parseFloat(row.querySelector('[data-labor-rate]')?.value) || 0;
+        if (desc && hours > 0 && rate > 0) {
+            addBudgetItem(desc, hours, rate, 'labor');
+        }
+    });
+
+    closeBudgetItemModal();
+}
+
+function closeBudgetItemModal() {
+    modal.overlay?.remove();
+    modal.overlay = null;
+    modal.selectedParts = new Map();
+    modal.parts = [];
+}
+
+/* ---------------------------------------------------------------------------
+   Totals + serialisation
+--------------------------------------------------------------------------- */
+export function recalcBudgetTotal() {
+    let total = 0;
+
+    document.querySelectorAll('.budget-item').forEach((item) => {
+        const quantity = parseFloat(item.querySelector('.item-qty')?.value) || 0;
+        const price = parseFloat(item.querySelector('.item-price')?.value) || 0;
+        const subtotal = quantity * price;
+        total += subtotal;
+        const subtotalEl = item.querySelector('.item-subtotal');
+        if (subtotalEl) subtotalEl.textContent = formatCurrency(subtotal);
+    });
+
+    const totalDisplay = document.getElementById('techTotalEstimatedDisplay');
+    const hiddenInput = document.getElementById('techEstimatedCostInput');
+    if (totalDisplay) totalDisplay.textContent = formatCurrency(total);
+    if (hiddenInput) hiddenInput.value = String(total);
+}
+
 export function getBudgetDetails() {
     const items = [];
 
     document.querySelectorAll('.budget-item').forEach((item) => {
-        const type = item.querySelector('.item-type')?.value || 'material';
+        const type = item.dataset.type || 'material';
         const description = item.querySelector('.item-desc')?.value.trim();
         const quantity = parseFloat(item.querySelector('.item-qty')?.value) || 0;
         const unitPrice = parseFloat(item.querySelector('.item-price')?.value) || 0;

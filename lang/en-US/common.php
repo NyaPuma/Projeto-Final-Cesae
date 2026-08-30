@@ -300,6 +300,7 @@ return [
     'Isento' => 'Free',
     'Isento / Sem taxa' => 'Exempt / No fee',
     'Itens do Orçamento' => 'Budget Items',
+    'Justificação' => 'Justification',
     'Kit / Conjunto' => 'Kit / Set',
     'Laranja Industrial' => 'Industrial Orange',
     'Laranja Noturno' => 'Night Orange',

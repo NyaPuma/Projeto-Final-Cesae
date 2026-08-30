@@ -301,6 +301,7 @@ return [
     'Isento' => 'Isento',
     'Isento / Sem taxa' => 'Isento / Sem taxa',
     'Itens do Orçamento' => 'Itens do Orçamento',
+    'Justificação' => 'Justificação',
     'Kit / Conjunto' => 'Kit / Conjunto',
     'Laranja Industrial' => 'Laranja Industrial',
     'Laranja Noturno' => 'Laranja Noturno',

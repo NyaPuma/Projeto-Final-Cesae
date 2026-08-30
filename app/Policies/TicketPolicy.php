@@ -27,10 +27,13 @@ final class TicketPolicy
 
     /**
      * Determines whether the user can create new tickets.
+     *
+     * Technicians resolve and close tickets; they do not open new ones.
+     * Only admins and regular users create tickets.
      */
     public function create(User $user): bool
     {
-        return true;
+        return ! $user->isTechnician();
     }
 
     /**

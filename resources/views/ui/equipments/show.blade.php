@@ -45,10 +45,12 @@
         <x-ui.page-actions.group>
             <x-ui.page-actions.back-button href="/ui/equipments" :label="__('equipment.Voltar aos Equipamentos')" />
 
-            <x-ui.page-actions.create-link
-                :href="route('ui.tickets.create') . '?equipment_id=' . $equipment->id"
-                :label="__('tickets.Abrir Ticket')"
-            />
+            @if(! isset($user) || ! $user || ! $user->isTechnician())
+                <x-ui.page-actions.create-link
+                    :href="route('ui.tickets.create') . '?equipment_id=' . $equipment->id"
+                    :label="__('tickets.Abrir Ticket')"
+                />
+            @endif
 
             @if(isset($user) && $user && $user->isAdmin())
                 <x-ui.page-actions.create-link

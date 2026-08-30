@@ -37,10 +37,15 @@ final class TicketController extends Controller
 
         $user = $request->user();
 
-        // Regular users only see their own tickets
-        $tickets = ($user->isTechnician() || $user->isAdmin())
-            ? $this->ticketRepository->getAll(['equipment', 'room', 'user', 'technician', 'status'])
-            : $this->ticketRepository->getTicketsByUser($user->id);
+        // Technicians only see the tickets assigned to them; admins see all.
+        if ($user->isTechnician()) {
+            $tickets = $this->ticketRepository->getTicketsByTechnician($user->id);
+        } elseif ($user->isAdmin()) {
+            $tickets = $this->ticketRepository->getAll(['equipment', 'room', 'user', 'technician', 'status']);
+        } else {
+            // Regular users only see their own tickets
+            $tickets = $this->ticketRepository->getTicketsByUser($user->id);
+        }
 
         return response()->json([
             'tickets' => TicketResource::collection($tickets),
@@ -89,9 +94,22 @@ final class TicketController extends Controller
 
         $filters = TicketFilters::fromRequest($request->all());
 
-        // Regular users only search their own tickets
+        // Regular users only search their own tickets; technicians only
+        // search the tickets assigned to them.
         $user = $request->user();
-        if (! $user->isTechnician() && ! $user->isAdmin()) {
+        if ($user->isTechnician()) {
+            $filters = new TicketFilters(
+                query: $filters->query,
+                priority: $filters->priority,
+                status: $filters->status,
+                dateFrom: $filters->dateFrom,
+                dateTo: $filters->dateTo,
+                userId: $filters->userId,
+                technicianId: $user->id,
+                equipmentId: $filters->equipmentId,
+                roomId: $filters->roomId,
+            );
+        } elseif (! $user->isAdmin()) {
             $filters = new TicketFilters(
                 query: $filters->query,
                 priority: $filters->priority,

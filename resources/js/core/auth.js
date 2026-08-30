@@ -63,3 +63,20 @@ export function getUserData() {
         token: localStorage.getItem('auth_token')
     };
 }
+
+/**
+ * The raw role slug of the authenticated user ('admin' | 'technician' | 'user'),
+ * read from the `user-role` meta tag rendered by the server. Returns null when
+ * no role is available (e.g. guest pages).
+ */
+export function getUserRole() {
+    const el = document.querySelector('meta[name="user-role"]');
+    return el ? el.getAttribute('content') : null;
+}
+
+/**
+ * Whether the authenticated user is a technician.
+ */
+export function isTechnician() {
+    return getUserRole() === 'technician';
+}

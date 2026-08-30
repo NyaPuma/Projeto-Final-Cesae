@@ -1,5 +1,6 @@
 import { renderResultsCount as renderSharedResultsCount, renderResultsFeedback, renderSimplePagination, renderTableEmptyState, renderTableErrorState } from '../../components/listing/feedback.js';
 import { getEquipmentTableBody, getPagination, getResultsCount } from './dom.js';
+import { isTechnician } from '../../core/auth.js';
 
 const translations = () => window.SGM_EQUIPMENT_I18N || {};
 
@@ -17,6 +18,13 @@ function renderEquipmentRow(equipment) {
     const serial = equipment.serial ?? `EQ-${String(equipment.id).padStart(3, '0')}`;
     const location = equipment.room ? `${equipment.room.name} (${equipment.room.location ?? '—'})` : '—';
 
+    const actions = [
+        isTechnician()
+            ? ''
+            : `<a href="/ui/tickets/create?equipment_id=${equipment.id}" class="inline-flex min-h-[28px] items-center justify-center rounded-lg border border-(--border) bg-(--surface) px-3 py-1.5 text-xs font-semibold text-(--text) shadow-sm transition-all hover:bg-(--surface-2)">${translations().openTicket || ''}</a>`,
+        `<a href="/ui/equipments/${equipment.id}" class="inline-flex min-h-[28px] items-center justify-center rounded-lg border border-(--border) bg-(--surface) px-3 py-1.5 text-xs font-semibold text-(--text) shadow-sm transition-all hover:bg-(--surface-2)">${translations().details || ''}</a>`,
+    ].join('');
+
     return `<tr class="transition-colors duration-150 hover:bg-(--surface-2)/50">
         <td class="px-5 py-4 font-mono font-bold text-(--text-soft)" data-label="${translations().code || ''}">${serial}</td>
         <td class="px-5 py-4" data-label="${translations().equipment || ''}">
@@ -28,10 +36,7 @@ function renderEquipmentRow(equipment) {
         <td class="px-5 py-4 font-semibold text-(--text-soft)" data-label="${translations().location || ''}">${location}</td>
         <td class="px-5 py-4" data-label="${translations().status || ''}">${renderStatusBadge(equipment)}</td>
         <td class="ui-listing-actions px-5 py-4 text-right">
-            <div class="inline-flex items-center justify-end gap-1.5">
-                <a href="/ui/tickets/create?equipment_id=${equipment.id}" class="inline-flex min-h-[28px] items-center justify-center rounded-lg border border-(--border) bg-(--surface) px-3 py-1.5 text-xs font-semibold text-(--text) shadow-sm transition-all hover:bg-(--surface-2)">${translations().openTicket || ''}</a>
-                <a href="/ui/equipments/${equipment.id}" class="inline-flex min-h-[28px] items-center justify-center rounded-lg border border-(--border) bg-(--surface) px-3 py-1.5 text-xs font-semibold text-(--text) shadow-sm transition-all hover:bg-(--surface-2)">${translations().details || ''}</a>
-            </div>
+            <div class="inline-flex items-center justify-end gap-1.5">${actions}</div>
         </td>
     </tr>`;
 }

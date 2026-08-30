@@ -2,7 +2,7 @@ import { authHeader } from '../utils/api.js';
 import { formatCurrency } from '../utils/locale.js';
 import { setTicketId, state } from './ticket-detail/state.js';
 import { renderTicketDetails } from './ticket-detail/details.js';
-import { addBudgetItem, recalcBudgetTotal, renderBudgetDetailsForAdmin } from './ticket-detail/budget.js';
+import { recalcBudgetTotal, renderBudgetDetailsForAdmin, openBudgetItemModal } from './ticket-detail/budget.js';
 import { fetchComments, bindCommentForm } from './ticket-detail/comments.js';
 import { fetchPhotos, bindPhotoForm, deletePhoto } from './ticket-detail/photos.js';
 import { bindAssignmentActions } from './ticket-detail/assignment.js';
@@ -81,7 +81,7 @@ async function fetchTicket() {
 }
 
 function bindTicketActions() {
-    document.getElementById('btnAddBudgetItem')?.addEventListener('click', () => addBudgetItem());
+    document.getElementById('btnAddBudgetItem')?.addEventListener('click', () => openBudgetItemModal());
     document.getElementById('techEstimatedCostInput')?.setAttribute('readonly', 'readonly');
     document.getElementById('btnSubmitEstimatedBudget')?.addEventListener('click', () => submitBudget(fetchTicket));
     document.getElementById('btnFinishTicket')?.addEventListener('click', () => finishTicket(fetchTicket));
@@ -95,15 +95,6 @@ function setupEventDelegation() {
         if (event.target.classList.contains('item-qty') || event.target.classList.contains('item-price') || event.target.classList.contains('item-desc')) {
             recalcBudgetTotal();
         }
-    });
-
-    document.addEventListener('change', (event) => {
-        if (!event.target.classList.contains('item-type')) return;
-        const item = event.target.closest('.budget-item');
-        if (!item) return;
-        const priceInput = item.querySelector('.item-price');
-        priceInput.placeholder = event.target.value === 'labor' ? '€/Hora' : 'P. Unit';
-        recalcBudgetTotal();
     });
 
     document.addEventListener('click', (event) => {
@@ -131,7 +122,6 @@ export function init() {
     fetchTicket();
     fetchComments();
     fetchPhotos();
-    addBudgetItem('', 1, 0);
 
     bindTicketActions();
     bindCommentForm();
