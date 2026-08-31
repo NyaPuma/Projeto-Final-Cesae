@@ -1,0 +1,193 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Services;
+
+use App\Models\ExchangeRate;
+use Illuminate\Support\Facades\Http;
+
+/**
+ * Fetches, stores and applies currency exchange-rate conversions.
+ *
+ * Rates are retrieved twice per day (see `currency:update-rates` in
+ * `routes/console.php`) from the ECB-backed Frankfurter API and persisted
+ * in the `currency_rates` table, keyed by base→target pair. Stored rates
+ * are expressed as: 1 unit of `base_currency` = N units of `target_currency`.
+ *
+ * The service degrades gracefully: when a convert is requested for a pair
+ * with no stored rate (e.g. before the first scheduled fetch), it returns a
+ * fallback of 1.0 instead of failing, so application rendering stays stable.
+ */
+final class CurrencyRateService
+{
+    /**
+     * Base currency used by the provider (Frankfurter default is EUR).
+     */
+    public const BASE_CURRENCY = 'EUR';
+
+    /**
+     * Provider endpoint. Latest ECB reference rates relative to the base.
+     */
+    private const ENDPOINT = 'https://api.frankfurter.app/latest';
+
+    /**
+     * HTTP timeout in seconds.
+     */
+    private const TIMEOUT = 10;
+
+    /**
+     * Fetches the latest rates from the provider and persists each pair.
+     *
+     * @return int Number of rate pairs stored/updated.
+     */
+    public function updateRates(): int
+    {
+        $rates = $this->fetchRatesFromProvider();
+
+        if ($rates === []) {
+            return 0;
+        }
+
+        $now = now();
+        $stored = 0;
+
+        foreach ($rates as $target => $rate) {
+            if (! is_numeric($rate) || (float) $rate <= 0.0) {
+                continue;
+            }
+
+            ExchangeRate::updateOrCreate(
+                [
+                    'base_currency' => self::BASE_CURRENCY,
+                    'target_currency' => strtoupper((string) $target),
+                ],
+                [
+                    'rate' => (float) $rate,
+                    'fetched_at' => $now,
+                ]
+            );
+
+            $stored++;
+        }
+
+        return $stored;
+    }
+
+    /**
+     * Returns the stored rate for a single base→target pair, or null when
+     * no stored rate is available yet.
+     */
+    public function storedRate(string $from, string $to): ?float
+    {
+        $from = strtoupper($from);
+        $to = strtoupper($to);
+
+        if ($from === $to) {
+            return 1.0;
+        }
+
+        $row = ExchangeRate::where('base_currency', $from)
+            ->where('target_currency', $to)
+            ->first();
+
+        if ($row) {
+            $rate = (float) $row->rate;
+
+            return $rate > 0.0 ? $rate : null;
+        }
+
+        // Conversions are stored relative to the provider base. When neither
+        // the exact pair nor the base pair exists, fall back gracefully.
+        return null;
+    }
+
+    /**
+     * Returns the conversion rate for a from→to pair (1 from = N to),
+     * falling back to 1.0 when no stored rate is available.
+     */
+    public function getRate(string $from, string $to): float
+    {
+        $from = strtoupper($from);
+        $to = strtoupper($to);
+
+        if ($from === $to) {
+            return 1.0;
+        }
+
+        $direct = $this->storedRate($from, $to);
+        if ($direct !== null) {
+            return $direct;
+        }
+
+        // Resolve through the provider base: rate(BASE→TO) / rate(BASE→FROM).
+        $in = $this->baseUnitRate($from);
+        $out = $this->baseUnitRate($to);
+
+        if ($in === null || $out === null || $in <= 0.0) {
+            return 1.0;
+        }
+
+        return $out / $in;
+    }
+
+    /**
+     * Converts an amount from a source currency into a target currency.
+     *
+     * @return float Converted amount (or the original amount when no rate).
+     */
+    public function convert(float $amount, string $from, string $to): float
+    {
+        return $amount * $this->getRate($from, $to);
+    }
+
+    /**
+     * Returns the provider rate of N units of the currency per 1 base unit.
+     */
+    private function baseUnitRate(string $currency): ?float
+    {
+        if (strtoupper($currency) === self::BASE_CURRENCY) {
+            return 1.0;
+        }
+
+        return $this->storedRate(self::BASE_CURRENCY, $currency);
+    }
+
+    /**
+     * Queries the provider for the latest rates.
+     *
+     * @return array<string, float> target currency → rate. Empty on failure.
+     */
+    private function fetchRatesFromProvider(): array
+    {
+        try {
+            $response = Http::timeout(self::TIMEOUT)
+                ->acceptJson()
+                ->get(self::ENDPOINT, [
+                    'from' => self::BASE_CURRENCY,
+                ]);
+
+            if (! $response->successful()) {
+                return [];
+            }
+
+            $payload = $response->json();
+
+            if (! is_array($payload) || ! isset($payload['rates']) || ! is_array($payload['rates'])) {
+                return [];
+            }
+
+            $rates = [];
+
+            foreach ($payload['rates'] as $target => $rate) {
+                if (is_numeric($rate)) {
+                    $rates[strtoupper((string) $target)] = (float) $rate;
+                }
+            }
+
+            return $rates;
+        } catch (\Throwable $e) {
+            return [];
+        }
+    }
+}
