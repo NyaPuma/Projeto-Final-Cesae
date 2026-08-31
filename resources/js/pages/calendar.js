@@ -93,7 +93,7 @@ async function loadScheduleFormData() {
             const allUsers = techData.users?.data ?? techData.users ?? [];
             const techList = allUsers.filter(t => t.profile?.name === 'technician');
             const list = techList.length ? techList : allUsers;
-            const autoAssignLabel = techSelect.dataset.placeholderAuto || 'Atribuição Automática';
+            const autoAssignLabel = techSelect.dataset.placeholderAuto || 'Automatic Assignment';
             techSelect.innerHTML = `<option value="">${autoAssignLabel}</option>` +
                 list.map(t => `<option value="${t.id}">${t.name}</option>`).join('');
         }
@@ -154,7 +154,7 @@ function initEquipmentSearch() {
         if (!matches.length) {
             const empty = document.createElement('li');
             empty.className = 'equipment-search__empty';
-            empty.textContent = 'Sem resultados';
+            empty.textContent = 'No results';
             list.appendChild(empty);
             dropdown.classList.remove('hidden');
             input.setAttribute('aria-expanded', 'true');
@@ -172,7 +172,7 @@ function initEquipmentSearch() {
 
             const room = document.createElement('span');
             room.className = 'equipment-search__item-room';
-            room.textContent = item.room?.name || 'Sem Sala';
+            room.textContent = item.room?.name || 'No Room';
 
             li.appendChild(name);
             li.appendChild(room);
@@ -236,8 +236,8 @@ async function submitPreventiveMaintenance(e) {
     feedback.classList.add('hidden');
 
     const endpoint = modal.dataset.scheduleUrl || '/calendar/maintenance';
-    const labelScheduling = btn.dataset.labelScheduling || 'A agendar...';
-    const labelConfirm = btn.dataset.labelConfirm || 'Confirmar Agendamento';
+    const labelScheduling = btn.dataset.labelScheduling || 'Scheduling...';
+    const labelConfirm = btn.dataset.labelConfirm || 'Confirm Scheduling';
     const errMessage = feedback.dataset.errMessage || (window.SGM_UI_I18N?.genericError || 'Error scheduling preventive maintenance.');
 
     const payload = {
@@ -372,7 +372,7 @@ function initCalendar() {
         expandRows: true,
         dayMaxEvents: 3,
         slotEventOverlap: false,
-        moreLinkText: (num) => `+ ${num} detalhes`,
+        moreLinkText: (num) => `+ ${num} more`,
         moreLinkClick: () => {
             document.querySelector('.fc-popover')?.remove();
             return undefined;
@@ -483,7 +483,7 @@ function initCalendar() {
             info.el.style.cursor = 'pointer';
             info.el.setAttribute('tabindex', '0');
             info.el.setAttribute('role', 'button');
-            info.el.setAttribute('aria-label', `${info.event.title}, clique para ver detalhes`);
+            info.el.setAttribute('aria-label', `${info.event.title}, click for details`);
 
             if (info.event.start) {
                 const dateStr = info.event.start.toISOString().split('T')[0];
@@ -534,8 +534,8 @@ function initCalendar() {
     calendarEl.querySelectorAll('.fc-button').forEach(el => el.removeAttribute('title'));
     const prevBtn = calendarEl.querySelector('.fc-prev-button');
     const nextBtn = calendarEl.querySelector('.fc-next-button');
-    if (prevBtn) prevBtn.setAttribute('aria-label', 'Anterior');
-    if (nextBtn) nextBtn.setAttribute('aria-label', 'Seguinte');
+    if (prevBtn) prevBtn.setAttribute('aria-label', 'Previous');
+    if (nextBtn) nextBtn.setAttribute('aria-label', 'Next');
 
     const popoverObserver = new MutationObserver(() => {
         calendarEl.querySelectorAll('table:not([role])').forEach(t => {
@@ -560,7 +560,7 @@ function init() {
 
     const modalTitle = document.getElementById('modalTitle');
     if (modalTitle && !modalTitle.textContent.trim()) {
-        modalTitle.textContent = 'Detalhes do Evento';
+        modalTitle.textContent = 'Event Details';
     }
 
     initEquipmentSearch();

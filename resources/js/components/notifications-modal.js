@@ -141,7 +141,7 @@ function toArray(value) {
 function renderEmpty(list, badge, countLabel) {
     list.innerHTML = `
         <p class="text-xs text-center py-6 italic text-muted">
-            Sem notificações
+            No notifications
         </p>
     `;
     if (badge) badge.classList.add('hidden');

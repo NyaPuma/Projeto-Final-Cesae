@@ -47,7 +47,7 @@ function drawEmptyMessage(canvas) {
     ctx.font = '600 13px system-ui, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('Sem dados para apresentar', width / 2, height / 2);
+    ctx.fillText('No data to display', width / 2, height / 2);
 }
 
 export function renderStatusChart(canvas, data, existingChart) {
@@ -200,7 +200,7 @@ export function renderCostChart(canvas, data, existingChart) {
         data: {
             labels: cost.labels,
             datasets: [{
-                label: 'Custo (€)',
+                label: 'Cost (€)',
                 data: cost.data,
                 borderColor: colors.primary,
                 borderWidth: 3,
@@ -628,7 +628,7 @@ export function renderCostByEquipmentChart(canvas, data, existingChart) {
         data: {
             labels: cost.labels,
             datasets: [{
-                label: 'Custo (€)',
+                label: 'Cost (€)',
                 data: cost.data,
                 backgroundColor: 'rgba(236, 72, 153, 0.85)',
                 borderRadius: 6
@@ -663,13 +663,13 @@ export function renderStockMonthlyChart(canvas, data, existingChart) {
             labels: stock.labels,
             datasets: [
                 {
-                    label: 'Entradas',
+                    label: 'Entries',
                     data: stock.in,
                     backgroundColor: 'rgba(16, 185, 129, 0.85)',
                     borderRadius: 4
                 },
                 {
-                    label: 'Saídas',
+                    label: 'Exits',
                     data: stock.out,
                     backgroundColor: 'rgba(239, 68, 68, 0.85)',
                     borderRadius: 4
@@ -703,7 +703,7 @@ export function renderLowStockChart(canvas, data, existingChart) {
         data: {
             labels: parts.labels,
             datasets: [{
-                label: 'Stock atual',
+                label: 'Current stock',
                 data: parts.data,
                 backgroundColor: 'rgba(239, 68, 68, 0.85)',
                 borderRadius: 6

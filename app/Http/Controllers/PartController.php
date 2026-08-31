@@ -32,19 +32,19 @@ final class PartController extends Controller
     #[OA\Get(
         path: '/stock/parts',
         tags: ['Stock'],
-        summary: 'Listar peças',
-        description: 'Lista paginada de peças do catálogo, com filtros por pesquisa, estado e categoria.',
+        summary: 'List parts',
+        description: 'Paginated list of catalogue parts, filterable by search, status, and category.',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
-            new OA\Parameter(name: 'q', in: 'query', required: false, description: 'Pesquisa por SKU ou nome', schema: new OA\Schema(type: 'string')),
-            new OA\Parameter(name: 'status', in: 'query', required: false, description: 'Estado do stock (low_stock, out_of_stock, healthy)', schema: new OA\Schema(type: 'string')),
+            new OA\Parameter(name: 'q', in: 'query', required: false, description: 'Search by SKU or name', schema: new OA\Schema(type: 'string')),
+            new OA\Parameter(name: 'status', in: 'query', required: false, description: 'Stock status (low_stock, out_of_stock, healthy)', schema: new OA\Schema(type: 'string')),
             new OA\Parameter(name: 'category_id', in: 'query', required: false, schema: new OA\Schema(type: 'integer')),
             new OA\Parameter(name: 'per_page', in: 'query', required: false, schema: new OA\Schema(type: 'integer')),
         ],
         responses: [
-            new OA\Response(response: 200, description: 'Lista paginada de peças'),
-            new OA\Response(response: 401, description: 'Autenticação necessária'),
-            new OA\Response(response: 403, description: 'Acesso proibido para o perfil'),
+            new OA\Response(response: 200, description: 'Paginated list of parts'),
+            new OA\Response(response: 401, description: 'Authentication required'),
+            new OA\Response(response: 403, description: 'Access forbidden for the profile'),
         ]
     )]
     public function index(Request $request): JsonResponse
@@ -74,14 +74,14 @@ final class PartController extends Controller
     #[OA\Get(
         path: '/stock/parts/{part}',
         tags: ['Stock'],
-        summary: 'Detalhe de uma peça',
+        summary: 'Part detail',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
             new OA\Parameter(name: 'part', in: 'path', required: true, schema: new OA\Schema(type: 'integer')),
         ],
         responses: [
-            new OA\Response(response: 200, description: 'Peça com categoria, taxa de IVA e fornecedores'),
-            new OA\Response(response: 404, description: 'Peça não encontrada'),
+            new OA\Response(response: 200, description: 'Part with category, VAT rate, and suppliers'),
+            new OA\Response(response: 404, description: 'Part not found'),
         ]
     )]
     public function show(Part $part): JsonResponse
@@ -99,15 +99,15 @@ final class PartController extends Controller
     #[OA\Post(
         path: '/admin/parts',
         tags: ['Admin Stock'],
-        summary: 'Criar peça',
-        description: 'Cria uma peça e regista o stock inicial como movimento de entrada.',
+        summary: 'Create part',
+        description: 'Creates a part and records the initial stock as an inward movement.',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         requestBody: new OA\RequestBody(
             required: true,
             content: new OA\JsonContent(
                 required: ['sku', 'name', 'unit_of_measure', 'cost_price', 'current_stock', 'min_stock'],
                 properties: [
-                    new OA\Property(property: 'sku', type: 'string', description: 'Código único (SKU)'),
+                    new OA\Property(property: 'sku', type: 'string', description: 'Unique code (SKU)'),
                     new OA\Property(property: 'name', type: 'string'),
                     new OA\Property(property: 'description', type: 'string'),
                     new OA\Property(property: 'brand', type: 'string'),
@@ -127,8 +127,8 @@ final class PartController extends Controller
             )
         ),
         responses: [
-            new OA\Response(response: 201, description: 'Peça criada com sucesso'),
-            new OA\Response(response: 422, description: 'Dados inválidos'),
+            new OA\Response(response: 201, description: 'Part created successfully'),
+            new OA\Response(response: 422, description: 'Invalid data'),
         ]
     )]
     public function store(StorePartRequest $request): JsonResponse
@@ -151,7 +151,7 @@ final class PartController extends Controller
     #[OA\Patch(
         path: '/admin/parts/{part}',
         tags: ['Admin Stock'],
-        summary: 'Atualizar peça',
+        summary: 'Update part',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
             new OA\Parameter(name: 'part', in: 'path', required: true, schema: new OA\Schema(type: 'integer')),
@@ -180,8 +180,8 @@ final class PartController extends Controller
             )
         ),
         responses: [
-            new OA\Response(response: 200, description: 'Peça atualizada com sucesso'),
-            new OA\Response(response: 422, description: 'Dados inválidos'),
+            new OA\Response(response: 200, description: 'Part updated successfully'),
+            new OA\Response(response: 422, description: 'Invalid data'),
         ]
     )]
     public function update(UpdatePartRequest $request, Part $part): JsonResponse
@@ -204,14 +204,14 @@ final class PartController extends Controller
     #[OA\Delete(
         path: '/admin/parts/{part}',
         tags: ['Admin Stock'],
-        summary: 'Eliminar peça',
+        summary: 'Delete part',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
             new OA\Parameter(name: 'part', in: 'path', required: true, schema: new OA\Schema(type: 'integer')),
         ],
         responses: [
-            new OA\Response(response: 200, description: 'Peça eliminada com sucesso'),
-            new OA\Response(response: 404, description: 'Peça não encontrada'),
+            new OA\Response(response: 200, description: 'Part deleted successfully'),
+            new OA\Response(response: 404, description: 'Part not found'),
         ]
     )]
     public function destroy(Part $part): JsonResponse

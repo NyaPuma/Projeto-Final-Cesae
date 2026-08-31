@@ -27,7 +27,7 @@ function setButtonLoading(btn, loading) {
         if (btn.dataset.originalContent === undefined) {
             btn.dataset.originalContent = btn.innerHTML;
         }
-        btn.innerHTML = `<span class="inline-flex items-center gap-2">${SPINNER_HTML} A autenticar...</span>`;
+        btn.innerHTML = `<span class="inline-flex items-center gap-2">${SPINNER_HTML} Authenticating...</span>`;
     } else {
         btn.innerHTML = btn.dataset.originalContent || '';
     }
@@ -40,7 +40,7 @@ function initPasswordToggle() {
     btn.addEventListener('click', () => {
         const isPassword = input.type === 'password';
         input.type = isPassword ? 'text' : 'password';
-        btn.textContent = isPassword ? 'Ocultar' : 'Mostrar';
+        btn.textContent = isPassword ? 'Hide' : 'Show';
     });
 }
 
@@ -60,7 +60,7 @@ async function submitLogin(event) {
     if (data.email) data.email = data.email.trim();
 
     setButtonLoading(button, true);
-    updateMsg('A verificar credenciais no servidor...', 'loading');
+    updateMsg('Verifying credentials on server...', 'loading');
 
     try {
         const response = await post('/login', {
@@ -69,7 +69,7 @@ async function submitLogin(event) {
         });
 
         if (!response.ok) {
-            updateMsg(response.data.message || 'Credenciais de acesso incorretas.', 'error');
+            updateMsg(response.data.message || 'Invalid login credentials.', 'error');
             setButtonLoading(button, false);
             return;
         }
@@ -78,7 +78,7 @@ async function submitLogin(event) {
             saveToken(response.data.token, response.data.user);
         }
 
-        updateMsg('Autenticação bem-sucedida! A redirecionar...', 'success');
+        updateMsg('Authentication successful! Redirecting...', 'success');
         setButtonLoading(button, false);
 
         setTimeout(() => {
@@ -86,7 +86,7 @@ async function submitLogin(event) {
         }, 500);
 
     } catch (error) {
-        updateMsg('Falha crítica na comunicação com o servidor.', 'error');
+        updateMsg('Critical server communication failure.', 'error');
         setButtonLoading(button, false);
     }
 }

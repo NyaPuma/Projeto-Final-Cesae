@@ -9,20 +9,20 @@ use Illuminate\Support\Facades\Schema;
 class FixTicketEncoding extends Command
 {
     protected $signature = 'tickets:fix-encoding
-                    {--dry-run : Apenas lista os registos afetados sem alterar dados}';
+                    {--dry-run : Only lists affected records without altering data}';
 
-    protected $description = 'Repara registos de tickets com Mojibake (dupla codificação latin1/utf8mb4)';
+    protected $description = 'Fixes ticket records with Mojibake (double latin1/utf8mb4 encoding)';
 
     public function handle(): int
     {
         if (DB::connection()->getDriverName() !== 'mysql') {
-            $this->error('Este comando só funciona em ligações MySQL.');
+            $this->error('This command only works on MySQL connections.');
 
             return self::FAILURE;
         }
 
         if (! Schema::hasTable('tickets')) {
-            $this->error('A tabela tickets não existe.');
+            $this->error('The tickets table does not exist.');
 
             return self::FAILURE;
         }
@@ -51,7 +51,7 @@ class FixTicketEncoding extends Command
                 continue;
             }
 
-            $this->line("  tickets.{$column}: " . count($ids) . " registo(s) afetado(s).");
+            $this->line("  tickets.{$column}: " . count($ids) . " affected record(s).");
 
             if (! $dryRun) {
                 $idList = implode(',', $ids);
@@ -65,18 +65,18 @@ class FixTicketEncoding extends Command
         }
 
         if ($total === 0) {
-            $this->info('Sem registos com mojibake na tabela tickets.');
+            $this->info('No mojibake records in the tickets table.');
 
             return self::SUCCESS;
         }
 
         if ($dryRun) {
-            $this->info("[dry-run] {$total} registo(s) seriam corrigidos.");
+            $this->info("[dry-run] {$total} record(s) would be fixed.");
 
             return self::SUCCESS;
         }
 
-        $this->info("Correção concluída: {$total} registo(s) corrigido(s).");
+        $this->info("Fix completed: {$total} record(s) fixed.");
 
         return self::SUCCESS;
     }

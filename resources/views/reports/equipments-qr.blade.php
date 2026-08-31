@@ -78,12 +78,12 @@
                 <div class="report-eyebrow">{{ __('equipment.Etiquetas de Equipamento') }}</div>
                 <h1 class="report-title">{{ __('equipment.QR Codes de Equipamentos') }}</h1>
                 <div class="report-subtitle">
-                    Códigos para reporte de avarias — afixar junto de cada equipamento.
+                    Codes for reporting faults — post next to each piece of equipment.
                 </div>
             </td>
             <td class="report-meta">
-                <div><strong>Emissão:</strong> {{ now() }}</div>
-                <div><strong>Equipamentos:</strong> {{ $items->count() }}</div>
+                <div><strong>Issued on:</strong> {{ now() }}</div>
+                <div><strong>Equipment:</strong> {{ $items->count() }}</div>
             </td>
         </tr>
     </table>
@@ -113,8 +113,8 @@
     <div class="page-footer">
         <table>
             <tr>
-                <td class="brand">Sistema de Gestão de Avarias</td>
-                <td class="page-num-cell">Página <span class="page-num"></span></td>
+                <td class="brand">{{ config('app.name') }}</td>
+                <td class="page-num-cell">Page <span class="page-num"></span></td>
             </tr>
         </table>
     </div>

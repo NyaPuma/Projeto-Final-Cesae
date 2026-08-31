@@ -14,17 +14,17 @@ export function showPriorityWarning(urgentCount, currentPriority, ticketId, acti
     if (!modal) return;
 
     if (countElement) {
-        let countText = `${urgentCount} ticket(s) de prioridade mais alta à espera`;
+        let countText = `${urgentCount} higher-priority ticket(s) waiting`;
         if (myUrgentCount > 0) {
-            countText += `<br><span class="font-bold text-warning">${myUrgentCount} desse(s) estão atribuídos a si</span>`;
+            countText += `<br><span class="font-bold text-warning">${myUrgentCount} of them are assigned to you</span>`;
         }
         countElement.innerHTML = countText;
     }
 
-    if (currentElement) currentElement.textContent = `Ticket atual: ${currentPriority}`;
+    if (currentElement) currentElement.textContent = `Current ticket: ${currentPriority}`;
     if (actionElement) actionElement.textContent = actionType === 'close'
-        ? 'Está prestes a fechar este ticket ignorando os mais urgentes.'
-        : 'Está prestes a iniciar este ticket ignorando os mais urgentes.';
+        ? 'You are about to close this ticket ignoring the more urgent ones.'
+        : 'You are about to start this ticket ignoring the more urgent ones.';
 
     setPendingAction({ ticketId, actionType });
     modal.classList.remove('hidden');

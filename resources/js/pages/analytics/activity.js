@@ -8,7 +8,7 @@ export function renderActivity(element, data) {
     const activities = data.recent_activity || [];
     if (activities.length === 0) {
         element.innerHTML = `
-            <div class="p-6 text-center text-xs text-soft">Sem atividade recente.</div>
+            <div class="p-6 text-center text-xs text-soft">No recent activity.</div>
         `;
         return;
     }
@@ -31,7 +31,7 @@ export function renderActivity(element, data) {
 export function renderList(element, items) {
     if (!element) return;
     if (!items || items.length === 0) {
-        element.innerHTML = `<div class="p-5 text-center text-xs text-(--text-soft)">Sem dados disponíveis</div>`;
+        element.innerHTML = `<div class="p-5 text-center text-xs text-(--text-soft)">No data available</div>`;
         return;
     }
     element.innerHTML = items.map((item, idx) => `

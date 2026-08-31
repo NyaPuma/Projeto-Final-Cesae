@@ -11,7 +11,6 @@ use App\Http\Requests\StoreTicketRequest;
 use App\Http\Resources\TicketResource;
 use App\Jobs\GenerateAiRecommendationJob;
 use App\Models\Ticket;
-use App\Models\User;
 use App\Services\TechnicianAssignmentService;
 use App\Services\TicketSearchService;
 use Illuminate\Http\JsonResponse;

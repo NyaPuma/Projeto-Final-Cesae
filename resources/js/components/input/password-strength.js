@@ -53,9 +53,9 @@ export default function passwordStrengthComponent() {
 
         get levelLabel() {
             const labels = {
-                weak: 'Fraca',
-                medium: 'Média',
-                strong: 'Forte',
+                weak: 'Weak',
+                medium: 'Medium',
+                strong: 'Strong',
             };
 
             return labels[this.level];

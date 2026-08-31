@@ -25,7 +25,7 @@ final readonly class TopEntitiesQuery
             ->map(fn ($row) => [
                 'name' => $row->name,
                 'total' => (int) $row->total,
-                'subtitle' => 'intervenções',
+                'subtitle' => 'interventions',
             ]);
     }
 
@@ -59,7 +59,7 @@ final readonly class TopEntitiesQuery
             ->map(fn ($row) => [
                 'name' => $row->name,
                 'total' => (int) $row->total,
-                'subtitle' => 'ações',
+                'subtitle' => 'actions',
             ]);
     }
 }

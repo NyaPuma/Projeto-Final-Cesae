@@ -3,7 +3,7 @@ import { bindPagination, clearPlanFilters, renderLoadingState } from './plans/do
 import { renderEmptyState, renderErrorState, renderPagination, renderPlans, renderResultsCount, showFeedback } from './plans/render.js';
 import { plansState, setCurrentPage } from './plans/state.js';
 
-const intervalLabels = { days: 'Dias', usage_hours: 'Horas de uso', cycles: 'Ciclos' };
+const intervalLabels = { days: 'Days', usage_hours: 'Usage hours', cycles: 'Cycles' };
 
 async function loadPlans(page = 1) {
     setCurrentPage(page);
@@ -76,7 +76,7 @@ function resetForm() {
     firstRow.querySelector('[data-part-id]').value = '';
     firstRow.querySelector('[data-expected-qty]').value = '';
 
-    document.getElementById('planFormTitle').textContent = 'Novo plano de manutenção';
+    document.getElementById('planFormTitle').textContent = 'New maintenance plan';
     document.getElementById('plMessage').textContent = '';
 }
 
@@ -165,7 +165,7 @@ async function handleEdit(id) {
         const form = document.getElementById('planForm');
         form.dataset.planFormMode = 'edit';
         form.dataset.planId = String(id);
-        document.getElementById('planFormTitle').textContent = 'Editar plano de manutenção';
+        document.getElementById('planFormTitle').textContent = 'Edit maintenance plan';
         message.textContent = '';
     } catch (error) {
         showMessage(error.message, true);

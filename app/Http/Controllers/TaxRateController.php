@@ -24,10 +24,10 @@ final class TaxRateController extends Controller
     #[OA\Get(
         path: '/admin/tax-rates',
         tags: ['Admin Stock'],
-        summary: 'Listar taxas de IVA',
+        summary: 'List VAT rates',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         responses: [
-            new OA\Response(response: 200, description: 'Lista de taxas de IVA'),
+            new OA\Response(response: 200, description: 'List of VAT rates'),
         ]
     )]
     public function index(): JsonResponse
@@ -47,7 +47,7 @@ final class TaxRateController extends Controller
     #[OA\Post(
         path: '/admin/tax-rates',
         tags: ['Admin Stock'],
-        summary: 'Criar taxa de IVA',
+        summary: 'Create VAT rate',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         requestBody: new OA\RequestBody(
             required: true,
@@ -62,8 +62,8 @@ final class TaxRateController extends Controller
             )
         ),
         responses: [
-            new OA\Response(response: 201, description: 'Taxa de IVA criada com sucesso'),
-            new OA\Response(response: 422, description: 'Dados inválidos'),
+            new OA\Response(response: 201, description: 'VAT rate created successfully'),
+            new OA\Response(response: 422, description: 'Invalid data'),
         ]
     )]
     public function store(StoreTaxRateRequest $request): JsonResponse
@@ -89,7 +89,7 @@ final class TaxRateController extends Controller
     #[OA\Patch(
         path: '/admin/tax-rates/{taxRate}',
         tags: ['Admin Stock'],
-        summary: 'Atualizar taxa de IVA',
+        summary: 'Update VAT rate',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
             new OA\Parameter(name: 'taxRate', in: 'path', required: true, schema: new OA\Schema(type: 'integer')),
@@ -107,8 +107,8 @@ final class TaxRateController extends Controller
             )
         ),
         responses: [
-            new OA\Response(response: 200, description: 'Taxa de IVA atualizada com sucesso'),
-            new OA\Response(response: 422, description: 'Dados inválidos'),
+            new OA\Response(response: 200, description: 'VAT rate updated successfully'),
+            new OA\Response(response: 422, description: 'Invalid data'),
         ]
     )]
     public function update(UpdateTaxRateRequest $request, TaxRate $taxRate): JsonResponse
@@ -135,14 +135,14 @@ final class TaxRateController extends Controller
     #[OA\Delete(
         path: '/admin/tax-rates/{taxRate}',
         tags: ['Admin Stock'],
-        summary: 'Desativar taxa de IVA',
+        summary: 'Deactivate VAT rate',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
             new OA\Parameter(name: 'taxRate', in: 'path', required: true, schema: new OA\Schema(type: 'integer')),
         ],
         responses: [
-            new OA\Response(response: 200, description: 'Taxa de IVA desativada com sucesso'),
-            new OA\Response(response: 404, description: 'Taxa de IVA não encontrada'),
+            new OA\Response(response: 200, description: 'VAT rate deactivated successfully'),
+            new OA\Response(response: 404, description: 'VAT rate not found'),
         ]
     )]
     public function destroy(TaxRate $taxRate): JsonResponse

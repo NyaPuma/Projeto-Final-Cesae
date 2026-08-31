@@ -62,15 +62,15 @@ final class UpdateRoomRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => 'nome da sala',
-            'location' => 'localização',
-            'code' => 'código da sala',
-            'building' => 'edifício',
-            'floor' => 'piso',
-            'capacity' => 'capacidade',
-            'description' => 'descrição',
-            'notes' => 'notas internas',
-            'active' => 'estado ativo',
+            'name' => 'room name',
+            'location' => 'location',
+            'code' => 'room code',
+            'building' => 'building',
+            'floor' => 'floor',
+            'capacity' => 'capacity',
+            'description' => 'description',
+            'notes' => 'internal notes',
+            'active' => 'active status',
         ];
     }
 }

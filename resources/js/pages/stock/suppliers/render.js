@@ -15,8 +15,8 @@ function translations() {
     const data = document.body?.dataset || {};
 
     return {
-        edit: window.SGM_STOCK_SUPPLIER_I18N?.edit || data.stockSupplierEdit || 'Editar',
-        delete: window.SGM_STOCK_SUPPLIER_I18N?.delete || data.stockSupplierDelete || 'Eliminar',
+        edit: window.SGM_STOCK_SUPPLIER_I18N?.edit || data.stockSupplierEdit || 'Edit',
+        delete: window.SGM_STOCK_SUPPLIER_I18N?.delete || data.stockSupplierDelete || 'Delete',
     };
 }
 
@@ -27,18 +27,18 @@ function renderSupplierRow(supplier) {
         : '';
 
     return `<tr class="transition-colors duration-150 hover:bg-(--surface-2)/50">
-        <td class="px-5 py-4" data-label="Fornecedor">
+        <td class="px-5 py-4" data-label="Supplier">
             <div class="ui-listing-value">
                 <div class="font-semibold text-(--text)">${escapeHtml(supplier.name)}</div>
                 <div class="mt-0.5 text-xs uppercase tracking-wider text-(--text-soft)">${escapeHtml(supplier.address ?? '—')}</div>
             </div>
         </td>
         <td class="px-5 py-4 font-mono font-bold text-(--text-soft)" data-label="${escapeHtml(window.SGM_LOCALE?.tax_id || '')}">${escapeHtml(supplier.nif ?? '—')}</td>
-        <td class="px-5 py-4 font-semibold text-(--text-soft)" data-label="Contacto">
+        <td class="px-5 py-4 font-semibold text-(--text-soft)" data-label="Contact">
             <div>${escapeHtml(supplier.email ?? '—')}</div>
             <div class="text-xs text-(--text-soft)">${escapeHtml(supplier.contact ?? '')}</div>
         </td>
-        <td class="px-5 py-4 font-semibold text-(--text-soft)" data-label="Prazo médio">${supplier.avg_lead_time_days != null ? `${supplier.avg_lead_time_days} dias` : '—'}</td>
+        <td class="px-5 py-4 font-semibold text-(--text-soft)" data-label="Avg. lead time">${supplier.avg_lead_time_days != null ? `${supplier.avg_lead_time_days} days` : '—'}</td>
         <td class="ui-listing-actions px-5 py-4 text-right">
             <div class="inline-flex items-center justify-end gap-1.5">${actions}</div>
         </td>

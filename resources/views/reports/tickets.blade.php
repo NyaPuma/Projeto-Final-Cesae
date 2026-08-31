@@ -118,13 +118,13 @@
                 <div class="report-eyebrow">{{ __('common.Relatório Analítico') }}</div>
                 <h1 class="report-title">{{ __('tickets.Relatório Consolidado de Tickets') }}</h1>
                 <div class="report-subtitle">
-                    Análise analítica de estados operacionais, tempos de resolução e custos.
+                    Analytical analysis of operational statuses, resolution times and costs.
                 </div>
             </td>
             <td class="report-meta">
-                <div><strong>Emissão:</strong> {{ now() }}</div>
-                <div><strong>Registos:</strong> {{ $tickets->count() }}</div>
-                <div><strong>Gerado automaticamente</strong></div>
+                <div><strong>Issued on:</strong> {{ now() }}</div>
+                <div><strong>Records:</strong> {{ $tickets->count() }}</div>
+                <div><strong>Automatically generated</strong></div>
             </td>
         </tr>
     </table>
@@ -222,7 +222,7 @@
             @empty
                 <tr>
                     <td colspan="12" class="text-center text-muted empty-row">
-                        Nenhum registo de ticket encontrado para os parâmetros selecionados.
+                        No ticket records found for the selected parameters.
                     </td>
                 </tr>
             @endforelse
@@ -244,8 +244,8 @@
     <div class="page-footer">
         <table>
             <tr>
-                <td class="brand">Sistema de Gestão de Avarias</td>
-                <td class="page-num-cell">Página <span class="page-num"></span></td>
+                <td class="brand">{{ config('app.name') }}</td>
+                <td class="page-num-cell">Page <span class="page-num"></span></td>
             </tr>
         </table>
     </div>

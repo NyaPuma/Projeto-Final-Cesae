@@ -58,19 +58,19 @@ final class StoreEquipmentRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => 'nome do equipamento',
-            'serial' => 'número de série',
-            'room_id' => 'sala',
-            'category_id' => 'categoria',
-            'active' => 'status ativo',
-            'asset_tag' => 'etiqueta de ativo',
-            'brand' => 'marca',
-            'model' => 'modelo',
-            'manufacturer' => 'fabricante',
-            'purchase_date' => 'data de compra',
-            'warranty_until' => 'fim de garantia',
-            'status' => 'estado operacional',
-            'notes' => 'notas',
+            'name' => 'equipment name',
+            'serial' => 'serial number',
+            'room_id' => 'room',
+            'category_id' => 'category',
+            'active' => 'active status',
+            'asset_tag' => 'asset tag',
+            'brand' => 'brand',
+            'model' => 'model',
+            'manufacturer' => 'manufacturer',
+            'purchase_date' => 'purchase date',
+            'warranty_until' => 'warranty expiry',
+            'status' => 'operational status',
+            'notes' => 'notes',
         ];
     }
 }

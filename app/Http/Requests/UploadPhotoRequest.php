@@ -47,7 +47,7 @@ final class UploadPhotoRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'photo' => 'fotografia',
+            'photo' => 'photo',
         ];
     }
 }

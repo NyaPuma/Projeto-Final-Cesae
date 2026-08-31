@@ -72,7 +72,7 @@ final class SubmitBudgetRequest extends FormRequest
                 if (abs($calculatedTotal - $estimatedBudget) > 0.01) {
                     $validator->errors()->add(
                         'estimated_budget',
-                        'O valor total estimado não corresponde à soma dos detalhes do orçamento.'
+                        'The estimated total does not match the sum of the budget details.'
                     );
                 }
             },
@@ -85,15 +85,15 @@ final class SubmitBudgetRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'estimated_budget' => 'orçamento estimado',
-            'estimatedBudget' => 'orçamento estimado',
-            'budget_details' => 'detalhes do orçamento',
-            'budget_details.*.description' => 'descrição do item',
-            'budget_details.*.type' => 'tipo do item',
-            'budget_details.*.quantity' => 'quantidade',
-            'budget_details.*.unit_price' => 'preço unitário',
-            'budget_details.*.hours' => 'horas de trabalho',
-            'budget_details.*.hourly_rate' => 'valor por hora',
+            'estimated_budget' => 'estimated budget',
+            'estimatedBudget' => 'estimated budget',
+            'budget_details' => 'budget details',
+            'budget_details.*.description' => 'item description',
+            'budget_details.*.type' => 'item type',
+            'budget_details.*.quantity' => 'quantity',
+            'budget_details.*.unit_price' => 'unit price',
+            'budget_details.*.hours' => 'labour hours',
+            'budget_details.*.hourly_rate' => 'hourly rate',
         ];
     }
 }

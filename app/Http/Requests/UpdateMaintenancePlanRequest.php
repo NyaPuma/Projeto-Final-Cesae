@@ -34,12 +34,12 @@ final class UpdateMaintenancePlanRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => 'nome',
-            'interval_type' => 'tipo de periodicidade',
-            'interval_value' => 'periodicidade',
-            'description' => 'descrição',
-            'active' => 'ativo',
-            'parts' => 'peças',
+            'name' => 'name',
+            'interval_type' => 'interval type',
+            'interval_value' => 'interval',
+            'description' => 'description',
+            'active' => 'active',
+            'parts' => 'parts',
         ];
     }
 }

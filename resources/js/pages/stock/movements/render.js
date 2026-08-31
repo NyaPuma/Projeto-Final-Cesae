@@ -28,23 +28,23 @@ function renderMovementRow(movement) {
         : '—';
 
     return `<tr class="transition-colors duration-150 hover:bg-(--surface-2)/50">
-        <td class="px-5 py-4 font-semibold text-(--text-soft)" data-label="Data">${escapeHtml(date)}</td>
-        <td class="px-5 py-4" data-label="Peça">
+        <td class="px-5 py-4 font-semibold text-(--text-soft)" data-label="Date">${escapeHtml(date)}</td>
+        <td class="px-5 py-4" data-label="Part">
             <div class="ui-listing-value">
-                <div class="font-semibold text-(--text)">${escapeHtml(movement.part?.name ?? `Peça #${movement.part_id}`)}</div>
+                <div class="font-semibold text-(--text)">${escapeHtml(movement.part?.name ?? `Part #${movement.part_id}`)}</div>
                 <div class="mt-0.5 font-mono text-xs uppercase tracking-wider text-(--text-soft)">${escapeHtml(movement.part?.sku ?? '')}</div>
             </div>
         </td>
-        <td class="px-5 py-4" data-label="Tipo">
+        <td class="px-5 py-4" data-label="Type">
             <span class="inline-flex items-center gap-1 rounded-lg bg-(--surface-2) px-2.5 py-1 text-xs font-bold uppercase tracking-tight ${typeColors[movement.movement_type] ?? ''}">
                 ${escapeHtml(typeLabels[movement.movement_type] ?? movement.movement_type)}
             </span>
         </td>
-        <td class="px-5 py-4 font-black ${deltaColor}" data-label="Variação">
+        <td class="px-5 py-4 font-black ${deltaColor}" data-label="Variation">
             ${sign}${delta}
             ${movement.stock_after != null ? `<span class="ml-1 text-xs font-semibold text-(--text-soft)">→ ${movement.stock_after}</span>` : ''}
         </td>
-        <td class="px-5 py-4 font-semibold text-(--text-soft)" data-label="Motivo">${escapeHtml(movement.reason ?? '—')}</td>
+        <td class="px-5 py-4 font-semibold text-(--text-soft)" data-label="Reason">${escapeHtml(movement.reason ?? '—')}</td>
     </tr>`;
 }
 

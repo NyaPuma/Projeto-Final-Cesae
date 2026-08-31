@@ -24,8 +24,8 @@ final class RescheduleEventRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'start' => 'início',
-            'end' => 'fim',
+            'start' => 'start',
+            'end' => 'end',
         ];
     }
 }

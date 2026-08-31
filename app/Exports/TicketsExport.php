@@ -84,19 +84,19 @@ final class TicketsExport implements
     public function headings(): array
     {
         return [
-            'ID',
-            'Código',
-            'Título',
-            'Estado',
-            'Prioridade',
-            'Urgente',
-            'Aberto em',
-            'Em Progresso em',
-            'Fechado em',
-            'Minutos Gastos',
-            'Custo (€)',
-            'Estado Orçamento',
-            'Montante Orçamento (€)',
+            __('exports.csv_id'),
+            __('exports.csv_code'),
+            __('exports.csv_title'),
+            __('exports.csv_status'),
+            __('exports.csv_priority'),
+            __('exports.csv_urgent'),
+            __('exports.csv_opened'),
+            __('exports.csv_in_progress'),
+            __('exports.csv_closed'),
+            __('exports.csv_duration_min'),
+            __('exports.csv_cost'),
+            __('exports.csv_budget_status'),
+            __('exports.csv_budget_amount'),
         ];
     }
 
@@ -149,7 +149,7 @@ final class TicketsExport implements
      */
     public function title(): string
     {
-        return 'Relatório de Tickets';
+        return __('exports.sheet_tickets');
     }
 
     /**

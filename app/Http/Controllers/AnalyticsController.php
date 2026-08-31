@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\TicketsExport;
 use App\Jobs\ExportCsvJob;
 use App\Jobs\ExportExcelJob;
 use App\Jobs\ExportPdfJob;
@@ -24,11 +23,11 @@ final class AnalyticsController extends Controller
     #[OA\Get(
         path: '/analytics/stats',
         tags: ['Analytics'],
-        summary: 'Estatísticas do dashboard',
-        description: 'Devolve o payload analítico agregado do dashboard.',
+        summary: 'Dashboard statistics',
+        description: 'Returns the aggregated analytical payload for the dashboard.',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         responses: [
-            new OA\Response(response: 200, description: 'Métricas e dados analíticos'),
+            new OA\Response(response: 200, description: 'Metrics and analytical data'),
         ]
     )]
     public function stats(Request $request): JsonResponse
@@ -47,10 +46,10 @@ final class AnalyticsController extends Controller
     #[OA\Get(
         path: '/analytics/export/csv',
         tags: ['Analytics'],
-        summary: 'Exportar CSV',
+        summary: 'Export CSV',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         responses: [
-            new OA\Response(response: 200, description: 'Exportação CSV em processamento'),
+            new OA\Response(response: 200, description: 'CSV export in progress'),
         ]
     )]
     public function exportCsv(Request $request): JsonResponse
@@ -74,10 +73,10 @@ final class AnalyticsController extends Controller
     #[OA\Get(
         path: '/analytics/export/pdf',
         tags: ['Analytics'],
-        summary: 'Exportar PDF',
+        summary: 'Export PDF',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         responses: [
-            new OA\Response(response: 200, description: 'Exportação PDF em processamento'),
+            new OA\Response(response: 200, description: 'PDF export in progress'),
         ]
     )]
     public function exportPdf(Request $request): JsonResponse
@@ -101,10 +100,10 @@ final class AnalyticsController extends Controller
     #[OA\Get(
         path: '/analytics/export/excel',
         tags: ['Analytics'],
-        summary: 'Exportar Excel',
+        summary: 'Export Excel',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         responses: [
-            new OA\Response(response: 200, description: 'Exportação Excel em processamento'),
+            new OA\Response(response: 200, description: 'Excel export in progress'),
         ]
     )]
     public function exportExcel(Request $request): JsonResponse

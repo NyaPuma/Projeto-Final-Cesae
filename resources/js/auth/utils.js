@@ -111,7 +111,7 @@ export const saveToken = (token, user = null) => {
     document.cookie = `api_token=${token}; path=/; max-age=2592000; SameSite=Lax`;
     document.cookie = `auth_token=${token}; path=/; max-age=2592000; SameSite=Lax`;
     if (user) {
-        localStorage.setItem(`${STORAGE_PREFIX}user_name`, user.name || 'Utilizador');
+        localStorage.setItem(`${STORAGE_PREFIX}user_name`, user.name || 'User');
         localStorage.setItem(`${STORAGE_PREFIX}user_role`, user.profile?.name || 'user');
     }
 };

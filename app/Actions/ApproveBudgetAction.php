@@ -10,7 +10,6 @@ use App\Models\User;
 use App\Services\NotificationService;
 use App\Services\TicketStatusService;
 use Illuminate\Support\Facades\DB;
-use InvalidArgumentException;
 use RuntimeException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 

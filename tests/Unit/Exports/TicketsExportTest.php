@@ -42,19 +42,19 @@ class TicketsExportTest extends TestCase
         $headings = $export->headings();
 
         $expectedHeadings = [
-            'ID',
-            'Código',
-            'Título',
-            'Estado',
-            'Prioridade',
-            'Urgente',
-            'Aberto em',
-            'Em Progresso em',
-            'Fechado em',
-            'Minutos Gastos',
-            'Custo (€)',
-            'Estado Orçamento',
-            'Montante Orçamento (€)',
+            __('exports.csv_id'),
+            __('exports.csv_code'),
+            __('exports.csv_title'),
+            __('exports.csv_status'),
+            __('exports.csv_priority'),
+            __('exports.csv_urgent'),
+            __('exports.csv_opened'),
+            __('exports.csv_in_progress'),
+            __('exports.csv_closed'),
+            __('exports.csv_duration_min'),
+            __('exports.csv_cost'),
+            __('exports.csv_budget_status'),
+            __('exports.csv_budget_amount'),
         ];
 
         $this->assertEquals($expectedHeadings, $headings);
@@ -64,7 +64,7 @@ class TicketsExportTest extends TestCase
     public function it_returns_correct_title(): void
     {
         $export = new TicketsExport;
-        $this->assertEquals('Relatório de Tickets', $export->title());
+        $this->assertEquals(__('exports.sheet_tickets'), $export->title());
     }
 
     #[Test]

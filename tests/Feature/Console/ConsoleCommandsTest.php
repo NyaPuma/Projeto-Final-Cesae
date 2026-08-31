@@ -30,7 +30,7 @@ class ConsoleCommandsTest extends DatabaseTestCase
         $exitCode = Artisan::call('db:backup', ['--connection' => 'nonexistent']);
 
         $this->assertEquals(1, $exitCode);
-        $this->assertStringContainsString('não foi encontrada', Artisan::output());
+        $this->assertStringContainsString('was not found', Artisan::output());
     }
 
     #[Test]
@@ -59,7 +59,7 @@ class ConsoleCommandsTest extends DatabaseTestCase
         $exitCode = Artisan::call('telemetry:simulate');
 
         $this->assertEquals(1, $exitCode);
-        $this->assertStringContainsString('administrador', mb_strtolower(Artisan::output()));
+        $this->assertStringContainsString('administrator', mb_strtolower(Artisan::output()));
     }
 
     #[Test]
@@ -75,7 +75,7 @@ class ConsoleCommandsTest extends DatabaseTestCase
         ]);
 
         $this->assertEquals(0, $exitCode);
-        $this->assertStringContainsString('Simulação concluída', Artisan::output());
+        $this->assertStringContainsString('Simulation completed', Artisan::output());
         $this->assertEquals(1, Ticket::where('title', 'like', '[TELEMETRIA]%')->count());
     }
 
@@ -94,7 +94,7 @@ class ConsoleCommandsTest extends DatabaseTestCase
         ]);
 
         $this->assertEquals(0, $exitCode);
-        $this->assertStringContainsString('já tem um ticket ativo', Artisan::output());
+        $this->assertStringContainsString('already has an active ticket', Artisan::output());
         $this->assertEquals(0, Ticket::where('title', 'like', '[TELEMETRIA]%')->count());
     }
 

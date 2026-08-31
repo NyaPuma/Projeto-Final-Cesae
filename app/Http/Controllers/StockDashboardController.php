@@ -25,11 +25,11 @@ final class StockDashboardController extends Controller
     #[OA\Get(
         path: '/stock/dashboard/summary',
         tags: ['Stock'],
-        summary: 'Resumo do dashboard de stock',
-        description: 'Valor total do stock, total de peças, contagem de peças com stock baixo e lista de alertas.',
+        summary: 'Stock dashboard summary',
+        description: 'Total stock value, total parts, count of low-stock parts, and list of alerts.',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         responses: [
-            new OA\Response(response: 200, description: 'Resumo de métricas de stock'),
+            new OA\Response(response: 200, description: 'Stock metrics summary'),
         ]
     )]
     public function summary(): JsonResponse
@@ -52,7 +52,7 @@ final class StockDashboardController extends Controller
     #[OA\Get(
         path: '/stock/dashboard/top-consumed',
         tags: ['Stock'],
-        summary: 'Peças mais consumidas',
+        summary: 'Most consumed parts',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
             new OA\Parameter(name: 'from', in: 'query', required: false, schema: new OA\Schema(type: 'string', format: 'date')),
@@ -60,7 +60,7 @@ final class StockDashboardController extends Controller
             new OA\Parameter(name: 'limit', in: 'query', required: false, schema: new OA\Schema(type: 'integer')),
         ],
         responses: [
-            new OA\Response(response: 200, description: 'Lista das peças mais consumidas'),
+            new OA\Response(response: 200, description: 'List of most consumed parts'),
         ]
     )]
     public function topConsumed(Request $request): JsonResponse
@@ -82,15 +82,15 @@ final class StockDashboardController extends Controller
     #[OA\Get(
         path: '/stock/dashboard/slow-moving',
         tags: ['Stock'],
-        summary: 'Peças com stock parado',
-        description: 'Peças ativas sem movimentos há X dias, ordenadas por stock atual.',
+        summary: 'Slow-moving parts',
+        description: 'Active parts with no movements for X days, sorted by current stock.',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
             new OA\Parameter(name: 'inactive_days', in: 'query', required: false, schema: new OA\Schema(type: 'integer')),
             new OA\Parameter(name: 'limit', in: 'query', required: false, schema: new OA\Schema(type: 'integer')),
         ],
         responses: [
-            new OA\Response(response: 200, description: 'Lista de peças com stock parado'),
+            new OA\Response(response: 200, description: 'List of slow-moving parts'),
         ]
     )]
     public function slowMoving(Request $request): JsonResponse
@@ -111,14 +111,14 @@ final class StockDashboardController extends Controller
     #[OA\Get(
         path: '/stock/dashboard/cost-by-equipment',
         tags: ['Stock'],
-        summary: 'Custo de peças por equipamento',
+        summary: 'Cost of parts by equipment',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
             new OA\Parameter(name: 'from', in: 'query', required: false, schema: new OA\Schema(type: 'string', format: 'date')),
             new OA\Parameter(name: 'to', in: 'query', required: false, schema: new OA\Schema(type: 'string', format: 'date')),
         ],
         responses: [
-            new OA\Response(response: 200, description: 'Custos de peças por equipamento'),
+            new OA\Response(response: 200, description: 'Part costs by equipment'),
         ]
     )]
     public function costByEquipment(Request $request): JsonResponse
@@ -139,14 +139,14 @@ final class StockDashboardController extends Controller
     #[OA\Get(
         path: '/stock/dashboard/cost-by-ticket',
         tags: ['Stock'],
-        summary: 'Custo de peças por ticket',
+        summary: 'Cost of parts by ticket',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
             new OA\Parameter(name: 'from', in: 'query', required: false, schema: new OA\Schema(type: 'string', format: 'date')),
             new OA\Parameter(name: 'to', in: 'query', required: false, schema: new OA\Schema(type: 'string', format: 'date')),
         ],
         responses: [
-            new OA\Response(response: 200, description: 'Custos de peças por ticket'),
+            new OA\Response(response: 200, description: 'Part costs by ticket'),
         ]
     )]
     public function costByTicket(Request $request): JsonResponse
@@ -167,14 +167,14 @@ final class StockDashboardController extends Controller
     #[OA\Get(
         path: '/stock/dashboard/runout-forecast',
         tags: ['Stock'],
-        summary: 'Previsão de rutura de stock',
-        description: 'Estimativa de meses de stock restantes com base no consumo médio mensal.',
+        summary: 'Stock runout forecast',
+        description: 'Estimate of remaining months of stock based on average monthly consumption.',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
             new OA\Parameter(name: 'months', in: 'query', required: false, schema: new OA\Schema(type: 'integer')),
         ],
         responses: [
-            new OA\Response(response: 200, description: 'Previsão de rutura de stock'),
+            new OA\Response(response: 200, description: 'Stock runout forecast'),
         ]
     )]
     public function runoutForecast(Request $request): JsonResponse

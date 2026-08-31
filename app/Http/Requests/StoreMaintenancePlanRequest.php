@@ -36,13 +36,13 @@ final class StoreMaintenancePlanRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'equipment_id' => 'equipamento',
-            'name' => 'nome',
-            'interval_type' => 'tipo de periodicidade',
-            'interval_value' => 'periodicidade',
-            'description' => 'descrição',
-            'active' => 'ativo',
-            'parts' => 'peças',
+            'equipment_id' => 'equipment',
+            'name' => 'name',
+            'interval_type' => 'interval type',
+            'interval_value' => 'interval',
+            'description' => 'description',
+            'active' => 'active',
+            'parts' => 'parts',
         ];
     }
 }

@@ -51,10 +51,10 @@ final class StorePreventiveRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'title' => 'título da preventiva',
-            'description' => 'descrição',
-            'scheduled_at' => 'data de agendamento',
-            'technician_id' => 'técnico responsável',
+            'title' => 'preventive title',
+            'description' => 'description',
+            'scheduled_at' => 'scheduled date',
+            'technician_id' => 'responsible technician',
         ];
     }
 }

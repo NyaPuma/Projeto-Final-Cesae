@@ -18,10 +18,10 @@ final class NotificationController extends Controller
     #[OA\Get(
         path: '/notifications',
         tags: ['Notifications'],
-        summary: 'Listar notificações do utilizador',
+        summary: 'List user notifications',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         responses: [
-            new OA\Response(response: 200, description: 'Lista paginada de notificações'),
+            new OA\Response(response: 200, description: 'Paginated list of notifications'),
         ]
     )]
     public function index(Request $request): JsonResponse
@@ -46,14 +46,14 @@ final class NotificationController extends Controller
     #[OA\Patch(
         path: '/notifications/{id}',
         tags: ['Notifications'],
-        summary: 'Marcar notificação como lida',
+        summary: 'Mark notification as read',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
             new OA\Parameter(name: 'id', in: 'path', required: true, schema: new OA\Schema(type: 'integer')),
         ],
         responses: [
-            new OA\Response(response: 200, description: 'Notificação atualizada'),
-            new OA\Response(response: 404, description: 'Notificação não encontrada'),
+            new OA\Response(response: 200, description: 'Notification updated'),
+            new OA\Response(response: 404, description: 'Notification not found'),
         ]
     )]
     public function markAsRead(Request $request, int $id): JsonResponse
@@ -84,10 +84,10 @@ final class NotificationController extends Controller
     #[OA\Post(
         path: '/notifications/test-email',
         tags: ['Notifications'],
-        summary: 'Enviar email de teste via Mailgun',
+        summary: 'Send test email via Mailgun',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         responses: [
-            new OA\Response(response: 200, description: 'Email de teste enviado'),
+            new OA\Response(response: 200, description: 'Test email sent'),
         ]
     )]
     public function sendTestEmail(Request $request): JsonResponse

@@ -1,7 +1,7 @@
 import { authDelete, authPatch, authPost } from '../../utils/api.js';
 
 function extractError(data) {
-    let errorText = data.message || 'Ocorreu um erro.';
+    let errorText = data.message || 'An error occurred.';
     if (data.errors) {
         errorText = Object.values(data.errors).flat().join(' ');
     }
@@ -20,7 +20,7 @@ function resetForm(form) {
     form.dataset.categoryId = '';
     document.getElementById('catName').value = '';
     document.getElementById('catActive').checked = true;
-    document.getElementById('categoryFormTitle').textContent = 'Nova categoria';
+    document.getElementById('categoryFormTitle').textContent = 'New category';
     document.getElementById('catMessage').textContent = '';
 }
 
@@ -67,13 +67,13 @@ function handleEdit(button) {
     const form = document.getElementById('categoryForm');
     form.dataset.categoryFormMode = 'edit';
     form.dataset.categoryId = button.dataset.categoryEdit;
-    document.getElementById('categoryFormTitle').textContent = 'Editar categoria';
+    document.getElementById('categoryFormTitle').textContent = 'Edit category';
     document.getElementById('catMessage').textContent = '';
 }
 
 async function handleDelete(id) {
     const message = document.getElementById('catMessage');
-    showMessage(message, 'A desativar categoria...', false);
+    showMessage(message, 'Deactivating category...', false);
 
     try {
         const response = await authDelete(`/admin/part-categories/${id}`);

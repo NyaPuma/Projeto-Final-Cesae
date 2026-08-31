@@ -112,9 +112,9 @@
 
                 {{-- System Diagnostics Metadata --}}
                 <div class="telemetry-box">
-                    <span class="telemetry-label">CANAL TRÁFEGO:</span> Mailgun API Driver<br>
-                    <span class="telemetry-label">ESTADO:</span> Conexão Ativa / Válida<br>
-                    <span class="telemetry-label">DATA EMISSÃO:</span> {{ now()->format('Y-m-d H:i:s') }} UTC
+                    <span class="telemetry-label">TRAFFIC CHANNEL:</span> Mailgun API Driver<br>
+                    <span class="telemetry-label">STATUS:</span> Connection Active / Valid<br>
+                    <span class="telemetry-label">ISSUED AT:</span> {{ now()->format('Y-m-d H:i:s') }} UTC
                 </div>
 
                 {{-- System Footer --}}

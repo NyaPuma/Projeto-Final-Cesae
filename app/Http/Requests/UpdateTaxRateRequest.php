@@ -26,10 +26,10 @@ final class UpdateTaxRateRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => 'nome',
-            'percent' => 'percentagem',
-            'is_default' => 'taxa padrão',
-            'active' => 'ativo',
+            'name' => 'name',
+            'percent' => 'percentage',
+            'is_default' => 'default rate',
+            'active' => 'active',
         ];
     }
 }

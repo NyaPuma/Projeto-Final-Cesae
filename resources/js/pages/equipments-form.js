@@ -6,7 +6,7 @@
 import { authPatch, authPost } from '../utils/api.js';
 
 function extractError(data) {
-    let errorText = data.message || 'Ocorreu um erro ao guardar o equipamento.';
+    let errorText = data.message || 'An error occurred while saving the equipment.';
     if (data.errors) {
         errorText = Object.values(data.errors).flat().join(' ');
     }

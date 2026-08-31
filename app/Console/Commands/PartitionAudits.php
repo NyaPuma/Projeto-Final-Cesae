@@ -9,18 +9,18 @@ use Throwable;
 class PartitionAudits extends Command
 {
     protected $signature = 'audit:partition
-                            {--months=12 : Número de meses para reter partições antigas}
-                            {--months-ahead=3 : Número de meses futuros a criar antecipadamente}
-                            {--dry-run : Exibe as operações SQL sem as executar}';
+                            {--months=12 : Number of months of old partitions to retain}
+                            {--months-ahead=3 : Number of future months to create ahead of time}
+                            {--dry-run : Shows the SQL operations without executing them}';
 
-    protected $description = 'Cria e remove partições de dados reais (ALTER TABLE) na tabela de audits';
+    protected $description = 'Creates and drops real data partitions (ALTER TABLE) on the audits table';
 
     public function handle(): int
     {
         $driver = DB::connection()->getDriverName();
 
         if ($driver !== 'mysql') {
-            $this->warn("O particionamento nativo por RANGE nesta implementação suporta apenas MySQL/MariaDB. Driver atual: {$driver}");
+            $this->warn("Native RANGE partitioning in this implementation only supports MySQL/MariaDB. Current driver: {$driver}");
 
             return self::FAILURE;
         }
@@ -29,17 +29,17 @@ class PartitionAudits extends Command
         $monthsToKeep = (int) $this->option('months');
         $dryRun = (bool) $this->option('dry-run');
 
-        $this->info('A verificar partições da tabela audits...');
+        $this->info('Checking partitions on the audits table...');
 
         try {
             $this->createFuturePartitions($monthsAhead, $dryRun);
             $this->dropOldPartitions($monthsToKeep, $dryRun);
 
-            $this->info('Gestão de partições concluída com sucesso.');
+            $this->info('Partition management completed successfully.');
 
             return self::SUCCESS;
         } catch (Throwable $e) {
-            $this->error("Erro ao gerir partições: {$e->getMessage()}");
+            $this->error("Error managing partitions: {$e->getMessage()}");
 
             return self::FAILURE;
         }
@@ -71,10 +71,10 @@ class PartitionAudits extends Command
             );
 
             if ($dryRun) {
-                $this->info("[DRY-RUN] Executaria SQL: {$sql}");
+                $this->info("[DRY-RUN] Would execute SQL: {$sql}");
             } else {
                 DB::statement($sql);
-                $this->info("Partição criada no MySQL: {$partitionName} (dados < '{$upperBound}')");
+                $this->info("Partition created on MySQL: {$partitionName} (data < '{$upperBound}')");
             }
         }
     }
@@ -97,10 +97,10 @@ class PartitionAudits extends Command
                 $sql = "ALTER TABLE audits DROP PARTITION {$partition};";
 
                 if ($dryRun) {
-                    $this->info("[DRY-RUN] Executaria SQL para apagar: {$sql}");
+                    $this->info("[DRY-RUN] Would execute SQL to drop: {$sql}");
                 } else {
                     DB::statement($sql);
-                    $this->warn("Partição antiga eliminada com sucesso (DROP PARTITION): {$partition}");
+                    $this->warn("Old partition removed successfully (DROP PARTITION): {$partition}");
                 }
             }
         }

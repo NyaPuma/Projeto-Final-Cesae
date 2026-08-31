@@ -32,12 +32,12 @@ final class PublicStoreTicketRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'equipment_id' => 'equipamento',
-            'problem_type' => 'tipo de problema',
-            'description' => 'descrição',
-            'reporter_name' => 'nome do reportante',
-            'reporter_contact' => 'contacto',
-            'photo' => 'fotografia',
+            'equipment_id' => 'equipment',
+            'problem_type' => 'problem type',
+            'description' => 'description',
+            'reporter_name' => 'reporter name',
+            'reporter_contact' => 'contact',
+            'photo' => 'photo',
         ];
     }
 }

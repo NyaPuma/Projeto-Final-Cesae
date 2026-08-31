@@ -91,26 +91,26 @@
                 <div class="report-eyebrow">{{ __('stock.Relatório de Stock') }}</div>
                 <h1 class="report-title">{{ __('equipment.Custo de Peças por Equipamento') }}</h1>
                 <div class="report-subtitle">
-                    Consumo de peças e valor associado às intervenções de cada equipamento.
+                    Parts consumption and associated value for each piece of equipment's interventions.
                 </div>
             </td>
             <td class="report-meta">
-                <div><strong>Período:</strong>
+                <div><strong>Period:</strong>
                     @if($from)
-                        {{ $from }} a {{ $to ?? now()->toDateString() }}
+                        {{ $from }} to {{ $to ?? now()->toDateString() }}
                     @else
-                        Todo o histórico
+                        Entire history
                     @endif
                 </div>
-                <div><strong>Emissão:</strong> {{ now() }}</div>
-                <div><strong>Equipamentos:</strong> {{ $items->count() }}</div>
+                <div><strong>Issued on:</strong> {{ now() }}</div>
+                <div><strong>Equipment:</strong> {{ $items->count() }}</div>
             </td>
         </tr>
     </table>
 
     @if($items->isEmpty())
         <div class="empty-state">
-            Não existem movimentos de saída de peças associados a equipamentos no período selecionado.
+            There are no outgoing part movements associated with equipment in the selected period.
         </div>
     @else
         <table class="data-table">
@@ -151,8 +151,8 @@
     <div class="page-footer">
         <table>
             <tr>
-                <td class="brand">Sistema de Gestão de Avarias</td>
-                <td class="page-num-cell">Página <span class="page-num"></span></td>
+                <td class="brand">{{ config('app.name') }}</td>
+                <td class="page-num-cell">Page <span class="page-num"></span></td>
             </tr>
         </table>
     </div>

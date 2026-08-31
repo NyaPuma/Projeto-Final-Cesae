@@ -34,13 +34,13 @@ final class StoreStockMovementRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'part_id' => 'peça',
-            'movement_type' => 'tipo de movimento',
-            'quantity' => 'quantidade',
-            'reason' => 'motivo',
+            'part_id' => 'part',
+            'movement_type' => 'movement type',
+            'quantity' => 'quantity',
+            'reason' => 'reason',
             'ticket_id' => 'ticket',
-            'equipment_id' => 'equipamento',
-            'unit_price_snapshot' => 'preço unitário',
+            'equipment_id' => 'equipment',
+            'unit_price_snapshot' => 'unit price',
         ];
     }
 }

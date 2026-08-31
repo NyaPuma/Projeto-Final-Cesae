@@ -111,8 +111,8 @@ export function renderAudits(audits) {
 
     tbody.innerHTML = audits.map((audit) => {
         const logId = audit.id ? `#${audit.id}` : '-';
-        const user = audit.user?.name || audit.user || audit.username || audit.operator || 'Sistema / Automático';
-        const entity = audit.auditable_type || audit.entity || 'Geral';
+        const user = audit.user?.name || audit.user || audit.username || audit.operator || 'System / Automatic';
+        const entity = audit.auditable_type || audit.entity || 'General';
         const referenceValue = audit.auditable_id || audit.reference;
         const reference = referenceValue ? `ID: ${referenceValue}` : '-';
         const dateFormatted = audit.created_at
@@ -121,13 +121,13 @@ export function renderAudits(audits) {
 
         return `<tr class="transition-colors duration-150 hover:bg-(--surface-2)/50">
             <td class="px-5 py-4 font-mono text-xs font-bold text-(--text-soft)" data-label="Log ID">${logId}</td>
-            <td class="px-5 py-4 font-semibold text-(--text)" data-label="Utilizador / Operador">${user}</td>
-            <td class="px-5 py-4 font-semibold text-(--text-soft)" data-label="Elemento Afetado">${entity}</td>
-            <td class="px-5 py-4 font-mono text-xs text-(--text-soft)" data-label="Referência">${reference}</td>
-            <td class="px-5 py-4" data-label="Tipo de Ação">${getEventBadge(audit.event)}</td>
-            <td class="px-5 py-4" data-label="Estado Anterior">${formatStateData(audit.old_values || audit.old_state)}</td>
-            <td class="px-5 py-4" data-label="Novo Estado">${formatStateData(audit.new_values || audit.new_state)}</td>
-            <td class="px-5 py-4 text-right font-mono text-xs font-semibold text-(--text-soft)" data-label="Data e Hora">${dateFormatted}</td>
+            <td class="px-5 py-4 font-semibold text-(--text)" data-label="User / Operator">${user}</td>
+            <td class="px-5 py-4 font-semibold text-(--text-soft)" data-label="Affected Element">${entity}</td>
+            <td class="px-5 py-4 font-mono text-xs text-(--text-soft)" data-label="Reference">${reference}</td>
+            <td class="px-5 py-4" data-label="Action Type">${getEventBadge(audit.event)}</td>
+            <td class="px-5 py-4" data-label="Previous State">${formatStateData(audit.old_values || audit.old_state)}</td>
+            <td class="px-5 py-4" data-label="New State">${formatStateData(audit.new_values || audit.new_state)}</td>
+            <td class="px-5 py-4 text-right font-mono text-xs font-semibold text-(--text-soft)" data-label="Date and Time">${dateFormatted}</td>
         </tr>`;
     }).join('');
 }

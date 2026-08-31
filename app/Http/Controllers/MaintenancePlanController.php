@@ -27,13 +27,13 @@ final class MaintenancePlanController extends Controller
     #[OA\Get(
         path: '/admin/maintenance-plans',
         tags: ['Admin Stock'],
-        summary: 'Listar planos de manutenção preventiva',
+        summary: 'List preventive maintenance plans',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
             new OA\Parameter(name: 'equipment_id', in: 'query', required: false, schema: new OA\Schema(type: 'integer')),
         ],
         responses: [
-            new OA\Response(response: 200, description: 'Lista paginada de planos'),
+            new OA\Response(response: 200, description: 'Paginated list of plans'),
         ]
     )]
     public function index(Request $request): JsonResponse
@@ -64,14 +64,14 @@ final class MaintenancePlanController extends Controller
     #[OA\Get(
         path: '/admin/maintenance-plans/{plan}',
         tags: ['Admin Stock'],
-        summary: 'Detalhe de um plano de manutenção',
+        summary: 'Maintenance plan detail',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
             new OA\Parameter(name: 'plan', in: 'path', required: true, schema: new OA\Schema(type: 'integer')),
         ],
         responses: [
-            new OA\Response(response: 200, description: 'Plano com equipamento e peças associadas'),
-            new OA\Response(response: 404, description: 'Plano não encontrado'),
+            new OA\Response(response: 200, description: 'Plan with associated equipment and parts'),
+            new OA\Response(response: 404, description: 'Plan not found'),
         ]
     )]
     public function show(MaintenancePlan $plan): JsonResponse
@@ -89,7 +89,7 @@ final class MaintenancePlanController extends Controller
     #[OA\Post(
         path: '/admin/maintenance-plans',
         tags: ['Admin Stock'],
-        summary: 'Criar plano de manutenção preventiva',
+        summary: 'Create preventive maintenance plan',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         requestBody: new OA\RequestBody(
             required: true,
@@ -105,7 +105,7 @@ final class MaintenancePlanController extends Controller
                     new OA\Property(
                         property: 'parts',
                         type: 'array',
-                        description: 'Peças do plano',
+                        description: 'Plan parts',
                         items: new OA\Items(
                             type: 'object',
                             properties: [
@@ -118,8 +118,8 @@ final class MaintenancePlanController extends Controller
             )
         ),
         responses: [
-            new OA\Response(response: 201, description: 'Plano criado com sucesso'),
-            new OA\Response(response: 422, description: 'Dados inválidos'),
+            new OA\Response(response: 201, description: 'Plan created successfully'),
+            new OA\Response(response: 422, description: 'Invalid data'),
         ]
     )]
     public function store(StoreMaintenancePlanRequest $request): JsonResponse
@@ -155,7 +155,7 @@ final class MaintenancePlanController extends Controller
     #[OA\Patch(
         path: '/admin/maintenance-plans/{plan}',
         tags: ['Admin Stock'],
-        summary: 'Atualizar plano de manutenção preventiva',
+        summary: 'Update preventive maintenance plan',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
             new OA\Parameter(name: 'plan', in: 'path', required: true, schema: new OA\Schema(type: 'integer')),
@@ -186,8 +186,8 @@ final class MaintenancePlanController extends Controller
             )
         ),
         responses: [
-            new OA\Response(response: 200, description: 'Plano atualizado com sucesso'),
-            new OA\Response(response: 422, description: 'Dados inválidos'),
+            new OA\Response(response: 200, description: 'Plan updated successfully'),
+            new OA\Response(response: 422, description: 'Invalid data'),
         ]
     )]
     public function update(UpdateMaintenancePlanRequest $request, MaintenancePlan $plan): JsonResponse
@@ -221,14 +221,14 @@ final class MaintenancePlanController extends Controller
     #[OA\Delete(
         path: '/admin/maintenance-plans/{plan}',
         tags: ['Admin Stock'],
-        summary: 'Eliminar plano de manutenção preventiva',
+        summary: 'Delete preventive maintenance plan',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
             new OA\Parameter(name: 'plan', in: 'path', required: true, schema: new OA\Schema(type: 'integer')),
         ],
         responses: [
-            new OA\Response(response: 200, description: 'Plano eliminado com sucesso'),
-            new OA\Response(response: 404, description: 'Plano não encontrado'),
+            new OA\Response(response: 200, description: 'Plan deleted successfully'),
+            new OA\Response(response: 404, description: 'Plan not found'),
         ]
     )]
     public function destroy(MaintenancePlan $plan): JsonResponse

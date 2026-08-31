@@ -24,10 +24,10 @@ final class StockReportController extends Controller
     #[OA\Get(
         path: '/stock/reports/low-stock.csv',
         tags: ['Stock'],
-        summary: 'Exportar CSV de stock baixo',
+        summary: 'Export low-stock CSV',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         responses: [
-            new OA\Response(response: 200, description: 'Ficheiro CSV de peças com stock baixo'),
+            new OA\Response(response: 200, description: 'CSV file of low-stock parts'),
         ]
     )]
     public function lowStockCsv(): StreamedResponse
@@ -75,10 +75,10 @@ final class StockReportController extends Controller
     #[OA\Get(
         path: '/stock/reports/inventory.csv',
         tags: ['Stock'],
-        summary: 'Exportar CSV do inventário',
+        summary: 'Export inventory CSV',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         responses: [
-            new OA\Response(response: 200, description: 'Ficheiro CSV do inventário completo'),
+            new OA\Response(response: 200, description: 'CSV file of the complete inventory'),
         ]
     )]
     public function inventoryCsv(): StreamedResponse
@@ -131,14 +131,14 @@ final class StockReportController extends Controller
     #[OA\Get(
         path: '/stock/reports/costs-by-equipment.pdf',
         tags: ['Stock'],
-        summary: 'Exportar PDF de custos por equipamento',
+        summary: 'Export equipment costs PDF',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
             new OA\Parameter(name: 'from', in: 'query', required: false, schema: new OA\Schema(type: 'string', format: 'date')),
             new OA\Parameter(name: 'to', in: 'query', required: false, schema: new OA\Schema(type: 'string', format: 'date')),
         ],
         responses: [
-            new OA\Response(response: 200, description: 'Processamento do PDF iniciado (notificação quando pronto)'),
+            new OA\Response(response: 200, description: 'PDF generation started (notification when ready)'),
         ]
     )]
     public function costsByEquipmentPdf(Request $request): JsonResponse

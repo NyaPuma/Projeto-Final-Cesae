@@ -37,12 +37,12 @@ final class UpdateSupplierRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => 'nome',
+            'name' => 'name',
             'nif' => \App\Services\LocaleService::taxIdentifierLabel(),
-            'contact' => 'contacto',
+            'contact' => 'contact',
             'email' => 'email',
-            'address' => 'morada',
-            'avg_lead_time_days' => 'prazo de entrega médio',
+            'address' => 'address',
+            'avg_lead_time_days' => 'average lead time',
         ];
     }
 }

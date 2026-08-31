@@ -45,11 +45,11 @@ final class StoreTicketRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'title' => 'título',
-            'description' => 'descrição',
-            'priority' => 'prioridade',
-            'equipment_id' => 'equipamento',
-            'room_id' => 'sala',
+            'title' => 'title',
+            'description' => 'description',
+            'priority' => 'priority',
+            'equipment_id' => 'equipment',
+            'room_id' => 'room',
         ];
     }
 }

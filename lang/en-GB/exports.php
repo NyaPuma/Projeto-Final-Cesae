@@ -45,4 +45,5 @@ return [
     'csv_stock_value' => 'Stock value',
     'csv_low_stock' => 'low-stock.csv',
     'csv_inventory' => 'inventory-stock.csv',
+    'sheet_tickets' => 'Tickets Report',
 ];

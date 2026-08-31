@@ -1,7 +1,7 @@
 import { authDelete, authPatch, authPost } from '../../utils/api.js';
 
 function extractError(data) {
-    let errorText = data.message || 'Ocorreu um erro.';
+    let errorText = data.message || 'An error occurred.';
     if (data.errors) {
         errorText = Object.values(data.errors).flat().join(' ');
     }
@@ -22,7 +22,7 @@ function resetForm(form) {
     document.getElementById('trPercent').value = '';
     document.getElementById('trDefault').checked = false;
     document.getElementById('trActive').checked = true;
-    document.getElementById('taxRateFormTitle').textContent = 'Nova taxa de IVA';
+    document.getElementById('taxRateFormTitle').textContent = 'New VAT rate';
     document.getElementById('trMessage').textContent = '';
 }
 
@@ -73,13 +73,13 @@ async function handleEdit(button) {
     const form = document.getElementById('taxRateForm');
     form.dataset.taxRateFormMode = 'edit';
     form.dataset.taxRateId = button.dataset.taxRateEdit;
-    document.getElementById('taxRateFormTitle').textContent = 'Editar taxa de IVA';
+    document.getElementById('taxRateFormTitle').textContent = 'Edit VAT rate';
     document.getElementById('trMessage').textContent = '';
 }
 
 async function handleDelete(id) {
     const message = document.getElementById('trMessage');
-    showMessage(message, 'A desativar taxa...', false);
+    showMessage(message, 'Deactivating rate...', false);
 
     try {
         const response = await authDelete(`/admin/tax-rates/${id}`);

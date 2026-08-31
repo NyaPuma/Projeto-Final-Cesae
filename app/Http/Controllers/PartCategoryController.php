@@ -24,10 +24,10 @@ final class PartCategoryController extends Controller
     #[OA\Get(
         path: '/admin/part-categories',
         tags: ['Admin Stock'],
-        summary: 'Listar categorias de peças',
+        summary: 'List part categories',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         responses: [
-            new OA\Response(response: 200, description: 'Lista de categorias de peças'),
+            new OA\Response(response: 200, description: 'List of part categories'),
         ]
     )]
     public function index(): JsonResponse
@@ -47,7 +47,7 @@ final class PartCategoryController extends Controller
     #[OA\Post(
         path: '/admin/part-categories',
         tags: ['Admin Stock'],
-        summary: 'Criar categoria de peças',
+        summary: 'Create part category',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         requestBody: new OA\RequestBody(
             required: true,
@@ -60,8 +60,8 @@ final class PartCategoryController extends Controller
             )
         ),
         responses: [
-            new OA\Response(response: 201, description: 'Categoria criada com sucesso'),
-            new OA\Response(response: 422, description: 'Dados inválidos'),
+            new OA\Response(response: 201, description: 'Category created successfully'),
+            new OA\Response(response: 422, description: 'Invalid data'),
         ]
     )]
     public function store(StorePartCategoryRequest $request): JsonResponse
@@ -85,7 +85,7 @@ final class PartCategoryController extends Controller
     #[OA\Patch(
         path: '/admin/part-categories/{category}',
         tags: ['Admin Stock'],
-        summary: 'Atualizar categoria de peças',
+        summary: 'Update part category',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
             new OA\Parameter(name: 'category', in: 'path', required: true, schema: new OA\Schema(type: 'integer')),
@@ -101,8 +101,8 @@ final class PartCategoryController extends Controller
             )
         ),
         responses: [
-            new OA\Response(response: 200, description: 'Categoria atualizada com sucesso'),
-            new OA\Response(response: 422, description: 'Dados inválidos'),
+            new OA\Response(response: 200, description: 'Category updated successfully'),
+            new OA\Response(response: 422, description: 'Invalid data'),
         ]
     )]
     public function update(UpdatePartCategoryRequest $request, PartCategory $category): JsonResponse
@@ -127,14 +127,14 @@ final class PartCategoryController extends Controller
     #[OA\Delete(
         path: '/admin/part-categories/{category}',
         tags: ['Admin Stock'],
-        summary: 'Desativar categoria de peças',
+        summary: 'Deactivate part category',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
             new OA\Parameter(name: 'category', in: 'path', required: true, schema: new OA\Schema(type: 'integer')),
         ],
         responses: [
-            new OA\Response(response: 200, description: 'Categoria desativada com sucesso'),
-            new OA\Response(response: 404, description: 'Categoria não encontrada'),
+            new OA\Response(response: 200, description: 'Category deactivated successfully'),
+            new OA\Response(response: 404, description: 'Category not found'),
         ]
     )]
     public function destroy(PartCategory $category): JsonResponse

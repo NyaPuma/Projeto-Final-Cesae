@@ -11,12 +11,12 @@ use Throwable;
 class DatabaseBackup extends Command
 {
     protected $signature = 'db:backup
-                    {--connection= : A conexão da base de dados a utilizar}
-                    {--path= : Caminho personalizado para os backups}
-                    {--no-compress : Ignorar compressão gzip}
-                    {--clean : Remover backups mais antigos que o período de retenção}';
+                    {--connection= : The database connection to use}
+                    {--path= : Custom path for the backups}
+                    {--no-compress : Skip gzip compression}
+                    {--clean : Remove backups older than the retention period}';
 
-    protected $description = 'Cria um backup da base de dados utilizando ferramentas nativas (mysqldump/sqlite3)';
+    protected $description = 'Creates a database backup using native tools (mysqldump/sqlite3)';
 
     public function handle(): int
     {
@@ -24,7 +24,7 @@ class DatabaseBackup extends Command
         $config = config("database.connections.{$connection}");
 
         if (! $config) {
-            $this->error("A conexão '{$connection}' não foi encontrada em config/database.php");
+            $this->error("The connection '{$connection}' was not found in config/database.php");
 
             return self::FAILURE;
         }
@@ -36,18 +36,18 @@ class DatabaseBackup extends Command
         $filename = "backup_{$timestamp}.sql";
         $filepath = rtrim($backupDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $filename;
 
-        $this->info("A iniciar backup da conexão: {$connection}");
+        $this->info("Starting backup of connection: {$connection}");
         $this->info("Driver: {$config['driver']}");
 
         try {
             match ($config['driver']) {
                 'mysql' => $this->backupMysql($config, $filepath),
                 'sqlite' => $this->backupSqlite($config, $filepath),
-                default => throw new RuntimeException("Driver não suportado: {$config['driver']}"),
+                default => throw new RuntimeException("Unsupported driver: {$config['driver']}"),
             };
 
-            $this->info("Backup criado com sucesso: {$filepath}");
-            $this->info('Tamanho original: ' . number_format(File::size($filepath)) . ' bytes');
+            $this->info("Backup created successfully: {$filepath}");
+            $this->info('Original size: ' . number_format(File::size($filepath)) . ' bytes');
 
             if (! $this->option('no-compress') && config('backup.database.compression', true)) {
                 $filepath = $this->compressBackup($filepath);
@@ -59,7 +59,7 @@ class DatabaseBackup extends Command
 
             return self::SUCCESS;
         } catch (Throwable $e) {
-            $this->error("Falha ao efetuar o backup: {$e->getMessage()}");
+            $this->error("Failed to create the backup: {$e->getMessage()}");
 
             // Remove the incomplete file if the process failed
             if (File::exists($filepath)) {
@@ -101,7 +101,7 @@ class DatabaseBackup extends Command
             ->run($cmd);
 
         if ($result->failed()) {
-            throw new RuntimeException('mysqldump falhou: ' . $result->errorOutput());
+            throw new RuntimeException('mysqldump failed: ' . $result->errorOutput());
         }
     }
 
@@ -110,7 +110,7 @@ class DatabaseBackup extends Command
         $database = $config['database'] ?? database_path('database.sqlite');
 
         if (! File::exists($database)) {
-            throw new RuntimeException("Ficheiro da base de dados SQLite não encontrado: {$database}");
+            throw new RuntimeException("SQLite database file not found: {$database}");
         }
 
         $cmd = sprintf(
@@ -122,7 +122,7 @@ class DatabaseBackup extends Command
         $result = Process::timeout(600)->run($cmd);
 
         if ($result->failed()) {
-            throw new RuntimeException('sqlite3 dump falhou: ' . $result->errorOutput());
+            throw new RuntimeException('sqlite3 dump failed: ' . $result->errorOutput());
         }
     }
 
@@ -137,7 +137,7 @@ class DatabaseBackup extends Command
         $fpIn = fopen($filepath, 'rb');
 
         if (! $fpOut || ! $fpIn) {
-            throw new RuntimeException('Não foi possível inicializar os streams de compressão Gzip.');
+            throw new RuntimeException('Could not initialise the Gzip compression streams.');
         }
 
         while (! feof($fpIn)) {
@@ -149,7 +149,7 @@ class DatabaseBackup extends Command
 
         if (File::exists($gzFile)) {
             File::delete($filepath);
-            $this->info("Comprimido com sucesso: {$gzFile} (" . number_format(File::size($gzFile)) . ' bytes)');
+            $this->info("Compressed successfully: {$gzFile} (" . number_format(File::size($gzFile)) . ' bytes)');
             return $gzFile;
         }
 
@@ -171,6 +171,6 @@ class DatabaseBackup extends Command
             }
         }
 
-        $this->info("Removidos {$removed} backups com idade superior a {$retentionDays} dias.");
+        $this->info("Removed {$removed} backups older than {$retentionDays} days.");
     }
 }

@@ -290,8 +290,6 @@ final class UiController extends Controller
      */
     public function getEquipments(Request $request): JsonResponse
     {
-        $request->user();
-
         $equipments = $this->equipmentService->listPaginated(
             $request->query('q'),
             $request->query('status'),

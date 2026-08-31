@@ -35,8 +35,8 @@ function translations() {
     const configured = window.SGM_STOCK_DASHBOARD_I18N || {};
 
     return {
-        currentStock: configured.currentStock || body.stockDashboardCurrentStock || 'Stock atual',
-        minimumStock: configured.minimumStock || body.stockDashboardMinimumStock || 'Stock mínimo',
+        currentStock: configured.currentStock || body.stockDashboardCurrentStock || 'Current stock',
+        minimumStock: configured.minimumStock || body.stockDashboardMinimumStock || 'Minimum stock',
         inStock: configured.inStock || body.stockDashboardInStock || 'in stock',
         month: configured.month || body.stockDashboardMonth || 'month',
         months: configured.months || body.stockDashboardMonths || 'months',

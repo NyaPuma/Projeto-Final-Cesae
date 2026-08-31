@@ -29,8 +29,8 @@ final class StockMovementController extends Controller
     #[OA\Get(
         path: '/stock/movements',
         tags: ['Stock'],
-        summary: 'Listar movimentos de stock',
-        description: 'Lista paginada de movimentos, filtrável por peça, tipo de movimento e ticket.',
+        summary: 'List stock movements',
+        description: 'Paginated list of movements, filterable by part, movement type, and ticket.',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
             new OA\Parameter(name: 'part_id', in: 'query', required: false, schema: new OA\Schema(type: 'integer')),
@@ -38,8 +38,8 @@ final class StockMovementController extends Controller
             new OA\Parameter(name: 'ticket_id', in: 'query', required: false, schema: new OA\Schema(type: 'integer')),
         ],
         responses: [
-            new OA\Response(response: 200, description: 'Lista paginada de movimentos'),
-            new OA\Response(response: 403, description: 'Acesso proibido para o perfil'),
+            new OA\Response(response: 200, description: 'Paginated list of movements'),
+            new OA\Response(response: 403, description: 'Access forbidden for the profile'),
         ]
     )]
     public function index(Request $request): JsonResponse
@@ -97,9 +97,9 @@ final class StockMovementController extends Controller
             )
         ),
         responses: [
-            new OA\Response(response: 201, description: 'Movimento registado com sucesso'),
-            new OA\Response(response: 422, description: 'Dados inválidos ou stock insuficiente'),
-            new OA\Response(response: 500, description: 'Não foi possível registar o movimento'),
+            new OA\Response(response: 201, description: 'Movement recorded successfully'),
+            new OA\Response(response: 422, description: 'Invalid data or insufficient stock'),
+            new OA\Response(response: 500, description: 'Could not record the movement'),
         ]
     )]
     public function store(StoreStockMovementRequest $request): JsonResponse

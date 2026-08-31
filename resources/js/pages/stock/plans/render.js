@@ -39,15 +39,15 @@ function renderPlanRow(plan) {
     const partsCount = Array.isArray(plan.parts) ? plan.parts.length : 0;
 
     return `<tr class="transition-colors duration-150 hover:bg-(--surface-2)/50">
-        <td class="px-5 py-4" data-label="Plano">
+        <td class="px-5 py-4" data-label="Plan">
             <div class="ui-listing-value">
                 <div class="font-semibold text-(--text)">${escapeHtml(plan.name)}</div>
                 <div class="mt-0.5 text-xs uppercase tracking-wider text-(--text-soft)">${plan.active ? translations().active : translations().inactive}</div>
             </div>
         </td>
-        <td class="px-5 py-4 font-semibold text-(--text-soft)" data-label="Equipamento">${escapeHtml(plan.equipment?.name ?? `#${plan.equipment_id}`)}</td>
-        <td class="px-5 py-4 font-semibold text-(--text-soft)" data-label="Periodicidade">${escapeHtml(renderIntervalLabel(plan))}</td>
-        <td class="px-5 py-4 font-semibold text-(--text-soft)" data-label="Peças">${partsCount} ${translations().parts}</td>
+        <td class="px-5 py-4 font-semibold text-(--text-soft)" data-label="Equipment">${escapeHtml(plan.equipment?.name ?? `#${plan.equipment_id}`)}</td>
+        <td class="px-5 py-4 font-semibold text-(--text-soft)" data-label="Frequency">${escapeHtml(renderIntervalLabel(plan))}</td>
+        <td class="px-5 py-4 font-semibold text-(--text-soft)" data-label="Parts">${partsCount} ${translations().parts}</td>
         <td class="ui-listing-actions px-5 py-4 text-right">
             <div class="inline-flex items-center justify-end gap-1.5">
                 <button type="button" data-plan-edit="${plan.id}" class="inline-flex min-h-[28px] items-center justify-center rounded-lg border border-(--border) bg-(--surface) px-3 py-1.5 text-xs font-semibold text-(--text) shadow-sm transition-all hover:bg-(--surface-2)">${translations().edit}</button>

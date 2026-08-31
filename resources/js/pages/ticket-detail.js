@@ -19,7 +19,7 @@ async function fetchTicket() {
 
     const response = await fetch(`/tickets/${state.ticketId}`, { headers: authHeader() });
     if (response.status === 401) {
-        alert('Autenticação necessária. Faça login.');
+        alert('Authentication required. Please log in.');
         window.location = '/ui/login';
         return;
     }
@@ -71,7 +71,7 @@ async function fetchTicket() {
         if (budgetIsPending) {
             document.getElementById('budgetEstimatedCost').innerText = formatCurrency(estimatedAmount);
             document.getElementById('budgetThresholdDisplay').innerText = formatCurrency(threshold);
-            document.getElementById('budgetTechnicianName').innerText = ticket.technician ? ticket.technician.name : 'Técnico de Campo';
+            document.getElementById('budgetTechnicianName').innerText = ticket.technician ? ticket.technician.name : 'Field Technician';
             budgetCard.classList.remove('hidden');
             renderBudgetDetailsForAdmin(ticket.budget_details);
         } else {

@@ -132,11 +132,11 @@ function init() {
             }
 
             if (!payload.current_password) {
-                return 'A palavra-passe atual é obrigatória para alterar a password.';
+                return 'The current password is required to change the password.';
             }
 
             if (payload.password !== payload.password_confirmation) {
-                return 'As palavras-passe não coincidem.';
+                return 'The passwords do not match.';
             }
 
             return null;

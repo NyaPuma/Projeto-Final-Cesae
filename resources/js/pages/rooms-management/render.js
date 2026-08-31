@@ -15,14 +15,14 @@ function renderRoomRow(room) {
     const equipmentCount = room.equipments_count ?? room.equipments?.length ?? 0;
 
     return `<tr class="transition-colors duration-150 hover:bg-(--surface-2)/50">
-        <td class="px-5 py-4" data-label="Nome da Sala">
+        <td class="px-5 py-4" data-label="Room Name">
             <div class="ui-listing-value">
                 <div class="font-semibold text-(--text)">${room.name}</div>
                 <div class="mt-0.5 font-mono text-xs text-(--text-soft)">${room.code || '—'}</div>
             </div>
         </td>
-        <td class="px-5 py-4 font-semibold text-(--text-soft)" data-label="Localização">${room.location || '—'}</td>
-        <td class="px-5 py-4" data-label="Equipamentos">
+        <td class="px-5 py-4 font-semibold text-(--text-soft)" data-label="Location">${room.location || '—'}</td>
+        <td class="px-5 py-4" data-label="Equipment">
             <span class="inline-flex items-center gap-1 rounded-lg bg-info/10 px-2.5 py-1 text-xs font-bold uppercase tracking-tight text-info">${equipmentCount} ${translations().equipmentCount || ''}</span>
         </td>
         <td class="ui-listing-actions px-5 py-4 text-right">

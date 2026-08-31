@@ -39,15 +39,15 @@ function renderUserRow(user) {
 
     return `<tr class="transition-colors duration-150 hover:bg-[var(--surface-2)]/50">
         <td class="px-6 py-4 font-mono font-bold text-[var(--text-soft)]" data-label="ID">#${user.id}</td>
-        <td class="px-6 py-4 font-semibold text-[var(--text)]" data-label="Nome">${escapeHtml(user.name)}</td>
+        <td class="px-6 py-4 font-semibold text-[var(--text)]" data-label="Name">${escapeHtml(user.name)}</td>
         <td class="px-6 py-4 font-semibold text-[var(--text-soft)]" data-label="Email">${escapeHtml(user.email)}</td>
-        <td class="px-6 py-4" data-label="Perfil">
+        <td class="px-6 py-4" data-label="Profile">
             <span class="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-2 py-0.5 text-xs font-bold uppercase tracking-tight text-[var(--text)] shadow-sm">${escapeHtml(getUserRole(user))}</span>
         </td>
-        <td class="px-6 py-4" data-label="Estado">${renderStatusBadge(user)}</td>
+        <td class="px-6 py-4" data-label="Status">${renderStatusBadge(user)}</td>
         <td class="ui-listing-actions px-6 py-4 text-right whitespace-nowrap">
             <div class="inline-flex items-center justify-end gap-1.5">
-                <a href="/ui/users/${user.id}" class="inline-flex min-h-[28px] items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-1.5 text-xs font-semibold text-[var(--text)] shadow-sm transition-all hover:bg-[var(--surface-2)]">${translations.details || 'Ver detalhes'}</a>
+                <a href="/ui/users/${user.id}" class="inline-flex min-h-[28px] items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-1.5 text-xs font-semibold text-[var(--text)] shadow-sm transition-all hover:bg-[var(--surface-2)]">${translations.details || 'View details'}</a>
             </div>
         </td>
     </tr>`;

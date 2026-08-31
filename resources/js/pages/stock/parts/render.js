@@ -55,7 +55,7 @@ function renderPartRow(part) {
 
     return `<tr class="transition-colors duration-150 hover:bg-(--surface-2)/50">
         <td class="px-5 py-4 font-mono font-bold text-(--text-soft)" data-label="SKU">${escapeHtml(part.sku)}</td>
-        <td class="px-5 py-4" data-label="Peça">
+        <td class="px-5 py-4" data-label="Part">
             <div class="ui-listing-value">
                 <div class="font-semibold text-(--text)">${escapeHtml(part.name)}</div>
                 <div class="mt-0.5 text-xs uppercase tracking-wider text-(--text-soft)">${escapeHtml(part.brand ?? (part.category?.name ?? '—'))}</div>
@@ -65,9 +65,9 @@ function renderPartRow(part) {
             <span class="font-black">${stock}</span>
             <span class="text-xs text-(--text-soft)"> / ${translations().min} ${min}</span>
         </td>
-        <td class="px-5 py-4 font-semibold text-(--text-soft)" data-label="Preço">${formatPrice(part.cost_price)}</td>
-        <td class="px-5 py-4 font-semibold text-(--text-soft)" data-label="Localização">${escapeHtml(location)}</td>
-        <td class="px-5 py-4" data-label="Estado">${renderStockBadge(part)}</td>
+        <td class="px-5 py-4 font-semibold text-(--text-soft)" data-label="Price">${formatPrice(part.cost_price)}</td>
+        <td class="px-5 py-4 font-semibold text-(--text-soft)" data-label="Location">${escapeHtml(location)}</td>
+        <td class="px-5 py-4" data-label="Status">${renderStockBadge(part)}</td>
         <td class="ui-listing-actions px-5 py-4 text-right">
             <div class="inline-flex items-center justify-end gap-1.5">
                 ${actions}

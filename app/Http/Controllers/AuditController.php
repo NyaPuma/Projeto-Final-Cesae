@@ -17,12 +17,12 @@ final class AuditController extends Controller
     #[OA\Get(
         path: '/admin/audits',
         tags: ['Admin'],
-        summary: 'Listar auditoria',
+        summary: 'List audits',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         responses: [
             new OA\Response(
                 response: 200,
-                description: 'Lista paginada de registos de auditoria'
+                description: 'Paginated list of audit records'
             ),
         ]
     )]

@@ -24,8 +24,8 @@ function setLoading(loading) {
     btn.classList.toggle('opacity-80', loading);
     btn.classList.toggle('cursor-not-allowed', loading);
     btn.innerHTML = loading
-        ? `<span class="inline-flex items-center gap-2"><svg class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" class="opacity-20"></circle><path fill="currentColor" class="opacity-90" d="M4 12a8 8 0 018-8V0A12 12 0 000 12h4z"></path></svg>A processar...</span>`
-        : `Repor password <svg class="h-4 w-4 transition group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>`;
+        ? `<span class="inline-flex items-center gap-2"><svg class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" class="opacity-20"></circle><path fill="currentColor" class="opacity-90" d="M4 12a8 8 0 018-8V0A12 12 0 000 12h4z"></path></svg>Processing...</span>`
+        : `Reset password <svg class="h-4 w-4 transition group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>`;
 }
 
 function init() {
@@ -41,12 +41,12 @@ function init() {
         const token = document.querySelector('input[name="token"]').value;
 
         if (password !== passwordConfirmation) {
-            setMsg("As passwords não coincidem.", 'error');
+            setMsg("The passwords do not match.", 'error');
             return;
         }
 
         if (password.length < 8) {
-            setMsg("A password deve ter pelo menos 8 caracteres.", 'error');
+            setMsg("The password must be at least 8 characters long.", 'error');
             return;
         }
 
@@ -72,7 +72,7 @@ function init() {
             setLoading(false);
             setTimeout(() => { window.location.href = '/ui/login'; }, 2000);
         } catch (err) {
-            setMsg("Falha na comunicação com o servidor.", 'error');
+            setMsg("Failed to communicate with the server.", 'error');
             setLoading(false);
         }
     });

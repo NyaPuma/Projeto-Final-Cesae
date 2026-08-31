@@ -61,7 +61,7 @@ function handleCreateSubmit(e) {
 
     if (password && passwordConfirmation && password !== passwordConfirmation.value) {
         const translations = window.SGM_USER_MANAGEMENT_I18N || {};
-        message.textContent = translations.passwordMismatch || 'As palavras-passe não coincidem.';
+        message.textContent = translations.passwordMismatch || 'The passwords do not match.';
         message.className = 'min-h-6 text-sm font-medium text-danger';
         return;
     }
@@ -111,7 +111,7 @@ function handleEditSubmit(e) {
 
     if (password && passwordConfirmation && password !== passwordConfirmation.value) {
         const translations = window.SGM_USER_MANAGEMENT_I18N || {};
-        message.textContent = translations.passwordMismatch || 'As palavras-passe não coincidem.';
+        message.textContent = translations.passwordMismatch || 'The passwords do not match.';
         message.className = 'min-h-6 text-sm font-medium text-danger';
         return;
     }

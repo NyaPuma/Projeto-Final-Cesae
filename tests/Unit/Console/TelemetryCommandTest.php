@@ -37,7 +37,7 @@ class TelemetryCommandTest extends FeatureTestCase
         $this->makeEquipment();
 
         $exit = $this->artisan('telemetry:simulate', ['--equipments' => 5, '--probability' => 100])
-            ->expectsOutputToContain('Nenhum utilizador administrador')
+            ->expectsOutputToContain('No administrator user found')
             ->run();
 
         $this->assertNotSame(0, $exit);

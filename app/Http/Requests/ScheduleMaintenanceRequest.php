@@ -41,10 +41,10 @@ final class ScheduleMaintenanceRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'title' => 'título da intervenção',
-            'equipment_id' => 'equipamento',
-            'scheduled_at' => 'data e hora',
-            'assigned_to' => 'técnico',
+            'title' => 'intervention title',
+            'equipment_id' => 'equipment',
+            'scheduled_at' => 'date and time',
+            'assigned_to' => 'technician',
         ];
     }
 }

@@ -52,7 +52,7 @@ function handleSessionExpiration() {
     localStorage.removeItem('user_name');
 
     if (window.showToast) {
-        window.showToast('Sessão expirada. Redirecionando...', 'error');
+        window.showToast('Session expired. Redirecting...', 'error');
     }
 
     setTimeout(() => {
@@ -76,8 +76,8 @@ window.api = {
 /**
  * NETWORK MONITORING
  */
-window.addEventListener('offline', () => window.showToast?.('Modo offline ativo.', 'error'));
-window.addEventListener('online', () => window.showToast?.('Ligação restabelecida.', 'success'));
+window.addEventListener('offline', () => window.showToast?.('Offline mode active.', 'error'));
+window.addEventListener('online', () => window.showToast?.('Connection restored.', 'success'));
 
 /**
  * Converts an HTMLFormElement or FormData into a plain JavaScript object

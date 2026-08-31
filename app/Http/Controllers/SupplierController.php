@@ -30,15 +30,15 @@ final class SupplierController extends Controller
     #[OA\Get(
         path: '/stock/suppliers',
         tags: ['Stock'],
-        summary: 'Listar fornecedores',
-        description: 'Lista paginada de fornecedores, com pesquisa por nome ou NIF.',
+        summary: 'List suppliers',
+        description: 'Paginated list of suppliers, searchable by name or NIF.',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
-            new OA\Parameter(name: 'q', in: 'query', required: false, description: 'Pesquisa por nome ou NIF', schema: new OA\Schema(type: 'string')),
+            new OA\Parameter(name: 'q', in: 'query', required: false, description: 'Search by name or NIF', schema: new OA\Schema(type: 'string')),
         ],
         responses: [
-            new OA\Response(response: 200, description: 'Lista paginada de fornecedores'),
-            new OA\Response(response: 403, description: 'Acesso proibido para o perfil'),
+            new OA\Response(response: 200, description: 'Paginated list of suppliers'),
+            new OA\Response(response: 403, description: 'Access forbidden for the profile'),
         ]
     )]
     public function index(Request $request): JsonResponse
@@ -73,14 +73,14 @@ final class SupplierController extends Controller
     #[OA\Get(
         path: '/stock/suppliers/{supplier}',
         tags: ['Stock'],
-        summary: 'Detalhe de um fornecedor',
+        summary: 'Supplier detail',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
             new OA\Parameter(name: 'supplier', in: 'path', required: true, schema: new OA\Schema(type: 'integer')),
         ],
         responses: [
-            new OA\Response(response: 200, description: 'Fornecedor com as peças associadas'),
-            new OA\Response(response: 404, description: 'Fornecedor não encontrado'),
+            new OA\Response(response: 200, description: 'Supplier with associated parts'),
+            new OA\Response(response: 404, description: 'Supplier not found'),
         ]
     )]
     public function show(Supplier $supplier): JsonResponse
@@ -98,7 +98,7 @@ final class SupplierController extends Controller
     #[OA\Post(
         path: '/admin/suppliers',
         tags: ['Admin Stock'],
-        summary: 'Criar fornecedor',
+        summary: 'Create supplier',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         requestBody: new OA\RequestBody(
             required: true,
@@ -115,8 +115,8 @@ final class SupplierController extends Controller
             )
         ),
         responses: [
-            new OA\Response(response: 201, description: 'Fornecedor criado com sucesso'),
-            new OA\Response(response: 422, description: 'Dados inválidos'),
+            new OA\Response(response: 201, description: 'Supplier created successfully'),
+            new OA\Response(response: 422, description: 'Invalid data'),
         ]
     )]
     public function store(StoreSupplierRequest $request): JsonResponse
@@ -138,7 +138,7 @@ final class SupplierController extends Controller
     #[OA\Patch(
         path: '/admin/suppliers/{supplier}',
         tags: ['Admin Stock'],
-        summary: 'Atualizar fornecedor',
+        summary: 'Update supplier',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
             new OA\Parameter(name: 'supplier', in: 'path', required: true, schema: new OA\Schema(type: 'integer')),
@@ -158,8 +158,8 @@ final class SupplierController extends Controller
             )
         ),
         responses: [
-            new OA\Response(response: 200, description: 'Fornecedor atualizado com sucesso'),
-            new OA\Response(response: 422, description: 'Dados inválidos'),
+            new OA\Response(response: 200, description: 'Supplier updated successfully'),
+            new OA\Response(response: 422, description: 'Invalid data'),
         ]
     )]
     public function update(UpdateSupplierRequest $request, Supplier $supplier): JsonResponse
@@ -181,14 +181,14 @@ final class SupplierController extends Controller
     #[OA\Delete(
         path: '/admin/suppliers/{supplier}',
         tags: ['Admin Stock'],
-        summary: 'Eliminar fornecedor',
+        summary: 'Delete supplier',
         security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
         parameters: [
             new OA\Parameter(name: 'supplier', in: 'path', required: true, schema: new OA\Schema(type: 'integer')),
         ],
         responses: [
-            new OA\Response(response: 200, description: 'Fornecedor eliminado com sucesso'),
-            new OA\Response(response: 404, description: 'Fornecedor não encontrado'),
+            new OA\Response(response: 200, description: 'Supplier deleted successfully'),
+            new OA\Response(response: 404, description: 'Supplier not found'),
         ]
     )]
     public function destroy(Supplier $supplier): JsonResponse

@@ -61,10 +61,10 @@ final class UpdateProfileRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => 'nome',
-            'current_password' => 'palavra-passe atual',
-            'password' => 'nova palavra-passe',
-            'password_confirmation' => 'confirmação da nova palavra-passe',
+            'name' => 'name',
+            'current_password' => 'current password',
+            'password' => 'new password',
+            'password_confirmation' => 'new password confirmation',
         ];
     }
 }

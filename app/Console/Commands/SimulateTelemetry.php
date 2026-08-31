@@ -20,36 +20,36 @@ use Illuminate\Support\Facades\DB;
 class SimulateTelemetry extends Command
 {
     protected $signature = 'telemetry:simulate
-                            {--equipments=3 : Número máximo de equipamentos a verificar por execução}
-                            {--probability=30 : Percentagem de probabilidade de anomalia (0-100)}
-                            {--dry-run : Executa a simulação sem gravar tickets na base de dados}';
+                            {--equipments=3 : Maximum number of equipment to check per run}
+                            {--probability=30 : Probability percentage of an anomaly (0-100)}
+                            {--dry-run : Runs the simulation without persisting tickets to the database}';
 
-    protected $description = 'Simula telemetria de equipamentos e gera tickets de manutenção preventiva automaticamente ao detetar anomalias.';
+    protected $description = 'Simulates equipment telemetry and automatically generates preventive-maintenance tickets when anomalies are detected.';
 
     private array $anomalyTypes = [
         [
-            'title' => 'Temperatura acima do limite operacional',
-            'description' => 'O sensor de temperatura do equipamento registou valores acima dos 85°C durante um período prolongado. Recomenda-se inspeção do sistema de arrefecimento.',
+            'title' => 'Temperature above operational limit',
+            'description' => 'The equipment temperature sensor recorded values above 85°C over a prolonged period. Inspection of the cooling system is recommended.',
             'priority' => TicketPriorityEnum::High->value,
         ],
         [
-            'title' => 'Vibração anormal detetada',
-            'description' => 'O acelerómetro registou padrões de vibração fora dos parâmetros normais. Poderá indicar desgaste em rolamentos ou desalinhamento mecânico.',
+            'title' => 'Abnormal vibration detected',
+            'description' => 'The accelerometer recorded vibration patterns outside normal parameters. This may indicate bearing wear or mechanical misalignment.',
             'priority' => TicketPriorityEnum::Medium->value,
         ],
         [
-            'title' => 'Consumo energético elevado',
-            'description' => 'O sistema de monitorização registou consumo elétrico 40% acima do esperado nas últimas 6 horas. Possível avaria no motor ou sobreaquecimento.',
+            'title' => 'High energy consumption',
+            'description' => 'The monitoring system recorded electrical consumption 40% above expected over the last 6 hours. Possible motor fault or overheating.',
             'priority' => TicketPriorityEnum::Medium->value,
         ],
         [
-            'title' => 'Pressão fora dos limites de segurança',
-            'description' => 'O sensor de pressão reportou valores anómalos. É necessária verificação imediata para evitar riscos operacionais.',
+            'title' => 'Pressure outside safety limits',
+            'description' => 'The pressure sensor reported anomalous values. Immediate verification is required to avoid operational risks.',
             'priority' => TicketPriorityEnum::High->value,
         ],
         [
-            'title' => 'Alerta de manutenção preventiva programada',
-            'description' => 'O equipamento atingiu o intervalo de manutenção preventiva recomendado pelo fabricante (500 horas de operação). Realizar inspeção de rotina.',
+            'title' => 'Scheduled preventive maintenance alert',
+            'description' => 'The equipment has reached the manufacturer-recommended preventive-maintenance interval (500 operating hours). Perform routine inspection.',
             'priority' => TicketPriorityEnum::Low->value,
         ],
     ];
@@ -60,13 +60,13 @@ class SimulateTelemetry extends Command
         $probability = (int) $this->option('probability');
         $dryRun = (bool) $this->option('dry-run');
 
-        $this->info('A iniciar simulação de telemetria...');
+        $this->info('Starting telemetry simulation...');
 
         // Find the system administrator user
         $systemUser = User::whereHas('profile', fn ($q) => $q->where('name', UserRoleEnum::Admin->value))->first();
 
         if (! $systemUser) {
-            $this->error('Nenhum utilizador administrador encontrado para atribuir como autor dos tickets.');
+            $this->error('No administrator user found to attribute as the ticket author.');
 
             return self::FAILURE;
         }
@@ -85,7 +85,7 @@ class SimulateTelemetry extends Command
             ->get();
 
         if ($equipments->isEmpty()) {
-            $this->warn('Nenhum equipamento ativo encontrado na base de dados.');
+            $this->warn('No active equipment found in the database.');
 
             return self::SUCCESS;
         }
@@ -95,14 +95,14 @@ class SimulateTelemetry extends Command
         foreach ($equipments as $equipment) {
             // Avoids duplication by consulting the pre-loaded Eloquent attribute
             if ($equipment->has_open_ticket) {
-                $this->line("  ⏭  Equipamento #{$equipment->id} ({$equipment->name}) já tem um ticket ativo. A ignorar.");
+                $this->line("  ⏭  Equipment #{$equipment->id} ({$equipment->name}) already has an active ticket. Skipping.");
 
                 continue;
             }
 
             // Anomaly probability test (0 to 100)
             if (random_int(1, 100) > $probability) {
-                $this->line("  Equipamento #{$equipment->id} ({$equipment->name}) sem anomalias detetadas.");
+                $this->line("  Equipment #{$equipment->id} ({$equipment->name}) without detected anomalies.");
 
                 continue;
             }
@@ -110,7 +110,7 @@ class SimulateTelemetry extends Command
             $anomaly = Arr::random($this->anomalyTypes);
 
             if ($dryRun) {
-                $this->info("  [DRY-RUN] Criaria Ticket para equip. #{$equipment->id} ({$equipment->name}): {$anomaly['title']}");
+                $this->info("  [DRY-RUN] Would create Ticket for equip. #{$equipment->id} ({$equipment->name}): {$anomaly['title']}");
                 $ticketsCreated++;
 
                 continue;
@@ -123,22 +123,22 @@ class SimulateTelemetry extends Command
                     'room_id' => $equipment->room_id ?? null,
                     'title' => "[TELEMETRIA] {$anomaly['title']} — {$equipment->name}",
                     'description' => $anomaly['description'] . "\n\n" .
-                                     "Equipamento: {$equipment->name}\n" .
-                                     "ID do Equipamento: #{$equipment->id}\n" .
-                                     'Data da anomalia: ' . now()->format('d/m/Y H:i:s') . "\n" .
-                                     'Gerado automaticamente pelo sistema de telemetria.',
+                                     "Equipment: {$equipment->name}\n" .
+                                     "Equipment ID: #{$equipment->id}\n" .
+                                     'Anomaly date: ' . now()->format('d/m/Y H:i:s') . "\n" .
+                                     'Automatically generated by the telemetry system.',
                     'priority' => $anomaly['priority'],
                     'status_id' => $openStatusId,
                     'opened_at' => now(),
                 ]);
 
                 $ticketsCreated++;
-                $this->info("  Ticket #{$ticket->id} criado para equip. #{$equipment->id} ({$equipment->name}): {$anomaly['title']}");
+                $this->info("  Ticket #{$ticket->id} created for equip. #{$equipment->id} ({$equipment->name}): {$anomaly['title']}");
             });
         }
 
         $prefix = $dryRun ? '[DRY-RUN] ' : '';
-        $this->info("Simulação concluída. {$prefix}{$ticketsCreated} ticket(s) de manutenção gerado(s).");
+        $this->info("Simulation completed. {$prefix}{$ticketsCreated} maintenance ticket(s) generated.");
 
         return self::SUCCESS;
     }

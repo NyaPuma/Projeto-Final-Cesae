@@ -20,17 +20,17 @@ final class UpdateCurrencyRates extends Command
 
     public function handle(CurrencyRateService $currencyService): int
     {
-        $this->info('A atualizar taxas de câmbio...');
+        $this->info('Updating exchange rates...');
 
         $stored = $currencyService->updateRates();
 
         if ($stored === 0) {
-            $this->error('Não foi possível obter taxas de câmbio do fornecedor.');
+            $this->error('Could not obtain exchange rates from the provider.');
 
             return self::FAILURE;
         }
 
-        $this->info("Taxas de câmbio atualizadas: {$stored} pares de moedas armazenados.");
+        $this->info("Exchange rates updated: {$stored} currency pair(s) stored.");
 
         return self::SUCCESS;
     }

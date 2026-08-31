@@ -58,8 +58,8 @@ export function logout(logoutUrl) {
 
 export function getUserData() {
     return {
-        name: localStorage.getItem('user_name') || 'Utilizador',
-        role: localStorage.getItem('user_role') || 'Utilizador',
+        name: localStorage.getItem('user_name') || 'User',
+        role: localStorage.getItem('user_role') || 'User',
         token: localStorage.getItem('auth_token')
     };
 }

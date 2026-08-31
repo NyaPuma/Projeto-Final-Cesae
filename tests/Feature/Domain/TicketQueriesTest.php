@@ -170,7 +170,7 @@ class TicketQueriesTest extends DatabaseTestCase
 
         $this->assertEquals('Impressora A', $equipments->first()['name']);
         $this->assertEquals(2, $equipments->first()['total']);
-        $this->assertEquals('intervenções', $equipments->first()['subtitle']);
+        $this->assertEquals('interventions', $equipments->first()['subtitle']);
 
         $this->assertEquals('Laboratório A', $rooms->first()['name']);
         $this->assertEquals(2, $rooms->first()['total']);
@@ -178,6 +178,6 @@ class TicketQueriesTest extends DatabaseTestCase
 
         $this->assertEquals('Técnica Ana', $technicians->first()['name']);
         $this->assertEquals(2, $technicians->first()['total']);
-        $this->assertEquals('ações', $technicians->first()['subtitle']);
+        $this->assertEquals('actions', $technicians->first()['subtitle']);
     }
 }
