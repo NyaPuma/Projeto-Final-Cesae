@@ -5,16 +5,20 @@ declare(strict_types=1);
 namespace Tests\Unit;
 
 use App\Services\PreferencesService;
-use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Test;
+use Tests\Base\FeatureTestCase;
 
 /**
  * Unit tests for PreferencesService.
  *
- * Tests validation and normalization of preferences independently.
+ * Tests validation and normalization of preferences. The framework is booted
+ * (FeatureTestCase) because `PreferencesService::validatePreferences()` relies
+ * on `LocaleService`, whose supported-language list is sourced from
+ * `config('locales')`.
  */
-class PreferenciasServiceTest extends TestCase
+class PreferenciasServiceTest extends FeatureTestCase
 {
-    /** @test */
+    #[Test]
     public function it_returns_supported_currencies_list(): void
     {
         $currencies = PreferencesService::supportedCurrencies();
@@ -25,7 +29,7 @@ class PreferenciasServiceTest extends TestCase
         $this->assertContains('GBP', $currencies);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_supported_date_formats_list(): void
     {
         $formats = PreferencesService::supportedDateFormats();
@@ -36,7 +40,7 @@ class PreferenciasServiceTest extends TestCase
         $this->assertContains('Y-m-d', $formats);
     }
 
-    /** @test */
+    #[Test]
     public function it_normalizes_currency_to_uppercase(): void
     {
         $prefs = PreferencesService::validatePreferences([
@@ -48,7 +52,7 @@ class PreferenciasServiceTest extends TestCase
         $this->assertEquals('EUR', $prefs['currency']);
     }
 
-    /** @test */
+    #[Test]
     public function it_trims_currency_whitespace(): void
     {
         $prefs = PreferencesService::validatePreferences([
@@ -60,7 +64,7 @@ class PreferenciasServiceTest extends TestCase
         $this->assertEquals('EUR', $prefs['currency']);
     }
 
-    /** @test */
+    #[Test]
     public function it_uses_default_language_for_invalid(): void
     {
         $prefs = PreferencesService::validatePreferences([
@@ -72,7 +76,7 @@ class PreferenciasServiceTest extends TestCase
         $this->assertEquals('pt-PT', $prefs['language']);
     }
 
-    /** @test */
+    #[Test]
     public function it_uses_default_currency_for_invalid(): void
     {
         $prefs = PreferencesService::validatePreferences([
@@ -84,7 +88,7 @@ class PreferenciasServiceTest extends TestCase
         $this->assertEquals('EUR', $prefs['currency']);
     }
 
-    /** @test */
+    #[Test]
     public function it_uses_default_date_format_for_invalid(): void
     {
         $prefs = PreferencesService::validatePreferences([
@@ -96,7 +100,7 @@ class PreferenciasServiceTest extends TestCase
         $this->assertEquals('d/m/Y', $prefs['date_format']);
     }
 
-    /** @test */
+    #[Test]
     public function it_accepts_all_supported_currencies(): void
     {
         $supported = PreferencesService::supportedCurrencies();
@@ -112,7 +116,7 @@ class PreferenciasServiceTest extends TestCase
         }
     }
 
-    /** @test */
+    #[Test]
     public function it_accepts_all_supported_date_formats(): void
     {
         $supported = PreferencesService::supportedDateFormats();
@@ -128,7 +132,7 @@ class PreferenciasServiceTest extends TestCase
         }
     }
 
-    /** @test */
+    #[Test]
     public function it_has_correct_defaults(): void
     {
         // Test defaults directly
@@ -143,7 +147,7 @@ class PreferenciasServiceTest extends TestCase
         $this->assertEquals('d/m/Y', $prefs['date_format']);
     }
 
-    /** @test */
+    #[Test]
     public function it_handles_empty_array(): void
     {
         $prefs = PreferencesService::validatePreferences([]);
@@ -153,7 +157,7 @@ class PreferenciasServiceTest extends TestCase
         $this->assertEquals('d/m/Y', $prefs['date_format']);
     }
 
-    /** @test */
+    #[Test]
     public function it_preserves_valid_preferences(): void
     {
         $prefs = PreferencesService::validatePreferences([
@@ -167,7 +171,7 @@ class PreferenciasServiceTest extends TestCase
         $this->assertEquals('m/d/Y', $prefs['date_format']);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_only_supported_currencies(): void
     {
         $currencies = PreferencesService::supportedCurrencies();

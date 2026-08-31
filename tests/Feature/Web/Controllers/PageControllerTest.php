@@ -2,12 +2,16 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class PageControllerTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_switch_lang_redirects_guest_to_login_with_locale_cookie(): void
     {
         $this->get('/lang/pt-PT')
@@ -35,7 +39,12 @@ class PageControllerTest extends TestCase
 
     public function test_switch_lang_redirects_authenticated_user_to_dashboard(): void
     {
-        $this->call('GET', '/lang/pt-PT', [], ['api_token' => 'some-token'])
+        $user = User::factory()->create([
+            'api_token' => 'some-token',
+            'active' => true,
+        ]);
+
+        $this->call('GET', '/lang/pt-PT', [], ['api_token' => $user->api_token])
             ->assertRedirect(route('ui.index'));
     }
 
@@ -43,7 +52,8 @@ class PageControllerTest extends TestCase
     {
         Mail::fake();
 
-        $this->get('/test-email')
+        $this->withCookie('locale', 'pt-PT')
+            ->get('/test-email')
             ->assertOk()
             ->assertSee('E-mail enviado com sucesso!');
     }

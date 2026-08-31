@@ -105,7 +105,9 @@ final class PreferencesService
      */
     public static function fromSession(Request $request): array
     {
-        $sessionPrefs = $request->session()->get(self::SESSION_KEY);
+        $sessionPrefs = $request->hasSession()
+            ? $request->session()->get(self::SESSION_KEY)
+            : null;
 
         if (is_array($sessionPrefs)) {
             return [
@@ -165,7 +167,7 @@ final class PreferencesService
     /**
      * Validates and normalizes preferences.
      */
-    private static function validatePreferences(array $preferences): array
+    public static function validatePreferences(array $preferences): array
     {
         return [
             'language' => self::validateLanguage($preferences['language'] ?? self::DEFAULTS['language']),

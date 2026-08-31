@@ -211,7 +211,7 @@ class StockManagementFeatureTest extends FeatureTestCase
                 'percent' => 13,
             ])
             ->assertStatus(201)
-            ->assertJsonPath('tax_rate.percent', 13);
+            ->assertJsonPath('tax_rate.percent', '13.00');
 
         $this->assertDatabaseHas('tax_rates', [
             'name' => 'Taxa Intermédia',

@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\UserPreference;
 use App\Services\PreferencesService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 /**
@@ -31,7 +32,7 @@ class UserPreferencesTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    /** @test */
+    #[Test]
     public function it_creates_preferences_with_defaults_for_new_user(): void
     {
         // Migration should create preferences with defaults
@@ -44,7 +45,7 @@ class UserPreferencesTest extends TestCase
         $this->assertEquals('d/m/Y', $prefs['date_format']);
     }
 
-    /** @test */
+    #[Test]
     public function it_updates_language_without_affecting_currency_and_date_format(): void
     {
         // Create initial preferences
@@ -68,7 +69,7 @@ class UserPreferencesTest extends TestCase
         $this->assertEquals('d/m/Y', $prefs['date_format']); // Did not change
     }
 
-    /** @test */
+    #[Test]
     public function it_updates_currency_without_affecting_language_and_date_format(): void
     {
         // Create initial preferences
@@ -92,7 +93,7 @@ class UserPreferencesTest extends TestCase
         $this->assertEquals('d/m/Y', $prefs['date_format']); // Did not change
     }
 
-    /** @test */
+    #[Test]
     public function it_updates_date_format_without_affecting_language_and_currency(): void
     {
         // Create initial preferences
@@ -116,7 +117,7 @@ class UserPreferencesTest extends TestCase
         $this->assertEquals('Y-m-d', $prefs['date_format']);
     }
 
-    /** @test */
+    #[Test]
     public function it_updates_all_preferences_independently(): void
     {
         // Update everything at once
@@ -133,7 +134,7 @@ class UserPreferencesTest extends TestCase
         $this->assertEquals('m/d/Y', $prefs['date_format']);
     }
 
-    /** @test */
+    #[Test]
     public function it_validates_language(): void
     {
         // Unsupported language should use default
@@ -148,7 +149,7 @@ class UserPreferencesTest extends TestCase
         $this->assertEquals('d/m/Y', $prefs['date_format']);
     }
 
-    /** @test */
+    #[Test]
     public function it_validates_currency(): void
     {
         // Invalid currency should use default
@@ -163,7 +164,7 @@ class UserPreferencesTest extends TestCase
         $this->assertEquals('d/m/Y', $prefs['date_format']);
     }
 
-    /** @test */
+    #[Test]
     public function it_validates_date_format(): void
     {
         // Invalid date format should use default
@@ -178,7 +179,7 @@ class UserPreferencesTest extends TestCase
         $this->assertEquals('d/m/Y', $prefs['date_format']); // Should be default
     }
 
-    /** @test */
+    #[Test]
     public function it_accepts_valid_currencies(): void
     {
         // Test valid currencies
@@ -195,7 +196,7 @@ class UserPreferencesTest extends TestCase
         }
     }
 
-    /** @test */
+    #[Test]
     public function it_accepts_valid_date_formats(): void
     {
         // Test valid date formats
@@ -212,7 +213,7 @@ class UserPreferencesTest extends TestCase
         }
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_defaults_for_non_authenticated_user(): void
     {
         // For unauthenticated user, should return defaults
@@ -228,7 +229,7 @@ class UserPreferencesTest extends TestCase
         $this->assertEquals('d/m/Y', $prefs['date_format']);
     }
 
-    /** @test */
+    #[Test]
     public function it_updates_only_specified_fields(): void
     {
         // Create initial preferences
@@ -250,7 +251,7 @@ class UserPreferencesTest extends TestCase
 
         $prefs = PreferencesService::forUser($this->user);
 
-        $this->assertEquals('pt-PT', $prefs['language']); // Kept
+        $this->assertEquals('pt', $prefs['language']); // Kept as stored base code
         $this->assertEquals('GBP', $prefs['currency']); // Updated
         $this->assertEquals('d/m/Y', $prefs['date_format']); // Kept
     }

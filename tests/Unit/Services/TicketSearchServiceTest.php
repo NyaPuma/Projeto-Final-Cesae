@@ -148,7 +148,7 @@ class TicketSearchServiceTest extends FeatureTestCase
     public function it_rejects_an_invalid_date_range_where_start_is_after_end(): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('não pode ser posterior');
+        $this->expectExceptionMessage('dateFrom cannot be later than dateTo.');
 
         $this->service->search(new TicketFilters(
             dateFrom: CarbonImmutable::now(),

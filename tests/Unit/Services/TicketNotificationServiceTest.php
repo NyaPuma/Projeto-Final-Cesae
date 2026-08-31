@@ -99,6 +99,6 @@ class TicketNotificationServiceTest extends FeatureTestCase
 
         $this->assertNotNull($notification);
         $this->assertStringContainsString('Ana Técnica', $notification->message);
-        $this->assertStringContainsString('2 ticket(s) mais urgente(s)', $notification->message);
+        $this->assertStringContainsString('2 more urgent pending ticket(s)', $notification->message);
     }
 }

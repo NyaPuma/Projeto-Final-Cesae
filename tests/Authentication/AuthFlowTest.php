@@ -19,6 +19,9 @@ class AuthFlowTest extends TestCase
     {
         parent::setUp();
 
+        // These assertions expect the English message strings.
+        app()->setLocale('en-GB');
+
         UserProfile::create(['name' => UserRoleEnum::User->value]);
         UserProfile::create(['name' => UserRoleEnum::Technician->value]);
         UserProfile::create(['name' => UserRoleEnum::Admin->value]);

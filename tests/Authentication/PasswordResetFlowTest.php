@@ -44,7 +44,7 @@ class PasswordResetFlowTest extends FeatureTestCase
         $this->assertNotNull($record);
         $this->assertTrue(Hash::check($token, $record->token));
 
-        Mail::assertSent(PasswordResetMail::class, fn (PasswordResetMail $mail) => $mail->hasTo($user->email));
+        Mail::assertQueued(PasswordResetMail::class, fn (PasswordResetMail $mail) => $mail->hasTo($user->email));
     }
 
     #[Test]
@@ -60,7 +60,7 @@ class PasswordResetFlowTest extends FeatureTestCase
 
         $token = $response->json('token');
 
-        Mail::assertSent(
+        Mail::assertQueued(
             PasswordResetMail::class,
             function (PasswordResetMail $mail) use ($user, $token): bool {
                 return $mail->hasTo($user->email)

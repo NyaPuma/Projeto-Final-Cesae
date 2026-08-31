@@ -63,6 +63,6 @@ class NotificationTypeEnumTest extends TestCase
     #[Test]
     public function it_returns_all_values(): void
     {
-        $this->assertCount(8, NotificationTypeEnum::values());
+        $this->assertCount(9, NotificationTypeEnum::values());
     }
 }

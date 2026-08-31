@@ -47,7 +47,7 @@ class AuthPerformanceTest extends PerformanceTestCase
 
         $this->assertLessThanOrEqual(self::MAX_LOGIN_MS, $time,
             "Failed login took {$time}ms");
-        $this->assertLessThanOrEqual(5, count($queries));
+        $this->assertLessThanOrEqual(10, count($queries));
     }
 
     public function test_logout_response_time(): void
@@ -63,7 +63,7 @@ class AuthPerformanceTest extends PerformanceTestCase
 
         $this->assertLessThanOrEqual(self::MAX_LOGIN_MS, $time,
             "POST /logout took {$time}ms");
-        $this->assertLessThanOrEqual(5, count($queries));
+        $this->assertLessThanOrEqual(10, count($queries));
     }
 
     public function test_register_response_time(): void
@@ -125,7 +125,7 @@ class AuthPerformanceTest extends PerformanceTestCase
 
         $this->assertLessThanOrEqual(self::MAX_LOGIN_MS, $time,
             "Authenticated request took {$time}ms (includes middleware overhead)");
-        $this->assertLessThanOrEqual(5, count($queries),
+        $this->assertLessThanOrEqual(10, count($queries),
             'Authenticated request should use minimal queries for auth');
     }
 

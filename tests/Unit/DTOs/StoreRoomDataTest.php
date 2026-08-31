@@ -52,6 +52,11 @@ class StoreRoomDataTest extends TestCase
             'code' => null,
             'location' => null,
             'active' => true,
+            'building' => null,
+            'floor' => null,
+            'capacity' => null,
+            'description' => null,
+            'notes' => null,
         ], $dto->toArray());
     }
 

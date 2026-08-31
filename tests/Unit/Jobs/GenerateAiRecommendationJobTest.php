@@ -35,8 +35,8 @@ class GenerateAiRecommendationJobTest extends FeatureTestCase
                     'message' => [
                         'role' => 'assistant',
                         'content' => json_encode([
-                            'tecnico_id' => $technician->id,
-                            'justificacao' => 'Perfil mais adequado ao tipo de avaria.',
+                            'technician_id' => $technician->id,
+                            'justification' => 'Perfil mais adequado ao tipo de avaria.',
                         ]),
                     ],
                     'finish_reason' => 'stop',
@@ -68,7 +68,7 @@ class GenerateAiRecommendationJobTest extends FeatureTestCase
 
         $this->assertNull($ticket->fresh()->recommended_technician_id);
         $this->assertStringContainsString(
-            'não existem técnicos',
+            'No active operational technicians',
             (string) $ticket->fresh()->ai_recommendation_reason,
         );
         $this->assertNotNull($ticket->fresh()->ai_processed_at);
@@ -94,7 +94,7 @@ class GenerateAiRecommendationJobTest extends FeatureTestCase
 
         $this->assertNull($ticket->fresh()->recommended_technician_id);
         $this->assertStringContainsString(
-            'IA indisponível',
+            'AI assistant unavailable',
             (string) $ticket->fresh()->ai_recommendation_reason,
         );
         $this->assertNotNull($ticket->fresh()->ai_processed_at);
@@ -121,7 +121,7 @@ class GenerateAiRecommendationJobTest extends FeatureTestCase
 
         $this->assertNotNull($ticket->fresh()->ai_processed_at);
         $this->assertStringContainsString(
-            'Não foi possível obter uma recomendação',
+            'Could not obtain an automatic recommendation',
             (string) $ticket->fresh()->ai_recommendation_reason,
         );
     }

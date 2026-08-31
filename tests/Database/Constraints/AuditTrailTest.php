@@ -94,6 +94,7 @@ class AuditTrailTest extends TestCase
         $audit = Audit::where('auditable_type', Ticket::class)
             ->where('auditable_id', $ticketId)
             ->where('event', 'updated')
+            ->latest('id')
             ->first();
 
         $this->assertNotNull($audit, 'Audit record should be created for ticket update');

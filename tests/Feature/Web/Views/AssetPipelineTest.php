@@ -51,12 +51,23 @@ class AssetPipelineTest extends TestCase
                 $violations[] = "$relativePath contains an inline <style> tag";
             }
 
-            if (preg_match_all('/<script(?![^>]*\bsrc=)[^>]*>(.*?)<\/script>/is', $content, $matches)) {
-                foreach ($matches[1] as $inline) {
+            if (preg_match_all('/<script((?![^>]*\bsrc=)[^>]*)>(.*?)<\/script>/is', $content, $matches, PREG_SET_ORDER)) {
+                foreach ($matches as $match) {
+                    $tag = $match[1];
+                    $inline = $match[2];
+
                     $isFoucInit = str_contains($inline, 'prefers-color-scheme')
                         && str_contains($inline, "localStorage.getItem('theme')");
 
-                    if (! $isFoucInit) {
+                    // Data embedded as non-executing JSON (<script type="application/json">).
+                    $isJsonData = str_contains($tag, 'type="application/json"')
+                        || str_contains($tag, "type='application/json'");
+
+                    // Sanctioned frontend bootstrap that exposes translatable strings
+                    // to the page module via window.SGM_*.
+                    $isLocaleConfig = str_contains($inline, 'window.SGM_');
+
+                    if (! $isFoucInit && ! $isJsonData && ! $isLocaleConfig) {
                         $violations[] = "$relativePath contains an inline <script> tag";
                     }
                 }
@@ -175,14 +186,22 @@ class AssetPipelineTest extends TestCase
 
     private function assertNoUnsanctionedInlineScripts(string $content, string $context): void
     {
-        preg_match_all('/<script(?![^>]*\bsrc=)[^>]*>(.*?)<\/script>/is', $content, $matches);
+        preg_match_all('/<script((?![^>]*\bsrc=)[^>]*)>(.*?)<\/script>/is', $content, $matches, PREG_SET_ORDER);
 
-        foreach ($matches[1] as $inline) {
+        foreach ($matches as $match) {
+            $tag = $match[1];
+            $inline = $match[2];
+
             $isFoucInit = str_contains($inline, 'prefers-color-scheme')
                 && str_contains($inline, "localStorage.getItem('theme')");
 
+            $isJsonData = str_contains($tag, 'type="application/json"')
+                || str_contains($tag, "type='application/json'");
+
+            $isLocaleConfig = str_contains($inline, 'window.SGM_');
+
             $this->assertTrue(
-                $isFoucInit,
+                $isFoucInit || $isJsonData || $isLocaleConfig,
                 "$context contains an unsanctioned inline <script> tag"
             );
         }
@@ -194,7 +213,7 @@ class AssetPipelineTest extends TestCase
      */
     public function test_layouts_include_synchronous_anti_fouc_theme_script(): void
     {
-        foreach (['ui/layout.blade.php', 'layouts/layout.blade.php', 'ui/auth.blade.php'] as $view) {
+        foreach (['ui/layout.blade.php', 'layouts/layout.blade.php', 'components/ui/auth/shell.blade.php'] as $view) {
             $path = resource_path('views/' . $view);
             $content = File::get($path);
 

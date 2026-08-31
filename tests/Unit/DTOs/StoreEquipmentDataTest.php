@@ -59,6 +59,14 @@ class StoreEquipmentDataTest extends TestCase
             'room_id' => null,
             'category_id' => null,
             'active' => false,
+            'asset_tag' => null,
+            'brand' => null,
+            'model' => null,
+            'manufacturer' => null,
+            'purchase_date' => null,
+            'warranty_until' => null,
+            'status' => 'operacional',
+            'notes' => null,
         ], $dto->toArray());
     }
 

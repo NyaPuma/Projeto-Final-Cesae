@@ -50,7 +50,7 @@ class CalendarServiceTest extends FeatureTestCase
         $this->assertEquals($scheduled->id, $events->first()['id']);
         $this->assertArrayHasKey('start', $events->first());
         $this->assertArrayHasKey('end', $events->first());
-        $this->assertStringContainsString("/ui/tickets/{$scheduled->id}", $events->first()['url']);
+        $this->assertStringContainsString("/ui/tickets/{$scheduled->id}", $events->first()['extendedProps']['url']);
     }
 
     #[Test]
@@ -62,6 +62,7 @@ class CalendarServiceTest extends FeatureTestCase
         Ticket::factory()->create([
             'user_id' => $admin->id,
             'equipment_id' => $equipment->id,
+            'title' => '',
             'scheduled' => true,
             'scheduled_at' => now()->addDay(),
         ]);
@@ -79,13 +80,14 @@ class CalendarServiceTest extends FeatureTestCase
         Ticket::factory()->create([
             'user_id' => $admin->id,
             'equipment_id' => null,
+            'title' => '',
             'scheduled' => true,
             'scheduled_at' => now()->addDay(),
         ]);
 
         $events = $this->service->getScheduledEventsForUser($admin);
 
-        $this->assertEquals('Avaria Geral', $events->first()['title']);
+        $this->assertEquals('General Fault', $events->first()['title']);
     }
 
     #[Test]
@@ -156,6 +158,7 @@ class CalendarServiceTest extends FeatureTestCase
             'user_id' => $admin->id,
             'scheduled' => true,
             'scheduled_at' => now()->addDays(5),
+            'opened_at' => now()->addDays(10),
         ]);
 
         $from = now()->toDateString();

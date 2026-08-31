@@ -10,6 +10,7 @@ use App\Models\Ticket;
 use App\Services\AnalyticsService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use OpenApi\Attributes as OA;
 
 final class AnalyticsController extends Controller
 {
@@ -20,6 +21,16 @@ final class AnalyticsController extends Controller
     /**
      * Returns the dashboard's analytical data and metrics.
      */
+    #[OA\Get(
+        path: '/analytics/stats',
+        tags: ['Analytics'],
+        summary: 'Estatísticas do dashboard',
+        description: 'Devolve o payload analítico agregado do dashboard.',
+        security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
+        responses: [
+            new OA\Response(response: 200, description: 'Métricas e dados analíticos'),
+        ]
+    )]
     public function stats(Request $request): JsonResponse
     {
         // 1. Authorization via Policy
@@ -33,6 +44,15 @@ final class AnalyticsController extends Controller
     /**
      * Dispatches asynchronous processing for CSV export.
      */
+    #[OA\Get(
+        path: '/analytics/export/csv',
+        tags: ['Analytics'],
+        summary: 'Exportar CSV',
+        security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
+        responses: [
+            new OA\Response(response: 200, description: 'Exportação CSV em processamento'),
+        ]
+    )]
     public function exportCsv(Request $request): JsonResponse
     {
         // 1. Authorization via Policy
@@ -51,6 +71,15 @@ final class AnalyticsController extends Controller
     /**
      * Dispatches asynchronous processing for PDF export.
      */
+    #[OA\Get(
+        path: '/analytics/export/pdf',
+        tags: ['Analytics'],
+        summary: 'Exportar PDF',
+        security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
+        responses: [
+            new OA\Response(response: 200, description: 'Exportação PDF em processamento'),
+        ]
+    )]
     public function exportPdf(Request $request): JsonResponse
     {
         // 1. Authorization via Policy
@@ -69,6 +98,15 @@ final class AnalyticsController extends Controller
     /**
      * Dispatches asynchronous processing for Excel export.
      */
+    #[OA\Get(
+        path: '/analytics/export/excel',
+        tags: ['Analytics'],
+        summary: 'Exportar Excel',
+        security: [['X-Auth-Token' => []], ['BearerAuth' => []]],
+        responses: [
+            new OA\Response(response: 200, description: 'Exportação Excel em processamento'),
+        ]
+    )]
     public function exportExcel(Request $request): JsonResponse
     {
         // 1. Authorization via Policy

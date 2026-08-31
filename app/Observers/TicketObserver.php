@@ -70,9 +70,9 @@ final readonly class TicketObserver
      */
     private function invalidateAnalyticsCache(): void
     {
+        // Matches the key used by AnalyticsDashboardService (locale-suffixed),
+        // as well as the legacy unsuffixed key.
+        Cache::forget('analytics_dashboard_payload:' . app()->getLocale());
         Cache::forget('analytics_dashboard_payload');
-
-        // If using cache tags (e.g. Redis), you can do:
-        // Cache::tags(['tickets', 'analytics'])->flush();
     }
 }

@@ -110,7 +110,7 @@ O projeto foi completamente refatorado seguindo as melhores práticas de desenvo
 - **Modular CSS:** CSS organizado por responsabilidade (components, pages)
 - **ES Modules:** JavaScript modularizado por feature
 - **Design System:** Variáveis CSS e tokens para consistência visual
-- **No Inline Code:** Eliminação completa de CSS/JS inline nas Blade views
+- **No Inline Code:** Eliminação completa de CSS/JS inline nas Blade views (com exceções sancionadas: script anti-FOUC do tema, config i18n `window.SGM_*` e blocos de dados `type="application/json"`)
 - **Accessibility:** ARIA labels, roles, focus management, keyboard navigation
 - **Responsive Design:** Layouts adaptativos para todos os breakpoints
 

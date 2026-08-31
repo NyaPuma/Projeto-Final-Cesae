@@ -71,13 +71,13 @@ class TicketAuthorizationFeatureTest extends TestCase
         $this->assertNotContains($other->id, $ids);
     }
 
-    public function test_technician_index_lists_all_tickets(): void
+    public function test_technician_index_lists_assigned_tickets(): void
     {
         $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
         $common = $this->createUserWithToken(UserRoleEnum::User->value);
 
-        $own = $this->createTicketFor($common);
-        $other = $this->createTicketFor($this->createUserWithToken(UserRoleEnum::User->value));
+        $own = $this->createTicketFor($common, ['assigned_to' => $technician->id]);
+        $other = $this->createTicketFor($this->createUserWithToken(UserRoleEnum::User->value), ['assigned_to' => $technician->id]);
 
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
             ->getJson('/api/tickets');
@@ -115,10 +115,12 @@ class TicketAuthorizationFeatureTest extends TestCase
         $ticketA = $this->createTicketFor($this->createUserWithToken(UserRoleEnum::User->value), [
             'equipment_id' => $equipmentA->id,
             'title' => 'Problema na impressora A',
+            'assigned_to' => $technician->id,
         ]);
         $this->createTicketFor($this->createUserWithToken(UserRoleEnum::User->value), [
             'equipment_id' => $equipmentB->id,
             'title' => 'Problema na impressora B',
+            'assigned_to' => $technician->id,
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)

@@ -47,3 +47,16 @@ Schedule::command('db:backup --clean')
 Schedule::command('audit:partition --months=12')
     ->monthly()
     ->appendOutputTo(storage_path('logs/audit_partitions.log'));
+
+/*
+|--------------------------------------------------------------------------
+| Currency Exchange Rates Scheduling
+|--------------------------------------------------------------------------
+| The currency:update-rates command runs twice a day, keeping the exchange
+| conversions stored in `currency_rates` reasonably fresh for per-user
+| currency preferences.
+*/
+Schedule::command('currency:update-rates')
+    ->twiceDaily()
+    ->withoutOverlapping()
+    ->appendOutputTo(storage_path('logs/currency_rates.log'));

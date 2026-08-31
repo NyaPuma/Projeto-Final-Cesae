@@ -1761,6 +1761,241 @@
                     }
                 ]
             }
+        },
+        "/analytics/stats": {
+            "get": {
+                "tags": [
+                    "Analytics"
+                ],
+                "summary": "Estatísticas do dashboard",
+                "responses": {
+                    "200": {
+                        "description": "Devolve o payload analítico agregado do dashboard."
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Devolve o payload analítico agregado do dashboard."
+            }
+        },
+        "/analytics/export/csv": {
+            "get": {
+                "tags": [
+                    "Analytics"
+                ],
+                "summary": "Exportar CSV",
+                "responses": {
+                    "200": {
+                        "description": "Exportação CSV em processamento"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Exportação CSV em processamento"
+            }
+        },
+        "/analytics/export/pdf": {
+            "get": {
+                "tags": [
+                    "Analytics"
+                ],
+                "summary": "Exportar PDF",
+                "responses": {
+                    "200": {
+                        "description": "Exportação PDF em processamento"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Exportação PDF em processamento"
+            }
+        },
+        "/analytics/export/excel": {
+            "get": {
+                "tags": [
+                    "Analytics"
+                ],
+                "summary": "Exportar Excel",
+                "responses": {
+                    "200": {
+                        "description": "Exportação Excel em processamento"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Exportação Excel em processamento"
+            }
+        },
+        "/admin/users": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Listar utilizadores",
+                "responses": {
+                    "200": {
+                        "description": "Listar utilizadores"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/admin/equipment": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Listar equipamentos",
+                "responses": {
+                    "200": {
+                        "description": "Listar equipamentos"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/admin/rooms": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Listar salas",
+                "responses": {
+                    "200": {
+                        "description": "Listar salas"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/admin/preventive": {
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Criar manutenção preventiva",
+                "responses": {
+                    "200": {
+                        "description": "Criar manutenção preventiva"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/admin/equipment/{id}": {
+            "patch": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Atualizar equipamento",
+                "responses": {
+                    "200": {
+                        "description": "Atualizar equipamento"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/admin/rooms/{id}": {
+            "patch": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Atualizar sala",
+                "responses": {
+                    "200": {
+                        "description": "Atualizar sala"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/admin/rooms/{id}/inactive": {
+            "patch": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Inativar sala",
+                "responses": {
+                    "200": {
+                        "description": "Inativar sala"
+                    }
+                },
+                "security": [
+                    {
+                        "X-Auth-Token": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {

@@ -71,7 +71,8 @@ trait Auditable
         } elseif ($event === 'deleted') {
             $old = $model->getOriginal();
         } else {
-            $changes = $model->getChanges();
+            // Fall back to the dirty attributes if the change set is empty.
+            $changes = $model->getChanges() ?: $model->getDirty();
             if (! empty($changes)) {
                 $oldVals = [];
                 $newVals = [];

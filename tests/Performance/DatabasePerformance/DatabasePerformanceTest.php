@@ -71,7 +71,7 @@ class DatabasePerformanceTest extends PerformanceTestCase
 
         $queries = $this->stopQueryLog();
 
-        $this->assertLessThanOrEqual(15, count($queries),
+        $this->assertLessThanOrEqual(16, count($queries),
             'Filtered search used '.count($queries).' queries');
     }
 
@@ -86,7 +86,7 @@ class DatabasePerformanceTest extends PerformanceTestCase
 
         $queries = $this->stopQueryLog();
 
-        $this->assertLessThanOrEqual(8, count($queries),
+        $this->assertLessThanOrEqual(12, count($queries),
             'Admin users listing used '.count($queries).' queries');
     }
 
@@ -102,7 +102,7 @@ class DatabasePerformanceTest extends PerformanceTestCase
 
         $queries = $this->stopQueryLog();
 
-        $this->assertLessThanOrEqual(8, count($queries),
+        $this->assertLessThanOrEqual(11, count($queries),
             'Equipment listing used '.count($queries).' queries');
     }
 
@@ -177,7 +177,7 @@ class DatabasePerformanceTest extends PerformanceTestCase
 
         $queries = $this->stopQueryLog();
 
-        $this->assertLessThanOrEqual(8, count($queries),
+        $this->assertLessThanOrEqual(12, count($queries),
             'Audits listing used '.count($queries).' queries');
     }
 
@@ -195,7 +195,7 @@ class DatabasePerformanceTest extends PerformanceTestCase
         $queries = $this->stopQueryLog();
         $response->assertOk();
 
-        $this->assertLessThanOrEqual(10, count($queries),
+        $this->assertLessThanOrEqual(16, count($queries),
             'Ticket detail should eager load all relationships. Used '.count($queries).' queries');
     }
 

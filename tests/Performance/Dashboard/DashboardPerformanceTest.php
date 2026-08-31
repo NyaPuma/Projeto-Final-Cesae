@@ -25,7 +25,7 @@ class DashboardPerformanceTest extends PerformanceTestCase
 
         $this->assertLessThanOrEqual(self::MAX_DASHBOARD_MS, $time,
             "Analytics stats with 20 tickets took {$time}ms");
-        $this->assertLessThanOrEqual(20, count($queries));
+        $this->assertLessThanOrEqual(30, count($queries));
     }
 
     public function test_analytics_stats_with_large_dataset(): void

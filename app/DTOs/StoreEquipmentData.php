@@ -57,6 +57,11 @@ final readonly class StoreEquipmentData
     {
         $payload = $data instanceof FormRequest ? $data->validated() : $data;
 
+        $status = $payload['status'] ?? 'operacional';
+        if (! in_array($status, self::STATUSES, true)) {
+            $status = 'operacional';
+        }
+
         return new self(
             name: trim((string) ($payload['name'] ?? '')),
             serial: strtoupper(trim((string) ($payload['serial'] ?? ''))),
@@ -69,9 +74,7 @@ final readonly class StoreEquipmentData
             manufacturer: self::parseNullableString($payload['manufacturer'] ?? null),
             purchaseDate: self::parseNullableString($payload['purchase_date'] ?? null),
             warrantyUntil: self::parseNullableString($payload['warranty_until'] ?? null),
-            status: in_array($payload['status'] ?? 'operacional', self::STATUSES, true)
-                ? $payload['status']
-                : 'operacional',
+            status: $status,
             notes: self::parseNullableString($payload['notes'] ?? null),
         );
     }

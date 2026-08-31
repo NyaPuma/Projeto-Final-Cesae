@@ -23,7 +23,7 @@ final readonly class UpdateEquipmentAction
                 'manufacturer' => $data->manufacturer ?? $equipment->manufacturer,
                 'purchase_date' => $data->purchaseDate ?? $equipment->purchase_date,
                 'warranty_until' => $data->warrantyUntil ?? $equipment->warranty_until,
-                'status' => $data->status ?? $equipment->status,
+                'status' => $data->status ?? $equipment->status ?? 'operacional',
                 'notes' => $data->notes ?? $equipment->notes,
             ]);
 

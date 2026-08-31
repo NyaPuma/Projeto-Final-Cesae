@@ -23,6 +23,13 @@
     @include('ui.partials.locale-config')
 
     @stack('styles')
+    <script>
+        (function () {
+            var saved = localStorage.getItem('theme');
+            var dark = saved ? saved === 'dark' : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            document.documentElement.classList.toggle('dark', dark);
+        })();
+    </script>
 </head>
 
 <body data-page="@yield('page_key')"

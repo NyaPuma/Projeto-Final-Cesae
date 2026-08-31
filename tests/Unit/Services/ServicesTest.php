@@ -202,7 +202,7 @@ class ServicesTest extends FeatureTestCase
 
         $this->createTicket(['assigned_to' => $tech->id, 'scheduled_at' => now()->addDay()]);
         $this->createTicket(['assigned_to' => $otherTech->id, 'scheduled_at' => now()->addDay()]);
-        $this->createTicket(['assigned_to' => $tech->id, 'scheduled_at' => null]);
+        $this->createTicket(['assigned_to' => $tech->id, 'scheduled_at' => null, 'opened_at' => null, 'resolved_at' => null]);
 
         $admin = $this->createAdmin();
         $this->assertCount(2, $this->calendar->getScheduledEventsForUser($admin));

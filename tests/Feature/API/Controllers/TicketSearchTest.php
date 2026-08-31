@@ -84,9 +84,9 @@ class TicketSearchTest extends TestCase
         $response = $this->withHeader('X-Auth-Token', $technician->api_token)
             ->getJson('/api/tickets/search?date_from='.now()->toDateString().'&date_to='.now()->subDays(1)->toDateString());
 
-        // FIXED: The search() method now validates the date range and returns 422
+        // TicketFilters validates the date range and returns 422
         $response->assertStatus(422);
-        $response->assertJson(['message' => 'A data inicial (dateFrom) não pode ser posterior à data final (dateTo).']);
+        $response->assertJson(['message' => 'dateFrom cannot be later than dateTo.']);
     }
 
     public function test_ticket_search_validates_priority_enum(): void

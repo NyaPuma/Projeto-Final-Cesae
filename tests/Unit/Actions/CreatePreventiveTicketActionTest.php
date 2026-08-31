@@ -88,7 +88,7 @@ class CreatePreventiveTicketActionTest extends DatabaseTestCase
 
         $this->assertInstanceOf(Ticket::class, $result);
         $this->assertNull($result->assigned_to);
-        $this->assertEquals('Manutenção preventiva agendada.', $result->description);
+        $this->assertEquals('Scheduled preventive maintenance.', $result->description);
     }
 
     #[Test]
@@ -121,7 +121,7 @@ class CreatePreventiveTicketActionTest extends DatabaseTestCase
             now()->addDays(7)->toDateTimeString()
         );
 
-        $this->assertEquals('Manutenção preventiva agendada.', $result->description);
+        $this->assertEquals('Scheduled preventive maintenance.', $result->description);
     }
 
     #[Test]

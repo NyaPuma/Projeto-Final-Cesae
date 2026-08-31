@@ -15,6 +15,67 @@ use Illuminate\Http\Request;
 final class LocaleService
 {
     /**
+     * Fallback currency symbols by ISO 4217 code, used when `intl` is absent
+     * or when a plain symbol is required outside a full currency formatting.
+     */
+    private const CURRENCY_SYMBOLS = [
+        'EUR' => '€',
+        'GBP' => '£',
+        'USD' => '$',
+        'BRL' => 'R$',
+        'JPY' => '¥',
+        'CNY' => '¥',
+        'PLN' => 'zł',
+        'ARS' => '$',
+        'CAD' => 'CA$',
+        'MXN' => 'MX$',
+        'INR' => '₹',
+        'AED' => 'AED',
+        'KRW' => '₩',
+        'ALL' => 'L',
+        'AZN' => '₼',
+        'BAM' => 'KM',
+        'BGN' => 'лв',
+        'BYN' => 'Br',
+        'CHF' => 'Fr',
+        'CZK' => 'Kč',
+        'DKK' => 'kr',
+        'GEL' => '₾',
+        'HUF' => 'Ft',
+        'ISK' => 'kr',
+        'MDL' => 'L',
+        'MKD' => 'ден',
+        'RON' => 'lei',
+        'RSD' => 'дин',
+        'RUB' => '₽',
+        'SEK' => 'kr',
+        'TRY' => '₺',
+        'UAH' => '₴',
+        'AMD' => '֏',
+        'THB' => '฿',
+        'VND' => '₫',
+        'IDR' => 'Rp',
+        'HKD' => 'HK$',
+        'TWD' => 'NT$',
+        'SGD' => 'S$',
+        'CLP' => 'CLP$',
+        'COP' => 'COL$',
+        'SAR' => 'SAR',
+        'EGP' => 'E£',
+        'NOK' => 'kr',
+        'AUD' => 'A$',
+    ];
+
+    /**
+     * Returns the plain symbol for an ISO 4217 currency code, or the code
+     * itself when no symbol is known.
+     */
+    public static function currencySymbol(string $currency): string
+    {
+        return self::CURRENCY_SYMBOLS[strtoupper($currency)] ?? strtoupper($currency);
+    }
+
+    /**
      * Lista de idiomas suportados.
      *
      * @return array<string, array<string, mixed>>
@@ -472,55 +533,7 @@ final class LocaleService
         }
 
         $formattedNum = self::formatNumber($value, 2, $targetLocale);
-        $symbols = [
-            'EUR' => '€',
-            'GBP' => '£',
-            'USD' => '$',
-            'BRL' => 'R$',
-            'JPY' => '¥',
-            'CNY' => '¥',
-            'PLN' => 'zł',
-            'ARS' => '$',
-            'CAD' => 'CA$',
-            'MXN' => 'MX$',
-            'INR' => '₹',
-            'AED' => 'AED',
-            'KRW' => '₩',
-            'ALL' => 'L',
-            'AZN' => '₼',
-            'BAM' => 'KM',
-            'BGN' => 'лв',
-            'BYN' => 'Br',
-            'CHF' => 'Fr',
-            'CZK' => 'Kč',
-            'DKK' => 'kr',
-            'GEL' => '₾',
-            'HUF' => 'Ft',
-            'ISK' => 'kr',
-            'MDL' => 'L',
-            'MKD' => 'ден',
-            'RON' => 'lei',
-            'RSD' => 'дин',
-            'RUB' => '₽',
-            'SEK' => 'kr',
-            'TRY' => '₺',
-            'UAH' => '₴',
-            'AMD' => '֏',
-            'THB' => '฿',
-            'VND' => '₫',
-            'IDR' => 'Rp',
-            'HKD' => 'HK$',
-            'TWD' => 'NT$',
-            'SGD' => 'S$',
-            'CLP' => 'CLP$',
-            'COP' => 'COL$',
-            'SAR' => 'SAR',
-            'EGP' => 'E£',
-            'NOK' => 'kr',
-            'AUD' => 'A$',
-        ];
-
-        $symbol = $symbols[$currencyCode] ?? $currencyCode;
+        $symbol = self::currencySymbol($currencyCode);
 
         if (in_array($targetLocale, ['en-US', 'en-GB'], true)) {
             return "{$symbol}{$formattedNum}";

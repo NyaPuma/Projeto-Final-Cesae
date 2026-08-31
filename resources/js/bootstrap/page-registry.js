@@ -62,6 +62,12 @@ const pageRegistry = {
     'stock-categories': initStockCategories,
     'stock-plans': initStockPlans,
     docs: initSwagger,
+    'equipment-detail': initEquipmentsManagement,
+    'equipment-qr': initEquipmentsManagement,
+    'room-detail': initRoomsManagement,
+    'stock-part-detail': initStockParts,
+    preferences: () => {},
+    error: () => {},
 };
 
 export function bootPageModules(root = document) {

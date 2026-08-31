@@ -35,6 +35,13 @@
     @include('ui.partials.theme-meta')
 
     @include('ui.partials.locale-config')
+    <script>
+        (function () {
+            var saved = localStorage.getItem('theme');
+            var dark = saved ? saved === 'dark' : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            document.documentElement.classList.toggle('dark', dark);
+        })();
+    </script>
 </head>
 <body {{ $attributes->merge(['class' => 'min-h-screen overflow-x-hidden bg-[var(--bg)] text-[var(--text)] antialiased' . (\App\Services\LocaleService::isRtl(app()->getLocale()) ? ' rtl' : '')]) }}>
     <div class="locale-trigger-wrapper fixed right-4 top-4 z-40">

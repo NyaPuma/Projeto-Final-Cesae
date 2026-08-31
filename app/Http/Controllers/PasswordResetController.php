@@ -24,7 +24,9 @@ final class PasswordResetController extends Controller
         $email = $request->input('email');
         $token = $this->passwordResetService->createResetToken($email);
 
-        $user = User::where('email', $email)->first();
+        // Look the user up with the same normalized email used for the token
+        // so case differences (e.g. "RESET@example.com") still resolve.
+        $user = User::where('email', strtolower(trim($email)))->first();
 
         if ($user) {
             Mail::to($user)->send(new PasswordResetMail($token));

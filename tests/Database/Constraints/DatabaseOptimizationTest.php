@@ -164,7 +164,10 @@ class DatabaseOptimizationTest extends TestCase
         $this->withHeader('X-Auth-Token', $admin->api_token)
             ->getJson('/api/analytics/stats')->assertOk();
 
-        $this->assertTrue(Cache::has('analytics_dashboard_payload'), 'Analytics payload should be cached');
+        $this->assertTrue(
+            Cache::has('analytics_dashboard_payload:' . app()->getLocale()),
+            'Analytics payload should be cached'
+        );
     }
 
     protected function seedLookupData(): void
