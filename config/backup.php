@@ -41,4 +41,22 @@ return [
 
     ],
 
+    'storage' => [
+
+        'enabled' => (bool) env('BACKUP_STORAGE_ENABLED', true),
+
+        'path' => storage_path('app'),
+
+    ],
+
+    'offsite' => [
+
+        'enabled' => (bool) env('BACKUP_OFFSITE_ENABLED', false),
+
+        'disk' => env('BACKUP_OFFSITE_DISK', 's3'),
+
+        'path' => env('BACKUP_OFFSITE_PATH', 'application-backups'),
+
+    ],
+
 ];

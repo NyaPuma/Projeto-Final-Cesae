@@ -21,6 +21,11 @@ use Illuminate\Support\Facades\Http;
  */
 final class CurrencyRateService
 {
+    public function __construct(
+        private readonly ?CircuitBreaker $circuitBreaker = null,
+        private readonly ?FeatureFlagService $featureFlags = null,
+    ) {}
+
     /**
      * Base currency used by the provider (Frankfurter default is EUR).
      */
@@ -34,7 +39,7 @@ final class CurrencyRateService
     /**
      * HTTP timeout in seconds.
      */
-    private const TIMEOUT = 10;
+    private const TIMEOUT = 5;
 
     /**
      * Fetches the latest rates from the provider and persists each pair.
@@ -160,32 +165,43 @@ final class CurrencyRateService
      */
     private function fetchRatesFromProvider(): array
     {
+        $featureFlags = $this->featureFlags ?? new FeatureFlagService;
+
+        if (! $featureFlags->enabled('external_currency_rates')) {
+            return [];
+        }
+
         try {
-            $response = Http::timeout(self::TIMEOUT)
-                ->acceptJson()
-                ->get(self::ENDPOINT, [
-                    'from' => self::BASE_CURRENCY,
-                ]);
+            $breaker = $this->circuitBreaker ?? new CircuitBreaker;
 
-            if (! $response->successful()) {
-                return [];
-            }
+            return $breaker->run('frankfurter', function (): array {
+                $response = Http::timeout(self::TIMEOUT)
+                    ->retry(3, 100, throw: false)
+                    ->acceptJson()
+                    ->get(self::ENDPOINT, [
+                        'from' => self::BASE_CURRENCY,
+                    ]);
 
-            $payload = $response->json();
-
-            if (! is_array($payload) || ! isset($payload['rates']) || ! is_array($payload['rates'])) {
-                return [];
-            }
-
-            $rates = [];
-
-            foreach ($payload['rates'] as $target => $rate) {
-                if (is_numeric($rate)) {
-                    $rates[strtoupper((string) $target)] = (float) $rate;
+                if (! $response->successful()) {
+                    throw new \RuntimeException('Currency provider returned an unsuccessful response.');
                 }
-            }
 
-            return $rates;
+                $payload = $response->json();
+
+                if (! is_array($payload) || ! isset($payload['rates']) || ! is_array($payload['rates'])) {
+                    throw new \RuntimeException('Currency provider returned an invalid payload.');
+                }
+
+                $rates = [];
+
+                foreach ($payload['rates'] as $target => $rate) {
+                    if (is_numeric($rate)) {
+                        $rates[strtoupper((string) $target)] = (float) $rate;
+                    }
+                }
+
+                return $rates;
+            }, []);
         } catch (\Throwable $e) {
             return [];
         }

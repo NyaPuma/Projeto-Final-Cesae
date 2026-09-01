@@ -131,7 +131,7 @@ final class StockMovementController extends Controller
                 'errors' => ['quantity' => [$e->getMessage()]],
             ], 422);
         } catch (Throwable $e) {
-            Log::error('Erro ao registar movimento de stock', [
+            Log::error('Failed to record stock movement', [
                 'error' => $e->getMessage(),
             ]);
 

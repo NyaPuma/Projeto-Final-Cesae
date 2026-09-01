@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Middleware\CustomAuthMiddleware;
 use App\Http\Middleware\RateLimitMiddleware;
+use App\Http\Middleware\RequestContextMiddleware;
 use App\Http\Middleware\RoleMiddleware;
 use App\Http\Middleware\SecurityHeaders;
 use App\Http\Middleware\SetLocaleMiddleware;
@@ -23,6 +24,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->append(RequestContextMiddleware::class);
+
         $middleware->web(append: [
             SetLocaleMiddleware::class,
             SetUserPreferencesMiddleware::class,

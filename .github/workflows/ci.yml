@@ -5,6 +5,7 @@ on:
     branches: [main, develop]
   pull_request:
     branches: [main, develop]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -14,79 +15,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lint:
-    name: Code Style
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: ./.github/actions/setup-php-composer
-
-      - name: Validate composer.json
-        run: composer validate --strict
-
-      - name: Check code style with Laravel Pint
-        run: vendor/bin/pint --test
-
-  build:
-    name: Build Assets
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: ./.github/actions/setup-php-composer
-        with:
-          install: false
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-
-      - name: Install Node dependencies
-        run: npm ci
-
-      - name: Build Vite assets
-        run: npm run build
-
-  test:
-    name: Tests
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: ./.github/actions/setup-php-composer
-
-      - name: Prepare environment
-        run: cp .env.example .env && php artisan key:generate
-
-      - name: Run PHPUnit tests
-        run: php artisan test
-
-      - name: Verify scheduler registration
-        run: php artisan schedule:list
-
-      - name: Verify database queue driver is healthy
-        run: |
-          DB_CONNECTION=sqlite DB_DATABASE=/tmp/ci-queue.sqlite php artisan migrate --force
-          DB_CONNECTION=sqlite DB_DATABASE=/tmp/ci-queue.sqlite php artisan queue:work --once
-
-  static-analysis:
-    name: Static Analysis
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: ./.github/actions/setup-php-composer
-
-      - name: Run PHPStan
-        run: vendor/bin/phpstan analyse --memory-limit=1G
+  quality-gates:
+    name: Laravel Quality Gates
+    uses: ./.github/workflows/tests.yml
+    permissions:
+      contents: read

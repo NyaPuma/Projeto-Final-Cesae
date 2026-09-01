@@ -70,10 +70,10 @@ services:
     restart: always
 
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: laravel
-      MYSQL_USER: laravel
-      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?MYSQL_ROOT_PASSWORD must be set}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-laravel}
+      MYSQL_USER: ${MYSQL_USER:-laravel}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?MYSQL_PASSWORD must be set}
 
     ports:
       - "3306:3306"
@@ -82,7 +82,7 @@ services:
       - mysql-data:/var/lib/mysql
 
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-psecret"]
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u$${MYSQL_USER:-laravel} -p$${MYSQL_PASSWORD}"]
       interval: 10s
       timeout: 5s
       retries: 5

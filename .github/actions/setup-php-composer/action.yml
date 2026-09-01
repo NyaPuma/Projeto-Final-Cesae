@@ -4,13 +4,16 @@ description: Reusable PHP setup with Composer cache and install
 inputs:
   php-version:
     description: PHP version to install
-    default: '8.2'
+    default: "8.2"
   extensions:
     description: PHP extensions to install
-    default: 'mbstring, pdo, sqlite, pdo_sqlite, bcmath, intl, gd'
+    default: "mbstring, pdo, sqlite, pdo_sqlite, bcmath, intl, gd, zip"
   install:
     description: Whether to run composer install
-    default: 'true'
+    default: "true"
+  coverage:
+    description: PHP coverage driver to install
+    default: none
 
 runs:
   using: composite
@@ -20,12 +23,14 @@ runs:
       with:
         php-version: ${{ inputs.php-version }}
         extensions: ${{ inputs.extensions }}
-        coverage: none
+        coverage: ${{ inputs.coverage }}
 
     - name: Cache Composer packages
       uses: actions/cache@v4
       with:
-        path: vendor
+        path: |
+          ~/.composer/cache
+          vendor
         key: composer-${{ runner.os }}-php${{ inputs.php-version }}-${{ hashFiles('composer.lock', 'composer.json') }}
         restore-keys: |
           composer-${{ runner.os }}-php${{ inputs.php-version }}-

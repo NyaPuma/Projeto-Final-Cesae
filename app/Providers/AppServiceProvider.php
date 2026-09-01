@@ -45,10 +45,14 @@ use App\Services\NotificationService;
 use App\Services\SystemSettingsService;
 use App\Services\TicketStatusService;
 use Illuminate\Database\Events\QueryExecuted;
+use Illuminate\Queue\Events\JobFailed;
+use Illuminate\Queue\Events\JobProcessed;
+use Illuminate\Queue\Events\JobProcessing;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\ServiceProvider;
 
 final class AppServiceProvider extends ServiceProvider
@@ -80,6 +84,7 @@ final class AppServiceProvider extends ServiceProvider
         $this->registerPolicies();
         $this->registerObservers();
         $this->registerSlowQueryListener();
+        $this->registerQueueObservability();
         $this->registerFormattingDirectives();
 
         // Apply overrides saved in the Settings → Configuration page
@@ -144,16 +149,65 @@ final class AppServiceProvider extends ServiceProvider
             return;
         }
 
-        $threshold = (float) config('database.connections.mysql.slow_query_threshold', 2);
+        $thresholdMs = (float) config('database.connections.mysql.slow_query_threshold_ms', 100);
 
-        DB::listen(function (QueryExecuted $query) use ($threshold): void {
-            $timeInSeconds = $query->time / 1000;
-
-            if ($timeInSeconds >= $threshold) {
-                Log::warning('Slow query detected', [
+        DB::listen(function (QueryExecuted $query) use ($thresholdMs): void {
+            if ($query->time >= $thresholdMs) {
+                Log::warning('Slow database query detected', [
+                    'metric' => 'database.query.duration_ms',
                     'sql' => $query->sql,
                     'bindings' => $query->bindings,
-                    'time' => round($timeInSeconds, 3).'s',
+                    'duration_ms' => round($query->time, 2),
+                ]);
+            }
+        });
+    }
+
+    /**
+     * Registers queue timing and failure telemetry.
+     */
+    private function registerQueueObservability(): void
+    {
+        $startedAt = [];
+
+        Queue::before(function (JobProcessing $event) use (&$startedAt): void {
+            $startedAt[(string) $event->job->getJobId()] = microtime(true);
+        });
+
+        Queue::after(function (JobProcessed $event) use (&$startedAt): void {
+            $jobId = (string) $event->job->getJobId();
+            $started = $startedAt[$jobId] ?? null;
+            unset($startedAt[$jobId]);
+
+            if (! is_float($started)) {
+                return;
+            }
+
+            $durationMs = round((microtime(true) - $started) * 1000, 2);
+
+            if ($durationMs >= (float) config('observability.queue_slow_job_threshold_ms', 1000)) {
+                Log::warning('Slow queue job detected', [
+                    'metric' => 'queue.job.duration_ms',
+                    'job' => $event->job->resolveName(),
+                    'job_id' => $jobId,
+                    'duration_ms' => $durationMs,
+                ]);
+            }
+        });
+
+        Queue::failing(function (JobFailed $event): void {
+            Log::error('Queue job failed', [
+                'metric' => 'queue.job.failure',
+                'job' => $event->job->resolveName(),
+                'job_id' => (string) $event->job->getJobId(),
+                'exception' => $event->exception->getMessage(),
+            ]);
+
+            try {
+                \Sentry\captureException($event->exception);
+            } catch (\Throwable $reportingException) {
+                Log::warning('Sentry queue failure reporting failed', [
+                    'exception' => $reportingException->getMessage(),
                 ]);
             }
         });

@@ -1,0 +1,1278 @@
+openapi: 3.0.0
+info:
+  title: 'Fault Management API'
+  description: 'OpenAPI documentation for the ticket, equipment, audit, and reporting management application.'
+  contact:
+    name: 'Maintenance and IT Department'
+    email: suporte@manutencao.local
+  version: 1.0.0
+servers:
+  -
+    url: /api
+    description: 'Main API Server'
+paths:
+  /analytics/stats:
+    get:
+      tags:
+        - Analytics
+      summary: 'Dashboard statistics'
+      description: 'Returns the aggregated analytical payload for the dashboard.'
+      operationId: da050905766d97acc67747e316888442
+      responses:
+        200:
+          description: 'Metrics and analytical data'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  /analytics/export/csv:
+    get:
+      tags:
+        - Analytics
+      summary: 'Export CSV'
+      description: 'Dispatches asynchronous processing for CSV export.'
+      operationId: dcecb6ea9412e3415e95274597687a02
+      responses:
+        200:
+          description: 'CSV export in progress'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  /analytics/export/pdf:
+    get:
+      tags:
+        - Analytics
+      summary: 'Export PDF'
+      description: 'Dispatches asynchronous processing for PDF export.'
+      operationId: e811405e32f1aa3a802356b7c46b474f
+      responses:
+        200:
+          description: 'PDF export in progress'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  /analytics/export/excel:
+    get:
+      tags:
+        - Analytics
+      summary: 'Export Excel'
+      description: 'Dispatches asynchronous processing for Excel export.'
+      operationId: 73d76b642b24a8e91eeaeada37e024e9
+      responses:
+        200:
+          description: 'Excel export in progress'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  /admin/audits:
+    get:
+      tags:
+        - Admin
+      summary: 'List audits'
+      description: "Lists the system's audit records.\nProtected globally via middleware and verified via Policy."
+      operationId: 395c570d8f9419ab32f3da4f449e7613
+      responses:
+        200:
+          description: 'Paginated list of audit records'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  /admin/maintenance-plans:
+    get:
+      tags:
+        - 'Admin Stock'
+      summary: 'List preventive maintenance plans'
+      description: 'Paginated listing of preventive maintenance plans.'
+      operationId: 92c08905490263cb0bf7b6112ef916b4
+      parameters:
+        -
+          name: equipment_id
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 'Paginated list of plans'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+    post:
+      tags:
+        - 'Admin Stock'
+      summary: 'Create preventive maintenance plan'
+      description: 'Creates a new preventive maintenance plan.'
+      operationId: 11cc569d09098407103fd3af3716ce16
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - equipment_id
+                - name
+                - interval_type
+                - interval_value
+              properties:
+                equipment_id:
+                  type: integer
+                name:
+                  type: string
+                interval_type:
+                  type: string
+                  enum:
+                    - days
+                    - usage_hours
+                    - cycles
+                interval_value:
+                  type: integer
+                description:
+                  type: string
+                active:
+                  type: boolean
+                parts:
+                  description: 'Plan parts'
+                  type: array
+                  items:
+                    properties:
+                      part_id:
+                        type: integer
+                      expected_quantity:
+                        type: integer
+                    type: object
+              type: object
+      responses:
+        201:
+          description: 'Plan created successfully'
+        422:
+          description: 'Invalid data'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  '/admin/maintenance-plans/{plan}':
+    get:
+      tags:
+        - 'Admin Stock'
+      summary: 'Maintenance plan detail'
+      description: 'Plan detail with associated parts.'
+      operationId: 5ea3de123ae9cfed4163d642da8f29da
+      parameters:
+        -
+          name: plan
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 'Plan with associated equipment and parts'
+        404:
+          description: 'Plan not found'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+    delete:
+      tags:
+        - 'Admin Stock'
+      summary: 'Delete preventive maintenance plan'
+      description: 'Soft-deletes a plan.'
+      operationId: 652e97b4be18939f14cb6698e3208800
+      parameters:
+        -
+          name: plan
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 'Plan deleted successfully'
+        404:
+          description: 'Plan not found'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+    patch:
+      tags:
+        - 'Admin Stock'
+      summary: 'Update preventive maintenance plan'
+      description: 'Updates a preventive maintenance plan.'
+      operationId: 562875b8a27c3344cce4696acd13464a
+      parameters:
+        -
+          name: plan
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - equipment_id
+                - name
+                - interval_type
+                - interval_value
+              properties:
+                equipment_id:
+                  type: integer
+                name:
+                  type: string
+                interval_type:
+                  type: string
+                  enum:
+                    - days
+                    - usage_hours
+                    - cycles
+                interval_value:
+                  type: integer
+                description:
+                  type: string
+                active:
+                  type: boolean
+                parts:
+                  type: array
+                  items:
+                    properties:
+                      part_id:
+                        type: integer
+                      expected_quantity:
+                        type: integer
+                    type: object
+              type: object
+      responses:
+        200:
+          description: 'Plan updated successfully'
+        422:
+          description: 'Invalid data'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  /notifications:
+    get:
+      tags:
+        - Notifications
+      summary: 'List user notifications'
+      description: "Lists the authenticated user's notifications in a paginated manner."
+      operationId: 0f031f66cd8c52bf73e89fb2d050ad83
+      responses:
+        200:
+          description: 'Paginated list of notifications'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  '/notifications/{id}':
+    patch:
+      tags:
+        - Notifications
+      summary: 'Mark notification as read'
+      description: 'Marks a specific notification as read.'
+      operationId: 58fb6750c2d309a0bc5028c22b02f9f8
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 'Notification updated'
+        404:
+          description: 'Notification not found'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  /notifications/test-email:
+    post:
+      tags:
+        - Notifications
+      summary: 'Send test email via Mailgun'
+      description: 'Dispatches a test email in the background via queue.'
+      operationId: c9f9ddcef1df2e8861c2e75c356531d1
+      responses:
+        200:
+          description: 'Test email sent'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  /admin/part-categories:
+    get:
+      tags:
+        - 'Admin Stock'
+      summary: 'List part categories'
+      description: 'Lists all part categories.'
+      operationId: 0d2545e2e823e4732b5cf439b635e5f7
+      responses:
+        200:
+          description: 'List of part categories'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+    post:
+      tags:
+        - 'Admin Stock'
+      summary: 'Create part category'
+      description: 'Creates a new category.'
+      operationId: 92c49d6e7a8ea3e681478704fce018f6
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                active:
+                  type: boolean
+              type: object
+      responses:
+        201:
+          description: 'Category created successfully'
+        422:
+          description: 'Invalid data'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  '/admin/part-categories/{category}':
+    delete:
+      tags:
+        - 'Admin Stock'
+      summary: 'Deactivate part category'
+      description: 'Soft-deactivates a category.'
+      operationId: 5acfd253e24d3358d14917981228f2ee
+      parameters:
+        -
+          name: category
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 'Category deactivated successfully'
+        404:
+          description: 'Category not found'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+    patch:
+      tags:
+        - 'Admin Stock'
+      summary: 'Update part category'
+      description: 'Updates a category.'
+      operationId: 20224dfcc54d628fb759407f9c142f9e
+      parameters:
+        -
+          name: category
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                active:
+                  type: boolean
+              type: object
+      responses:
+        200:
+          description: 'Category updated successfully'
+        422:
+          description: 'Invalid data'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  /stock/parts:
+    get:
+      tags:
+        - Stock
+      summary: 'List parts'
+      description: 'Paginated list of catalogue parts, filterable by search, status, and category.'
+      operationId: 2680fb30daccf7e28242bc0711455363
+      parameters:
+        -
+          name: q
+          in: query
+          description: 'Search by SKU or name'
+          required: false
+          schema:
+            type: string
+        -
+          name: status
+          in: query
+          description: 'Stock status (low_stock, out_of_stock, healthy)'
+          required: false
+          schema:
+            type: string
+        -
+          name: category_id
+          in: query
+          required: false
+          schema:
+            type: integer
+        -
+          name: per_page
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 'Paginated list of parts'
+        401:
+          description: 'Authentication required'
+        403:
+          description: 'Access forbidden for the profile'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  '/stock/parts/{part}':
+    get:
+      tags:
+        - Stock
+      summary: 'Part detail'
+      description: 'Part detail view.'
+      operationId: 6fa257f57902e6319bec35c56f239dd1
+      parameters:
+        -
+          name: part
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 'Part with category, VAT rate, and suppliers'
+        404:
+          description: 'Part not found'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  /admin/parts:
+    post:
+      tags:
+        - 'Admin Stock'
+      summary: 'Create part'
+      description: 'Creates a part and records the initial stock as an inward movement.'
+      operationId: 47e21836c26b2148506390d0846c36d2
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - sku
+                - name
+                - unit_of_measure
+                - cost_price
+                - current_stock
+                - min_stock
+              properties:
+                sku:
+                  description: 'Unique code (SKU)'
+                  type: string
+                name:
+                  type: string
+                description:
+                  type: string
+                brand:
+                  type: string
+                manufacturer_ref:
+                  type: string
+                part_category_id:
+                  type: integer
+                unit_of_measure:
+                  type: string
+                  enum:
+                    - unit
+                    - meter
+                    - liter
+                    - kg
+                    - pair
+                    - set
+                    - roll
+                    - other
+                cost_price:
+                  type: number
+                tax_rate_id:
+                  type: integer
+                sale_price:
+                  type: number
+                current_stock:
+                  type: integer
+                min_stock:
+                  type: integer
+                max_stock:
+                  type: integer
+                location:
+                  type: string
+                active:
+                  type: boolean
+                technical_notes:
+                  type: string
+              type: object
+      responses:
+        201:
+          description: 'Part created successfully'
+        422:
+          description: 'Invalid data'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  '/admin/parts/{part}':
+    delete:
+      tags:
+        - 'Admin Stock'
+      summary: 'Delete part'
+      description: 'Soft-deletes a part.'
+      operationId: 28c6118a14b976200d9bf3130dec92a1
+      parameters:
+        -
+          name: part
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 'Part deleted successfully'
+        404:
+          description: 'Part not found'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+    patch:
+      tags:
+        - 'Admin Stock'
+      summary: 'Update part'
+      description: 'Updates a part.'
+      operationId: 02170285e84d2f9b1809291259e7e6b6
+      parameters:
+        -
+          name: part
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - sku
+                - name
+                - unit_of_measure
+                - cost_price
+                - min_stock
+              properties:
+                sku:
+                  type: string
+                name:
+                  type: string
+                description:
+                  type: string
+                brand:
+                  type: string
+                manufacturer_ref:
+                  type: string
+                part_category_id:
+                  type: integer
+                unit_of_measure:
+                  type: string
+                  enum:
+                    - unit
+                    - meter
+                    - liter
+                    - kg
+                    - pair
+                    - set
+                    - roll
+                    - other
+                cost_price:
+                  type: number
+                tax_rate_id:
+                  type: integer
+                sale_price:
+                  type: number
+                min_stock:
+                  type: integer
+                max_stock:
+                  type: integer
+                location:
+                  type: string
+                active:
+                  type: boolean
+                technical_notes:
+                  type: string
+              type: object
+      responses:
+        200:
+          description: 'Part updated successfully'
+        422:
+          description: 'Invalid data'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  /stock/dashboard/summary:
+    get:
+      tags:
+        - Stock
+      summary: 'Stock dashboard summary'
+      description: 'Total stock value, total parts, count of low-stock parts, and list of alerts.'
+      operationId: a2866a7f4f54fc164a01e5daa9ea3d90
+      responses:
+        200:
+          description: 'Stock metrics summary'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  /stock/dashboard/top-consumed:
+    get:
+      tags:
+        - Stock
+      summary: 'Most consumed parts'
+      description: 'Top most-consumed parts in a period.'
+      operationId: ed019de109283d6b0551ac59112f7151
+      parameters:
+        -
+          name: from
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+        -
+          name: to
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+        -
+          name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 'List of most consumed parts'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  /stock/dashboard/slow-moving:
+    get:
+      tags:
+        - Stock
+      summary: 'Slow-moving parts'
+      description: 'Active parts with no movements for X days, sorted by current stock.'
+      operationId: 2b84697d08526039dc9020d451d25a12
+      parameters:
+        -
+          name: inactive_days
+          in: query
+          required: false
+          schema:
+            type: integer
+        -
+          name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 'List of slow-moving parts'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  /stock/dashboard/cost-by-equipment:
+    get:
+      tags:
+        - Stock
+      summary: 'Cost of parts by equipment'
+      description: 'Cost of parts by equipment.'
+      operationId: 88fc39403ba11eb0e7dc4028986d47f0
+      parameters:
+        -
+          name: from
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+        -
+          name: to
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+      responses:
+        200:
+          description: 'Part costs by equipment'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  /stock/dashboard/cost-by-ticket:
+    get:
+      tags:
+        - Stock
+      summary: 'Cost of parts by ticket'
+      description: 'Cost of parts by ticket/intervention.'
+      operationId: 666176642e91f91114a9d1c4945d3af1
+      parameters:
+        -
+          name: from
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+        -
+          name: to
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+      responses:
+        200:
+          description: 'Part costs by ticket'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  /stock/dashboard/runout-forecast:
+    get:
+      tags:
+        - Stock
+      summary: 'Stock runout forecast'
+      description: 'Estimate of remaining months of stock based on average monthly consumption.'
+      operationId: 5975bbb5c328bdcf96d82c085ac8cadf
+      parameters:
+        -
+          name: months
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 'Stock runout forecast'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  /stock/movements:
+    get:
+      tags:
+        - Stock
+      summary: 'List stock movements'
+      description: 'Paginated list of movements, filterable by part, movement type, and ticket.'
+      operationId: d077d854985b667853cd1c6fbc5344ad
+      parameters:
+        -
+          name: part_id
+          in: query
+          required: false
+          schema:
+            type: integer
+        -
+          name: movement_type
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - in
+              - out
+              - adjust
+              - return
+        -
+          name: ticket_id
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 'Paginated list of movements'
+        403:
+          description: 'Access forbidden for the profile'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+    post:
+      tags:
+        - Stock
+      summary: 'Register stock movement'
+      description: 'Registers a movement and atomically updates the part stock. Outflows use positive quantity.'
+      operationId: a9702f508c0a44421fdde340130e4c93
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - part_id
+                - movement_type
+                - quantity
+              properties:
+                part_id:
+                  type: integer
+                movement_type:
+                  type: string
+                  enum:
+                    - in
+                    - out
+                    - adjust
+                    - return
+                quantity:
+                  type: integer
+                reason:
+                  type: string
+                ticket_id:
+                  type: integer
+                equipment_id:
+                  type: integer
+                unit_price_snapshot:
+                  type: number
+              type: object
+      responses:
+        201:
+          description: 'Movement recorded successfully'
+        422:
+          description: 'Invalid data or insufficient stock'
+        500:
+          description: 'Could not record the movement'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  /stock/reports/low-stock.csv:
+    get:
+      tags:
+        - Stock
+      summary: 'Export low-stock CSV'
+      description: 'Exports the low-stock parts list as CSV.'
+      operationId: d44c1aff0403e4af3e3bb930ccbb92a4
+      responses:
+        200:
+          description: 'CSV file of low-stock parts'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  /stock/reports/inventory.csv:
+    get:
+      tags:
+        - Stock
+      summary: 'Export inventory CSV'
+      description: 'Exports the complete inventory as CSV.'
+      operationId: b2c2d2e7a07e71872086787c931f5491
+      responses:
+        200:
+          description: 'CSV file of the complete inventory'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  /stock/reports/costs-by-equipment.pdf:
+    get:
+      tags:
+        - Stock
+      summary: 'Export equipment costs PDF'
+      description: 'Dispatches asynchronous generation of the cost-by-equipment report (PDF).'
+      operationId: 12562726361f4816592618005b5fb340
+      parameters:
+        -
+          name: from
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+        -
+          name: to
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+      responses:
+        200:
+          description: 'PDF generation started (notification when ready)'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  /stock/suppliers:
+    get:
+      tags:
+        - Stock
+      summary: 'List suppliers'
+      description: 'Paginated list of suppliers, searchable by name or NIF.'
+      operationId: dd48fcdadf70003562d4b370b532cbd7
+      parameters:
+        -
+          name: q
+          in: query
+          description: 'Search by name or NIF'
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: 'Paginated list of suppliers'
+        403:
+          description: 'Access forbidden for the profile'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  '/stock/suppliers/{supplier}':
+    get:
+      tags:
+        - Stock
+      summary: 'Supplier detail'
+      description: 'Supplier detail view.'
+      operationId: 34425542cd31eec91e0f84672a18d848
+      parameters:
+        -
+          name: supplier
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 'Supplier with associated parts'
+        404:
+          description: 'Supplier not found'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  /admin/suppliers:
+    post:
+      tags:
+        - 'Admin Stock'
+      summary: 'Create supplier'
+      description: 'Creates a new supplier.'
+      operationId: c978c9ce85fc730ab910e3ba84df43d8
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                nif:
+                  type: string
+                contact:
+                  type: string
+                email:
+                  type: string
+                address:
+                  type: string
+                avg_lead_time_days:
+                  type: integer
+              type: object
+      responses:
+        201:
+          description: 'Supplier created successfully'
+        422:
+          description: 'Invalid data'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  '/admin/suppliers/{supplier}':
+    delete:
+      tags:
+        - 'Admin Stock'
+      summary: 'Delete supplier'
+      description: 'Soft-deletes a supplier.'
+      operationId: 20cd9046e6915a1bacd71d8e73a99cb4
+      parameters:
+        -
+          name: supplier
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 'Supplier deleted successfully'
+        404:
+          description: 'Supplier not found'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+    patch:
+      tags:
+        - 'Admin Stock'
+      summary: 'Update supplier'
+      description: 'Updates a supplier.'
+      operationId: 63593f5e8dbb442cc17bf6adc0bac1db
+      parameters:
+        -
+          name: supplier
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                nif:
+                  type: string
+                contact:
+                  type: string
+                email:
+                  type: string
+                address:
+                  type: string
+                avg_lead_time_days:
+                  type: integer
+              type: object
+      responses:
+        200:
+          description: 'Supplier updated successfully'
+        422:
+          description: 'Invalid data'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  /admin/tax-rates:
+    get:
+      tags:
+        - 'Admin Stock'
+      summary: 'List VAT rates'
+      description: 'Lista todas as taxas de IVA.'
+      operationId: 442b6e675ceb1fd56896a0ad5d959841
+      responses:
+        200:
+          description: 'List of VAT rates'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+    post:
+      tags:
+        - 'Admin Stock'
+      summary: 'Create VAT rate'
+      description: 'Creates a new VAT rate.'
+      operationId: a91763441b072660e6faebb84d916bc4
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+                - percent
+              properties:
+                name:
+                  type: string
+                percent:
+                  type: number
+                is_default:
+                  type: boolean
+                active:
+                  type: boolean
+              type: object
+      responses:
+        201:
+          description: 'VAT rate created successfully'
+        422:
+          description: 'Invalid data'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+  '/admin/tax-rates/{taxRate}':
+    delete:
+      tags:
+        - 'Admin Stock'
+      summary: 'Deactivate VAT rate'
+      description: 'Soft-deactivates a VAT rate.'
+      operationId: 8263b21546e9cd002f0210fb48a30765
+      parameters:
+        -
+          name: taxRate
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 'VAT rate deactivated successfully'
+        404:
+          description: 'VAT rate not found'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+    patch:
+      tags:
+        - 'Admin Stock'
+      summary: 'Update VAT rate'
+      description: 'Updates a VAT rate.'
+      operationId: 1f58e2fb3125408916d66860101bd818
+      parameters:
+        -
+          name: taxRate
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+                - percent
+              properties:
+                name:
+                  type: string
+                percent:
+                  type: number
+                is_default:
+                  type: boolean
+                active:
+                  type: boolean
+              type: object
+      responses:
+        200:
+          description: 'VAT rate updated successfully'
+        422:
+          description: 'Invalid data'
+      security:
+        -
+          X-Auth-Token: []
+        -
+          BearerAuth: []
+components:
+  securitySchemes:
+    X-Auth-Token:
+      type: apiKey
+      description: 'Custom header-based authentication token'
+      name: X-Auth-Token
+      in: header
+    BearerAuth:
+      type: http
+      description: 'JWT token based authentication'
+      bearerFormat: JWT
+      scheme: bearer
+tags:
+  -
+    name: Analytics
+    description: 'Maintenance performance reports and metrics'
+  -
+    name: Stock
+    description: 'Parts catalogue, suppliers, stock movements, dashboard and reports'
+  -
+    name: 'Admin Stock'
+    description: 'Administrative management of parts, suppliers, VAT rates, categories and maintenance plans'
+  -
+    name: Admin
+    description: Admin
+  -
+    name: Notifications
+    description: Notifications

@@ -15,6 +15,8 @@ final class AIService
 {
     public function __construct(
         private readonly TicketStatusService $statusService,
+        private readonly ?CircuitBreaker $circuitBreaker = null,
+        private readonly ?FeatureFlagService $featureFlags = null,
     ) {}
 
     /**
@@ -24,6 +26,15 @@ final class AIService
      */
     public function recommendTechnician(Ticket $ticket): array
     {
+        $featureFlags = $this->featureFlags ?? new FeatureFlagService;
+
+        if (! $featureFlags->enabled('ai_recommendations')) {
+            return [
+                'technician_id' => null,
+                'justification' => 'AI recommendations are currently disabled. Please select a technician manually through the Assignment Panel.',
+            ];
+        }
+
         $technicians = User::whereHas('profile', fn ($q) => $q->where('name', UserRoleEnum::Technician->value))
             ->where('active', true)
             ->withCount(['assignedTickets as active_tickets' => function ($query) {
@@ -79,13 +90,20 @@ final class AIService
         $prompt .= '}';
 
         try {
-            $response = OpenAI::chat()->create([
-                'model' => config('services.custom.ai.model'),
-                'messages' => [
-                    ['role' => 'user', 'content' => $prompt],
-                ],
-                'temperature' => (float) config('services.custom.ai.temperature', 0.2),
-            ]);
+            $breaker = $this->circuitBreaker ?? new CircuitBreaker;
+            $response = $breaker->run('openai', function () use ($prompt) {
+                return OpenAI::chat()->create([
+                    'model' => config('services.custom.ai.model'),
+                    'messages' => [
+                        ['role' => 'user', 'content' => $prompt],
+                    ],
+                    'temperature' => (float) config('services.custom.ai.temperature', 0.2),
+                ]);
+            });
+
+            if ($response === null) {
+                throw new Exception('AI dependency circuit is open.');
+            }
 
             $content = trim($response->choices[0]->message->content ?? '');
 

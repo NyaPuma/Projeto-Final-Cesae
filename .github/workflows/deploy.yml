@@ -1,0 +1,184 @@
+name: Production Deployment
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-deployment
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy Production Release
+    if: >-
+      (github.event_name == 'workflow_run' &&
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_branch == 'main') ||
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: production
+
+    env:
+      DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+      DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+      DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+      DEPLOY_PORT: ${{ secrets.DEPLOY_PORT || '22' }}
+      DEPLOY_SERVICE: ${{ secrets.DEPLOY_SERVICE }}
+      DEPLOY_HEALTHCHECK_URL: ${{ secrets.DEPLOY_HEALTHCHECK_URL }}
+
+    steps:
+      - name: Check out the tested revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
+
+      - name: Configure SSH agent
+        uses: webfactory/ssh-agent@v0.9.1
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
+
+      - name: Pin deployment host key
+        shell: bash
+        env:
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          set -Eeuo pipefail
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Validate deployment inputs
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          test -n "$DEPLOY_HOST"
+          test -n "$DEPLOY_USER"
+          test -n "$DEPLOY_PATH"
+          test -n "$DEPLOY_SERVICE"
+          test -n "$DEPLOY_HEALTHCHECK_URL"
+          case "$DEPLOY_PATH" in
+            /*) ;;
+            *) echo 'DEPLOY_PATH must be an absolute path.' >&2; exit 1 ;;
+          esac
+
+      - name: Prepare remote release directory
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          ssh -p "$DEPLOY_PORT" "$DEPLOY_USER@$DEPLOY_HOST" bash -se -- "$DEPLOY_PATH" <<'REMOTE'
+          set -Eeuo pipefail
+          deploy_path="$1"
+          mkdir -p -- "$deploy_path/releases"
+          REMOTE
+
+      - name: Upload release source
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          release_path="$DEPLOY_PATH/releases/$GITHUB_SHA"
+          rsync --archive --compress --delete \
+            --exclude='.git/' \
+            --exclude='.env' \
+            --exclude='node_modules/' \
+            --exclude='vendor/' \
+            --exclude='storage/' \
+            --exclude='public/build/' \
+            ./ "$DEPLOY_USER@$DEPLOY_HOST:$release_path/"
+
+      - name: Install dependencies and activate release
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          ssh -p "$DEPLOY_PORT" "$DEPLOY_USER@$DEPLOY_HOST" bash -se -- \
+            "$DEPLOY_PATH" "$GITHUB_SHA" "$DEPLOY_SERVICE" <<'REMOTE'
+          set -Eeuo pipefail
+
+          deploy_path="$1"
+          release_id="$2"
+          service_name="$3"
+          release="$deploy_path/releases/$release_id"
+          shared="$deploy_path/shared"
+          current="$deploy_path/current"
+
+          test -d "$release"
+          test -f "$shared/.env"
+          mkdir -p -- "$shared/storage"
+
+          ln -sfn -- "$shared/.env" "$release/.env"
+          if [ -e "$release/storage" ] || [ -L "$release/storage" ]; then
+            rm -rf -- "$release/storage"
+          fi
+          ln -s -- "$shared/storage" "$release/storage"
+
+          cd "$release"
+          composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+          npm ci
+          npm run build
+          php artisan migrate --force
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
+          php artisan event:cache
+
+          ln -s -- "$release" "$deploy_path/current.next"
+          mv -Tf -- "$deploy_path/current.next" "$current"
+          php "$current/artisan" queue:restart
+          sudo systemctl reload "$service_name"
+
+          find "$deploy_path/releases" -mindepth 1 -maxdepth 1 -type d \
+            -printf '%T@ %p\n' | sort -nr | tail -n +6 | cut -d' ' -f2- | \
+            xargs -r rm -rf --
+          REMOTE
+
+      - name: Verify deployed application health
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          for attempt in $(seq 1 12); do
+            status="$(curl --location --silent --show-error --output /tmp/health-response.json \
+              --write-out '%{http_code}' --max-time 15 "$DEPLOY_HEALTHCHECK_URL" || true)"
+            echo "Health check attempt $attempt returned HTTP $status."
+            if [ "$status" = '200' ]; then
+              exit 0
+            fi
+            sleep 5
+          done
+          echo 'The deployed application did not return HTTP 200.' >&2
+          exit 1
+
+      - name: Roll back to the previous release
+        if: ${{ failure() }}
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          ssh -p "$DEPLOY_PORT" "$DEPLOY_USER@$DEPLOY_HOST" bash -se -- \
+            "$DEPLOY_PATH" "$GITHUB_SHA" "$DEPLOY_SERVICE" <<'REMOTE'
+          set -Eeuo pipefail
+
+          deploy_path="$1"
+          failed_release="$2"
+          service_name="$3"
+          current="$deploy_path/current"
+          previous="$(find "$deploy_path/releases" -mindepth 1 -maxdepth 1 -type d \
+            ! -path "$deploy_path/releases/$failed_release" -printf '%T@ %p\n' | \
+            sort -nr | head -n 1 | cut -d' ' -f2-)"
+
+          if [ -z "$previous" ]; then
+            echo 'No previous release is available for rollback.' >&2
+            exit 0
+          fi
+
+          ln -s -- "$previous" "$deploy_path/current.rollback"
+          mv -Tf -- "$deploy_path/current.rollback" "$current"
+          php "$current/artisan" queue:restart || true
+          sudo systemctl reload "$service_name" || true
+          echo "Rolled back to $previous."
+          REMOTE

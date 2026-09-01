@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schedule;
 
 Artisan::command('inspire', function () {
@@ -32,10 +33,21 @@ Schedule::command('telemetry:simulate --equipments=5 --probability=25')
 | retention by DB_BACKUP_RETENTION_DAYS; the --clean option removes backups
 | older than the retention period.
 */
-Schedule::command('db:backup --clean')
+Schedule::command('backup:run --clean')
     ->daily()
     ->at('02:00')
     ->withoutOverlapping()
+    ->onFailure(function (): void {
+        Log::error('Scheduled backup failed', [
+            'metric' => 'backup.scheduled_failure',
+        ]);
+
+        try {
+            \Sentry\captureMessage('Scheduled backup failed');
+        } catch (Throwable) {
+            // Backup alerting must never interrupt the scheduler.
+        }
+    })
     ->appendOutputTo(storage_path('logs/backup.log'));
 
 /*

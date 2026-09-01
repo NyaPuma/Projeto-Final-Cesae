@@ -1,8 +1,8 @@
 name: Laravel Quality Gates
 
 on:
-  push:
-  pull_request:
+  workflow_call:
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -13,44 +13,34 @@ concurrency:
 
 jobs:
   quality:
-    name: Pint, Larastan, and PHPUnit
+    name: Static Analysis, Security, and Tests
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
-    services:
-      postgres:
-        image: postgres:16
-        env:
-          POSTGRES_DB: laravel_testing
-          POSTGRES_USER: laravel
-          POSTGRES_PASSWORD: laravel
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd="pg_isready -U laravel -d laravel_testing"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=5
-
-    env:
-      APP_ENV: testing
-      DB_CONNECTION: sqlite
-      DB_DATABASE: ':memory:'
-
     steps:
-      - name: Check out repository
+      - name: Check out repository history
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up PHP and Composer dependencies
         uses: ./.github/actions/setup-php-composer
         with:
-          extensions: mbstring, pdo, pdo_sqlite, pdo_pgsql, bcmath, intl, gd
+          extensions: mbstring, pdo, sqlite, pdo_sqlite, bcmath, intl, gd, zip
 
       - name: Set up Node.js and npm cache
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
+
+      - name: Cache Node modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: npm-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            npm-${{ runner.os }}-
 
       - name: Install frontend dependencies
         run: npm ci
@@ -63,14 +53,104 @@ jobs:
       - name: Validate Composer configuration
         run: composer validate --strict
 
+      - name: Audit Composer dependencies
+        run: composer audit --locked
+
+      - name: Audit npm dependencies
+        run: npm audit --audit-level=high
+
+      - name: Scan repository for verified secrets
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Check code style with Laravel Pint
         run: vendor/bin/pint --test
 
       - name: Run Larastan static analysis
         run: vendor/bin/phpstan analyse --memory-limit=1G
 
-      - name: Run the complete PHPUnit suite
-        run: php artisan test
+      - name: Verify scheduler registration
+        run: php artisan schedule:list
 
-      - name: Build frontend assets
+      - name: Verify database queue worker
+        run: |
+          DB_CONNECTION=sqlite DB_DATABASE=/tmp/ci-queue.sqlite php artisan migrate --force
+          DB_CONNECTION=sqlite DB_DATABASE=/tmp/ci-queue.sqlite php artisan queue:work --once
+
+      - name: Build Vite assets
         run: npm run build
+
+      - name: Generate OpenAPI specifications
+        run: composer docs:generate
+
+      - name: Validate OpenAPI JSON document
+        run: |
+          php -r '$spec = json_decode(file_get_contents("storage/api-docs/api-docs.json"), true, 512, JSON_THROW_ON_ERROR); if (($spec["openapi"] ?? null) !== "3.0.0") { fwrite(STDERR, "The generated OpenAPI document is not OpenAPI 3.0.0.\n"); exit(1); } if (empty($spec["paths"])) { fwrite(STDERR, "The generated OpenAPI document contains no paths.\n"); exit(1); } echo "OpenAPI JSON document is valid.\n";'
+
+      - name: Upload OpenAPI specifications
+        uses: actions/upload-artifact@v4
+        with:
+          name: openapi-specifications
+          path: storage/api-docs/api-docs.*
+          if-no-files-found: error
+
+  tests:
+    name: PHPUnit ${{ matrix.suite }} suite
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: quality
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        suite:
+          - Unit
+          - Feature
+          - Performance
+          - Security
+          - Integration
+          - Authentication
+          - Authorization
+          - Database
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP and Composer dependencies
+        uses: ./.github/actions/setup-php-composer
+        with:
+          extensions: mbstring, pdo, sqlite, pdo_sqlite, bcmath, intl, gd, zip
+
+      - name: Prepare application
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Run PHPUnit suite
+        run: vendor/bin/phpunit "tests/${{ matrix.suite }}" --do-not-cache-result
+
+  coverage:
+    name: PHPUnit Coverage
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: [quality, tests]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP with PCOV
+        uses: ./.github/actions/setup-php-composer
+        with:
+          extensions: mbstring, pdo, sqlite, pdo_sqlite, bcmath, intl, gd, zip
+          coverage: pcov
+
+      - name: Prepare application
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Generate and enforce PHPUnit coverage
+        run: php artisan test --coverage --min=80

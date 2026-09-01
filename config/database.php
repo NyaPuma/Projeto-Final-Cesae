@@ -64,8 +64,8 @@ return [
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 (PHP_VERSION_ID >= 80500 ? Mysql::ATTR_SSL_CA : PDO::MYSQL_ATTR_SSL_CA) => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
-            'slow_query_log' => (bool) env('DB_SLOW_QUERY_LOG', false),
-            'slow_query_threshold' => (int) env('DB_SLOW_QUERY_THRESHOLD', 2),
+            'slow_query_log' => (bool) env('DB_SLOW_QUERY_LOG', true),
+            'slow_query_threshold_ms' => (float) env('DB_SLOW_QUERY_THRESHOLD_MS', 100),
         ],
 
         'mariadb' => [

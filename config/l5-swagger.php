@@ -12,13 +12,13 @@ return [
     'documentations' => [
         'default' => [
             'api' => [
-                'title' => env('APP_NAME', 'Gestão de Avarias').' API Docs',
+                'title' => env('APP_NAME', 'Maintenance Management').' API Documentation',
             ],
 
             'routes' => [
                 /*
                  * Route for accessing api documentation interface
-                 * Aqui definimos onde queres aceder no browser (docs/openapi)
+                 * The documentation interface is available at docs/openapi.
                  */
                 'api' => 'docs/openapi',
             ],
@@ -61,7 +61,7 @@ return [
         'routes' => [
             /*
              * Route for accessing parsed swagger annotations.
-             * Alteramos aqui para 'docs/openapi-json' para evitar conflito com a rota da UI
+             * Keep the parsed document route separate from the documentation interface.
              */
             'docs' => 'docs/openapi-json',
 
@@ -192,7 +192,7 @@ return [
         /*
          * Set this to `true` to generate a copy of documentation in yaml format
          */
-        'generate_yaml_copy' => (bool) env('L5_SWAGGER_GENERATE_YAML_COPY', false),
+        'generate_yaml_copy' => (bool) env('L5_SWAGGER_GENERATE_YAML_COPY', true),
 
         /*
          * Edit to trust the proxy's ip address - needed for AWS Load Balancer
@@ -257,7 +257,7 @@ return [
          * Constants which can be used in annotations
          */
         'constants' => [
-            'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'http://my-default-host.com'),
+            'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', env('APP_URL', 'http://localhost')),
         ],
     ],
 ];

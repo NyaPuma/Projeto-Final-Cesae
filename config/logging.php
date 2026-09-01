@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Logging\AddRequestContext;
+use App\Logging\RequestContextProcessor;
+use Monolog\Formatter\JsonFormatter;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
@@ -56,7 +59,7 @@ return [
 
         'stack' => [
             'driver' => 'stack',
-            'channels' => explode(',', (string) env('LOG_STACK', 'single')),
+            'channels' => explode(',', (string) env('LOG_STACK', 'daily')),
             'ignore_exceptions' => false,
         ],
 
@@ -64,6 +67,11 @@ return [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
+            'tap' => [AddRequestContext::class],
+            'formatter' => JsonFormatter::class,
+            'formatter_with' => [
+                'appendNewline' => true,
+            ],
             'replace_placeholders' => true,
         ],
 
@@ -72,6 +80,11 @@ return [
             'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
             'days' => (int) env('LOG_DAILY_DAYS', 14),
+            'tap' => [AddRequestContext::class],
+            'formatter' => JsonFormatter::class,
+            'formatter_with' => [
+                'appendNewline' => true,
+            ],
             'replace_placeholders' => true,
         ],
 
@@ -103,8 +116,14 @@ return [
             'handler_with' => [
                 'stream' => 'php://stderr',
             ],
-            'formatter' => env('LOG_STDERR_FORMATTER'),
-            'processors' => [PsrLogMessageProcessor::class],
+            'formatter' => env('LOG_STDERR_FORMATTER', JsonFormatter::class),
+            'formatter_with' => [
+                'appendNewline' => true,
+            ],
+            'processors' => [
+                PsrLogMessageProcessor::class,
+                RequestContextProcessor::class,
+            ],
         ],
 
         'syslog' => [

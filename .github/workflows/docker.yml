@@ -3,7 +3,7 @@ name: Docker
 on:
   push:
     branches: [main, develop]
-    tags: ['v*']
+    tags: ["v*"]
   pull_request:
     branches: [main, develop]
 
@@ -51,8 +51,8 @@ jobs:
             type=sha
             type=raw,value=latest,enable={{is_default_branch}}
           labels: |
-            org.opencontainers.image.title=Sistema Integrado de Gestao de Manutencao
-            org.opencontainers.image.description=Projeto Final CESAE em Laravel
+            org.opencontainers.image.title=Integrated Maintenance Management System
+            org.opencontainers.image.description=CESAE Laravel project
             org.opencontainers.image.vendor=CESAE
             org.opencontainers.image.licenses=MIT
 
