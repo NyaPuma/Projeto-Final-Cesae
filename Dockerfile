@@ -19,7 +19,32 @@ RUN npm run build
 # Stage 2 - Composer
 ###############################################
 
-FROM composer:2.8 AS vendor
+FROM php:8.2-cli-bookworm AS vendor
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        git \
+        libfreetype6-dev \
+        libicu-dev \
+        libjpeg62-turbo-dev \
+        libonig-dev \
+        libpng-dev \
+        libzip-dev \
+        unzip \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j"$(nproc)" \
+        bcmath \
+        gd \
+        intl \
+        mbstring \
+        opcache \
+        pdo_mysql \
+        pdo_sqlite \
+        zip \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=composer:2.8 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
 
@@ -44,6 +69,8 @@ RUN composer dump-autoload \
 ###############################################
 
 FROM dunglas/frankenphp:1.9.0-php8.2
+
+RUN install-php-extensions gd
 
 LABEL org.opencontainers.image.title="Sistema Integrado de Gestão de Manutenção"
 LABEL org.opencontainers.image.description="Projeto Final CESAE desenvolvido em Laravel 11"
