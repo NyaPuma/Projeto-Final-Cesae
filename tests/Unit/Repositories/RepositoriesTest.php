@@ -65,8 +65,8 @@ class RepositoriesTest extends FeatureTestCase
         $result = $this->users->getActiveTechnicians();
 
         $this->assertCount(1, $result);
-        $this->assertSame($tech->id, $result[0]->id);
-        $this->assertSame(['id', 'name'], array_keys($result[0]->toArray()));
+        $this->assertSame($tech->id, $result[0]['id']);
+        $this->assertSame(['id', 'name'], array_keys($result[0]));
         $adminIds = array_column($this->users->getAdmins(), 'id');
         $this->assertContains($admin->id, $adminIds);
         $this->assertNotContains($tech->id, $adminIds);
