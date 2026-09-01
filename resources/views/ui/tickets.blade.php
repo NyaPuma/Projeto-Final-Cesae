@@ -21,23 +21,16 @@ window.requireAuthOnLoad = true;
         . '</div>'
 ])
 
-    {{-- Painel de Pesquisa Avançada Bento-Style --}}
+    {{-- Painel de Pesquisa --}}
     <div class="mb-6 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm animate-[fadeIn_0.2s_ease-out]">
-        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 
-            <div class="sm:col-span-2 lg:col-span-3 xl:col-span-5">
+            <div class="sm:col-span-2 lg:col-span-3 xl:col-span-4">
                 <label for="filter_q" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Termo de Pesquisa') }}</label>
                 <div class="relative">
                     <input id="filter_q" placeholder="{{ __('Pesquisar em título e descrição do ticket...') }}"
                         class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2.5 text-xs text-[var(--text)] placeholder-[var(--text-soft)] outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all">
                 </div>
-            </div>
-
-            <div>
-                <label for="filter_room" class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('Sala') }}</label>
-                <select id="filter_room" class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2.5 text-xs text-[var(--text)] outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all">
-                    <option value="">{{ __('Todas as Salas') }}</option>
-                </select>
             </div>
 
             <div>
@@ -115,7 +108,7 @@ window.requireAuthOnLoad = true;
         </div>
     </div>
 
-    {{-- Área de Paginação --}}
+    {{-- Paginação --}}
     <div id="pagination" class="mt-5 flex items-center justify-between text-xs text-[var(--text-soft)] px-1"></div>
 
 @endcomponent
@@ -138,27 +131,37 @@ const priorityColors = {
 
 function formatDynamicText(text) {
     if (!text) return '—';
-    const locale = window.currentLocale || 'pt';
+    const locale = window.currentLocale || '{{ app()->getLocale() }}';
     if (locale !== 'en') return text;
 
+    // Se existir correspondência direta no dicionário global do layout
+    if (typeof window.__ === 'function') {
+        const translated = window.__(text);
+        if (translated !== text) return translated;
+    }
+
     return String(text)
+        .replace(/Erro de comunicação no controlador do Braço Robótico/gi, 'Communication error in Robotic Arm controller')
+        .replace(/Braço Robótico KUKA KR210/gi, 'Robotic Arm KUKA KR210')
+        .replace(/Lentidão crítica e sobreaquecimento no nó primário/gi, 'Critical lag and overheating on primary node')
+        .replace(/Servidor Central Dell PowerEdge/gi, 'Central Server Dell PowerEdge')
+        .replace(/Laboratório de I&D/gi, 'R&D Laboratory')
+        .replace(/Fuga de óleo visível no pistão hidráulico principal/gi, 'Visible oil leak in the main hydraulic piston')
+        .replace(/Prensa Hidráulica 50T/gi, '50T Hydraulic Press')
+        .replace(/Linha de Montagem A/gi, 'Assembly Line A')
+        .replace(/Pavilhão Industrial 1/gi, 'Industrial Pavilion 1')
         .replace(/Ocorrência sintética/gi, 'Synthetic Incident')
         .replace(/Sala Operacional/gi, 'Operational Room')
         .replace(/Utilizador Sintético/gi, 'Synthetic User')
         .replace(/Equipamento Operacional/gi, 'Operational Equipment')
-        .replace(/Linha de Montagem/gi, 'Assembly Line')
-        .replace(/Armazém Logístico/gi, 'Logistics Warehouse')
-        .replace(/Pavilhão Sul/gi, 'South Pavilion')
-        .replace(/Zona Norte/gi, 'North Zone')
-        .replace(/Setor/gi, 'Sector')
         .replace(/Técnico/gi, 'Technician')
         .replace(/Administrador/gi, 'Administrator');
 }
 
 function translateStatusLabel(status) {
     if (!status) return 'N/A';
-    const locale = window.currentLocale || 'pt';
-    if (locale !== 'en') return status;
+    const locale = window.currentLocale || '{{ app()->getLocale() }}';
+    if (locale !== 'en') return String(status).toUpperCase();
 
     const map = {
         'fechada': 'CLOSED',
@@ -202,54 +205,16 @@ function authHeader(){
     return headers;
 }
 
-async function loadRoomsOptions() {
-    const select = document.getElementById('filter_room');
-    if (!select) return;
-
-    try {
-        let res = await fetch('/rooms', { headers: authHeader() });
-        if (!res.ok) {
-            res = await fetch('/api/rooms', { headers: authHeader() });
-        }
-        if (!res.ok) return;
-
-        const data = await res.json();
-        let rooms = [];
-        if (Array.isArray(data)) {
-            rooms = data;
-        } else if (data.rooms && Array.isArray(data.rooms)) {
-            rooms = data.rooms;
-        } else if (data.data && Array.isArray(data.data)) {
-            rooms = data.data;
-        } else if (data.rooms && data.rooms.data && Array.isArray(data.rooms.data)) {
-            rooms = data.rooms.data;
-        }
-
-        select.innerHTML = `<option value="">${__('Todas as Salas')}</option>`;
-
-        rooms.forEach(room => {
-            const opt = document.createElement('option');
-            opt.value = room.id;
-            opt.textContent = formatDynamicText(room.name || room.designation || `Room #${room.id}`);
-            select.appendChild(opt);
-        });
-    } catch (e) {
-        console.warn('Não foi possível carregar as salas para o filtro:', e);
-    }
-}
-
 async function loadTickets(page = 1) {
     currentPage = page;
     const params = new URLSearchParams();
-    const q        = document.getElementById('filter_q').value.trim();
-    const roomId   = document.getElementById('filter_room')?.value;
-    const status   = document.getElementById('filter_status').value;
-    const priority = document.getElementById('filter_priority').value;
-    const dateFrom = document.getElementById('filter_date_from').value;
-    const dateTo   = document.getElementById('filter_date_to').value;
+    const q        = document.getElementById('filter_q')?.value.trim() || '';
+    const status   = document.getElementById('filter_status')?.value || '';
+    const priority = document.getElementById('filter_priority')?.value || '';
+    const dateFrom = document.getElementById('filter_date_from')?.value || '';
+    const dateTo   = document.getElementById('filter_date_to')?.value || '';
 
     if (q)        params.append('q', q);
-    if (roomId)   params.append('room_id', roomId);
     if (status)   params.append('status', status);
     if (priority) params.append('priority', priority);
     if (dateFrom) params.append('date_from', dateFrom);
@@ -258,7 +223,7 @@ async function loadTickets(page = 1) {
 
     const url = `/tickets/search?${params.toString()}`;
     const tbody = document.getElementById('ticketsBody');
-    tbody.innerHTML = `<tr><td colspan="8" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]">${__('A atualizar dados...')}</td></tr>`;
+    if (tbody) tbody.innerHTML = `<tr><td colspan="8" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]">${__('A carregar listagem de tickets...')}</td></tr>`;
 
     try {
         const res = await fetch(url, { headers: authHeader() });
@@ -279,11 +244,15 @@ async function loadTickets(page = 1) {
         const meta    = data.tickets?.meta ?? data.tickets ?? {};
         const total   = meta.total ?? tickets.length;
 
-        document.getElementById('resultsCount').textContent = total > 0 ? `${total} ${__('resultado(s) encontrado(s)')}` : __('Sem resultados');
+        const resultsEl = document.getElementById('resultsCount');
+        if (resultsEl) {
+            resultsEl.textContent = total > 0 ? `${total} ${__('resultado(s) encontrado(s)')}` : __('Sem resultados');
+        }
 
         if (!tickets.length) {
-            tbody.innerHTML = `<tr><td colspan="8" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]"><div class="mx-auto max-w-sm rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface-2)] p-5">${__('Nenhum ticket encontrado com os filtros aplicados.')}</div></td></tr>`;
-            document.getElementById('pagination').innerHTML = '';
+            if (tbody) tbody.innerHTML = `<tr><td colspan="8" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]"><div class="mx-auto max-w-sm rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface-2)] p-5">${__('Nenhum ticket encontrado com os filtros aplicados.')}</div></td></tr>`;
+            const pagEl = document.getElementById('pagination');
+            if (pagEl) pagEl.innerHTML = '';
             return;
         }
 
@@ -307,16 +276,21 @@ async function loadTickets(page = 1) {
                 statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-rose-500/10 text-rose-800 dark:text-rose-400 border border-rose-500/20 uppercase tracking-tight">${translatedStatus}</span>`;
             }
 
+            const titleTranslated = formatDynamicText(t.title);
+            const equipmentTranslated = formatDynamicText(t.equipment ? t.equipment.name : (t.equipment_name || '—'));
+            const roomTranslated = formatDynamicText(t.room ? t.room.name : (t.room_name || '—'));
+            const technicianTranslated = t.technician ? formatDynamicText(t.technician.name) : '<span class="text-[var(--text-soft)] font-normal italic">—</span>';
+
             return `<tr class="hover:bg-[var(--surface-2)]/50 transition-colors duration-150">
                 <td class="px-5 py-4 font-mono text-[var(--text-soft)] font-bold">#${t.id}</td>
-                <td class="px-5 py-4 font-semibold text-[var(--text)]">${formatDynamicText(t.title)}</td>
+                <td class="px-5 py-4 font-semibold text-[var(--text)]">${titleTranslated}</td>
                 <td class="px-5 py-4">
                     <span class="inline-block px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-tight ${priColor}">${priorityLabel}</span>
                 </td>
                 <td class="px-5 py-4">${statusBadge}</td>
-                <td class="px-5 py-4 text-[var(--text-soft)] font-semibold">${formatDynamicText(t.equipment ? t.equipment.name : '—')}</td>
-                <td class="px-5 py-4 text-[var(--text-soft)] font-semibold">${formatDynamicText(t.room ? t.room.name : '—')}</td>
-                <td class="px-5 py-4 text-xs font-semibold text-[var(--text)]">${t.technician ? formatDynamicText(t.technician.name) : '<span class="text-[var(--text-soft)] font-normal italic">—</span>'}</td>
+                <td class="px-5 py-4 text-[var(--text-soft)] font-semibold">${equipmentTranslated}</td>
+                <td class="px-5 py-4 text-[var(--text-soft)] font-semibold">${roomTranslated}</td>
+                <td class="px-5 py-4 text-xs font-semibold text-[var(--text)]">${technicianTranslated}</td>
                 <td class="px-5 py-4 text-right">
                     <a href="/ui/tickets/${t.id}" class="inline-flex items-center justify-center px-3.5 py-1.5 bg-[var(--surface)] hover:bg-[var(--surface-2)] text-[11px] font-semibold text-[var(--text)] border border-[var(--border)] rounded-lg shadow-sm transition-all min-h-[28px]">${__('Ver')}</a>
                 </td>
@@ -327,15 +301,20 @@ async function loadTickets(page = 1) {
         const currPage = meta.current_page ?? page;
         const pagEl    = document.getElementById('pagination');
         
-        if (lastPage <= 1) { pagEl.innerHTML = ''; return; }
+        if (lastPage <= 1) { 
+            if (pagEl) pagEl.innerHTML = ''; 
+            return; 
+        }
         
-        pagEl.innerHTML = `
-            <button onclick="loadTickets(${currPage - 1})" ${currPage <= 1 ? 'disabled' : ''}
-                class="ui-button ui-button--primary inline-flex items-center justify-center px-3.5 py-2 text-xs font-bold text-[var(--on-primary)] rounded-xl shadow-sm hover:opacity-90 transition-all disabled:opacity-40 disabled:cursor-not-allowed min-h-[36px]">← ${__('Anterior')}</button>
-            <span class="font-bold text-[var(--text-soft)]">${__('Página')} ${currPage} ${__('de')} ${lastPage}</span>
-            <button onclick="loadTickets(${currPage + 1})" ${currPage >= lastPage ? 'disabled' : ''}
-                class="ui-button ui-button--primary inline-flex items-center justify-center px-3.5 py-2 text-xs font-bold text-[var(--on-primary)] rounded-xl shadow-sm hover:opacity-90 transition-all disabled:opacity-40 disabled:cursor-not-allowed min-h-[36px]">${__('Próxima')} →</button>
-        `;
+        if (pagEl) {
+            pagEl.innerHTML = `
+                <button onclick="loadTickets(${currPage - 1})" ${currPage <= 1 ? 'disabled' : ''}
+                    class="ui-button ui-button--primary inline-flex items-center justify-center px-3.5 py-2 text-xs font-bold text-[var(--on-primary)] rounded-xl shadow-sm hover:opacity-90 transition-all disabled:opacity-40 disabled:cursor-not-allowed min-h-[36px]">← ${__('Anterior')}</button>
+                <span class="font-bold text-[var(--text-soft)]">${__('Página')} ${currPage} ${__('de')} ${lastPage}</span>
+                <button onclick="loadTickets(${currPage + 1})" ${currPage >= lastPage ? 'disabled' : ''}
+                    class="ui-button ui-button--primary inline-flex items-center justify-center px-3.5 py-2 text-xs font-bold text-[var(--on-primary)] rounded-xl shadow-sm hover:opacity-90 transition-all disabled:opacity-40 disabled:cursor-not-allowed min-h-[36px]">${__('Próxima')} →</button>
+            `;
+        }
     } catch (err) {
         console.error('❌ Exceção em loadTickets:', err);
         showFeedback(`${__('Erro ao carregar tickets.')} ${err.message}`, true);
@@ -349,28 +328,26 @@ function showFeedback(message, error = false) {
     el.className = `text-xs font-semibold ${error ? 'text-red-700 dark:text-red-400' : 'text-[var(--text-soft)]'}`;
 }
 
-document.getElementById('btnSearch').addEventListener('click', () => loadTickets(1));
+document.getElementById('btnSearch')?.addEventListener('click', () => loadTickets(1));
 
-document.getElementById('btnClear').addEventListener('click', () => {
-    ['filter_q','filter_room','filter_status','filter_priority','filter_date_from','filter_date_to'].forEach(id => {
+document.getElementById('btnClear')?.addEventListener('click', () => {
+    ['filter_q','filter_status','filter_priority','filter_date_from','filter_date_to'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.value = '';
     });
     loadTickets(1);
 });
 
-document.getElementById('filter_q').addEventListener('keydown', e => {
+document.getElementById('filter_q')?.addEventListener('keydown', e => {
     if (e.key === 'Enter') loadTickets(1);
 });
 
-document.getElementById('filter_room')?.addEventListener('change', () => loadTickets(1));
 document.getElementById('filter_status')?.addEventListener('change', () => loadTickets(1));
 document.getElementById('filter_priority')?.addEventListener('change', () => loadTickets(1));
 document.getElementById('filter_date_from')?.addEventListener('change', () => loadTickets(1));
 document.getElementById('filter_date_to')?.addEventListener('change', () => loadTickets(1));
 
-window.addEventListener('load', async () => {
-    await loadRoomsOptions();
+window.addEventListener('load', () => {
     loadTickets(1);
 });
 </script>

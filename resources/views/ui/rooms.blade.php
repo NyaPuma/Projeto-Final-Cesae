@@ -133,6 +133,27 @@ function getAuthHeader() {
     return headers;
 }
 
+function formatRoomDynamicText(text) {
+    if (!text) return '—';
+    const locale = window.currentLocale || '{{ app()->getLocale() }}';
+    if (locale !== 'en') return text;
+
+    return String(text)
+        .replace(/Armazém Logístico/gi, 'Logistics Warehouse')
+        .replace(/Laboratório de I&D/gi, 'R&D Laboratory')
+        .replace(/Linha de Montagem/gi, 'Assembly Line')
+        .replace(/Pavilhão Central/gi, 'Central Pavilion')
+        .replace(/Pavilhão Industrial/gi, 'Industrial Pavilion')
+        .replace(/Pavilhão Sul/gi, 'South Pavilion')
+        .replace(/Edifício Central/gi, 'Central Building')
+        .replace(/Piso/gi, 'Floor')
+        .replace(/Sala Operacional/gi, 'Operational Room')
+        .replace(/Zona Norte/gi, 'North Zone')
+        .replace(/Zona Centro/gi, 'Central Zone')
+        .replace(/Zona Sul/gi, 'South Zone')
+        .replace(/Setor/gi, 'Sector');
+}
+
 async function fetchIsolatedRooms(page = 1) {
     currentRoomPage = page;
     const params = new URLSearchParams();
@@ -169,7 +190,10 @@ async function fetchIsolatedRooms(page = 1) {
     const meta = resData.rooms?.meta ?? resData.meta ?? {};
     const total = meta.total ?? rooms.length;
 
-    document.getElementById('resultsCount').textContent = total > 0 ? `${total} ${__('registo(s) encontrado(s)')}` : __('0 registos encontrados');
+    const locale = window.currentLocale || '{{ app()->getLocale() }}';
+    const foundText = locale === 'en' ? 'record(s) found' : __('registo(s) encontrado(s)');
+    const noneFoundText = locale === 'en' ? '0 records found' : __('0 registos encontrados');
+    document.getElementById('resultsCount').textContent = total > 0 ? `${total} ${foundText}` : noneFoundText;
 
     if (!rooms || rooms.length === 0) {
         tbody.innerHTML = `<tr><td colspan="5" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]"><div class="mx-auto max-w-sm rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface-2)] p-5">${__('Nenhuma sala encontrada.')}</div></td></tr>`;
@@ -179,17 +203,32 @@ async function fetchIsolatedRooms(page = 1) {
 
     tbody.innerHTML = rooms.map(r => {
         const equipmentCount = r.equipments_count ?? r.equipment_count ?? (r.equipments ? r.equipments.length : (r.equipment ? r.equipment.length : 0));
-        const eqLabel = equipmentCount === 1 ? __('Equipamento') : __('Equipamentos');
+        
+        let eqLabel = '';
+        if (locale === 'en') {
+            eqLabel = equipmentCount === 1 ? 'EQUIPMENT' : 'EQUIPMENT';
+        } else {
+            eqLabel = equipmentCount === 1 ? 'EQUIPAMENTO' : 'EQUIPAMENTOS';
+        }
 
-        // Contagem atualizada de avarias ativas passada pelo controlador
         const openTickets = r.active_tickets_count ?? r.open_tickets_count ?? r.tickets_count ?? 0;
-        const statusBadge = openTickets > 0
-            ? `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-rose-500/10 text-rose-500 border border-rose-500/20 uppercase tracking-wider">🔴 ${openTickets} ${openTickets === 1 ? __('Avaria Aberta') : __('Avarias Abertas')}</span>`
-            : `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 uppercase tracking-wider">🟢 ${__('Sem Avarias')}</span>`;
+        let statusBadge = '';
+        if (openTickets > 0) {
+            const ticketLabel = locale === 'en'
+                ? (openTickets === 1 ? 'OPEN INCIDENT' : 'OPEN INCIDENTS')
+                : (openTickets === 1 ? 'AVARIA ABERTA' : 'AVARIAS ABERTAS');
+
+            statusBadge = `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-extrabold bg-rose-500/10 text-rose-500 border border-rose-500/20 uppercase tracking-wider">🔴 ${openTickets} ${ticketLabel}</span>`;
+        } else {
+            const noIncidentLabel = locale === 'en' ? 'NO INCIDENTS' : 'SEM AVARIAS';
+            statusBadge = `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-extrabold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 uppercase tracking-wider">🟢 ${noIncidentLabel}</span>`;
+        }
+
+        const editLabel = locale === 'en' ? 'Edit' : __('Editar');
 
         return `<tr class="hover:bg-[var(--surface-2)]/50 transition-colors duration-150">
-            <td class="px-5 py-4 font-bold text-xs text-[var(--text)]">${r.name}</td>
-            <td class="px-5 py-4 text-[var(--text-soft)] font-medium">${r.building || '-'}</td>
+            <td class="px-5 py-4 font-bold text-xs text-[var(--text)]">${formatRoomDynamicText(r.name)}</td>
+            <td class="px-5 py-4 text-[var(--text-soft)] font-medium">${formatRoomDynamicText(r.building)}</td>
             <td class="px-5 py-4">
                 <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-[var(--surface-2)] text-[var(--text)] border border-[var(--border)] uppercase tracking-wider">
                     ${equipmentCount} ${eqLabel}
@@ -201,7 +240,7 @@ async function fetchIsolatedRooms(page = 1) {
             <td class="px-5 py-4 text-right">
                 <button onclick='editRoom(${JSON.stringify(r)})'
                     class="inline-flex items-center justify-center px-3 py-1.5 text-xs font-semibold text-[var(--text)] bg-[var(--surface-2)] hover:bg-[var(--border)] border border-[var(--border)] rounded-xl transition-all cursor-pointer">
-                    ${__('Editar')}
+                    ${editLabel}
                 </button>
             </td>
         </tr>`;
