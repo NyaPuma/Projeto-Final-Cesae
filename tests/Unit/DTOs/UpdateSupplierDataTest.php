@@ -11,7 +11,14 @@ class UpdateSupplierDataTest extends TestCase
     #[Test]
     public function it_creates_dto_from_constructor(): void
     {
-        $dto = new UpdateSupplierData(name: 'Fornecedor A', nif: '500000000');
+        $dto = new UpdateSupplierData(
+            name: 'Fornecedor A',
+            nif: '500000000',
+            contact: null,
+            email: null,
+            address: null,
+            avgLeadTimeDays: null,
+        );
 
         $this->assertEquals('Fornecedor A', $dto->name);
         $this->assertEquals('500000000', $dto->nif);

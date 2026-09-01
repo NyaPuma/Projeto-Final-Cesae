@@ -11,7 +11,14 @@ class StoreSupplierDataTest extends TestCase
     #[Test]
     public function it_creates_dto_from_constructor(): void
     {
-        $dto = new StoreSupplierData(name: 'Fornecedor A', nif: '500000000');
+        $dto = new StoreSupplierData(
+            name: 'Fornecedor A',
+            nif: '500000000',
+            contact: null,
+            email: null,
+            address: null,
+            avgLeadTimeDays: null,
+        );
 
         $this->assertEquals('Fornecedor A', $dto->name);
         $this->assertEquals('500000000', $dto->nif);

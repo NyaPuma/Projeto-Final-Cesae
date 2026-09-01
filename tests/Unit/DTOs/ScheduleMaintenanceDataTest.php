@@ -50,12 +50,12 @@ class ScheduleMaintenanceDataTest extends TestCase
     {
         $dto = ScheduleMaintenanceData::fromRequest([
             'title' => 'Revisão',
-            'equipment_id' => '0',
+            'equipment_id' => '4',
             'scheduled_at' => '2026-08-01 09:00:00',
             'assigned_to' => 'abc',
         ]);
 
-        $this->assertNull($dto->equipmentId);
+        $this->assertEquals(4, $dto->equipmentId);
         $this->assertNull($dto->assignedTo);
     }
 
@@ -94,5 +94,17 @@ class ScheduleMaintenanceDataTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
 
         new ScheduleMaintenanceData(title: 'Revisão', equipmentId: 0, scheduledAt: '2026-08-01');
+    }
+
+    #[Test]
+    public function it_rejects_missing_equipment_from_request(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        ScheduleMaintenanceData::fromRequest([
+            'title' => 'Revisão',
+            'equipment_id' => '0',
+            'scheduled_at' => '2026-08-01 09:00:00',
+        ]);
     }
 }
