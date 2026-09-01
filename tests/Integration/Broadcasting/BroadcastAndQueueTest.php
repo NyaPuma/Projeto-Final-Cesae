@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Integration\Broadcasting;
 
 use App\Enums\TicketStatusEnum;
 use App\Events\TicketStatusUpdatedBroadcast;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Performance\DatabasePerformance;
 
 use App\Enums\UserRoleEnum;
 use App\Models\Equipment;

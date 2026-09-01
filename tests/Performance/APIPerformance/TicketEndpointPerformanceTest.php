@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Performance\Api;
+namespace Tests\Performance\APIPerformance;
 
 use App\Models\TicketStatus;
 use Tests\Performance\PerformanceTestCase;

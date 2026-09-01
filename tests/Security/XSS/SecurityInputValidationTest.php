@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Security\XSS;
 
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;

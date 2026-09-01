@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Security\RateLimiting;
 
 use App\Enums\UserRoleEnum;
 use App\Models\User;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Database\Seeders;
 
 use Database\Seeders\BulkOperationalDataSeeder;
 use Database\Seeders\TicketLookupSeeder;

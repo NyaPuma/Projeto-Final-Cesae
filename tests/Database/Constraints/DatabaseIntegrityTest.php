@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Database\Constraints;
 
 use App\Models\Equipment;
 use App\Models\Room;

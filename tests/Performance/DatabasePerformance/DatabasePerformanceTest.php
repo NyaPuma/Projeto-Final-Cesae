@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Performance\Database;
+namespace Tests\Performance\DatabasePerformance;
 
 use App\Models\Ticket;
 use Tests\Performance\PerformanceTestCase;

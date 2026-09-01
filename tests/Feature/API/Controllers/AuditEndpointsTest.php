@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\API\Controllers;
 
 use App\Enums\TicketStatusEnum;
 use App\Enums\UserRoleEnum;

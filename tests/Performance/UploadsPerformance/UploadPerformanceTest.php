@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Performance\Uploads;
+namespace Tests\Performance\UploadsPerformance;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Performance\Cache;
+namespace Tests\Performance\CachePerformance;
 
 use Illuminate\Support\Facades\Cache;
 use Tests\Performance\PerformanceTestCase;

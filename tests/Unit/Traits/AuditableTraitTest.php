@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Traits;
 
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;

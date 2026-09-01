@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature;
+namespace Tests\Feature\API\Controllers;
 
 use App\Jobs\ExportEquipmentQrPdfJob;
 use App\Models\Equipment;

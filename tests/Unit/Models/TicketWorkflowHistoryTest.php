@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Models;
 
 use App\Enums\UserRoleEnum;
 use App\Models\Ticket;

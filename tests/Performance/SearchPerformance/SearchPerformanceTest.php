@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Performance\Search;
+namespace Tests\Performance\SearchPerformance;
 
 use Tests\Performance\PerformanceTestCase;
 

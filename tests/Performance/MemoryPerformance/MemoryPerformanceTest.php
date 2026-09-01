@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Performance\Memory;
+namespace Tests\Performance\MemoryPerformance;
 
 use Tests\Performance\PerformanceTestCase;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Performance\Scalability;
+namespace Tests\Performance\ScalabilityPerformance;
 
 use Tests\Performance\PerformanceTestCase;
 

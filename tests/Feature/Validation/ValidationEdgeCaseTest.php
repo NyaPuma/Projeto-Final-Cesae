@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Validation;
 
 use App\Enums\TicketPriorityEnum;
 use App\Enums\UserRoleEnum;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\API\Controllers;
 
 use App\Models\Ticket;
 use App\Models\TicketStatus;

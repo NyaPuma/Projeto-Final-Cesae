@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Performance\Reports;
+namespace Tests\Performance\ReportsPerformance;
 
 use App\Models\Ticket;
 use Illuminate\Support\Facades\Storage;

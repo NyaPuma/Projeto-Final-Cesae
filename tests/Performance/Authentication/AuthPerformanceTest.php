@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Performance\Auth;
+namespace Tests\Performance\Authentication;
 
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Support\Facades\Cache;

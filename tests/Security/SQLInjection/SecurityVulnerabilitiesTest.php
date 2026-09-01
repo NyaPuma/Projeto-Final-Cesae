@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Security\SQLInjection;
 
 use App\Enums\UserRoleEnum;
 use App\Models\Ticket;

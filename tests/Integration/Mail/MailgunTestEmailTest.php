@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Integration\Mail;
 
 use App\Enums\UserRoleEnum;
 use App\Models\User;
