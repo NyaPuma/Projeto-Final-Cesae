@@ -6,4 +6,3 @@ return [
     'page' => 'Oldal',
     'of' => 'de',
 ];
-

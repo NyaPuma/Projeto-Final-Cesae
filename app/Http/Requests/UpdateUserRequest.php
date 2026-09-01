@@ -61,6 +61,7 @@ final class UpdateUserRequest extends FormRequest
                     if (! app()->environment('testing')) {
                         $rule->uncompromised();
                     }
+
                     return $rule;
                 })(),
             ],

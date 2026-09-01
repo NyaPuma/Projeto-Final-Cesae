@@ -3,9 +3,8 @@
 namespace Tests\Unit\Services;
 
 use App\Enums\TicketPriorityEnum;
+use App\Enums\TicketStatusEnum;
 use App\Enums\UserRoleEnum;
-use App\Models\Ticket;
-use App\Models\User;
 use App\Services\TechnicianAssignmentService;
 use App\Services\TicketStatusService;
 use PHPUnit\Framework\Attributes\Test;
@@ -33,7 +32,7 @@ class TechnicianAssignmentServiceTest extends FeatureTestCase
         $busyTechnician = $this->createUserWithToken(UserRoleEnum::Technician->value);
         $freeTechnician = $this->createUserWithToken(UserRoleEnum::Technician->value);
 
-        $inProgressId = app(TicketStatusService::class)->getByName(\App\Enums\TicketStatusEnum::InProgress);
+        $inProgressId = app(TicketStatusService::class)->getByName(TicketStatusEnum::InProgress);
         $this->createTicket(['assigned_to' => $busyTechnician->id, 'status_id' => $inProgressId]);
         $this->createTicket(['assigned_to' => $busyTechnician->id, 'status_id' => $inProgressId]);
 
@@ -154,7 +153,7 @@ class TechnicianAssignmentServiceTest extends FeatureTestCase
     #[Test]
     public function it_ignores_tickets_that_are_not_open(): void
     {
-        $closedStatusId = app(TicketStatusService::class)->getByName(\App\Enums\TicketStatusEnum::Closed);
+        $closedStatusId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Closed);
         $this->createTicket([
             'priority' => TicketPriorityEnum::Critical->value,
             'status_id' => $closedStatusId,

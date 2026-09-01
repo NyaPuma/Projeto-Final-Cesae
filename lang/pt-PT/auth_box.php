@@ -7,4 +7,3 @@ return [
     'login_register' => 'Login / Registo',
     'connection_error' => 'Erro de ligação',
 ];
-

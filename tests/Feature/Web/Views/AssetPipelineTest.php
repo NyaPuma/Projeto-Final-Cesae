@@ -40,7 +40,7 @@ class AssetPipelineTest extends TestCase
 
             $relativePath = str_replace('\\', '/', $file->getRelativePathname());
             foreach ($excluded as $prefix) {
-                if (str_starts_with($relativePath, $prefix . '/')) {
+                if (str_starts_with($relativePath, $prefix.'/')) {
                     continue 2;
                 }
             }
@@ -125,7 +125,7 @@ class AssetPipelineTest extends TestCase
     {
         $manifestPath = public_path('build/manifest.json');
 
-        if (!File::exists($manifestPath)) {
+        if (! File::exists($manifestPath)) {
             $this->markTestSkipped('Vite manifest not built. Run `npm run build`.');
         }
 
@@ -134,7 +134,7 @@ class AssetPipelineTest extends TestCase
 
         $this->assertNotNull($entry, 'Manifest is missing the resources/js/app.js entry');
 
-        $assetPath = public_path('build/' . $entry['file']);
+        $assetPath = public_path('build/'.$entry['file']);
         $this->assertFileExists($assetPath);
 
         $bundle = File::get($assetPath);
@@ -173,7 +173,7 @@ class AssetPipelineTest extends TestCase
         $create->assertSee('data-page="users-create"', false);
         $this->assertNoUnsanctionedInlineScripts($create->getContent(), '/ui/users/create');
 
-        $edit = $this->withHeader('X-Auth-Token', $admin->api_token)->get('/ui/users/' . $admin->id . '/edit');
+        $edit = $this->withHeader('X-Auth-Token', $admin->api_token)->get('/ui/users/'.$admin->id.'/edit');
         $edit->assertOk();
         $edit->assertSee('data-page="users-edit"', false);
         $this->assertNoUnsanctionedInlineScripts($edit->getContent(), '/ui/users/{id}/edit');
@@ -214,7 +214,7 @@ class AssetPipelineTest extends TestCase
     public function test_layouts_include_synchronous_anti_fouc_theme_script(): void
     {
         foreach (['ui/layout.blade.php', 'layouts/layout.blade.php', 'components/ui/auth/shell.blade.php'] as $view) {
-            $path = resource_path('views/' . $view);
+            $path = resource_path('views/'.$view);
             $content = File::get($path);
 
             $this->assertStringContainsString('prefers-color-scheme', $content);

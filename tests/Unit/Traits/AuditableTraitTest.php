@@ -2,10 +2,9 @@
 
 namespace Tests\Unit;
 
-
-use App\Enums\UserRoleEnum;
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
+use App\Enums\UserRoleEnum;
 use App\Models\Audit;
 use App\Models\Equipment;
 use App\Models\Room;

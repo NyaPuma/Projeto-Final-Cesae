@@ -11,6 +11,7 @@ use App\Http\Requests\StoreTicketRequest;
 use App\Http\Resources\TicketResource;
 use App\Jobs\GenerateAiRecommendationJob;
 use App\Models\Ticket;
+use App\Repositories\Contracts\TicketRepositoryInterface;
 use App\Services\TechnicianAssignmentService;
 use App\Services\TicketSearchService;
 use Illuminate\Http\JsonResponse;
@@ -20,7 +21,7 @@ use Illuminate\View\View;
 final class TicketController extends Controller
 {
     public function __construct(
-        private readonly \App\Repositories\Contracts\TicketRepositoryInterface $ticketRepository,
+        private readonly TicketRepositoryInterface $ticketRepository,
         private readonly CreateTicketAction $createTicketAction,
         private readonly TechnicianAssignmentService $technicianService,
         private readonly TicketSearchService $searchService,

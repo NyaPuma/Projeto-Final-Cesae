@@ -65,14 +65,14 @@ final class TicketStatusChanged extends Notification implements ShouldQueue
         $newLabel = $this->resolveStatusLabel($this->newStatus);
 
         return [
-            'ticket_id'  => $this->ticket->id,
-            'title'      => __('notifications.db_status_title', ['id' => $this->ticket->id]),
-            'message'    => __('notifications.db_status_message', [
+            'ticket_id' => $this->ticket->id,
+            'title' => __('notifications.db_status_title', ['id' => $this->ticket->id]),
+            'message' => __('notifications.db_status_message', [
                 'title' => $this->ticket->title,
                 'status' => $newLabel,
             ]),
-            'type'       => 'info',
-            'link'       => "/ui/tickets/{$this->ticket->id}",
+            'type' => 'info',
+            'link' => "/ui/tickets/{$this->ticket->id}",
             'old_status' => $this->oldStatus,
             'new_status' => $this->newStatus,
         ];
@@ -85,12 +85,12 @@ final class TicketStatusChanged extends Notification implements ShouldQueue
     {
         $enum = TicketStatusEnum::tryFrom($status);
 
-        if ($enum && method_exists($enum, 'label')) {
+        if ($enum !== null) {
             return $enum->label();
         }
 
         foreach (TicketStatusEnum::cases() as $case) {
-            if (method_exists($case, 'label') && $case->label() === $status) {
+            if ($case->label() === $status) {
                 return $case->label();
             }
         }

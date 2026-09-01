@@ -9,6 +9,7 @@ use App\Http\Requests\RequestBudgetRequest;
 use App\Http\Requests\SubmitBudgetRequest;
 use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
+use App\Models\User;
 use App\Services\NotificationService;
 use App\Services\TicketStatusService;
 use Illuminate\Http\JsonResponse;
@@ -99,7 +100,7 @@ final class TicketBudgetController extends Controller
     /**
      * Applies common budget and assignment changes to the ticket.
      */
-    private function applyBudgetChanges(Ticket $ticket, BudgetSubmissionData $data, $user): void
+    private function applyBudgetChanges(Ticket $ticket, BudgetSubmissionData $data, User $user): void
     {
         if ($data->budgetDetails !== null) {
             $ticket->budget_details = $data->budgetDetails;

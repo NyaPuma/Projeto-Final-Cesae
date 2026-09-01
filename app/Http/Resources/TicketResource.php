@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
+use App\Enums\TicketPriorityEnum;
+use App\Enums\TicketStatusEnum;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/** @mixin Ticket */
 final class TicketResource extends JsonResource
 {
     public function toArray(Request $request): array
@@ -17,7 +21,7 @@ final class TicketResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'priority' => $this->priority,
-            'priority_label' => \App\Enums\TicketPriorityEnum::normalize((string) $this->priority)?->label(),
+            'priority_label' => TicketPriorityEnum::normalize((string) $this->priority)?->label(),
             'urgent' => $this->urgent,
             'user_id' => $this->user_id,
             'reporter_name' => $this->reporter_name,
@@ -28,7 +32,7 @@ final class TicketResource extends JsonResource
             'room_id' => $this->room_id,
             'status_id' => $this->status_id,
             'status' => $this->status,
-            'status_label' => \App\Enums\TicketStatusEnum::normalize($this->status?->name)?->label(),
+            'status_label' => TicketStatusEnum::normalize($this->status?->name)?->label(),
             'user' => $this->whenLoaded('user', fn () => $this->user ? [
                 'id' => $this->user->id,
                 'name' => $this->user->name,

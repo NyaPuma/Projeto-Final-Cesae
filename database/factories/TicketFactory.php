@@ -26,7 +26,7 @@ class TicketFactory extends Factory
             'room_id' => null,
             'equipment_id' => null,
             'status_id' => TicketStatus::query()->inRandomOrder()->value('id'),
-            'reference' => 'TKT-' . now()->format('YmdHis') . '-' . fake()->unique()->randomNumber(5),
+            'reference' => 'TKT-'.now()->format('YmdHis').'-'.fake()->unique()->randomNumber(5),
             'title' => fake()->sentence(4),
             'description' => fake()->paragraph(),
             'priority' => fake()->randomElement([

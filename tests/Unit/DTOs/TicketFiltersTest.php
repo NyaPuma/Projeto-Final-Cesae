@@ -14,7 +14,7 @@ class TicketFiltersTest extends TestCase
     #[Test]
     public function it_creates_empty_filters(): void
     {
-        $dto = new TicketFilters();
+        $dto = new TicketFilters;
 
         $this->assertFalse($dto->hasFilters());
         $this->assertEquals([], $dto->toArray());

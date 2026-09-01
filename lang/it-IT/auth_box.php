@@ -6,4 +6,3 @@ return [
     'signin' => 'Accedi',
     'login_register' => 'Accesso / Registrazione',
 ];
-

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Requests;
 
 use App\Models\Supplier;
+use App\Services\LocaleService;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -38,7 +39,7 @@ final class UpdateSupplierRequest extends FormRequest
     {
         return [
             'name' => 'name',
-            'nif' => \App\Services\LocaleService::taxIdentifierLabel(),
+            'nif' => LocaleService::taxIdentifierLabel(),
             'contact' => 'contact',
             'email' => 'email',
             'address' => 'address',

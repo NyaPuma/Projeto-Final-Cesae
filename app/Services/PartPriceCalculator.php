@@ -21,7 +21,7 @@ final class PartPriceCalculator
     public function priceWithVat(Part $part, ?TaxRate $taxRate = null): float
     {
         $rate = $taxRate ?? $part->taxRate;
-        $percent = (float) ($rate?->percent ?? 0);
+        $percent = $rate === null ? 0.0 : (float) $rate->percent;
 
         return round((float) $part->cost_price * (1 + $percent / 100), 2);
     }
@@ -44,7 +44,7 @@ final class PartPriceCalculator
         }
 
         $rate = $taxRate ?? $part->taxRate;
-        $percent = (float) ($rate?->percent ?? 0);
+        $percent = $rate === null ? 0.0 : (float) $rate->percent;
 
         return round((float) $part->sale_price * (1 + $percent / 100), 2);
     }

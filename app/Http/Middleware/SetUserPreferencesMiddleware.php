@@ -38,5 +38,4 @@ final class SetUserPreferencesMiddleware
 
         return $next($request);
     }
-
 }

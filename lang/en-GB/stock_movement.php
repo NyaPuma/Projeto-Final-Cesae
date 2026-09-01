@@ -5,4 +5,3 @@ return [
     'surplus_return' => 'Return of surplus',
     'intervention_consumption' => 'Consumption during intervention',
 ];
-

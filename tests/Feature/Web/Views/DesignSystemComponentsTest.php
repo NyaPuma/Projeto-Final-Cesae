@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Web\Views;
 
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\MessageBag;
 use Illuminate\Support\ViewErrorBag;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
@@ -16,7 +18,7 @@ class DesignSystemComponentsTest extends TestCase
 
     private function renderBlade(string $blade, array $data = []): string
     {
-        \Illuminate\Support\Facades\View::share('errors', new ViewErrorBag);
+        View::share('errors', new ViewErrorBag);
 
         return $this->blade($blade, array_merge(['errors' => new ViewErrorBag], $data));
     }
@@ -109,9 +111,9 @@ class DesignSystemComponentsTest extends TestCase
         $this->assertStringContainsString('aria-invalid="false"', $html);
 
         $errors = new ViewErrorBag;
-        $errors->put('default', new \Illuminate\Support\MessageBag(['email' => 'O campo e-mail é obrigatório.']));
+        $errors->put('default', new MessageBag(['email' => 'O campo e-mail é obrigatório.']));
 
-        \Illuminate\Support\Facades\View::share('errors', $errors);
+        View::share('errors', $errors);
 
         $errorHtml = $this->blade('<x-input.input name="email" label="E-mail" />');
 

@@ -44,7 +44,7 @@ final readonly class ScheduledEventsQuery
 
             return [
                 'id' => $ticket->id,
-                'title' => '#' . $ticket->id . ' - ' . $ticket->title,
+                'title' => '#'.$ticket->id.' - '.$ticket->title,
                 'start' => Carbon::parse($start)->toIso8601String(),
                 'end' => $ticket->scheduled_end ? Carbon::parse($ticket->scheduled_end)->toIso8601String() : null,
             ];

@@ -54,7 +54,7 @@ class UpdateUserDataTest extends TestCase
     public function it_detects_whether_updates_exist(): void
     {
         $this->assertTrue((new UpdateUserData(password: 'secret'))->hasUpdates());
-        $this->assertFalse((new UpdateUserData())->hasUpdates());
+        $this->assertFalse((new UpdateUserData)->hasUpdates());
     }
 
     #[Test]

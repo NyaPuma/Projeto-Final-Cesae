@@ -6,4 +6,3 @@ return [
     'page' => 'Sida',
     'of' => 'de',
 ];
-

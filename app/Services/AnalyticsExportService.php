@@ -83,7 +83,6 @@ final class AnalyticsExportService
     /**
      * Exports ticket data to a CSV file at the specified path.
      *
-     * @param string $path
      * @throws RuntimeException
      */
     public function exportCsvToFile(string $path): void
@@ -105,8 +104,6 @@ final class AnalyticsExportService
 
     /**
      * Exports the analytics report in PDF format to the specified path.
-     *
-     * @param string $path
      */
     public function exportPdfToFile(string $path): void
     {
@@ -125,7 +122,6 @@ final class AnalyticsExportService
     /**
      * Ensures the parent directory of the file path exists.
      *
-     * @param string $path
      * @throws RuntimeException
      */
     private function ensureDirectoryExists(string $path): void
@@ -140,7 +136,7 @@ final class AnalyticsExportService
     /**
      * Writes CSV header and data rows to the provided file pointer.
      *
-     * @param resource $handle
+     * @param  resource  $handle
      */
     private function writeCsvRows($handle): void
     {
@@ -205,5 +201,4 @@ final class AnalyticsExportService
     {
         return $this->localization ?? app(LocalizationService::class);
     }
-
 }

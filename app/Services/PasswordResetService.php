@@ -14,9 +14,6 @@ final class PasswordResetService
 {
     /**
      * Creates and stores a secure password reset token for the provided email.
-     *
-     * @param string $email
-     * @return string
      */
     public function createResetToken(string $email): string
     {
@@ -33,10 +30,6 @@ final class PasswordResetService
 
     /**
      * Validates the password reset token, checking expiration and match.
-     *
-     * @param string $email
-     * @param string $token
-     * @return User|null
      */
     public function validateToken(string $email, string $token): ?User
     {
@@ -66,9 +59,6 @@ final class PasswordResetService
 
     /**
      * Resets the user password, revokes associated API tokens, and removes the recovery record.
-     *
-     * @param User $user
-     * @param string $password
      */
     public function resetPassword(User $user, string $password): void
     {

@@ -2,7 +2,6 @@
 
 namespace Tests\Concerns;
 
-
 use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\UserProfile;

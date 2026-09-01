@@ -5,4 +5,3 @@ return [
     'surplus_return' => 'Fazlanın iadesi',
     'intervention_consumption' => 'Müdahale sırasında tüketim',
 ];
-

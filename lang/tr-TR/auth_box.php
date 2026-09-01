@@ -6,4 +6,3 @@ return [
     'signin' => 'Oturum aç',
     'login_register' => 'Giriş / Kayıt',
 ];
-

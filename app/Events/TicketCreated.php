@@ -7,6 +7,7 @@ use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use App\Models\User;
 use Carbon\CarbonImmutable;
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -30,7 +31,7 @@ final class TicketCreated implements ShouldBroadcast
     /**
      * The channels on which the event should be broadcast in real time (WebSockets).
      *
-     * @return array<\Illuminate\Broadcasting\Channel>
+     * @return array<Channel>
      */
     public function broadcastOn(): array
     {
@@ -55,22 +56,24 @@ final class TicketCreated implements ShouldBroadcast
      */
     public function broadcastWith(): array
     {
-        $statusEnum = $this->ticket->status ? TicketStatusEnum::tryFrom($this->ticket->status->name) : null;
-        $priorityEnum = is_string($this->ticket->priority) ? TicketPriorityEnum::tryFrom($this->ticket->priority) : null;
+        $statusEnum = $this->ticket->status !== null
+            ? TicketStatusEnum::tryFrom($this->ticket->status->name)
+            : null;
+        $priorityEnum = TicketPriorityEnum::normalize($this->ticket->getAttribute('priority'));
 
         return [
             'ticket_id' => $this->ticket->id,
-            'code' => $this->ticket->status?->code ?? null,
-            'title' => $this->ticket->title ?? $this->ticket->name ?? null,
+            'code' => $this->ticket->status?->code,
+            'title' => $this->ticket->title,
             'status' => [
-                'value' => $statusEnum?->value ?? null,
-                'label' => $statusEnum?->label() ?? null,
-                'color' => $statusEnum?->color() ?? null,
+                'value' => $statusEnum?->value,
+                'label' => $statusEnum?->label(),
+                'color' => $statusEnum?->color(),
             ],
             'priority' => [
-                'value' => $priorityEnum?->value ?? null,
-                'label' => $priorityEnum?->label() ?? null,
-                'color' => $priorityEnum?->color() ?? null,
+                'value' => $priorityEnum?->value,
+                'label' => $priorityEnum?->label(),
+                'color' => $priorityEnum?->color(),
             ],
             'creator' => [
                 'id' => $this->creator->id,

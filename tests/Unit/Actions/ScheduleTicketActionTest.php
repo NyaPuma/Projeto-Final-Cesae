@@ -65,7 +65,7 @@ class ScheduleTicketActionTest extends FeatureTestCase
         $ticket = $this->createTicketWithStatus(TicketStatusEnum::Closed->value);
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("Cannot schedule a ticket that is already closed.");
+        $this->expectExceptionMessage('Cannot schedule a ticket that is already closed.');
 
         $this->action->execute(
             $ticket,

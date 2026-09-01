@@ -14,7 +14,32 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 
+/**
+ * @property Carbon|null $opened_at
+ * @property Carbon|null $in_progress_at
+ * @property Carbon|null $closed_at
+ * @property Carbon|null $reopened_at
+ * @property Carbon|null $assigned_at
+ * @property Carbon|null $first_response_at
+ * @property Carbon|null $resolved_at
+ * @property Carbon|null $scheduled_at
+ * @property Carbon|null $scheduled_end
+ * @property Carbon|null $budget_requested_at
+ * @property Carbon|null $budget_decided_at
+ * @property Carbon|null $budget_approved_at
+ * @property Carbon|null $due_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property string|null $reference
+ * @property array<int, array<string, mixed>>|null $budget_details
+ * @property-read User|null $user
+ * @property-read User|null $technician
+ * @property-read TicketStatus|null $status
+ * @property-read Equipment|null $equipment
+ * @property-read Room|null $room
+ */
 final class Ticket extends Model
 {
     use Auditable;
@@ -23,9 +48,9 @@ final class Ticket extends Model
 
     protected static function booted(): void
     {
-        static::creating(function (Ticket $ticket) {
+        self::creating(function (Ticket $ticket) {
             if ($ticket->reference === null) {
-                $ticket->reference = 'TKT-' . now()->format('YmdHis') . '-' . strtoupper(substr(uniqid(), -5));
+                $ticket->reference = 'TKT-'.now()->format('YmdHis').'-'.strtoupper(substr(uniqid(), -5));
             }
         });
     }

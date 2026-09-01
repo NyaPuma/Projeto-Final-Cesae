@@ -44,17 +44,17 @@ final class TicketStartController extends Controller
 
         // 3. Check for higher priority pending tickets
         if ($higherPriority['has_higher'] && ! $force) {
-            $msg = __("tickets.Existem :total ticket(s) de prioridade mais alta por atender.", [
+            $msg = __('tickets.Existem :total ticket(s) de prioridade mais alta por atender.', [
                 'total' => $higherPriority['total'],
             ]);
 
             if ($higherPriority['assigned_to_user'] > 0) {
-                $msg .= ' ' . __("common.Destes, :assigned estão atribuídos a si.", [
+                $msg .= ' '.__('common.Destes, :assigned estão atribuídos a si.', [
                     'assigned' => $higherPriority['assigned_to_user'],
                 ]);
             }
 
-            $msg .= ' ' . __('common.Recomenda-se resolver os mais urgentes primeiro.');
+            $msg .= ' '.__('common.Recomenda-se resolver os mais urgentes primeiro.');
 
             return response()->json([
                 'warning' => true,

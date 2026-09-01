@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/** @property string|null $code */
 final class TicketStatus extends Model
 {
     use HasFactory;
@@ -17,7 +18,7 @@ final class TicketStatus extends Model
 
     protected static function booted(): void
     {
-        static::creating(function (TicketStatus $status) {
+        self::creating(function (TicketStatus $status) {
             if ($status->code === null) {
                 $status->code = strtoupper(substr(preg_replace('/[^a-zA-Z0-9]/', '_', $status->name ?? 'status'), 0, 20));
             }

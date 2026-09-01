@@ -15,8 +15,6 @@ use App\Models\Room;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Services\TicketStatusService;
-use Carbon\Carbon;
-use Carbon\CarbonImmutable;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Base\DatabaseTestCase;
 use Tests\Concerns\CreatesTickets;
@@ -77,7 +75,7 @@ class TicketQueriesTest extends DatabaseTestCase
         $this->assertGreaterThanOrEqual(2, $result->count());
         $event = $result->firstWhere('id', $ticket->id);
         $this->assertNotNull($event);
-        $this->assertEquals('#' . $ticket->id . ' - Test Ticket', $event['title']);
+        $this->assertEquals('#'.$ticket->id.' - Test Ticket', $event['title']);
         $this->assertNotNull($event['start']);
         $this->assertNotNull($event['end']);
     }

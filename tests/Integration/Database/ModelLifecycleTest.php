@@ -2,11 +2,9 @@
 
 namespace Tests\Integration\Database;
 
-
 use App\Enums\UserRoleEnum;
 use App\Models\EquipmentCategory;
 use App\Models\Room;
-use App\Models\User;
 use App\Models\UserProfile;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Base\FeatureTestCase;

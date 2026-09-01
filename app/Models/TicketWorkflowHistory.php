@@ -9,7 +9,13 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
+/**
+ * @property Carbon|null $created_at
+ * @property-read TicketStatus|null $originStatus
+ * @property-read TicketStatus|null $destinationStatus
+ */
 final class TicketWorkflowHistory extends Model
 {
     use HasFactory;
@@ -66,8 +72,8 @@ final class TicketWorkflowHistory extends Model
         return Attribute::make(
             get: fn (): string => sprintf(
                 '%s ➔ %s',
-                $this->originStatus?->name ?? 'N/A',
-                $this->destinationStatus?->name ?? 'N/A'
+                optional($this->originStatus)->name ?? 'N/A',
+                optional($this->destinationStatus)->name ?? 'N/A'
             )
         );
     }

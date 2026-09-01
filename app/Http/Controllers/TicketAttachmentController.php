@@ -42,8 +42,8 @@ final class TicketAttachmentController extends Controller
 
         // 3. Safe filename processing and storage write
         //    The extension is derived from the real MIME (never from the client-submitted name)
-        $extension = self::EXTENSION_BY_MIME[$realMime] ?? 'img';
-        $safeFilename = Str::uuid() . '.' . $extension;
+        $extension = self::EXTENSION_BY_MIME[$realMime];
+        $safeFilename = Str::uuid().'.'.$extension;
         $path = $file->storeAs('ticket_photos', $safeFilename, 'public');
 
         // 4. Register the attachment in the database

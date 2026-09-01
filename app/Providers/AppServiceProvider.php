@@ -40,6 +40,7 @@ use App\Repositories\TicketRepository;
 use App\Repositories\UserRepository;
 use App\Services\AIService;
 use App\Services\AnalyticsService;
+use App\Services\LocalizationService;
 use App\Services\NotificationService;
 use App\Services\SystemSettingsService;
 use App\Services\TicketStatusService;
@@ -108,7 +109,7 @@ final class AppServiceProvider extends ServiceProvider
      */
     private function registerFormattingDirectives(): void
     {
-        $service = \App\Services\LocalizationService::class;
+        $service = LocalizationService::class;
 
         Blade::directive('money', static fn (string $expr) => "<?php echo app({$service}::class)->formatCurrency($expr); ?>");
         Blade::directive('number', static fn (string $expr) => "<?php echo app({$service}::class)->formatNumber($expr); ?>");
@@ -150,9 +151,9 @@ final class AppServiceProvider extends ServiceProvider
 
             if ($timeInSeconds >= $threshold) {
                 Log::warning('Slow query detected', [
-                    'sql'      => $query->sql,
+                    'sql' => $query->sql,
                     'bindings' => $query->bindings,
-                    'time'     => round($timeInSeconds, 3) . 's',
+                    'time' => round($timeInSeconds, 3).'s',
                 ]);
             }
         });

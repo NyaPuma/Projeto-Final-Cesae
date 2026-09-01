@@ -12,9 +12,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use InvalidArgumentException;
 
+/**
+ * @property-read TaxRate|null $taxRate
+ * @property-read PartCategory|null $category
+ * @property-read Pivot $pivot
+ */
 final class Part extends Model
 {
     use Auditable;

@@ -6,4 +6,3 @@ return [
     'signin' => 'Kirjaudu sisään',
     'login_register' => 'Kirjautuminen / rekisteröinti',
 ];
-

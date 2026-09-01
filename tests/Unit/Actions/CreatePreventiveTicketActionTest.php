@@ -2,10 +2,9 @@
 
 namespace Tests\Unit\Actions;
 
-
-use App\Enums\UserRoleEnum;
 use App\Actions\CreatePreventiveTicketAction;
 use App\Enums\TicketPriorityEnum;
+use App\Enums\UserRoleEnum;
 use App\Models\Ticket;
 use App\Models\TicketStatus;
 use App\Models\User;

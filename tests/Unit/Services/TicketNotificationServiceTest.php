@@ -4,6 +4,7 @@ namespace Tests\Unit\Services;
 
 use App\Enums\NotificationTypeEnum;
 use App\Enums\TicketPriorityEnum;
+use App\Enums\UserRoleEnum;
 use App\Models\Notification;
 use App\Models\Ticket;
 use App\Services\TicketNotificationService;
@@ -60,7 +61,7 @@ class TicketNotificationServiceTest extends FeatureTestCase
     {
         $adminOne = $this->createAdmin();
         $adminTwo = $this->createAdmin();
-        $this->createUserWithToken(\App\Enums\UserRoleEnum::Technician->value);
+        $this->createUserWithToken(UserRoleEnum::Technician->value);
 
         $ticket = $this->createTicket([
             'title' => 'Ticket de baixa prioridade',

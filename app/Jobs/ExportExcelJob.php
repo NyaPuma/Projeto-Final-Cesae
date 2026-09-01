@@ -44,7 +44,7 @@ final class ExportExcelJob implements ShouldQueue
         Storage::disk('public')->makeDirectory('exports');
 
         Excel::store(
-            new TicketsExport(),
+            new TicketsExport,
             'exports/'.$filename,
             'public',
             \Maatwebsite\Excel\Excel::XLSX,

@@ -14,7 +14,7 @@ return new class extends Migration
     public function up(): void
     {
         // Get all users who don't have preferences defined
-        $usersWithoutPrefs = \DB::table('users')
+        $usersWithoutPrefs = DB::table('users')
             ->leftJoin('user_preferences', 'users.id', '=', 'user_preferences.user_id')
             ->whereNull('user_preferences.user_id')
             ->select('users.id')

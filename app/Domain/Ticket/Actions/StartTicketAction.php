@@ -7,7 +7,6 @@ use App\Models\Ticket;
 use App\Models\User;
 use App\Services\TicketStatusService;
 use Illuminate\Support\Facades\DB;
-use RuntimeException;
 
 final readonly class StartTicketAction
 {
@@ -18,10 +17,6 @@ final readonly class StartTicketAction
     public function execute(Ticket $ticket, ?User $user = null): bool
     {
         $inProgressStatusId = $this->statusService->getByName(TicketStatusEnum::InProgress);
-
-        if ($inProgressStatusId === null) {
-            throw new RuntimeException("Status '" . TicketStatusEnum::InProgress->value . "' was not found.");
-        }
 
         if ($ticket->status_id === $inProgressStatusId) {
             return true;

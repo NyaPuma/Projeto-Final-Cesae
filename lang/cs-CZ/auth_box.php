@@ -6,4 +6,3 @@ return [
     'signin' => 'Zahájit relaci',
     'login_register' => 'Přihlášení / Registrace',
 ];
-

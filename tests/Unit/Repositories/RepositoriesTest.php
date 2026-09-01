@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Repositories;
 
+use App\Enums\TicketStatusEnum;
 use App\Enums\UserRoleEnum;
 use App\Models\Equipment;
 use App\Models\EquipmentCategory;
@@ -13,6 +14,7 @@ use App\Repositories\Contracts\EquipmentRepositoryInterface;
 use App\Repositories\Contracts\RoomRepositoryInterface;
 use App\Repositories\Contracts\TicketRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Services\TicketStatusService;
 use Tests\Base\FeatureTestCase;
 use Tests\Concerns\CreatesUsers;
 
@@ -21,8 +23,11 @@ class RepositoriesTest extends FeatureTestCase
     use CreatesUsers;
 
     private UserRepositoryInterface $users;
+
     private RoomRepositoryInterface $rooms;
+
     private EquipmentRepositoryInterface $equipment;
+
     private TicketRepositoryInterface $tickets;
 
     protected function setUp(): void
@@ -102,7 +107,7 @@ class RepositoriesTest extends FeatureTestCase
         $room = Room::factory()->create();
         $created = $this->equipment->create([
             'name' => 'Monitor',
-            'serial' => 'SN-' . fake()->unique()->bothify('####'),
+            'serial' => 'SN-'.fake()->unique()->bothify('####'),
             'category_id' => $category->id,
             'room_id' => $room->id,
         ]);
@@ -131,7 +136,7 @@ class RepositoriesTest extends FeatureTestCase
         $this->assertSame(2, $this->tickets->getTicketsByTechnician($technician->id)->total());
 
         $statusId = $this->tickets->getAll()->first()->status_id;
-        $openId = app(\App\Services\TicketStatusService::class)->getByName(\App\Enums\TicketStatusEnum::Open);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
         $openCount = Ticket::where('status_id', $openId)->count();
         $this->assertSame($openCount, $this->tickets->getOpenTickets()->total());
         foreach ($this->tickets->getOpenTickets() as $ticket) {

@@ -17,7 +17,7 @@ final readonly class CreateRoomAction
                     ? strtoupper(trim($data->code))
                     : null,
                 'location' => $data->location ? trim($data->location) : null,
-                'active' => $data->active ?? true,
+                'active' => $data->active,
                 'building' => $data->building,
                 'floor' => $data->floor,
                 'capacity' => $data->capacity,

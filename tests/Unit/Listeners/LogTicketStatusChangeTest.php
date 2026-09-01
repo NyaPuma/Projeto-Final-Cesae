@@ -23,7 +23,7 @@ class LogTicketStatusChangeTest extends TestCase
         $inProgress = TicketStatus::firstOrCreate(['name' => 'em curso'], ['code' => 'EM_CURSO']);
         $ticket = Ticket::factory()->create(['status_id' => $open->id]);
 
-        $listener = new LogTicketStatusChange();
+        $listener = new LogTicketStatusChange;
         $listener->handle(new TicketStatusUpdatedBroadcast(
             $ticket,
             TicketStatusEnum::Open,
@@ -45,7 +45,7 @@ class LogTicketStatusChangeTest extends TestCase
 
         Log::spy();
 
-        $listener = new LogTicketStatusChange();
+        $listener = new LogTicketStatusChange;
         $listener->handle(new TicketStatusUpdatedBroadcast(
             $ticket,
             TicketStatusEnum::Open,

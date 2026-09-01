@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-
 use App\Enums\UserRoleEnum;
+use App\Http\Middleware\CsrfMiddleware;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -48,7 +48,7 @@ class CsrfMiddlewareTest extends TestCase
 
         // Isolated route with ONLY the custom CsrfMiddleware, for deterministic tests
         // (without the framework's ValidateCsrfToken mixed into the pipeline).
-        Route::middleware(\App\Http\Middleware\CsrfMiddleware::class)
+        Route::middleware(CsrfMiddleware::class)
             ->post('/test-csrf-only', function () {
                 return response()->json(['ok' => true], 200);
             })

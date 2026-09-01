@@ -1,0 +1,76 @@
+name: Laravel Quality Gates
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Pint, Larastan, and PHPUnit
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: laravel_testing
+          POSTGRES_USER: laravel
+          POSTGRES_PASSWORD: laravel
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U laravel -d laravel_testing"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    env:
+      APP_ENV: testing
+      DB_CONNECTION: sqlite
+      DB_DATABASE: ':memory:'
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP and Composer dependencies
+        uses: ./.github/actions/setup-php-composer
+        with:
+          extensions: mbstring, pdo, pdo_sqlite, pdo_pgsql, bcmath, intl, gd
+
+      - name: Set up Node.js and npm cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Prepare application
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Validate Composer configuration
+        run: composer validate --strict
+
+      - name: Check code style with Laravel Pint
+        run: vendor/bin/pint --test
+
+      - name: Run Larastan static analysis
+        run: vendor/bin/phpstan analyse --memory-limit=1G
+
+      - name: Run the complete PHPUnit suite
+        run: php artisan test
+
+      - name: Build frontend assets
+        run: npm run build

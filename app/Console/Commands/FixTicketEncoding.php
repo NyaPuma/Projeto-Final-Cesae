@@ -51,7 +51,7 @@ class FixTicketEncoding extends Command
                 continue;
             }
 
-            $this->line("  tickets.{$column}: " . count($ids) . " affected record(s).");
+            $this->line("  tickets.{$column}: ".count($ids).' affected record(s).');
 
             if (! $dryRun) {
                 $idList = implode(',', $ids);

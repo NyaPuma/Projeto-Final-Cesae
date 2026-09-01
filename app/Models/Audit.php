@@ -8,8 +8,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Carbon;
 use LogicException;
 
+/**
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property array<string, mixed>|null $new_values
+ * @property-read User|null $user
+ */
 final class Audit extends Model
 {
     use HasFactory;
@@ -44,11 +51,11 @@ final class Audit extends Model
      */
     protected static function booted(): void
     {
-        static::updating(static function (): void {
+        self::updating(static function (): void {
             throw new LogicException('Audit records are immutable and cannot be updated.');
         });
 
-        static::deleting(static function (): void {
+        self::deleting(static function (): void {
             throw new LogicException('Audit records are immutable and cannot be deleted.');
         });
     }

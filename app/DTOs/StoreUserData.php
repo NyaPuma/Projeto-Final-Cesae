@@ -17,7 +17,7 @@ final readonly class StoreUserData
             throw new \InvalidArgumentException('User name cannot be empty.');
         }
 
-        if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+        if (! filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
             throw new \InvalidArgumentException('The provided e-mail is invalid.');
         }
 

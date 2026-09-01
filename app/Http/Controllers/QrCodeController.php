@@ -34,11 +34,11 @@ final class QrCodeController extends Controller
      */
     public function download(Equipment $equipment): Response
     {
-        $filename = 'qr-' . ($equipment->asset_tag ?? $equipment->id) . '.png';
+        $filename = 'qr-'.($equipment->asset_tag ?? $equipment->id).'.png';
 
         return response($this->qrCodeService->png($equipment), 200, [
             'Content-Type' => 'image/png',
-            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+            'Content-Disposition' => 'attachment; filename="'.$filename.'"',
         ]);
     }
 

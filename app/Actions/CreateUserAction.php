@@ -22,8 +22,10 @@ final readonly class CreateUserAction
                 'email' => trim(strtolower($data->email)),
                 'password' => Hash::make($data->password),
                 'profile_id' => $data->profileId,
-                'active' => $data->active ?? true,
+                'active' => $data->active,
             ]);
+
+            $this->userService->ensureDefaultProfile($user);
 
             return $user->load('profile');
         });

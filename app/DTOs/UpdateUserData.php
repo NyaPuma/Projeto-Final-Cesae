@@ -17,7 +17,7 @@ final readonly class UpdateUserData
             throw new \InvalidArgumentException('User name cannot be an empty string.');
         }
 
-        if ($this->email !== null && !filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+        if ($this->email !== null && ! filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
             throw new \InvalidArgumentException('The provided e-mail format is invalid.');
         }
 
@@ -44,7 +44,7 @@ final readonly class UpdateUserData
      */
     private static function parseNullableString(mixed $value): ?string
     {
-        if (!is_string($value)) {
+        if (! is_string($value)) {
             return null;
         }
 
@@ -68,7 +68,7 @@ final readonly class UpdateUserData
      */
     private static function parsePassword(mixed $value): ?string
     {
-        if (!is_string($value) || $value === '') {
+        if (! is_string($value) || $value === '') {
             return null;
         }
 
@@ -119,6 +119,6 @@ final readonly class UpdateUserData
 
     public function hasUpdates(): bool
     {
-        return $this->hasPassword() || !empty($this->toArray());
+        return $this->hasPassword() || ! empty($this->toArray());
     }
 }

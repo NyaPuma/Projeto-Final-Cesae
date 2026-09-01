@@ -5,4 +5,3 @@ return [
     'surplus_return' => 'Felesleg visszaszolgáltatása',
     'intervention_consumption' => 'Fogyasztás beavatkozás közben',
 ];
-

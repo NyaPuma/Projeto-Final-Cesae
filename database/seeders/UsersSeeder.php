@@ -77,8 +77,8 @@ class UsersSeeder extends Seeder
             $email = sprintf('synthetic-%03d@example.invalid', $index);
 
             $name = $profileName === 'technician'
-                ? $names['first'][$nameIndex % count($names['first'])] . ' ' . $names['last'][$nameIndex % count($names['last'])]
-                : 'Utilizador Sintético ' . str_pad((string) $index, 3, '0', STR_PAD_LEFT);
+                ? $names['first'][$nameIndex % count($names['first'])].' '.$names['last'][$nameIndex % count($names['last'])]
+                : 'Utilizador Sintético '.str_pad((string) $index, 3, '0', STR_PAD_LEFT);
 
             $nameIndex++;
 

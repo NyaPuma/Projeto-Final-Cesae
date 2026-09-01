@@ -12,6 +12,9 @@ final readonly class TopEntitiesQuery
         private Builder $baseQuery,
     ) {}
 
+    /**
+     * @return Collection<int, array{name: string, total: int, subtitle: 'interventions'}>
+     */
     public function getTopEquipments(): Collection
     {
         return (clone $this->baseQuery)
@@ -22,13 +25,16 @@ final readonly class TopEntitiesQuery
             ->orderByDesc('total')
             ->limit(5)
             ->get()
-            ->map(fn ($row) => [
-                'name' => $row->name,
-                'total' => (int) $row->total,
+            ->map(fn (mixed $row): array => [
+                'name' => (string) data_get($row, 'name'),
+                'total' => (int) data_get($row, 'total'),
                 'subtitle' => 'interventions',
             ]);
     }
 
+    /**
+     * @return Collection<int, array{name: string, total: int, subtitle: 'tickets'}>
+     */
     public function getTopRooms(): Collection
     {
         return (clone $this->baseQuery)
@@ -39,13 +45,16 @@ final readonly class TopEntitiesQuery
             ->orderByDesc('total')
             ->limit(5)
             ->get()
-            ->map(fn ($row) => [
-                'name' => $row->name,
-                'total' => (int) $row->total,
+            ->map(fn (mixed $row): array => [
+                'name' => (string) data_get($row, 'name'),
+                'total' => (int) data_get($row, 'total'),
                 'subtitle' => 'tickets',
             ]);
     }
 
+    /**
+     * @return Collection<int, array{name: string, total: int, subtitle: 'actions'}>
+     */
     public function getTopTechnicians(): Collection
     {
         return (clone $this->baseQuery)
@@ -56,9 +65,9 @@ final readonly class TopEntitiesQuery
             ->orderByDesc('total')
             ->limit(5)
             ->get()
-            ->map(fn ($row) => [
-                'name' => $row->name,
-                'total' => (int) $row->total,
+            ->map(fn (mixed $row): array => [
+                'name' => (string) data_get($row, 'name'),
+                'total' => (int) data_get($row, 'total'),
                 'subtitle' => 'actions',
             ]);
     }

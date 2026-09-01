@@ -54,13 +54,13 @@ final class NewTicketNotification extends Notification implements ShouldQueue
     {
         return [
             'ticket_id' => $this->ticket->id,
-            'title'     => __('notifications.db_new_ticket_title'),
-            'message'   => __('notifications.db_new_ticket_message', [
+            'title' => __('notifications.db_new_ticket_title'),
+            'message' => __('notifications.db_new_ticket_message', [
                 'id' => $this->ticket->id,
                 'title' => $this->ticket->title,
             ]),
-            'type'      => 'info',
-            'link'      => "/ui/tickets/{$this->ticket->id}",
+            'type' => 'info',
+            'link' => "/ui/tickets/{$this->ticket->id}",
         ];
     }
 }

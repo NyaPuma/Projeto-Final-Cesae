@@ -79,7 +79,7 @@ class SubmitBudgetActionTest extends FeatureTestCase
         $ticket = $this->createTicketWithStatus(TicketStatusEnum::Closed->value);
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("Cannot submit a budget for a ticket that is already closed.");
+        $this->expectExceptionMessage('Cannot submit a budget for a ticket that is already closed.');
 
         $this->action->execute(
             $ticket,
@@ -93,7 +93,7 @@ class SubmitBudgetActionTest extends FeatureTestCase
         $ticket = $this->createTicketWithBudget();
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("A pending budget request already exists for this ticket.");
+        $this->expectExceptionMessage('A pending budget request already exists for this ticket.');
 
         $this->action->execute(
             $ticket,
@@ -107,7 +107,7 @@ class SubmitBudgetActionTest extends FeatureTestCase
         $ticket = $this->createTicket();
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The budget amount must be greater than 0.");
+        $this->expectExceptionMessage('The budget amount must be greater than 0.');
 
         $this->action->execute(
             $ticket,

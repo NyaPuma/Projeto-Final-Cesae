@@ -52,6 +52,7 @@ final class StoreUserRequest extends FormRequest
                     if (! app()->environment('testing')) {
                         $rule->uncompromised();
                     }
+
                     return $rule;
                 })(),
             ],

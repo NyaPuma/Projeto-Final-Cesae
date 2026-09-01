@@ -24,7 +24,7 @@ class UpdateUserActionTest extends FeatureTestCase
     #[Test]
     public function it_updates_the_user_name(): void
     {
-        $user = User::factory()->create(["active" => true]);
+        $user = User::factory()->create(['active' => true]);
 
         $result = $this->action->execute(
             $user,
@@ -77,7 +77,7 @@ class UpdateUserActionTest extends FeatureTestCase
     public function it_switches_the_user_profile_when_a_profile_id_is_provided(): void
     {
         $profile = UserProfile::firstOrCreate(['name' => UserRoleEnum::Technician->value]);
-        $user = User::factory()->create(["active" => true]);
+        $user = User::factory()->create(['active' => true]);
 
         $result = $this->action->execute(
             $user,

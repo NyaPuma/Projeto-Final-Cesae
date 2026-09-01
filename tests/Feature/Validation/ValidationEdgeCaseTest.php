@@ -2,9 +2,8 @@
 
 namespace Tests\Feature;
 
-
-use App\Enums\UserRoleEnum;
 use App\Enums\TicketPriorityEnum;
+use App\Enums\UserRoleEnum;
 use App\Models\Room;
 use App\Models\Ticket;
 use App\Models\User;

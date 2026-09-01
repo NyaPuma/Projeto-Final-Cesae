@@ -6,7 +6,6 @@ namespace App\Services;
 
 use App\Enums\TicketStatusEnum;
 use App\Models\TicketStatus;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
 final class TicketStatusService
@@ -20,11 +19,8 @@ final class TicketStatusService
 
     /**
      * Gets ticket status ID by enum name, using in-memory and persistent cache.
-     *
-     * @param TicketStatusEnum $status
-     * @return int|null
      */
-    public function getByName(TicketStatusEnum $status): ?int
+    public function getByName(TicketStatusEnum $status): int
     {
         $name = $status->value;
 

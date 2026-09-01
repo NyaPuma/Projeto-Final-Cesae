@@ -22,7 +22,7 @@ final class ThemeController extends Controller
         $themeId = $this->effectiveThemeId($this->resolveCssUser($request));
         $values = $this->themePresets->valuesFor($themeId);
         $css = $this->buildCss($values);
-        $etag = '"' . sha1($css) . '"';
+        $etag = '"'.sha1($css).'"';
 
         if ($request->headers->get('if-none-match') === $etag) {
             return response('', 304)
@@ -98,7 +98,7 @@ final class ThemeController extends Controller
             // session unavailable — continue with the other candidates
         }
 
-        foreach (array_unique(array_filter($candidates)) as $token) {
+        foreach (array_unique($candidates) as $token) {
             $tokenHash = User::hashToken($token);
             $found = User::with('profile')
                 ->where('api_token', $tokenHash)
@@ -130,7 +130,7 @@ final class ThemeController extends Controller
             return 'default';
         }
 
-        return substr(sha1($id . $raw), 0, 12);
+        return substr(sha1($id.$raw), 0, 12);
     }
 
     private function buildCss(array $settings): string
@@ -152,7 +152,7 @@ final class ThemeController extends Controller
             $lines[] = sprintf('    %s: %s;', $key, $value);
         }
 
-        return ":root {\n" . implode("\n", $lines) . "\n}\n";
+        return ":root {\n".implode("\n", $lines)."\n}\n";
     }
 
     /**
@@ -181,6 +181,7 @@ final class ThemeController extends Controller
     private function hexToRgb(string $hex): array
     {
         $hex = ltrim($hex, '#');
+
         return [
             hexdec(substr($hex, 0, 2)),
             hexdec(substr($hex, 2, 2)),

@@ -5,6 +5,7 @@ namespace Tests\Unit\Jobs;
 use App\Jobs\GenerateAiRecommendationJob;
 use App\Services\AIService;
 use App\Services\TicketStatusService;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
 use OpenAI\Laravel\Facades\OpenAI;
 use OpenAI\Responses\Chat\CreateResponse;
 use PHPUnit\Framework\Attributes\Test;
@@ -107,7 +108,7 @@ class GenerateAiRecommendationJobTest extends FeatureTestCase
 
         $job = new GenerateAiRecommendationJob($ticket);
 
-        $this->assertInstanceOf(\Illuminate\Contracts\Queue\ShouldBeUnique::class, $job);
+        $this->assertInstanceOf(ShouldBeUnique::class, $job);
         $this->assertEquals((string) $ticket->id, $job->uniqueId());
         $this->assertGreaterThan(0, $job->uniqueFor());
     }

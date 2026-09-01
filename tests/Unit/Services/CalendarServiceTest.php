@@ -19,7 +19,7 @@ class CalendarServiceTest extends FeatureTestCase
 
         app(TicketStatusService::class)->flush();
 
-        $this->service = new CalendarService();
+        $this->service = new CalendarService;
     }
 
     #[Test]

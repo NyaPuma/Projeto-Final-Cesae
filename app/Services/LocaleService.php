@@ -94,7 +94,7 @@ final class LocaleService
     /**
      * List of supported languages grouped by continent.
      *
-     * @return array<string, array<string, array<string, mixed>>>
+     * @return array<string, list<array<string, mixed>>>
      */
     public static function groupedByContinent(): array
     {
@@ -186,7 +186,7 @@ final class LocaleService
      */
     public static function supportedCurrencies(): array
     {
-        return \App\Services\PreferencesService::supportedCurrencies();
+        return PreferencesService::supportedCurrencies();
     }
 
     /**
@@ -273,14 +273,12 @@ final class LocaleService
         if (class_exists(\Collator::class)) {
             $collator = new \Collator('pt_PT');
 
-            if ($collator) {
-                uasort($locales, static fn (array $a, array $b): int => $collator->compare(
-                    (string) ($a['name'] ?? ''),
-                    (string) ($b['name'] ?? ''),
-                ));
+            uasort($locales, static fn (array $a, array $b): int => $collator->compare(
+                (string) ($a['name'] ?? ''),
+                (string) ($b['name'] ?? ''),
+            ));
 
-                return;
-            }
+            return;
         }
 
         uasort($locales, static fn (array $a, array $b): int => strcasecmp(
@@ -446,7 +444,7 @@ final class LocaleService
     {
         $code = strtoupper(trim((string) $countryCode));
 
-        if (!preg_match('/^[A-Z]{2}$/', $code)) {
+        if (! preg_match('/^[A-Z]{2}$/', $code)) {
             return '🏳️';
         }
 
@@ -844,12 +842,13 @@ final class LocaleService
     public static function userCurrency(?Request $request = null): string
     {
         if ($request) {
-            return \App\Services\PreferencesService::getCurrency($request);
+            return PreferencesService::getCurrency($request);
         }
 
         $user = auth()->user();
         if ($user) {
-            $prefs = \App\Services\PreferencesService::forUser($user);
+            $prefs = PreferencesService::forUser($user);
+
             return $prefs['currency'];
         }
 
@@ -862,12 +861,13 @@ final class LocaleService
     public static function userDateFormat(?Request $request = null): string
     {
         if ($request) {
-            return \App\Services\PreferencesService::getDateFormat($request);
+            return PreferencesService::getDateFormat($request);
         }
 
         $user = auth()->user();
         if ($user) {
-            $prefs = \App\Services\PreferencesService::forUser($user);
+            $prefs = PreferencesService::forUser($user);
+
             return $prefs['date_format'];
         }
 
@@ -880,6 +880,7 @@ final class LocaleService
     public static function formatMoney(int|float $value, ?Request $request = null, ?string $currency = null): string
     {
         $userCurrency = $currency ?? self::userCurrency($request);
+
         return self::formatCurrency($value, $userCurrency);
     }
 
@@ -896,6 +897,7 @@ final class LocaleService
 
         try {
             $date = new \DateTimeImmutable((string) $value);
+
             return $date->format($userFormat);
         } catch (\Throwable $e) {
             return '';

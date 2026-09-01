@@ -30,7 +30,7 @@ final class LogTicketWorkflowChange implements ShouldQueue
             'ticket_id' => $event->ticket->id,
             'origin_status_id' => $originStatusId,
             'destination_status_id' => $destinationStatusId,
-            'technician_id' => $event->changedBy?->id ?? auth()->id(),
+            'technician_id' => $event->changedBy !== null ? $event->changedBy->id : auth()->id(),
             'comment' => "Status changed from \"{$event->oldStatus->value}\" to \"{$event->newStatus->value}\".",
         ]);
     }

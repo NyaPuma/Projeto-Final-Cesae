@@ -45,7 +45,8 @@ final class TicketCommentController extends Controller
         $this->authorize('view', $ticket);
 
         // 2. Load comments chronologically with the respective user relation
-        $comments = $ticket->comments()
+        $comments = TicketComment::query()
+            ->where('ticket_id', $ticket->id)
             ->with('user')
             ->chronological()
             ->get();

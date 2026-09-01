@@ -78,7 +78,7 @@ final readonly class UpdateRoomData
     {
         $parsed = filter_var($value, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
 
-        return $parsed !== false && $parsed >= 0 ? $parsed : null;
+        return $parsed !== null && $parsed >= 0 ? $parsed : null;
     }
 
     /**

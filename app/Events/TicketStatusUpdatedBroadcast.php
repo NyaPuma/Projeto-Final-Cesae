@@ -5,6 +5,7 @@ namespace App\Events;
 use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use Carbon\CarbonImmutable;
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
@@ -16,7 +17,9 @@ final class TicketStatusUpdatedBroadcast implements ShouldBroadcastNow
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public TicketStatusEnum $oldStatus;
+
     public TicketStatusEnum $newStatus;
+
     public CarbonImmutable $broadcastedAt;
 
     public function __construct(
@@ -39,7 +42,7 @@ final class TicketStatusUpdatedBroadcast implements ShouldBroadcastNow
     /**
      * The private channels on which the event should be broadcast immediately.
      *
-     * @return array<\Illuminate\Broadcasting\Channel>
+     * @return array<Channel>
      */
     public function broadcastOn(): array
     {

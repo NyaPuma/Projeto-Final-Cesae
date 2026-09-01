@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
+use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -35,7 +36,7 @@ final class AuthController extends Controller
         }
 
         // 2. Find the active user
-        $user = \App\Models\User::where('email', $email)
+        $user = User::where('email', $email)
             ->where('active', true)
             ->first();
 
@@ -43,8 +44,8 @@ final class AuthController extends Controller
         $valid = $user && Hash::check($request->input('password'), $user->password);
 
         if (! $valid) {
-        // Atomic increment: Cache::add seeds the key with TTL on first failure;
-        // Cache::increment ensures correct count under concurrency.
+            // Atomic increment: Cache::add seeds the key with TTL on first failure;
+            // Cache::increment ensures correct count under concurrency.
             if (! Cache::add($rateLimitKey, 1, now()->addMinutes($lockoutMinutes))) {
                 Cache::increment($rateLimitKey);
             }

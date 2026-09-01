@@ -6,4 +6,3 @@ return [
     'signin' => 'Începe sesiunea',
     'login_register' => 'Autentificare / Înregistrare',
 ];
-

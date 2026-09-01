@@ -42,8 +42,7 @@ final readonly class TicketFilters
     }
 
     /**
-     * Safely coerce input to TicketPriorityEnum using normalize() when available,
-     * falling back to tryFrom().
+     * Safely coerce input to TicketPriorityEnum.
      */
     private static function parsePriority(mixed $value): ?TicketPriorityEnum
     {
@@ -51,15 +50,11 @@ final readonly class TicketFilters
             return $value;
         }
 
-        if (empty($value) || (!is_string($value) && !is_int($value))) {
+        if (empty($value) || (! is_string($value) && ! is_int($value))) {
             return null;
         }
 
-        if (method_exists(TicketPriorityEnum::class, 'normalize')) {
-            return TicketPriorityEnum::normalize($value);
-        }
-
-        return TicketPriorityEnum::tryFrom($value);
+        return TicketPriorityEnum::normalize($value);
     }
 
     /**
@@ -67,7 +62,7 @@ final readonly class TicketFilters
      */
     private static function parseNullableString(mixed $value): ?string
     {
-        if (!is_string($value)) {
+        if (! is_string($value)) {
             return null;
         }
 
@@ -118,7 +113,7 @@ final readonly class TicketFilters
     {
         return array_filter([
             'q' => $this->query,
-            'priority' => $this->priority?->value ?? $this->priority,
+            'priority' => $this->priority?->value,
             'status' => $this->status,
             'date_from' => $this->dateFrom?->toDateString(),
             'date_to' => $this->dateTo?->toDateString(),
@@ -131,6 +126,6 @@ final readonly class TicketFilters
 
     public function hasFilters(): bool
     {
-        return !empty($this->toArray());
+        return ! empty($this->toArray());
     }
 }

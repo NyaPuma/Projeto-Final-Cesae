@@ -57,12 +57,13 @@ final class LocalizeSwaggerDocument
         foreach ($node as $key => &$value) {
             if (is_array($value)) {
                 $this->translateFields($value);
+
                 continue;
             }
 
             if (is_string($value) && in_array((string) $key, self::TRANSLATABLE_FIELDS, true)) {
                 $domain = self::SOURCE_DOMAINS[$value] ?? null;
-                $value = $domain !== null ? __($domain . '.' . $value) : $value;
+                $value = $domain !== null ? __($domain.'.'.$value) : $value;
             }
         }
     }

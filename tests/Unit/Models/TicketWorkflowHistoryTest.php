@@ -2,7 +2,6 @@
 
 namespace Tests\Unit;
 
-
 use App\Enums\UserRoleEnum;
 use App\Models\Ticket;
 use App\Models\TicketStatus;

@@ -2,7 +2,6 @@
 
 namespace Tests\Security\PrivilegeEscalation;
 
-
 use App\Enums\UserRoleEnum;
 use App\Models\Ticket;
 use App\Models\User;

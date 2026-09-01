@@ -107,8 +107,8 @@ class NotificationSeeder extends Seeder
     }
 
     /**
-     * @param array<int, string> $items
-     * @param array<int, int> $weights
+     * @param  array<int, string>  $items
+     * @param  array<int, int>  $weights
      */
     private function weightedPick(array $items, array $weights, int $total): string
     {

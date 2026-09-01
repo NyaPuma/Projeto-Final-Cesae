@@ -9,10 +9,6 @@ use App\Models\User;
 
 final class NotificationService
 {
-    /**
-     * @param BudgetNotificationService $budgetService
-     * @param TicketNotificationService $ticketService
-     */
     public function __construct(
         private readonly BudgetNotificationService $budgetService,
         private readonly TicketNotificationService $ticketService,
@@ -20,9 +16,6 @@ final class NotificationService
 
     /**
      * Notifies budget submission.
-     *
-     * @param Ticket $ticket
-     * @param string $message
      */
     public function notifyBudgetSubmitted(Ticket $ticket, string $message): void
     {
@@ -31,9 +24,6 @@ final class NotificationService
 
     /**
      * Notifies budget auto-approval.
-     *
-     * @param Ticket $ticket
-     * @param string $message
      */
     public function notifyBudgetAutoApproved(Ticket $ticket, string $message): void
     {
@@ -42,10 +32,6 @@ final class NotificationService
 
     /**
      * Notifies budget decision.
-     *
-     * @param Ticket $ticket
-     * @param string $decision
-     * @param string $message
      */
     public function notifyBudgetDecision(Ticket $ticket, string $decision, string $message): void
     {
@@ -54,9 +40,6 @@ final class NotificationService
 
     /**
      * Notifies ticket closure.
-     *
-     * @param Ticket $ticket
-     * @param string $message
      */
     public function notifyTicketClosed(Ticket $ticket, string $message): void
     {
@@ -65,10 +48,6 @@ final class NotificationService
 
     /**
      * Notifies priority override on a technician.
-     *
-     * @param Ticket $ticket
-     * @param User $technician
-     * @param int $urgentCount
      */
     public function notifyPriorityOverride(Ticket $ticket, User $technician, int $urgentCount): void
     {
@@ -77,8 +56,6 @@ final class NotificationService
 
     /**
      * Notifies new ticket creation.
-     *
-     * @param Ticket $ticket
      */
     public function notifyTicketCreated(Ticket $ticket): void
     {

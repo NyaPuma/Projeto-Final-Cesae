@@ -38,8 +38,8 @@ final class SendTicketStatusNotification implements ShouldQueue
         if ($user instanceof User && $user->email) {
             $user->notify(new TicketStatusChanged(
                 $ticket,
-                $event->oldStatus,
-                $event->newStatus
+                $event->oldStatus->value,
+                $event->newStatus->value
             ));
         }
     }

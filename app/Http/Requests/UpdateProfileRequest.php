@@ -48,6 +48,7 @@ final class UpdateProfileRequest extends FormRequest
                     if (! app()->environment('testing')) {
                         $rule->uncompromised();
                     }
+
                     return $rule;
                 })(),
                 'confirmed',

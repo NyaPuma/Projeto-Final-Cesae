@@ -3,7 +3,6 @@
 namespace Tests\Unit\Policies;
 
 use App\Enums\UserRoleEnum;
-use App\Models\Audit;
 use App\Models\Equipment;
 use App\Models\Room;
 use App\Models\User;
@@ -19,9 +18,13 @@ use Tests\Base\DatabaseTestCase;
 class AccessPoliciesTest extends DatabaseTestCase
 {
     private UserPolicy $userPolicy;
+
     private RoomPolicy $roomPolicy;
+
     private EquipmentPolicy $equipmentPolicy;
+
     private AuditPolicy $auditPolicy;
+
     private UserProfilePolicy $profilePolicy;
 
     protected function setUp(): void

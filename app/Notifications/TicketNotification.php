@@ -36,10 +36,10 @@ final class TicketNotification extends Notification implements ShouldQueue
     public function toBroadcast(object $notifiable): BroadcastMessage
     {
         return new BroadcastMessage([
-            'title'   => $this->title,
+            'title' => $this->title,
             'message' => $this->message,
-            'type'    => $this->type,
-            'link'    => $this->link,
+            'type' => $this->type,
+            'link' => $this->link,
         ]);
     }
 
@@ -51,10 +51,10 @@ final class TicketNotification extends Notification implements ShouldQueue
     public function toArray(object $notifiable): array
     {
         return [
-            'title'   => $this->title,
+            'title' => $this->title,
             'message' => $this->message,
-            'type'    => $this->type,
-            'link'    => $this->link,
+            'type' => $this->type,
+            'link' => $this->link,
         ];
     }
 }

@@ -86,11 +86,15 @@ final class ActivityFeedController extends Controller
     {
         $values = $audit->new_values;
 
-        if (is_array($values)) {
-            return $values['title'] ?? $values['name'] ?? null;
+        if (! is_array($values)) {
+            return null;
         }
 
-        return null;
+        if (isset($values['title'])) {
+            return (string) $values['title'];
+        }
+
+        return isset($values['name']) ? (string) $values['name'] : null;
     }
 
     private function iconBgFor(Audit $audit): string

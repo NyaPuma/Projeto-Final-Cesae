@@ -34,7 +34,7 @@ class DatabaseBackup extends Command
 
         $timestamp = now()->format('Y-m-d_His');
         $filename = "backup_{$timestamp}.sql";
-        $filepath = rtrim($backupDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $filename;
+        $filepath = rtrim($backupDir, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.$filename;
 
         $this->info("Starting backup of connection: {$connection}");
         $this->info("Driver: {$config['driver']}");
@@ -47,7 +47,7 @@ class DatabaseBackup extends Command
             };
 
             $this->info("Backup created successfully: {$filepath}");
-            $this->info('Original size: ' . number_format(File::size($filepath)) . ' bytes');
+            $this->info('Original size: '.number_format(File::size($filepath)).' bytes');
 
             if (! $this->option('no-compress') && config('backup.database.compression', true)) {
                 $filepath = $this->compressBackup($filepath);
@@ -101,7 +101,7 @@ class DatabaseBackup extends Command
             ->run($cmd);
 
         if ($result->failed()) {
-            throw new RuntimeException('mysqldump failed: ' . $result->errorOutput());
+            throw new RuntimeException('mysqldump failed: '.$result->errorOutput());
         }
     }
 
@@ -122,7 +122,7 @@ class DatabaseBackup extends Command
         $result = Process::timeout(600)->run($cmd);
 
         if ($result->failed()) {
-            throw new RuntimeException('sqlite3 dump failed: ' . $result->errorOutput());
+            throw new RuntimeException('sqlite3 dump failed: '.$result->errorOutput());
         }
     }
 
@@ -131,7 +131,7 @@ class DatabaseBackup extends Command
      */
     private function compressBackup(string $filepath): string
     {
-        $gzFile = $filepath . '.gz';
+        $gzFile = $filepath.'.gz';
 
         $fpOut = gzopen($gzFile, 'wb9');
         $fpIn = fopen($filepath, 'rb');
@@ -149,7 +149,8 @@ class DatabaseBackup extends Command
 
         if (File::exists($gzFile)) {
             File::delete($filepath);
-            $this->info("Compressed successfully: {$gzFile} (" . number_format(File::size($gzFile)) . ' bytes)');
+            $this->info("Compressed successfully: {$gzFile} (".number_format(File::size($gzFile)).' bytes)');
+
             return $gzFile;
         }
 
@@ -161,7 +162,7 @@ class DatabaseBackup extends Command
         $retentionDays = config('backup.retention.days', 30);
         $cutoff = now()->subDays($retentionDays);
 
-        $files = File::glob($backupDir . DIRECTORY_SEPARATOR . 'backup_*');
+        $files = File::glob($backupDir.DIRECTORY_SEPARATOR.'backup_*');
         $removed = 0;
 
         foreach ($files as $file) {

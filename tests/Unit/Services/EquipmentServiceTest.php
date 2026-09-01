@@ -19,7 +19,7 @@ class EquipmentServiceTest extends FeatureTestCase
 
         app(TicketStatusService::class)->flush();
 
-        $this->service = new EquipmentService();
+        $this->service = new EquipmentService;
     }
 
     #[Test]

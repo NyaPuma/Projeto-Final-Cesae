@@ -2,11 +2,10 @@
 
 namespace Tests\Unit\Models;
 
-
-use App\Enums\UserRoleEnum;
 use App\Enums\BudgetStatusEnum;
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
+use App\Enums\UserRoleEnum;
 use App\Models\Ticket;
 use App\Models\TicketStatus;
 use App\Models\TicketType;

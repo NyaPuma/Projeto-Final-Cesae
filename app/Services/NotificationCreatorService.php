@@ -14,12 +14,6 @@ final class NotificationCreatorService
 {
     /**
      * Creates a notification targeted to a specific user safely.
-     *
-     * @param int $userId
-     * @param string $title
-     * @param string $message
-     * @param string $type
-     * @param string $link
      */
     public function createForUser(int $userId, string $title, string $message, string $type, string $link): void
     {
@@ -41,11 +35,6 @@ final class NotificationCreatorService
 
     /**
      * Creates a bulk notification for all users with the Administrator profile.
-     *
-     * @param string $title
-     * @param string $message
-     * @param string $type
-     * @param string $link
      */
     public function createForAdmins(string $title, string $message, string $type, string $link): void
     {
@@ -59,7 +48,7 @@ final class NotificationCreatorService
      * Administrator. Resolves the admin list once and uses a single insert per
      * entry instead of one query per admin.
      *
-     * @param array<int, array{title: string, message: string, type: string, link: string}> $entries
+     * @param  array<int, array{title: string, message: string, type: string, link: string}>  $entries
      * @return int number of notifications created
      */
     public function createForAdminsMany(array $entries): int

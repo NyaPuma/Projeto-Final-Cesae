@@ -6,4 +6,3 @@ return [
     'page' => 'Page',
     'of' => 'of',
 ];
-

@@ -6,4 +6,3 @@ return [
     'signin' => 'Se connecter',
     'login_register' => 'Connexion / Inscription',
 ];
-

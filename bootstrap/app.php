@@ -9,16 +9,17 @@ use App\Http\Middleware\SecurityHeaders;
 use App\Http\Middleware\SetLocaleMiddleware;
 use App\Http\Middleware\SetUserPreferencesMiddleware;
 use App\Jobs\CheckLowStockJob;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Http\Request;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
-        web: __DIR__ . '/../routes/web.php',
-        api: __DIR__ . '/../routes/api.php',
-        commands: __DIR__ . '/../routes/console.php',
+        web: __DIR__.'/../routes/web.php',
+        api: __DIR__.'/../routes/api.php',
+        commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
@@ -46,16 +47,16 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withSchedule(function (Schedule $schedule): void {
-        $schedule->job(new CheckLowStockJob())->dailyAt('06:00');
+        $schedule->job(new CheckLowStockJob)->dailyAt('06:00');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        $exceptions->render(function (\InvalidArgumentException $e) {
+        $exceptions->render(function (InvalidArgumentException $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         });
 
         // Ensures the locale (session/cookie/browser) is also set on error pages,
         // where the web group middleware no longer runs.
-        $exceptions->render(function (\Throwable $e, \Illuminate\Http\Request $request) {
+        $exceptions->render(function (Throwable $e, Request $request) {
             app()->setLocale(SetLocaleMiddleware::resolveFromRequest($request));
         });
     })->create();

@@ -20,15 +20,13 @@ use App\Models\StockMovement;
 use App\Models\Ticket;
 use App\Models\UserProfile;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 final class AnalyticsDashboardService
 {
-    /**
-     * @param TicketStatusService $statusService
-     */
     public function __construct(
         private readonly TicketStatusService $statusService,
     ) {}
@@ -41,7 +39,7 @@ final class AnalyticsDashboardService
     public function getDashboardPayload(): array
     {
         return Cache::remember(
-            'analytics_dashboard_payload:' . app()->getLocale(),
+            'analytics_dashboard_payload:'.app()->getLocale(),
             60,
             fn () => $this->buildPayload(),
         );
@@ -144,16 +142,16 @@ final class AnalyticsDashboardService
      */
     private function monthlyPerformanceData(array $monthLabels): array
     {
-        $start = \Illuminate\Support\Carbon::parse($monthLabels[0])->startOfMonth();
-        $end = \Illuminate\Support\Carbon::parse(end($monthLabels))->endOfMonth();
+        $start = Carbon::parse($monthLabels[0])->startOfMonth();
+        $end = Carbon::parse(end($monthLabels))->endOfMonth();
 
         $driver = DB::connection()->getDriverName();
         $monthExpr = $driver === 'sqlite'
             ? "strftime('%Y-%m', opened_at)"
             : "DATE_FORMAT(opened_at, '%Y-%m')";
         $diffExpr = $driver === 'sqlite'
-            ? "(julianday(closed_at) - julianday(opened_at)) * 1440"
-            : "TIMESTAMPDIFF(MINUTE, opened_at, closed_at)";
+            ? '(julianday(closed_at) - julianday(opened_at)) * 1440'
+            : 'TIMESTAMPDIFF(MINUTE, opened_at, closed_at)';
         $targetMinutes = (int) config('services.analytics.sla_target_minutes', 480);
 
         $rows = Ticket::query()
@@ -180,7 +178,8 @@ final class AnalyticsDashboardService
             $row = $rows->get($month);
             $closed = (int) ($row->closed_count ?? 0);
             $sla[] = $closed > 0 ? round((((int) ($row->sla_met ?? 0)) / $closed) * 100, 1) : null;
-            $mttr[] = $row?->avg_resolution !== null ? round((float) $row->avg_resolution, 1) : null;
+            $averageResolution = data_get($row, 'avg_resolution');
+            $mttr[] = $averageResolution !== null ? round((float) $averageResolution, 1) : null;
         }
 
         return [
@@ -192,7 +191,7 @@ final class AnalyticsDashboardService
     /**
      * Ticket distribution by urgency.
      *
-     * @return array{labels: Collection<int, string>, data: Collection<int, int>}
+     * @return array{labels: Collection<int, string>, data: Collection<int, int<0, max>>}
      */
     private function urgencyBreakdown(Builder $baseQuery): array
     {
@@ -203,8 +202,8 @@ final class AnalyticsDashboardService
             'labels' => collect([
                 __('analytics_data.urgent'),
                 __('analytics_data.normal'),
-            ]),
-            'data' => collect([$urgent, $normal]),
+            ])->map(static fn (mixed $label): string => (string) $label),
+            'data' => collect([$urgent, $normal])->map(static fn (mixed $value): int => (int) $value),
         ];
     }
 
@@ -276,8 +275,8 @@ final class AnalyticsDashboardService
         ];
 
         return [
-            'labels' => $labels->map(fn ($s) => $sourceLabels[$s] ?? $s),
-            'data' => $labels->map(fn ($s) => (int) ($rows->firstWhere('source', $s)?->total ?? 0)),
+            'labels' => $labels->map(fn (string $s): string => (string) ($sourceLabels[$s] ?? $s)),
+            'data' => $labels->map(fn (string $s): int => (int) (data_get($rows->firstWhere('source', $s), 'total') ?? 0)),
         ];
     }
 
@@ -313,8 +312,8 @@ final class AnalyticsDashboardService
      */
     private function stockMonthlyData(array $monthLabels): array
     {
-        $start = \Illuminate\Support\Carbon::parse($monthLabels[0])->startOfMonth();
-        $end = \Illuminate\Support\Carbon::parse(end($monthLabels))->endOfMonth();
+        $start = Carbon::parse($monthLabels[0])->startOfMonth();
+        $end = Carbon::parse(end($monthLabels))->endOfMonth();
 
         $driver = DB::connection()->getDriverName();
         $monthExpr = $driver === 'sqlite'
@@ -432,10 +431,10 @@ final class AnalyticsDashboardService
             ->latest()
             ->take(6)
             ->get()
-            ->map(fn ($audit) => [
-                'title' => optional($audit->user)->name ?? 'Sistema',
+            ->map(fn (Audit $audit): array => [
+                'title' => (string) (optional($audit->user)->name ?? 'Sistema'),
                 'description' => $this->getAuditDescription($audit->event),
-                'time' => $audit->created_at?->diffForHumans() ?? 'recentemente',
+                'time' => (string) ($audit->created_at?->diffForHumans() ?? 'recentemente'),
             ])
             ->values();
     }

@@ -3,9 +3,7 @@
 namespace Tests\Unit\Services;
 
 use App\Enums\StockMovementTypeEnum;
-use App\Models\Notification;
 use App\Models\Part;
-use App\Models\StockMovement;
 use App\Models\TaxRate;
 use App\Services\LowStockAlertService;
 use App\Services\NotificationCreatorService;
@@ -26,9 +24,9 @@ class StockServicesTest extends FeatureTestCase
     {
         parent::setUp();
 
-        $this->priceCalculator = new PartPriceCalculator();
-        $this->movementService = new StockMovementService();
-        $this->lowStockAlertService = new LowStockAlertService(new NotificationCreatorService());
+        $this->priceCalculator = new PartPriceCalculator;
+        $this->movementService = new StockMovementService;
+        $this->lowStockAlertService = new LowStockAlertService(new NotificationCreatorService);
     }
 
     #[Test]

@@ -16,14 +16,6 @@ use Illuminate\Support\Facades\DB;
 
 final class TicketWorkflowService
 {
-    /**
-     * @param TicketStatusService $statusService
-     * @param StartTicketAction $startAction
-     * @param CloseTicketAction $closeAction
-     * @param ReopenTicketAction $reopenAction
-     * @param CancelTicketAction $cancelAction
-     * @param CheckHigherPriorityAction $checkHigherPriorityAction
-     */
     public function __construct(
         private readonly TicketStatusService $statusService,
         private readonly StartTicketAction $startAction,
@@ -35,9 +27,6 @@ final class TicketWorkflowService
 
     /**
      * Starts ticket repair.
-     *
-     * @param Ticket $ticket
-     * @return bool
      */
     public function startRepair(Ticket $ticket, ?User $user = null): bool
     {
@@ -46,9 +35,6 @@ final class TicketWorkflowService
 
     /**
      * Reopens a previously closed or cancelled ticket.
-     *
-     * @param Ticket $ticket
-     * @return bool
      */
     public function reopen(Ticket $ticket): bool
     {
@@ -57,9 +43,6 @@ final class TicketWorkflowService
 
     /**
      * Cancels a ticket.
-     *
-     * @param Ticket $ticket
-     * @return bool
      */
     public function cancel(Ticket $ticket): bool
     {
@@ -68,12 +51,6 @@ final class TicketWorkflowService
 
     /**
      * Closes a ticket with cost, report, and time spent data within a transaction.
-     *
-     * @param Ticket $ticket
-     * @param float|null $cost
-     * @param string|null $report
-     * @param int|null $minutesSpent
-     * @return bool
      */
     public function close(Ticket $ticket, ?float $cost = null, ?string $report = null, ?int $minutesSpent = null): bool
     {
@@ -82,10 +59,6 @@ final class TicketWorkflowService
 
     /**
      * Checks if the ticket can be auto-closed based on the configured cost threshold.
-     *
-     * @param Ticket $ticket
-     * @param float $threshold
-     * @return bool
      */
     public function checkAutoClose(Ticket $ticket, float $threshold): bool
     {
@@ -95,9 +68,7 @@ final class TicketWorkflowService
 
         $statusId = $this->statusService->getByName(TicketStatusEnum::Closed);
 
-        if ($statusId !== null) {
-            $ticket->status_id = $statusId;
-        }
+        $ticket->status_id = $statusId;
 
         $ticket->closed_at = now();
 
@@ -105,10 +76,9 @@ final class TicketWorkflowService
     }
 
     /**
-     * Encontra tickets com prioridade superior associados ao contexto.
+     * Finds higher-priority tickets in the current context.
      *
-     * @param Ticket $ticket
-     * @return array<int, mixed>
+     * @return array{total: int, assigned_to_user: int, has_higher: bool}
      */
     public function findHigherPriorityTickets(Ticket $ticket): array
     {

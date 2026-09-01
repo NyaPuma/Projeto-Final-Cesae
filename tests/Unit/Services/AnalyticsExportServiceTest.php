@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Services;
 
-use App\Models\Ticket;
 use App\Services\AnalyticsExportService;
 use App\Services\TicketStatusService;
 use PHPUnit\Framework\Attributes\Test;
@@ -21,7 +20,7 @@ class AnalyticsExportServiceTest extends FeatureTestCase
 
         app(TicketStatusService::class)->flush();
 
-        $this->service = new AnalyticsExportService();
+        $this->service = new AnalyticsExportService;
     }
 
     #[Test]
@@ -95,7 +94,7 @@ class AnalyticsExportServiceTest extends FeatureTestCase
 
         $this->service->exportCsvToFile($path);
 
-        $lines = array_filter(array_map(fn ($line) => str_getcsv($line, ';'), file($path)), fn ($line) => !empty($line));
+        $lines = array_filter(array_map(fn ($line) => str_getcsv($line, ';'), file($path)), fn ($line) => ! empty($line));
 
         $this->assertEquals('ID', trim($lines[array_key_first($lines)][0], "\xEF\xBB\xBF"));
 

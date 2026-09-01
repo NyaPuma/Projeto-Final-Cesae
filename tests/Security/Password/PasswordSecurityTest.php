@@ -2,9 +2,7 @@
 
 namespace Tests\Security\Password;
 
-
 use App\Enums\UserRoleEnum;
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Base\FeatureTestCase;

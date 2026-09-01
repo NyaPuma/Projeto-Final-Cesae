@@ -6,4 +6,3 @@ return [
     'page' => 'Strona',
     'of' => 'z',
 ];
-

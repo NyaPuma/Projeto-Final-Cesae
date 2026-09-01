@@ -7,8 +7,6 @@ use App\Enums\TicketStatusEnum;
 use App\Enums\UserRoleEnum;
 use App\Models\Equipment;
 use App\Models\EquipmentCategory;
-use App\Models\Notification;
-use App\Models\Room;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserProfile;
@@ -18,7 +16,9 @@ use App\Services\CalendarService;
 use App\Services\EquipmentService;
 use App\Services\PasswordResetService;
 use App\Services\TechnicianAssignmentService;
+use App\Services\TicketStatusService;
 use App\Services\UserService;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Tests\Base\FeatureTestCase;
@@ -31,11 +31,17 @@ class ServicesTest extends FeatureTestCase
     use CreatesUsers;
 
     private UserService $userService;
+
     private EquipmentService $equipmentService;
+
     private BudgetCalculatorService $budgetCalculator;
+
     private PasswordResetService $passwordReset;
+
     private TechnicianAssignmentService $assignment;
+
     private CalendarService $calendar;
+
     private AnalyticsDashboardService $dashboard;
 
     protected function setUp(): void
@@ -167,7 +173,7 @@ class ServicesTest extends FeatureTestCase
         $techB = $this->createTechnician();
         $user = $this->createRegularUser();
 
-        $inProgressId = app(\App\Services\TicketStatusService::class)->getByName(TicketStatusEnum::InProgress);
+        $inProgressId = app(TicketStatusService::class)->getByName(TicketStatusEnum::InProgress);
         $this->createTicket(['assigned_to' => $techA->id, 'status_id' => $inProgressId]);
 
         $this->assertSame($techB->id, $this->assignment->getLeastBusyTechnician()?->id);
@@ -183,7 +189,7 @@ class ServicesTest extends FeatureTestCase
 
     public function test_find_most_urgent_open_ticket_orders_critical_first_then_oldest(): void
     {
-        $openId = app(\App\Services\TicketStatusService::class)->getByName(TicketStatusEnum::Open);
+        $openId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
         $old = $this->createTicket(['priority' => TicketPriorityEnum::Medium->value, 'status_id' => $openId]);
         $old->update(['created_at' => now()->subDays(2)]);
         $critical = $this->createTicket(['priority' => TicketPriorityEnum::Critical->value, 'status_id' => $openId]);
@@ -234,7 +240,7 @@ class ServicesTest extends FeatureTestCase
         $this->assertArrayHasKey('sla_success', $payload);
         $this->assertArrayHasKey('top_equipments', $payload);
         $this->assertArrayHasKey('monthly_tickets', $payload);
-        $this->assertInstanceOf(\Illuminate\Support\Collection::class, $payload['top_rooms']);
+        $this->assertInstanceOf(Collection::class, $payload['top_rooms']);
         $this->assertIsArray($payload['monthly_tickets']['labels']);
     }
 }

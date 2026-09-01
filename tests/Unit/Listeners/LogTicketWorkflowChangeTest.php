@@ -23,7 +23,7 @@ class LogTicketWorkflowChangeTest extends TestCase
         $inProgress = TicketStatus::firstOrCreate(['name' => 'em curso'], ['code' => 'EM_CURSO']);
         $ticket = Ticket::factory()->create(['status_id' => $open->id]);
 
-        $listener = new LogTicketWorkflowChange();
+        $listener = new LogTicketWorkflowChange;
         $listener->handle(new TicketStatusChanged(
             $ticket,
             TicketStatusEnum::Open,
@@ -45,7 +45,7 @@ class LogTicketWorkflowChangeTest extends TestCase
         $ticket = Ticket::factory()->create(['status_id' => $open->id]);
         $changedBy = User::factory()->create();
 
-        $listener = new LogTicketWorkflowChange();
+        $listener = new LogTicketWorkflowChange;
         $listener->handle(new TicketStatusChanged(
             $ticket,
             TicketStatusEnum::Open,

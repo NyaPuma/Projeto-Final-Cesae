@@ -5,14 +5,16 @@ declare(strict_types=1);
 namespace App\Http\Resources;
 
 use App\Enums\StockMovementTypeEnum;
+use App\Models\StockMovement;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/** @mixin StockMovement */
 final class StockMovementResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
-        $type = StockMovementTypeEnum::tryFrom($this->movement_type);
+        $type = StockMovementTypeEnum::normalize((string) $this->movement_type);
 
         return [
             'id' => $this->id,

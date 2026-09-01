@@ -74,7 +74,7 @@ class TicketsSeeder extends Seeder
             return;
         }
 
-        $dataset = new TicketDataset();
+        $dataset = new TicketDataset;
         $rows = $dataset->generate($statusIds, $equipmentRows, $rooms, $technicianIds, $reporterUserIds);
 
         foreach (array_chunk($rows, 500) as $chunk) {

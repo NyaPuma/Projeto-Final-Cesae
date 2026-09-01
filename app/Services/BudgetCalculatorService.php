@@ -36,8 +36,8 @@ final class BudgetCalculatorService
      * Returns the detailed breakdown of ticket budget items.
      *
      * @return array{
-     *     materials: array<int, array{type?: string, quantity?: float|int, unit_price?: float|int, subtotal: float, [string]: mixed}>,
-     *     labor: array<int, array{type?: string, hours?: float|int, hourly_rate?: float|int, subtotal: float, [string]: mixed}>,
+     *     materials: array<int, array<string, mixed>>,
+     *     labor: array<int, array<string, mixed>>,
      *     material_total: float,
      *     labor_total: float,
      *     grand_total: float

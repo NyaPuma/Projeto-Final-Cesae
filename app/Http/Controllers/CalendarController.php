@@ -103,7 +103,7 @@ final class CalendarController extends Controller
             'event' => [
                 'id' => $ticket->id,
                 'start' => $ticket->scheduled_at->toIso8601String(),
-                'end' => $ticket->scheduled_end?->toIso8601String(),
+                'end' => $ticket->scheduled_end->toIso8601String(),
             ],
         ]);
     }

@@ -11,7 +11,6 @@ use App\Models\Ticket;
 use App\Models\User;
 use App\Models\UserProfile;
 use App\Services\TicketStatusService;
-use Illuminate\Support\Facades\DB;
 use Tests\Base\FeatureTestCase;
 
 class TelemetryCommandTest extends FeatureTestCase

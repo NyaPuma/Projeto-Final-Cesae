@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Web\Controllers;
 
-use App\Enums\UserRoleEnum;
 use App\Models\Room;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Base\FeatureTestCase;
@@ -118,6 +117,6 @@ class RoomControllerTest extends FeatureTestCase
     public function guest_cannot_access_room_endpoints(): void
     {
         $this->getJson('/api/admin/rooms')->assertUnauthorized();
-        $this->postJson('/api/admin/rooms', ['name' => 'Sala'])  ->assertUnauthorized();
+        $this->postJson('/api/admin/rooms', ['name' => 'Sala'])->assertUnauthorized();
     }
 }

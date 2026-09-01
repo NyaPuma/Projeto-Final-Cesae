@@ -2,6 +2,7 @@
 
 namespace Tests\Authentication;
 
+use App\Enums\UserRoleEnum;
 use App\Mail\PasswordResetMail;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +17,7 @@ class PasswordResetFlowTest extends FeatureTestCase
     private function createUser(): User
     {
         return $this->createUserWithPassword(
-            \App\Enums\UserRoleEnum::User->value,
+            UserRoleEnum::User->value,
             'reset@example.com',
             'password-antiga-1',
             ['api_token' => Str::random(60)],

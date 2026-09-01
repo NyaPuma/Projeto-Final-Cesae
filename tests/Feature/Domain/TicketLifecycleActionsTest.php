@@ -7,7 +7,6 @@ use App\Domain\Ticket\Actions\CloseTicketAction;
 use App\Domain\Ticket\Actions\ReopenTicketAction;
 use App\Domain\Ticket\Actions\StartTicketAction;
 use App\Enums\TicketStatusEnum;
-use App\Models\Ticket;
 use App\Models\User;
 use App\Services\TicketStatusService;
 use PHPUnit\Framework\Attributes\Test;

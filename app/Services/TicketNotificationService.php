@@ -9,18 +9,12 @@ use App\Models\Ticket;
 
 final class TicketNotificationService
 {
-    /**
-     * @param NotificationCreatorService $creator
-     */
     public function __construct(
         private readonly NotificationCreatorService $creator,
     ) {}
 
     /**
      * Notifies the ticket creator user about ticket closure.
-     *
-     * @param Ticket $ticket
-     * @param string $message
      */
     public function notifyTicketClosed(Ticket $ticket, string $message): void
     {
@@ -37,10 +31,6 @@ final class TicketNotificationService
 
     /**
      * Notifies administrators when a technician starts a ticket ignoring more urgent ones.
-     *
-     * @param Ticket $ticket
-     * @param string $technicianName
-     * @param int $urgentCount
      */
     public function notifyPriorityOverride(Ticket $ticket, string $technicianName, int $urgentCount): void
     {

@@ -19,11 +19,11 @@ final class TicketDataset
     private const LABOUR_RATE_PER_HOUR = 35;
 
     /**
-     * @param array<string, int> $statusIds
-     * @param array<int, array{id: int, category: string, weight: int}> $equipmentRows
-     * @param array<int, array{id: int, weight: int}> $rooms
-     * @param array<int, int> $technicianIds
-     * @param array<int, int> $reporterUserIds
+     * @param  array<string, int>  $statusIds
+     * @param  array<int, array{id: int, category: string, weight: int}>  $equipmentRows
+     * @param  array<int, array{id: int, weight: int}>  $rooms
+     * @param  array<int, int>  $technicianIds
+     * @param  array<int, int>  $reporterUserIds
      * @return array<int, array<string, mixed>>
      */
     public function generate(
@@ -223,17 +223,17 @@ final class TicketDataset
         $names = OperationalData::reporterNames();
 
         return $names['first'][random_int(0, count($names['first']) - 1)]
-            . ' ' . $names['last'][random_int(0, count($names['last']) - 1)];
+            .' '.$names['last'][random_int(0, count($names['last']) - 1)];
     }
 
     private function randomPhone(): string
     {
-        return '+351 9' . random_int(1, 9) . ' ' . random_int(1000000, 9999999);
+        return '+351 9'.random_int(1, 9).' '.random_int(1000000, 9999999);
     }
 
     /**
-     * @param array<int, int> $items
-     * @param array<int, int> $weights
+     * @param  array<int, int>  $items
+     * @param  array<int, int>  $weights
      */
     private function weightedPick(array $items, array $weights): mixed
     {
@@ -241,7 +241,7 @@ final class TicketDataset
     }
 
     /**
-     * @param array<int, int> $weights
+     * @param  array<int, int>  $weights
      */
     private function weightedIndex(array $weights): int
     {

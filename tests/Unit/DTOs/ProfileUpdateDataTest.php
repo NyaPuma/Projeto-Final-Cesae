@@ -51,7 +51,7 @@ class ProfileUpdateDataTest extends TestCase
     public function it_detects_whether_changes_exist(): void
     {
         $this->assertTrue((new ProfileUpdateData(name: 'João'))->hasChanges());
-        $this->assertFalse((new ProfileUpdateData())->hasChanges());
+        $this->assertFalse((new ProfileUpdateData)->hasChanges());
     }
 
     #[Test]

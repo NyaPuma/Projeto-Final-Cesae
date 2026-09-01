@@ -8,7 +8,6 @@ use App\Models\Equipment;
 use App\Models\Ticket;
 use App\Services\TicketStatusService;
 use Illuminate\Support\Facades\DB;
-use RuntimeException;
 
 final readonly class CreatePublicTicketAction
 {
@@ -28,14 +27,10 @@ final readonly class CreatePublicTicketAction
     ): Ticket {
         $openStatusId = $this->statusService->getByName(TicketStatusEnum::Open);
 
-        if ($openStatusId === null) {
-            throw new RuntimeException("Status '" . TicketStatusEnum::Open->value . "' was not found in the system.");
-        }
-
         return DB::transaction(function () use ($equipment, $problemType, $description, $reporterName, $reporterContact, $openStatusId) {
             $ticket = Ticket::create([
-                'reference' => 'TKT-' . now()->format('YmdHis') . '-' . strtoupper(uniqid()),
-                'title' => trim($problemType->label() . ' — ' . $equipment->name),
+                'reference' => 'TKT-'.now()->format('YmdHis').'-'.strtoupper(uniqid()),
+                'title' => trim($problemType->label().' — '.$equipment->name),
                 'description' => trim($description),
                 'priority' => $problemType->priority()->value,
                 'user_id' => null,

@@ -242,7 +242,7 @@ class UserPreferencesTest extends TestCase
         // Update only currency (simulating what controller does)
         // Controller passes current values for fields not being updated
         $currentPrefs = PreferencesService::forUser($this->user);
-        
+
         PreferencesService::saveForUser($this->user, [
             'language' => $currentPrefs['language'],
             'currency' => 'GBP',

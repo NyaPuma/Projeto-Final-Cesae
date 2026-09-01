@@ -35,13 +35,11 @@ final readonly class CreateTicketData
     {
         $payload = $data instanceof FormRequest ? $data->validated() : $data;
 
-        // Flexible priority enum normalization: accepts enum instance, value string, or method normalize()
+        // Accept enum instances and normalize scalar priority values.
         $rawPriority = $payload['priority'] ?? TicketPriorityEnum::Low;
         $priority = $rawPriority instanceof TicketPriorityEnum
             ? $rawPriority
-            : (method_exists(TicketPriorityEnum::class, 'normalize')
-                ? TicketPriorityEnum::normalize($rawPriority)
-                : TicketPriorityEnum::from($rawPriority));
+            : TicketPriorityEnum::normalize($rawPriority);
 
         return new self(
             title: trim((string) ($payload['title'] ?? '')),

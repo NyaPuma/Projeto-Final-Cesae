@@ -15,7 +15,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
-final class GenerateAiRecommendationJob implements ShouldQueue, ShouldBeUnique
+final class GenerateAiRecommendationJob implements ShouldBeUnique, ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;
@@ -69,7 +69,7 @@ final class GenerateAiRecommendationJob implements ShouldQueue, ShouldBeUnique
             // 2. Persist result on Ticket model
             $this->ticket->update([
                 'recommended_technician_id' => $recommendation['technician_id'] ?? null,
-                'ai_recommendation_reason' => $recommendation['justification'] ?? null,
+                'ai_recommendation_reason' => $recommendation['justification'],
                 'ai_processed_at' => now(),
             ]);
         } catch (Throwable $e) {

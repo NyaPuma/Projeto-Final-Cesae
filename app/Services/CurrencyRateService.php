@@ -53,7 +53,7 @@ final class CurrencyRateService
         $stored = 0;
 
         foreach ($rates as $target => $rate) {
-            if (! is_numeric($rate) || (float) $rate <= 0.0) {
+            if ((float) $rate <= 0.0) {
                 continue;
             }
 

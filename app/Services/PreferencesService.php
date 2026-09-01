@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Models\UserPreference;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Central user preferences service.
@@ -59,9 +60,9 @@ final class PreferencesService
      * Supported time formats.
      */
     private const SUPPORTED_TIME_FORMATS = [
-        'H:i'     => ['label' => '24h', 'example' => '14:30'],
-        'h:i A'   => ['label' => '12h', 'example' => '2:30 PM'],
-        'H:i:s'   => ['label' => '24h + seconds', 'example' => '14:30:00'],
+        'H:i' => ['label' => '24h', 'example' => '14:30'],
+        'h:i A' => ['label' => '12h', 'example' => '2:30 PM'],
+        'H:i:s' => ['label' => '24h + seconds', 'example' => '14:30:00'],
         'h:i:s A' => ['label' => '12h + seconds', 'example' => '2:30:00 PM'],
     ];
 
@@ -85,7 +86,7 @@ final class PreferencesService
      */
     public static function forUser(Authenticatable $user): array
     {
-        $prefs = UserPreference::where('user_id', $user->id)->first();
+        $prefs = UserPreference::where('user_id', (int) $user->getAuthIdentifier())->first();
 
         if ($prefs) {
             return [
@@ -132,8 +133,8 @@ final class PreferencesService
     public static function current(Request $request): array
     {
         $user = $request->user()
-            ?? \Illuminate\Support\Facades\Auth::guard('api')->user()
-            ?? \App\Services\AuthUserResolver::fromRequest($request);
+            ?? Auth::guard('api')->user()
+            ?? AuthUserResolver::fromRequest($request);
 
         if ($user) {
             return self::forUser($user);
@@ -150,7 +151,7 @@ final class PreferencesService
         $validated = self::validatePreferences($preferences);
 
         return UserPreference::updateOrCreate(
-            ['user_id' => $user->id],
+            ['user_id' => (int) $user->getAuthIdentifier()],
             $validated
         );
     }
@@ -324,11 +325,11 @@ final class PreferencesService
     {
         $format = self::getNumberFormat($request);
         $decoded = json_decode($format, true);
-        
+
         if (is_array($decoded) && isset($decoded['decimal']) && isset($decoded['thousand'])) {
             return $decoded;
         }
-        
+
         return [
             'decimal' => '.',
             'thousand' => ',',
@@ -353,7 +354,7 @@ final class PreferencesService
         $grouped = [];
 
         foreach (self::SUPPORTED_NUMBER_FORMATS as $key => $format) {
-            $decimal = $format['decimal'] ?? 'other';
+            $decimal = $format['decimal'];
             $grouped[$decimal][$key] = $format;
         }
 
@@ -366,7 +367,7 @@ final class PreferencesService
     public static function formatNumber(Request $request, float $number): string
     {
         $separators = self::getNumberSeparators($request);
-        
+
         return number_format(
             $number,
             2,
@@ -381,11 +382,11 @@ final class PreferencesService
     public static function validateNumberFormat(string $format): string
     {
         $decoded = json_decode($format, true);
-        
+
         if (is_array($decoded) && isset($decoded['decimal']) && isset($decoded['thousand'])) {
             return $format;
         }
-        
+
         return self::DEFAULTS['number_format'];
     }
 }

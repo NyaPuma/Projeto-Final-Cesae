@@ -27,10 +27,6 @@ final readonly class TicketStatusChecker
 
         $expectedStatusId = $this->statusService->getByName($status);
 
-        if ($expectedStatusId === null) {
-            return false;
-        }
-
         return $statusId === $expectedStatusId;
     }
 }

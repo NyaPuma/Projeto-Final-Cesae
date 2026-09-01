@@ -2,7 +2,9 @@
 
 namespace Tests;
 
+use App\Services\TicketStatusService;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Support\Facades\Schema;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -13,8 +15,8 @@ abstract class TestCase extends BaseTestCase
         // The state cache (static + Cache) persists across tests within the same process,
         // but RefreshDatabase resets SQLite auto-increments on every rollback.
         // Without the flush, cached IDs point to wrong states after a re-seed.
-        if (\Illuminate\Support\Facades\Schema::hasTable('ticket_statuses')) {
-            app(\App\Services\TicketStatusService::class)->flush();
+        if (Schema::hasTable('ticket_statuses')) {
+            app(TicketStatusService::class)->flush();
         }
 
         $buildDir = public_path('build');

@@ -10,7 +10,6 @@ use App\Models\User;
 use App\Services\NotificationService;
 use App\Services\TicketStatusService;
 use Illuminate\Support\Facades\DB;
-use RuntimeException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 final readonly class ApproveBudgetAction
@@ -30,10 +29,6 @@ final readonly class ApproveBudgetAction
 
         $targetTicketStatus = $isApproved ? TicketStatusEnum::InProgress : TicketStatusEnum::Rejected;
         $statusId = $this->statusService->getByName($targetTicketStatus);
-
-        if ($statusId === null) {
-            throw new RuntimeException("Status '{$targetTicketStatus->value}' was not found in the system.");
-        }
 
         $ticket = DB::transaction(function () use ($ticket, $admin, $data, $isApproved, $statusId) {
             $ticket->budget_approved_by = $admin->id;
@@ -61,7 +56,7 @@ final readonly class ApproveBudgetAction
 
     private function notifyDecision(Ticket $ticket, BudgetDecisionData $data, bool $isApproved): void
     {
-        $amountFormatted = number_format($ticket->budget_amount ?? 0, 2, ',', '.') . '€';
+        $amountFormatted = number_format($ticket->budget_amount ?? 0, 2, ',', '.').'€';
 
         $message = $isApproved
             ? "Budget of {$amountFormatted} for ticket #{$ticket->id} was APPROVED."

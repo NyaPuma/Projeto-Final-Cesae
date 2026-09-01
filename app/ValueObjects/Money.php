@@ -12,13 +12,15 @@ use InvalidArgumentException;
 final readonly class Money
 {
     private int $amount;
+
     private string $currency;
 
     /**
      * Creates a new Money instance from an amount in cents and its currency.
      *
-     * @param int $amount Amount in cents
-     * @param string $currency Three-letter ISO currency code (e.g. EUR)
+     * @param  int  $amount  Amount in cents
+     * @param  string  $currency  Three-letter ISO currency code (e.g. EUR)
+     *
      * @throws InvalidArgumentException
      */
     public function __construct(int $amount, string $currency = 'EUR')
@@ -32,7 +34,6 @@ final readonly class Money
     /**
      * Validates that the provided amount is valid (non-negative).
      *
-     * @param int $amount
      * @throws InvalidArgumentException
      */
     private function validateAmount(int $amount): void
@@ -45,7 +46,6 @@ final readonly class Money
     /**
      * Validates that the currency is a valid 3-letter ISO code.
      *
-     * @param string $currency
      * @throws InvalidArgumentException
      */
     private function validateCurrency(string $currency): void
@@ -57,10 +57,6 @@ final readonly class Money
 
     /**
      * Creates a Money instance from a decimal (float) value.
-     *
-     * @param float $amount
-     * @param string $currency
-     * @return self
      */
     public static function fromFloat(float $amount, string $currency = 'EUR'): self
     {
@@ -69,9 +65,6 @@ final readonly class Money
 
     /**
      * Creates a zero-value Money instance.
-     *
-     * @param string $currency
-     * @return self
      */
     public static function zero(string $currency = 'EUR'): self
     {
@@ -80,8 +73,6 @@ final readonly class Money
 
     /**
      * Returns the amount in cents.
-     *
-     * @return int
      */
     public function amount(): int
     {
@@ -90,8 +81,6 @@ final readonly class Money
 
     /**
      * Returns the currency code.
-     *
-     * @return string
      */
     public function currency(): string
     {
@@ -100,8 +89,6 @@ final readonly class Money
 
     /**
      * Converts the amount to decimal (float) format.
-     *
-     * @return float
      */
     public function toFloat(): float
     {
@@ -110,19 +97,15 @@ final readonly class Money
 
     /**
      * Returns the value formatted with two decimal places and the currency.
-     *
-     * @return string
      */
     public function formatted(): string
     {
-        return number_format($this->toFloat(), 2) . ' ' . $this->currency;
+        return number_format($this->toFloat(), 2).' '.$this->currency;
     }
 
     /**
      * Adds another monetary amount, validating currency compatibility.
      *
-     * @param Money $other
-     * @return self
      * @throws InvalidArgumentException
      */
     public function add(Money $other): self
@@ -135,8 +118,6 @@ final readonly class Money
     /**
      * Subtracts another monetary amount, validating currency compatibility.
      *
-     * @param Money $other
-     * @return self
      * @throws InvalidArgumentException
      */
     public function subtract(Money $other): self
@@ -148,9 +129,6 @@ final readonly class Money
 
     /**
      * Multiplies the amount by a numeric factor.
-     *
-     * @param float $factor
-     * @return self
      */
     public function multiply(float $factor): self
     {
@@ -159,9 +137,6 @@ final readonly class Money
 
     /**
      * Checks whether this amount and currency are equal to another Money object.
-     *
-     * @param Money $other
-     * @return bool
      */
     public function equals(Money $other): bool
     {
@@ -170,8 +145,6 @@ final readonly class Money
 
     /**
      * Checks whether the amount is zero.
-     *
-     * @return bool
      */
     public function isZero(): bool
     {
@@ -180,8 +153,6 @@ final readonly class Money
 
     /**
      * Checks whether the amount is strictly positive.
-     *
-     * @return bool
      */
     public function isPositive(): bool
     {
@@ -191,7 +162,6 @@ final readonly class Money
     /**
      * Ensures both Money objects use the same currency.
      *
-     * @param Money $other
      * @throws InvalidArgumentException
      */
     private function ensureSameCurrency(Money $other): void
@@ -203,8 +173,6 @@ final readonly class Money
 
     /**
      * Returns the formatted string representation of this monetary object.
-     *
-     * @return string
      */
     public function __toString(): string
     {

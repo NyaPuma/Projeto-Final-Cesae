@@ -12,9 +12,7 @@ final class EquipmentService
     /**
      * Returns a paginated listing of equipment based on search terms and status.
      *
-     * @param string|null $search
-     * @param string|null $status
-     * @return LengthAwarePaginator<Equipment>
+     * @return LengthAwarePaginator<int, Equipment>
      */
     public function listPaginated(?string $search = null, ?string $status = null): LengthAwarePaginator
     {

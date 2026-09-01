@@ -2,9 +2,8 @@
 
 namespace Tests\Feature;
 
-
-use App\Enums\UserRoleEnum;
 use App\Enums\TicketStatusEnum;
+use App\Enums\UserRoleEnum;
 use App\Models\Ticket;
 use App\Models\TicketStatus;
 use App\Models\User;

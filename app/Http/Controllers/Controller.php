@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 abstract class Controller
 {
     use AuthorizesRequests;
+
     /**
      * Gets the authenticated user from the API guard or the default request.
      */

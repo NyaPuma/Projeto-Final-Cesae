@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Services\AuthUserResolver;
 use App\Services\LocaleService;
 use App\Services\PreferencesService;
 use Illuminate\Http\JsonResponse;
@@ -54,7 +55,7 @@ final class PreferencesController extends Controller
      */
     private function resolveUser(Request $request): ?User
     {
-        return $request->user() ?? \App\Services\AuthUserResolver::fromRequest($request);
+        return $request->user() ?? AuthUserResolver::fromRequest($request);
     }
 
     /**

@@ -25,8 +25,6 @@ final class UserService
 
     /**
      * Ensures the user has a default profile associated.
-     *
-     * @param User $user
      */
     public function ensureDefaultProfile(User $user): void
     {
@@ -41,9 +39,6 @@ final class UserService
 
     /**
      * Generates a secure hash for the API token using the application key.
-     *
-     * @param string $token
-     * @return string
      */
     public function hashToken(string $token): string
     {
@@ -56,13 +51,10 @@ final class UserService
     /**
      * Creates and persists a new API token for the user and updates the session.
      *
-     * @param User $user
-     * @param Request $request
-     * @param bool $withSession When false, the token is not linked to the current request session
-     *                          (needed when registration is done by another user,
-     *                          preventing the registrant's session/cookies from being assumed
-     *                          by the new user).
-     * @return string
+     * @param  bool  $withSession  When false, the token is not linked to the current request session
+     *                             (needed when registration is done by another user,
+     *                             preventing the registrant's session/cookies from being assumed
+     *                             by the new user).
      */
     public function createToken(User $user, Request $request, bool $withSession = true): string
     {
@@ -86,12 +78,6 @@ final class UserService
 
     /**
      * Builds the authentication JSON response with the respective token cookies.
-     *
-     * @param User $user
-     * @param string $plainToken
-     * @param Request $request
-     * @param int $statusCode
-     * @return JsonResponse
      */
     public function buildAuthResponse(User $user, string $plainToken, Request $request, int $statusCode = 200): JsonResponse
     {
@@ -104,9 +90,6 @@ final class UserService
 
     /**
      * Builds the session termination (logout) JSON response, invalidating session and removing cookies.
-     *
-     * @param Request $request
-     * @return JsonResponse
      */
     public function buildLogoutResponse(Request $request): JsonResponse
     {

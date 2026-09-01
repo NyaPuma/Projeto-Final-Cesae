@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
 final class ChangePasswordRequest extends FormRequest
 {
@@ -15,7 +16,7 @@ final class ChangePasswordRequest extends FormRequest
 
     public function rules(): array
     {
-        $rule = \Illuminate\Validation\Rules\Password::min(8)
+        $rule = Password::min(8)
             ->letters()
             ->mixedCase()
             ->numbers()

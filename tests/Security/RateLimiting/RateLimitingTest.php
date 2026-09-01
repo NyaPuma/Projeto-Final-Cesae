@@ -2,7 +2,6 @@
 
 namespace Tests\Security\RateLimiting;
 
-
 use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\UserProfile;

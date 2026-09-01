@@ -2,10 +2,9 @@
 
 namespace Tests\Security\SQLInjection;
 
-
-use App\Enums\UserRoleEnum;
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
+use App\Enums\UserRoleEnum;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Services\TicketStatusService;

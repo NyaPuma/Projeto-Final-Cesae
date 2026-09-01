@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-
 use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\UserProfile;
@@ -158,8 +157,6 @@ class AuthenticationTest extends TestCase
 
         $response->assertStatus(401);
     }
-
-
 
     #[Test]
     public function login_stores_hashed_token_in_database(): void

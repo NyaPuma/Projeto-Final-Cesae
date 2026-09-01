@@ -17,8 +17,6 @@ trait Auditable
      * Cached user ID per request.
      * Note: Static cache per process; in long-running processes (queues, Octane),
      * reset with resetResolvedUserId() to ensure proper ID resolution.
-     *
-     * @var int|null
      */
     private static ?int $resolvedUserId = null;
 

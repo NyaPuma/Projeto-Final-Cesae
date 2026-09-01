@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/** @property string|null $code */
 final class Room extends Model
 {
     use Auditable;
@@ -19,9 +20,9 @@ final class Room extends Model
 
     protected static function booted(): void
     {
-        static::creating(function (Room $room) {
+        self::creating(function (Room $room) {
             if ($room->code === null || trim((string) $room->code) === '') {
-                $room->code = 'RM-' . strtoupper(uniqid());
+                $room->code = 'RM-'.strtoupper(uniqid());
             }
         });
     }

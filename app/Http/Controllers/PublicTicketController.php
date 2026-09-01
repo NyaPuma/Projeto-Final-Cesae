@@ -108,8 +108,8 @@ final class PublicTicketController extends Controller
             return;
         }
 
-        $extension = self::EXTENSION_BY_MIME[$realMime] ?? 'img';
-        $safeFilename = Str::uuid() . '.' . $extension;
+        $extension = self::EXTENSION_BY_MIME[$realMime];
+        $safeFilename = Str::uuid().'.'.$extension;
         $path = $file->storeAs('ticket_photos', $safeFilename, 'public');
 
         TicketAttachment::create([
@@ -134,7 +134,7 @@ final class PublicTicketController extends Controller
             title: __('tickets.Novo Ticket Reportado'),
             message: __('equipment.:reference — :equipment (:priority)', [
                 'reference' => $ticket->reference,
-                'equipment' => $ticket->equipment?->name ?? $ticket->equipment_id,
+                'equipment' => optional($ticket->equipment)->name ?? (string) $ticket->equipment_id,
                 'priority' => $ticket->priority,
             ]),
             type: NotificationTypeEnum::TicketCreated->value,

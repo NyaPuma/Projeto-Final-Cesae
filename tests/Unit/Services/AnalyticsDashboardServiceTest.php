@@ -3,7 +3,6 @@
 namespace Tests\Unit\Services;
 
 use App\Enums\TicketPriorityEnum;
-use App\Models\Ticket;
 use App\Services\AnalyticsDashboardService;
 use App\Services\TicketStatusService;
 use Illuminate\Support\Facades\Cache;

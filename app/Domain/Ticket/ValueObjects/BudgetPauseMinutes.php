@@ -6,7 +6,7 @@ use Carbon\CarbonInterface;
 use JsonSerializable;
 use Stringable;
 
-final readonly class BudgetPauseMinutes implements Stringable, JsonSerializable
+final readonly class BudgetPauseMinutes implements JsonSerializable, Stringable
 {
     public function __construct(
         public ?CarbonInterface $requestedAt,

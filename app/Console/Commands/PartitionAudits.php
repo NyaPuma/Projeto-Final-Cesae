@@ -52,7 +52,7 @@ class PartitionAudits extends Command
         for ($i = 0; $i <= $monthsAhead; $i++) {
             // Ensure exact month start to avoid bugs with 28/30/31-day months
             $date = now()->startOfMonth()->addMonths($i);
-            $partitionName = 'p_' . $date->format('Y_m');
+            $partitionName = 'p_'.$date->format('Y_m');
 
             if (in_array($partitionName, $existingPartitions, true)) {
                 continue;
@@ -82,7 +82,7 @@ class PartitionAudits extends Command
     private function dropOldPartitions(int $monthsToKeep, bool $dryRun): void
     {
         $cutoffDate = now()->startOfMonth()->subMonths($monthsToKeep);
-        $cutoffPartitionName = 'p_' . $cutoffDate->format('Y_m');
+        $cutoffPartitionName = 'p_'.$cutoffDate->format('Y_m');
 
         $existingPartitions = $this->getExistingPartitions();
 

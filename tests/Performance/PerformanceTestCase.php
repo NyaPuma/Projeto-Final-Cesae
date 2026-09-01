@@ -2,9 +2,8 @@
 
 namespace Tests\Performance;
 
-
-use App\Enums\UserRoleEnum;
 use App\Enums\TicketPriorityEnum;
+use App\Enums\UserRoleEnum;
 use App\Models\Equipment;
 use App\Models\EquipmentCategory;
 use App\Models\Room;

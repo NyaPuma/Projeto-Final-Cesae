@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-
-use App\Enums\UserRoleEnum;
 use App\Enums\TicketStatusEnum;
+use App\Enums\UserRoleEnum;
+use App\Models\Audit;
 use App\Models\Equipment;
 use App\Models\Room;
 use App\Models\Ticket;
@@ -123,7 +123,7 @@ class AuditEndpointsTest extends TestCase
             'opened_at' => now(),
         ]);
 
-        \App\Models\Audit::create([
+        Audit::create([
             'user_id' => $creator->id,
             'auditable_type' => Ticket::class,
             'auditable_id' => $ticket->id,

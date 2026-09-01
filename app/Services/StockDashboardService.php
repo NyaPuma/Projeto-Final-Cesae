@@ -196,7 +196,7 @@ final class StockDashboardService
         }
 
         if ($to !== null && $to !== '') {
-            $query->where('stock_movements.created_at', '<=', $to . ' 23:59:59');
+            $query->where('stock_movements.created_at', '<=', $to.' 23:59:59');
         }
 
         $query->select(

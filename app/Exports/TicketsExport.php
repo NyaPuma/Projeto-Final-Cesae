@@ -3,7 +3,6 @@
 namespace App\Exports;
 
 use App\Enums\TicketPriorityEnum;
-use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use Illuminate\Database\Eloquent\Builder;
 use Maatwebsite\Excel\Concerns\FromQuery;
@@ -16,9 +15,9 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\Conditional;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
-use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
@@ -26,16 +25,7 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
  * Excel export class for Tickets.
  * Supports dynamic filtering, native currency/date formatting, and chunked reading.
  */
-final class TicketsExport implements
-    FromQuery,
-    ShouldAutoSize,
-    WithHeadings,
-    WithMapping,
-    WithStyles,
-    WithTitle,
-    WithColumnFormatting,
-    WithChunkReading,
-    WithEvents
+final class TicketsExport implements FromQuery, ShouldAutoSize, WithChunkReading, WithColumnFormatting, WithEvents, WithHeadings, WithMapping, WithStyles, WithTitle
 {
     /**
      * Allows injecting a custom/filtered query from the Controller.
@@ -103,14 +93,12 @@ final class TicketsExport implements
     /**
      * Maps each Eloquent record to an Excel row.
      *
-     * @param Ticket $ticket
+     * @param  Ticket  $ticket
      */
     public function map(mixed $ticket): array
     {
         /** @var Ticket $ticket */
-        $statusLabel = $ticket->status instanceof TicketStatusEnum
-            ? $ticket->status->label()
-            : ($ticket->status->name ?? (string) ($ticket->status ?? 'N/A'));
+        $statusLabel = (string) (optional($ticket->status)->name ?? 'N/A');
 
         $priorityLabel = TicketPriorityEnum::normalize($ticket->priority)?->label()
             ?? (string) ($ticket->priority ?? 'N/A');
@@ -168,7 +156,7 @@ final class TicketsExport implements
                 $sheet->setAutoFilter($range);
 
                 if ($highestRow > 1) {
-                    $conditional = new Conditional();
+                    $conditional = new Conditional;
                     $conditional->setConditionType(Conditional::CONDITION_EXPRESSION);
                     $conditional->setOperatorType(Conditional::OPERATOR_EQUAL);
                     $conditional->addCondition('MOD(ROW(),2)=0');

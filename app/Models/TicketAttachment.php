@@ -9,8 +9,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property string|null $original_name
+ * @property-read User|null $user
+ */
 final class TicketAttachment extends Model
 {
     use HasFactory;
@@ -44,14 +51,14 @@ final class TicketAttachment extends Model
 
     protected static function booted(): void
     {
-        static::creating(function (self $attachment): void {
+        self::creating(function (self $attachment): void {
             if ($attachment->original_name === null) {
-                $attachment->original_name = $attachment->file_name ?? 'file_' . uniqid();
+                $attachment->original_name = $attachment->file_name ?? 'file_'.uniqid();
             }
         });
 
         // Ensure physical file is deleted from Storage on model deletion
-        static::deleting(static function (self $attachment): void {
+        self::deleting(static function (self $attachment): void {
             $disk = $attachment->disk ?: 'public';
             if ($attachment->path && Storage::disk($disk)->exists($attachment->path)) {
                 Storage::disk($disk)->delete($attachment->path);

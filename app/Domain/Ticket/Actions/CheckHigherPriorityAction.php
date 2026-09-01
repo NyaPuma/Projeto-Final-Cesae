@@ -13,6 +13,9 @@ final readonly class CheckHigherPriorityAction
         private TicketStatusService $statusService,
     ) {}
 
+    /**
+     * @return array{total: int, assigned_to_user: int, has_higher: bool}
+     */
     public function execute(Ticket $ticket): array
     {
         $normalized = TicketPriorityEnum::normalize($ticket->priority);

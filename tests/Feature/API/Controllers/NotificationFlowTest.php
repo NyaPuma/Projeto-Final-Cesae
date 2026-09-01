@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-
 use App\Enums\UserRoleEnum;
 use App\Mail\TestMail;
 use App\Models\Notification;

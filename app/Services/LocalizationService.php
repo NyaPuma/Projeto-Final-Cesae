@@ -104,10 +104,10 @@ final class LocalizationService
         $prefs = $this->preferences();
         $userFormat = $prefs['date_format'] ?? null;
 
-        if (is_string($userFormat) && $userFormat !== '') {
+        if (is_string($userFormat) && $userFormat) {
             $rendered = $date->format($userFormat);
 
-            return $rendered === '' ? $this->formatDateFallback($date, $format, $locale) : $rendered;
+            return $rendered;
         }
 
         return $this->formatDateFallback($date, $format, $locale);
@@ -130,7 +130,7 @@ final class LocalizationService
 
         if (is_string($userDate) && $userDate !== '') {
             $time = is_string($userTime) && $userTime !== '' ? $userTime : 'H:i';
-            $rendered = $date->format(trim($userDate . ' ' . $time));
+            $rendered = $date->format(trim($userDate.' '.$time));
 
             if ($rendered !== '') {
                 return $rendered;
@@ -146,7 +146,7 @@ final class LocalizationService
         $seps = $this->numberSeparators($prefs);
 
         if ($seps !== null) {
-            return number_format($value, 1, $seps['decimal'], $seps['thousand']) . '%';
+            return number_format($value, 1, $seps['decimal'], $seps['thousand']).'%';
         }
 
         return LocaleService::formatPercent($value, 1, $locale);
@@ -199,7 +199,7 @@ final class LocalizationService
      * has been made (stored value is the default sentinel), so the formatter
      * can fall back to the language's natural grouping.
      *
-     * @param array<string, mixed> $prefs
+     * @param  array<string, mixed>  $prefs
      * @return array{decimal: string, thousand: string}|null
      */
     private function numberSeparators(array $prefs): ?array
@@ -284,6 +284,6 @@ final class LocalizationService
             }
         }
 
-        return $this->formatDateFallback($date, 'short', $targetLocale) . ' ' . $date->format('H:i');
+        return $this->formatDateFallback($date, 'short', $targetLocale).' '.$date->format('H:i');
     }
 }

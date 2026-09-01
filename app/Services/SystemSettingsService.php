@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\SystemSetting;
-use App\Services\LocaleService;
 use Illuminate\Support\Facades\Schema;
 
 /**
@@ -219,6 +218,7 @@ final class SystemSettingsService
             foreach ($group['fields'] as $key => $field) {
                 if (array_key_exists($key, $overrides)) {
                     $values[$key] = $this->cast($field, $overrides[$key]);
+
                     continue;
                 }
 
@@ -284,6 +284,7 @@ final class SystemSettingsService
         foreach ($group['fields'] as $key => $field) {
             if (array_key_exists($key, $overrides)) {
                 $values[$key] = $this->cast($field, $overrides[$key]);
+
                 continue;
             }
 

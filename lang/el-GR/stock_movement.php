@@ -5,4 +5,3 @@ return [
     'surplus_return' => 'Επιστροφή πλεονάσματος',
     'intervention_consumption' => 'Κατανάλωση σε παρέμβαση',
 ];
-

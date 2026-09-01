@@ -26,7 +26,7 @@ class TicketStatusFactory extends Factory
                 'em revisão',
                 'sem rede',
             ]),
-            'code' => 'STS-' . strtoupper($this->faker->unique()->lexify('????')),
+            'code' => 'STS-'.strtoupper($this->faker->unique()->lexify('????')),
             'description' => $this->faker->sentence(12),
             'type_id' => null,
         ];

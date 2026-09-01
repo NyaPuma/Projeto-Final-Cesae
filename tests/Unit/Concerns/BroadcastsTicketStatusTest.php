@@ -17,7 +17,8 @@ class BroadcastsTicketStatusTest extends FeatureTestCase
 {
     private function makeSubject(): object
     {
-        return new class {
+        return new class
+        {
             use BroadcastsTicketStatus;
 
             public function fire(Ticket $ticket, TicketStatusEnum|string $old, TicketStatusEnum|string $new): void

@@ -12,17 +12,12 @@ use App\Models\User;
 
 final class TechnicianAssignmentService
 {
-    /**
-     * @param TicketStatusService $statusService
-     */
     public function __construct(
         private readonly TicketStatusService $statusService,
     ) {}
 
     /**
      * Finds the active technician with the lowest workload (in-progress tickets).
-     *
-     * @return User|null
      */
     public function getLeastBusyTechnician(): ?User
     {
@@ -37,10 +32,6 @@ final class TechnicianAssignmentService
 
     /**
      * Assigns a technician to a ticket (specific by ID or automatically the least busy).
-     *
-     * @param Ticket $ticket
-     * @param int|null $technicianId
-     * @return User|null
      */
     public function assignToTicket(Ticket $ticket, ?int $technicianId): ?User
     {
@@ -71,9 +62,6 @@ final class TechnicianAssignmentService
 
     /**
      * Finds the most urgent open ticket based on priority and creation date.
-     *
-     * @param int|null $excludeId
-     * @return Ticket|null
      */
     public function findMostUrgentOpenTicket(?int $excludeId = null): ?Ticket
     {
@@ -92,7 +80,7 @@ final class TechnicianAssignmentService
             array_keys($reversed)
         );
 
-        return $query->orderByRaw('CASE priority ' . implode(' ', $cases) . ' ELSE 99 END')
+        return $query->orderByRaw('CASE priority '.implode(' ', $cases).' ELSE 99 END')
             ->orderBy('created_at', 'asc')
             ->first();
     }

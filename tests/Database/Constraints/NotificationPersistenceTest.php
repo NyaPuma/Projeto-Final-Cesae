@@ -2,7 +2,6 @@
 
 namespace Tests\Database\Constraints;
 
-
 use App\Enums\UserRoleEnum;
 use App\Models\Notification;
 use App\Models\TicketComment;

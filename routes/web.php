@@ -7,8 +7,13 @@ use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\LocaleController;
+use App\Http\Controllers\MaintenancePlanController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PartCategoryController;
+use App\Http\Controllers\PartController;
+use App\Http\Controllers\PreferencesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicTicketController;
 use App\Http\Controllers\QrCodeController;
@@ -18,12 +23,10 @@ use App\Http\Controllers\StockDashboardController;
 use App\Http\Controllers\StockMovementController;
 use App\Http\Controllers\StockReportController;
 use App\Http\Controllers\StockUiController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\SystemSettingsController;
 use App\Http\Controllers\TaxRateController;
-use App\Http\Controllers\PartCategoryController;
-use App\Http\Controllers\MaintenancePlanController;
-use App\Http\Controllers\PartController;
-use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\Ticket\TicketAssignmentController;
 use App\Http\Controllers\Ticket\TicketCloseController;
 use App\Http\Controllers\Ticket\TicketLifecycleController;
@@ -33,9 +36,7 @@ use App\Http\Controllers\TicketAttachmentController;
 use App\Http\Controllers\TicketBudgetController;
 use App\Http\Controllers\TicketCommentController;
 use App\Http\Controllers\TicketController;
-use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\UiController;
-use App\Http\Controllers\LocaleController;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Support\Facades\Route;
 
@@ -72,24 +73,24 @@ Route::get('/ticket/success/{ticket}', [PublicTicketController::class, 'success'
     ->where('ticket', '[0-9]+');
 
 // --- User Preferences (Language, Currency, Date Format) ---
-Route::get('/preferences', [\App\Http\Controllers\PreferencesController::class, 'edit'])
+Route::get('/preferences', [PreferencesController::class, 'edit'])
     ->name('preferences.edit');
-Route::post('/preferences/language', [\App\Http\Controllers\PreferencesController::class, 'updateLanguage'])
+Route::post('/preferences/language', [PreferencesController::class, 'updateLanguage'])
     ->name('preferences.update_language')
     ->withoutMiddleware([ValidateCsrfToken::class]);
-Route::post('/preferences/currency', [\App\Http\Controllers\PreferencesController::class, 'updateCurrency'])
+Route::post('/preferences/currency', [PreferencesController::class, 'updateCurrency'])
     ->name('preferences.update_currency')
     ->withoutMiddleware([ValidateCsrfToken::class]);
-Route::post('/preferences/date-format', [\App\Http\Controllers\PreferencesController::class, 'updateDateFormat'])
+Route::post('/preferences/date-format', [PreferencesController::class, 'updateDateFormat'])
     ->name('preferences.update_date_format')
     ->withoutMiddleware([ValidateCsrfToken::class]);
-Route::post('/preferences/time-format', [\App\Http\Controllers\PreferencesController::class, 'updateTimeFormat'])
+Route::post('/preferences/time-format', [PreferencesController::class, 'updateTimeFormat'])
     ->name('preferences.update_time_format')
     ->withoutMiddleware([ValidateCsrfToken::class]);
-Route::post('/preferences/number-format', [\App\Http\Controllers\PreferencesController::class, 'updateNumberFormat'])
+Route::post('/preferences/number-format', [PreferencesController::class, 'updateNumberFormat'])
     ->name('preferences.update_number_format')
     ->withoutMiddleware([ValidateCsrfToken::class]);
-Route::post('/preferences', [\App\Http\Controllers\PreferencesController::class, 'updateAll'])
+Route::post('/preferences', [PreferencesController::class, 'updateAll'])
     ->name('preferences.update_all')
     ->withoutMiddleware([ValidateCsrfToken::class]);
 

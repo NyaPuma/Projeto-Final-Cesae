@@ -4,7 +4,7 @@ namespace Tests\Unit\Services;
 
 use App\DTOs\TicketFilters;
 use App\Enums\TicketPriorityEnum;
-use App\Models\Ticket;
+use App\Enums\TicketStatusEnum;
 use App\Services\TicketSearchService;
 use App\Services\TicketStatusService;
 use Carbon\CarbonImmutable;
@@ -32,7 +32,7 @@ class TicketSearchServiceTest extends FeatureTestCase
     {
         $this->createTickets(3);
 
-        $result = $this->service->search(new TicketFilters());
+        $result = $this->service->search(new TicketFilters);
 
         $this->assertEquals(3, $result->total());
         $this->assertEquals(15, $result->perPage());
@@ -76,7 +76,7 @@ class TicketSearchServiceTest extends FeatureTestCase
     #[Test]
     public function it_filters_by_status(): void
     {
-        $closedStatusId = app(TicketStatusService::class)->getByName(\App\Enums\TicketStatusEnum::Closed);
+        $closedStatusId = app(TicketStatusService::class)->getByName(TicketStatusEnum::Closed);
         $this->createTicket(['title' => 'Ticket fechado', 'status_id' => $closedStatusId]);
         $this->createTicket(['title' => 'Ticket aberto']);
 
@@ -161,7 +161,7 @@ class TicketSearchServiceTest extends FeatureTestCase
     {
         $this->createTicketWithEquipment();
 
-        $result = $this->service->search(new TicketFilters());
+        $result = $this->service->search(new TicketFilters);
 
         $ticket = $result->getCollection()->first();
         $this->assertTrue($ticket->relationLoaded('equipment'));

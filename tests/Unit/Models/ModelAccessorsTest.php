@@ -2,7 +2,9 @@
 
 namespace Tests\Unit\Models;
 
+use App\Enums\TicketStatusEnum;
 use App\Models\Notification;
+use App\Models\Ticket;
 use App\Models\TicketAttachment;
 use App\Models\TicketComment;
 use App\Models\TicketWorkflowHistory;
@@ -52,7 +54,7 @@ class ModelAccessorsTest extends FeatureTestCase
         $open = $this->createTicket();
         $closed = $this->createTicketWithStatus('fechada');
 
-        $ids = \App\Models\Ticket::open()->pluck('id')->all();
+        $ids = Ticket::open()->pluck('id')->all();
 
         $this->assertContains($open->id, $ids);
         $this->assertNotContains($closed->id, $ids);
@@ -67,7 +69,7 @@ class ModelAccessorsTest extends FeatureTestCase
         $assigned = $this->createTicket(['assigned_to' => $technician->id]);
         $this->createTicket(['assigned_to' => $other->id]);
 
-        $ids = \App\Models\Ticket::forTechnician($technician->id)->pluck('id')->all();
+        $ids = Ticket::forTechnician($technician->id)->pluck('id')->all();
 
         $this->assertContains($assigned->id, $ids);
         $this->assertCount(1, $ids);
@@ -118,8 +120,8 @@ class ModelAccessorsTest extends FeatureTestCase
     {
         $history = TicketWorkflowHistory::create([
             'ticket_id' => $this->createTicket()->id,
-            'origin_status_id' => $this->statusId(\App\Enums\TicketStatusEnum::Open),
-            'destination_status_id' => $this->statusId(\App\Enums\TicketStatusEnum::InProgress),
+            'origin_status_id' => $this->statusId(TicketStatusEnum::Open),
+            'destination_status_id' => $this->statusId(TicketStatusEnum::InProgress),
         ]);
 
         $this->assertSame(
@@ -179,7 +181,7 @@ class ModelAccessorsTest extends FeatureTestCase
         $this->assertFalse($pdf->is_image);
     }
 
-    private function statusId(\App\Enums\TicketStatusEnum $status): int
+    private function statusId(TicketStatusEnum $status): int
     {
         return app(TicketStatusService::class)->getByName($status);
     }

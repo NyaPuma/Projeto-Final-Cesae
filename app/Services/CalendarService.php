@@ -16,9 +16,6 @@ final class CalendarService
      * - Admin sees all schedules;
      * - Technician sees only their assigned tickets;
      * - Regular user sees only their own tickets.
-     *
-     * @param User $user
-     * @return Collection<int, array<string, mixed>>
      */
     public function getScheduledEventsForUser(User $user): Collection
     {
@@ -33,7 +30,7 @@ final class CalendarService
 
         $tickets = $baseQuery->get();
 
-        return $tickets->map(function (Ticket $ticket) use ($user): array {
+        return $tickets->toBase()->map(function (Ticket $ticket) use ($user): array {
             $start = $ticket->scheduled_at ?? $ticket->opened_at ?? $ticket->resolved_at;
 
             if (! $start) {
@@ -62,8 +59,6 @@ final class CalendarService
     /**
      * Gets global scheduled events within an optional date range.
      *
-     * @param string|null $from
-     * @param string|null $to
      * @return Collection<int, array<string, mixed>>
      */
     public function getScheduledEvents(?string $from = null, ?string $to = null): Collection

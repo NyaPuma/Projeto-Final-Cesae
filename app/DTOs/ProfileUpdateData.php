@@ -10,7 +10,7 @@ final readonly class ProfileUpdateData
         public ?string $name = null,
         public ?string $email = null,
     ) {
-        if ($this->email !== null && !filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+        if ($this->email !== null && ! filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
             throw new \InvalidArgumentException('The provided e-mail format is invalid.');
         }
 
@@ -34,7 +34,7 @@ final readonly class ProfileUpdateData
      */
     private static function parseNullableString(mixed $value): ?string
     {
-        if (!is_string($value)) {
+        if (! is_string($value)) {
             return null;
         }
 

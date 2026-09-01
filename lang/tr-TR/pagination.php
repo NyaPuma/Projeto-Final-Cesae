@@ -6,4 +6,3 @@ return [
     'page' => 'Sayfa',
     'of' => 'içinde',
 ];
-

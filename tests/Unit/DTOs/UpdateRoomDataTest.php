@@ -49,7 +49,7 @@ class UpdateRoomDataTest extends TestCase
     public function it_detects_whether_updates_exist(): void
     {
         $this->assertTrue((new UpdateRoomData(location: 'Piso 3'))->hasUpdates());
-        $this->assertFalse((new UpdateRoomData())->hasUpdates());
+        $this->assertFalse((new UpdateRoomData)->hasUpdates());
     }
 
     #[Test]

@@ -5,4 +5,3 @@ return [
     'surplus_return' => 'Vrácení přebytku',
     'intervention_consumption' => 'Spotřeba při intervenci',
 ];
-

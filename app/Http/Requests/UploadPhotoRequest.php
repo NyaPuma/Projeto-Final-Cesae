@@ -17,9 +17,8 @@ final class UploadPhotoRequest extends FormRequest
 
     public function rules(): array
     {
-        /** @var array<int, string> $allowedMimes */
         $allowedMimes = config('services.upload.allowed_photo_mimes', ['jpeg', 'jpg', 'png', 'gif', 'webp']);
-        if (! is_array($allowedMimes) || $allowedMimes === []) {
+        if ($allowedMimes === []) {
             $allowedMimes = ['jpeg', 'jpg', 'png', 'gif', 'webp'];
         }
 

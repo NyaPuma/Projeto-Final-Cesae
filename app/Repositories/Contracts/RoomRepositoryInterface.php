@@ -11,16 +11,13 @@ interface RoomRepositoryInterface
 {
     /**
      * Find a room by its ID.
-     *
-     * @param int $id
-     * @return Room|null
      */
     public function findById(int $id): ?Room;
 
     /**
      * Return a paginated list of rooms.
      *
-     * @param array<int, string> $relations
+     * @param  array<int, string>  $relations
      * @return LengthAwarePaginator<Room>
      */
     public function getAll(array $relations = []): LengthAwarePaginator;
@@ -35,25 +32,19 @@ interface RoomRepositoryInterface
     /**
      * Create a new room record.
      *
-     * @param array<string, mixed> $data
-     * @return Room
+     * @param  array<string, mixed>  $data
      */
     public function create(array $data): Room;
 
     /**
      * Update an existing room.
      *
-     * @param Room $room
-     * @param array<string, mixed> $data
-     * @return bool
+     * @param  array<string, mixed>  $data
      */
     public function update(Room $room, array $data): bool;
 
     /**
      * Inactivate a room.
-     *
-     * @param Room $room
-     * @return bool
      */
     public function inactivate(Room $room): bool;
 }

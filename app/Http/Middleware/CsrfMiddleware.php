@@ -125,7 +125,7 @@ final class CsrfMiddleware
 
         if ($storedToken === '' || ! hash_equals($storedToken, $trimmedToken)) {
             Log::debug('CsrfMiddleware - Token mismatch', [
-                'provided_token' => substr($trimmedToken, 0, 8) . '...',
+                'provided_token' => substr($trimmedToken, 0, 8).'...',
                 'stored_token' => $storedToken ?: null,
             ]);
 

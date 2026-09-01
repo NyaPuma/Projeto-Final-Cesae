@@ -5,4 +5,3 @@ return [
     'surplus_return' => 'Returnare de surplus',
     'intervention_consumption' => 'Consum în intervenție',
 ];
-

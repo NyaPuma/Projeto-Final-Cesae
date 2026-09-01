@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Middleware\LocalizeSwaggerDocument;
 use L5Swagger\CustomGeneratorInterface;
 use L5Swagger\Generator;
 use OpenApi\scan;
@@ -77,7 +78,7 @@ return [
             'middleware' => [
                 'api' => ['web', 'custom.auth', 'role:admin'],
                 'asset' => [],
-                'docs' => ['web', 'custom.auth', 'role:admin', \App\Http\Middleware\LocalizeSwaggerDocument::class],
+                'docs' => ['web', 'custom.auth', 'role:admin', LocalizeSwaggerDocument::class],
                 'oauth2_callback' => [],
             ],
 

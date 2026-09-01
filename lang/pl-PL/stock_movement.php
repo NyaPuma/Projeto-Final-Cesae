@@ -5,4 +5,3 @@ return [
     'surplus_return' => 'Zwrot nadwyżki',
     'intervention_consumption' => 'Zużycie w interwencji',
 ];
-

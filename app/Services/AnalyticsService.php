@@ -6,10 +6,6 @@ namespace App\Services;
 
 final class AnalyticsService
 {
-    /**
-     * @param AnalyticsDashboardService $dashboardService
-     * @param AnalyticsExportService $exportService
-     */
     public function __construct(
         private readonly AnalyticsDashboardService $dashboardService,
         private readonly AnalyticsExportService $exportService,
@@ -35,8 +31,6 @@ final class AnalyticsService
 
     /**
      * Exports analytics data to a CSV file at the specified path.
-     *
-     * @param string $path
      */
     public function exportCsvToFile(string $path): void
     {
@@ -45,8 +39,6 @@ final class AnalyticsService
 
     /**
      * Exports the analytics report in PDF format to the specified path.
-     *
-     * @param string $path
      */
     public function exportPdfToFile(string $path): void
     {

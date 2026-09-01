@@ -15,7 +15,7 @@ class BudgetCalculatorServiceTest extends TestCase
     {
         parent::setUp();
 
-        $this->service = new BudgetCalculatorService();
+        $this->service = new BudgetCalculatorService;
     }
 
     #[Test]

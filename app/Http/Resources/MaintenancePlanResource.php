@@ -5,14 +5,17 @@ declare(strict_types=1);
 namespace App\Http\Resources;
 
 use App\Enums\MaintenancePlanIntervalTypeEnum;
+use App\Models\MaintenancePlan;
+use App\Models\Part;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/** @mixin MaintenancePlan */
 final class MaintenancePlanResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
-        $intervalType = MaintenancePlanIntervalTypeEnum::tryFrom($this->interval_type);
+        $intervalType = MaintenancePlanIntervalTypeEnum::normalize((string) $this->interval_type);
 
         return [
             'id' => $this->id,
@@ -24,11 +27,11 @@ final class MaintenancePlanResource extends JsonResource
             'interval_value' => $this->interval_value,
             'description' => $this->description,
             'active' => $this->active,
-            'parts' => $this->whenLoaded('parts', fn () => $this->parts->map(fn ($part) => [
+            'parts' => $this->whenLoaded('parts', fn () => $this->parts->map(fn (Part $part): array => [
                 'id' => $part->id,
                 'sku' => $part->sku,
                 'name' => $part->name,
-                'expected_quantity' => $part->pivot->expected_quantity,
+                'expected_quantity' => $part->pivot->getAttribute('expected_quantity'),
             ])),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

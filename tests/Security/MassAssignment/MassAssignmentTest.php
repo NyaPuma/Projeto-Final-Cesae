@@ -2,12 +2,10 @@
 
 namespace Tests\Security\MassAssignment;
 
-
-use App\Enums\UserRoleEnum;
 use App\Enums\TicketPriorityEnum;
 use App\Enums\TicketStatusEnum;
+use App\Enums\UserRoleEnum;
 use App\Models\Ticket;
-use App\Models\User;
 use App\Services\TicketStatusService;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Base\FeatureTestCase;

@@ -102,7 +102,7 @@ enum TicketStatusEnum: string
             return $value;
         }
 
-        if (!is_string($value)) {
+        if (! is_string($value)) {
             return null;
         }
 

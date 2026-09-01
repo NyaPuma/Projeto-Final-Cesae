@@ -16,7 +16,6 @@ final readonly class SerialNumber
     /**
      * Creates a new SerialNumber instance after validation and normalization.
      *
-     * @param string $serial
      * @throws InvalidArgumentException
      */
     public function __construct(string $serial)
@@ -28,7 +27,6 @@ final readonly class SerialNumber
     /**
      * Validates that the serial number meets format, length, and character requirements.
      *
-     * @param string $serial
      * @throws InvalidArgumentException
      */
     private function validate(string $serial): void
@@ -48,8 +46,6 @@ final readonly class SerialNumber
 
     /**
      * Returns the normalized serial number value.
-     *
-     * @return string
      */
     public function value(): string
     {
@@ -58,9 +54,6 @@ final readonly class SerialNumber
 
     /**
      * Checks whether this serial number is exactly equal to another SerialNumber.
-     *
-     * @param SerialNumber $other
-     * @return bool
      */
     public function equals(SerialNumber $other): bool
     {
@@ -69,8 +62,6 @@ final readonly class SerialNumber
 
     /**
      * Returns the string representation of the serial number.
-     *
-     * @return string
      */
     public function __toString(): string
     {

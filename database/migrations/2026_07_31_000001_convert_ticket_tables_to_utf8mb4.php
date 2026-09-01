@@ -37,7 +37,5 @@ return new class extends Migration
     /**
      * The data conversion cannot be safely reverted.
      */
-    public function down(): void
-    {
-    }
+    public function down(): void {}
 };

@@ -6,4 +6,3 @@ return [
     'signin' => 'Log ind',
     'login_register' => 'Login / Registrering',
 ];
-

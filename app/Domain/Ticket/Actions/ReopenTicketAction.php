@@ -6,7 +6,6 @@ use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use App\Services\TicketStatusService;
 use Illuminate\Support\Facades\DB;
-use RuntimeException;
 
 final readonly class ReopenTicketAction
 {
@@ -21,10 +20,6 @@ final readonly class ReopenTicketAction
         }
 
         $openStatusId = $this->statusService->getByName(TicketStatusEnum::Open);
-
-        if ($openStatusId === null) {
-            throw new RuntimeException("Status '" . TicketStatusEnum::Open->value . "' was not found.");
-        }
 
         return DB::transaction(function () use ($ticket, $openStatusId) {
             $ticket->status_id = $openStatusId;

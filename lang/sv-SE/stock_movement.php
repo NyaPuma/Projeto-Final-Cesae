@@ -5,4 +5,3 @@ return [
     'surplus_return' => 'Retur av överskott',
     'intervention_consumption' => 'Förbrukning vid åtgärd',
 ];
-

@@ -22,7 +22,7 @@ return [
 
             'path' => storage_path('app/backups'),
 
-            'filename' => 'backup_' . date('Y-m-d_His') . '.sql',
+            'filename' => 'backup_'.date('Y-m-d_His').'.sql',
 
         ],
 

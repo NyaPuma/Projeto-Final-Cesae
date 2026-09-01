@@ -2,9 +2,8 @@
 
 namespace Tests\Database\Constraints;
 
-
-use App\Enums\UserRoleEnum;
 use App\Enums\TicketStatusEnum;
+use App\Enums\UserRoleEnum;
 use App\Models\Equipment;
 use App\Models\Room;
 use App\Models\Ticket;
@@ -165,7 +164,7 @@ class DatabaseOptimizationTest extends TestCase
             ->getJson('/api/analytics/stats')->assertOk();
 
         $this->assertTrue(
-            Cache::has('analytics_dashboard_payload:' . app()->getLocale()),
+            Cache::has('analytics_dashboard_payload:'.app()->getLocale()),
             'Analytics payload should be cached'
         );
     }

@@ -13,9 +13,6 @@ use OpenAI\Laravel\Facades\OpenAI;
 
 final class AIService
 {
-    /**
-     * @param TicketStatusService $statusService
-     */
     public function __construct(
         private readonly TicketStatusService $statusService,
     ) {}
@@ -23,7 +20,6 @@ final class AIService
     /**
      * Recommends the most qualified technician using AI for ticket resolution.
      *
-     * @param Ticket $ticket
      * @return array{technician_id: int|null, justification: string}
      */
     public function recommendTechnician(Ticket $ticket): array
@@ -61,9 +57,9 @@ final class AIService
         $prompt .= "Your sole role is to analyze the fault ticket and recommend the most qualified technician.\n\n";
 
         $prompt .= "--- TICKET UNDER ANALYSIS ---\n";
-        $prompt .= '- Problem Description: ' . $ticket->description . "\n";
-        $prompt .= '- Equipment: ' . ($ticket->equipment->name ?? 'Not Specified') . "\n";
-        $prompt .= '- Technical Category: ' . ($ticket->equipment->category->name ?? 'General') . "\n\n";
+        $prompt .= '- Problem Description: '.$ticket->description."\n";
+        $prompt .= '- Equipment: '.($ticket->equipment->name ?? 'Not Specified')."\n";
+        $prompt .= '- Technical Category: '.($ticket->equipment->category->name ?? 'General')."\n\n";
 
         $prompt .= "--- AVAILABLE HUMAN RESOURCES ---\n";
         foreach ($technicians as $technician) {
@@ -78,8 +74,8 @@ final class AIService
 
         $prompt .= "--- REQUIRED RESPONSE FORMAT ---\n";
         $prompt .= "{\n";
-        $prompt .= '  "technician_id": <insert_numeric_id_only>,' . "\n";
-        $prompt .= '  "justification": "<a short professional sentence in English validating the choice for the Operations Director>"' . "\n";
+        $prompt .= '  "technician_id": <insert_numeric_id_only>,'."\n";
+        $prompt .= '  "justification": "<a short professional sentence in English validating the choice for the Operations Director>"'."\n";
         $prompt .= '}';
 
         try {
@@ -101,7 +97,7 @@ final class AIService
 
             if (is_array($result) && isset($result['technician_id'])) {
                 return [
-                    'technician_id' => $result['technician_id'] !== null ? (int) $result['technician_id'] : null,
+                    'technician_id' => (int) $result['technician_id'],
                     'justification' => (string) ($result['justification'] ?? 'Assignment recommended by AI assistant.'),
                 ];
             }

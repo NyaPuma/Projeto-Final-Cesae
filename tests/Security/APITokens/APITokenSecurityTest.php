@@ -2,9 +2,7 @@
 
 namespace Tests\Security\APITokens;
 
-
 use App\Enums\UserRoleEnum;
-use App\Models\User;
 use Illuminate\Support\Str;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Base\FeatureTestCase;

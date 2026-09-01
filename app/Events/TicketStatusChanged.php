@@ -6,6 +6,7 @@ use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use App\Models\User;
 use Carbon\CarbonImmutable;
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -17,7 +18,9 @@ final class TicketStatusChanged implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public TicketStatusEnum $oldStatus;
+
     public TicketStatusEnum $newStatus;
+
     public CarbonImmutable $changedAt;
 
     public function __construct(
@@ -41,7 +44,7 @@ final class TicketStatusChanged implements ShouldBroadcast
     /**
      * The channels on which the event should be broadcast in real time (WebSockets).
      *
-     * @return array<\Illuminate\Broadcasting\Channel>
+     * @return array<Channel>
      */
     public function broadcastOn(): array
     {

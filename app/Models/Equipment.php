@@ -11,7 +11,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 
+/**
+ * @property Carbon|null $purchase_date
+ * @property Carbon|null $warranty_until
+ * @property-read EquipmentCategory|null $category
+ * @property-read Room|null $room
+ */
 final class Equipment extends Model
 {
     use Auditable;

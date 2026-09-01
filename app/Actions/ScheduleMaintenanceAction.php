@@ -11,7 +11,6 @@ use App\Models\User;
 use App\Services\TicketStatusService;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use RuntimeException;
 
 /**
  * Creates a preventive maintenance ticket already scheduled on the calendar.
@@ -26,15 +25,11 @@ final readonly class ScheduleMaintenanceAction
     {
         $openStatusId = $this->statusService->getByName(TicketStatusEnum::Open);
 
-        if ($openStatusId === null) {
-            throw new RuntimeException("Status '" . TicketStatusEnum::Open->value . "' was not found in the system.");
-        }
-
         $scheduledAt = Carbon::parse($data->scheduledAt);
 
         return DB::transaction(function () use ($creator, $data, $openStatusId, $scheduledAt): Ticket {
             $ticket = Ticket::create([
-                'reference' => 'MNT-' . now()->format('YmdHis') . '-' . strtoupper(uniqid()),
+                'reference' => 'MNT-'.now()->format('YmdHis').'-'.strtoupper(uniqid()),
                 'title' => trim($data->title),
                 'description' => trim($data->description ?? __('maintenance_plan.Manutenção preventiva agendada.')),
                 'priority' => 'média',

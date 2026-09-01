@@ -49,7 +49,7 @@ class UpdateEquipmentDataTest extends TestCase
     public function it_detects_whether_updates_exist(): void
     {
         $this->assertTrue((new UpdateEquipmentData(name: 'Novo'))->hasUpdates());
-        $this->assertFalse((new UpdateEquipmentData())->hasUpdates());
+        $this->assertFalse((new UpdateEquipmentData)->hasUpdates());
     }
 
     #[Test]

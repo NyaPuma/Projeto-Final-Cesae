@@ -9,18 +9,12 @@ use App\Models\Ticket;
 
 final class BudgetNotificationService
 {
-    /**
-     * @param NotificationCreatorService $creator
-     */
     public function __construct(
         private readonly NotificationCreatorService $creator,
     ) {}
 
     /**
      * Notifies budget submission to administrators and ticket creator.
-     *
-     * @param Ticket $ticket
-     * @param string $message
      */
     public function notifyBudgetSubmitted(Ticket $ticket, string $message): void
     {
@@ -44,9 +38,6 @@ final class BudgetNotificationService
 
     /**
      * Notifies budget auto-approval to the assigned technician and ticket creator.
-     *
-     * @param Ticket $ticket
-     * @param string $message
      */
     public function notifyBudgetAutoApproved(Ticket $ticket, string $message): void
     {
@@ -73,10 +64,6 @@ final class BudgetNotificationService
 
     /**
      * Notifies budget decision (approved or rejected).
-     *
-     * @param Ticket $ticket
-     * @param string $decision
-     * @param string $message
      */
     public function notifyBudgetDecision(Ticket $ticket, string $decision, string $message): void
     {
@@ -106,8 +93,6 @@ final class BudgetNotificationService
 
     /**
      * Notifies new ticket creation to administrators.
-     *
-     * @param Ticket $ticket
      */
     public function notifyTicketCreated(Ticket $ticket): void
     {

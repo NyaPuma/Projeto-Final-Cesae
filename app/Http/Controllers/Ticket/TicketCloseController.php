@@ -9,8 +9,8 @@ use App\Http\Requests\CloseTicketRequest;
 use App\Http\Requests\CloseTicketSimpleRequest;
 use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
-use App\Services\NotificationService;
 use App\Services\LocalizationService;
+use App\Services\NotificationService;
 use App\Services\TicketWorkflowService;
 use Illuminate\Http\JsonResponse;
 
@@ -78,7 +78,7 @@ final class TicketCloseController extends Controller
             if ($higherPriority['has_higher']) {
                 return response()->json([
                     'warning' => true,
-                    'message' => __("tickets.Existem :total ticket(s) de prioridade mais alta por atender.", [
+                    'message' => __('tickets.Existem :total ticket(s) de prioridade mais alta por atender.', [
                         'total' => $higherPriority['total'],
                     ]),
                     'urgent_tickets_count' => $higherPriority['total'],
@@ -115,7 +115,7 @@ final class TicketCloseController extends Controller
         $formattedCost = $this->localization->formatDecimal($cost);
         $this->notificationService->notifyTicketClosed(
             $ticket,
-            __("tickets.O ticket #:id - :title foi concluído e fechado com custo final de :cost €.", [
+            __('tickets.O ticket #:id - :title foi concluído e fechado com custo final de :cost €.', [
                 'id' => $ticket->id,
                 'title' => $ticket->title,
                 'cost' => $formattedCost,

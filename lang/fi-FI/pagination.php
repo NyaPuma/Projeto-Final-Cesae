@@ -6,4 +6,3 @@ return [
     'page' => 'Sivu',
     'of' => 'de',
 ];
-

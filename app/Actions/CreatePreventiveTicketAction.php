@@ -10,7 +10,6 @@ use App\Services\TicketStatusService;
 use Carbon\CarbonInterface;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use RuntimeException;
 
 final readonly class CreatePreventiveTicketAction
 {
@@ -26,10 +25,6 @@ final readonly class CreatePreventiveTicketAction
         CarbonInterface|string|null $scheduledAt = null,
     ): Ticket {
         $openStatusId = $this->statusService->getByName(TicketStatusEnum::Open);
-
-        if ($openStatusId === null) {
-            throw new RuntimeException("Status '" . TicketStatusEnum::Open->value . "' was not found in the system.");
-        }
 
         $resolvedTechnician = $this->resolveTechnician($technician);
 

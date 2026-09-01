@@ -12,10 +12,17 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 
 /**
  * @property-read UserProfile|null $profile
  * @property-read int $tickets_ativos
+ * @property-read int $active_tickets
+ * @property Carbon|null $token_created_at
+ * @property Carbon|null $email_verified_at
+ * @property Carbon|null $password_changed_at
+ * @property Carbon|null $last_login_at
+ * @property Carbon|null $locked_until
  */
 class User extends Authenticatable
 {

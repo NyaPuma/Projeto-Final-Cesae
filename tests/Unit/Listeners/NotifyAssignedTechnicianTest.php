@@ -36,7 +36,7 @@ class NotifyAssignedTechnicianTest extends TestCase
         $technician = $this->technician();
         $ticket = Ticket::factory()->create(['assigned_to' => $technician->id]);
 
-        $listener = new NotifyAssignedTechnician();
+        $listener = new NotifyAssignedTechnician;
         $listener->handle(new TicketStatusUpdatedBroadcast(
             $ticket,
             TicketStatusEnum::Open,
@@ -53,7 +53,7 @@ class NotifyAssignedTechnicianTest extends TestCase
 
         $ticket = Ticket::factory()->create(['assigned_to' => null]);
 
-        $listener = new NotifyAssignedTechnician();
+        $listener = new NotifyAssignedTechnician;
         $listener->handle(new TicketStatusUpdatedBroadcast(
             $ticket,
             TicketStatusEnum::Open,

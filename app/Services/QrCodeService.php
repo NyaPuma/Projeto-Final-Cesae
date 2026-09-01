@@ -25,7 +25,7 @@ final class QrCodeService
      */
     public function png(Equipment $equipment): string
     {
-        $result = (new PngWriter())->write(new QrCode($this->urlFor($equipment)));
+        $result = (new PngWriter)->write(new QrCode($this->urlFor($equipment)));
 
         return $result->getString();
     }
@@ -35,11 +35,11 @@ final class QrCodeService
      */
     public function pngDataUri(Equipment $equipment): string
     {
-        $result = (new PngWriter())->write(new QrCode($this->urlFor($equipment)));
+        $result = (new PngWriter)->write(new QrCode($this->urlFor($equipment)));
 
         $dataUri = $result->getDataUri();
 
-        if (! is_string($dataUri) || $dataUri === '') {
+        if ($dataUri === '') {
             throw new RuntimeException('Could not generate QR Code in PNG format.');
         }
 
@@ -51,7 +51,7 @@ final class QrCodeService
      */
     public function svg(Equipment $equipment): string
     {
-        $result = (new SvgWriter())->write(new QrCode($this->urlFor($equipment)));
+        $result = (new SvgWriter)->write(new QrCode($this->urlFor($equipment)));
 
         return $result->getString();
     }

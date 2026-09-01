@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-
 use App\Enums\UserRoleEnum;
 use App\Models\Ticket;
 use App\Models\User;

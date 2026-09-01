@@ -7,4 +7,3 @@ return [
     'login_register' => 'Login / Register',
     'connection_error' => 'Connection error',
 ];
-

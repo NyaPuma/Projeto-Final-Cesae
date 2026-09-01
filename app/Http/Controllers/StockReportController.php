@@ -114,7 +114,7 @@ final class StockReportController extends Controller
                         $part->category?->name,
                         $part->current_stock,
                         $this->localization->formatDecimal((float) $part->cost_price),
-                        $part->taxRate?->percent . '%',
+                        $part->taxRate?->percent.'%',
                         $this->localization->formatDecimal((float) $part->priceWithVat()),
                         $this->localization->formatDecimal((float) $part->stockValue()),
                         $part->location,

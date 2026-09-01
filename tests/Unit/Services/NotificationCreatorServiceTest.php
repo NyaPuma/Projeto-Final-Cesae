@@ -4,7 +4,6 @@ namespace Tests\Unit\Services;
 
 use App\Enums\UserRoleEnum;
 use App\Models\Notification;
-use App\Models\User;
 use App\Services\NotificationCreatorService;
 use Illuminate\Support\Facades\Log;
 use PHPUnit\Framework\Attributes\Test;
@@ -18,7 +17,7 @@ class NotificationCreatorServiceTest extends FeatureTestCase
     {
         parent::setUp();
 
-        $this->service = new NotificationCreatorService();
+        $this->service = new NotificationCreatorService;
     }
 
     #[Test]

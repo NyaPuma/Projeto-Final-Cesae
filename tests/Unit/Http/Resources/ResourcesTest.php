@@ -2,16 +2,16 @@
 
 namespace Tests\Unit\Http\Resources;
 
+use App\Enums\NotificationTypeEnum;
 use App\Enums\UserRoleEnum;
 use App\Http\Resources\NotificationResource;
 use App\Http\Resources\RoomResource;
 use App\Http\Resources\TicketResource;
 use App\Http\Resources\UserResource;
-use App\Models\Equipment;
-use App\Models\EquipmentCategory;
 use App\Models\Notification;
 use App\Models\Room;
 use App\Models\Ticket;
+use App\Models\TicketStatus;
 use App\Models\User;
 use App\Models\UserProfile;
 use Tests\Base\FeatureTestCase;
@@ -20,6 +20,7 @@ use Tests\Concerns\CreatesTickets;
 class ResourcesTest extends FeatureTestCase
 {
     use CreatesTickets;
+
     public function test_ticket_resource_exposes_all_expected_keys_with_eager_relations(): void
     {
         $ticket = Ticket::with(['status', 'user', 'technician', 'equipment', 'room'])
@@ -31,7 +32,7 @@ class ResourcesTest extends FeatureTestCase
             $this->assertArrayHasKey($key, $payload);
         }
         $this->assertArrayHasKey('status', $payload);
-        $this->assertInstanceOf(\App\Models\TicketStatus::class, $payload['status']);
+        $this->assertInstanceOf(TicketStatus::class, $payload['status']);
         $this->assertSame($ticket->id, $payload['id']);
     }
 
@@ -68,7 +69,7 @@ class ResourcesTest extends FeatureTestCase
             'user_id' => $user->id,
             'title' => 'Notificação',
             'message' => 'Mensagem',
-            'type' => \App\Enums\NotificationTypeEnum::TicketCreated->value,
+            'type' => NotificationTypeEnum::TicketCreated->value,
             'link' => '/ui/tickets/1',
         ]);
         $room = Room::withCount('equipments')->findOrFail(Room::factory()->create()->id);

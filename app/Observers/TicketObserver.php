@@ -72,7 +72,7 @@ final readonly class TicketObserver
     {
         // Matches the key used by AnalyticsDashboardService (locale-suffixed),
         // as well as the legacy unsuffixed key.
-        Cache::forget('analytics_dashboard_payload:' . app()->getLocale());
+        Cache::forget('analytics_dashboard_payload:'.app()->getLocale());
         Cache::forget('analytics_dashboard_payload');
     }
 }

@@ -60,7 +60,7 @@ final class StockMovement extends Model
      */
     public function delta(): int
     {
-        return match ($this->movement_type) {
+        return match ((string) $this->getAttribute('movement_type')) {
             StockMovementTypeEnum::In->value,
             StockMovementTypeEnum::Return->value => abs((int) $this->quantity),
             StockMovementTypeEnum::Out->value => -abs((int) $this->quantity),

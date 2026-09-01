@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/** @property string|null $code */
 final class TicketType extends Model
 {
     use HasFactory;
@@ -17,7 +18,7 @@ final class TicketType extends Model
 
     protected static function booted(): void
     {
-        static::creating(function (TicketType $type) {
+        self::creating(function (TicketType $type) {
             if ($type->code === null) {
                 $type->code = strtoupper(uniqid('TYPE_'));
             }

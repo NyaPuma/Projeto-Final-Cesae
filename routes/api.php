@@ -1,24 +1,25 @@
 <?php
 
+use App\Http\Controllers\ActivityFeedController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminEquipmentController;
 use App\Http\Controllers\AdminUserController;
-use App\Http\Controllers\ActivityFeedController;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MaintenancePlanController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PartCategoryController;
+use App\Http\Controllers\PartController;
 use App\Http\Controllers\PasswordResetController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\StockDashboardController;
 use App\Http\Controllers\StockMovementController;
 use App\Http\Controllers\StockReportController;
-use App\Http\Controllers\TaxRateController;
-use App\Http\Controllers\PartCategoryController;
-use App\Http\Controllers\MaintenancePlanController;
-use App\Http\Controllers\PartController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\TaxRateController;
 use App\Http\Controllers\Ticket\TicketAssignmentController;
 use App\Http\Controllers\Ticket\TicketCloseController;
 use App\Http\Controllers\Ticket\TicketLifecycleController;
@@ -67,7 +68,7 @@ Route::middleware(['custom.auth'])->group(function () {
     Route::get('/activities', [ActivityFeedController::class, 'index'])->name('api.activities');
 
     // Authentication
-    Route::post('/password/change', [\App\Http\Controllers\ProfileController::class, 'changePassword'])
+    Route::post('/password/change', [ProfileController::class, 'changePassword'])
         ->name('api.password.change')
         ->middleware('rate.limit:10,1');
 
@@ -158,8 +159,8 @@ Route::middleware(['custom.auth'])->group(function () {
         Route::post('/admin/preventive', [AdminController::class, 'storePreventive'])->name('api.admin.preventive.store');
         Route::patch('/admin/tickets/{ticket}/approve-budget', [AdminController::class, 'approveBudget'])->name('api.admin.tickets.approve-budget');
         Route::patch('/admin/tickets/{ticket}/assign', TicketAssignmentController::class)
-        ->name('api.admin.tickets.assign')
-        ->middleware('rate.limit:20,1');
+            ->name('api.admin.tickets.assign')
+            ->middleware('rate.limit:20,1');
 
         // Stock: management (admin)
         Route::post('/admin/parts', [PartController::class, 'store'])->name('api.admin.stock.parts.store');

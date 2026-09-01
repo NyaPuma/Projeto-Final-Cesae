@@ -16,7 +16,7 @@ final readonly class CreateEquipmentAction
                 'serial' => $data->serial ? strtoupper(trim($data->serial)) : null,
                 'room_id' => $data->roomId,
                 'category_id' => $data->categoryId,
-                'active' => $data->active ?? true,
+                'active' => $data->active,
                 'asset_tag' => $data->assetTag,
                 'brand' => $data->brand,
                 'model' => $data->model,

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Database\Seeders;
 
 use App\Enums\StockMovementTypeEnum;
+use App\Models\Equipment;
 use App\Models\MaintenancePlan;
 use App\Models\Part;
 use App\Models\PartCategory;
@@ -91,9 +92,9 @@ class StockDataSeeder extends Seeder
 
             for ($i = 0; $i < 8; $i++) {
                 $item = $catalogItems[$i] ?? [
-                    'name' => 'Peça de reserva ' . ($i + 1),
+                    'name' => 'Peça de reserva '.($i + 1),
                     'brand' => 'Genérico',
-                    'manufacturer_ref' => 'GEN-' . ($i + 1),
+                    'manufacturer_ref' => 'GEN-'.($i + 1),
                     'cost_min' => 5,
                     'cost_max' => 40,
                 ];
@@ -242,8 +243,8 @@ class StockDataSeeder extends Seeder
         |--------------------------------------------------------------------------
         */
 
-        \App\Models\Equipment::query()->active()->inRandomOrder()->limit(15)->get()
-            ->each(function (\App\Models\Equipment $equipment) use ($parts): void {
+        Equipment::query()->active()->inRandomOrder()->limit(15)->get()
+            ->each(function (Equipment $equipment) use ($parts): void {
                 $plan = MaintenancePlan::factory()->create([
                     'equipment_id' => $equipment->id,
                 ]);

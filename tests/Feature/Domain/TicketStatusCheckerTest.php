@@ -4,7 +4,6 @@ namespace Tests\Feature\Domain;
 
 use App\Domain\Ticket\Services\TicketStatusChecker;
 use App\Enums\TicketStatusEnum;
-use App\Models\Ticket;
 use App\Services\TicketStatusService;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Base\DatabaseTestCase;

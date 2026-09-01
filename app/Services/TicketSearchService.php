@@ -12,9 +12,6 @@ use Illuminate\Database\Eloquent\Builder;
 
 final class TicketSearchService
 {
-    /**
-     * @param TicketStatusService $statusService
-     */
     public function __construct(
         private readonly TicketStatusService $statusService,
     ) {}
@@ -22,8 +19,7 @@ final class TicketSearchService
     /**
      * Executes ticket search and filtering with pagination.
      *
-     * @param TicketFilters $filters
-     * @return LengthAwarePaginator<Ticket>
+     * @return LengthAwarePaginator<int, Ticket>
      */
     public function search(TicketFilters $filters): LengthAwarePaginator
     {
@@ -83,15 +79,11 @@ final class TicketSearchService
 
     /**
      * Applies date filters to the ticket query safely.
-     *
-     * @param Builder $query
-     * @param string|null $dateFrom
-     * @param string|null $dateTo
      */
     private function applyDateFilters(Builder $query, ?string $dateFrom, ?string $dateTo): void
     {
         if ($dateFrom !== null && $dateTo !== null) {
-            $query->whereBetween('created_at', [$dateFrom, $dateTo . ' 23:59:59']);
+            $query->whereBetween('created_at', [$dateFrom, $dateTo.' 23:59:59']);
         } elseif ($dateFrom !== null) {
             $query->whereDate('created_at', '>=', $dateFrom);
         } elseif ($dateTo !== null) {

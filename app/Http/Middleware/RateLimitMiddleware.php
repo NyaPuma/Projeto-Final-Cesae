@@ -53,14 +53,14 @@ final class RateLimitMiddleware
         if ($this->isAuthEndpoint($request)) {
             $email = (string) $request->input('email', '');
 
-            return sha1($request->ip() . '|' . $email);
+            return sha1($request->ip().'|'.$email);
         }
 
         // For other endpoints, use IP + user_id (if authenticated) or 'guest'
         $user = $request->user();
         $userId = $user ? (string) $user->id : 'guest';
 
-        return sha1($request->ip() . '|' . $userId . '|' . $request->path());
+        return sha1($request->ip().'|'.$userId.'|'.$request->path());
     }
 
     /**
@@ -112,7 +112,7 @@ final class RateLimitMiddleware
             'retry_after' => $retryAfter,
         ], 429);
 
-        $response->headers->set('Retry-After', $retryAfter);
+        $response->headers->set('Retry-After', (string) $retryAfter);
 
         return $this->addHeaders($response, $maxAttempts, 0);
     }

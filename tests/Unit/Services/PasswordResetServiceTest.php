@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Services;
 
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Services\PasswordResetService;
 use Illuminate\Support\Facades\DB;
@@ -18,14 +19,14 @@ class PasswordResetServiceTest extends FeatureTestCase
     {
         parent::setUp();
 
-        $this->service = new PasswordResetService();
+        $this->service = new PasswordResetService;
     }
 
     #[Test]
     public function it_creates_a_reset_token_and_persists_a_hashed_version(): void
     {
         $user = $this->createUserWithPassword(
-            \App\Enums\UserRoleEnum::User->value,
+            UserRoleEnum::User->value,
             'joao@example.com',
             'SenhaForte123'
         );
@@ -68,7 +69,7 @@ class PasswordResetServiceTest extends FeatureTestCase
     public function it_validates_a_valid_token_and_returns_the_user(): void
     {
         $user = $this->createUserWithPassword(
-            \App\Enums\UserRoleEnum::User->value,
+            UserRoleEnum::User->value,
             'ana@example.com',
             'SenhaForte123'
         );
@@ -85,7 +86,7 @@ class PasswordResetServiceTest extends FeatureTestCase
     public function it_returns_null_for_an_invalid_token(): void
     {
         $user = $this->createUserWithPassword(
-            \App\Enums\UserRoleEnum::User->value,
+            UserRoleEnum::User->value,
             'carlos@example.com',
             'SenhaForte123'
         );
@@ -105,7 +106,7 @@ class PasswordResetServiceTest extends FeatureTestCase
     public function it_rejects_and_deletes_expired_tokens(): void
     {
         $user = $this->createUserWithPassword(
-            \App\Enums\UserRoleEnum::User->value,
+            UserRoleEnum::User->value,
             'maria@example.com',
             'SenhaForte123'
         );
@@ -126,7 +127,7 @@ class PasswordResetServiceTest extends FeatureTestCase
     public function it_accepts_a_token_within_the_expiry_window(): void
     {
         $user = $this->createUserWithPassword(
-            \App\Enums\UserRoleEnum::User->value,
+            UserRoleEnum::User->value,
             'pedro@example.com',
             'SenhaForte123'
         );
@@ -144,7 +145,7 @@ class PasswordResetServiceTest extends FeatureTestCase
     public function it_resets_the_password_clears_the_api_token_and_removes_the_record(): void
     {
         $user = $this->createUserWithPassword(
-            \App\Enums\UserRoleEnum::User->value,
+            UserRoleEnum::User->value,
             'rita@example.com',
             'SenhaForte123'
         );

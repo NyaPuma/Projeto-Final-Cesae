@@ -10,7 +10,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 
+/**
+ * @property Carbon|null $read_at
+ * @property Carbon|null $expires_at
+ * @property-read User|null $user
+ */
 final class Notification extends Model
 {
     use HasFactory;
