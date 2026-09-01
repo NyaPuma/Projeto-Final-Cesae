@@ -15,6 +15,7 @@ use App\Models\Room;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Services\TicketStatusService;
+use Illuminate\Support\Carbon;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Base\DatabaseTestCase;
 use Tests\Concerns\CreatesTickets;
@@ -35,7 +36,7 @@ class TicketQueriesTest extends DatabaseTestCase
     #[Test]
     public function monthly_tickets_query_aggregates_last_six_months(): void
     {
-        $now = \Illuminate\Support\Carbon::parse('2026-07-31 12:00:00');
+        $now = Carbon::parse('2026-07-31 12:00:00');
         $open = $this->statusService->getByName(TicketStatusEnum::Open);
         $inProgress = $this->statusService->getByName(TicketStatusEnum::InProgress);
         $closed = $this->statusService->getByName(TicketStatusEnum::Closed);
