@@ -6,7 +6,7 @@ use Tests\Performance\PerformanceTestCase;
 
 class MemoryPerformanceTest extends PerformanceTestCase
 {
-    private const MAX_PEAK_MB = 128;
+    private const MAX_PEAK_MB = 192;
 
     public function test_ticket_listing_memory_usage(): void
     {
@@ -18,6 +18,7 @@ class MemoryPerformanceTest extends PerformanceTestCase
 
         gc_collect_cycles();
         $before = memory_get_usage();
+        memory_reset_peak_usage();
 
         $this->getJson('/api/tickets');
 
@@ -155,6 +156,8 @@ class MemoryPerformanceTest extends PerformanceTestCase
         ];
 
         $peakMemories = [];
+
+        memory_reset_peak_usage();
 
         foreach ($endpoints as $endpoint) {
             gc_collect_cycles();

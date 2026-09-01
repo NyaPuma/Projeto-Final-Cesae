@@ -18,7 +18,7 @@ export function bindPriorityModalActions(fetchTicket) {
 
         try {
             viewUrgentButton.disabled = true;
-            viewUrgentButton.innerHTML = '<span class="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin"></span> Locating...;
+            viewUrgentButton.innerHTML = '<span class="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin"></span> Locating...';
 
             const response = await fetch(`/tickets/most-urgent?exclude=${pendingId}`, { headers: authHeader() });
             if (response.ok) {

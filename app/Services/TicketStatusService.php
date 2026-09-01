@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Enums\TicketStatusEnum;
 use App\Models\TicketStatus;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 
 final class TicketStatusService
 {

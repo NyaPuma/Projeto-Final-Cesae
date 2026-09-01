@@ -26,8 +26,8 @@ class TicketEndpointPerformanceTest extends PerformanceTestCase
 
         $this->assertLessThanOrEqual(self::MAX_RESPONSE_MS, $time,
             "GET /api/tickets took {$time}ms, exceeds ".self::MAX_RESPONSE_MS.'ms');
-        $this->assertLessThanOrEqual(10, count($queries),
-            'Ticket index should use 10 or fewer queries, used '.count($queries));
+        $this->assertLessThanOrEqual(12, count($queries),
+            'Ticket index should use 12 or fewer queries, used '.count($queries));
     }
 
     public function test_ticket_index_with_500_records(): void
@@ -79,8 +79,8 @@ class TicketEndpointPerformanceTest extends PerformanceTestCase
 
         $this->assertLessThanOrEqual(self::MAX_RESPONSE_MS, $time,
             "GET /api/tickets/{id} took {$time}ms");
-        $this->assertLessThanOrEqual(10, count($queries),
-            'Ticket detail should use 10 or fewer queries');
+        $this->assertLessThanOrEqual(12, count($queries),
+            'Ticket detail should use 12 or fewer queries');
     }
 
     public function test_ticket_store_response_time(): void

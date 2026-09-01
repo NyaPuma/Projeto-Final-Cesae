@@ -22,7 +22,7 @@
                 <span class="ui-sidebar__icon">
                     {!! $item['icon'] !!}
                 </span>
-                <span class="sidebar-text">{{ __($item['label']) }}</span>
+                <span class="sidebar-text">{{ $item['label'] }}</span>
             </a>
         @endforeach
     </nav>

@@ -68,8 +68,10 @@ RUN mkdir -p \
     storage/framework/cache \
     storage/framework/views \
     storage/framework/sessions \
+    storage/app/public \
     storage/logs \
-    bootstrap/cache
+    bootstrap/cache \
+    && php artisan storage:link
 
 RUN chown -R www-data:www-data \
     storage \
@@ -86,4 +88,7 @@ HEALTHCHECK \
     --retries=3 \
 CMD wget --spider http://127.0.0.1/ || exit 1
 
-CMD ["frankenphp", "run", "--config", "/etc/caddy/Caddyfile"]
+# Run Laravel Octane in FrankenPHP worker mode (public/frankenphp-worker.php is shipped
+# with the image so the www-data user never needs write access to the root-owned public/).
+# --admin-port=2019 is required: with --port=80 Octane's default would compute a negative admin port.
+CMD ["php", "artisan", "octane:frankenphp", "--host=0.0.0.0", "--port=80", "--admin-port=2019"]

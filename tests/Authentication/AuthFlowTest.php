@@ -91,6 +91,7 @@ class AuthFlowTest extends TestCase
             'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->value('id'),
             'api_token' => Str::random(60),
             'password' => Hash::make('Password123!'),
+            'locale' => 'en-GB',
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)

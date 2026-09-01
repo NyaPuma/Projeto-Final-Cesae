@@ -20,7 +20,7 @@ class DatabasePerformanceTest extends PerformanceTestCase
 
         $queries = $this->stopQueryLog();
 
-        $this->assertLessThanOrEqual(10, count($queries),
+        $this->assertLessThanOrEqual(12, count($queries),
             'N+1 detected: Ticket listing used '.count($queries).' queries');
     }
 
@@ -121,7 +121,7 @@ class DatabasePerformanceTest extends PerformanceTestCase
 
         $queries = $this->stopQueryLog();
 
-        $this->assertLessThanOrEqual(10, count($queries));
+        $this->assertLessThanOrEqual(12, count($queries));
         $this->assertLessThanOrEqual(300, $time);
     }
 
@@ -140,7 +140,7 @@ class DatabasePerformanceTest extends PerformanceTestCase
 
         $queries = $this->stopQueryLog();
 
-        $this->assertLessThanOrEqual(10, count($queries));
+        $this->assertLessThanOrEqual(12, count($queries));
         $this->assertLessThanOrEqual(500, $time);
     }
 

@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Number;
 
 final class TicketAttachment extends Model
 {
@@ -90,8 +89,30 @@ final class TicketAttachment extends Model
     protected function formattedSize(): Attribute
     {
         return Attribute::make(
-            get: fn (): string => Number::fileSize($this->size)
+            get: fn (): string => self::formatBytes($this->size)
         );
+    }
+
+    /**
+     * Format a byte count as a human-readable file size string.
+     */
+    private static function formatBytes(int $bytes): string
+    {
+        $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB'];
+
+        $value = (float) $bytes;
+
+        foreach ($units as $index => $unit) {
+            if ($value < 1024 || $index === count($units) - 1) {
+                $decimals = $value >= 100 || $value === floor($value) ? 0 : 1;
+
+                return number_format($value, $decimals, '.', '').' '.$unit;
+            }
+
+            $value /= 1024;
+        }
+
+        return '0 B';
     }
 
     /**

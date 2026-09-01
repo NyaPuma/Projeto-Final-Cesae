@@ -186,6 +186,7 @@ abstract class PerformanceTestCase extends TestCase
     {
         gc_collect_cycles();
         $before = memory_get_usage(true);
+        memory_reset_peak_usage();
         $callback();
         $after = memory_get_usage(true);
         $peak = memory_get_peak_usage(true);

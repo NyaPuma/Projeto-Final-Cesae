@@ -107,6 +107,7 @@ class AuthEdgeCasesTest extends TestCase
             'active' => true,
             'password' => Hash::make('Password123!'),
             'api_token' => Str::random(60),
+            'locale' => 'en-GB',
         ]);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)

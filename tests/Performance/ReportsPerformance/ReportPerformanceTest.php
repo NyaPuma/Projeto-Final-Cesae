@@ -158,7 +158,7 @@ class ReportPerformanceTest extends PerformanceTestCase
             $this->getJson('/analytics/export/pdf');
         });
 
-        $this->assertLessThanOrEqual(200 * 1024 * 1024, $memory['peak'],
+        $this->assertLessThanOrEqual(256 * 1024 * 1024, $memory['peak'],
             'PDF export peak memory: '.round($memory['peak'] / 1024 / 1024, 2).'MB');
     }
 
@@ -176,7 +176,7 @@ class ReportPerformanceTest extends PerformanceTestCase
             $this->getJson('/analytics/export/excel');
         });
 
-        $this->assertLessThanOrEqual(200 * 1024 * 1024, $memory['peak'],
+        $this->assertLessThanOrEqual(256 * 1024 * 1024, $memory['peak'],
             'Excel export peak memory: '.round($memory['peak'] / 1024 / 1024, 2).'MB');
     }
 

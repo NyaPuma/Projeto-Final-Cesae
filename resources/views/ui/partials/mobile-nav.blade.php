@@ -21,7 +21,7 @@
 
             <a href="{{ url($item['href'] === '/' ? '/' : $item['href']) }}" data-action="close-mobile-nav" class="ui-mobile-nav__link {{ $isActive ? 'ui-sidebar__link--active' : '' }}">
                 <span class="ui-sidebar__icon">{!! $item['icon'] !!}</span>
-                <span>{{ __($item['label']) }}</span>
+                <span>{{ $item['label'] }}</span>
             </a>
         @endforeach
     </nav>
