@@ -18,7 +18,7 @@ O sistema mitiga falhas de comunicação e paragens prolongadas de infraestrutur
 
 ##  Base de Dados & Ficheiro de Entrega
 * **Nome da Base de Dados esperada:** `sigma_maintenance_db` (configurável no `.env`).
-* ⚠️ **Nota de Avaliação/Entrega:** A base de dados estrutural com dados de demonstração completos é entregue separadamente através do ficheiro SQL (`accept_maintenance_bd.sql`) enviado em anexo via Microsoft Teams / e-mail. Não é obrigatório recriar os dados via `migrate:fresh --seed`, embora as *migrations* e *seeders* estejam totalmente operacionais no código-fonte.
+* ⚠️ **Nota de Avaliação/Entrega:** A base de dados estrutural com dados de demonstração completos é entregue separadamente através do ficheiro SQL (`sigma_maintenance_bd.sql`) enviado em anexo via Microsoft Teams / e-mail. Não é obrigatório recriar os dados via `migrate:fresh --seed`, embora as *migrations* e *seeders* estejam totalmente operacionais no código-fonte.
 
 ---
 
