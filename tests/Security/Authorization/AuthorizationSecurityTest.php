@@ -10,6 +10,7 @@ use App\Models\UserProfile;
 use App\Services\TicketStatusService;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Base\FeatureTestCase;
+use Illuminate\Support\Facades\Log;
 
 class AuthorizationSecurityTest extends FeatureTestCase
 {
@@ -39,7 +40,7 @@ class AuthorizationSecurityTest extends FeatureTestCase
         );
 
         if ($status === 200) {
-            \Log::critical('T3 — IDOR CONFIRMED: User A can view User B ticket via API', [
+            Log::critical('T3 — IDOR CONFIRMED: User A can view User B ticket via API', [
                 'user_a' => $userA->id,
                 'user_b' => $userB->id,
                 'ticket_id' => $ticket->id,
@@ -74,7 +75,7 @@ class AuthorizationSecurityTest extends FeatureTestCase
         );
 
         if ($status === 200) {
-            \Log::critical('T3 — IDOR CONFIRMED: User A can list photos of User B ticket', [
+            Log::critical('T3 — IDOR CONFIRMED: User A can list photos of User B ticket', [
                 'user_a' => $userA->id,
                 'ticket_id' => $ticket->id,
             ]);

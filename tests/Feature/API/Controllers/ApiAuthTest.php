@@ -9,6 +9,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
@@ -173,7 +175,7 @@ class ApiAuthTest extends TestCase
         ]);
 
         Route::middleware(['custom.auth'])->get('/api/test-user', function () {
-            return response()->json(auth()->user());
+            return response()->json(Auth::user());
         });
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
@@ -193,7 +195,7 @@ class ApiAuthTest extends TestCase
             'active' => true,
         ]);
 
-        \DB::table('users')->where('id', $user->id)->update(['profile_id' => null]);
+        DB::table('users')->where('id', $user->id)->update(['profile_id' => null]);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->getJson('/api/test-auth');

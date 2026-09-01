@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Central locale (language) service.
@@ -845,7 +846,7 @@ final class LocaleService
             return PreferencesService::getCurrency($request);
         }
 
-        $user = auth()->user();
+        $user = Auth::user();
         if ($user) {
             $prefs = PreferencesService::forUser($user);
 
@@ -864,7 +865,7 @@ final class LocaleService
             return PreferencesService::getDateFormat($request);
         }
 
-        $user = auth()->user();
+        $user = Auth::user();
         if ($user) {
             $prefs = PreferencesService::forUser($user);
 

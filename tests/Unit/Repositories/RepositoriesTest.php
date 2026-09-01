@@ -65,8 +65,8 @@ class RepositoriesTest extends FeatureTestCase
         $result = $this->users->getActiveTechnicians();
 
         $this->assertCount(1, $result);
-        $this->assertSame($tech->id, $result[0]['id']);
-        $this->assertSame(['id', 'name'], array_keys($result[0]));
+        $this->assertSame($tech->id, $result[0]->id);
+        $this->assertSame(['id', 'name'], array_keys($result[0]->toArray()));
         $adminIds = array_column($this->users->getAdmins(), 'id');
         $this->assertContains($admin->id, $adminIds);
         $this->assertNotContains($tech->id, $adminIds);
@@ -88,7 +88,7 @@ class RepositoriesTest extends FeatureTestCase
         $result = $this->rooms->getActive();
         $this->assertCount(1, $result);
         $this->assertSame($active->id, $result[0]['id']);
-        $this->assertSame(['id', 'name', 'code', 'location'], array_keys($result[0]));
+        $this->assertSame(['id', 'name', 'code', 'location'], array_keys(is_array($result[0]) ? $result[0] : $result[0]->toArray()));
 
         $this->assertSame($active->id, $this->rooms->findById($active->id)?->id);
         $this->assertNull($this->rooms->findById(999999));

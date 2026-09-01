@@ -49,7 +49,11 @@ final class SystemSettingsController extends Controller
             ]);
         }
 
-        $saved = $this->settings->update($data['updates'] ?? []);
+        $updates = is_array($request->input('updates'))
+            ? \Illuminate\Support\Arr::dot($request->input('updates'))
+            : [];
+
+        $saved = $this->settings->update($updates);
 
         return response()->json([
             'ok' => true,

@@ -82,7 +82,7 @@ class AuthenticationSecurityTest extends FeatureTestCase
     public function it_hides_token_from_json_response(): void
     {
         Route::middleware(['custom.auth'])->get('/api/test-user-json', function () {
-            return response()->json(['user' => auth()->user()]);
+            return response()->json(['user' => Auth::user()]);
         });
 
         $user = $this->createUserWithToken(UserRoleEnum::User->value);
@@ -248,7 +248,7 @@ class AuthenticationSecurityTest extends FeatureTestCase
         }
 
         if (! empty($missing)) {
-            \Log::warning('T2 — Missing security headers on /ui/login', ['missing' => $missing]);
+            \Illuminate\Support\Facades\Log::warning('T2 — Missing security headers on /ui/login', ['missing' => $missing]);
         }
 
         $this->assertEmpty($missing, 'Missing security headers: '.implode(', ', $missing));
@@ -264,7 +264,7 @@ class AuthenticationSecurityTest extends FeatureTestCase
             $status = $response->status();
 
             if ($status === 200) {
-                \Log::critical("T6 — EXPOSED: {$path} accessible (HTTP 200)", [
+                \Illuminate\Support\Facades\Log::critical("T6 — EXPOSED: {$path} accessible (HTTP 200)", [
                     'content_preview' => substr($response->content(), 0, 200),
                 ]);
             }
@@ -287,7 +287,7 @@ class AuthenticationSecurityTest extends FeatureTestCase
             $status = $response->status();
 
             if ($status === 200) {
-                \Log::critical("T6 — EXPOSED: {$path} accessible (HTTP 200)", []);
+                \Illuminate\Support\Facades\Log::critical("T6 — EXPOSED: {$path} accessible (HTTP 200)", []);
             }
 
             $this->assertNotEquals(200, $status,

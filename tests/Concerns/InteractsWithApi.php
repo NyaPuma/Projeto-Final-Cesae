@@ -6,6 +6,12 @@ use Illuminate\Support\Str;
 
 trait InteractsWithApi
 {
+    /**
+     * The last HTTP response instance.
+     *
+     * @var \Illuminate\Testing\TestResponse|null
+     */
+    protected $response;
     protected function withApiHeaders(): self
     {
         return $this->withHeader('Accept', 'application/json')

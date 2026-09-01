@@ -19,10 +19,11 @@
                     const body = new FormData();
                     body.append(select.name, select.value);
                     try {
+                        const tokenEl = document.querySelector('meta[name=csrf-token]');
                         const res = await fetch(url, {
                             method: 'POST',
                             headers: {
-                                'X-CSRF-TOKEN': document.querySelector('meta[name=\'csrf-token\']').content,
+                                'X-CSRF-TOKEN': tokenEl ? tokenEl.content : '',
                                 'Accept': 'application/json',
                                 'X-Requested-With': 'XMLHttpRequest'
                             },
@@ -30,10 +31,10 @@
                         });
                         const data = await res.json();
                         this.feedback = res.ok && data.success
-                            ? @js(__('preferences.Preferências atualizadas com sucesso.'))
-                            : @js(__('common.Por favor, tente novamente mais tarde.'));
+                            ? 'Preferências atualizadas com sucesso.'
+                            : 'Por favor, tente novamente mais tarde.';
                     } catch (e) {
-                        this.feedback = @js(__('common.Por favor, tente novamente mais tarde.'));
+                        this.feedback = 'Por favor, tente novamente mais tarde.';
                     } finally {
                         this.saving = false;
                     }
