@@ -30,7 +30,7 @@ class SetLocaleMiddlewareTest extends TestCase
     public function test_respects_authenticated_user_locale_preference(): void
     {
         $profile = UserProfile::create(['name' => 'admin']);
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = User::factory()->create([
             'profile_id' => $profile->id,
             'locale' => 'pt-BR',
@@ -56,7 +56,7 @@ class SetLocaleMiddlewareTest extends TestCase
     public function test_locale_switch_endpoint_updates_session_and_user_db(): void
     {
         $profile = UserProfile::create(['name' => 'admin']);
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = User::factory()->create([
             'profile_id' => $profile->id,
             'locale' => 'pt-PT',

@@ -8,7 +8,6 @@ use App\Actions\ScheduleMaintenanceAction;
 use App\DTOs\ScheduleMaintenanceData;
 use App\Models\Equipment;
 use App\Models\Ticket;
-use App\Models\User;
 use App\Services\TicketStatusService;
 use Tests\Base\DatabaseTestCase;
 use Tests\Concerns\CreatesUsers;

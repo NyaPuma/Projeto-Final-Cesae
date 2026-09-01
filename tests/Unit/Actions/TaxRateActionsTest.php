@@ -15,7 +15,7 @@ final class TaxRateActionsTest extends DatabaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->action = new TaxRateActions();
+        $this->action = new TaxRateActions;
     }
 
     public function test_it_creates_tax_rate_and_handles_default_flag(): void

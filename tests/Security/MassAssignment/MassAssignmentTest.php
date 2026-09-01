@@ -7,9 +7,9 @@ use App\Enums\TicketStatusEnum;
 use App\Enums\UserRoleEnum;
 use App\Models\Ticket;
 use App\Services\TicketStatusService;
+use Illuminate\Support\Facades\Log;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Base\FeatureTestCase;
-use Illuminate\Support\Facades\Log;
 
 class MassAssignmentTest extends FeatureTestCase
 {

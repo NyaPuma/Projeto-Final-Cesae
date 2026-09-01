@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\UserProfile;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -264,7 +265,7 @@ class RoleMiddlewareTest extends TestCase
         DB::table('users')->where('id', $user->id)->update(['profile_id' => null]);
         $user->refresh();
 
-        /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
+        /** @var Authenticatable $user */
         $response = $this->actingAs($user)->getJson('/standalone-role');
 
         $response->assertStatus(403);
@@ -276,7 +277,7 @@ class RoleMiddlewareTest extends TestCase
     {
         $adminProfile = UserProfile::where('name', UserRoleEnum::Admin->value)->firstOrFail();
 
-        /** @var \Illuminate\Contracts\Auth\Authenticatable $admin */
+        /** @var Authenticatable $admin */
         $admin = User::factory()->create([
             'profile_id' => $adminProfile->id,
             'active' => true,

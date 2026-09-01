@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Services\SystemSettingsService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\View\View;
 
 final class SystemSettingsController extends Controller
@@ -50,7 +51,7 @@ final class SystemSettingsController extends Controller
         }
 
         $updates = is_array($request->input('updates'))
-            ? \Illuminate\Support\Arr::dot($request->input('updates'))
+            ? Arr::dot($request->input('updates'))
             : [];
 
         $saved = $this->settings->update($updates);

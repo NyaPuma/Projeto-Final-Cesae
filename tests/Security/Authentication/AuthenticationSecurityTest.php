@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use PHPUnit\Framework\Attributes\Test;
@@ -248,7 +249,7 @@ class AuthenticationSecurityTest extends FeatureTestCase
         }
 
         if (! empty($missing)) {
-            \Illuminate\Support\Facades\Log::warning('T2 — Missing security headers on /ui/login', ['missing' => $missing]);
+            Log::warning('T2 — Missing security headers on /ui/login', ['missing' => $missing]);
         }
 
         $this->assertEmpty($missing, 'Missing security headers: '.implode(', ', $missing));
@@ -264,7 +265,7 @@ class AuthenticationSecurityTest extends FeatureTestCase
             $status = $response->status();
 
             if ($status === 200) {
-                \Illuminate\Support\Facades\Log::critical("T6 — EXPOSED: {$path} accessible (HTTP 200)", [
+                Log::critical("T6 — EXPOSED: {$path} accessible (HTTP 200)", [
                     'content_preview' => substr($response->content(), 0, 200),
                 ]);
             }
@@ -287,7 +288,7 @@ class AuthenticationSecurityTest extends FeatureTestCase
             $status = $response->status();
 
             if ($status === 200) {
-                \Illuminate\Support\Facades\Log::critical("T6 — EXPOSED: {$path} accessible (HTTP 200)", []);
+                Log::critical("T6 — EXPOSED: {$path} accessible (HTTP 200)", []);
             }
 
             $this->assertNotEquals(200, $status,

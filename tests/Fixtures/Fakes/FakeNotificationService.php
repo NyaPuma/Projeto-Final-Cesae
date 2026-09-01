@@ -6,9 +6,7 @@ class FakeNotificationService
 {
     private array $notifications = [];
 
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function notifyBudgetDecision($ticket, string $decision, string $message): void
     {

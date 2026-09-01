@@ -15,7 +15,7 @@ final class ThemePresetServiceTest extends DatabaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->service = new ThemePresetService();
+        $this->service = new ThemePresetService;
     }
 
     public function test_all_returns_preset_themes_with_required_fields(): void

@@ -15,7 +15,7 @@ final class SystemSettingsServiceTest extends DatabaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->service = new SystemSettingsService();
+        $this->service = new SystemSettingsService;
     }
 
     public function test_groups_returns_curated_configuration_structure(): void

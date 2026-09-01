@@ -16,7 +16,7 @@ final class PartPriceCalculatorTest extends DatabaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->calculator = new PartPriceCalculator();
+        $this->calculator = new PartPriceCalculator;
     }
 
     public function test_it_calculates_price_with_vat_from_tax_rate(): void

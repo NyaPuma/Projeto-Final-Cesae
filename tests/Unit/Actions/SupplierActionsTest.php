@@ -14,13 +14,14 @@ use Tests\Base\DatabaseTestCase;
 final class SupplierActionsTest extends DatabaseTestCase
 {
     private CreateSupplierAction $createAction;
+
     private UpdateSupplierAction $updateAction;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->createAction = new CreateSupplierAction();
-        $this->updateAction = new UpdateSupplierAction();
+        $this->createAction = new CreateSupplierAction;
+        $this->updateAction = new UpdateSupplierAction;
     }
 
     public function test_it_creates_supplier_from_dto(): void

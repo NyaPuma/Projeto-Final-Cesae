@@ -8,9 +8,9 @@ use App\Enums\UserRoleEnum;
 use App\Models\Ticket;
 use App\Models\UserProfile;
 use App\Services\TicketStatusService;
+use Illuminate\Support\Facades\Log;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Base\FeatureTestCase;
-use Illuminate\Support\Facades\Log;
 
 class AuthorizationSecurityTest extends FeatureTestCase
 {

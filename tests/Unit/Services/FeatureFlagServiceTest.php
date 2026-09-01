@@ -16,7 +16,7 @@ final class FeatureFlagServiceTest extends UnitTestCase
     {
         parent::setUp();
         Cache::flush();
-        $this->service = new FeatureFlagService();
+        $this->service = new FeatureFlagService;
     }
 
     public function test_it_returns_config_default_when_no_cache_override(): void

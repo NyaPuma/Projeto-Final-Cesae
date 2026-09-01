@@ -18,13 +18,14 @@ use Tests\Base\DatabaseTestCase;
 final class PartActionsTest extends DatabaseTestCase
 {
     private CreatePartAction $createAction;
+
     private UpdatePartAction $updateAction;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->createAction = new CreatePartAction(new StockMovementService());
-        $this->updateAction = new UpdatePartAction();
+        $this->createAction = new CreatePartAction(new StockMovementService);
+        $this->updateAction = new UpdatePartAction;
     }
 
     public function test_it_creates_part_and_initializes_stock_movement(): void

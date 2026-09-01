@@ -15,7 +15,7 @@ final class PartCategoryActionsTest extends DatabaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->action = new PartCategoryActions();
+        $this->action = new PartCategoryActions;
     }
 
     public function test_it_creates_a_part_category(): void

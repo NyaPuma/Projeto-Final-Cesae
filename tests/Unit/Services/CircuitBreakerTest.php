@@ -17,7 +17,7 @@ final class CircuitBreakerTest extends UnitTestCase
     {
         parent::setUp();
         Cache::flush();
-        $this->circuitBreaker = new CircuitBreaker();
+        $this->circuitBreaker = new CircuitBreaker;
     }
 
     public function test_successful_operation_returns_result_and_resets(): void
@@ -81,6 +81,7 @@ final class CircuitBreakerTest extends UnitTestCase
             $dependency,
             function () use (&$executed) {
                 $executed = true;
+
                 return 'should_not_run';
             },
             'circuit_open_fallback'

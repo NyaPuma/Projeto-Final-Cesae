@@ -6,8 +6,6 @@ namespace Tests\Feature;
 
 use App\Jobs\GenerateAiRecommendationJob;
 use App\Models\Equipment;
-use App\Models\Notification;
-use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
