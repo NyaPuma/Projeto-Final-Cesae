@@ -96,4 +96,22 @@ class TicketPriorityEnumTest extends TestCase
         $this->assertContains('critica', $accepted);
         $this->assertCount(6, $accepted);
     }
+
+    #[Test]
+    public function it_returns_correct_colors(): void
+    {
+        $this->assertEquals('gray', TicketPriorityEnum::Low->color());
+        $this->assertEquals('info', TicketPriorityEnum::Medium->color());
+        $this->assertEquals('warning', TicketPriorityEnum::High->color());
+        $this->assertEquals('danger', TicketPriorityEnum::Critical->color());
+    }
+
+    #[Test]
+    public function it_returns_correct_icons(): void
+    {
+        $this->assertEquals('heroicon-o-arrow-down-short', TicketPriorityEnum::Low->icon());
+        $this->assertEquals('heroicon-o-minus', TicketPriorityEnum::Medium->icon());
+        $this->assertEquals('heroicon-o-arrow-up-short', TicketPriorityEnum::High->icon());
+        $this->assertEquals('heroicon-o-fire', TicketPriorityEnum::Critical->icon());
+    }
 }

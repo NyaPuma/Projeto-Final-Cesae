@@ -71,6 +71,21 @@ class MoneyTest extends TestCase
     }
 
     #[Test]
+    public function it_detects_positive_amounts(): void
+    {
+        $this->assertTrue(Money::fromFloat(1.00)->isPositive());
+        $this->assertFalse(Money::fromFloat(0.00)->isPositive());
+    }
+
+    #[Test]
+    public function it_rejects_subtracting_across_different_currencies(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Money::fromFloat(10.00, 'EUR')->subtract(Money::fromFloat(5.00, 'USD'));
+    }
+
+    #[Test]
     public function it_rejects_negative_amounts(): void
     {
         $this->expectException(InvalidArgumentException::class);

@@ -84,4 +84,77 @@ class TicketWorkflowStatusEnumTest extends TestCase
     {
         $this->assertCount(7, TicketWorkflowStatusEnum::values());
     }
+
+    #[Test]
+    public function it_returns_correct_colors(): void
+    {
+        $this->assertEquals('info', TicketWorkflowStatusEnum::Open->color());
+        $this->assertEquals('primary', TicketWorkflowStatusEnum::InProgress->color());
+        $this->assertEquals('warning', TicketWorkflowStatusEnum::WaitingBudget->color());
+        $this->assertEquals('success', TicketWorkflowStatusEnum::Approved->color());
+        $this->assertEquals('danger', TicketWorkflowStatusEnum::Rejected->color());
+        $this->assertEquals('gray', TicketWorkflowStatusEnum::Closed->color());
+        $this->assertEquals('danger', TicketWorkflowStatusEnum::Cancelled->color());
+    }
+
+    #[Test]
+    public function it_returns_correct_icons(): void
+    {
+        $this->assertEquals('heroicon-o-sparkles', TicketWorkflowStatusEnum::Open->icon());
+        $this->assertEquals('heroicon-o-play', TicketWorkflowStatusEnum::InProgress->icon());
+        $this->assertEquals('heroicon-o-clock', TicketWorkflowStatusEnum::WaitingBudget->icon());
+        $this->assertEquals('heroicon-o-check-circle', TicketWorkflowStatusEnum::Approved->icon());
+        $this->assertEquals('heroicon-o-x-circle', TicketWorkflowStatusEnum::Rejected->icon());
+        $this->assertEquals('heroicon-o-archive-box', TicketWorkflowStatusEnum::Closed->icon());
+        $this->assertEquals('heroicon-o-ban', TicketWorkflowStatusEnum::Cancelled->icon());
+    }
+
+    #[Test]
+    public function it_defines_transitions_for_intermediate_states(): void
+    {
+        $this->assertEquals([
+            TicketWorkflowStatusEnum::WaitingBudget,
+            TicketWorkflowStatusEnum::Approved,
+            TicketWorkflowStatusEnum::Closed,
+            TicketWorkflowStatusEnum::Cancelled,
+        ], TicketWorkflowStatusEnum::InProgress->allowedTransitions());
+
+        $this->assertEquals([
+            TicketWorkflowStatusEnum::Approved,
+            TicketWorkflowStatusEnum::Rejected,
+            TicketWorkflowStatusEnum::Cancelled,
+        ], TicketWorkflowStatusEnum::WaitingBudget->allowedTransitions());
+
+        $this->assertEquals([
+            TicketWorkflowStatusEnum::InProgress,
+            TicketWorkflowStatusEnum::Closed,
+            TicketWorkflowStatusEnum::Cancelled,
+        ], TicketWorkflowStatusEnum::Approved->allowedTransitions());
+
+        $this->assertEquals([
+            TicketWorkflowStatusEnum::WaitingBudget,
+            TicketWorkflowStatusEnum::Cancelled,
+        ], TicketWorkflowStatusEnum::Rejected->allowedTransitions());
+    }
+
+    #[Test]
+    public function it_validates_relevant_transitions(): void
+    {
+        $this->assertTrue(TicketWorkflowStatusEnum::WaitingBudget->canTransitionTo(TicketWorkflowStatusEnum::Approved));
+        $this->assertTrue(TicketWorkflowStatusEnum::WaitingBudget->canTransitionTo(TicketWorkflowStatusEnum::Rejected));
+        $this->assertFalse(TicketWorkflowStatusEnum::WaitingBudget->canTransitionTo(TicketWorkflowStatusEnum::Open));
+        $this->assertTrue(TicketWorkflowStatusEnum::Approved->canTransitionTo(TicketWorkflowStatusEnum::Closed));
+        $this->assertTrue(TicketWorkflowStatusEnum::Rejected->canTransitionTo(TicketWorkflowStatusEnum::WaitingBudget));
+    }
+
+    #[Test]
+    public function it_normalizes_edge_cases(): void
+    {
+        $this->assertSame(TicketWorkflowStatusEnum::Open, TicketWorkflowStatusEnum::normalize(TicketWorkflowStatusEnum::Open));
+        $this->assertSame(TicketWorkflowStatusEnum::Closed, TicketWorkflowStatusEnum::normalize(' closed '));
+        $this->assertNull(TicketWorkflowStatusEnum::normalize(null));
+        $this->assertNull(TicketWorkflowStatusEnum::normalize(123));
+        $this->assertNull(TicketWorkflowStatusEnum::normalize([]));
+        $this->assertNull(TicketWorkflowStatusEnum::normalize('unknown'));
+    }
 }
