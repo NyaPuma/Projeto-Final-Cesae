@@ -48,7 +48,9 @@ COPY . .
 
 RUN composer dump-autoload \
     --optimize \
-    --classmap-authoritative
+    --classmap-authoritative \
+    --no-interaction \
+    --no-scripts
 
 
 ###############################################
@@ -57,7 +59,15 @@ RUN composer dump-autoload \
 
 FROM dunglas/frankenphp:1.9.0-php8.2
 
-RUN install-php-extensions gd
+RUN install-php-extensions \
+        bcmath \
+        gd \
+        intl \
+        mbstring \
+        opcache \
+        pdo_mysql \
+        pdo_sqlite \
+        zip
 
 LABEL org.opencontainers.image.title="Sistema Integrado de Gestão de Manutenção"
 LABEL org.opencontainers.image.description="Projeto Final CESAE desenvolvido em Laravel 11"
