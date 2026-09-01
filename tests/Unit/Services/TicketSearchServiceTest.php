@@ -35,7 +35,10 @@ class TicketSearchServiceTest extends FeatureTestCase
         $result = $this->service->search(new TicketFilters);
 
         $this->assertEquals(3, $result->total());
-        $this->assertEquals(15, $result->perPage());
+        $this->assertEquals(
+            config('services.custom.pagination.default_per_page'),
+            $result->perPage()
+        );
     }
 
     #[Test]

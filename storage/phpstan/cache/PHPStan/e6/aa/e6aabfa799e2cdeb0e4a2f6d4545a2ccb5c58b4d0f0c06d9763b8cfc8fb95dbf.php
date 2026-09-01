@@ -934,9 +934,10 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:/laravel/Projeto-Final-Cesae/vendor/composer/../symfony/polyfill-intl-grapheme/bootstrap.php' => 
     array (
-      0 => 'f8fe6f266364354cc84dfa5171da4e717553bb0f84d34ec52ff11a608b500c51',
+      0 => '356c4b7e565eb25919dc31c504bcd91353c0777e7de99809676e11e27db7e076',
       1 => 
       array (
+        0 => 'valueerror',
       ),
       2 => 
       array (
@@ -1115,9 +1116,10 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:/laravel/Projeto-Final-Cesae/vendor/composer/../symfony/polyfill-php85/bootstrap.php' => 
     array (
-      0 => '284aa090970bfaca0589ac017efd9116bf54f6116fbf1203bb91e652ee1d4115',
+      0 => 'b40bb89199e8dedcf55ef1597be54216a9bb134647138925b3f43a1fa0001d55',
       1 => 
       array (
+        0 => 'valueerror',
       ),
       2 => 
       array (
@@ -2267,6 +2269,157 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
       ),
       2 => 
       array (
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:/laravel/Projeto-Final-Cesae/vendor/composer/../laminas/laminas-diactoros/src/functions/create_uploaded_file.php' => 
+    array (
+      0 => '15a88d7d1cb2357dc7db98f4c886ae6594e6715632ae423d06030f70c9c737c2',
+      1 => 
+      array (
+      ),
+      2 => 
+      array (
+        0 => 'laminas\\diactoros\\createuploadedfile',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:/laravel/Projeto-Final-Cesae/vendor/composer/../laminas/laminas-diactoros/src/functions/marshal_headers_from_sapi.php' => 
+    array (
+      0 => 'c811c6d118bb22c1540b2d758436a44240cd5fd26c5ef59ae5b2e7b902cd7af8',
+      1 => 
+      array (
+      ),
+      2 => 
+      array (
+        0 => 'laminas\\diactoros\\marshalheadersfromsapi',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:/laravel/Projeto-Final-Cesae/vendor/composer/../laminas/laminas-diactoros/src/functions/marshal_method_from_sapi.php' => 
+    array (
+      0 => '94127d9d867339291781f7b35692ae3df9da1b0bccac575f50d37502bc777937',
+      1 => 
+      array (
+      ),
+      2 => 
+      array (
+        0 => 'laminas\\diactoros\\marshalmethodfromsapi',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:/laravel/Projeto-Final-Cesae/vendor/composer/../laminas/laminas-diactoros/src/functions/marshal_protocol_version_from_sapi.php' => 
+    array (
+      0 => 'c23cf0f9ceafa27fc1cc68c2c27227c4618aef7579e77ce38909a306218eeacf',
+      1 => 
+      array (
+      ),
+      2 => 
+      array (
+        0 => 'laminas\\diactoros\\marshalprotocolversionfromsapi',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:/laravel/Projeto-Final-Cesae/vendor/composer/../laminas/laminas-diactoros/src/functions/normalize_server.php' => 
+    array (
+      0 => 'c3723b568aafe6e5c6e80a33c1f84efd8e0e8d9a91f2edddda0d7103192c6ddb',
+      1 => 
+      array (
+      ),
+      2 => 
+      array (
+        0 => 'laminas\\diactoros\\normalizeserver',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:/laravel/Projeto-Final-Cesae/vendor/composer/../laminas/laminas-diactoros/src/functions/normalize_uploaded_files.php' => 
+    array (
+      0 => '1381d32476f911c7566114456a543186c40412abf6b49f367df639471b03643d',
+      1 => 
+      array (
+      ),
+      2 => 
+      array (
+        0 => 'laminas\\diactoros\\normalizeuploadedfiles',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:/laravel/Projeto-Final-Cesae/vendor/composer/../laminas/laminas-diactoros/src/functions/parse_cookie_header.php' => 
+    array (
+      0 => '5640fa27e56855ff90e4c4f9a848277862eeeb012cc837e451628b98ae0f6df7',
+      1 => 
+      array (
+      ),
+      2 => 
+      array (
+        0 => 'laminas\\diactoros\\parsecookieheader',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:/laravel/Projeto-Final-Cesae/vendor/composer/../mtdowling/jmespath.php/src/JmesPath.php' => 
+    array (
+      0 => '20677c3a93cd539917968af7ba1c0f2ff0ae4f213f8730642a16e5200ddfe446',
+      1 => 
+      array (
+      ),
+      2 => 
+      array (
+        0 => 'jmespath\\search',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:/laravel/Projeto-Final-Cesae/vendor/composer/../sentry/sentry/src/functions.php' => 
+    array (
+      0 => 'e52a121a22c594241ab22993da24436b8c7bed70d721b772bac6fd7bb43a4e2d',
+      1 => 
+      array (
+      ),
+      2 => 
+      array (
+        0 => 'sentry\\init',
+        1 => 'sentry\\capturemessage',
+        2 => 'sentry\\captureexception',
+        3 => 'sentry\\captureevent',
+        4 => 'sentry\\capturelasterror',
+        5 => 'sentry\\capturecheckin',
+        6 => 'sentry\\withmonitor',
+        7 => 'sentry\\addbreadcrumb',
+        8 => 'sentry\\configurescope',
+        9 => 'sentry\\withscope',
+        10 => 'sentry\\startcontext',
+        11 => 'sentry\\endcontext',
+        12 => 'sentry\\withcontext',
+        13 => 'sentry\\starttransaction',
+        14 => 'sentry\\trace',
+        15 => 'sentry\\getotlptracesendpointurl',
+        16 => 'sentry\\gettraceparent',
+        17 => 'sentry\\getw3ctraceparent',
+        18 => 'sentry\\getbaggage',
+        19 => 'sentry\\continuetrace',
+        20 => 'sentry\\logger',
+        21 => 'sentry\\metrics',
+        22 => 'sentry\\tracemetrics',
+        23 => 'sentry\\trace_metrics',
+        24 => 'sentry\\addfeatureflag',
+        25 => 'sentry\\flush',
       ),
       3 => 
       array (

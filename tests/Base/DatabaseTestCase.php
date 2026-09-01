@@ -5,6 +5,8 @@ namespace Tests\Base;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 abstract class DatabaseTestCase extends BaseTestCase
 {
@@ -20,7 +22,7 @@ abstract class DatabaseTestCase extends BaseTestCase
     protected function assertDatabaseHasTable(string $table): void
     {
         $this->assertTrue(
-            \Schema::hasTable($table),
+            Schema::hasTable($table),
             "Database table '{$table}' does not exist."
         );
     }
@@ -28,7 +30,7 @@ abstract class DatabaseTestCase extends BaseTestCase
     protected function assertDatabaseMissingTable(string $table): void
     {
         $this->assertFalse(
-            \Schema::hasTable($table),
+            Schema::hasTable($table),
             "Database table '{$table}' exists but should not."
         );
     }
@@ -36,7 +38,7 @@ abstract class DatabaseTestCase extends BaseTestCase
     protected function assertDatabaseHasColumn(string $table, string $column): void
     {
         $this->assertTrue(
-            \Schema::hasColumn($table, $column),
+            Schema::hasColumn($table, $column),
             "Database table '{$table}' does not have column '{$column}'."
         );
     }
@@ -44,7 +46,7 @@ abstract class DatabaseTestCase extends BaseTestCase
     protected function assertDatabaseMissingColumn(string $table, string $column): void
     {
         $this->assertFalse(
-            \Schema::hasColumn($table, $column),
+            Schema::hasColumn($table, $column),
             "Database table '{$table}' has column '{$column}' but should not."
         );
     }
@@ -52,7 +54,7 @@ abstract class DatabaseTestCase extends BaseTestCase
     protected function assertDatabaseHasIndex(string $table, string $index): void
     {
         $this->assertTrue(
-            \Schema::hasIndex($table, $index),
+            Schema::hasIndex($table, $index),
             "Database table '{$table}' does not have index '{$index}'."
         );
     }
@@ -60,7 +62,7 @@ abstract class DatabaseTestCase extends BaseTestCase
     protected function assertDatabaseMissingIndex(string $table, string $index): void
     {
         $this->assertFalse(
-            \Schema::hasIndex($table, $index),
+            Schema::hasIndex($table, $index),
             "Database table '{$table}' has index '{$index}' but should not."
         );
     }
@@ -68,7 +70,7 @@ abstract class DatabaseTestCase extends BaseTestCase
     protected function assertDatabaseHasForeignKey(string $table, string $foreign): void
     {
         $this->assertTrue(
-            \Schema::hasForeignKey($table, $foreign),
+            $this->foreignKeyExists($table, $foreign),
             "Database table '{$table}' does not have foreign key '{$foreign}'."
         );
     }
@@ -76,9 +78,55 @@ abstract class DatabaseTestCase extends BaseTestCase
     protected function assertDatabaseMissingForeignKey(string $table, string $foreign): void
     {
         $this->assertFalse(
-            \Schema::hasForeignKey($table, $foreign),
+            $this->foreignKeyExists($table, $foreign),
             "Database table '{$table}' has foreign key '{$foreign}' but should not."
         );
+    }
+
+    private function foreignKeyExists(string $table, string $foreign): bool
+    {
+        if (DB::connection()->getDriverName() === 'sqlite') {
+            $quotedTable = str_replace('"', '""', $table);
+            $foreignKeys = DB::select("PRAGMA foreign_key_list(\"{$quotedTable}\")");
+
+            foreach ($foreignKeys as $foreignKey) {
+                if (in_array($foreign, [
+                    (string) ($foreignKey->id ?? ''),
+                    (string) ($foreignKey->table ?? ''),
+                    (string) ($foreignKey->from ?? ''),
+                    (string) ($foreignKey->to ?? ''),
+                ], true)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        $driver = DB::connection()->getDriverName();
+
+        if ($driver === 'mysql') {
+            return DB::select(
+                'SELECT CONSTRAINT_NAME FROM information_schema.KEY_COLUMN_USAGE
+                 WHERE TABLE_SCHEMA = DATABASE()
+                   AND TABLE_NAME = ?
+                   AND CONSTRAINT_NAME = ?',
+                [$table, $foreign]
+            ) !== [];
+        }
+
+        if ($driver === 'pgsql') {
+            return DB::select(
+                'SELECT constraint_name FROM information_schema.table_constraints
+                 WHERE table_schema = current_schema()
+                   AND table_name = ?
+                   AND constraint_name = ?
+                   AND constraint_type = \'FOREIGN KEY\'',
+                [$table, $foreign]
+            ) !== [];
+        }
+
+        return false;
     }
 
     private function createViteManifest(): void
@@ -94,6 +142,12 @@ abstract class DatabaseTestCase extends BaseTestCase
         }
 
         $stub = $existing + [
+            'resources/js/early-theme.js' => [
+                'file' => 'assets/early-theme.js',
+                'name' => 'early-theme',
+                'src' => 'resources/js/early-theme.js',
+                'isEntry' => true,
+            ],
             'resources/css/app.css' => [
                 'file' => 'assets/app.css',
                 'name' => 'app',

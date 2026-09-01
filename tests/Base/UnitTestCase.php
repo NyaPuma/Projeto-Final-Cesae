@@ -34,6 +34,12 @@ abstract class UnitTestCase extends BaseTestCase
         }
 
         $stub = $existing + [
+            'resources/js/early-theme.js' => [
+                'file' => 'assets/early-theme.js',
+                'name' => 'early-theme',
+                'src' => 'resources/js/early-theme.js',
+                'isEntry' => true,
+            ],
             'resources/css/app.css' => [
                 'file' => 'assets/app.css',
                 'name' => 'app',
