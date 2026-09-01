@@ -6,7 +6,7 @@
 
 import { initSidebar, toggleDesktopSidebar, toggleMobileNav, closeMobileNav } from './sidebar.js';
 import { initTheme, toggleTheme } from './theme.js';
-import { requireAuth } from './auth.js';
+import { requireAuth, logout } from './auth.js';
 import { renderAuthBox } from './auth-box.js';
 import { initNotificationsModal } from '../components/notifications-modal.js';
 
@@ -53,7 +53,7 @@ function setupEventListeners(logoutUrl) {
         const logoutBtn = e.target.closest('[data-action="logout"]');
         if (logoutBtn) {
             e.preventDefault();
-            import('./auth.js').then(({ logout }) => logout(logoutUrl));
+            logout(logoutUrl);
         }
 
         const closeMobileNavBtn = e.target.closest('[data-action="close-mobile-nav"]');
@@ -63,12 +63,12 @@ function setupEventListeners(logoutUrl) {
 
         const toggleMobileNavBtn = e.target.closest('[data-action="toggle-mobile-nav"]');
         if (toggleMobileNavBtn) {
-            import('./sidebar.js').then(({ toggleMobileNav }) => toggleMobileNav());
+            toggleMobileNav();
         }
 
         const toggleSidebarBtn = e.target.closest('[data-action="toggle-sidebar"]');
         if (toggleSidebarBtn) {
-            import('./sidebar.js').then(({ toggleDesktopSidebar }) => toggleDesktopSidebar());
+            toggleDesktopSidebar();
         }
 
         const toggleThemeBtn = e.target.closest('[data-action="toggle-theme"]');
