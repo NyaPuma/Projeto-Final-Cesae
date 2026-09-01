@@ -7,6 +7,7 @@ use App\Enums\TicketStatusEnum;
 use App\Enums\UserRoleEnum;
 use App\Models\Ticket;
 use App\Services\TicketStatusService;
+use Illuminate\Support\Facades\Log;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\Base\FeatureTestCase;
 
@@ -36,7 +37,7 @@ class MassAssignmentTest extends FeatureTestCase
             $this->assertNotNull($createdTicket, 'Ticket should have been created');
 
             if ($createdTicket->user_id == $userB->id) {
-                \Log::critical('T4 — MASS ASSIGNMENT CONFIRMED', [
+                Log::critical('T4 — MASS ASSIGNMENT CONFIRMED', [
                     'user_a' => $userA->id,
                     'ticket_user_id' => $createdTicket->user_id,
                 ]);

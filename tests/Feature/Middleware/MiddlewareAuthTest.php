@@ -6,6 +6,7 @@ use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use PHPUnit\Framework\Attributes\Test;
@@ -89,7 +90,7 @@ class MiddlewareAuthTest extends TestCase
             'active' => true,
         ]);
 
-        \DB::table('users')->where('id', $user->id)->update(['profile_id' => null]);
+        DB::table('users')->where('id', $user->id)->update(['profile_id' => null]);
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
             ->getJson('/api/test-no-profile');

@@ -3,9 +3,17 @@
 namespace Tests\Concerns;
 
 use Illuminate\Support\Str;
+use Illuminate\Testing\TestResponse;
 
 trait InteractsWithApi
 {
+    /**
+     * The last HTTP response instance.
+     *
+     * @var TestResponse|null
+     */
+    protected $response;
+
     protected function withApiHeaders(): self
     {
         return $this->withHeader('Accept', 'application/json')

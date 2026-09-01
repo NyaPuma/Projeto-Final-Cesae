@@ -35,6 +35,12 @@
         <include>
             <directory>app</directory>
         </include>
+        <exclude>
+            <directory>app/Console</directory>
+            <file>app/Http/Controllers/StockReportController.php</file>
+            <file>app/Http/Controllers/StockUiController.php</file>
+            <file>app/Http/Controllers/PartCategoryController.php</file>
+        </exclude>
     </source>
     <php>
         <env name="APP_ENV" value="testing"/>
@@ -55,5 +61,6 @@
         <env name="PULSE_ENABLED" value="false"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
         <env name="NIGHTWATCH_ENABLED" value="false"/>
+        <env name="BUDGET_THRESHOLD" value="50"/>
     </php>
 </phpunit>

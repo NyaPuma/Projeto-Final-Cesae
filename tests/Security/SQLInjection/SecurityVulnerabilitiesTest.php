@@ -32,7 +32,6 @@ class SecurityVulnerabilitiesTest extends TestCase
         $maliciousQuery = "' OR '1'='1";
 
         $response = $this->withHeader('X-Auth-Token', $user->api_token)
-            ->actingAs($user)
             ->getJson('/api/admin/users?q='.urlencode($maliciousQuery));
 
         $response->assertStatus(200);
@@ -45,15 +44,19 @@ class SecurityVulnerabilitiesTest extends TestCase
     public function test_xss_payload_in_ticket_description_does_not_execute_raw_script()
     {
         $userProfile = UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
+        /** @var User $operator */
         $operator = User::factory()->create([
             'profile_id' => $userProfile->id,
             'api_token' => Str::random(60),
         ]);
+        $this->assertInstanceOf(User::class, $operator);
+
+        $authenticatedOperator = $operator instanceof User ? $operator : User::findOrFail($operator->id);
 
         $xssPayload = "<script>alert('XSS')</script>Avaria no motor";
 
-        $response = $this->withHeader('X-Auth-Token', $operator->api_token)
-            ->actingAs($operator)
+        $response = $this->actingAs($authenticatedOperator)
+            ->withHeader('X-Auth-Token', $operator->api_token)
             ->postJson('/api/tickets', [
                 'title' => 'Avaria XSS Test',
                 'description' => $xssPayload,
@@ -75,8 +78,11 @@ class SecurityVulnerabilitiesTest extends TestCase
         ]);
 
         // Operator attempts to create a new user via admin endpoint
-        $response = $this->withHeader('X-Auth-Token', $operator->api_token)
-            ->actingAs($operator)
+        $authenticatedOperator = $operator->fresh();
+        $this->assertInstanceOf(User::class, $authenticatedOperator);
+
+        $response = $this->actingAs($authenticatedOperator)
+            ->withHeader('X-Auth-Token', $operator->api_token)
             ->postJson('/api/admin/users', [
                 'name' => 'Hacker Account',
                 'email' => 'hacker@empresa.pt',

@@ -65,4 +65,38 @@ class NotificationTypeEnumTest extends TestCase
     {
         $this->assertCount(9, NotificationTypeEnum::values());
     }
+
+    #[Test]
+    public function it_returns_icons(): void
+    {
+        $this->assertEquals('heroicon-o-banknotes', NotificationTypeEnum::BudgetRequest->icon());
+        $this->assertEquals('heroicon-o-clipboard-document-list', NotificationTypeEnum::BudgetSubmitted->icon());
+        $this->assertEquals('heroicon-o-check-circle', NotificationTypeEnum::BudgetApproved->icon());
+        $this->assertEquals('heroicon-o-x-circle', NotificationTypeEnum::BudgetRejected->icon());
+        $this->assertEquals('heroicon-o-check-circle', NotificationTypeEnum::BudgetAutoApproved->icon());
+        $this->assertEquals('heroicon-o-wrench-screwdriver', NotificationTypeEnum::TicketClosed->icon());
+        $this->assertEquals('heroicon-o-ticket', NotificationTypeEnum::TicketCreated->icon());
+        $this->assertEquals('heroicon-o-exclamation-triangle', NotificationTypeEnum::PriorityOverride->icon());
+        $this->assertEquals('heroicon-o-archive-box', NotificationTypeEnum::LowStock->icon());
+    }
+
+    #[Test]
+    public function it_returns_colors(): void
+    {
+        $this->assertEquals('success', NotificationTypeEnum::BudgetApproved->color());
+        $this->assertEquals('success', NotificationTypeEnum::BudgetAutoApproved->color());
+        $this->assertEquals('danger', NotificationTypeEnum::BudgetRejected->color());
+        $this->assertEquals('danger', NotificationTypeEnum::PriorityOverride->color());
+        $this->assertEquals('warning', NotificationTypeEnum::BudgetRequest->color());
+        $this->assertEquals('warning', NotificationTypeEnum::BudgetSubmitted->color());
+        $this->assertEquals('warning', NotificationTypeEnum::LowStock->color());
+        $this->assertEquals('info', NotificationTypeEnum::TicketCreated->color());
+        $this->assertEquals('info', NotificationTypeEnum::TicketClosed->color());
+    }
+
+    #[Test]
+    public function it_detects_low_stock_as_not_budget_related(): void
+    {
+        $this->assertFalse(NotificationTypeEnum::LowStock->isBudgetRelated());
+    }
 }

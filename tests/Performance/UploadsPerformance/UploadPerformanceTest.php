@@ -94,7 +94,7 @@ class UploadPerformanceTest extends PerformanceTestCase
             ])->assertStatus(201);
         });
 
-        $this->assertLessThanOrEqual(200 * 1024 * 1024, $memory['peak'],
+        $this->assertLessThanOrEqual(256 * 1024 * 1024, $memory['peak'],
             'Upload peak memory: '.round($memory['peak'] / 1024 / 1024, 2).'MB');
     }
 

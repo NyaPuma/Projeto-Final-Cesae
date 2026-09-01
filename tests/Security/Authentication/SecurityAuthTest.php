@@ -99,7 +99,7 @@ class SecurityAuthTest extends TestCase
     public function token_not_visible_in_json_response(): void
     {
         Route::middleware(['custom.auth'])->get('/api/test-user-json', function () {
-            return response()->json(['user' => auth()->user()]);
+            return response()->json(['user' => Auth::user()]);
         });
 
         $profile = UserProfile::where('name', UserRoleEnum::User->value)->first();

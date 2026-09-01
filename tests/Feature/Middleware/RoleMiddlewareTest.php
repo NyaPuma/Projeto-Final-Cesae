@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\UserProfile;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -262,8 +263,10 @@ class RoleMiddlewareTest extends TestCase
             'active' => true,
         ]);
         DB::table('users')->where('id', $user->id)->update(['profile_id' => null]);
+        $user->refresh();
 
-        $response = $this->actingAs(User::find($user->id))->getJson('/standalone-role');
+        /** @var Authenticatable $user */
+        $response = $this->actingAs($user)->getJson('/standalone-role');
 
         $response->assertStatus(403);
         $response->assertJson(['message' => 'Perfil inválido.']);
@@ -272,8 +275,9 @@ class RoleMiddlewareTest extends TestCase
     #[Test]
     public function it_allows_access_when_used_standalone_with_authenticated_user()
     {
-        $adminProfile = UserProfile::where('name', UserRoleEnum::Admin->value)->first();
+        $adminProfile = UserProfile::where('name', UserRoleEnum::Admin->value)->firstOrFail();
 
+        /** @var Authenticatable $admin */
         $admin = User::factory()->create([
             'profile_id' => $adminProfile->id,
             'active' => true,

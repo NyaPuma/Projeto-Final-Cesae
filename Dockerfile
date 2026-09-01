@@ -19,7 +19,19 @@ RUN npm run build
 # Stage 2 - Composer
 ###############################################
 
-FROM composer:2.8 AS vendor
+FROM dunglas/frankenphp:1.9.0-php8.2 AS vendor
+
+RUN install-php-extensions \
+        bcmath \
+        gd \
+        intl \
+        mbstring \
+        opcache \
+        pdo_mysql \
+        pdo_sqlite \
+        zip
+
+COPY --from=composer:2.8 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
 
@@ -36,7 +48,9 @@ COPY . .
 
 RUN composer dump-autoload \
     --optimize \
-    --classmap-authoritative
+    --classmap-authoritative \
+    --no-interaction \
+    --no-scripts
 
 
 ###############################################
@@ -44,6 +58,16 @@ RUN composer dump-autoload \
 ###############################################
 
 FROM dunglas/frankenphp:1.9.0-php8.2
+
+RUN install-php-extensions \
+        bcmath \
+        gd \
+        intl \
+        mbstring \
+        opcache \
+        pdo_mysql \
+        pdo_sqlite \
+        zip
 
 LABEL org.opencontainers.image.title="Sistema Integrado de Gestão de Manutenção"
 LABEL org.opencontainers.image.description="Projeto Final CESAE desenvolvido em Laravel 11"

@@ -127,6 +127,8 @@ class RateLimitingTest extends FeatureTestCase
             'active' => true,
         ]);
 
+        $response = null;
+
         for ($i = 0; $i < 6; $i++) {
             $response = $this->withSession([])->postJson('/api/login', [
                 'email' => 'headers@example.com',
@@ -134,7 +136,7 @@ class RateLimitingTest extends FeatureTestCase
             ]);
         }
 
-        if ($response->status() === 429) {
+        if ($response !== null && $response->status() === 429) {
             $this->assertNotNull($response->headers->get('Retry-After'));
         }
     }

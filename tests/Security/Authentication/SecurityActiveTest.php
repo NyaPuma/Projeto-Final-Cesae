@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\UserProfile;
 use App\Services\TicketStatusService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
@@ -71,7 +72,7 @@ class SecurityActiveTest extends TestCase
 
         // Log findings for the report
         if (! empty($missing)) {
-            \Log::warning('T2 — Missing security headers on /ui/login', ['missing' => $missing]);
+            Log::warning('T2 — Missing security headers on /ui/login', ['missing' => $missing]);
         }
 
         // We record but don't fail — this is an audit test
@@ -109,7 +110,7 @@ class SecurityActiveTest extends TestCase
         );
 
         if ($status === 200) {
-            \Log::critical('T3 — IDOR CONFIRMED: User A can view User B ticket via API', [
+            Log::critical('T3 — IDOR CONFIRMED: User A can view User B ticket via API', [
                 'user_a' => $userA->id,
                 'user_b' => $userB->id,
                 'ticket_id' => $ticket->id,
@@ -146,7 +147,7 @@ class SecurityActiveTest extends TestCase
         );
 
         if ($status === 200) {
-            \Log::critical('T3 — IDOR CONFIRMED: User A can list photos of User B ticket', [
+            Log::critical('T3 — IDOR CONFIRMED: User A can list photos of User B ticket', [
                 'user_a' => $userA->id,
                 'ticket_id' => $ticket->id,
             ]);
@@ -181,7 +182,7 @@ class SecurityActiveTest extends TestCase
             $this->assertNotNull($createdTicket, 'Ticket should have been created');
 
             if ($createdTicket->user_id == $userB->id) {
-                \Log::critical('T4 — MASS ASSIGNMENT CONFIRMED', [
+                Log::critical('T4 — MASS ASSIGNMENT CONFIRMED', [
                     'user_a' => $userA->id,
                     'ticket_user_id' => $createdTicket->user_id,
                 ]);
@@ -227,7 +228,7 @@ class SecurityActiveTest extends TestCase
         }
 
         if ($user->profile_id == $adminProfile->id) {
-            \Log::critical('T4 — PRIVILEGE ESCALATION CONFIRMED', [
+            Log::critical('T4 — PRIVILEGE ESCALATION CONFIRMED', [
                 'user_id' => $user->id,
                 'old_profile_id' => $originalProfileId,
                 'new_profile_id' => $user->profile_id,
@@ -252,7 +253,7 @@ class SecurityActiveTest extends TestCase
             $status = $response->status();
 
             if ($status === 200) {
-                \Log::critical("T6 — EXPOSED: {$path} accessible (HTTP 200)", [
+                Log::critical("T6 — EXPOSED: {$path} accessible (HTTP 200)", [
                     'content_preview' => substr($response->content(), 0, 200),
                 ]);
             }
@@ -274,7 +275,7 @@ class SecurityActiveTest extends TestCase
             $status = $response->status();
 
             if ($status === 200) {
-                \Log::critical("T6 — EXPOSED: {$path} accessible (HTTP 200)", []);
+                Log::critical("T6 — EXPOSED: {$path} accessible (HTTP 200)", []);
             }
 
             $this->assertNotEquals(200, $status,

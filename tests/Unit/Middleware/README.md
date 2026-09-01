@@ -1,8 +1,30 @@
-# Middleware
+# Middleware — Testes
 
-Unit tests for HTTP middleware.
+## Descrição da Pasta
+Testes unitários isolados para validação atómica de componentes, classes de domínio, Actions, DTOs, Enums, Models, Services e Jobs sem dependências externas.
 
-| File | Purpose |
-|------|---------|
-| `SecurityHeadersTest.php` | Security response headers middleware |
-| `SetLocaleMiddlewareTest.php` | Locale resolution/persistence middleware |
+### Módulos e Ficheiros de Teste
+
+- **`SecurityHeadersTest`** (`tests/Unit/Middleware/SecurityHeadersTest.php`): Valida os cenários e fluxos correspondentes a SecurityHeadersTest.
+- **`SetLocaleMiddlewareTest`** (`tests/Unit/Middleware/SetLocaleMiddlewareTest.php`): Valida os cenários e fluxos correspondentes a SetLocaleMiddlewareTest.
+
+
+## Comandos de Execução
+
+Para executar isoladamente todos os testes desta pasta:
+
+```bash
+php artisan test tests/Unit/Middleware
+```
+
+Para filtrar por um teste ou método específico:
+
+```bash
+php artisan test tests/Unit/Middleware --filter=NomeDoTeste
+```
+
+Para executar com cobertura de código (se suportado pelo ambiente):
+
+```bash
+php artisan test tests/Unit/Middleware --coverage
+```

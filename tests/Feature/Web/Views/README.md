@@ -1,32 +1,32 @@
-# Views
+# Views — Testes
 
-Feature tests for Blade view rendering and front-end design system output.
+## Descrição da Pasta
+Testes funcionais e de integração de ponta a ponta (Feature/API/Web) cobrindo ciclo de vida de requisições HTTP, autenticação, autorização, validação de formulários e respostas JSON/Blade.
 
-| File | Purpose |
-|------|---------|
-| `AssetPipelineTest.php` | Vite asset pipeline integration in views |
-| `DesignSystemComponentsTest.php` | Design-system component rendering |
-| `DesignSystemViewsTest.php` | Design-system page layouts |
-| `UiUsabilityTest.php` | Usability/accessibility markup assertions |
+### Módulos e Ficheiros de Teste
 
-## Inline script policy (AssetPipelineTest)
+- **`AssetPipelineTest`** (`tests/Feature/Web/Views/AssetPipelineTest.php`): Valida os cenários e fluxos correspondentes a AssetPipelineTest.
+- **`DesignSystemComponentsTest`** (`tests/Feature/Web/Views/DesignSystemComponentsTest.php`): Valida os cenários e fluxos correspondentes a DesignSystemComponentsTest.
+- **`DesignSystemViewsTest`** (`tests/Feature/Web/Views/DesignSystemViewsTest.php`): Valida os cenários e fluxos correspondentes a DesignSystemViewsTest.
+- **`UiUsabilityTest`** (`tests/Feature/Web/Views/UiUsabilityTest.php`): Valida os cenários e fluxos correspondentes a UiUsabilityTest.
 
-Views must not contain inline CSS/JS. Three sanctioned exceptions exist:
 
-1. **Synchronous anti-FOUC theme script** in layout `<head>` — must contain both `prefers-color-scheme` and `localStorage.getItem('theme')`.
-2. **i18n bootstrap** — the `locale-config` partial exposing translations as `window.SGM_*`.
-3. **Non-executing data** — `<script type="application/json">` blocks (e.g. `theme-meta`).
+## Comandos de Execução
 
-Every page key used via `@section('page_key', ...)` must be registered in `resources/js/bootstrap/page-registry.js`.
+Para executar isoladamente todos os testes desta pasta:
 
-## Design-system components (DesignSystemComponentsTest)
+```bash
+php artisan test tests/Feature/Web/Views
+```
 
-Top-level aliases implemented under `resources/views/components/{button,card,input}/`:
+Para filtrar por um teste ou método específico:
 
-| Alias | Expected class hooks |
-|-------|----------------------|
-| `<x-button.button>` | `ui-button`, `ui-button--primary\|secondary`, `--loading`, `--disabled`, `aria-busy`, `disabled` |
-| `<x-card.card>` | `ui-card`, `ui-card--loading`, `ui-card-skeleton` |
-| `<x-card.badge>` | `ui-card-badge--{variant}`, `--pill`, `--has-dot` |
-| `<x-card.alert>` | `ui-card-alert--{variant}`, title + slot |
-| `<x-input.input>` | `ui-input-field`, `--error`, label, hint, `aria-invalid`, error message |
+```bash
+php artisan test tests/Feature/Web/Views --filter=NomeDoTeste
+```
+
+Para executar com cobertura de código (se suportado pelo ambiente):
+
+```bash
+php artisan test tests/Feature/Web/Views --coverage
+```

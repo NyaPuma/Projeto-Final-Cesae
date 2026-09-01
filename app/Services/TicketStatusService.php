@@ -32,9 +32,14 @@ final class TicketStatusService
         $cached = Cache::get("ticket_status:{$name}");
 
         if ($cached !== null) {
-            self::$statusIdCache[$name] = $cached;
+            // Validate persistent cache value still points to an existing row.
+            if (TicketStatus::where('id', $cached)->exists()) {
+                self::$statusIdCache[$name] = $cached;
 
-            return $cached;
+                return $cached;
+            }
+
+            Cache::forget("ticket_status:{$name}");
         }
 
         /** @var int|null $id */

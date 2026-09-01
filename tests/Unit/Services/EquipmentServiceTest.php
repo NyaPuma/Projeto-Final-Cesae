@@ -44,7 +44,7 @@ class EquipmentServiceTest extends FeatureTestCase
         $result = $this->service->listPaginated('impress');
 
         $this->assertEquals(1, $result->total());
-        $this->assertEquals('Impressora Laser', $result->getCollection()->first()->name);
+        $this->assertEquals('Impressora Laser', $result->items()[0]->name);
     }
 
     #[Test]
@@ -56,7 +56,7 @@ class EquipmentServiceTest extends FeatureTestCase
         $result = $this->service->listPaginated('LAP-');
 
         $this->assertEquals(1, $result->total());
-        $this->assertEquals('LAP-2026', $result->getCollection()->first()->serial);
+        $this->assertEquals('LAP-2026', $result->items()[0]->serial);
     }
 
     #[Test]
@@ -68,7 +68,7 @@ class EquipmentServiceTest extends FeatureTestCase
         $result = $this->service->listPaginated('AB_CD');
 
         $this->assertTrue(
-            $result->getCollection()->every(fn ($equipment) => $equipment->name !== 'Câmara ABXCD'),
+            collect($result->items())->every(fn ($equipment) => $equipment->name !== 'Câmara ABXCD'),
             'A pesquisa com wildcards não deve devolver correspondências não pretendidas.'
         );
     }
@@ -83,9 +83,9 @@ class EquipmentServiceTest extends FeatureTestCase
         $inactive = $this->service->listPaginated(null, 'inactive');
 
         $this->assertEquals(1, $active->total());
-        $this->assertEquals('Ativo', $active->getCollection()->first()->name);
+        $this->assertEquals('Ativo', $active->items()[0]->name);
         $this->assertEquals(1, $inactive->total());
-        $this->assertEquals('Inativo', $inactive->getCollection()->first()->name);
+        $this->assertEquals('Inativo', $inactive->items()[0]->name);
     }
 
     #[Test]
@@ -105,10 +105,10 @@ class EquipmentServiceTest extends FeatureTestCase
         Equipment::factory()->create(['name' => 'Alfa', 'room_id' => $room->id]);
 
         $result = $this->service->listPaginated();
-        $items = $result->getCollection();
+        $items = $result->items();
 
         $this->assertEquals('Alfa', $items[0]->name);
         $this->assertEquals('Beta', $items[1]->name);
-        $this->assertTrue($items->first()->relationLoaded('room'));
+        $this->assertTrue(collect($items)->first()->relationLoaded('room'));
     }
 }

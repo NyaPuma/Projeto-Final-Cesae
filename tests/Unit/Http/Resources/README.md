@@ -1,7 +1,29 @@
-# Resources
+# Resources — Testes
 
-Unit tests for API Resources (HTTP response transformers).
+## Descrição da Pasta
+Testes unitários isolados para validação atómica de componentes, classes de domínio, Actions, DTOs, Enums, Models, Services e Jobs sem dependências externas.
 
-| File | Purpose |
-|------|---------|
-| `ResourcesTest.php` | Grouped tests for API Resource classes (JSON transformation) |
+### Módulos e Ficheiros de Teste
+
+- **`ResourcesTest`** (`tests/Unit/Http/Resources/ResourcesTest.php`): Valida os cenários e fluxos correspondentes a ResourcesTest.
+
+
+## Comandos de Execução
+
+Para executar isoladamente todos os testes desta pasta:
+
+```bash
+php artisan test tests/Unit/Http/Resources
+```
+
+Para filtrar por um teste ou método específico:
+
+```bash
+php artisan test tests/Unit/Http/Resources --filter=NomeDoTeste
+```
+
+Para executar com cobertura de código (se suportado pelo ambiente):
+
+```bash
+php artisan test tests/Unit/Http/Resources --coverage
+```

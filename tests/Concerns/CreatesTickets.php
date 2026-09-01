@@ -45,6 +45,11 @@ trait CreatesTickets
 
     protected function createTicketWithStatus(string $statusName, array $attributes = []): Ticket
     {
+        // Ensure standard lookup data exists so status IDs are stable and
+        // consistent across helper calls (prevents creating a single status
+        // row which would shift ID assignments in subsequent operations).
+        $this->ensureTicketLookupData();
+
         $statusId = app(TicketStatusService::class)->getByName(TicketStatusEnum::from($statusName));
 
         return $this->createTicket(array_merge([

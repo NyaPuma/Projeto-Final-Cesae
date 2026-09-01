@@ -66,4 +66,13 @@ class NotificationPriorityEnumTest extends TestCase
     {
         $this->assertCount(4, NotificationPriorityEnum::values());
     }
+
+    #[Test]
+    public function it_returns_icons(): void
+    {
+        $this->assertEquals('heroicon-o-arrow-down', NotificationPriorityEnum::Low->icon());
+        $this->assertEquals('heroicon-o-minus', NotificationPriorityEnum::Normal->icon());
+        $this->assertEquals('heroicon-o-arrow-up', NotificationPriorityEnum::High->icon());
+        $this->assertEquals('heroicon-o-exclamation-triangle', NotificationPriorityEnum::Urgent->icon());
+    }
 }

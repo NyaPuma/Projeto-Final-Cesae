@@ -19,6 +19,7 @@ class PerformanceAndNPlusOneTest extends TestCase
     public function test_tickets_listing_uses_eager_loading_without_n_plus_one_queries()
     {
         $techProfile = UserProfile::firstOrCreate(['name' => UserRoleEnum::Technician->value]);
+        /** @var User $technician */
         $technician = User::factory()->create(['profile_id' => $techProfile->id]);
         $room = Room::factory()->create();
         $equipment = Equipment::factory()->create(['room_id' => $room->id]);

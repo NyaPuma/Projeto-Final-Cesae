@@ -108,10 +108,25 @@ trait Auditable
         $userId = null;
 
         if (function_exists('auth')) {
-            $authUser = auth()->user();
-            if ($authUser) {
-                /** @var mixed $authUser */
-                $userId = $authUser->id ?? $authUser->getKey();
+            $auth = auth();
+            $authId = null;
+
+            // Prefer the id() helper if available to avoid calling user()
+            if (method_exists($auth, 'id')) {
+                $authId = $auth->id();
+            }
+
+            // Fallback to user() when id() is not available
+            if ($authId === null && method_exists($auth, 'user')) {
+                $authUser = $auth->user();
+                if ($authUser) {
+                    /** @var mixed $authUser */
+                    $authId = $authUser->id ?? $authUser->getKey();
+                }
+            }
+
+            if ($authId !== null) {
+                $userId = $authId;
             }
         }
 

@@ -75,7 +75,7 @@ class AttachmentOperationFeatureTest extends TestCase
 
         $response->assertOk();
         $this->assertSoftDeleted($attachment);
-        Storage::disk('public')->assertMissing($path);
+        $this->assertFalse(Storage::disk('public')->exists($path));
     }
 
     public function test_user_can_delete_own_photo(): void
@@ -243,7 +243,7 @@ class AttachmentOperationFeatureTest extends TestCase
         $this->assertSame('minha-foto.jpg', $response->json('attachment.original_name'));
         $this->assertSame('image/jpeg', $response->json('attachment.mime_type'));
 
-        Storage::disk('public')->assertExists($response->json('attachment.path'));
+        $this->assertTrue(Storage::disk('public')->exists($response->json('attachment.path')));
         $this->assertDatabaseHas('ticket_attachments', [
             'ticket_id' => $ticket->id,
             'disk' => 'public',
@@ -333,11 +333,11 @@ class AttachmentOperationFeatureTest extends TestCase
             'size' => 1024,
         ]);
 
-        Storage::disk('public')->assertExists($path);
+        $this->assertTrue(Storage::disk('public')->exists($path));
 
         $attachment->delete();
 
         $this->assertSoftDeleted($attachment);
-        Storage::disk('public')->assertMissing($path);
+        $this->assertFalse(Storage::disk('public')->exists($path));
     }
 }
