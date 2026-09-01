@@ -20,9 +20,10 @@ Para garantir maior estabilidade, previsibilidade de custos e foco no ecossistem
 
 | Nível | Cor Visual | Impacto Operacional | Critério de Atribuição |
 | :--- | :--- | :--- | :--- |
-| **Alta** | 🔴 Vermelho | **Paragem Crítica / Risco** | Linha de produção totalmente inoperacional. Risco de segurança ou danos graves em cadeia. |
-| **Média** | 🟡 Amarelo | **Degradação Parcial** | Equipamento funciona com limitações ou existe alternativa na sala sem parar a produção. |
-| **Baixa** | 🟢 Verde | **Manutenção Ligeira** | Anomalia estética, necessidade de lubrificação ou falha em componente secundário. |
+| **Crítica** | 🟣 / 🔴 Roxo Escuro | **Paragem Total / Emergência** | Falha catastrófica de infraestrutura ou linha de produção totalmente imobilizada com risco iminente de segurança. |
+| **Alta** | 🔴 Vermelho | **Risco Elevado** | Grande degradação operacional ou ativo crítico a operar sob alto risco de falha em cadeia. |
+| **Média** | 🟡 Amarelo | **Degradação Parcial** | Equipamento funciona com limitações ou existe alternativa na sala sem parar totalmente a produção. |
+| **Baixa** | 🟢 Verde | **Manutenção Ligeira** | Anomalia estética, necessidade de lubrificação ou falha em componente secundário de baixo impacto. |
 
 ---
 
@@ -39,7 +40,7 @@ sequenceDiagram
 
     O->>S: Reporta Avaria + Seleciona Prioridade Inicial (Manual)
     S->>IA: Processa texto da ocorrência (Apenas no Admin)
-    IA-->>A: Exibe Sugestão de Prioridade + Recomendação de Técnico
+    IA-->>A: Exibe Sugestão de Prioridade (4 Níveis) + Recomendação de Técnico
     
     alt Ajuste ou Confirmação
         A->>S: Valida/Altera a Prioridade Final e Atribui Técnico
