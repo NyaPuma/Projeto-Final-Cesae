@@ -25,16 +25,30 @@ final class TicketStatusService
         $name = $status->value;
 
         if (array_key_exists($name, self::$statusIdCache)) {
-            return self::$statusIdCache[$name];
+            $cachedId = self::$statusIdCache[$name];
+
+            // Ensure the cached ID still exists in the database (avoids stale IDs
+            // after test DB refreshes or when migrations recreate tables). If the
+            // record was removed, drop the in-memory cache and continue lookup.
+            if (TicketStatus::where('id', $cachedId)->exists()) {
+                return $cachedId;
+            }
+
+            unset(self::$statusIdCache[$name]);
         }
 
         /** @var int|null $cached */
         $cached = Cache::get("ticket_status:{$name}");
 
         if ($cached !== null) {
-            self::$statusIdCache[$name] = $cached;
+            // Validate persistent cache value still points to an existing row.
+            if (TicketStatus::where('id', $cached)->exists()) {
+                self::$statusIdCache[$name] = $cached;
 
-            return $cached;
+                return $cached;
+            }
+
+            Cache::forget("ticket_status:{$name}");
         }
 
         /** @var int|null $id */
