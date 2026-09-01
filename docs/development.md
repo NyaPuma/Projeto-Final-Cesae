@@ -15,7 +15,7 @@ The Docker Compose stack is available through `docker-compose.yml` and requires 
 ```bash
 composer docs:generate
 php artisan backup:run --help
-php artisan schedule:list
+  CACHE_STORE=array php artisan schedule:list
 vendor/bin/pint --test
 vendor/bin/phpstan analyse
 php artisan test

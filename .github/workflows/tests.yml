@@ -71,6 +71,8 @@ jobs:
         run: vendor/bin/phpstan analyse --memory-limit=1G
 
       - name: Verify scheduler registration
+        env:
+          CACHE_STORE: array
         run: php artisan schedule:list
 
       - name: Verify database queue worker
