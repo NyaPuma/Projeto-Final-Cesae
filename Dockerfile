@@ -19,20 +19,9 @@ RUN npm run build
 # Stage 2 - Composer
 ###############################################
 
-FROM php:8.2-cli-bookworm AS vendor
+FROM dunglas/frankenphp:1.9.0-php8.2 AS vendor
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        git \
-        libfreetype6-dev \
-        libicu-dev \
-        libjpeg62-turbo-dev \
-        libonig-dev \
-        libpng-dev \
-        libzip-dev \
-        unzip \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j"$(nproc)" \
+RUN install-php-extensions \
         bcmath \
         gd \
         intl \
@@ -40,9 +29,7 @@ RUN apt-get update \
         opcache \
         pdo_mysql \
         pdo_sqlite \
-        zip \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+        zip
 
 COPY --from=composer:2.8 /usr/bin/composer /usr/bin/composer
 
