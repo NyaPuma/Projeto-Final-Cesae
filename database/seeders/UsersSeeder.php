@@ -107,7 +107,13 @@ class UsersSeeder extends Seeder
         $totalUsers = DB::table('users')->count();
         $inactiveCount = (int) floor($totalUsers * 0.15);
 
-        $activeUsers = DB::table('users')->where('active', true)->pluck('id')->shuffle()->take($inactiveCount);
+        $defaultUserEmails = collect($defaultUsers)->pluck('email');
+        $activeUsers = DB::table('users')
+            ->where('active', true)
+            ->whereNotIn('email', $defaultUserEmails)
+            ->pluck('id')
+            ->shuffle()
+            ->take($inactiveCount);
 
         DB::table('users')->whereIn('id', $activeUsers)->update(['active' => false]);
     }
