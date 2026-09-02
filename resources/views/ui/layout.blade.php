@@ -120,12 +120,13 @@
 
         $userRole = strtolower($currentUser?->profile?->name ?? $currentUser?->role ?? '');
 
-        // Links de Navegação Básicos
+        // 1. Links Base (Visíveis a todos os autenticados)
         $navItems = [
             ['href' => '/ui', 'active' => 'ui', 'label' => __('Dashboard'), 'icon' => '📊', 'exact' => true],
             ['href' => '/ui/tickets', 'active' => 'ui/tickets*', 'label' => __('Tickets'), 'icon' => '🎫', 'exact' => false],
         ];
 
+        // 2. Links exclusivos para Perfil Técnico
         if (in_array($userRole, ['technician', 'tecnico', 'técnico'])) {
             $navItems[] = [
                 'href' => '/ui/my-tickets',
@@ -136,23 +137,35 @@
             ];
         }
 
+        // 3. Ativos Operacionais Gerais e Agenda
         $navItems = array_merge($navItems, [
             ['href' => '/ui/equipments', 'active' => 'ui/equipments*', 'label' => __('Equipamentos'), 'icon' => '🖥️', 'exact' => false],
             ['href' => '/ui/rooms', 'active' => 'ui/rooms*', 'label' => __('Salas'), 'icon' => '🚪', 'exact' => false],
             ['href' => '/calendar', 'active' => 'calendar*', 'label' => __('Agenda'), 'icon' => '📅', 'exact' => false],
         ]);
 
+        // 4. Módulos Exclusivos de Administrador (Swagger removido daqui)
         if (in_array($userRole, ['admin', 'administrador', 'administrator'])) {
             $navItems = array_merge($navItems, [
                 ['href' => '/ui/users', 'active' => 'ui/users*', 'label' => __('Utilizadores'), 'icon' => '👥', 'exact' => false],
                 ['href' => '/ui/audits', 'active' => 'ui/audits*', 'label' => __('Auditoria'), 'icon' => '📝', 'exact' => false],
                 ['href' => '/ui/reports', 'active' => 'ui/reports*', 'label' => __('Relatórios'), 'icon' => '📈', 'exact' => false],
-                ['href' => '/docs/openapi', 'active' => 'docs/openapi*', 'label' => __('Swagger'), 'icon' => '📚', 'exact' => false],
                 ['href' => '/ui/budgets', 'active' => 'ui/budgets*', 'label' => __('Orçamentos'), 'icon' => '💰', 'exact' => false],
             ]);
         }
 
-        // Roadmap posicionado estritamente no final da lista
+        // 5. Módulos Técnicos Exclusivos para Perfil de Desenvolvimento / Integração (Swagger)
+        if (in_array($userRole, ['developer', 'programador', 'integrador', 'dev'])) {
+            $navItems[] = [
+                'href' => '/docs/openapi',
+                'active' => 'docs/openapi*',
+                'label' => __('Swagger'),
+                'icon' => '📚',
+                'exact' => false,
+            ];
+        }
+
+        // 6. Roadmap posicionado estritamente no final da lista
         $navItems[] = [
             'href' => '/ui/roadmap',
             'active' => 'ui/roadmap*',
@@ -258,7 +271,7 @@
             </div>
         </aside>
 
-        {{-- Botão Hamburger para Mobile --}}
+        {{-- Botão Hamburger Mobile --}}
         <div class="lg:hidden fixed top-[18px] left-8 z-30">
             <button type="button" onclick="toggleMobileNav()"
                 class="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary text-[var(--on-primary)] shadow-md shadow-primary/20 transition-all hover:opacity-90 cursor-pointer text-base"
@@ -299,8 +312,7 @@
                                     </svg>
                                 @endif
                                 <span class="font-semibold text-xs uppercase text-[var(--text)]">{{ app()->getLocale() }}</span>
-                                <svg class="h-3.5 w-3.5 text-[var(--text-soft)]" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor" stroke-width="2.5">
+                                <svg class="h-3.5 w-3.5 text-[var(--text-soft)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                                 </svg>
                             </button>
@@ -337,8 +349,7 @@
                                 aria-label="{{ __('Notificações') }}" id="notificationBellBtn">
                                 🔔
                                 <span id="notificationBadge"
-                                    class="hidden absolute -top-1 -right-1 inline-flex items-center justify-center h-4.5 min-w-[18px] px-1 rounded-full bg-rose-500 text-[9px] font-extrabold text-white shadow-sm shadow-rose-500/30 leading-none"
-                                    style="font-size:9px;line-height:1">
+                                    class="hidden absolute -top-1 -right-1 inline-flex items-center justify-center h-4.5 min-w-[18px] px-1 rounded-full bg-rose-500 text-[9px] font-extrabold text-white shadow-sm shadow-rose-500/30 leading-none">
                                     0
                                 </span>
                             </button>
@@ -367,14 +378,14 @@
                             </div>
                         </div>
 
-                        {{-- Botão de Alternar Tema --}}
+                        {{-- Alternar Tema --}}
                         <button type="button" onclick="toggleTheme()"
                             class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] text-sm shadow-sm transition-all hover:bg-[var(--surface-2)] cursor-pointer"
                             aria-label="{{ __('Alternar Tema') }}">
                             🌙
                         </button>
 
-                        {{-- Botão de Ajuda Rápida / Guia da Plataforma --}}
+                        {{-- Guia da Plataforma --}}
                         <button type="button" onclick="openQuickHelpModal()" title="{{ __('Guia da Plataforma') }}"
                             class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] text-sm text-[var(--text-soft)] shadow-sm transition-all hover:text-[var(--text)] hover:bg-[var(--surface-2)] cursor-pointer"
                             aria-label="{{ __('Guia da Plataforma') }}">
@@ -398,10 +409,8 @@
         </div>
     </div>
 
-    {{-- Modal do Centro de Ajuda --}}
+    {{-- Modais --}}
     @include('ui.partials.help-modal')
-
-    {{-- Modal de QR Code --}}
     @include('ui.partials.qr-modal')
 
     {{-- Core Auth & Layout Scripts --}}
@@ -495,6 +504,7 @@
         function toggleLangDropdown(event) {
             if (event) {
                 event.stopPropagation();
+                event.preventDefault();
             }
             const dropdown = document.getElementById('langDropdown');
             const btn = document.getElementById('langDropdownBtn');

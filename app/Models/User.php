@@ -27,7 +27,7 @@ class User extends Authenticatable
         'email',
         'password',
         'profile_id',
-        'avatar', // <-- Adicionado para permitir o armazenamento da imagem
+        'avatar',
         'active',
         'api_token',
         'remember_token',
@@ -49,20 +49,20 @@ class User extends Authenticatable
     ];
 
     /**
-     * Inclui automaticamente o atributo 'avatar_url' nas respostas JSON
+     * Inclui automaticamente atributos nas respostas JSON
      *
      * @var list<string>
      */
     protected $appends = [
         'avatar_url',
+        'role_translated',
     ];
 
     // Constantes de Roles - mapeadas para os nomes dos perfis
     public const ROLE_USER = 'user';
-
     public const ROLE_TECHNICIAN = 'technician';
-
     public const ROLE_ADMIN = 'admin';
+    public const ROLE_DEVELOPER = 'developer';
 
     /**
      * Retorna a URL completa da foto do utilizador ou gera um avatar com as iniciais.
@@ -73,7 +73,6 @@ class User extends Authenticatable
             return asset('storage/' . $this->avatar);
         }
 
-        // Caso não tenha foto personalizada, gera um avatar dinâmico apelativo com o nome
         return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=f97316&color=ffffff&bold=true';
     }
 
@@ -134,11 +133,25 @@ class User extends Authenticatable
     }
 
     /**
+     * Verifica se o utilizador é Developer/Integrador de API.
+     */
+    public function isDeveloper(): bool
+    {
+        $roleName = strtolower($this->profile?->name ?? $this->role ?? '');
+        return in_array($roleName, [self::ROLE_DEVELOPER, 'programador', 'integrador', 'dev']);
+    }
+
+    /**
      * Obtém todas as constantes de roles disponíveis.
      */
     public static function getAvailableRoles(): array
     {
-        return [self::ROLE_USER, self::ROLE_TECHNICIAN, self::ROLE_ADMIN];
+        return [
+            self::ROLE_USER,
+            self::ROLE_TECHNICIAN,
+            self::ROLE_ADMIN,
+            self::ROLE_DEVELOPER,
+        ];
     }
 
     /**
@@ -168,35 +181,38 @@ class User extends Authenticatable
      */
     private static function ensureValidProfile(User $user): void
     {
-        $profileName = $user->profile->name ?? '';
-
-        if (! $user->profile_id || ! self::isValidProfile($profileName)) {
-            $defaultRole = self::ROLE_USER;
-
-            $existingProfile = UserProfile::firstOrCreate(['name' => $defaultRole]);
-
-            $user->profile_id = $existingProfile->id;
+        if ($user->profile_id) {
+            $profile = UserProfile::find($user->profile_id);
+            if ($profile && self::isValidProfile($profile->name)) {
+                return;
+            }
         }
+
+        $defaultRole = self::ROLE_USER;
+        $existingProfile = UserProfile::firstOrCreate(['name' => $defaultRole]);
+        $user->profile_id = $existingProfile->id;
     }
-   
-public function getRoleTranslatedAttribute(): string
-{
-    $locale = app()->getLocale();
-    $roleName = strtolower($this->profile->name ?? $this->role ?? 'user');
 
-    $map = [
-        'pt' => [
-            'admin' => 'Administrador',
-            'technician' => 'Técnico',
-            'user' => 'Utilizador',
-        ],
-        'en' => [
-            'admin' => 'Administrator',
-            'technician' => 'Technician',
-            'user' => 'User',
-        ]
-    ];
+    public function getRoleTranslatedAttribute(): string
+    {
+        $locale = app()->getLocale();
+        $roleName = strtolower($this->profile->name ?? $this->role ?? 'user');
 
-    return $map[$locale][$roleName] ?? ucfirst($roleName);
-}
+        $map = [
+            'pt' => [
+                'admin' => 'Administrador',
+                'technician' => 'Técnico',
+                'user' => 'Utilizador',
+                'developer' => 'Developer',
+            ],
+            'en' => [
+                'admin' => 'Administrator',
+                'technician' => 'Technician',
+                'user' => 'User',
+                'developer' => 'Developer',
+            ]
+        ];
+
+        return $map[$locale][$roleName] ?? ucfirst($roleName);
+    }
 }

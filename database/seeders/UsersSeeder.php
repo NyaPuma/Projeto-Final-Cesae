@@ -34,6 +34,13 @@ class UsersSeeder extends Seeder
                 'password' => bcrypt('user123'),
                 'api_token' => 'user-token-'.Str::random(40),
             ],
+            [
+                'name' => 'Developer',
+                'email' => 'developer@example.com',
+                'profile_name' => 'developer',
+                'password' => bcrypt('developer123'),
+                'api_token' => 'dev-token-'.Str::random(40),
+            ],
         ];
 
         foreach ($defaultUsers as $user) {
@@ -68,7 +75,7 @@ class UsersSeeder extends Seeder
                     'name' => 'Utilizador Sintético '.str_pad((string) $index, 3, '0', STR_PAD_LEFT),
                     'email' => $email,
                     'email_verified_at' => now(),
-                    'password' => bcrypt('Password123!'),
+                    'password' => $user['password'] ?? bcrypt('Password123!'),
                     'profile_id' => $profileIds[$profileName] ?? $profileIds['user'],
                     'active' => true,
                     'api_token' => 'synthetic-'.Str::random(40),

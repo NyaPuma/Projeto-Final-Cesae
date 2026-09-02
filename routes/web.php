@@ -10,6 +10,7 @@ use App\Http\Controllers\RoomController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UiController;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
@@ -111,7 +112,7 @@ Route::middleware(['custom.auth'])->group(function () {
         // Submissão de valor pelo técnico
         Route::post('/tickets/{id}/submit-budget', [TicketController::class, 'submitEstimatedBudget']);
 
-        // Decision de aprovação pelo Administrador (Aceita qualquer método e endpoint comum)
+        // Decisão de aprovação pelo Administrador
         Route::match(['post', 'patch', 'put'], '/tickets/{id}/budget', [AdminController::class, 'approveBudget']);
         Route::match(['post', 'patch', 'put'], '/admin/tickets/{id}/approve-budget', [AdminController::class, 'approveBudget']);
         Route::match(['post', 'patch', 'put'], '/admin/tickets/{id}/budget-decision', [AdminController::class, 'approveBudget']);
@@ -124,11 +125,10 @@ Route::middleware(['custom.auth'])->group(function () {
         Route::get('/calendar', [TicketController::class, 'calendarView']);
 
         /*
-         |-- Área Exclusiva do Técnico de Manutenção (Apenas Technicians)
-         |----------------------------------------------------------------------*/
-        // =========================================================================
-        // 👇 👇 👇 GRUPO EXCLUSIVO PARA TÉCNICOS (SEM ADMIN) 👇 👇 👇
-        // =========================================================================
+        |--------------------------------------------------------------------------
+        | Área Exclusiva do Técnico de Manutenção (Apenas Technicians)
+        |--------------------------------------------------------------------------
+        */
         Route::middleware(['role:technician'])->group(function () {
             Route::get('/ui/my-tickets', function () {
                 return view('ui.my-tickets');
@@ -136,8 +136,10 @@ Route::middleware(['custom.auth'])->group(function () {
         });
 
         /*
-         |-- Área Exclusiva do Técnico de Manutenção e Administradores
-         |----------------------------------------------------------------------*/
+        |--------------------------------------------------------------------------
+        | Área Exclusiva do Técnico de Manutenção e Administradores
+        |--------------------------------------------------------------------------
+        */
         Route::middleware(['role:technician,admin'])->group(function () {
             Route::match(['put', 'post'], '/technician/tickets/{id}/start', [TicketController::class, 'startTicket']);
             Route::match(['put', 'post'], '/technician/tickets/{id}/close', [TicketController::class, 'closeTicket']);
@@ -145,8 +147,10 @@ Route::middleware(['custom.auth'])->group(function () {
         });
 
         /*
-         |-- Área Partilhada (Técnicos e Administradores)
-         |----------------------------------------------------------------------*/
+        |--------------------------------------------------------------------------
+        | Área Partilhada / Operacional de Administração
+        |--------------------------------------------------------------------------
+        */
         Route::middleware(['role:admin'])->group(function () {
             Route::get('/ui/users', [UiController::class, 'users']);
             Route::get('/ui/audits', [UiController::class, 'audits']);
@@ -156,8 +160,10 @@ Route::middleware(['custom.auth'])->group(function () {
         });
 
         /*
-         |-- Área de Administração e Backoffice
-         |----------------------------------------------------------------------*/
+        |--------------------------------------------------------------------------
+        | Área de Administração e Backoffice (Sem Swagger)
+        |--------------------------------------------------------------------------
+        */
         Route::middleware(['role:admin'])->group(function () {
             Route::get('/analytics', [AnalyticsController::class, 'stats']);
             Route::get('/analytics/charts', [AnalyticsController::class, 'charts']);
@@ -165,7 +171,6 @@ Route::middleware(['custom.auth'])->group(function () {
             Route::get('/analytics/export/pdf', [AnalyticsController::class, 'exportPdf']);
             Route::get('/analytics/export/excel', [AnalyticsController::class, 'exportExcel']);
             Route::get('/ui/analytics', [UiController::class, 'analytics']);
-            // Suporte/Alias para a rota /ui/reports
             Route::get('/ui/reports', [UiController::class, 'analytics']);
             Route::get('/reports', [UiController::class, 'analytics']);
 
@@ -180,10 +185,7 @@ Route::middleware(['custom.auth'])->group(function () {
 
             Route::get('/admin/users', [AdminController::class, 'users']);
             Route::post('/admin/users', [AdminController::class, 'storeUser']);
-
-            // 💡 Rota flexibilizada para aceitar POST, PATCH e PUT para uploads de imagem de utilizador
             Route::match(['post', 'patch', 'put'], '/admin/users/{id}', [AdminController::class, 'updateUser']);
-
             Route::patch('/admin/users/{id}/inactive', [AdminController::class, 'inactivateUser']);
             Route::get('/admin/profiles', [AdminController::class, 'profiles']);
 
@@ -207,26 +209,111 @@ Route::middleware(['custom.auth'])->group(function () {
 
             Route::post('/admin/tickets/{id}/override-priority-assignment', [AdminController::class, 'overridePriorityAndAssignment']);
 
-            Route::middleware(['role:admin'])->group(function () {
-                // Vista do Painel de Orçamentos
-                Route::get('/ui/budgets', [AdminController::class, 'budgetsView'])->name('ui.budgets');
+            // Orçamentos
+            Route::get('/ui/budgets', [AdminController::class, 'budgetsView'])->name('ui.budgets');
+            Route::get('/admin/budgets/data', [AdminController::class, 'budgetsList']);
+            Route::post('/admin/tickets/{id}/budget-decision', [AdminController::class, 'approveBudget']);
+        });
 
-                // API para popular a tabela e filtros
-                Route::get('/admin/budgets/data', [AdminController::class, 'budgetsList']);
+        /*
+        |--------------------------------------------------------------------------
+        | Área Técnica de Engenharia / API (Exclusiva para Developer / Integrador)
+        |--------------------------------------------------------------------------
+        */
+        Route::middleware(['role:developer,programador,integrador,dev'])->group(function () {
+            
+            Route::get('/docs/openapi', function () {
+                $doc = 'default';
+                $url = url('/docs/openapi.json');
 
-                // Rota de Decisão Orçamental (Aprovar / Rejeitar pelo Admin)
-                Route::post('/admin/tickets/{id}/budget-decision', [AdminController::class, 'approveBudget']);
+                if (view()->exists('vendor.l5-swagger.index')) {
+                    return view('vendor.l5-swagger.index', [
+                        'documentation'       => $doc,
+                        'documentationTitle'  => 'API Documentation - Swagger UI',
+                        'urlToDocs'           => $url,
+                        'urlsToDocs'          => [$doc => $url],
+                        'operationsSorter'    => 'alpha',
+                        'configUrl'           => null,
+                        'validatorUrl'        => null,
+                        'useAbsolutePath'     => true,
+                    ]);
+                }
+
+                // Fallback seguro via Swagger UI Oficial em CDN
+                return response()->make(<<<'HTML'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>API Documentation - Swagger UI</title>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist@5/swagger-ui.css">
+    <style>
+        html { box-sizing: border-box; overflow-y: scroll; }
+        *, *:before, *:after { box-sizing: inherit; }
+        body { margin:0; background: #0f172a; }
+        .topbar { display: none; }
+        .swagger-ui .info .title { color: #f97316 !important; }
+    </style>
+</head>
+<body>
+    <div id="swagger-ui"></div>
+    <script src="https://unpkg.com/swagger-ui-dist@5/swagger-ui-bundle.js"></script>
+    <script src="https://unpkg.com/swagger-ui-dist@5/swagger-ui-standalone-preset.js"></script>
+    <script>
+    window.onload = function() {
+        window.ui = SwaggerUIBundle({
+            url: "/docs/openapi.json",
+            dom_id: '#swagger-ui',
+            deepLinking: true,
+            presets: [
+                SwaggerUIBundle.presets.apis,
+                SwaggerUIStandalonePreset
+            ],
+            layout: "StandaloneLayout"
+        });
+    };
+    </script>
+</body>
+</html>
+HTML
+                , 200, ['Content-Type' => 'text/html']);
+            })->name('docs.openapi');
+
+            // Serve a especificação OpenAPI em formato JSON
+            Route::get('/docs/openapi.json', function () {
+                $candidates = [
+                    storage_path('api-docs/api-docs.json'),
+                    public_path('docs/api-docs.json'),
+                    public_path('swagger.json'),
+                    base_path('openapi.json'),
+                ];
+
+                foreach ($candidates as $file) {
+                    if (File::exists($file)) {
+                        return response()->file($file, ['Content-Type' => 'application/json']);
+                    }
+                }
+
+                return response()->json([
+                    'openapi' => '3.0.0',
+                    'info' => [
+                        'title' => 'Gestão de Avarias - API',
+                        'version' => '1.0.0',
+                        'description' => 'Documentação técnica dos endpoints.'
+                    ],
+                    'paths' => new \stdClass()
+                ]);
             });
         });
+
     });
 
     // Rota de Agendamento Preventivo
     Route::post('/admin/maintenance/schedule', [AdminController::class, 'scheduleMaintenance']);
 
+    // Rota para todos os utilizadores autenticados
     Route::get('/ui/roadmap', function () {
-    return view('ui.roadmap');
-})->name('ui.roadmap');
-
-
+        return view('ui.roadmap');
+    })->name('ui.roadmap');
 
 });

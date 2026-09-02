@@ -193,48 +193,13 @@
                 ]
             }
         },
-        "/admin/tickets/{id}/approve-budget": {
-            "patch": {
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Aprovar orçamento",
-                "description": "Aprova um pedido de orçamento associado a um ticket de avaria.",
-                "operationId": "38116d9bfe19425825216fbcd939666d",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Orçamento aprovado"
-                    },
-                    "422": {
-                        "description": "Pedido inválido"
-                    }
-                },
-                "security": [
-                    {
-                        "X-Auth-Token": []
-                    },
-                    {
-                        "BearerAuth": []
-                    }
-                ]
-            }
-        },
         "/admin/preventive": {
             "post": {
                 "tags": [
                     "Admin"
                 ],
                 "summary": "Criar manutenção preventiva",
+                "description": "Regista uma manutenção preventiva no sistema.",
                 "operationId": "42c254c0854aa9b960b70776a024b1dd",
                 "responses": {
                     "201": {
@@ -288,75 +253,6 @@
                 "responses": {
                     "200": {
                         "description": "Séries para gráficos"
-                    }
-                },
-                "security": [
-                    {
-                        "X-Auth-Token": []
-                    },
-                    {
-                        "BearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/analytics/export/csv": {
-            "get": {
-                "tags": [
-                    "Analytics"
-                ],
-                "summary": "Exportar CSV",
-                "description": "Exporta o relatório de todos os tickets em formato de fluxo CSV (Streaming).",
-                "operationId": "dcecb6ea9412e3415e95274597687a02",
-                "responses": {
-                    "200": {
-                        "description": "Ficheiro CSV descarregado"
-                    }
-                },
-                "security": [
-                    {
-                        "X-Auth-Token": []
-                    },
-                    {
-                        "BearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/analytics/export/pdf": {
-            "get": {
-                "tags": [
-                    "Analytics"
-                ],
-                "summary": "Exportar PDF",
-                "description": "Exporta o relatório de tickets em formato PDF via DOMPDF.",
-                "operationId": "e811405e32f1aa3a802356b7c46b474f",
-                "responses": {
-                    "200": {
-                        "description": "Ficheiro PDF descarregado"
-                    }
-                },
-                "security": [
-                    {
-                        "X-Auth-Token": []
-                    },
-                    {
-                        "BearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/analytics/export/excel": {
-            "get": {
-                "tags": [
-                    "Analytics"
-                ],
-                "summary": "Exportar Excel",
-                "description": "Exporta o relatório de tickets em formato Excel (.xlsx).",
-                "operationId": "73d76b642b24a8e91eeaeada37e024e9",
-                "responses": {
-                    "200": {
-                        "description": "Ficheiro XLSX descarregado"
                     }
                 },
                 "security": [
@@ -611,7 +507,7 @@
                     "Admin"
                 ],
                 "summary": "Listar salas",
-                "description": "Lista todas as salas registadas.",
+                "description": "Lista todas as salas registadas com a contagem real de equipamentos e avarias.",
                 "operationId": "e314a74e53273536a378fc5bfb2c3666",
                 "responses": {
                     "200": {
@@ -632,7 +528,6 @@
                     "Admin"
                 ],
                 "summary": "Criar sala",
-                "description": "Cria uma nova sala de trabalho.",
                 "operationId": "ce2c4c7bfbc0091348ab12f6047b06ff",
                 "responses": {
                     "201": {
@@ -658,7 +553,6 @@
                     "Admin"
                 ],
                 "summary": "Atualizar sala",
-                "description": "Atualiza os detalhes de uma sala.",
                 "operationId": "70f7ed947701e0f65b56da349ef910b5",
                 "parameters": [
                     {
@@ -697,7 +591,6 @@
                     "Admin"
                 ],
                 "summary": "Inativar sala",
-                "description": "Inativa uma sala (Gestão lógica / Soft management).",
                 "operationId": "49645ae257ed61ab928f8473f1f530a6",
                 "parameters": [
                     {

@@ -13,6 +13,7 @@ class UserProfilesSeeder extends Seeder
             ['name' => 'admin'],
             ['name' => 'technician'],
             ['name' => 'user'],
+            ['name' => 'developer'],
         ];
 
         foreach ($profiles as $profile) {
