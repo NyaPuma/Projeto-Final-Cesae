@@ -11,7 +11,8 @@
         "darkaonline/l5-swagger": "^11.1",
         "endroid/qr-code": "^5.0",
         "laravel/framework": "^12.0",
-        "laravel/octane": "^2.19",
+        "laravel/octane": "*",
+        "laravel/pulse": "^1.8",
         "laravel/sanctum": "^4.3",
         "laravel/tinker": "^3.0.2",
         "league/flysystem-aws-s3-v3": "^3.35",
@@ -60,6 +61,12 @@
         "test": [
             "@php artisan config:clear --ansi",
             "@php artisan test"
+        ],
+        "optimize": [
+            "@php artisan optimize --ansi"
+        ],
+        "optimize:clear": [
+            "@php artisan optimize:clear --ansi"
         ],
         "docs:generate": "@php artisan l5-swagger:generate",
         "post-autoload-dump": [

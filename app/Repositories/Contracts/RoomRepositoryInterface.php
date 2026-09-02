@@ -18,9 +18,10 @@ interface RoomRepositoryInterface
      * Return a paginated list of rooms.
      *
      * @param  array<int, string>  $relations
+     * @param  array<int, string>  $withCounts
      * @return LengthAwarePaginator<Room>
      */
-    public function getAll(array $relations = []): LengthAwarePaginator;
+    public function getAll(array $relations = [], array $withCounts = []): LengthAwarePaginator;
 
     /**
      * Return all active rooms.

@@ -9,10 +9,6 @@ html {
   line-height: var(--leading-normal);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  text-wrap: pretty;
-  text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
 }
 

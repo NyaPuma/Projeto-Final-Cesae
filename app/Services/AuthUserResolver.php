@@ -17,8 +17,18 @@ use Illuminate\Http\Request;
  */
 final class AuthUserResolver
 {
+    /**
+     * Resolve the authenticated user from tokens, memoized per request so that
+     * the same lookup is not repeated by consecutive middlewares/services
+     * in the same request lifecycle.
+     */
     public static function fromRequest(Request $request): ?User
     {
+        $cached = $request->attributes->get('_auth_user_resolved');
+        if ($cached !== null) {
+            return $cached;
+        }
+
         $tokens = array_filter([
             $request->header('X-Auth-Token'),
             $request->bearerToken(),
@@ -26,6 +36,8 @@ final class AuthUserResolver
             $request->cookie('auth_token'),
             $request->hasSession() ? $request->session()->get('api_token') : null,
         ], fn ($v) => is_string($v) && $v !== '');
+
+        $user = null;
 
         foreach ($tokens as $token) {
             $found = User::where('api_token', User::hashToken($token))
@@ -41,10 +53,13 @@ final class AuthUserResolver
             }
 
             if ($found) {
-                return $found;
+                $user = $found;
+                break;
             }
         }
 
-        return null;
+        $request->attributes->set('_auth_user_resolved', $user);
+
+        return $user;
     }
 }

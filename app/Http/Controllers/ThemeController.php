@@ -98,16 +98,27 @@ final class ThemeController extends Controller
             // session unavailable — continue with the other candidates
         }
 
-        foreach (array_unique($candidates) as $token) {
-            $tokenHash = User::hashToken($token);
-            $found = User::with('profile')
-                ->where('api_token', $tokenHash)
-                ->where('active', true)
-                ->whereNull('deleted_at')
-                ->first();
+        $uniqueTokens = array_unique(array_filter(array_map(
+            fn (mixed $token): string => is_string($token) ? $token : (string) $token,
+            $candidates,
+        )));
 
-            if ($found) {
-                return $found;
+        if ($uniqueTokens === []) {
+            return null;
+        }
+
+        $hashes = array_map(static fn (string $token): string => User::hashToken($token), $uniqueTokens);
+        $hashSet = array_flip($hashes);
+
+        $users = User::whereIn('api_token', $hashes)
+            ->where('active', true)
+            ->whereNull('deleted_at')
+            ->get()
+            ->keyBy('api_token');
+
+        foreach ($hashSet as $hash => $_) {
+            if (isset($users[$hash])) {
+                return $users[$hash];
             }
         }
 

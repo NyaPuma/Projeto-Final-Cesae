@@ -63,7 +63,7 @@ final class TicketRepository implements TicketRepositoryInterface
      */
     public function getOpenTickets(): LengthAwarePaginator
     {
-        return Ticket::with(['equipment', 'room', 'user', 'status'])
+        return Ticket::with(['equipment', 'room', 'user', 'status', 'technician'])
             ->open()
             ->latest()
             ->paginate(15);
@@ -74,7 +74,7 @@ final class TicketRepository implements TicketRepositoryInterface
      */
     public function getTicketsByTechnician(int $technicianId): LengthAwarePaginator
     {
-        return Ticket::with(['equipment', 'room', 'user', 'status'])
+        return Ticket::with(['equipment', 'room', 'user', 'status', 'technician'])
             ->forTechnician($technicianId)
             ->latest()
             ->paginate(15);

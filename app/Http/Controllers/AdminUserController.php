@@ -137,7 +137,7 @@ final class AdminUserController extends Controller
         // 1. Authorization via Policy (or reuse of UserProfile model permission)
         $this->authorize('viewAny', UserProfile::class);
 
-        $profiles = UserProfile::all();
+        $profiles = UserProfile::withCount('users')->get();
 
         return response()->json([
             'profiles' => UserProfileResource::collection($profiles),

@@ -88,7 +88,7 @@ final class SupplierController extends Controller
         $this->authorize('view', $supplier);
 
         return response()->json([
-            'supplier' => new SupplierResource($supplier->load('parts')),
+            'supplier' => new SupplierResource($supplier->load('parts.taxRate')),
         ]);
     }
 

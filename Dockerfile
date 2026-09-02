@@ -80,13 +80,28 @@ WORKDIR /app
 ENV APP_ENV=production
 ENV APP_DEBUG=false
 ENV LOG_CHANNEL=stderr
+ENV LOG_LEVEL=warning
 ENV PHP_OPCACHE_ENABLE=1
+# Session, cache and queue move to Redis in production for maximum throughput.
+# Set the connection details via environment (compose/`.env.production`).
+ENV SESSION_DRIVER=redis
+ENV CACHE_STORE=redis
+ENV QUEUE_CONNECTION=redis
+ENV REDIS_CLIENT=phpredis
 
 COPY --from=vendor /app ./
 
 COPY --from=frontend /app/public/build ./public/build
 
 COPY Caddyfile /etc/caddy/Caddyfile
+
+# Tuned OPcache + Laravel caches for production.
+COPY infra/php/opcache.ini /usr/local/etc/php/conf.d/zz-opcache-production.ini
+COPY infra/entrypoint.sh /usr/local/bin/octane-entrypoint
+RUN chmod +x /usr/local/bin/octane-entrypoint
+
+# Inference: Laravel config/route/view/map caches are generated at runtime by the
+# Octane entrypoint (below) so they reflect the container's environment.
 
 RUN mkdir -p \
     storage/framework/cache \
@@ -115,4 +130,6 @@ CMD wget --spider http://127.0.0.1/ || exit 1
 # Run Laravel Octane in FrankenPHP worker mode (public/frankenphp-worker.php is shipped
 # with the image so the www-data user never needs write access to the root-owned public/).
 # --admin-port=2019 is required: with --port=80 Octane's default would compute a negative admin port.
+# The entrypoint first generates Laravel caches (config/route/view/event) for the running env.
+ENTRYPOINT ["/usr/local/bin/octane-entrypoint"]
 CMD ["php", "artisan", "octane:frankenphp", "--host=0.0.0.0", "--port=80", "--admin-port=2019"]

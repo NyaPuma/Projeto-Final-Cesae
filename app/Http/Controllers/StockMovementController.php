@@ -46,7 +46,7 @@ final class StockMovementController extends Controller
     {
         $this->authorize('viewAny', StockMovement::class);
 
-        $query = StockMovement::query()->with(['part', 'user']);
+        $query = StockMovement::query()->with(['part.taxRate', 'user']);
 
         if ($request->filled('part_id')) {
             $query->where('part_id', (int) $request->query('part_id'));
@@ -142,7 +142,7 @@ final class StockMovementController extends Controller
 
         return response()->json([
             'message' => __('messages.Movimento de stock registado com sucesso.'),
-            'movement' => new StockMovementResource($movement->load(['part', 'user'])),
+            'movement' => new StockMovementResource($movement->load(['part.taxRate', 'user'])),
         ], 201);
     }
 }

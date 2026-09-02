@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Models\ExchangeRate;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
 /**
@@ -42,6 +43,13 @@ final class CurrencyRateService
     private const TIMEOUT = 5;
 
     /**
+     * Cache lifetime for stored rates (minutes). Rates are refreshed twice
+     * per day, so a 6h TTL avoids re-reading the DB on every conversion while
+     * staying well within the refresh window.
+     */
+    private const RATE_CACHE_TTL = 360;
+
+    /**
      * Fetches the latest rates from the provider and persists each pair.
      *
      * @return int Number of rate pairs stored/updated.
@@ -62,16 +70,20 @@ final class CurrencyRateService
                 continue;
             }
 
+            $target = strtoupper((string) $target);
+
             ExchangeRate::updateOrCreate(
                 [
                     'base_currency' => self::BASE_CURRENCY,
-                    'target_currency' => strtoupper((string) $target),
+                    'target_currency' => $target,
                 ],
                 [
                     'rate' => (float) $rate,
                     'fetched_at' => $now,
                 ]
             );
+
+            Cache::forget('currency_rate:'.self::BASE_CURRENCY.':'.$target);
 
             $stored++;
         }
@@ -92,6 +104,18 @@ final class CurrencyRateService
             return 1.0;
         }
 
+        return Cache::remember(
+            "currency_rate:{$from}:{$to}",
+            now()->addMinutes(self::RATE_CACHE_TTL),
+            fn (): ?float => $this->queryStoredRate($from, $to),
+        );
+    }
+
+    /**
+     * Queries the database for a stored base→target rate (uncached).
+     */
+    private function queryStoredRate(string $from, string $to): ?float
+    {
         $row = ExchangeRate::where('base_currency', $from)
             ->where('target_currency', $to)
             ->first();

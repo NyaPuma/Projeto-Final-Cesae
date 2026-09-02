@@ -21,9 +21,9 @@ final class RoomRepository implements RoomRepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function getAll(array $relations = []): LengthAwarePaginator
+    public function getAll(array $relations = [], array $withCounts = []): LengthAwarePaginator
     {
-        return Room::with($relations)->latest()->paginate(15);
+        return Room::with($relations)->withCount($withCounts)->latest()->paginate(15);
     }
 
     /**

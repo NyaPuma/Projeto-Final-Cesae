@@ -31,7 +31,7 @@ final class RoomController extends Controller
         $this->authorize('viewAny', Room::class);
 
         // 2. Search for rooms via the repository
-        $rooms = $this->roomRepository->getAll();
+        $rooms = $this->roomRepository->getAll(withCounts: ['equipments']);
 
         return response()->json([
             'rooms' => RoomResource::collection($rooms),

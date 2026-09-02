@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use Sentry\Event;
-
 return [
 
     'dsn' => env('SENTRY_LARAVEL_DSN', env('SENTRY_DSN')),
@@ -50,49 +48,5 @@ return [
         'missing_routes' => false,
         'continue_after_response' => true,
     ],
-
-    'before_send' => static function (Event $event): Event {
-        $sanitize = static function (mixed $value) use (&$sanitize): mixed {
-            if (! is_array($value)) {
-                return $value;
-            }
-
-            $result = [];
-
-            foreach ($value as $key => $item) {
-                $keyString = strtolower((string) $key);
-
-                if (preg_match('/password|token|secret|api[_-]?key|authorization|card|cvv/', $keyString) === 1) {
-                    $result[$key] = '[REDACTED]';
-                } else {
-                    $result[$key] = $sanitize($item);
-                }
-            }
-
-            return $result;
-        };
-
-        $request = $sanitize($event->getRequest());
-
-        if (is_array($request)) {
-            $event->setRequest($request);
-        }
-
-        foreach ($event->getContexts() as $name => $context) {
-            $sanitizedContext = $sanitize($context);
-
-            if (is_array($sanitizedContext)) {
-                $event->setContext($name, $sanitizedContext);
-            }
-        }
-
-        $extra = $sanitize($event->getExtra());
-
-        if (is_array($extra)) {
-            $event->setExtra($extra);
-        }
-
-        return $event;
-    },
 
 ];

@@ -54,6 +54,8 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\ServiceProvider;
+use Sentry\Event;
+use Sentry\State\HubInterface;
 
 final class AppServiceProvider extends ServiceProvider
 {
@@ -86,6 +88,7 @@ final class AppServiceProvider extends ServiceProvider
         $this->registerSlowQueryListener();
         $this->registerQueueObservability();
         $this->registerFormattingDirectives();
+        $this->registerSentrySanitization();
 
         // Apply overrides saved in the Settings → Configuration page
         $this->app->make(SystemSettingsService::class)->applyOverrides();
@@ -96,6 +99,10 @@ final class AppServiceProvider extends ServiceProvider
      */
     private function registerPolicies(): void
     {
+        // Laravel Pulse dashboard is restricted to administrators. In non-local
+        // environments Life just overrides Pulse's default local-only ability.
+        Gate::define('viewPulse', fn ($user = null) => $user?->isAdmin() === true);
+
         Gate::policy(Ticket::class, TicketPolicy::class);
         Gate::policy(User::class, UserPolicy::class);
         Gate::policy(Equipment::class, EquipmentPolicy::class);
@@ -210,6 +217,76 @@ final class AppServiceProvider extends ServiceProvider
                     'exception' => $reportingException->getMessage(),
                 ]);
             }
+        });
+    }
+
+    /**
+     * Redacts sensitive data (passwords, tokens, keys, cards) from Sentry events.
+     *
+     * Historically this sanitization lived as a `before_send` closure in
+     * `config/sentry.php`, which broke `php artisan config:cache` (closures are
+     * not serializable). It is now applied to the Sentry client options once the
+     * hub is resolved, so the config stays fully serializable and the production
+     * deploy can generate the caches.
+     */
+    private function registerSentrySanitization(): void
+    {
+        $this->app->afterResolving(HubInterface::class, function (HubInterface $hub): void {
+            try {
+                $client = $hub->getClient();
+            } catch (\Throwable $e) {
+                Log::debug('Sentry sanitization setup skipped', ['error' => $e->getMessage()]);
+
+                return;
+            }
+
+            if ($client === null) {
+                return;
+            }
+
+            $sanitize = static function (mixed $value) use (&$sanitize): mixed {
+                if (! is_array($value)) {
+                    return $value;
+                }
+
+                $result = [];
+
+                foreach ($value as $key => $item) {
+                    $keyString = strtolower((string) $key);
+
+                    if (preg_match('/password|token|secret|api[_-]?key|authorization|card|cvv/', $keyString) === 1) {
+                        $result[$key] = '[REDACTED]';
+                    } else {
+                        $result[$key] = $sanitize($item);
+                    }
+                }
+
+                return $result;
+            };
+
+            $client->getOptions()->setBeforeSendCallback(static function (Event $event) use ($sanitize): Event {
+                $request = $sanitize($event->getRequest());
+
+                if (is_array($request)) {
+                    $event->setRequest($request);
+                }
+
+                foreach ($event->getContexts() as $name => $context) {
+                    $sanitizedContext = $sanitize($context);
+
+                    if (is_array($sanitizedContext)) {
+                        $event->setContext($name, $sanitizedContext);
+                    }
+                }
+
+                $extra = $sanitize($event->getExtra());
+
+                if (is_array($extra)) {
+                    $event->setExtra($extra);
+                }
+
+                return $event;
+            });
         });
     }
 }

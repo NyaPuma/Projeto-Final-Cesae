@@ -141,4 +141,49 @@ class UiAuthorizationTest extends TestCase
             ->getJson('/ui/analytics')
             ->assertStatus(403);
     }
+
+    public function test_admin_can_access_pulse_dashboard(): void
+    {
+        $adminProfile = UserProfile::where('name', UserRoleEnum::Admin->value)->firstOrFail();
+        $admin = User::factory()->create([
+            'profile_id' => $adminProfile->id,
+            'api_token' => Str::random(60),
+        ]);
+
+        $this->actingAs($admin, 'web')
+            ->get('/pulse')
+            ->assertOk();
+    }
+
+    public function test_common_user_is_blocked_from_pulse_dashboard(): void
+    {
+        $userProfile = UserProfile::where('name', UserRoleEnum::User->value)->firstOrFail();
+        $user = User::factory()->create([
+            'profile_id' => $userProfile->id,
+            'api_token' => Str::random(60),
+        ]);
+
+        $this->actingAs($user, 'web')
+            ->get('/pulse')
+            ->assertStatus(403);
+    }
+
+    public function test_technician_is_blocked_from_pulse_dashboard(): void
+    {
+        $techProfile = UserProfile::where('name', UserRoleEnum::Technician->value)->firstOrFail();
+        $technician = User::factory()->create([
+            'profile_id' => $techProfile->id,
+            'api_token' => Str::random(60),
+        ]);
+
+        $this->actingAs($technician, 'web')
+            ->get('/pulse')
+            ->assertStatus(403);
+    }
+
+    public function test_guest_is_blocked_from_pulse_dashboard(): void
+    {
+        $this->get('/pulse')
+            ->assertStatus(403);
+    }
 }

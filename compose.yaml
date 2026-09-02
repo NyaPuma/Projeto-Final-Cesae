@@ -4,13 +4,79 @@ services:
 
     build: .
 
+    image: projeto-final-cesae:latest
+
     container_name: projeto-final-cesae
+
+    restart: unless-stopped
 
     ports:
       - "8000:80"
 
     env_file:
-      - .env
+      - .env.production
+
+    depends_on:
+      - redis
+
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://127.0.0.1/"]
+      interval: 30s
+      timeout: 5s
+      start_period: 20s
+      retries: 3
+
+  queue:
+
+    build: .
+
+    image: projeto-final-cesae:latest
+
+    container_name: projeto-final-cesae-queue
+
+    restart: unless-stopped
+
+    command: php artisan queue:work --sleep=3 --tries=3 --timeout=300 --max-time=3600
+
+    env_file:
+      - .env.production
+
+    depends_on:
+      - redis
+
+  schedule:
+
+    build: .
+
+    image: projeto-final-cesae:latest
+
+    container_name: projeto-final-cesae-schedule
+
+    restart: unless-stopped
+
+    command: php artisan schedule:work
+
+    env_file:
+      - .env.production
+
+    depends_on:
+      - redis
+
+  redis:
+
+    image: redis:7-alpine
+
+    container_name: projeto-final-cesae-redis
+
+    restart: unless-stopped
+
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru"]
+
+    ports:
+      - "6379:6379"
 
     volumes:
-      - .:/app
+      - redis-data:/data
+
+volumes:
+  redis-data:
