@@ -278,7 +278,7 @@
 <script>
     window.SGM_LOCALE = {
         locale: @json(app()->getLocale()),
-        currency: @json(\App\Services\LocaleService::currency()),
+        currency: @json(\App\Services\LocaleService::userCurrency(request())),
         tax_id: @json(\App\Services\LocaleService::taxIdentifierLabel()),
         unit_system: @json(\App\Services\LocaleService::unitSystem()),
         rtl: @json(\App\Services\LocaleService::isRtl(app()->getLocale())),

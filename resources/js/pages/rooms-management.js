@@ -12,7 +12,7 @@ async function loadRooms(page = 1) {
         if (!data) return;
 
         const rooms = data.rooms?.data ?? data.rooms ?? [];
-        const meta = data.rooms ?? {};
+        const meta = data.meta ?? data.rooms ?? {};
         const total = meta.meta?.total ?? meta.total ?? rooms.length;
 
         renderResultsCount(total);

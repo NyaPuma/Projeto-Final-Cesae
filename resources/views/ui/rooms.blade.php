@@ -44,6 +44,8 @@
         </x-slot:head>
     </x-ui.listing.table-card>
 
-    <x-ui.listing.pagination />
+    <x-ui.listing.pagination>
+        <span id="resultsCount"></span>
+    </x-ui.listing.pagination>
 </x-ui.partials.page-header>
 @endsection
