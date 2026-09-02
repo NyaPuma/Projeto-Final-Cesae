@@ -2,7 +2,7 @@
 
 @section('content')
 <script>
-window.requireAuthOnLoad = true;
+    window.requireAuthOnLoad = true;
 </script>
 
 <div class="mx-auto max-w-7xl space-y-4 animate-[fadeIn_0.3s_ease-out]">
@@ -85,7 +85,7 @@ window.requireAuthOnLoad = true;
             <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm space-y-3">
                 <div class="flex items-center justify-between border-b border-[var(--border)] pb-2">
                     <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)]">{{ __('Evidências Fotográficas') }}</h3>
-                    <span class="text-[9px] font-bold text-[var(--text-soft)] uppercase tracking-wider">Anexos</span>
+                    <span class="text-[9px] font-bold text-[var(--text-soft)] uppercase tracking-wider">{{ __('Anexos') }}</span>
                 </div>
                 
                 <form id="photoForm" onsubmit="uploadPhoto(event)" class="flex items-center gap-2 border-b border-[var(--border)] pb-3">
@@ -107,11 +107,15 @@ window.requireAuthOnLoad = true;
 
         </div>
 
-        {{-- COLUNA DIREITA (Painéis de Ação / Controlo) --}}
+        {{-- COLUNA DIREITA (Painéis Operacionais e Administrativos) --}}
         <div class="space-y-4">
 
-            {{-- PAINEL DE ADMINISTRAÇÃO 1: Atribuição de Técnico --}}
-            @if(isset($user) && $user && $user->isAdmin())
+            @php
+                $currentUser = auth()->user();
+            @endphp
+
+            {{-- Painel de Administração --}}
+            @if($currentUser && method_exists($currentUser, 'isAdmin') && $currentUser->isAdmin())
             <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm space-y-3">
                 <div class="flex items-center justify-between border-b border-[var(--border)] pb-2">
                     <span class="px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-orange-500 bg-orange-500/10 border border-orange-500/20 rounded-lg">
@@ -129,9 +133,9 @@ window.requireAuthOnLoad = true;
 
                 <div class="space-y-2 pt-1">
                     <div>
-                        <label class="block text-[9px] font-bold uppercase tracking-wider text-[var(--text-soft)] mb-1">{{ __('ID do Técnico (Manual)') }}</label>
+                        <label class="block text-[9px] font-bold uppercase tracking-wider text-[var(--text-soft)] mb-1">{{ __('Selecionar Técnico') }}</label>
                         <select id="assignTechnicianSelect" class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2 text-xs text-[var(--text)] outline-none cursor-pointer">
-                            <option value="">{{ __('Ex: 12 (A carregar...)') }}</option>
+                            <option value="">{{ __('A carregar técnicos...') }}</option>
                         </select>
                     </div>
 
@@ -147,7 +151,7 @@ window.requireAuthOnLoad = true;
                 </div>
             </div>
 
-            {{-- PAINEL DE ADMINISTRAÇÃO 2: Validação Orçamental --}}
+            {{-- Validação Orçamental (Admin) --}}
             <div id="adminBudgetApprovalCard" class="hidden rounded-2xl border border-amber-500/40 bg-[var(--surface)] p-4 shadow-sm space-y-3">
                 <div class="flex items-center justify-between border-b border-[var(--border)] pb-2">
                     <span class="px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-amber-500 bg-amber-500/10 border border-amber-500/20 rounded-lg">
@@ -159,24 +163,23 @@ window.requireAuthOnLoad = true;
                 <div>
                     <h3 class="text-xs font-bold text-[var(--text)]">{{ __('Validar Orçamento Estimado') }}</h3>
                     <p class="text-[11px] text-[var(--text-soft)] mt-0.5 leading-tight">
-                        {{ __('O técnico submeteu um pedido de orçamento acima da autonomia. Decida a aprovação para autorizar o início da reparação.') }}
+                        {{ __('O técnico submeteu um pedido acima da autonomia de aprovação.') }}
                     </p>
                 </div>
 
                 <div class="grid grid-cols-2 gap-2 pt-1">
                     <button type="button" onclick="decideBudget('approved')" class="py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl shadow-sm transition cursor-pointer flex items-center justify-center gap-1">
-                        ✅ {{ __('Validar Orçamento') }}
+                        ✅ {{ __('Validar') }}
                     </button>
                     <button type="button" onclick="decideBudget('rejected')" class="py-2 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold rounded-xl shadow-sm transition cursor-pointer flex items-center justify-center gap-1">
-                        ❌ {{ __('Não Validar') }}
+                        ❌ {{ __('Rejeitar') }}
                     </button>
                 </div>
             </div>
             @endif
 
-            {{-- PAINÉIS DO TÉCNICO --}}
-            @if(isset($user) && $user && $user->isTechnician())
-            
+            {{-- Painéis Operacionais do Técnico --}}
+            @if($currentUser && method_exists($currentUser, 'isTechnician') && $currentUser->isTechnician())
             <div id="techClaimCard" class="hidden rounded-2xl border border-primary/30 bg-[var(--surface)] p-4 shadow-sm space-y-3">
                 <div class="flex items-center justify-between border-b border-[var(--border)] pb-2">
                     <span class="text-[9px] font-bold uppercase tracking-widest text-primary bg-primary/10 px-2 py-0.5 rounded-lg">{{ __('Operacional') }}</span>
@@ -185,7 +188,7 @@ window.requireAuthOnLoad = true;
                 <div>
                     <h3 class="text-xs font-bold text-[var(--text)]">{{ __('Assumir Ocorrência') }}</h3>
                     <p class="text-[11px] text-[var(--text-soft)] mt-0.5 leading-tight">
-                        {{ __('Este ticket encontra-se livre. Caso tenha disponibilidade na sua agenda, assuma a reparação.') }}
+                        {{ __('Este ticket não tem técnico atribuído. Registe a ocorrência na sua lista de intervenções.') }}
                     </p>
                 </div>
                 <button type="button" id="btnClaimTicket" onclick="claimTicket()" class="w-full inline-flex items-center justify-center rounded-xl py-2.5 text-xs font-black uppercase tracking-wider bg-primary text-white hover:opacity-90 shadow-md shadow-orange-500/20 transition cursor-pointer">
@@ -195,10 +198,10 @@ window.requireAuthOnLoad = true;
 
             <div id="techBudgetCard" class="hidden rounded-2xl border border-orange-500/30 bg-[var(--surface)] p-4 shadow-sm space-y-3">
                 <div class="flex items-center justify-between border-b border-[var(--border)] pb-2">
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)]">1. Avaliação Orçamental Detalhada</h3>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)]">{{ __('1. Avaliação Orçamental') }}</h3>
                 </div>
                 <p class="text-[11px] text-[var(--text-soft)] leading-tight">
-                    {{ __('Introduza o orçamento estimado. Se o total exceder 100€, o ticket aguardará autorização da Administração.') }}
+                    {{ __('Custos superiores a 100€ requerem aprovação prévia da Administração.') }}
                 </p>
 
                 <form id="budgetForm" onsubmit="submitBudget(event)" class="space-y-3 pt-1">
@@ -218,7 +221,7 @@ window.requireAuthOnLoad = true;
                     <input type="hidden" id="estimatedBudgetInput" name="estimatedBudget">
 
                     <button type="submit" class="w-full py-2.5 px-3 bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold rounded-xl shadow-sm transition cursor-pointer">
-                        {{ __('Submeter Orçamento Detalhado') }}
+                        {{ __('Submeter Orçamento') }}
                     </button>
                 </form>
 
@@ -233,7 +236,7 @@ window.requireAuthOnLoad = true;
                 <div class="w-8 h-8 rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center mx-auto text-sm font-bold">⏳</div>
                 <h3 class="text-xs font-bold text-[var(--text)]">{{ __('Aguardar Validação Orçamental') }}</h3>
                 <p class="text-[11px] text-[var(--text-soft)] leading-tight">
-                    {{ __('O orçamento excede 100.00€. O ticket aguarda aprovação da Administração.') }}
+                    {{ __('Orçamento acima de 100.00€. A aguardar validação da gestão.') }}
                 </p>
             </div>
 
@@ -243,7 +246,7 @@ window.requireAuthOnLoad = true;
                     <span class="text-xs font-bold text-emerald-400">{{ __('Autorizado') }}</span>
                 </div>
                 <p class="text-[11px] text-[var(--text-soft)] leading-tight">
-                    {{ __('Intervenção autorizada. Conclua os trabalhos e registe os dados finais.') }}
+                    {{ __('Trabalhos autorizados. Proceda à intervenção e registe o desfecho.') }}
                 </p>
                 
                 <div class="space-y-2.5 pt-1">
@@ -253,7 +256,7 @@ window.requireAuthOnLoad = true;
                     </div>
                     <div>
                         <label class="block text-[9px] font-bold uppercase tracking-wider text-[var(--text-soft)] mb-1">{{ __('Relatório Técnico') }}</label>
-                        <textarea id="techFinalReport" rows="2" placeholder="{{ __('Descrição da reparação efetuada...') }}" class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-1.5 text-xs text-[var(--text)] resize-none"></textarea>
+                        <textarea id="techFinalReport" rows="2" placeholder="{{ __('Descrição do serviço executado...') }}" class="w-full rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-1.5 text-xs text-[var(--text)] resize-none"></textarea>
                     </div>
                     <button type="button" id="btnFinishTicket" onclick="finishTicket()" class="w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition cursor-pointer">
                         {{ __('Finalizar e Fechar Ticket') }}
@@ -278,7 +281,7 @@ window.requireAuthOnLoad = true;
     <div id="ticketMessage" class="min-h-5 text-xs font-medium px-1"></div>
 </div>
 
-{{-- Modal para Visualizar Imagem Ampliada --}}
+{{-- Modal de Visualização de Imagens --}}
 <div id="imagePreviewModal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4" onclick="this.classList.add('hidden')">
     <div class="relative max-w-4xl max-h-[90vh] flex flex-col items-center">
         <img id="previewModalImg" src="" alt="Imagem ampliada" class="max-w-full max-h-[85vh] rounded-2xl shadow-2xl object-contain">
@@ -289,8 +292,8 @@ window.requireAuthOnLoad = true;
 
 @push('scripts')
 <script>
-const ticketId = {{ json_encode($ticketId ?? $ticket->id ?? null) }};
-const currentUserId = {{ json_encode($user->id ?? null) }};
+const ticketId = {{ json_encode($ticketId ?? (isset($ticket) ? $ticket->id : null)) }};
+const currentUserId = {{ json_encode(auth()->id() ?? null) }};
 
 const priorityBadges = {
     baixa:   '<span class="inline-block px-2 py-0.5 rounded-lg text-[10px] font-black bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 uppercase">Baixa</span>',
@@ -304,7 +307,7 @@ function showMessage(msg, isError = false) {
     if (!el) return;
     el.innerText = msg;
     el.className = `min-h-5 text-xs font-medium px-1 ${isError ? 'text-rose-400' : 'text-emerald-400'}`;
-    setTimeout(() => { el.innerText = ''; }, 5000);
+    setTimeout(() => { if (el) el.innerText = ''; }, 5000);
 }
 
 function authHeader() {
@@ -321,7 +324,9 @@ function authHeader() {
 
 function updatePhotoName(input) {
     const label = document.getElementById('photoFileName');
-    label.textContent = input.files && input.files[0] ? input.files[0].name : "{{ __('Nenhum ficheiro') }}";
+    if (label) {
+        label.textContent = input.files && input.files[0] ? input.files[0].name : "{{ __('Nenhum ficheiro') }}";
+    }
 }
 
 function openImageModal(url) {
@@ -340,7 +345,6 @@ function renderPhotos(ticket) {
 
     const photos = [];
 
-    // 1. Fotos do relacionamento attachments
     if (ticket.attachments && Array.isArray(ticket.attachments)) {
         ticket.attachments.forEach(att => {
             if (att.path) {
@@ -350,7 +354,6 @@ function renderPhotos(ticket) {
         });
     }
 
-    // 2. Foto direta do campo photo_path ou image_path se não duplicada
     const directPath = ticket.photo_path || ticket.image_path;
     if (directPath) {
         const directUrl = directPath.startsWith('http') ? directPath : `/storage/${directPath}`;
@@ -381,14 +384,13 @@ function renderPhotos(ticket) {
 async function uploadPhoto(e) {
     e.preventDefault();
     const input = document.getElementById('photoInput');
-    if (!input.files || !input.files[0]) {
+    if (!input || !input.files || !input.files[0]) {
         showMessage("{{ __('Selecione um ficheiro de imagem primeiro.') }}", true);
         return;
     }
 
     const btn = document.getElementById('btnUploadPhoto');
-    btn.disabled = true;
-    btn.innerText = "{{ __('A carregar...') }}";
+    if (btn) { btn.disabled = true; btn.innerText = "{{ __('A carregar...') }}"; }
 
     const formData = new FormData();
     formData.append('photo', input.files[0]);
@@ -416,8 +418,7 @@ async function uploadPhoto(e) {
     } catch (err) {
         showMessage("{{ __('Erro na comunicação com o servidor.') }}", true);
     } finally {
-        btn.disabled = false;
-        btn.innerText = "{{ __('Enviar') }}";
+        if (btn) { btn.disabled = false; btn.innerText = "{{ __('Enviar') }}"; }
     }
 }
 
@@ -463,22 +464,22 @@ function calculateBudgetTotal() {
     let total = 0;
     const rows = container.querySelectorAll('div[id^="budget_row_"]');
     rows.forEach(row => {
-        const qtyVal = row.querySelector('input[name="quantity"]')?.value;
-        const priceVal = row.querySelector('input[name="unit_price"]')?.value;
-        const qty = parseFloat(qtyVal) || 0;
-        const price = parseFloat(priceVal) || 0;
+        const qty = parseFloat(row.querySelector('input[name="quantity"]')?.value) || 0;
+        const price = parseFloat(row.querySelector('input[name="unit_price"]')?.value) || 0;
         total += (qty * price);
     });
 
     const formatted = total.toFixed(2);
-    document.getElementById('calculatedBudgetTotal').innerText = formatted + ' €';
-    document.getElementById('estimatedBudgetInput').value = formatted;
+    const labelTotal = document.getElementById('calculatedBudgetTotal');
+    const inputTotal = document.getElementById('estimatedBudgetInput');
+    if (labelTotal) labelTotal.innerText = formatted + ' €';
+    if (inputTotal) inputTotal.value = formatted;
 }
 
 async function submitBudget(e) {
     e.preventDefault();
     const container = document.getElementById('budgetItemsContainer');
-    const rows = container.querySelectorAll('div[id^="budget_row_"]');
+    const rows = container ? container.querySelectorAll('div[id^="budget_row_"]') : [];
     
     if (rows.length === 0) {
         showMessage("{{ __('Adicione pelo menos um item ao orçamento.') }}", true);
@@ -487,21 +488,16 @@ async function submitBudget(e) {
 
     const budget_details = [];
     rows.forEach(row => {
-        const desc = row.querySelector('input[name="description"]')?.value || 'Item de reparação';
-        const qty = parseFloat(row.querySelector('input[name="quantity"]')?.value) || 1;
-        const price = parseFloat(row.querySelector('input[name="unit_price"]')?.value) || 0;
-        const type = row.querySelector('select[name="type"]')?.value || 'labor';
-
         budget_details.push({
-            type: type,
-            description: desc,
-            quantity: qty,
-            unit_price: price
+            type: row.querySelector('select[name="type"]')?.value || 'labor',
+            description: row.querySelector('input[name="description"]')?.value || 'Item de intervenção',
+            quantity: parseFloat(row.querySelector('input[name="quantity"]')?.value) || 1,
+            unit_price: parseFloat(row.querySelector('input[name="unit_price"]')?.value) || 0
         });
     });
 
     calculateBudgetTotal();
-    const estimatedBudget = parseFloat(document.getElementById('estimatedBudgetInput').value) || 0;
+    const estimatedBudget = parseFloat(document.getElementById('estimatedBudgetInput')?.value) || 0;
 
     if (estimatedBudget <= 0) {
         showMessage("{{ __('O valor total deve ser superior a 0.00€.') }}", true);
@@ -516,7 +512,6 @@ async function submitBudget(e) {
         });
 
         const data = await res.json();
-
         if (res.ok) {
             showMessage(data.message || "{{ __('Orçamento submetido com sucesso!') }}");
             await fetchTicket();
@@ -550,8 +545,8 @@ async function decideBudget(decision) {
 }
 
 async function finishTicket() {
-    const cost = parseFloat(document.getElementById('techTotalCost').value || 0);
-    const report = document.getElementById('techFinalReport').value.trim();
+    const cost = parseFloat(document.getElementById('techTotalCost')?.value || 0);
+    const report = (document.getElementById('techFinalReport')?.value || '').trim();
 
     try {
         const res = await fetch(`/tickets/${ticketId}/close`, {
@@ -564,7 +559,7 @@ async function finishTicket() {
             showMessage("{{ __('Ticket concluído e fechado com sucesso!') }}");
             await fetchTicket();
         } else {
-            const err = await res.json();
+            const err = await res.json().catch(() => ({}));
             showMessage(err.message || "{{ __('Erro ao fechar o ticket.') }}", true);
         }
     } catch (e) {
@@ -581,94 +576,99 @@ async function loadTechnicians() {
             const data = await res.json();
             const users = data.users?.data || data.users || data || [];
             const techs = users.filter(u => u.profile?.name === 'technician' || u.role === 'technician' || true);
-            select.innerHTML = `<option value="">${"{{ __('Ex: 12 (Selecione...)') }}"}</option>` +
+            select.innerHTML = `<option value="">{{ __('Selecione um técnico...') }}</option>` +
                 techs.map(t => `<option value="${t.id}">${t.name} (ID #${t.id})</option>`).join('');
         }
     } catch (e) {
-        select.innerHTML = `<option value="">Emanuel Silva (#12)</option>`;
+        select.innerHTML = `<option value="">{{ __('Falha ao carregar técnicos') }}</option>`;
     }
 }
 
 async function fetchTicket() {
     if (!ticketId) return;
 
-    const res = await fetch('/tickets/' + ticketId, { headers: authHeader() });
-    if (!res.ok) return;
+    try {
+        const res = await fetch('/tickets/' + ticketId, { headers: authHeader() });
+        if (!res.ok) return;
 
-    const data = await res.json();
-    const ticket = data.ticket || data;
+        const data = await res.json();
+        const ticket = data.ticket || data;
 
-    // 1. Dados gerais
-    document.getElementById('pageMainTitle').innerText = `Detalhes do Ticket #${ticket.id}`;
-    document.getElementById('ticketCreatedAt').innerText = `CRIADO A: ${ticket.created_at || '—'}`;
-    document.getElementById('ticketTitleText').innerText = ticket.title || '—';
-    document.getElementById('ticketDescriptionText').innerText = ticket.description || '—';
+        document.getElementById('pageMainTitle').innerText = `Detalhes do Ticket #${ticket.id}`;
+        document.getElementById('ticketCreatedAt').innerText = `CRIADO A: ${ticket.created_at || '—'}`;
+        document.getElementById('ticketTitleText').innerText = ticket.title || '—';
+        document.getElementById('ticketDescriptionText').innerText = ticket.description || '—';
 
-    document.getElementById('ticketPriorityBadge').innerHTML = priorityBadges[ticket.priority] || priorityBadges['média'];
-    document.getElementById('ticketEquipmentText').innerText = ticket.equipment ? ticket.equipment.name : '—';
-    document.getElementById('ticketRoomText').innerText = ticket.room ? ticket.room.name : '—';
-    document.getElementById('ticketSpecialtyText').innerText = ticket.specialty || ticket.equipment?.specialty || 'Mecânica';
+        const pBadge = priorityBadges[ticket.priority] || priorityBadges['média'];
+        document.getElementById('ticketPriorityBadge').innerHTML = pBadge;
+        document.getElementById('ticketEquipmentText').innerText = ticket.equipment ? ticket.equipment.name : '—';
+        document.getElementById('ticketRoomText').innerText = ticket.room ? ticket.room.name : '—';
+        document.getElementById('ticketSpecialtyText').innerText = ticket.specialty || ticket.equipment?.specialty || 'Mecânica';
 
-    const statusName = typeof ticket.status === 'object' ? ticket.status?.name : (ticket.status || 'Aberto');
-    document.getElementById('ticketStatusBadgeContainer').innerHTML = `
-        <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-black bg-amber-500/10 text-amber-500 border border-amber-500/20 uppercase tracking-wider">
-            ${statusName}
-        </span>
-    `;
+        const statusName = typeof ticket.status === 'object' ? ticket.status?.name : (ticket.status || 'Aberto');
+        document.getElementById('ticketStatusBadgeContainer').innerHTML = `
+            <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-black bg-amber-500/10 text-amber-500 border border-amber-500/20 uppercase tracking-wider">
+                ${statusName}
+            </span>
+        `;
 
-    // 2. Renderizar fotografias e evidências
-    renderPhotos(ticket);
+        renderPhotos(ticket);
 
-    // 3. Controlador do Fluxo Técnico
-    const assignedTechId = ticket.assigned_to || (ticket.technician ? ticket.technician.id : null);
-    
-    const techClaimCard = document.getElementById('techClaimCard');
-    const techReadOnlyCard = document.getElementById('techReadOnlyCard');
-    const techBudgetCard = document.getElementById('techBudgetCard');
-    const techPendingApprovalCard = document.getElementById('techPendingApprovalCard');
-    const techWorkCard = document.getElementById('techWorkCard');
+        const assignedTechId = ticket.assigned_to || (ticket.technician ? ticket.technician.id : null);
+        
+        const techClaimCard = document.getElementById('techClaimCard');
+        const techReadOnlyCard = document.getElementById('techReadOnlyCard');
+        const techBudgetCard = document.getElementById('techBudgetCard');
+        const techPendingApprovalCard = document.getElementById('techPendingApprovalCard');
+        const techWorkCard = document.getElementById('techWorkCard');
 
-    if (techClaimCard && techReadOnlyCard && techBudgetCard && techWorkCard && techPendingApprovalCard) {
-        techClaimCard.classList.add('hidden');
-        techReadOnlyCard.classList.add('hidden');
-        techBudgetCard.classList.add('hidden');
-        techPendingApprovalCard.classList.add('hidden');
-        techWorkCard.classList.add('hidden');
+        if (techClaimCard && techReadOnlyCard && techBudgetCard && techWorkCard && techPendingApprovalCard) {
+            techClaimCard.classList.add('hidden');
+            techReadOnlyCard.classList.add('hidden');
+            techBudgetCard.classList.add('hidden');
+            techPendingApprovalCard.classList.add('hidden');
+            techWorkCard.classList.add('hidden');
 
-        if (!assignedTechId) {
-            techClaimCard.classList.remove('hidden');
-        } else if (currentUserId && parseInt(assignedTechId) !== parseInt(currentUserId)) {
-            document.getElementById('assignedTechName').innerText = ticket.technician ? `${ticket.technician.name} (#${ticket.technician.id})` : '—';
-            techReadOnlyCard.classList.remove('hidden');
-        } else {
-            const statusSlug = (statusName || '').toLowerCase();
-            const budgetStatus = ticket.budget_status;
-            const hasRequestedBudget = ticket.budget_requested === true || ticket.budget_requested === 1;
-
-            if (!hasRequestedBudget && (statusSlug.includes('abert') || statusSlug.includes('curso'))) {
-                techBudgetCard.classList.remove('hidden');
-                const container = document.getElementById('budgetItemsContainer');
-                if (container && container.children.length === 0) {
-                    addBudgetItemRow('Resolução bug sistema', 1, 25, 'labor');
+            if (!assignedTechId) {
+                techClaimCard.classList.remove('hidden');
+            } else if (currentUserId && parseInt(assignedTechId) !== parseInt(currentUserId)) {
+                const techNameSpan = document.getElementById('assignedTechName');
+                if (techNameSpan) {
+                    techNameSpan.innerText = ticket.technician ? `${ticket.technician.name} (#${ticket.technician.id})` : `#${assignedTechId}`;
                 }
-            } else if (statusSlug.includes('pendente') || budgetStatus === 'pending') {
-                techPendingApprovalCard.classList.remove('hidden');
+                techReadOnlyCard.classList.remove('hidden');
             } else {
-                techWorkCard.classList.remove('hidden');
+                const statusSlug = (statusName || '').toLowerCase();
+                const budgetStatus = ticket.budget_status;
+                const hasRequestedBudget = ticket.budget_requested === true || ticket.budget_requested === 1;
+
+                if (!hasRequestedBudget && (statusSlug.includes('abert') || statusSlug.includes('curso'))) {
+                    techBudgetCard.classList.remove('hidden');
+                    const container = document.getElementById('budgetItemsContainer');
+                    if (container && container.children.length === 0) {
+                        addBudgetItemRow('Intervenção técnica padrão', 1, 30, 'labor');
+                    }
+                } else if (statusSlug.includes('pendente') || budgetStatus === 'pending') {
+                    techPendingApprovalCard.classList.remove('hidden');
+                } else {
+                    techWorkCard.classList.remove('hidden');
+                }
             }
         }
-    }
 
-    // 4. Controlador do Painel do Admin
-    const adminBudgetCard = document.getElementById('adminBudgetApprovalCard');
-    if (adminBudgetCard) {
-        const statusSlug = (statusName || '').toLowerCase();
-        if (statusSlug.includes('pendente') || ticket.budget_status === 'pending') {
-            adminBudgetCard.classList.remove('hidden');
-            document.getElementById('pendingBudgetAmount').innerText = (parseFloat(ticket.budget_amount) || 0).toFixed(2) + ' €';
-        } else {
-            adminBudgetCard.classList.add('hidden');
+        const adminBudgetCard = document.getElementById('adminBudgetApprovalCard');
+        if (adminBudgetCard) {
+            const statusSlug = (statusName || '').toLowerCase();
+            if (statusSlug.includes('pendente') || ticket.budget_status === 'pending') {
+                adminBudgetCard.classList.remove('hidden');
+                const pBudget = document.getElementById('pendingBudgetAmount');
+                if (pBudget) pBudget.innerText = (parseFloat(ticket.budget_amount) || 0).toFixed(2) + ' €';
+            } else {
+                adminBudgetCard.classList.add('hidden');
+            }
         }
+    } catch (e) {
+        console.error('Erro ao carregar detalhes do ticket:', e);
     }
 }
 
@@ -713,7 +713,7 @@ async function releaseTicket() {
 
 async function fetchComments() {
     const sec = document.getElementById('commentsSection');
-    if (!sec) return;
+    if (!sec || !ticketId) return;
     try {
         const res = await fetch(`/tickets/${ticketId}/comments`, { headers: authHeader() });
         if (!res.ok) return;
@@ -744,15 +744,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('commentForm')?.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const text = document.getElementById('commentText').value.trim();
+        const textInput = document.getElementById('commentText');
+        const text = textInput ? textInput.value.trim() : '';
         if (!text) return;
+
         const res = await fetch(`/tickets/${ticketId}/comments`, {
             method: 'POST',
             headers: { ...authHeader(), 'Content-Type': 'application/json' },
             body: JSON.stringify({ comment: text })
         });
         if (res.ok) {
-            document.getElementById('commentText').value = '';
+            if (textInput) textInput.value = '';
             fetchComments();
             showMessage("{{ __('Comentário enviado!') }}");
         }
@@ -770,7 +772,7 @@ document.addEventListener('DOMContentLoaded', () => {
             showMessage("{{ __('Técnico atribuído com sucesso!') }}");
             await fetchTicket();
         } else {
-            showMessage("{{ __('Erro ao atribuir.') }}", true);
+            showMessage("{{ __('Erro ao atribuir técnico.') }}", true);
         }
     });
 
