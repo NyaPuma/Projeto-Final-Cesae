@@ -1,29 +1,21 @@
-# SearchPerformance — Testes
+# Search Performance -- Automated Performance Tests
 
-## Descrição da Pasta
-Testes de carga, performance, latência de endpoints, volumetria de queries, mitigação de consultas N+1 e eficiência de memória e cache.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../NON_TECHNICAL_PROJECT_GUIDE.md) -- this is part of "The Quality Assurance Lab." Performance tests check that the system stays fast even as it grows.
 
-### Módulos e Ficheiros de Teste
+## What is this folder?
 
-- **`SearchPerformanceTest`** (`tests/Performance/SearchPerformance/SearchPerformanceTest.php`): Valida os cenários e fluxos correspondentes a SearchPerformanceTest.
+Performance tests for **Search Performance** -- search queries return results quickly. These verify the system's speed and responsiveness.
 
+## What Gets Tested
 
-## Comandos de Execução
+The tests measure response times, resource usage, and throughput to ensure the system remains performant.
 
-Para executar isoladamente todos os testes desta pasta:
+## How to run these tests
 
 ```bash
+# All tests in this folder
 php artisan test tests/Performance/SearchPerformance
-```
 
-Para filtrar por um teste ou método específico:
-
-```bash
-php artisan test tests/Performance/SearchPerformance --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Performance/SearchPerformance --coverage
+# A specific test
+php artisan test tests/Performance/SearchPerformance --filter=TestName
 ```

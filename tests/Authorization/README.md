@@ -1,29 +1,38 @@
-# Authorization — Testes
+# Authorization -- Automated Authorization Tests (RBAC)
 
-## Descrição da Pasta
-Testes de políticas de controlo de acesso baseado em papéis (RBAC - Admin, Técnico, Utilizador) em interfaces e APIs.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../NON_TECHNICAL_PROJECT_GUIDE.md) -- this folder is part of "The Quality Assurance Lab." RBAC (Role-Based Access Control) means "permissions are based on your job role."
 
-### Módulos e Ficheiros de Teste
+## What is this folder?
 
-- **`UiAuthorizationTest`** (`tests/Authorization/UiAuthorizationTest.php`): Valida os cenários e fluxos correspondentes a UiAuthorizationTest.
+These tests verify the **role-based access control** system -- the rules that determine which person is allowed to do which things.
 
+## The Three Roles
 
-## Comandos de Execução
+| Role | What They Can Do |
+|------|------------------|
+| **Admin** | Everything -- full control of the system |
+| **Technician** | View and work on tickets, manage stock, view equipment |
+| **Operator** | Report faults, view their own tickets, manage own profile |
 
-Para executar isoladamente todos os testes desta pasta:
+## What Gets Tested
+
+| Test | What It Verifies |
+|------|------------------|
+| `UiAuthorizationTest` | The web interface (pages) enforces role rules -- an Operator cannot access the Admin panel; unauthenticated users are redirected to login |
+
+## Example Rules Verified
+
+- An Operator cannot open the "User Management" page
+- A Technician cannot create a new user
+- An Admin can access everything
+- Users cannot see other users' private data
+
+## How to run these tests
 
 ```bash
+# All authorization tests
 php artisan test tests/Authorization
-```
 
-Para filtrar por um teste ou método específico:
-
-```bash
-php artisan test tests/Authorization --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Authorization --coverage
+# A single test
+php artisan test tests/Authorization --filter=UiAuthorizationTest
 ```

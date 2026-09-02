@@ -1,5 +1,7 @@
 # resources/css/components
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Component-level CSS styles. Each file targets a specific UI component or group of related components.
 
 ## Files

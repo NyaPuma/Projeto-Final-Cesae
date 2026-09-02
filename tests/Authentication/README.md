@@ -1,33 +1,34 @@
-# Authentication — Testes
+# Authentication -- Automated Authentication Tests
 
-## Descrição da Pasta
-Testes do ciclo de vida de autenticação, login, logout, recuperação de palavra-passe e validação de tokens de utilizador.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../NON_TECHNICAL_PROJECT_GUIDE.md) -- this folder is part of "The Quality Assurance Lab" that tests the login, logout, and password-recovery workflows.
 
-### Módulos e Ficheiros de Teste
+## What is this folder?
 
-- **`AuthEdgeCasesTest`** (`tests/Authentication/AuthEdgeCasesTest.php`): Valida os cenários e fluxos correspondentes a AuthEdgeCasesTest.
-- **`AuthenticationTest`** (`tests/Authentication/AuthenticationTest.php`): Valida os cenários e fluxos correspondentes a AuthenticationTest.
-- **`AuthFlowTest`** (`tests/Authentication/AuthFlowTest.php`): Valida os cenários e fluxos correspondentes a AuthFlowTest.
-- **`LoginFlowTest`** (`tests/Authentication/LoginFlowTest.php`): Valida os cenários e fluxos correspondentes a LoginFlowTest.
-- **`PasswordResetFlowTest`** (`tests/Authentication/PasswordResetFlowTest.php`): Valida os cenários e fluxos correspondentes a PasswordResetFlowTest.
+These tests verify the **entire authentication lifecycle** -- everything related to proving who a user is before they can access the system.
 
+## What Gets Tested
 
-## Comandos de Execução
+| Test | What It Verifies |
+|------|------------------|
+| `AuthenticationTest` | Basic authentication works (login succeeds with correct credentials) |
+| `LoginFlowTest` | The full login flow works (form → validation → credentials check → session created) |
+| `AuthFlowTest` | The complete authentication workflow (login, access protected pages, logout) |
+| `AuthEdgeCasesTest` | Edge cases: wrong password, locked accounts, expired sessions, missing fields |
+| `PasswordResetFlowTest` | The "forgot password" flow (request reset → receive email → set new password) |
 
-Para executar isoladamente todos os testes desta pasta:
+## Important Security Rules Being Tested
+
+- **Account lockout**: After 5 failed login attempts, the account locks for 15 minutes
+- **Password rules**: New passwords must meet strength requirements
+- **Session security**: Sessions expire and are protected
+- **Reset links**: Reset links expire after a timeout and can only be used once
+
+## How to run these tests
 
 ```bash
+# All authentication tests
 php artisan test tests/Authentication
-```
 
-Para filtrar por um teste ou método específico:
-
-```bash
-php artisan test tests/Authentication --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Authentication --coverage
+# A single test
+php artisan test tests/Authentication --filter=PasswordResetFlowTest
 ```

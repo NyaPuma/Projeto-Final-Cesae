@@ -1,5 +1,7 @@
 # resources/views/components/ui/partials
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Reusable partial components used as building blocks within larger page layouts.
 
 ## Files

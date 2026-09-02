@@ -1,35 +1,31 @@
-# Integration — Testes
+# Integration -- Automated Integration Tests
 
-## Descrição da Pasta
-Testes de integração entre subsistemas: broadcasting em tempo real, filas assíncronas (queues), base de dados e envio de e-mails via Mailables.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../NON_TECHNICAL_PROJECT_GUIDE.md) -- this folder is explained as part of "The Quality Assurance Lab." Integration tests verify different parts of the system work together correctly -- like testing that the kitchen, cash register, and delivery service all coordinate properly.
 
-### Módulos e Ficheiros de Teste
+## What is this folder?
 
-- **`BroadcastAndQueueTest`** (`tests/Integration/Broadcasting/BroadcastAndQueueTest.php`): Valida os cenários e fluxos correspondentes a BroadcastAndQueueTest.
-- **`ForeignKeyIntegrityTest`** (`tests/Integration/Database/ForeignKeyIntegrityTest.php`): Valida os cenários e fluxos correspondentes a ForeignKeyIntegrityTest.
-- **`MassAssignmentProtectionTest`** (`tests/Integration/Database/MassAssignmentProtectionTest.php`): Valida os cenários e fluxos correspondentes a MassAssignmentProtectionTest.
-- **`ModelLifecycleTest`** (`tests/Integration/Database/ModelLifecycleTest.php`): Valida os cenários e fluxos correspondentes a ModelLifecycleTest.
-- **`RelationshipIntegrityTest`** (`tests/Integration/Database/RelationshipIntegrityTest.php`): Valida os cenários e fluxos correspondentes a RelationshipIntegrityTest.
-- **`SoftDeleteTest`** (`tests/Integration/Database/SoftDeleteTest.php`): Valida os cenários e fluxos correspondentes a SoftDeleteTest.
-- **`MailgunTestEmailTest`** (`tests/Integration/Mail/MailgunTestEmailTest.php`): Valida os cenários e fluxos correspondentes a MailgunTestEmailTest.
+These tests verify that **different subsystems cooperate correctly**. While unit tests check parts in isolation, integration tests connect the parts and confirm they work as a whole.
 
+## What Gets Tested
 
-## Comandos de Execução
+| Area | What It Verifies |
+|------|------------------|
+| **Broadcasting** | Real-time WebSocket notifications fire correctly when events happen (a ticket status change is broadcast to the right channels) |
+| **Queues** | Background jobs are queued and processed correctly (exports, emails, notifications) |
+| **Database** | Foreign key integrity (you can't delete a room that still has equipment in it), soft deletes, model lifecycles, mass assignment protection, relationship correctness |
+| **Mail** | Email delivery works correctly (test email via Mailgun) |
 
-Para executar isoladamente todos os testes desta pasta:
+## How to run these tests
 
 ```bash
+# All integration tests
 php artisan test tests/Integration
-```
 
-Para filtrar por um teste ou método específico:
+# A specific area
+php artisan test tests/Integration/Database
+php artisan test tests/Integration/Broadcasting
+php artisan test tests/Integration/Mail
 
-```bash
-php artisan test tests/Integration --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Integration --coverage
+# A single test
+php artisan test tests/Integration --filter=SoftDeleteTest
 ```

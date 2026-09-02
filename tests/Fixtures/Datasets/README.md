@@ -1,29 +1,13 @@
-# Datasets — Testes
+# Datasets -- Test Support Tools
 
-## Descrição da Pasta
-Fixtures, Data Builders, Fakes e Helpers utilitários para suporte à execução dos testes automatizados.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../NON_TECHNICAL_PROJECT_GUIDE.md) -- these are "The Props and Scripts" used during testing.
 
-### Conteúdo da Pasta
+## What is this folder?
 
-- Utilitários, configurações base e recursos de suporte para a suite de testes.
+**Datasets** -- provides reference data used by tests (all possible priority levels, statuses, roles).
 
+These are support tools, not standalone tests -- they help other test files do their job quickly and cleanly.
 
-## Comandos de Execução
+## How to use these
 
-Para executar isoladamente todos os testes desta pasta:
-
-```bash
-php artisan test tests/Fixtures/Datasets
-```
-
-Para filtrar por um teste ou método específico:
-
-```bash
-php artisan test tests/Fixtures/Datasets --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Fixtures/Datasets --coverage
-```
+Import them in your test file to speed up test setup.

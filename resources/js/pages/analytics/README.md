@@ -1,5 +1,7 @@
 # resources/js/pages/analytics
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Analytics dashboard page.
 
 | File | Purpose |

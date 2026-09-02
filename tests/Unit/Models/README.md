@@ -1,44 +1,24 @@
-# Models — Testes
+# Models -- Automated Unit Tests
 
-## Descrição da Pasta
-Testes unitários isolados para validação atómica de componentes, classes de domínio, Actions, DTOs, Enums, Models, Services e Jobs sem dependências externas.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../NON_TECHNICAL_PROJECT_GUIDE.md) -- this is part of "The Quality Assurance Lab." Unit tests check individual pieces of code in isolation.
 
-### Módulos e Ficheiros de Teste
+## What is this folder?
 
-- **`AuditTest`** (`tests/Unit/Models/AuditTest.php`): Valida os cenários e fluxos correspondentes a AuditTest.
-- **`CategoryTest`** (`tests/Unit/Models/CategoryTest.php`): Valida os cenários e fluxos correspondentes a CategoryTest.
-- **`EquipmentCategoryTest`** (`tests/Unit/Models/EquipmentCategoryTest.php`): Valida os cenários e fluxos correspondentes a EquipmentCategoryTest.
-- **`EquipmentTest`** (`tests/Unit/Models/EquipmentTest.php`): Valida os cenários e fluxos correspondentes a EquipmentTest.
-- **`ModelAccessorsTest`** (`tests/Unit/Models/ModelAccessorsTest.php`): Valida os cenários e fluxos correspondentes a ModelAccessorsTest.
-- **`NotificationModelTest`** (`tests/Unit/Models/NotificationModelTest.php`): Valida os cenários e fluxos correspondentes a NotificationModelTest.
-- **`RoomTest`** (`tests/Unit/Models/RoomTest.php`): Valida os cenários e fluxos correspondentes a RoomTest.
-- **`TicketAttachmentTest`** (`tests/Unit/Models/TicketAttachmentTest.php`): Valida os cenários e fluxos correspondentes a TicketAttachmentTest.
-- **`TicketAttributesTest`** (`tests/Unit/Models/TicketAttributesTest.php`): Valida os cenários e fluxos correspondentes a TicketAttributesTest.
-- **`TicketCommentTest`** (`tests/Unit/Models/TicketCommentTest.php`): Valida os cenários e fluxos correspondentes a TicketCommentTest.
-- **`TicketStatusTest`** (`tests/Unit/Models/TicketStatusTest.php`): Valida os cenários e fluxos correspondentes a TicketStatusTest.
-- **`TicketTypeTest`** (`tests/Unit/Models/TicketTypeTest.php`): Valida os cenários e fluxos correspondentes a TicketTypeTest.
-- **`TicketWorkflowHistoryTest`** (`tests/Unit/Models/TicketWorkflowHistoryTest.php`): Valida os cenários e fluxos correspondentes a TicketWorkflowHistoryTest.
-- **`TicketWorkflowTest`** (`tests/Unit/Models/TicketWorkflowTest.php`): Valida os cenários e fluxos correspondentes a TicketWorkflowTest.
-- **`UserProfileTest`** (`tests/Unit/Models/UserProfileTest.php`): Valida os cenários e fluxos correspondentes a UserProfileTest.
-- **`UserTest`** (`tests/Unit/Models/UserTest.php`): Valida os cenários e fluxos correspondentes a UserTest.
+Unit tests for **Models** -- the 'blueprints' for database records (User, Ticket, Equipment). These tests check each piece on its own (without the database or other parts of the system) to make sure it works correctly.
 
+## What Gets Tested
 
-## Comandos de Execução
+Each test file in this folder verifies that its corresponding class behaves correctly:
+- Valid inputs produce correct outputs
+- Invalid inputs are handled gracefully (or rejected)
+- Relationships, formatting, and business rules within the class are correct
 
-Para executar isoladamente todos os testes desta pasta:
+## How to run these tests
 
 ```bash
+# All unit tests in this folder
 php artisan test tests/Unit/Models
-```
 
-Para filtrar por um teste ou método específico:
-
-```bash
-php artisan test tests/Unit/Models --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Unit/Models --coverage
+# A single test
+php artisan test tests/Unit/Models --filter=TestName
 ```

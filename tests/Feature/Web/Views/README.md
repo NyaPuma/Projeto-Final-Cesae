@@ -1,32 +1,22 @@
-# Views — Testes
+# Views -- View / Template Tests
 
-## Descrição da Pasta
-Testes funcionais e de integração de ponta a ponta (Feature/API/Web) cobrindo ciclo de vida de requisições HTTP, autenticação, autorização, validação de formulários e respostas JSON/Blade.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../../NON_TECHNICAL_PROJECT_GUIDE.md) -- this is part of "The Quality Assurance Lab."
 
-### Módulos e Ficheiros de Teste
+Tests for the **Blade view templates** -- the HTML templates that render what users see. These verify the templates render without errors and show the correct content.
 
-- **`AssetPipelineTest`** (`tests/Feature/Web/Views/AssetPipelineTest.php`): Valida os cenários e fluxos correspondentes a AssetPipelineTest.
-- **`DesignSystemComponentsTest`** (`tests/Feature/Web/Views/DesignSystemComponentsTest.php`): Valida os cenários e fluxos correspondentes a DesignSystemComponentsTest.
-- **`DesignSystemViewsTest`** (`tests/Feature/Web/Views/DesignSystemViewsTest.php`): Valida os cenários e fluxos correspondentes a DesignSystemViewsTest.
-- **`UiUsabilityTest`** (`tests/Feature/Web/Views/UiUsabilityTest.php`): Valida os cenários e fluxos correspondentes a UiUsabilityTest.
+| Test | What It Verifies |
+|------|------------------|
+| `AssetPipelineTest` | CSS/JS/Vite assets load correctly on pages |
+| `DesignSystemComponentsTest` | Reusable UI components render correctly |
+| `DesignSystemViewsTest` | Layout/template files render correctly |
+| `UiUsabilityTest` | UI elements are usable and correctly implemented |
 
-
-## Comandos de Execução
-
-Para executar isoladamente todos os testes desta pasta:
+## How to run these tests
 
 ```bash
+# All tests in this folder
 php artisan test tests/Feature/Web/Views
-```
 
-Para filtrar por um teste ou método específico:
-
-```bash
-php artisan test tests/Feature/Web/Views --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Feature/Web/Views --coverage
+# A single test
+php artisan test tests/Feature/Web/Views --filter=TestName
 ```

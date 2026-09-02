@@ -1,5 +1,7 @@
 # resources/views/emails
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 HTML email templates for transactional and notification emails.
 
 ## Files

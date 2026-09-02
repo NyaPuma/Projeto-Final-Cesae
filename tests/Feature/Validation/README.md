@@ -1,29 +1,19 @@
-# Validation — Testes
+# Validation -- Automated Validation Tests
 
-## Descrição da Pasta
-Testes funcionais e de integração de ponta a ponta (Feature/API/Web) cobrindo ciclo de vida de requisições HTTP, autenticação, autorização, validação de formulários e respostas JSON/Blade.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../NON_TECHNICAL_PROJECT_GUIDE.md) -- this is part of "The Quality Assurance Lab."
 
-### Módulos e Ficheiros de Teste
+Tests for **form/input validation** -- the rules that reject bad or malicious input.
 
-- **`ValidationEdgeCaseTest`** (`tests/Feature/Validation/ValidationEdgeCaseTest.php`): Valida os cenários e fluxos correspondentes a ValidationEdgeCaseTest.
+| Test | What It Verifies |
+|------|------------------|
+| `.*ValidationTest` | Valid input is accepted; invalid input is rejected with clear error messages |
 
-
-## Comandos de Execução
-
-Para executar isoladamente todos os testes desta pasta:
+## How to run these tests
 
 ```bash
+# All tests in this folder
 php artisan test tests/Feature/Validation
-```
 
-Para filtrar por um teste ou método específico:
-
-```bash
-php artisan test tests/Feature/Validation --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Feature/Validation --coverage
+# A single test
+php artisan test tests/Feature/Validation --filter=TestName
 ```

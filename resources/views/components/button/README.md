@@ -1,5 +1,7 @@
 # resources/views/components/button
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Design-system button component (top-level alias `<x-button.button>`).
 
 ## Files

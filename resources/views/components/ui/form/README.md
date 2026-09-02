@@ -1,5 +1,7 @@
 # resources/views/components/ui/form
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Low-level form field Blade components. These are the building blocks used by all form-based views in the application.
 
 ## Files

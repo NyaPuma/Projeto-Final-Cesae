@@ -1,5 +1,7 @@
 # resources/views/preferences
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 User preference editing views.
 
 ## Files

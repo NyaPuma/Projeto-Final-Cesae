@@ -1,30 +1,24 @@
-# Actions — Testes
+# Actions -- Automated Feature Tests for Action Classes
 
-## Descrição da Pasta
-Testes funcionais e de integração de ponta a ponta (Feature/API/Web) cobrindo ciclo de vida de requisições HTTP, autenticação, autorização, validação de formulários e respostas JSON/Blade.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../NON_TECHNICAL_PROJECT_GUIDE.md) -- this folder is part of "The Quality Assurance Lab."
 
-### Módulos e Ficheiros de Teste
+## What is this folder?
 
-- **`CreateTicketActionTest`** (`tests/Feature/Actions/CreateTicketActionTest.php`): Valida os cenários e fluxos correspondentes a CreateTicketActionTest.
-- **`CreateUserActionTest`** (`tests/Feature/Actions/CreateUserActionTest.php`): Valida os cenários e fluxos correspondentes a CreateUserActionTest.
+Feature-level tests for **Action classes** -- the "Worker Bees" that each do one specific job. These tests verify the actions work correctly when invoked in a full application context (with database, real models, etc.).
 
+## What Gets Tested
 
-## Comandos de Execução
+| Test | What It Verifies |
+|------|------------------|
+| `CreateTicketActionTest` | Creating a ticket works end-to-end (validation, saving, status assignment, auditing, notification triggers) |
+| `CreateUserActionTest` | Creating a user works end-to-end (password hashing, profile assignment, auditing) |
 
-Para executar isoladamente todos os testes desta pasta:
+## How to run these tests
 
 ```bash
+# All feature action tests
 php artisan test tests/Feature/Actions
-```
 
-Para filtrar por um teste ou método específico:
-
-```bash
-php artisan test tests/Feature/Actions --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Feature/Actions --coverage
+# A single test
+php artisan test tests/Feature/Actions --filter=CreateTicketActionTest
 ```

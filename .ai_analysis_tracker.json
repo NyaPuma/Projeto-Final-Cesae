@@ -1,0 +1,242 @@
+{
+  "project_name": "SGM - Sistema Integrado de Gestão de Manutenção (Integrated Maintenance Management System)",
+  "total_files": 0,
+  "processed_files": 15,
+  "status": "completed",
+  "folders": {
+    "app/": {
+      "status": "completed",
+      "analogy_explanation": "The Brain & Control Center — contains all the business logic, decision-making, and coordination code"
+    },
+    "app/Actions/": {
+      "status": "completed",
+      "analogy_explanation": "The Worker Bees — each does exactly one job (create, update, approve) and nothing else"
+    },
+    "app/Concerns/": {
+      "status": "completed",
+      "analogy_explanation": "Shared Toolbelt — reusable behaviors that any worker can pick up and use"
+    },
+    "app/Console/Commands/": {
+      "status": "completed",
+      "analogy_explanation": "The Night Shift Crew — automated tasks that run on schedule without human help"
+    },
+    "app/Domain/": {
+      "status": "completed",
+      "analogy_explanation": "Specialized Departments — business rules organized by what they do (tickets, maintenance, etc.)"
+    },
+    "app/DTOs/": {
+      "status": "completed",
+      "analogy_explanation": "Sealed Envelopes — pre-validated data packages that carry information from one desk to another"
+    },
+    "app/Enums/": {
+      "status": "completed",
+      "analogy_explanation": "The Rulebook — predefined lists of allowed values (roles, statuses, priorities) that keep everyone on the same page"
+    },
+    "app/Events/": {
+      "status": "completed",
+      "analogy_explanation": "The PA System — broadcasts important announcements (status changes) to everyone who needs to know"
+    },
+    "app/Exports/": {
+      "status": "completed",
+      "analogy_explanation": "The Report Printer — generates downloadable spreadsheets from system data"
+    },
+    "app/Http/": {
+      "status": "completed",
+      "analogy_explanation": "The Reception Desk — handles all incoming requests from users and returns responses"
+    },
+    "app/Http/Controllers/": {
+      "status": "completed",
+      "analogy_explanation": "The Front Desk Clerks — each handles a specific type of request and routes it to the right department"
+    },
+    "app/Http/Middleware/": {
+      "status": "completed",
+      "analogy_explanation": "The Security Guards — check credentials, validate requests, and enforce rules before anything gets through"
+    },
+    "app/Http/Requests/": {
+      "status": "completed",
+      "analogy_explanation": "The Application Forms — standardised forms that validate what the user typed before processing"
+    },
+    "app/Http/Resources/": {
+      "status": "completed",
+      "analogy_explanation": "The Translation Desk — converts internal database data into a clean format for the outside world"
+    },
+    "app/Jobs/": {
+      "status": "completed",
+      "analogy_explanation": "The Assembly Line — tasks queued up to be processed in the background when things get busy"
+    },
+    "app/Listeners/": {
+      "status": "completed",
+      "analogy_explanation": "The Follow-Up Team — automatically reacts when something important happens (sends emails, logs changes)"
+    },
+    "app/Mail/": {
+      "status": "completed",
+      "analogy_explanation": "The Post Office — composes and sends email messages"
+    },
+    "app/Models/": {
+      "status": "completed",
+      "analogy_explanation": "The Filing Cabinet — defines what data is stored and how different records relate to each other"
+    },
+    "app/Notifications/": {
+      "status": "completed",
+      "analogy_explanation": "The Alert System — pushes notifications to users via email, browser pop-ups, or the app"
+    },
+    "app/Observers/": {
+      "status": "completed",
+      "analogy_explanation": "The Watchdogs — automatically react when data is created, changed, or deleted"
+    },
+    "app/Policies/": {
+      "status": "completed",
+      "analogy_explanation": "The Access Control List — decides who is allowed to do what (view, edit, delete)"
+    },
+    "app/Providers/": {
+      "status": "completed",
+      "analogy_explanation": "The Wiring Diagram — connects all the pieces together at startup so everything can find each other"
+    },
+    "app/Repositories/": {
+      "status": "completed",
+      "analogy_explanation": "The Librarians — specialists who fetch and store data from the database on behalf of other workers"
+    },
+    "app/Services/": {
+      "status": "completed",
+      "analogy_explanation": "The Department Managers — handle complex business logic that involves multiple steps or decisions"
+    },
+    "app/Traits/": {
+      "status": "completed",
+      "analogy_explanation": "Shared Behaviors — reusable capabilities that can be plugged into any model"
+    },
+    "app/ValueObjects/": {
+      "status": "completed",
+      "analogy_explanation": "Precision Measuring Tools — special values that carry built-in validation (email, money, serial number)"
+    },
+    "bootstrap/": {
+      "status": "completed",
+      "analogy_explanation": "The Power Button — the first code that runs when the system starts up"
+    },
+    "config/": {
+      "status": "completed",
+      "analogy_explanation": "The Settings Panel — all the knobs and switches that control how the system behaves"
+    },
+    "database/": {
+      "status": "completed",
+      "analogy_explanation": "The Blueprint Room — defines the database structure, test data, and startup seed data"
+    },
+    "docs/": {
+      "status": "completed",
+      "analogy_explanation": "The Library — architectural decisions and API documentation for developers"
+    },
+    "infra/": {
+      "status": "completed",
+      "analogy_explanation": "The Server Room — deployment and infrastructure configuration files"
+    },
+    "lang/": {
+      "status": "completed",
+      "analogy_explanation": "The Translation Office — all user-facing text in 50+ languages"
+    },
+    "public/": {
+      "status": "completed",
+      "analogy_explanation": "The Storefront — publicly accessible files (images, CSS, JS) served directly to browsers"
+    },
+    "resources/": {
+      "status": "completed",
+      "analogy_explanation": "The Design Studio — all the visual templates, styles, and client-side scripts"
+    },
+    "resources/css/": {
+      "status": "completed",
+      "analogy_explanation": "The Paint Department — all the colors, spacing, and visual rules for the interface"
+    },
+    "resources/js/": {
+      "status": "completed",
+      "analogy_explanation": "The Interactive Workshop — client-side scripts that make buttons work, forms validate, and pages feel alive"
+    },
+    "resources/views/": {
+      "status": "completed",
+      "analogy_explanation": "The Blueprint Templates — reusable page layouts and visual components"
+    },
+    "routes/": {
+      "status": "completed",
+      "analogy_explanation": "The Switchboard — maps every URL to the right controller that handles it"
+    },
+    "storage/": {
+      "status": "completed",
+      "analogy_explanation": "The Warehouse — where uploaded files, logs, and cached data live"
+    },
+    "tests/": {
+      "status": "completed",
+      "analogy_explanation": "The Quality Assurance Lab — automated tests that verify everything works correctly"
+    },
+    "tests/Security/": {
+      "status": "completed",
+      "analogy_explanation": "The Penetration Testing Team — tries to break into the system to find vulnerabilities"
+    },
+    "tests/Performance/": {
+      "status": "completed",
+      "analogy_explanation": "The Stress Testing Lab — measures how fast and how much the system can handle"
+    },
+    "tools/": {
+      "status": "completed",
+      "analogy_explanation": "The Workshop Toolbox — developer utilities for code quality and refactoring"
+    }
+  },
+  "files": {
+    "README.md": {
+      "status": "completed",
+      "summary": "Root project README with overview, setup instructions, and architecture"
+    },
+    "composer.json": {
+      "status": "completed",
+      "summary": "PHP dependency list and project metadata"
+    },
+    "package.json": {
+      "status": "completed",
+      "summary": "JavaScript dependency list and build scripts"
+    },
+    "artisan": {
+      "status": "completed",
+      "summary": "Laravel command-line tool entry point"
+    },
+    "Dockerfile": {
+      "status": "completed",
+      "summary": "Docker container build instructions"
+    },
+    "docker-compose.yml": {
+      "status": "completed",
+      "summary": "Docker multi-container orchestration"
+    },
+    "compose.yaml": {
+      "status": "completed",
+      "summary": "Docker Compose configuration (alternative format)"
+    },
+    "phpunit.xml": {
+      "status": "completed",
+      "summary": "Test runner configuration"
+    },
+    "phpstan.neon": {
+      "status": "completed",
+      "summary": "Static analysis configuration"
+    },
+    ".env.example": {
+      "status": "completed",
+      "summary": "Example environment variables template"
+    },
+    "vite.config.js": {
+      "status": "completed",
+      "summary": "Frontend build tool configuration"
+    },
+    "ARCHITECTURE.md": {
+      "status": "completed",
+      "summary": "Detailed architecture documentation"
+    },
+    "CONTRIBUTING.md": {
+      "status": "completed",
+      "summary": "Contributor guidelines"
+    },
+    "CODE_OF_CONDUCT.md": {
+      "status": "completed",
+      "summary": "Community behavior standards"
+    },
+    "LICENSE": {
+      "status": "completed",
+      "summary": "MIT license file"
+    }
+  }
+}

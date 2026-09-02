@@ -1,5 +1,7 @@
 # resources/views/components/ui/analytics
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Blade components for the analytics dashboard. Each component is a self-contained, reusable UI building block used by analytics views.
 
 ## Files

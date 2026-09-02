@@ -1,5 +1,7 @@
 # resources/js
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Client-side JavaScript modules for the application frontend.
 
 ## Structure

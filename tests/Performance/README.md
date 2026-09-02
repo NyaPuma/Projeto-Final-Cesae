@@ -1,43 +1,39 @@
-# Performance — Testes
+# Performance -- Automated Performance Tests
 
-## Descrição da Pasta
-Testes de carga, performance, latência de endpoints, volumetria de queries, mitigação de consultas N+1 e eficiência de memória e cache.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../NON_TECHNICAL_PROJECT_GUIDE.md) -- this folder is explained as "The Stress Testing Lab" that measures how fast and how much the system can handle.
 
-### Módulos e Ficheiros de Teste
+## What is this folder?
 
-- **`TicketEndpointPerformanceTest`** (`tests/Performance/APIPerformance/TicketEndpointPerformanceTest.php`): Valida os cenários e fluxos correspondentes a TicketEndpointPerformanceTest.
-- **`AuthPerformanceTest`** (`tests/Performance/Authentication/AuthPerformanceTest.php`): Valida os cenários e fluxos correspondentes a AuthPerformanceTest.
-- **`CachePerformanceTest`** (`tests/Performance/CachePerformance/CachePerformanceTest.php`): Valida os cenários e fluxos correspondentes a CachePerformanceTest.
-- **`DashboardPerformanceTest`** (`tests/Performance/Dashboard/DashboardPerformanceTest.php`): Valida os cenários e fluxos correspondentes a DashboardPerformanceTest.
-- **`DatabasePerformanceTest`** (`tests/Performance/DatabasePerformance/DatabasePerformanceTest.php`): Valida os cenários e fluxos correspondentes a DatabasePerformanceTest.
-- **`LazyLoadingTest`** (`tests/Performance/DatabasePerformance/LazyLoadingTest.php`): Valida os cenários e fluxos correspondentes a LazyLoadingTest.
-- **`NPlusOneQueryTest`** (`tests/Performance/DatabasePerformance/NPlusOneQueryTest.php`): Valida os cenários e fluxos correspondentes a NPlusOneQueryTest.
-- **`PerformanceAndNPlusOneTest`** (`tests/Performance/DatabasePerformance/PerformanceAndNPlusOneTest.php`): Valida os cenários e fluxos correspondentes a PerformanceAndNPlusOneTest.
-- **`QueryCountTest`** (`tests/Performance/DatabasePerformance/QueryCountTest.php`): Valida os cenários e fluxos correspondentes a QueryCountTest.
-- **`MemoryPerformanceTest`** (`tests/Performance/MemoryPerformance/MemoryPerformanceTest.php`): Valida os cenários e fluxos correspondentes a MemoryPerformanceTest.
-- **`MemoryUsageTest`** (`tests/Performance/MemoryPerformance/MemoryUsageTest.php`): Valida os cenários e fluxos correspondentes a MemoryUsageTest.
-- **`ReportPerformanceTest`** (`tests/Performance/ReportsPerformance/ReportPerformanceTest.php`): Valida os cenários e fluxos correspondentes a ReportPerformanceTest.
-- **`ScalabilityPerformanceTest`** (`tests/Performance/ScalabilityPerformance/ScalabilityPerformanceTest.php`): Valida os cenários e fluxos correspondentes a ScalabilityPerformanceTest.
-- **`SearchPerformanceTest`** (`tests/Performance/SearchPerformance/SearchPerformanceTest.php`): Valida os cenários e fluxos correspondentes a SearchPerformanceTest.
-- **`UploadPerformanceTest`** (`tests/Performance/UploadsPerformance/UploadPerformanceTest.php`): Valida os cenários e fluxos correspondentes a UploadPerformanceTest.
+These tests measure **speed** and **efficiency**. They verify the system responds quickly, uses memory wisely, doesn't make unnecessary database queries, and can handle growing amounts of data without slowing down.
 
+## Performance Areas Covered
 
-## Comandos de Execução
+| Folder | What It Measures | Why It Matters |
+|--------|-----------------|----------------|
+| `APIPerformance/` | How fast API endpoints respond | Slow APIs = frustrated users |
+| `DatabasePerformance/` | How many database queries each operation makes | Too many queries = slow pages |
+| `NPlusOneQueryTest` | Detects the "N+1" problem (making 100 queries when 1 would do) | This is the #1 cause of slow Laravel apps |
+| `LazyLoadingTest` | Detects accidental lazy loading (related data fetched late, one-by-one) | Wastes time and database resources |
+| `QueryCountTest` | Verifies operations stay under a query budget | Keeps pages snappy as data grows |
+| `CachePerformance/` | Verifies caching actually speeds things up | Cached data loads instantly vs. recomputing |
+| `MemoryPerformance/` | How much memory the system uses | Memory leaks = crashes after long use |
+| `DashboardPerformance/` | Speed of the analytics dashboard with large datasets | Dashboards must load fast for managers |
+| `SearchPerformance/` | Speed of search and filtering | Users expect instant search results |
+| `ReportsPerformance/` | Speed of generating reports | Large reports must not time out |
+| `ScalabilityPerformance/` | How the system handles growing data volumes | The system must not slow as data grows |
+| `UploadsPerformance/` | Speed of file uploads | Photo/document uploads must complete quickly |
+| `Authentication/` | Speed of login and auth operations | Login should feel instant |
 
-Para executar isoladamente todos os testes desta pasta:
+## How to run these tests
 
 ```bash
+# All performance tests
 php artisan test tests/Performance
-```
 
-Para filtrar por um teste ou método específico:
+# A specific area
+php artisan test tests/Performance/DatabasePerformance
+php artisan test tests/Performance/MemoryPerformance
 
-```bash
-php artisan test tests/Performance --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Performance --coverage
+# A single test
+php artisan test tests/Performance --filter=QueryCountTest
 ```

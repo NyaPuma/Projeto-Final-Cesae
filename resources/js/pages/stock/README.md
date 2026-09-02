@@ -1,5 +1,7 @@
 # resources/js/pages/stock
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Stock management module.
 
 | Directory | Purpose |

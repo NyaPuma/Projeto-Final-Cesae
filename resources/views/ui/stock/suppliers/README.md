@@ -1,5 +1,7 @@
 # resources/views/ui/stock/suppliers
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Supplier CRUD views.
 
 ## Files

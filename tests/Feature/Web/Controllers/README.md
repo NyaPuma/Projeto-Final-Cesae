@@ -1,35 +1,25 @@
-# Controllers — Testes
+# Controllers -- Web Controller Tests
 
-## Descrição da Pasta
-Testes funcionais e de integração de ponta a ponta (Feature/API/Web) cobrindo ciclo de vida de requisições HTTP, autenticação, autorização, validação de formulários e respostas JSON/Blade.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../../NON_TECHNICAL_PROJECT_GUIDE.md) -- this is part of "The Quality Assurance Lab."
 
-### Módulos e Ficheiros de Teste
+Tests for the **web controllers** -- the request handlers that respond to browser page requests. Each test verifies a controller responds correctly to valid and invalid requests.
 
-- **`DashboardRedirectTest`** (`tests/Feature/Web/Controllers/DashboardRedirectTest.php`): Valida os cenários e fluxos correspondentes a DashboardRedirectTest.
-- **`PageControllerTest`** (`tests/Feature/Web/Controllers/PageControllerTest.php`): Valida os cenários e fluxos correspondentes a PageControllerTest.
-- **`PreferencesControllerTest`** (`tests/Feature/Web/Controllers/PreferencesControllerTest.php`): Valida os cenários e fluxos correspondentes a PreferencesControllerTest.
-- **`ProfileControllerTest`** (`tests/Feature/Web/Controllers/ProfileControllerTest.php`): Valida os cenários e fluxos correspondentes a ProfileControllerTest.
-- **`RegisterControllerTest`** (`tests/Feature/Web/Controllers/RegisterControllerTest.php`): Valida os cenários e fluxos correspondentes a RegisterControllerTest.
-- **`RoomControllerTest`** (`tests/Feature/Web/Controllers/RoomControllerTest.php`): Valida os cenários e fluxos correspondentes a RoomControllerTest.
-- **`UiControllerTest`** (`tests/Feature/Web/Controllers/UiControllerTest.php`): Valida os cenários e fluxos correspondentes a UiControllerTest.
+| Test | What It Verifies |
+|------|------------------|
+| `DashboardRedirectTest` | Correct dashboard redirection behavior |
+| `PageControllerTest` | Page routes respond with the correct view |
+| `PreferencesControllerTest` | Preference save/load works |
+| `ProfileControllerTest` | Profile view/update works with validation |
+| `RegisterControllerTest` | Registration validation and creation work |
+| `RoomControllerTest` | Room CRUD via web routes works |
+| `UiControllerTest` | UI routes return the correct page |
 
-
-## Comandos de Execução
-
-Para executar isoladamente todos os testes desta pasta:
+## How to run these tests
 
 ```bash
+# All tests in this folder
 php artisan test tests/Feature/Web/Controllers
-```
 
-Para filtrar por um teste ou método específico:
-
-```bash
-php artisan test tests/Feature/Web/Controllers --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Feature/Web/Controllers --coverage
+# A single test
+php artisan test tests/Feature/Web/Controllers --filter=TestName
 ```

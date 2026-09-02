@@ -1,5 +1,7 @@
 # resources/views/ui/definicoes
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Settings/preferences views (Portuguese folder name — retained as a route convention).
 
 ## Files

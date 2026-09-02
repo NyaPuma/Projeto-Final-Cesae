@@ -1,5 +1,7 @@
 # resources/views/components/ui/page-actions
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Reusable button and link components for page-level actions (create, back, export, etc.).
 
 ## Files

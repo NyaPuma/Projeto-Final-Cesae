@@ -1,40 +1,21 @@
-# Constraints — Testes
+# Constraints -- Automated Database Tests
 
-## Descrição da Pasta
-Testes de integridade da base de dados: validação de schema, migrations, constraints de integridade referencial, foreign keys, triggers e seeders.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../NON_TECHNICAL_PROJECT_GUIDE.md) -- this is part of "The Quality Assurance Lab" that checks the database (the filing cabinet of data).
 
-### Módulos e Ficheiros de Teste
+## What is this folder?
 
-- **`AttachmentPersistenceTest`** (`tests/Database/Constraints/AttachmentPersistenceTest.php`): Valida os cenários e fluxos correspondentes a AttachmentPersistenceTest.
-- **`AuditTrailTest`** (`tests/Database/Constraints/AuditTrailTest.php`): Valida os cenários e fluxos correspondentes a AuditTrailTest.
-- **`BudgetCalculationTest`** (`tests/Database/Constraints/BudgetCalculationTest.php`): Valida os cenários e fluxos correspondentes a BudgetCalculationTest.
-- **`CastIntegrityTest`** (`tests/Database/Constraints/CastIntegrityTest.php`): Valida os cenários e fluxos correspondentes a CastIntegrityTest.
-- **`ConcurrencyTest`** (`tests/Database/Constraints/ConcurrencyTest.php`): Valida os cenários e fluxos correspondentes a ConcurrencyTest.
-- **`DatabaseIntegrityTest`** (`tests/Database/Constraints/DatabaseIntegrityTest.php`): Valida os cenários e fluxos correspondentes a DatabaseIntegrityTest.
-- **`DatabaseOptimizationTest`** (`tests/Database/Constraints/DatabaseOptimizationTest.php`): Valida os cenários e fluxos correspondentes a DatabaseOptimizationTest.
-- **`ModelLifecycleTest`** (`tests/Database/Constraints/ModelLifecycleTest.php`): Valida os cenários e fluxos correspondentes a ModelLifecycleTest.
-- **`NotificationPersistenceTest`** (`tests/Database/Constraints/NotificationPersistenceTest.php`): Valida os cenários e fluxos correspondentes a NotificationPersistenceTest.
-- **`RelationshipIntegrityTest`** (`tests/Database/Constraints/RelationshipIntegrityTest.php`): Valida os cenários e fluxos correspondentes a RelationshipIntegrityTest.
-- **`TokenIntegrityTest`** (`tests/Database/Constraints/TokenIntegrityTest.php`): Valida os cenários e fluxos correspondentes a TokenIntegrityTest.
-- **`WorkflowPersistenceTest`** (`tests/Database/Constraints/WorkflowPersistenceTest.php`): Valida os cenários e fluxos correspondentes a WorkflowPersistenceTest.
+Tests for **Constraints** -- the 'rules' tests -- verifying that database relationships and business constraints hold (foreign keys, unique rules, cascading deletes, immutability).
 
+## What Gets Tested
 
-## Comandos de Execução
+The test files here verify the database behaves correctly and follows the rules the business expects.
 
-Para executar isoladamente todos os testes desta pasta:
+## How to run these tests
 
 ```bash
+# All tests in this folder
 php artisan test tests/Database/Constraints
-```
 
-Para filtrar por um teste ou método específico:
-
-```bash
-php artisan test tests/Database/Constraints --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Database/Constraints --coverage
+# A specific test
+php artisan test tests/Database/Constraints --filter=TestName
 ```

@@ -1,5 +1,7 @@
 # Integrated Maintenance Management System (SGM)
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](NON_TECHNICAL_PROJECT_GUIDE.md)
+
 ![Status](https://img.shields.io/badge/status-production--ready-brightgreen)
 ![Tests](https://img.shields.io/badge/tests-1410%20passed-brightgreen)
 ![PHP Version](https://img.shields.io/badge/PHP-8.2%2B-blue)
@@ -23,6 +25,89 @@ The system mitigates communication failures and extended infrastructure downtime
 - **Multi-Language Support**: 50+ locales with per-user preferences (currency, date format, language)
 - **Advanced Reporting**: CSV/PDF/Excel exports with analytics and insights
 - **Responsive Design**: Mobile-friendly interface with Tailwind CSS and component-based UI
+
+---
+
+## 🗺️ A Plain-English Tour of the System
+
+> *No jargon. No code. Just how it works in the real world.*
+
+### What is SGM, in one sentence?
+
+SGM is a **digital help-desk for a maintenance team**. When something breaks in a building — a faulty air-conditioner, a leaking pipe, a jammed printer — someone reports it, it gets tracked, a technician is sent to fix it, and the whole process is recorded so management knows what happened, how much it cost, and how long it took.
+
+Think of it as a **"fault ticketing app"** combined with a **"spare-parts warehouse manager"** and a **"management report generator"**, all in one place.
+
+---
+
+### The Three People Who Use It
+
+| Role | Who they are | What they do |
+|------|-------------|--------------|
+| **Operator** (Standard User) | A regular employee in any department — an office worker, a factory floor supervisor, a warehouse clerk. | They **spot the problem** and **report it**: "The light in room 204 is broken." They can track the status of their tickets, view their own history, and receive updates. They cannot assign work or see system-wide reports. |
+| **Technician** | A maintenance worker — electrician, plumber, HVAC specialist, general handy-person. | They **receive assigned tickets**, go fix the problem, log what they did, record which spare parts they used, and mark the ticket as resolved. They can view their own workload and schedule. |
+| **Administrator** (Operations Director) | The head of the Maintenance Department or a senior operations manager. | They **manage everything**: assign tickets to technicians, oversee all equipment and rooms, control stock/inventory, manage budgets and costs, view analytics dashboards and reports, and manage user accounts and permissions. They have a bird's-eye view of the entire operation. |
+
+---
+
+### A Day in the Life — The Workflow as a Story
+
+Here is what happens when something breaks, told step by step:
+
+1. **A problem is spotted.** Maria, an office worker in Room 204, notices the air-conditioning unit is making a strange noise and blowing warm air. She opens SGM on her phone.
+
+2. **A ticket is created.** Maria fills out a simple form: "AC unit making noise, not cooling." She selects the equipment (the specific AC unit), the room, and optionally snaps a photo. She hits **Submit**. The system generates a ticket with a unique ID and a timestamp. The AI module even suggests a category ("HVAC — Mechanical Noise") automatically.
+
+3. **The admin reviews and assigns.** Paulo, the Maintenance Director, sees the new ticket on his dashboard. He checks who is available, sees that technician Carlos is scheduled for building B today, and **assigns** the ticket to Carlos. He can also set a priority level and a deadline.
+
+4. **The technician is notified.** Carlos receives a notification: "New ticket #1247 assigned to you — AC noise in Room 204." He opens it on his phone and sees the full details, the location, and the equipment history (is this the same unit that broke last month?).
+
+5. **The technician goes to fix it.** Carlos goes to Room 204, inspects the unit, and determines the issue is a faulty fan bearing. He checks the **stock system** — there is a compatible bearing in the warehouse. He requests it (a stock movement is recorded: warehouse → technician, quantity −1).
+
+6. **The fix is logged.** Carlos replaces the bearing, tests the unit, and it works. He goes back into SGM, logs the repair details: what was replaced, what parts were used (and their cost), and how long it took. He marks the ticket as **Resolved**.
+
+7. **Everything is recorded.** Behind the scenes, the system logs the entire history: who reported it, when, who fixed it, what parts were used, how much the parts cost (charged against the department's **budget**), and when it was closed. A notification goes back to Maria: "Your ticket #1247 has been resolved."
+
+8. **Management sees the big picture.** Paulo opens the **Analytics Dashboard**. He sees that HVAC tickets are up 15% this month, that the average resolution time is 4.2 hours, and that stock for fan bearings is running low. He exports a PDF report for the monthly operations review.
+
+---
+
+### What Each Major Folder Does (In Plain English)
+
+The project's source code is organized into folders. Here is what each one is for, explained like a real-world analogy:
+
+| Folder | Plain-English Analogy | What It Actually Contains |
+|--------|----------------------|--------------------------|
+| `app/` | **The brain of the operation.** All the logic, rules, and decisions live here. | Controllers, services, models, actions, policies — all the code that makes the app *do* things. |
+| `routes/` | **The address book.** Tells the system which URL leads to which page or action. | Route definitions mapping URLs (like `/tickets/create`) to the code that handles them. |
+| `database/` | **The filing cabinet.** The permanent records — who exists, what equipment is where, every ticket ever filed. | Database table definitions (migrations), seed data (test/demo records), and factory definitions. |
+| `resources/views/` | **The design studio.** Where the visual pages are assembled — what users actually see on screen. | Blade templates, CSS styles, JavaScript interactions for every page in the app. |
+| `config/` | **The settings panel.** All the knobs and dials that control how the app behaves. | Configuration files for mail, database, cache, sessions, permissions, and more. |
+| `public/` | **The front door.** The only folder the web server shows to the outside world. | The `index.php` entry point, compiled CSS/JS assets, and uploaded files. |
+| `tests/` | **The quality-control lab.** Every test is a "what if?" scenario — "what if a technician tries to delete another technician's ticket?" | PHPUnit and Vitest test files that verify the app works correctly. |
+| `lang/` | **The translation room.** All the text the user sees, translated into 50+ languages. | JSON translation files for every supported locale. |
+| `storage/` | **The warehouse.** Uploaded files, logs, cached data — things the app generates while running. | User uploads, application logs, session files, and cached views. |
+| `docs/` | **The instruction manual.** Architecture diagrams, business rules, API specs — everything a new developer or stakeholder needs to understand the project. | Markdown documentation covering strategy, requirements, workflows, and user guides. |
+
+---
+
+### How It All Fits Together
+
+When a user clicks a button or opens a page, here is what happens behind the scenes — explained like ordering food in a restaurant:
+
+1. **The Menu (Routes):** The user picks a page — say, "Create Ticket." The system looks up its **route file** (the menu) and finds the right address.
+
+2. **The Hostess (Middleware):** Before you reach the kitchen, a hostess checks: Are you logged in? Are you allowed to do this? Operators can create tickets; guests cannot. This is **middleware** — a gatekeeper that enforces rules before your request proceeds.
+
+3. **The Waiter (Controller):** Once approved, the request is handed to a **controller** — the waiter who takes your order to the kitchen. The controller reads what the user submitted and passes it along.
+
+4. **The Chef (Service / Action):** The controller hands the work to a **service** or **action class** — the chef who actually prepares the meal. This is where the business rules live: "Does this ticket have all required fields? Is the equipment valid? Send a notification to the assigned technician."
+
+5. **The Pantry (Database):** When the chef needs ingredients — or needs to store the finished dish — the **database** is the pantry and cold-storage. Data is saved, updated, or retrieved using the **model layer** (the pantry's inventory system).
+
+6. **The Plate (Response):** The finished result is packaged up and sent back to the user's screen — a success message, a updated dashboard, or a confirmation email.
+
+And just like in a real restaurant, if something goes wrong at any step — wrong order, missing ingredient, allergy conflict — the system has an **error handler** (the manager) who catches the problem and gives the user a clear, friendly message instead of a crash.
 
 ---
 
@@ -243,6 +328,12 @@ MAIL_PORT=587
 
 ---
 
+## 📖 New to Programming?
+
+**See [NON_TECHNICAL_PROJECT_GUIDE.md](NON_TECHNICAL_PROJECT_GUIDE.md)** -- a step-by-step plain-English guide explaining every folder, file, and workflow in this project with real-world analogies. Written for someone with zero programming experience.
+
+---
+
 ## 📚 Documentation
 
 Comprehensive architectural and operational documentation is available in the `/docs` directory:
@@ -441,36 +532,4 @@ For issues, questions, or feature requests:
 ---
 
 **Last Updated**: September 1, 2026  
-**Status**: ✅ Production-Ready
-- **Repository Pattern:** Abstração de acesso a dados com Query Objects
-- **Action Classes:** Classes dedicadas para casos de uso específicos
-- **DTOs:** Data Transfer Objects para validação e transporte de dados
-- **Observers:** Event-driven model lifecycle management
-- **Caching Strategy:** Cache com invalidação automática via observers
-- **Jobs:** Operações assíncronas (exportação, email, IA) processadas em fila
-
-### Frontend Refactoring
-- **Blade Components:** Sistema de componentes reutilizáveis
-- **Modular CSS:** CSS organizado por responsabilidade (components, pages)
-- **ES Modules:** JavaScript modularizado por feature
-- **Design System:** Variáveis CSS e tokens para consistência visual
-- **No Inline Code:** Eliminação completa de CSS/JS inline nas Blade views (com exceções sancionadas: script anti-FOUC do tema, config i18n `window.SGM_*` e blocos de dados `type="application/json"`)
-- **Accessibility:** ARIA labels, roles, focus management, keyboard navigation
-- **Responsive Design:** Layouts adaptativos para todos os breakpoints
-
-### Quality Assurance
-- **PHPStan/Larastan:** Análise estática nível máximo (Level 5)
-- **Laravel Pint:** Formatação de código consistente
-- **Test Suite:** Testes unitários, feature e integration
-- **Security:** CSRF, XSS, SQL injection protection, RBAC
-
-A plataforma encontra-se na sua versão estável de produção, com arquitetura enterprise-ready, código limpo e manutenível.
-
-
----
-
-# Licença
-
-Este projeto encontra-se licenciado sob a **MIT License**.
-
-Consulte o ficheiro **LICENSE** para mais informações.
+**Status**: Production-Ready

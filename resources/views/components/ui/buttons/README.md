@@ -1,5 +1,7 @@
 # resources/views/components/ui/buttons
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Blade button components. These are thin wrappers that delegate to base button components with pre-configured defaults.
 
 ## Files

@@ -1,5 +1,7 @@
 # resources/css/pages
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Page-specific CSS styles. Each file targets a single page or closely related set of pages.
 
 ## Files

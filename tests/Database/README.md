@@ -1,42 +1,46 @@
-# Database — Testes
+# Database -- Automated Database Tests
 
-## Descrição da Pasta
-Testes de integridade da base de dados: validação de schema, migrations, constraints de integridade referencial, foreign keys, triggers e seeders.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../NON_TECHNICAL_PROJECT_GUIDE.md) -- this folder is explained as part of "The Quality Assurance Lab." These tests verify that data stays correct, relationships hold, and the schema is valid.
 
-### Módulos e Ficheiros de Teste
+## What is this folder?
 
-- **`AttachmentPersistenceTest`** (`tests/Database/Constraints/AttachmentPersistenceTest.php`): Valida os cenários e fluxos correspondentes a AttachmentPersistenceTest.
-- **`AuditTrailTest`** (`tests/Database/Constraints/AuditTrailTest.php`): Valida os cenários e fluxos correspondentes a AuditTrailTest.
-- **`BudgetCalculationTest`** (`tests/Database/Constraints/BudgetCalculationTest.php`): Valida os cenários e fluxos correspondentes a BudgetCalculationTest.
-- **`CastIntegrityTest`** (`tests/Database/Constraints/CastIntegrityTest.php`): Valida os cenários e fluxos correspondentes a CastIntegrityTest.
-- **`ConcurrencyTest`** (`tests/Database/Constraints/ConcurrencyTest.php`): Valida os cenários e fluxos correspondentes a ConcurrencyTest.
-- **`DatabaseIntegrityTest`** (`tests/Database/Constraints/DatabaseIntegrityTest.php`): Valida os cenários e fluxos correspondentes a DatabaseIntegrityTest.
-- **`DatabaseOptimizationTest`** (`tests/Database/Constraints/DatabaseOptimizationTest.php`): Valida os cenários e fluxos correspondentes a DatabaseOptimizationTest.
-- **`ModelLifecycleTest`** (`tests/Database/Constraints/ModelLifecycleTest.php`): Valida os cenários e fluxos correspondentes a ModelLifecycleTest.
-- **`NotificationPersistenceTest`** (`tests/Database/Constraints/NotificationPersistenceTest.php`): Valida os cenários e fluxos correspondentes a NotificationPersistenceTest.
-- **`RelationshipIntegrityTest`** (`tests/Database/Constraints/RelationshipIntegrityTest.php`): Valida os cenários e fluxos correspondentes a RelationshipIntegrityTest.
-- **`TokenIntegrityTest`** (`tests/Database/Constraints/TokenIntegrityTest.php`): Valida os cenários e fluxos correspondentes a TokenIntegrityTest.
-- **`WorkflowPersistenceTest`** (`tests/Database/Constraints/WorkflowPersistenceTest.php`): Valida os cenários e fluxos correspondentes a WorkflowPersistenceTest.
-- **`DatabaseSchemaValidationTest`** (`tests/Database/Migrations/DatabaseSchemaValidationTest.php`): Valida os cenários e fluxos correspondentes a DatabaseSchemaValidationTest.
-- **`ComplianceSeedersTest`** (`tests/Database/Seeders/ComplianceSeedersTest.php`): Valida os cenários e fluxos correspondentes a ComplianceSeedersTest.
+These tests verify the **integrity of the database** -- the filing cabinet that stores all the company's data. They ensure that:
 
+1. The database **structure** (schema) matches what the code expects
+2. **Relationships** between records are correct (a ticket really belongs to a user; deleting a room doesn't orphan equipment)
+3. **Business rules** are enforced (audit records cannot be changed; budget calculations are accurate)
+4. **Migrations** run correctly and don't break existing data
+5. **Seeders** create valid reference data
 
-## Comandos de Execução
+## What Gets Tested
 
-Para executar isoladamente todos os testes desta pasta:
+| Test | What It Verifies |
+|------|------------------|
+| `AuditTrailTest` | Audit records are immutable -- nobody can change or delete them |
+| `BudgetCalculationTest` | Budget amounts are calculated correctly |
+| `RelationshipIntegrityTest` | Data relationships hold (foreign keys, cascading) |
+| `ConcurrencyTest` | Multiple users can't corrupt data simultaneously |
+| `DatabaseIntegrityTest` | No orphaned or invalid data records |
+| `WorkflowPersistenceTest` | Ticket workflow states survive save/load cycles |
+| `AttachmentPersistenceTest` | Ticket attachments are persisted correctly |
+| `CastIntegrityTest` | Data types are stored and retrieved correctly |
+| `TokenIntegrityTest` | Security tokens are stored and verified correctly |
+| `ModelLifecycleTest` | Models go through their lifecycle correctly (create → update → soft-delete) |
+| `DatabaseOptimizationTest` | Database queries are efficient |
+| `DatabaseSchemaValidationTest` | The schema matches the expected structure |
+| `ComplianceSeedersTest` | Seed data complies with business rules |
+
+## How to run these tests
 
 ```bash
+# All database tests
 php artisan test tests/Database
-```
 
-Para filtrar por um teste ou método específico:
+# A specific area
+php artisan test tests/Database/Constraints
+php artisan test tests/Database/Migrations
+php artisan test tests/Database/Seeders
 
-```bash
-php artisan test tests/Database --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Database --coverage
+# A single test
+php artisan test tests/Database --filter=AuditTrailTest
 ```

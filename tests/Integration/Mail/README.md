@@ -1,29 +1,21 @@
-# Mail — Testes
+# Mail integration -- Automated Integration Tests
 
-## Descrição da Pasta
-Testes de integração entre subsistemas: broadcasting em tempo real, filas assíncronas (queues), base de dados e envio de e-mails via Mailables.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../NON_TECHNICAL_PROJECT_GUIDE.md) -- this is part of "The Quality Assurance Lab." Integration tests check how different parts of the system work together.
 
-### Módulos e Ficheiros de Teste
+## What is this folder?
 
-- **`MailgunTestEmailTest`** (`tests/Integration/Mail/MailgunTestEmailTest.php`): Valida os cenários e fluxos correspondentes a MailgunTestEmailTest.
+Integration tests for **Mail integration** -- how emails are sent and the email pipeline works. These verify that the component works correctly when connected to its real surroundings (the database, mail system, etc.).
 
+## What Gets Tested
 
-## Comandos de Execução
+Each test verifies the component integrates correctly and produces the expected result when real data flows through it.
 
-Para executar isoladamente todos os testes desta pasta:
+## How to run these tests
 
 ```bash
+# All tests in this folder
 php artisan test tests/Integration/Mail
-```
 
-Para filtrar por um teste ou método específico:
-
-```bash
-php artisan test tests/Integration/Mail --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Integration/Mail --coverage
+# A specific test
+php artisan test tests/Integration/Mail --filter=TestName
 ```

@@ -1,5 +1,7 @@
 # resources/views/components/input
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Design-system input component (top-level alias `<x-input.input>`).
 
 ## Files

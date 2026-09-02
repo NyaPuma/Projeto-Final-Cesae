@@ -1,34 +1,28 @@
-# Middleware — Testes
+# Middleware -- Automated Middleware Tests
 
-## Descrição da Pasta
-Testes funcionais e de integração de ponta a ponta (Feature/API/Web) cobrindo ciclo de vida de requisições HTTP, autenticação, autorização, validação de formulários e respostas JSON/Blade.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../NON_TECHNICAL_PROJECT_GUIDE.md) -- middleware are "The Security Guards" that check every request before it proceeds.
 
-### Módulos e Ficheiros de Teste
+## What is this folder?
 
-- **`CsrfMiddlewareTest`** (`tests/Feature/Middleware/CsrfMiddlewareTest.php`): Valida os cenários e fluxos correspondentes a CsrfMiddlewareTest.
-- **`CustomAuthMiddlewareTest`** (`tests/Feature/Middleware/CustomAuthMiddlewareTest.php`): Valida os cenários e fluxos correspondentes a CustomAuthMiddlewareTest.
-- **`MiddlewareAuthTest`** (`tests/Feature/Middleware/MiddlewareAuthTest.php`): Valida os cenários e fluxos correspondentes a MiddlewareAuthTest.
-- **`RateLimitMiddlewareTest`** (`tests/Feature/Middleware/RateLimitMiddlewareTest.php`): Valida os cenários e fluxos correspondentes a RateLimitMiddlewareTest.
-- **`RoleMiddlewareTest`** (`tests/Feature/Middleware/RoleMiddlewareTest.php`): Valida os cenários e fluxos correspondentes a RoleMiddlewareTest.
-- **`SetLocaleMiddlewareTest`** (`tests/Feature/Middleware/SetLocaleMiddlewareTest.php`): Valida os cenários e fluxos correspondentes a SetLocaleMiddlewareTest.
+Tests for the **security checkpoints** that intercept every request. They verify that each guard correctly allows legitimate users through and blocks unauthorized access.
 
+## What Gets Tested
 
-## Comandos de Execução
+| Test | What It Verifies |
+|------|------------------|
+| `CsrfMiddlewareTest` | CSRF protection works (block forged requests, allow legitimate ones) |
+| `CustomAuthMiddlewareTest` | Token authentication works (valid token allowed, invalid/missing token blocked) |
+| `MiddlewareAuthTest` | Auth middleware interaction with routes |
+| `RateLimitMiddlewareTest` | Rate limiting works (too many requests get blocked) |
+| `RoleMiddlewareTest` | Role checks work (admin-only routes block technicians, etc.) |
+| `SetLocaleMiddlewareTest` | Language detection works (session → cookie → user → browser → default) |
 
-Para executar isoladamente todos os testes desta pasta:
+## How to run these tests
 
 ```bash
+# All middleware tests
 php artisan test tests/Feature/Middleware
-```
 
-Para filtrar por um teste ou método específico:
-
-```bash
-php artisan test tests/Feature/Middleware --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Feature/Middleware --coverage
+# A single test
+php artisan test tests/Feature/Middleware --filter=RoleMiddlewareTest
 ```

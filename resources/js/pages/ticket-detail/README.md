@@ -1,5 +1,7 @@
 # resources/js/pages/ticket-detail
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Ticket detail view.
 
 | File | Purpose |

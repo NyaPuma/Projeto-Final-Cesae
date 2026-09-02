@@ -1,5 +1,7 @@
 # resources/css/swagger
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Swagger UI custom theme that integrates the API documentation with the application's design system.
 
 ## Files

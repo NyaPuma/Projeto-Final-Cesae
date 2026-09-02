@@ -1,5 +1,7 @@
 # resources/css/components/buttons
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Button component styles, split into base mechanics and visual variants.
 
 ## Files

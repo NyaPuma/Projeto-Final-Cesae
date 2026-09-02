@@ -1,5 +1,7 @@
 # resources/views/reports
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Print-ready PDF report templates (A4 page size, inline `<style>` blocks).
 
 ## Files

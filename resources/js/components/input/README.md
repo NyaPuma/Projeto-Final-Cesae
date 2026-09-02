@@ -1,5 +1,7 @@
 # resources/js/components/input
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Enhanced input components with A11y support.
 
 | File | Purpose |

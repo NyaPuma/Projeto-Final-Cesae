@@ -1,29 +1,32 @@
-# Fixtures — Testes
+# Fixtures -- Test Helpers & Data Builders
 
-## Descrição da Pasta
-Fixtures, Data Builders, Fakes e Helpers utilitários para suporte à execução dos testes automatizados.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../NON_TECHNICAL_PROJECT_GUIDE.md) -- this folder is explained as "The Props and Scripts" used during testing.
 
-### Conteúdo da Pasta
+## What is this folder?
 
-- Utilitários, configurações base e recursos de suporte para a suite de testes.
+These are the **support tools** that make testing faster and cleaner. They include fake data generators, reusable helpers, and mock replacements for external services.
 
+## What's Inside
 
-## Comandos de Execução
+| Folder/File | Purpose |
+|-------------|---------|
+| `Builders/` | Create test data with specific configurations (e.g., "a high-priority ticket assigned to a specific technician") |
+| `Datasets/` | Reference data for testing (all possible priority levels, statuses, and roles) |
+| `Fakes/` | Mock replacements for external services (e.g., a fake notification service that doesn't actually send emails) |
+| `Helpers/` | Common test utilities (API interaction, event simulation, storage management) |
 
-Para executar isoladamente todos os testes desta pasta:
+## Common Test Helpers (in `tests/Base/` and `tests/Concerns/`)
 
-```bash
-php artisan test tests/Fixtures
-```
+| Concern | What It Provides |
+|---------|------------------|
+| `CreatesUsers` | Quickly creates test users with specific roles |
+| `CreatesTickets` | Quickly creates test tickets with settings |
+| `CreatesEquipment` | Quickly creates test equipment records |
+| `InteractsWithApi` | Simulates API calls for testing endpoints |
+| `InteractsWithMail` | Captures and inspects emails that "would have been sent" |
+| `InteractsWithEvents` | Captures and inspects events that "would have fired" |
+| `InteractsWithQueue` | Simulates background job processing |
+| `InteractsWithStorage` | Simulates file storage for upload tests |
+| `InteractsWithNotifications` | Captures and inspects notifications |
 
-Para filtrar por um teste ou método específico:
-
-```bash
-php artisan test tests/Fixtures --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Fixtures --coverage
-```
+**Note:** These files are not run as standalone tests -- they are included by other test files to reduce duplication.

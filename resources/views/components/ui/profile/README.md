@@ -1,5 +1,7 @@
 # resources/views/components/ui/profile
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Profile page card components for user settings.
 
 ## Files

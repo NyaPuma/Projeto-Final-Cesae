@@ -1,5 +1,7 @@
 # resources/views
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Top-level Blade views that extend layout templates and compose UI components.
 
 ## Files

@@ -1,5 +1,7 @@
 # resources/views/components/ui/stats
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Shared statistical / KPI card components used on entity detail pages.
 
 ## Files

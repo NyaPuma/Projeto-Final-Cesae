@@ -1,5 +1,7 @@
 # resources/css
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Root directory for the application's CSS design system. All styles are defined using CSS custom properties (design tokens) and organized into logical layers.
 
 ## Files

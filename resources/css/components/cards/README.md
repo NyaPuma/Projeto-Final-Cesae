@@ -1,5 +1,7 @@
 # resources/css/components/cards
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Card component base styles.
 
 ## Files

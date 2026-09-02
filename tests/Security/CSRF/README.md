@@ -1,30 +1,21 @@
-# CSRF — Testes
+# CSRF -- Automated Security Tests
 
-## Descrição da Pasta
-Testes dedicados à garantia de segurança da informação (OWASP Top 10), incluindo proteção contra XSS, SQL Injection, CSRF, IDOR, Privilege Escalation, Rate Limiting e força bruta.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../NON_TECHNICAL_PROJECT_GUIDE.md) -- this is part of "The Penetration Testing Team" that tries to break into the system to find vulnerabilities.
 
-### Módulos e Ficheiros de Teste
+## What is this folder?
 
-- **`CsrfProtectionTest`** (`tests/Security/CSRF/CsrfProtectionTest.php`): Valida os cenários e fluxos correspondentes a CsrfProtectionTest.
-- **`SecurityCsrfTest`** (`tests/Security/CSRF/SecurityCsrfTest.php`): Valida os cenários e fluxos correspondentes a SecurityCsrfTest.
+**Cross-Site Request Forgery (CSRF)** -- A malicious third-party website cannot trick a logged-in user's browser into performing actions they didn't intend.
 
+## What Gets Tested
 
-## Comandos de Execução
+The test files in this folder simulate attacks of this type and verify the system successfully blocks them.
 
-Para executar isoladamente todos os testes desta pasta:
+## How to run these tests
 
 ```bash
+# All tests in this security area
 php artisan test tests/Security/CSRF
-```
 
-Para filtrar por um teste ou método específico:
-
-```bash
-php artisan test tests/Security/CSRF --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Security/CSRF --coverage
+# A specific test
+php artisan test tests/Security/CSRF --filter=TestName
 ```

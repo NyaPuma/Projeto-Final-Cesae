@@ -1,5 +1,7 @@
 # resources/views/components/ui/dashboard
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Dashboard-specific Blade components.
 
 ## Files

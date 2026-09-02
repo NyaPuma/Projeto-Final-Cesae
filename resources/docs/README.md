@@ -1,5 +1,7 @@
 # resources/docs
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Internal design documentation for the frontend.
 
 | File | Purpose |

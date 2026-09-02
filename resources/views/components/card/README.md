@@ -1,5 +1,7 @@
 # resources/views/components/card
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Design-system card primitives (top-level aliases `<x-card.card>`, `<x-card.badge>`, `<x-card.alert>`).
 
 ## Files

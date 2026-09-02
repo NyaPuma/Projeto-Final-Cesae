@@ -1,5 +1,7 @@
 # resources/views/components/ui/text
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Low-level typography components for displaying styled text labels and badges.
 
 ## Files

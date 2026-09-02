@@ -1,40 +1,30 @@
-# Web — Testes
+# Web -- Automated Browser/Page Tests
 
-## Descrição da Pasta
-Testes funcionais e de integração de ponta a ponta (Feature/API/Web) cobrindo ciclo de vida de requisições HTTP, autenticação, autorização, validação de formulários e respostas JSON/Blade.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../NON_TECHNICAL_PROJECT_GUIDE.md) -- this is part of "The Quality Assurance Lab."
 
-### Módulos e Ficheiros de Teste
+Acceptance tests for the system's web pages (what users see and interact with in the browser). These verify that pages load correctly, forms submit properly, and users are redirected to the right place.
 
-- **`DashboardRedirectTest`** (`tests/Feature/Web/Controllers/DashboardRedirectTest.php`): Valida os cenários e fluxos correspondentes a DashboardRedirectTest.
-- **`PageControllerTest`** (`tests/Feature/Web/Controllers/PageControllerTest.php`): Valida os cenários e fluxos correspondentes a PageControllerTest.
-- **`PreferencesControllerTest`** (`tests/Feature/Web/Controllers/PreferencesControllerTest.php`): Valida os cenários e fluxos correspondentes a PreferencesControllerTest.
-- **`ProfileControllerTest`** (`tests/Feature/Web/Controllers/ProfileControllerTest.php`): Valida os cenários e fluxos correspondentes a ProfileControllerTest.
-- **`RegisterControllerTest`** (`tests/Feature/Web/Controllers/RegisterControllerTest.php`): Valida os cenários e fluxos correspondentes a RegisterControllerTest.
-- **`RoomControllerTest`** (`tests/Feature/Web/Controllers/RoomControllerTest.php`): Valida os cenários e fluxos correspondentes a RoomControllerTest.
-- **`UiControllerTest`** (`tests/Feature/Web/Controllers/UiControllerTest.php`): Valida os cenários e fluxos correspondentes a UiControllerTest.
-- **`LocaleControllerTest`** (`tests/Feature/Web/LocaleControllerTest.php`): Valida os cenários e fluxos correspondentes a LocaleControllerTest.
-- **`AssetPipelineTest`** (`tests/Feature/Web/Views/AssetPipelineTest.php`): Valida os cenários e fluxos correspondentes a AssetPipelineTest.
-- **`DesignSystemComponentsTest`** (`tests/Feature/Web/Views/DesignSystemComponentsTest.php`): Valida os cenários e fluxos correspondentes a DesignSystemComponentsTest.
-- **`DesignSystemViewsTest`** (`tests/Feature/Web/Views/DesignSystemViewsTest.php`): Valida os cenários e fluxos correspondentes a DesignSystemViewsTest.
-- **`UiUsabilityTest`** (`tests/Feature/Web/Views/UiUsabilityTest.php`): Valida os cenários e fluxos correspondentes a UiUsabilityTest.
+| Test | What It Verifies |
+|------|------------------|
+| `DashboardRedirectTest` | Logged-in users are sent to the correct dashboard after login |
+| `PageControllerTest` | Standard pages load correctly (home, about, dashboard) |
+| `PreferencesControllerTest` | User preferences (language, theme) are saved and applied |
+| `ProfileControllerTest` | Users can view/update their own profile |
+| `RegisterControllerTest` | The registration form works end-to-end |
+| `RoomControllerTest` | Room management pages work |
+| `UiControllerTest` | Generic UI controller routes respond correctly |
+| `LocaleControllerTest` | Language switching works |
+| `AssetPipelineTest` | CSS/JS/asset files are served correctly |
+| `DesignSystemComponentsTest` | Design system components render correctly |
+| `DesignSystemViewsTest` | Design system templates render correctly |
+| `UiUsabilityTest` | UI is usable (navigation, labels, links) |
 
-
-## Comandos de Execução
-
-Para executar isoladamente todos os testes desta pasta:
+## How to run these tests
 
 ```bash
+# All tests in this folder
 php artisan test tests/Feature/Web
-```
 
-Para filtrar por um teste ou método específico:
-
-```bash
-php artisan test tests/Feature/Web --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Feature/Web --coverage
+# A single test
+php artisan test tests/Feature/Web --filter=TestName
 ```

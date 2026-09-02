@@ -1,29 +1,27 @@
-# Base — Testes
+# Base -- Shared Test Base Classes
 
-## Descrição da Pasta
-Classes base de teste (`UnitTestCase`, `DatabaseTestCase`, `FeatureTestCase`) configurando ambiente limpo e seeds necessárias.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../NON_TECHNICAL_PROJECT_GUIDE.md) -- these are the "foundations" that all tests stand on.
 
-### Conteúdo da Pasta
+## What is this folder?
 
-- Utilitários, configurações base e recursos de suporte para a suite de testes.
+These are the **base classes** that all other tests extend. They set up a clean testing environment so each test starts from a known, predictable state.
 
+## Files
 
-## Comandos de Execução
+| File | Purpose |
+|------|---------|
+| `UnitTestCase.php` | Base class for **unit tests** (tests individual pieces in isolation; no database needed) |
+| `FeatureTestCase.php` | Base class for **feature tests** (tests complete user workflows with a test database and HTTP simulation) |
+| `DatabaseTestCase.php` | Base class for **database tests** (sets up a real (in-memory) database, runs migrations and seeds before each test) |
 
-Para executar isoladamente todos os testes desta pasta:
+## How They Work
 
-```bash
-php artisan test tests/Base
-```
+1. Each test file extends one of these base classes
+2. Before each test, the base class:
+   - Creates a fresh test database
+   - Runs migrations (builds all tables)
+   - Seeds reference data (roles, statuses, categories)
+   - Sets up the testing environment
+3. After each test, the database is reset so the next test starts clean
 
-Para filtrar por um teste ou método específico:
-
-```bash
-php artisan test tests/Base --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Base --coverage
-```
+**Why this matters:** Between tests, the data is completely reset -- no test can accidentally affect another test. This ensures every test gives reliable, repeatable results.

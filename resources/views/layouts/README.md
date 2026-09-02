@@ -1,5 +1,7 @@
 # resources/views/layouts
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Base HTML layout used by all Blade views.
 
 ## Files

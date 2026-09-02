@@ -1,29 +1,21 @@
-# Authentication — Testes
+# Authentication Performance -- Automated Performance Tests
 
-## Descrição da Pasta
-Testes de carga, performance, latência de endpoints, volumetria de queries, mitigação de consultas N+1 e eficiência de memória e cache.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../NON_TECHNICAL_PROJECT_GUIDE.md) -- this is part of "The Quality Assurance Lab." Performance tests check that the system stays fast even as it grows.
 
-### Módulos e Ficheiros de Teste
+## What is this folder?
 
-- **`AuthPerformanceTest`** (`tests/Performance/Authentication/AuthPerformanceTest.php`): Valida os cenários e fluxos correspondentes a AuthPerformanceTest.
+Performance tests for **Authentication Performance** -- login/register requests stay fast even under load. These verify the system's speed and responsiveness.
 
+## What Gets Tested
 
-## Comandos de Execução
+The tests measure response times, resource usage, and throughput to ensure the system remains performant.
 
-Para executar isoladamente todos os testes desta pasta:
+## How to run these tests
 
 ```bash
+# All tests in this folder
 php artisan test tests/Performance/Authentication
-```
 
-Para filtrar por um teste ou método específico:
-
-```bash
-php artisan test tests/Performance/Authentication --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Performance/Authentication --coverage
+# A specific test
+php artisan test tests/Performance/Authentication --filter=TestName
 ```

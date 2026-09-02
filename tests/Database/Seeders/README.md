@@ -1,29 +1,21 @@
-# Seeders — Testes
+# Seeders -- Automated Database Tests
 
-## Descrição da Pasta
-Testes de integridade da base de dados: validação de schema, migrations, constraints de integridade referencial, foreign keys, triggers e seeders.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../NON_TECHNICAL_PROJECT_GUIDE.md) -- this is part of "The Quality Assurance Lab" that checks the database (the filing cabinet of data).
 
-### Módulos e Ficheiros de Teste
+## What is this folder?
 
-- **`ComplianceSeedersTest`** (`tests/Database/Seeders/ComplianceSeedersTest.php`): Valida os cenários e fluxos correspondentes a ComplianceSeedersTest.
+Tests for **Seeders** -- the tests that verify the 'seed data' (reference data like roles, statuses, categories) is valid and complete.
 
+## What Gets Tested
 
-## Comandos de Execução
+The test files here verify the database behaves correctly and follows the rules the business expects.
 
-Para executar isoladamente todos os testes desta pasta:
+## How to run these tests
 
 ```bash
+# All tests in this folder
 php artisan test tests/Database/Seeders
-```
 
-Para filtrar por um teste ou método específico:
-
-```bash
-php artisan test tests/Database/Seeders --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Database/Seeders --coverage
+# A specific test
+php artisan test tests/Database/Seeders --filter=TestName
 ```

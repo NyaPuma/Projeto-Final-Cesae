@@ -1,5 +1,7 @@
 # resources/views/components/ui/listing
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Blade components for data listing/table views with filtering and pagination.
 
 ## Files

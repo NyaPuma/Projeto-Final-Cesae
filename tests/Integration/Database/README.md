@@ -1,33 +1,21 @@
-# Database — Testes
+# Database integration -- Automated Integration Tests
 
-## Descrição da Pasta
-Testes de integração entre subsistemas: broadcasting em tempo real, filas assíncronas (queues), base de dados e envio de e-mails via Mailables.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../NON_TECHNICAL_PROJECT_GUIDE.md) -- this is part of "The Quality Assurance Lab." Integration tests check how different parts of the system work together.
 
-### Módulos e Ficheiros de Teste
+## What is this folder?
 
-- **`ForeignKeyIntegrityTest`** (`tests/Integration/Database/ForeignKeyIntegrityTest.php`): Valida os cenários e fluxos correspondentes a ForeignKeyIntegrityTest.
-- **`MassAssignmentProtectionTest`** (`tests/Integration/Database/MassAssignmentProtectionTest.php`): Valida os cenários e fluxos correspondentes a MassAssignmentProtectionTest.
-- **`ModelLifecycleTest`** (`tests/Integration/Database/ModelLifecycleTest.php`): Valida os cenários e fluxos correspondentes a ModelLifecycleTest.
-- **`RelationshipIntegrityTest`** (`tests/Integration/Database/RelationshipIntegrityTest.php`): Valida os cenários e fluxos correspondentes a RelationshipIntegrityTest.
-- **`SoftDeleteTest`** (`tests/Integration/Database/SoftDeleteTest.php`): Valida os cenários e fluxos correspondentes a SoftDeleteTest.
+Integration tests for **Database integration** -- how the app integrates correctly with the database. These verify that the component works correctly when connected to its real surroundings (the database, mail system, etc.).
 
+## What Gets Tested
 
-## Comandos de Execução
+Each test verifies the component integrates correctly and produces the expected result when real data flows through it.
 
-Para executar isoladamente todos os testes desta pasta:
+## How to run these tests
 
 ```bash
+# All tests in this folder
 php artisan test tests/Integration/Database
-```
 
-Para filtrar por um teste ou método específico:
-
-```bash
-php artisan test tests/Integration/Database --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Integration/Database --coverage
+# A specific test
+php artisan test tests/Integration/Database --filter=TestName
 ```

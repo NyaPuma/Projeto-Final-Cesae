@@ -1,5 +1,7 @@
 # resources/views/ui/partials
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Reusable partial components included by the main layout and other views.
 
 ## Files

@@ -2,6 +2,8 @@
 
 Frontend source assets for the SGM application: Blade templates, JavaScript modules, stylesheets, and design documentation compiled by Vite.
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../NON_TECHNICAL_PROJECT_GUIDE.md) for a plain-English explanation of what each subfolder does with real-world analogies (e.g., "The Design Studio", "The Paint Department", "The Interactive Workshop").
+
 ---
 
 ## Directory Structure

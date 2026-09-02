@@ -1,5 +1,7 @@
 # resources/views/errors
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Custom error page templates extending the `errors.minimal` base layout.
 
 ## Files

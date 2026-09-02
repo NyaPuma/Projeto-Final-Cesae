@@ -1,30 +1,21 @@
-# Password — Testes
+# Password -- Automated Security Tests
 
-## Descrição da Pasta
-Testes dedicados à garantia de segurança da informação (OWASP Top 10), incluindo proteção contra XSS, SQL Injection, CSRF, IDOR, Privilege Escalation, Rate Limiting e força bruta.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../NON_TECHNICAL_PROJECT_GUIDE.md) -- this is part of "The Penetration Testing Team" that tries to break into the system to find vulnerabilities.
 
-### Módulos e Ficheiros de Teste
+## What is this folder?
 
-- **`PasswordSecurityTest`** (`tests/Security/Password/PasswordSecurityTest.php`): Valida os cenários e fluxos correspondentes a PasswordSecurityTest.
-- **`SecurityPasswordPolicyTest`** (`tests/Security/Password/SecurityPasswordPolicyTest.php`): Valida os cenários e fluxos correspondentes a SecurityPasswordPolicyTest.
+**Password Security** -- Passwords are stored securely (hashed), meet strength requirements, and the account lockout policy works (5 failed attempts = 15-min lockout).
 
+## What Gets Tested
 
-## Comandos de Execução
+The test files in this folder simulate attacks of this type and verify the system successfully blocks them.
 
-Para executar isoladamente todos os testes desta pasta:
+## How to run these tests
 
 ```bash
+# All tests in this security area
 php artisan test tests/Security/Password
-```
 
-Para filtrar por um teste ou método específico:
-
-```bash
-php artisan test tests/Security/Password --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Security/Password --coverage
+# A specific test
+php artisan test tests/Security/Password --filter=TestName
 ```

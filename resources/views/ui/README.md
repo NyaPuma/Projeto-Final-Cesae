@@ -1,5 +1,7 @@
 # resources/views/ui
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Main Blade views for the application's UI (web interface).
 
 ## Files

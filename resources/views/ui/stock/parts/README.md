@@ -1,5 +1,7 @@
 # resources/views/ui/stock/parts
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Part detail and CRUD views.
 
 ## Files

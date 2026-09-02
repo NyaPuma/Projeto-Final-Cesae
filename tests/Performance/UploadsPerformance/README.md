@@ -1,29 +1,21 @@
-# UploadsPerformance — Testes
+# Upload Performance -- Automated Performance Tests
 
-## Descrição da Pasta
-Testes de carga, performance, latência de endpoints, volumetria de queries, mitigação de consultas N+1 e eficiência de memória e cache.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../NON_TECHNICAL_PROJECT_GUIDE.md) -- this is part of "The Quality Assurance Lab." Performance tests check that the system stays fast even as it grows.
 
-### Módulos e Ficheiros de Teste
+## What is this folder?
 
-- **`UploadPerformanceTest`** (`tests/Performance/UploadsPerformance/UploadPerformanceTest.php`): Valida os cenários e fluxos correspondentes a UploadPerformanceTest.
+Performance tests for **Upload Performance** -- file uploads are handled within acceptable time. These verify the system's speed and responsiveness.
 
+## What Gets Tested
 
-## Comandos de Execução
+The tests measure response times, resource usage, and throughput to ensure the system remains performant.
 
-Para executar isoladamente todos os testes desta pasta:
+## How to run these tests
 
 ```bash
+# All tests in this folder
 php artisan test tests/Performance/UploadsPerformance
-```
 
-Para filtrar por um teste ou método específico:
-
-```bash
-php artisan test tests/Performance/UploadsPerformance --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Performance/UploadsPerformance --coverage
+# A specific test
+php artisan test tests/Performance/UploadsPerformance --filter=TestName
 ```

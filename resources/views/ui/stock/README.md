@@ -1,5 +1,7 @@
 # resources/views/ui/stock
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Stock management views.
 
 ## Files

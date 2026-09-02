@@ -1,55 +1,44 @@
-# Security — Testes
+# Security -- Automated Security Tests
 
-## Descrição da Pasta
-Testes dedicados à garantia de segurança da informação (OWASP Top 10), incluindo proteção contra XSS, SQL Injection, CSRF, IDOR, Privilege Escalation, Rate Limiting e força bruta.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../NON_TECHNICAL_PROJECT_GUIDE.md) -- this folder is explained as "The Penetration Testing Team" that tries to break into the system to find vulnerabilities.
 
-### Módulos e Ficheiros de Teste
+## What is this folder?
 
-- **`APITokenSecurityTest`** (`tests/Security/APITokens/APITokenSecurityTest.php`): Valida os cenários e fluxos correspondentes a APITokenSecurityTest.
-- **`AuthenticationSecurityTest`** (`tests/Security/Authentication/AuthenticationSecurityTest.php`): Valida os cenários e fluxos correspondentes a AuthenticationSecurityTest.
-- **`SecurityActiveTest`** (`tests/Security/Authentication/SecurityActiveTest.php`): Valida os cenários e fluxos correspondentes a SecurityActiveTest.
-- **`SecurityAuthTest`** (`tests/Security/Authentication/SecurityAuthTest.php`): Valida os cenários e fluxos correspondentes a SecurityAuthTest.
-- **`AuthorizationSecurityTest`** (`tests/Security/Authorization/AuthorizationSecurityTest.php`): Valida os cenários e fluxos correspondentes a AuthorizationSecurityTest.
-- **`CsrfProtectionTest`** (`tests/Security/CSRF/CsrfProtectionTest.php`): Valida os cenários e fluxos correspondentes a CsrfProtectionTest.
-- **`SecurityCsrfTest`** (`tests/Security/CSRF/SecurityCsrfTest.php`): Valida os cenários e fluxos correspondentes a SecurityCsrfTest.
-- **`FileUploadSecurityTest`** (`tests/Security/FileUpload/FileUploadSecurityTest.php`): Valida os cenários e fluxos correspondentes a FileUploadSecurityTest.
-- **`SecurityHeadersTest`** (`tests/Security/Headers/SecurityHeadersTest.php`): Valida os cenários e fluxos correspondentes a SecurityHeadersTest.
-- **`IDORTest`** (`tests/Security/IDOR/IDORTest.php`): Valida os cenários e fluxos correspondentes a IDORTest.
-- **`MassAssignmentTest`** (`tests/Security/MassAssignment/MassAssignmentTest.php`): Valida os cenários e fluxos correspondentes a MassAssignmentTest.
-- **`PasswordSecurityTest`** (`tests/Security/Password/PasswordSecurityTest.php`): Valida os cenários e fluxos correspondentes a PasswordSecurityTest.
-- **`SecurityPasswordPolicyTest`** (`tests/Security/Password/SecurityPasswordPolicyTest.php`): Valida os cenários e fluxos correspondentes a SecurityPasswordPolicyTest.
-- **`PathTraversalTest`** (`tests/Security/PathTraversal/PathTraversalTest.php`): Valida os cenários e fluxos correspondentes a PathTraversalTest.
-- **`PrivilegeEscalationTest`** (`tests/Security/PrivilegeEscalation/PrivilegeEscalationTest.php`): Valida os cenários e fluxos correspondentes a PrivilegeEscalationTest.
-- **`RateLimitingTest`** (`tests/Security/RateLimiting/RateLimitingTest.php`): Valida os cenários e fluxos correspondentes a RateLimitingTest.
-- **`SecurityBruteForceTest`** (`tests/Security/RateLimiting/SecurityBruteForceTest.php`): Valida os cenários e fluxos correspondentes a SecurityBruteForceTest.
-- **`SecurityRateLimitTest`** (`tests/Security/RateLimiting/SecurityRateLimitTest.php`): Valida os cenários e fluxos correspondentes a SecurityRateLimitTest.
-- **`SecuritySessionTest`** (`tests/Security/Session/SecuritySessionTest.php`): Valida os cenários e fluxos correspondentes a SecuritySessionTest.
-- **`SessionSecurityTest`** (`tests/Security/Session/SessionSecurityTest.php`): Valida os cenários e fluxos correspondentes a SessionSecurityTest.
-- **`SecurityVulnerabilitiesTest`** (`tests/Security/SQLInjection/SecurityVulnerabilitiesTest.php`): Valida os cenários e fluxos correspondentes a SecurityVulnerabilitiesTest.
-- **`SqlInjectionTest`** (`tests/Security/SQLInjection/SqlInjectionTest.php`): Valida os cenários e fluxos correspondentes a SqlInjectionTest.
-- **`SecurityTokenTest`** (`tests/Security/Tokens/SecurityTokenTest.php`): Valida os cenários e fluxos correspondentes a SecurityTokenTest.
-- **`TokenSecurityTest`** (`tests/Security/Tokens/TokenSecurityTest.php`): Valida os cenários e fluxos correspondentes a TokenSecurityTest.
-- **`UserEnumerationTest`** (`tests/Security/UserEnumeration/UserEnumerationTest.php`): Valida os cenários e fluxos correspondentes a UserEnumerationTest.
-- **`SecurityInputValidationTest`** (`tests/Security/XSS/SecurityInputValidationTest.php`): Valida os cenários e fluxos correspondentes a SecurityInputValidationTest.
-- **`XSSProtectionTest`** (`tests/Security/XSS/XSSProtectionTest.php`): Valida os cenários e fluxos correspondentes a XSSProtectionTest.
+These tests simulate cyberattacks to verify the system resists real-world threats. Just like a bank hires security experts to test its locks, this codebase has automated tests that attempt to break in -- and every test must fail to break in.
 
+## Security Coverage (OWASP Top 10)
 
-## Comandos de Execução
+| Folder | Attack Simulated | What It Verifies |
+|--------|------------------|------------------|
+| `SQLInjection/` | SQL Injection | An attacker cannot steal or corrupt database data by typing malicious database commands into forms |
+| `XSS/` | Cross-Site Scripting | An attacker cannot inject harmful scripts into web pages that run for other users |
+| `CSRF/` | Cross-Site Request Forgery | A malicious website cannot trick a logged-in user's browser into making forbidden actions |
+| `IDOR/` | Insecure Direct Object Reference | A user cannot access another user's data by changing IDs in the URL |
+| `Password/` | Password Attacks | Passwords are stored securely; the 5-attempt/15-minute lockout works |
+| `RateLimiting/` | Brute Force / Spam | An attacker cannot hammer the login form with thousands of guesses |
+| `Session/` | Session Hijacking | User sessions are protected from being stolen or reused |
+| `PrivilegeEscalation/` | Privilege Escalation | A regular user cannot gain admin powers |
+| `MassAssignment/` | Mass Assignment | A user cannot change fields they should not be allowed to set |
+| `PathTraversal/` | Path Traversal | An attacker cannot access files outside the allowed folder |
+| `FileUpload/` | Malicious Uploads | Only safe file types (images, documents) can be uploaded; size limits enforced |
+| `UserEnumeration/` | User Discovery | An attacker cannot tell which email addresses have accounts |
+| `Headers/` | Security Headers | HTTP security headers (CSP, HSTS, X-Frame-Options) are correctly configured |
+| `APITokens/` | Token Theft | API tokens are stored and transmitted securely |
+| `Authentication/` | Auth Bypass | Users cannot bypass login or steal tokens |
+| `Authorization/` | Auth Bypass | Users cannot access resources without proper permissions |
+| `Tokens/` | Token Security | Reset/token system is protected from tampering |
 
-Para executar isoladamente todos os testes desta pasta:
+## How to run these tests
 
 ```bash
+# All security tests
 php artisan test tests/Security
-```
 
-Para filtrar por um teste ou método específico:
+# A specific security area
+php artisan test tests/Security/SQLInjection
+php artisan test tests/Security/XSS
+php artisan test tests/Security/RateLimiting
 
-```bash
-php artisan test tests/Security --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Security --coverage
+# A single test
+php artisan test tests/Security --filter=SqlInjectionTest
 ```

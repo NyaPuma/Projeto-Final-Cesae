@@ -1,29 +1,24 @@
-# Mail — Testes
+# Mail classes -- Automated Unit Tests
 
-## Descrição da Pasta
-Testes unitários isolados para validação atómica de componentes, classes de domínio, Actions, DTOs, Enums, Models, Services e Jobs sem dependências externas.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../NON_TECHNICAL_PROJECT_GUIDE.md) -- this is part of "The Quality Assurance Lab." Unit tests check individual pieces of code in isolation.
 
-### Módulos e Ficheiros de Teste
+## What is this folder?
 
-- **`MailablesTest`** (`tests/Unit/Mail/MailablesTest.php`): Valida os cenários e fluxos correspondentes a MailablesTest.
+Unit tests for **Mail classes** -- the code that builds and sends emails / notifications. These tests check each piece on its own (without the database or other parts of the system) to make sure it works correctly.
 
+## What Gets Tested
 
-## Comandos de Execução
+Each test file in this folder verifies that its corresponding class behaves correctly:
+- Valid inputs produce correct outputs
+- Invalid inputs are handled gracefully (or rejected)
+- Relationships, formatting, and business rules within the class are correct
 
-Para executar isoladamente todos os testes desta pasta:
+## How to run these tests
 
 ```bash
+# All unit tests in this folder
 php artisan test tests/Unit/Mail
-```
 
-Para filtrar por um teste ou método específico:
-
-```bash
-php artisan test tests/Unit/Mail --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Unit/Mail --coverage
+# A single test
+php artisan test tests/Unit/Mail --filter=TestName
 ```

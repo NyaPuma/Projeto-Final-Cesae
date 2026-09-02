@@ -1,5 +1,7 @@
 # `app/Http/Controllers/Ticket`
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Specialized controllers for specific ticket lifecycle operations. Each controller handles a single responsibility within the ticket workflow.
 
 ## Controllers

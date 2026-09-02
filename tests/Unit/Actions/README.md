@@ -1,43 +1,24 @@
-# Actions — Testes
+# Actions -- Automated Unit Tests
 
-## Descrição da Pasta
-Testes unitários isolados para validação atómica de componentes, classes de domínio, Actions, DTOs, Enums, Models, Services e Jobs sem dependências externas.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../NON_TECHNICAL_PROJECT_GUIDE.md) -- this is part of "The Quality Assurance Lab." Unit tests check individual pieces of code in isolation.
 
-### Módulos e Ficheiros de Teste
+## What is this folder?
 
-- **`ApproveBudgetActionTest`** (`tests/Unit/Actions/ApproveBudgetActionTest.php`): Valida os cenários e fluxos correspondentes a ApproveBudgetActionTest.
-- **`AssignTechnicianActionTest`** (`tests/Unit/Actions/AssignTechnicianActionTest.php`): Valida os cenários e fluxos correspondentes a AssignTechnicianActionTest.
-- **`CreateEquipmentActionTest`** (`tests/Unit/Actions/CreateEquipmentActionTest.php`): Valida os cenários e fluxos correspondentes a CreateEquipmentActionTest.
-- **`CreatePreventiveTicketActionTest`** (`tests/Unit/Actions/CreatePreventiveTicketActionTest.php`): Valida os cenários e fluxos correspondentes a CreatePreventiveTicketActionTest.
-- **`CreateRoomActionTest`** (`tests/Unit/Actions/CreateRoomActionTest.php`): Valida os cenários e fluxos correspondentes a CreateRoomActionTest.
-- **`PartActionsTest`** (`tests/Unit/Actions/PartActionsTest.php`): Valida os cenários e fluxos correspondentes a PartActionsTest.
-- **`PartCategoryActionsTest`** (`tests/Unit/Actions/PartCategoryActionsTest.php`): Valida os cenários e fluxos correspondentes a PartCategoryActionsTest.
-- **`ScheduleMaintenanceActionTest`** (`tests/Unit/Actions/ScheduleMaintenanceActionTest.php`): Valida os cenários e fluxos correspondentes a ScheduleMaintenanceActionTest.
-- **`ScheduleTicketActionTest`** (`tests/Unit/Actions/ScheduleTicketActionTest.php`): Valida os cenários e fluxos correspondentes a ScheduleTicketActionTest.
-- **`SubmitBudgetActionTest`** (`tests/Unit/Actions/SubmitBudgetActionTest.php`): Valida os cenários e fluxos correspondentes a SubmitBudgetActionTest.
-- **`SupplierActionsTest`** (`tests/Unit/Actions/SupplierActionsTest.php`): Valida os cenários e fluxos correspondentes a SupplierActionsTest.
-- **`TaxRateActionsTest`** (`tests/Unit/Actions/TaxRateActionsTest.php`): Valida os cenários e fluxos correspondentes a TaxRateActionsTest.
-- **`UpdateEquipmentActionTest`** (`tests/Unit/Actions/UpdateEquipmentActionTest.php`): Valida os cenários e fluxos correspondentes a UpdateEquipmentActionTest.
-- **`UpdateRoomActionTest`** (`tests/Unit/Actions/UpdateRoomActionTest.php`): Valida os cenários e fluxos correspondentes a UpdateRoomActionTest.
-- **`UpdateUserActionTest`** (`tests/Unit/Actions/UpdateUserActionTest.php`): Valida os cenários e fluxos correspondentes a UpdateUserActionTest.
+Unit tests for **Actions** -- the 'Worker Bees' that each perform one specific job in the business workflow. These tests check each piece on its own (without the database or other parts of the system) to make sure it works correctly.
 
+## What Gets Tested
 
-## Comandos de Execução
+Each test file in this folder verifies that its corresponding class behaves correctly:
+- Valid inputs produce correct outputs
+- Invalid inputs are handled gracefully (or rejected)
+- Relationships, formatting, and business rules within the class are correct
 
-Para executar isoladamente todos os testes desta pasta:
+## How to run these tests
 
 ```bash
+# All unit tests in this folder
 php artisan test tests/Unit/Actions
-```
 
-Para filtrar por um teste ou método específico:
-
-```bash
-php artisan test tests/Unit/Actions --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Unit/Actions --coverage
+# A single test
+php artisan test tests/Unit/Actions --filter=TestName
 ```

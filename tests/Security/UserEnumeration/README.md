@@ -1,29 +1,21 @@
-# UserEnumeration — Testes
+# UserEnumeration -- Automated Security Tests
 
-## Descrição da Pasta
-Testes dedicados à garantia de segurança da informação (OWASP Top 10), incluindo proteção contra XSS, SQL Injection, CSRF, IDOR, Privilege Escalation, Rate Limiting e força bruta.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../NON_TECHNICAL_PROJECT_GUIDE.md) -- this is part of "The Penetration Testing Team" that tries to break into the system to find vulnerabilities.
 
-### Módulos e Ficheiros de Teste
+## What is this folder?
 
-- **`UserEnumerationTest`** (`tests/Security/UserEnumeration/UserEnumerationTest.php`): Valida os cenários e fluxos correspondentes a UserEnumerationTest.
+**User Enumeration** -- An attacker cannot tell which email addresses have registered accounts (responses don't reveal this).
 
+## What Gets Tested
 
-## Comandos de Execução
+The test files in this folder simulate attacks of this type and verify the system successfully blocks them.
 
-Para executar isoladamente todos os testes desta pasta:
+## How to run these tests
 
 ```bash
+# All tests in this security area
 php artisan test tests/Security/UserEnumeration
-```
 
-Para filtrar por um teste ou método específico:
-
-```bash
-php artisan test tests/Security/UserEnumeration --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Security/UserEnumeration --coverage
+# A specific test
+php artisan test tests/Security/UserEnumeration --filter=TestName
 ```

@@ -1,29 +1,17 @@
-# Debug — Testes
+# Debug -- Automated Debug/Development Helper Tests
 
-## Descrição da Pasta
-Testes funcionais e de integração de ponta a ponta (Feature/API/Web) cobrindo ciclo de vida de requisições HTTP, autenticação, autorização, validação de formulários e respostas JSON/Blade.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../NON_TECHNICAL_PROJECT_GUIDE.md) -- this is part of "The Quality Assurance Lab."
 
-### Conteúdo da Pasta
+## What is this folder?
 
-- Utilitários, configurações base e recursos de suporte para a suite de testes.
+Tests related to **debugging and development helpers** -- tools that help developers diagnose issues (e.g., profiling, logging, information endpoints).
 
-
-## Comandos de Execução
-
-Para executar isoladamente todos os testes desta pasta:
+## How to run these tests
 
 ```bash
+# All tests in this folder
 php artisan test tests/Feature/Debug
-```
 
-Para filtrar por um teste ou método específico:
-
-```bash
-php artisan test tests/Feature/Debug --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Feature/Debug --coverage
+# A specific test
+php artisan test tests/Feature/Debug --filter=TestName
 ```

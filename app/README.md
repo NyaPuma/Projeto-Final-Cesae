@@ -2,6 +2,56 @@
 
 Application source code for the SGM (Integrated Maintenance Management System) platform. A Laravel application following clean architecture principles with domain-driven organization.
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../NON_TECHNICAL_PROJECT_GUIDE.md) for a plain-English explanation of every folder and file in this project with real-world analogies.
+
+---
+
+## A Plain-English Tour of the `app/` Folder
+
+Think of `app/` as the **engine room** of the SGM platform — it is the place where *every* business rule, every piece of logic, and every decision lives. When a user clicks a button, opens a report, or submits a maintenance ticket, the request eventually lands inside `app/` and the folders described below work together to make it happen. If `routes/` is the building's front door and `resources/views/` is the front window the customer sees, then `app/` is everything happening behind the scenes.
+
+### The `app/` "Office Building" — Who Does What?
+
+Imagine SGM as a large, well-organised office building. Each folder is a different department or role:
+
+| Folder | Real-World Analogy | What It Does (plain English) |
+|---|---|---|
+| [`Http/Controllers/`](Http/Controllers/README.md) | **Front-desk clerks** | Receive the visitor's request, check the paperwork, and hand it off to the right department. |
+| [`Http/Requests/`](Http/Requests/README.md) | **Paperwork inspector** | Inspects every form and document for completeness and correctness *before* it goes further. |
+| [`Http/Resources/`](Http/Resources/README.md) | **Translation desk for outgoing mail** | Takes raw internal data and reformats it into the clean JSON (or view) the customer is waiting for. |
+| [`Services/`](Services/README.md) | **Department managers** | Coordinate complex work that spans multiple teams — they call the shots but don't do the filing themselves. |
+| [`Actions/`](Actions/README.md) | **Worker bees** | Each one knows exactly one task and does it well (create a user, close a ticket, submit a budget…). |
+| [`Models/`](Models/README.md) | **Filing cabinet** | Defines the structure of every record the company keeps — who owns which ticket, which room has which equipment, and so on. |
+| [`Repositories/`](Repositories/README.md) | **Librarians** | Knows exactly how to look things up, file things away, and retrieve them — keeps all database access in one expert place. |
+| [`Middleware/`](Http/Middleware/README.md) | **Security guards at every floor** | Check credentials, enforce speed limits, and redirect traffic *before* anyone reaches a department. |
+| [`Policies/`](Policies/README.md) | **Access-control list on the door** | Decides whether a specific person is allowed to perform a specific action on a record (view, edit, delete…). |
+| [`DTOs/`](DTOs/README.md) | **Sealed envelopes** | Carry a fixed set of typed data from one department to another, guaranteeing nothing is missing or extra. |
+| [`Enums/`](Enums/README.md) | **The company rulebook** | Lists the only allowed values for things like ticket status, priority, or user role — no magic strings allowed. |
+| [`Jobs/`](Jobs/Queues/README.md) | **Assembly-line stations** | Handle heavy or slow tasks (generating exports, sending emails) on a side conveyor belt so the front desk doesn't stall. |
+| [`Events/`](Events/README.md) | **PA-system announcements** | Shout "something just happened!" so the whole building can react without the originator knowing who's listening. |
+| [`Listeners/`](Listeners/README.md) | **Follow-up team** | Each one hears a specific announcement and carries out its own small task in response. |
+| [`Observers/`](Observers/README.md) | **Automatic notifiers on the filing cabinet** | Whenever a record is created, changed, or deleted, they trigger side-effects (audit logs, cache clears) without anyone remembering to call them. |
+| [`Mail/`](Mail/README.md) | **Internal post room** | Prepares and sends emails — password resets, ticket confirmations, reports — often on a background schedule. |
+| [`Notifications/`](Notifications/README.md) | **Multi-channel alert desk** | Delivers messages via email, database notification, or real-time broadcast depending on user preference. |
+| [`Exports/`](Exports/README.md) | **Report-printing room** | Turns live data into CSV, PDF, or Excel files for download. |
+| [`ValueObjects/`](ValueObjects/README.md) | **Specialised measuring tools** | Encapsulates a single concept (like `Money` or `Email`) so invalid data simply cannot exist. |
+| [`Providers/`](Providers/README.md) | **Wiring diagram / switchboard** | Tells Laravel how to connect all the pieces together (dependency injection, event bindings, boot-up tasks). |
+
+> 💡 *Every folder above has its own `README.md` with deeper explanations and file lists — follow the links to learn more.*
+
+### How a Single Request Flows Through `app/`
+
+Here is what happens, end to end, when a technician clicks **"Submit Maintenance Ticket"**:
+
+1. **Security guards (Middleware)** stop the visitor at the entrance: *Are you logged in? Do you have the right role? Is this IP allowed?* If any check fails, the request is turned away immediately.
+2. **Front-desk clerk (Controller)** receives the validated visitor, checks the ticket form (via a **FormRequest / Paperwork Inspector**) and asks the **Access-control list (Policy)**: *"Is this person allowed to create a ticket?"*
+3. Once the paperwork is accepted, the clerk hands the sealed envelope of typed data (**DTO**) to the **Department Manager (Service)**, who orchestrates the work: *"Find the right equipment record (via the **Librarian / Repository**), assign the ticket, and log the event."*
+4. The **Librarian (Repository)** looks up or stores the data in the **Filing Cabinet (Model / Database)** and returns a confirmed record.
+5. Back in the manager's office, a **PA announcement (Event)** goes out: *"A new ticket was just created!"* The **Follow-up team (Listeners)** springs into action — one sends an email notification, another updates a dashboard counter, a third might queue a heavy data-export **assembly-line job (Job)** so the front desk can immediately reply.
+6. The front-desk clerk wraps the result in clean outgoing mail (**API Resource**) and sends it back to the visitor's browser.
+
+All of this happens in fractions of a second, but every step has a clear owner, a clear responsibility, and a clear place in the code. That is the power of the layered architecture inside `app/`.
+
 ---
 
 ## Directory Structure

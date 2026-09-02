@@ -1,32 +1,26 @@
-# Domain — Testes
+# Domain -- Automated Domain Logic Tests
 
-## Descrição da Pasta
-Testes funcionais e de integração de ponta a ponta (Feature/API/Web) cobrindo ciclo de vida de requisições HTTP, autenticação, autorização, validação de formulários e respostas JSON/Blade.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../NON_TECHNICAL_PROJECT_GUIDE.md) -- this folder is part of "The Quality Assurance Lab" covering the core business rules of ticket management.
 
-### Módulos e Ficheiros de Teste
+## What is this folder?
 
-- **`CheckHigherPriorityActionTest`** (`tests/Feature/Domain/CheckHigherPriorityActionTest.php`): Valida os cenários e fluxos correspondentes a CheckHigherPriorityActionTest.
-- **`TicketLifecycleActionsTest`** (`tests/Feature/Domain/TicketLifecycleActionsTest.php`): Valida os cenários e fluxos correspondentes a TicketLifecycleActionsTest.
-- **`TicketQueriesTest`** (`tests/Feature/Domain/TicketQueriesTest.php`): Valida os cenários e fluxos correspondentes a TicketQueriesTest.
-- **`TicketStatusCheckerTest`** (`tests/Feature/Domain/TicketStatusCheckerTest.php`): Valida os cenários e fluxos correspondentes a TicketStatusCheckerTest.
+Tests for the **core business rules** of the ticket system -- the rules that govern how tickets move through their lifecycle.
 
+## What Gets Tested
 
-## Comandos de Execução
+| Test | What It Verifies |
+|------|------------------|
+| `TicketLifecycleActionsTest` | The full ticket journey works: open → in-progress → budget review → closed |
+| `TicketStatusCheckerTest` | Status checking logic works correctly (is this ticket in "open" status?) |
+| `TicketQueriesTest` | Dashboard queries return correct data (counts, KPIs, top entities) |
+| `CheckHigherPriorityActionTest` | Logic that checks whether higher-priority tickets exist works correctly |
 
-Para executar isoladamente todos os testes desta pasta:
+## How to run these tests
 
 ```bash
+# All domain tests
 php artisan test tests/Feature/Domain
-```
 
-Para filtrar por um teste ou método específico:
-
-```bash
-php artisan test tests/Feature/Domain --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Feature/Domain --coverage
+# A single test
+php artisan test tests/Feature/Domain --filter=TicketLifecycleActionsTest
 ```

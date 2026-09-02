@@ -1,5 +1,7 @@
 # resources/js/pages/equipments-management
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Equipment management page.
 
 | File | Purpose |

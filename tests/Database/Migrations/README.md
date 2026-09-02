@@ -1,29 +1,21 @@
-# Migrations — Testes
+# Migrations -- Automated Database Tests
 
-## Descrição da Pasta
-Testes de integridade da base de dados: validação de schema, migrations, constraints de integridade referencial, foreign keys, triggers e seeders.
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../NON_TECHNICAL_PROJECT_GUIDE.md) -- this is part of "The Quality Assurance Lab" that checks the database (the filing cabinet of data).
 
-### Módulos e Ficheiros de Teste
+## What is this folder?
 
-- **`DatabaseSchemaValidationTest`** (`tests/Database/Migrations/DatabaseSchemaValidationTest.php`): Valida os cenários e fluxos correspondentes a DatabaseSchemaValidationTest.
+Tests for **Migrations** -- the tests that verify database 'structure changes' (migrations) apply cleanly without breaking existing data.
 
+## What Gets Tested
 
-## Comandos de Execução
+The test files here verify the database behaves correctly and follows the rules the business expects.
 
-Para executar isoladamente todos os testes desta pasta:
+## How to run these tests
 
 ```bash
+# All tests in this folder
 php artisan test tests/Database/Migrations
-```
 
-Para filtrar por um teste ou método específico:
-
-```bash
-php artisan test tests/Database/Migrations --filter=NomeDoTeste
-```
-
-Para executar com cobertura de código (se suportado pelo ambiente):
-
-```bash
-php artisan test tests/Database/Migrations --coverage
+# A specific test
+php artisan test tests/Database/Migrations --filter=TestName
 ```

@@ -1,5 +1,7 @@
 # resources/views/components/ui/auth
 
+> **New to programming?** See [NON_TECHNICAL_PROJECT_GUIDE.md](../../../../../NON_TECHNICAL_PROJECT_GUIDE.md)
+
 Blade components for authentication and secure-area layouts. These form the visual foundation for login, registration and password reset pages.
 
 ## Files
