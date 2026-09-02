@@ -98,10 +98,7 @@ final class ThemeController extends Controller
             // session unavailable — continue with the other candidates
         }
 
-        $uniqueTokens = array_unique(array_filter(array_map(
-            fn (mixed $token): string => is_string($token) ? $token : (string) $token,
-            $candidates,
-        )));
+        $uniqueTokens = array_unique(array_filter($candidates, static fn (mixed $token): bool => is_string($token)));
 
         if ($uniqueTokens === []) {
             return null;

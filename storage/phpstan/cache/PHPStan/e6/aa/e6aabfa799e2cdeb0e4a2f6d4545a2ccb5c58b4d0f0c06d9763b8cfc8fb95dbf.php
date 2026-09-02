@@ -383,18 +383,23 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:/laravel/Projeto-Final-Cesae/vendor/composer/../mockery/mockery/library/helpers.php' => 
     array (
-      0 => '93da8798c256eafe88dfc319557f853143c48aa1027f5197de1b963a87503e8f',
+      0 => '382257db35ce97e1b135a056e790e8ca68feb98710b15984479a47a2d961c929',
       1 => 
       array (
       ),
       2 => 
       array (
-        0 => 'mock',
-        1 => 'spy',
-        2 => 'namedmock',
-        3 => 'anyargs',
-        4 => 'andanyotherargs',
-        5 => 'andanyothers',
+        0 => 'andanyotherargs',
+        1 => 'andanyothers',
+        2 => 'anyargs',
+        3 => 'get_debug_type',
+        4 => 'mock',
+        5 => 'namedmock',
+        6 => 'spy',
+        7 => 'str_contains',
+        8 => 'str_ends_with',
+        9 => 'str_starts_with',
+        10 => 'array_is_list',
       ),
       3 => 
       array (
@@ -402,7 +407,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:/laravel/Projeto-Final-Cesae/vendor/composer/../mockery/mockery/library/Mockery.php' => 
     array (
-      0 => '8b6663d4d2c8acda387d4e3a48a8d8998f80315912dcd119a1f67c4ada60f43f',
+      0 => 'a415a7ab010bfdbf5947ff168724d5bc13b6dd38c0ed78162af56090928630b1',
       1 => 
       array (
         0 => 'mockery',
@@ -454,14 +459,14 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         42 => 'subset',
         43 => 'type',
         44 => 'builddemeterchain',
-        45 => 'cleanuparray',
-        46 => 'cleanupnesting',
-        47 => 'declaretype',
-        48 => 'extractinstancepublicproperties',
-        49 => 'formatargument',
-        50 => 'getexistingdemetermock',
-        51 => 'getnewdemetermock',
-        52 => 'nomoreelementsinchain',
+        45 => 'assertvaliddemeterchain',
+        46 => 'cleanuparray',
+        47 => 'cleanupnesting',
+        48 => 'declaretype',
+        49 => 'extractinstancepublicproperties',
+        50 => 'formatargument',
+        51 => 'getexistingdemetermock',
+        52 => 'getnewdemetermock',
         53 => 'objecttoarray',
       ),
       3 => 
@@ -547,7 +552,7 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
     ),
     'C:/laravel/Projeto-Final-Cesae/vendor/composer/../phpunit/phpunit/src/Framework/Assert/Functions.php' => 
     array (
-      0 => '4d07837721a64f55630417d7e9e0bc36ee9e8fc0a16bf3cfcb2efb017b8d5899',
+      0 => 'f6ff5e503f687f79e9cf782157e645f33264dfc839e3607a456d975caf3e904a',
       1 => 
       array (
       ),
@@ -2420,6 +2425,47 @@ return \PHPStan\Cache\CacheItem::__set_state(array(
         23 => 'sentry\\trace_metrics',
         24 => 'sentry\\addfeatureflag',
         25 => 'sentry\\flush',
+      ),
+      3 => 
+      array (
+      ),
+    ),
+    'C:/laravel/Projeto-Final-Cesae/vendor/composer/../livewire/livewire/src/helpers.php' => 
+    array (
+      0 => 'b0ff11be1de271da279355962e6f89339dec0d29ad7b70e20a43ad54cd38044c',
+      1 => 
+      array (
+      ),
+      2 => 
+      array (
+        0 => 'livewire\\str',
+        1 => 'livewire\\__call',
+        2 => 'livewire\\invade',
+        3 => 'livewire\\__construct',
+        4 => 'livewire\\__get',
+        5 => 'livewire\\__set',
+        6 => 'livewire\\__call',
+        7 => 'livewire\\once',
+        8 => 'livewire\\of',
+        9 => 'livewire\\revert',
+        10 => 'livewire\\wrap',
+        11 => 'livewire\\pipe',
+        12 => 'livewire\\trigger',
+        13 => 'livewire\\on',
+        14 => 'livewire\\after',
+        15 => 'livewire\\before',
+        16 => 'livewire\\off',
+        17 => 'livewire\\memoize',
+        18 => 'livewire\\__construct',
+        19 => 'livewire\\__call',
+        20 => 'livewire\\store',
+        21 => 'livewire\\__construct',
+        22 => 'livewire\\get',
+        23 => 'livewire\\set',
+        24 => 'livewire\\push',
+        25 => 'livewire\\find',
+        26 => 'livewire\\has',
+        27 => 'livewire\\unset',
       ),
       3 => 
       array (
