@@ -292,7 +292,7 @@
 
 @push('scripts')
 <script>
-const ticketId = {{ json_encode($ticketId ?? (isset($ticket) ? $ticket->id : null)) }};
+const ticketId = {!! json_encode($ticketId ?? (isset($ticket) ? $ticket->id : null)) !!};
 const currentUserId = {{ json_encode(auth()->id() ?? null) }};
 
 const priorityBadges = {
