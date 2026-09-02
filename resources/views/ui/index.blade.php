@@ -56,29 +56,7 @@
                     <h2 class="text-base font-bold text-(--text)">{{ __('equipment.Piquete Técnico Ativo') }}</h2>
                 </div>
 
-                <div id="picketList" class="space-y-3 mt-2">
-                    <div class="flex items-center justify-between text-xs py-1.5 border-b border-(--border)/50">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-success"></span>
-                            <span class="font-semibold text-(--text)">Emanuel Silva</span>
-                        </div>
-                        <span class="text-xs font-bold text-warning bg-warning/10 px-2 py-0.5 rounded-full">2 {{ __('common.em curso') }}</span>
-                    </div>
-                    <div class="flex items-center justify-between text-xs py-1.5 border-b border-(--border)/50">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-success"></span>
-                            <span class="font-semibold text-(--text)">João Pires</span>
-                        </div>
-                        <span class="text-xs font-bold text-success bg-success/10 px-2 py-0.5 rounded-full">1 {{ __('common.em curso') }}</span>
-                    </div>
-                    <div class="flex items-center justify-between text-xs py-1.5">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-[var(--border)]"></span>
-                            <span class="font-semibold text-(--text-soft)">Carlos Costa</span>
-                        </div>
-                        <span class="text-xs font-semibold text-(--text-soft)">Off-line</span>
-                    </div>
-                </div>
+                <div id="picketList" class="space-y-3 mt-2"></div>
             </div>
 
             @if($isAdmin)

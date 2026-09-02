@@ -132,6 +132,7 @@ Route::middleware(['custom.auth'])->group(function () {
     Route::get('/ui/tickets/{id}', [UiController::class, 'ticketDetail'])->name('ui.tickets.show');
     Route::get('/ui/equipments', [UiController::class, 'equipments'])->name('ui.equipments');
     Route::get('/equipments', [UiController::class, 'getEquipments'])->name('equipments.list');
+    Route::get('/dashboard/picket', [UiController::class, 'getTechnicalPicket'])->name('dashboard.picket');
 
     // --- Theme / appearance: available to any authenticated user ---
     Route::get('/ui/settings/appearance', [UiController::class, 'themeAppearance'])->name('ui.settings.appearance');

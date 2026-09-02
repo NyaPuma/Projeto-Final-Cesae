@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Enums\TicketStatusEnum;
+use App\Enums\UserRoleEnum;
 use App\Models\Audit;
 use App\Models\Equipment;
 use App\Models\EquipmentCategory;
@@ -297,6 +298,32 @@ final class UiController extends Controller
 
         return response()->json([
             'equipments' => $equipments,
+        ]);
+    }
+
+    /**
+     * Returns the active technical picket: active technicians with the number
+     * of tickets currently "in progress" assigned to each one.
+     */
+    public function getTechnicalPicket(Request $request): JsonResponse
+    {
+        $picket = User::query()
+            ->whereHas('profile', fn ($q) => $q->where('name', UserRoleEnum::Technician->value))
+            ->where('active', true)
+            ->withCount([
+                'assignedTickets as in_progress_tickets' => fn ($q) => $q
+                    ->whereHas('status', fn ($s) => $s->where('name', TicketStatusEnum::InProgress->value)),
+            ])
+            ->get(['id', 'name'])
+            ->map(fn (User $user) => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'in_progress_tickets' => $user->in_progress_tickets,
+            ])
+            ->values();
+
+        return response()->json([
+            'picket' => $picket,
         ]);
     }
 

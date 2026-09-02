@@ -129,7 +129,58 @@ async function loadRecentTickets() {
 }
 
 function init() {
-    window.addEventListener('DOMContentLoaded', loadMetrics);
+    /*
+     * The dashboard module is loaded dynamically (via bootPageModules) *after*
+     * `DOMContentLoaded` has already fired, so listening to that event here
+     * would never run. The registry only calls `init()` once the DOM is ready.
+     */
+    loadMetrics();
+    loadTechnicalPicket();
+}
+
+async function loadTechnicalPicket() {
+    const container = document.getElementById('picketList');
+    if (!container) return;
+
+    try {
+        const res = await fetch('/dashboard/picket', { headers: authHeader() });
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        const picket = Array.isArray(data.picket) ? data.picket : [];
+        const label = i18n().inProgress || 'em curso';
+
+        if (picket.length === 0) {
+            container.innerHTML = `<p class="text-xs text-(--text-soft) py-2">${i18n().noRecent || 'No active technicians.'}</p>`;
+            return;
+        }
+
+        container.innerHTML = picket.map(t => {
+            const count = Number(t.in_progress_tickets) || 0;
+            const active = count > 0;
+            return `
+                <div class="flex items-center justify-between text-xs py-1.5 ${active ? 'border-b border-(--border)/50' : ''}">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full ${active ? 'bg-success' : 'bg-[var(--border)]'}"></span>
+                        <span class="font-semibold ${active ? 'text-(--text)' : 'text-(--text-soft)'}">${escapeHtml(t.name)}</span>
+                    </div>
+                    ${active
+                        ? `<span class="text-xs font-bold ${count >= 2 ? 'text-warning bg-warning/10' : 'text-success bg-success/10'} px-2 py-0.5 rounded-full">${count} ${label}</span>`
+                        : `<span class="text-xs font-semibold text-(--text-soft)">${i18n().idle || 'Off-line'}</span>`}
+                </div>
+            `;
+        }).join('');
+    } catch (e) {
+        container.innerHTML = `<p class="text-xs text-(--text-soft) py-2">${i18n().loadError || 'Unable to load the technical picket.'}</p>`;
+    }
+}
+
+function escapeHtml(value) {
+    return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
 }
 
 export { init };

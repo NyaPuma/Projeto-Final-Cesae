@@ -271,6 +271,8 @@
         'action' => __('common.Ação'),
         'view' => __('common.Ver'),
         'minutes' => __('common.min'),
+        'inProgress' => __('common.Em Curso'),
+        'idle' => __('dashboard.Sem ocorrências em curso'),
     ];
 @endphp
 <script>

@@ -2,6 +2,24 @@
    FullCalendar — Adaptação ao design system do projeto
    ============================================================ */
 
+/* ============================================================
+   FullCalendar — Adaptação ao design system do projeto
+   ============================================================ */
+
+/*
+   O FullCalendar injeta a fonte interna "fcicons" (base64) para os
+   glifos `chevron`, `x`, `_warning`, etc. Este projeto não usa nenhum
+   ícone `fcicons` (botões são texto, eventos são SVG customizados),
+   e a fonte tem glifos com bbox inválido — o que provoca warnings de
+   consola "downloadable font: glyf: Glyph bbox was incorrect".
+   Descartamos aqui o `@font-face` embutido para evitar o parse da fonte.
+*/
+@font-face {
+    font-family: 'fcicons';
+    src: local('Arial');
+    font-display: swap;
+}
+
 .fc {
     font-family: var(--font-sans);
     color: var(--text);
@@ -15,6 +33,10 @@
     --fc-event-text-color: var(--text);
     --fc-event-bg-color: var(--surface);
     --fc-small-font-size: var(--text-xs);
+}
+
+.fc .fc-icon {
+    font-family: 'fcicons';
 }
 
 /* --- Moldura do calendário (scrollgrid) --- */

@@ -4,6 +4,8 @@ namespace Tests\Feature\Web\Controllers;
 
 use App\Enums\UserRoleEnum;
 use App\Models\Room;
+use App\Models\Ticket;
+use App\Models\TicketStatus;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -122,5 +124,46 @@ class UiControllerTest extends TestCase
             ->getJson('/equipments')
             ->assertOk()
             ->assertJsonStructure(['equipments' => ['data' => []]]);
+    }
+
+    public function test_technical_picket_returns_technicians_with_in_progress_counts(): void
+    {
+        $inProgress = TicketStatus::create(['name' => 'em curso', 'code' => 'EM_CURSO']);
+        $closed = TicketStatus::create(['name' => 'fechada', 'code' => 'FECHADA']);
+
+        $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
+
+        Ticket::factory()->count(2)->create([
+            'assigned_to' => $technician->id,
+            'status_id' => $inProgress->id,
+        ]);
+        Ticket::factory()->count(1)->create([
+            'assigned_to' => $technician->id,
+            'status_id' => $closed->id,
+        ]);
+
+        $inactiveTechnician = $this->createUserWithToken(UserRoleEnum::Technician->value);
+        $inactiveTechnician->update(['active' => false]);
+        Ticket::factory()->create([
+            'assigned_to' => $inactiveTechnician->id,
+            'status_id' => $inProgress->id,
+        ]);
+
+        $this->withHeader('X-Auth-Token', $technician->api_token)
+            ->getJson('/dashboard/picket')
+            ->assertOk()
+            ->assertJsonFragment([
+                'id' => $technician->id,
+                'name' => $technician->name,
+                'in_progress_tickets' => 2,
+            ]);
+
+        $response = $this->withHeader('X-Auth-Token', $technician->api_token)
+            ->getJson('/dashboard/picket')
+            ->json('picket');
+
+        collect($response)->each(function (array $entry) use ($inactiveTechnician): void {
+            $this->assertNotEquals($inactiveTechnician->id, $entry['id']);
+        });
     }
 }
