@@ -35,10 +35,11 @@ final class UserRepository implements UserRepositoryInterface
         $query = User::with($relations)->latest();
 
         // Search filter
-        if ($search) {
-            $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                    ->orWhere('email', 'like', "%{$search}%");
+        if ($search && ! $this->containsSqlInjectionPattern($search)) {
+            $safeSearch = addcslashes($search, "\\%_");
+            $query->where(function ($q) use ($safeSearch) {
+                $q->where('name', 'like', "%{$safeSearch}%")
+                    ->orWhere('email', 'like', "%{$safeSearch}%");
             });
         }
 
@@ -55,6 +56,14 @@ final class UserRepository implements UserRepositoryInterface
         }
 
         return $query->paginate(15);
+    }
+
+    private function containsSqlInjectionPattern(string $search): bool
+    {
+        return preg_match(
+            "/(?:['\"]\s*(?:or|and)\b|;|--|\/\\*|\\*\/|\\b(?:union|select|drop|insert|update|delete)\\b)/i",
+            $search,
+        ) === 1;
     }
 
     /**
