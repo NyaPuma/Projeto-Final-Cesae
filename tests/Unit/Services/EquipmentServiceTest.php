@@ -76,16 +76,20 @@ class EquipmentServiceTest extends FeatureTestCase
     #[Test]
     public function it_filters_by_active_status(): void
     {
-        Equipment::factory()->create(['name' => 'Ativo', 'active' => true]);
-        Equipment::factory()->create(['name' => 'Inativo', 'active' => false]);
+        Equipment::factory()->create(['name' => 'Operacional', 'status' => 'operacional']);
+        Equipment::factory()->create(['name' => 'Em Manutenção', 'status' => 'manutenção']);
+        Equipment::factory()->create(['name' => 'Avariado', 'status' => 'avariado']);
 
-        $active = $this->service->listPaginated(null, 'active');
-        $inactive = $this->service->listPaginated(null, 'inactive');
+        $operational = $this->service->listPaginated(null, 'operacional');
+        $maintenance = $this->service->listPaginated(null, 'manutenção');
+        $broken = $this->service->listPaginated(null, 'avariado');
 
-        $this->assertEquals(1, $active->total());
-        $this->assertEquals('Ativo', $active->items()[0]->name);
-        $this->assertEquals(1, $inactive->total());
-        $this->assertEquals('Inativo', $inactive->items()[0]->name);
+        $this->assertEquals(1, $operational->total());
+        $this->assertEquals('Operacional', $operational->items()[0]->name);
+        $this->assertEquals(1, $maintenance->total());
+        $this->assertEquals('Em Manutenção', $maintenance->items()[0]->name);
+        $this->assertEquals(1, $broken->total());
+        $this->assertEquals('Avariado', $broken->items()[0]->name);
     }
 
     #[Test]

@@ -96,13 +96,13 @@ class ServicesTest extends FeatureTestCase
     public function test_equipment_list_filters_by_search_and_status(): void
     {
         $category = EquipmentCategory::factory()->create();
-        Equipment::factory()->create(['category_id' => $category->id, 'name' => 'Portátil A', 'serial' => 'SN-XYZ', 'active' => true]);
-        Equipment::factory()->create(['category_id' => $category->id, 'name' => 'Impressora B', 'serial' => 'SN-ABC', 'active' => false]);
+        Equipment::factory()->create(['category_id' => $category->id, 'name' => 'Portátil A', 'serial' => 'SN-XYZ', 'status' => 'operacional']);
+        Equipment::factory()->create(['category_id' => $category->id, 'name' => 'Impressora B', 'serial' => 'SN-ABC', 'status' => 'manutenção']);
 
         $this->assertSame(2, $this->equipmentService->listPaginated()->total());
         $this->assertSame(1, $this->equipmentService->listPaginated('SN-XYZ')->total());
-        $this->assertSame(1, $this->equipmentService->listPaginated(null, 'inactive')->total());
-        $this->assertSame(1, $this->equipmentService->listPaginated(null, 'active')->total());
+        $this->assertSame(1, $this->equipmentService->listPaginated(null, 'manutenção')->total());
+        $this->assertSame(1, $this->equipmentService->listPaginated(null, 'operacional')->total());
         $this->assertSame(1, $this->equipmentService->listPaginated('SN-ABC')->total());
     }
 
