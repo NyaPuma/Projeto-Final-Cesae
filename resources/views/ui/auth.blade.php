@@ -13,7 +13,7 @@
         <p class="mt-3 text-sm leading-7 text-[var(--text-soft)]">{{ __('auth.Introduza o seu email e palavra-passe para continuar.') }}</p>
     </div>
 
-    <div id="msg" aria-live="polite" class="mb-6 hidden min-h-[48px] items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 text-sm font-medium text-[var(--text-soft)]"></div>
+    <x-ui.auth.message id="msg" class="mb-6" />
 
     <form id="loginForm" class="space-y-5">
         <div>

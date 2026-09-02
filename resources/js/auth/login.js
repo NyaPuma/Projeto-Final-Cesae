@@ -8,7 +8,7 @@ function updateMsg(message, type) {
     const msg = getMsgEl();
     if (!msg) return;
     msg.classList.remove('hidden');
-    msg.className = 'mb-6 min-h-[48px] items-center justify-center rounded-2xl border px-4 text-sm font-medium transition-all ' +
+    msg.className = 'mb-6 flex min-h-[48px] items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 text-[var(--text-soft)] text-sm font-medium transition-all ' +
         (type === 'error'
             ? 'border-danger/20 bg-danger/5 text-danger'
             : type === 'loading'
