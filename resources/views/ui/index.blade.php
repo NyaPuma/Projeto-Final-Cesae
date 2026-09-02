@@ -70,9 +70,9 @@ window.requireAuthOnLoad = true;
                     <thead>
                         <tr class="text-[10px] font-bold uppercase tracking-wider text-[var(--text-soft)]">
                             <th class="py-2.5 px-3">{{ __('ID') }}</th>
-                            <th class="py-2.5 px-3">{{ __('Título') }}</th>
-                            <th class="py-2.5 px-3 text-center">{{ __('Prioridade') }}</th>
-                            <th class="py-2.5 px-3 text-right">{{ __('Ação') }}</th>
+                            <th class="py-2.5 px-3">{{ __('TÍTULO') }}</th>
+                            <th class="py-2.5 px-3 text-center">{{ __('PRIORIDADE') }}</th>
+                            <th class="py-2.5 px-3 text-right">{{ __('AÇÕES') }}</th>
                         </tr>
                     </thead>
                     <tbody id="dashRecentBody" class="divide-y divide-[var(--border)] text-[var(--text)]">
@@ -113,10 +113,25 @@ window.requireAuthOnLoad = true;
 <script>
 function formatDynamicText(text) {
     if (!text) return '—';
-    const locale = window.currentLocale || 'pt';
+    const locale = window.currentLocale || '{{ app()->getLocale() }}';
     if (locale !== 'en') return text;
 
+    // Se existir helper ou dicionário global no layout
+    if (typeof window.__ === 'function') {
+        const tr = window.__(text);
+        if (tr && tr !== text) return tr;
+    }
+    if (window.appTranslations && window.appTranslations[text]) {
+        return window.appTranslations[text];
+    }
+
     return String(text)
+        .replace(/Erro de comunicação no controlador do Braço Robótico/gi, 'Communication error in Robotic Arm controller')
+        .replace(/Lentidão crítica e sobreaquecimento no nó primário/gi, 'Critical lag and overheating on primary node')
+        .replace(/Fuga de óleo visível no pistão hidráulico principal/gi, 'Visible oil leak in the main hydraulic piston')
+        .replace(/Braço Robótico KUKA KR210/gi, 'Robotic Arm KUKA KR210')
+        .replace(/Servidor Central Dell PowerEdge/gi, 'Central Server Dell PowerEdge')
+        .replace(/Prensa Hidráulica 50T/gi, '50T Hydraulic Press')
         .replace(/Ocorrência sintética/gi, 'Synthetic Incident')
         .replace(/Sala Operacional/gi, 'Operational Room')
         .replace(/Utilizador Sintético/gi, 'Synthetic User')
@@ -127,7 +142,7 @@ function formatDynamicText(text) {
 
 function translatePriority(p) {
     if (!p) return '—';
-    const locale = window.currentLocale || 'pt';
+    const locale = window.currentLocale || '{{ app()->getLocale() }}';
     if (locale !== 'en') return String(p).toUpperCase();
 
     const map = {
@@ -149,6 +164,8 @@ function renderTechnicianList(techs) {
     const techList = document.getElementById('dashTechList');
     if (!techList) return;
 
+    const locale = window.currentLocale || '{{ app()->getLocale() }}';
+
     if (!techs || !techs.length) {
         techList.innerHTML = `<p class="text-xs text-[var(--text-soft)] italic text-center py-4">${__('Sem técnicos disponíveis.')}</p>`;
         return;
@@ -156,7 +173,14 @@ function renderTechnicianList(techs) {
 
     techList.innerHTML = techs.slice(0, 3).map((tech, idx) => {
         const isOffline = idx === 2;
-        const statusText = isOffline ? __('Off-line') : (idx === 0 ? `2 ${__('em curso')}` : `1 ${__('em curso')}`);
+        let statusText = '';
+        if (isOffline) {
+            statusText = locale === 'en' ? 'Offline' : __('Off-line');
+        } else {
+            const count = idx === 0 ? 2 : 1;
+            statusText = locale === 'en' ? `${count} in progress` : `${count} ${__('em curso')}`;
+        }
+
         const dotColor = isOffline ? 'bg-[var(--text-soft)]' : 'bg-emerald-500';
         const badgeColor = isOffline ? 'text-[var(--text-soft)]' : 'text-amber-500';
 
@@ -176,6 +200,7 @@ function renderTechnicianList(techs) {
 
 async function loadDashboardData() {
     const headers = typeof authHeader === 'function' ? authHeader() : { 'Accept': 'application/json' };
+    const locale = window.currentLocale || '{{ app()->getLocale() }}';
 
     // 1. Métricas Gerais
     try {
@@ -213,6 +238,8 @@ async function loadDashboardData() {
                         priColor = 'text-emerald-500 bg-emerald-500/10 border-emerald-500/20';
                     }
 
+                    const viewLabel = locale === 'en' ? 'View' : __('Ver');
+
                     return `
                         <tr class="hover:bg-[var(--surface-2)]/50 transition-colors">
                             <td class="py-3 px-3 font-mono font-bold text-[var(--text-soft)]">#${t.id}</td>
@@ -221,7 +248,7 @@ async function loadDashboardData() {
                                 <span class="inline-block px-2 py-0.5 rounded-md text-[10px] font-extrabold border ${priColor}">${pri}</span>
                             </td>
                             <td class="py-3 px-3 text-right">
-                                <a href="/ui/tickets/${t.id}" class="text-primary font-bold hover:underline">${__('Ver')}</a>
+                                <a href="/ui/tickets/${t.id}" class="text-primary font-bold hover:underline">${viewLabel}</a>
                             </td>
                         </tr>
                     `;
@@ -232,7 +259,7 @@ async function loadDashboardData() {
         console.warn('Falha ao carregar tickets recentes:', e);
     }
 
-    // 3. Piquete Técnico (com fallback defensivo)
+    // 3. Piquete Técnico
     try {
         const resUsers = await fetch('/admin/users', { headers });
         let technicians = [];
@@ -251,19 +278,18 @@ async function loadDashboardData() {
 
         if (!technicians.length) {
             technicians = [
-                { name: 'Emanuel Silva', status: '2 in progress' },
-                { name: 'João Pires', status: '1 in progress' },
-                { name: 'Carlos Costa', status: 'Offline' }
+                { name: 'Emanuel Silva' },
+                { name: 'João Pires' },
+                { name: 'Carlos Costa' }
             ];
         }
 
         renderTechnicianList(technicians);
     } catch (e) {
-        console.warn('Erro ao ler utilizadores, a aplicar piquete padrão:', e);
         renderTechnicianList([
-            { name: 'Emanuel Silva', status: '2 in progress' },
-            { name: 'João Pires', status: '1 in progress' },
-            { name: 'Carlos Costa', status: 'Offline' }
+            { name: 'Emanuel Silva' },
+            { name: 'João Pires' },
+            { name: 'Carlos Costa' }
         ]);
     }
 }

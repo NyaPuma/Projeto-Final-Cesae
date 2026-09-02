@@ -40,9 +40,12 @@
             "Título": "Title",
             "Prioridade": "Priority",
             "Ação": "Action",
+            "AÇÃO": "ACTION",
+            "Ações": "Actions",
+            "AÇÕES": "ACTIONS",
             "Ver": "View",
 
-            // Prioridades (Maiúsculas, minúsculas e capitalizadas)
+            // Prioridades
             "baixa": "Low",
             "média": "Medium",
             "alta": "High",
@@ -276,7 +279,7 @@
                         
                         {{-- Seletor de Idioma --}}
                         <div class="relative inline-block text-left" id="langSelectorDropdown">
-                            <button type="button" onclick="toggleLangDropdown()"
+                            <button type="button" onclick="toggleLangDropdown(event)"
                                 class="inline-flex h-10 px-3 items-center justify-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface)] text-sm text-[var(--text)] shadow-sm transition-all hover:bg-[var(--surface-2)] cursor-pointer"
                                 aria-label="{{ __('Alterar Idioma') }}" aria-haspopup="true" aria-expanded="false"
                                 id="langDropdownBtn">
@@ -489,10 +492,14 @@
             }, 300);
         }
 
-        function toggleLangDropdown() {
+        function toggleLangDropdown(event) {
+            if (event) {
+                event.stopPropagation();
+            }
             const dropdown = document.getElementById('langDropdown');
             const btn = document.getElementById('langDropdownBtn');
             if (!dropdown) return;
+
             const isHidden = dropdown.classList.contains('hidden');
             if (isHidden) {
                 dropdown.classList.remove('hidden');

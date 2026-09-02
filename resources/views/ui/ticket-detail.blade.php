@@ -1,4 +1,4 @@
-@extends('ui.layout')
+﻿@extends('ui.layout')
 
 @section('content')
 <script>
@@ -18,16 +18,15 @@ window.requireAuthOnLoad = true;
         </a>
     </div>
 
-    {{-- Grelha Principal de Detalhes (1.2fr / 0.8fr) --}}
+    {{-- Grelha Principal de Detalhes --}}
     <div class="grid gap-4 xl:grid-cols-[1.2fr_0.8fr] items-start">
 
-        {{-- COLUNA ESQUERDA (Informação Principal + Comentários + Evidências) --}}
+        {{-- COLUNA ESQUERDA --}}
         <div class="space-y-4">
 
-            {{-- 1. Cartão Principal do Ticket (Compacto) --}}
+            {{-- 1. Cartão Principal do Ticket --}}
             <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm space-y-3">
                 
-                {{-- Topo com Data de Criação e Badge de Estado --}}
                 <div class="flex items-center justify-between border-b border-[var(--border)] pb-2.5">
                     <span id="ticketCreatedAt" class="text-[9px] font-mono font-bold uppercase tracking-wider text-[var(--text-soft)]">
                         {{ __('CRIADO A: —') }}
@@ -35,7 +34,6 @@ window.requireAuthOnLoad = true;
                     <div id="ticketStatusBadgeContainer"></div>
                 </div>
 
-                {{-- Título e Descrição --}}
                 <div>
                     <h2 id="ticketTitleText" class="text-base font-black text-[var(--text)]">—</h2>
                     <div class="mt-2">
@@ -71,7 +69,7 @@ window.requireAuthOnLoad = true;
             <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm space-y-3">
                 <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)] border-b border-[var(--border)] pb-2">{{ __('Histórico & Comentários') }}</h3>
                 
-                <div id="commentsSection" class="text-xs text-[var(--text-soft)] max-h-28 overflow-y-auto pr-1 space-y-2">
+                <div id="commentsSection" class="text-xs text-[var(--text-soft)] max-h-40 overflow-y-auto pr-1 space-y-2">
                     <p class="italic py-1 text-center text-[11px]">{{ __('A carregar histórico...') }}</p>
                 </div>
 
@@ -90,20 +88,20 @@ window.requireAuthOnLoad = true;
                     <span class="text-[9px] font-bold text-[var(--text-soft)] uppercase tracking-wider">Anexos</span>
                 </div>
                 
-                <form id="photoForm" class="flex items-center gap-2 border-b border-[var(--border)] pb-3">
+                <form id="photoForm" onsubmit="uploadPhoto(event)" class="flex items-center gap-2 border-b border-[var(--border)] pb-3">
                     <label for="photoInput" class="cursor-pointer rounded-xl bg-[var(--surface-2)] border border-[var(--border)] px-3 py-1.5 text-xs font-semibold text-[var(--text)] hover:bg-[var(--border)] transition whitespace-nowrap">
                         📷 {{ __('Escolher') }}
                     </label>
                     <input id="photoInput" type="file" accept="image/*" class="hidden" onchange="updatePhotoName(this)">
                     <span id="photoFileName" class="text-xs text-[var(--text-soft)] truncate flex-1 block">{{ __('Nenhum ficheiro') }}</span>
                     
-                    <button type="submit" class="py-1.5 px-3 bg-[var(--surface-2)] hover:bg-[var(--border)] text-xs font-bold text-[var(--text)] border border-[var(--border)] rounded-xl transition cursor-pointer whitespace-nowrap">
+                    <button type="submit" id="btnUploadPhoto" class="py-1.5 px-3 bg-primary hover:opacity-90 text-xs font-bold text-white rounded-xl transition cursor-pointer whitespace-nowrap">
                         {{ __('Enviar') }}
                     </button>
                 </form>
 
                 <div id="photosSection" class="text-xs text-[var(--text-soft)]">
-                    <p class="italic text-[11px]">{{ __('Nenhuma evidência carregada.') }}</p>
+                    <p class="italic text-[11px]">{{ __('A carregar imagens...') }}</p>
                 </div>
             </div>
 
@@ -112,7 +110,7 @@ window.requireAuthOnLoad = true;
         {{-- COLUNA DIREITA (Painéis de Ação / Controlo) --}}
         <div class="space-y-4">
 
-            {{-- 👑 PAINEL DE ADMINISTRAÇÃO 1: Atribuição de Técnico --}}
+            {{-- PAINEL DE ADMINISTRAÇÃO 1: Atribuição de Técnico --}}
             @if(isset($user) && $user && $user->isAdmin())
             <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm space-y-3">
                 <div class="flex items-center justify-between border-b border-[var(--border)] pb-2">
@@ -149,7 +147,7 @@ window.requireAuthOnLoad = true;
                 </div>
             </div>
 
-            {{-- 👑 PAINEL DE ADMINISTRAÇÃO 2: Validação Orçamental --}}
+            {{-- PAINEL DE ADMINISTRAÇÃO 2: Validação Orçamental --}}
             <div id="adminBudgetApprovalCard" class="hidden rounded-2xl border border-amber-500/40 bg-[var(--surface)] p-4 shadow-sm space-y-3">
                 <div class="flex items-center justify-between border-b border-[var(--border)] pb-2">
                     <span class="px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-amber-500 bg-amber-500/10 border border-amber-500/20 rounded-lg">
@@ -176,10 +174,9 @@ window.requireAuthOnLoad = true;
             </div>
             @endif
 
-            {{-- 🛠️ PAINÉIS DO TÉCNICO --}}
+            {{-- PAINÉIS DO TÉCNICO --}}
             @if(isset($user) && $user && $user->isTechnician())
             
-            {{-- 1. Assumir Ticket Livre (COM GATILHO ONCLICK DIRETO) --}}
             <div id="techClaimCard" class="hidden rounded-2xl border border-primary/30 bg-[var(--surface)] p-4 shadow-sm space-y-3">
                 <div class="flex items-center justify-between border-b border-[var(--border)] pb-2">
                     <span class="text-[9px] font-bold uppercase tracking-widest text-primary bg-primary/10 px-2 py-0.5 rounded-lg">{{ __('Operacional') }}</span>
@@ -196,7 +193,6 @@ window.requireAuthOnLoad = true;
                 </button>
             </div>
 
-            {{-- 2. Avaliação Orçamental Detalhada --}}
             <div id="techBudgetCard" class="hidden rounded-2xl border border-orange-500/30 bg-[var(--surface)] p-4 shadow-sm space-y-3">
                 <div class="flex items-center justify-between border-b border-[var(--border)] pb-2">
                     <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text)]">1. Avaliação Orçamental Detalhada</h3>
@@ -233,7 +229,6 @@ window.requireAuthOnLoad = true;
                 </div>
             </div>
 
-            {{-- 3. Aguardar Aprovação (>100€) --}}
             <div id="techPendingApprovalCard" class="hidden rounded-2xl border border-amber-500/30 bg-amber-500/5 p-4 shadow-sm space-y-2 text-center">
                 <div class="w-8 h-8 rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center mx-auto text-sm font-bold">⏳</div>
                 <h3 class="text-xs font-bold text-[var(--text)]">{{ __('Aguardar Validação Orçamental') }}</h3>
@@ -242,7 +237,6 @@ window.requireAuthOnLoad = true;
                 </p>
             </div>
 
-            {{-- 4. Finalização da Intervenção --}}
             <div id="techWorkCard" class="hidden rounded-2xl border border-emerald-500/30 bg-[var(--surface)] p-4 shadow-sm space-y-3">
                 <div class="flex items-center justify-between border-b border-[var(--border)] pb-2">
                     <span class="text-[9px] font-bold uppercase tracking-widest text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded-lg">{{ __('A minha intervenção') }}</span>
@@ -267,7 +261,6 @@ window.requireAuthOnLoad = true;
                 </div>
             </div>
 
-            {{-- Modo Leitura --}}
             <div id="techReadOnlyCard" class="hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm space-y-2">
                 <div class="flex items-center justify-between border-b border-[var(--border)] pb-2">
                     <span class="text-[9px] font-bold uppercase tracking-widest text-slate-400 bg-slate-500/10 px-2 py-0.5 rounded-lg">{{ __('Estado') }}</span>
@@ -283,6 +276,14 @@ window.requireAuthOnLoad = true;
     </div>
 
     <div id="ticketMessage" class="min-h-5 text-xs font-medium px-1"></div>
+</div>
+
+{{-- Modal para Visualizar Imagem Ampliada --}}
+<div id="imagePreviewModal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4" onclick="this.classList.add('hidden')">
+    <div class="relative max-w-4xl max-h-[90vh] flex flex-col items-center">
+        <img id="previewModalImg" src="" alt="Imagem ampliada" class="max-w-full max-h-[85vh] rounded-2xl shadow-2xl object-contain">
+        <span class="text-white text-xs mt-3 opacity-70">{{ __('Clique em qualquer lugar para fechar') }}</span>
+    </div>
 </div>
 @endsection
 
@@ -321,6 +322,103 @@ function authHeader() {
 function updatePhotoName(input) {
     const label = document.getElementById('photoFileName');
     label.textContent = input.files && input.files[0] ? input.files[0].name : "{{ __('Nenhum ficheiro') }}";
+}
+
+function openImageModal(url) {
+    const modal = document.getElementById('imagePreviewModal');
+    const img = document.getElementById('previewModalImg');
+    if (modal && img) {
+        img.src = url;
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    }
+}
+
+function renderPhotos(ticket) {
+    const sec = document.getElementById('photosSection');
+    if (!sec) return;
+
+    const photos = [];
+
+    // 1. Fotos do relacionamento attachments
+    if (ticket.attachments && Array.isArray(ticket.attachments)) {
+        ticket.attachments.forEach(att => {
+            if (att.path) {
+                const url = att.path.startsWith('http') ? att.path : `/storage/${att.path}`;
+                photos.push({ url, name: att.file_name || 'Anexo' });
+            }
+        });
+    }
+
+    // 2. Foto direta do campo photo_path ou image_path se não duplicada
+    const directPath = ticket.photo_path || ticket.image_path;
+    if (directPath) {
+        const directUrl = directPath.startsWith('http') ? directPath : `/storage/${directPath}`;
+        if (!photos.some(p => p.url === directUrl)) {
+            photos.unshift({ url: directUrl, name: 'Foto Original' });
+        }
+    }
+
+    if (photos.length === 0) {
+        sec.innerHTML = `<p class="italic text-[11px] text-[var(--text-soft)] text-center py-2">{{ __('Nenhuma evidência carregada.') }}</p>`;
+        return;
+    }
+
+    sec.innerHTML = `
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 pt-1">
+            ${photos.map(p => `
+                <div class="group relative rounded-xl border border-[var(--border)] overflow-hidden bg-[var(--surface-2)] aspect-video cursor-pointer" onclick="openImageModal('${p.url}')">
+                    <img src="${p.url}" alt="${p.name}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" onerror="this.src='/images/placeholder-image.png'">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="text-white text-[10px] font-bold">🔍 {{ __('Ver') }}</span>
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
+
+async function uploadPhoto(e) {
+    e.preventDefault();
+    const input = document.getElementById('photoInput');
+    if (!input.files || !input.files[0]) {
+        showMessage("{{ __('Selecione um ficheiro de imagem primeiro.') }}", true);
+        return;
+    }
+
+    const btn = document.getElementById('btnUploadPhoto');
+    btn.disabled = true;
+    btn.innerText = "{{ __('A carregar...') }}";
+
+    const formData = new FormData();
+    formData.append('photo', input.files[0]);
+    formData.append('image', input.files[0]);
+
+    try {
+        const headers = authHeader();
+        delete headers['Content-Type'];
+
+        const res = await fetch(`/tickets/${ticketId}/photos`, {
+            method: 'POST',
+            headers: headers,
+            body: formData
+        });
+
+        if (res.ok) {
+            showMessage("{{ __('Fotografia adicionada com sucesso!') }}");
+            input.value = '';
+            document.getElementById('photoFileName').textContent = "{{ __('Nenhum ficheiro') }}";
+            await fetchTicket();
+        } else {
+            const data = await res.json().catch(() => ({}));
+            showMessage(data.message || "{{ __('Erro ao enviar imagem.') }}", true);
+        }
+    } catch (err) {
+        showMessage("{{ __('Erro na comunicação com o servidor.') }}", true);
+    } finally {
+        btn.disabled = false;
+        btn.innerText = "{{ __('Enviar') }}";
+    }
 }
 
 function addBudgetItemRow(desc = '', qty = 1, price = 0, type = 'labor') {
@@ -500,7 +598,7 @@ async function fetchTicket() {
     const data = await res.json();
     const ticket = data.ticket || data;
 
-    // Dados gerais
+    // 1. Dados gerais
     document.getElementById('pageMainTitle').innerText = `Detalhes do Ticket #${ticket.id}`;
     document.getElementById('ticketCreatedAt').innerText = `CRIADO A: ${ticket.created_at || '—'}`;
     document.getElementById('ticketTitleText').innerText = ticket.title || '—';
@@ -518,7 +616,10 @@ async function fetchTicket() {
         </span>
     `;
 
-    // CONTROLADOR DO FLUXO TÉCNICO
+    // 2. Renderizar fotografias e evidências
+    renderPhotos(ticket);
+
+    // 3. Controlador do Fluxo Técnico
     const assignedTechId = ticket.assigned_to || (ticket.technician ? ticket.technician.id : null);
     
     const techClaimCard = document.getElementById('techClaimCard');
@@ -558,7 +659,7 @@ async function fetchTicket() {
         }
     }
 
-    // CONTROLADOR DO PAINEL DO ADMIN (Validação de Orçamento)
+    // 4. Controlador do Painel do Admin
     const adminBudgetCard = document.getElementById('adminBudgetApprovalCard');
     if (adminBudgetCard) {
         const statusSlug = (statusName || '').toLowerCase();
@@ -641,7 +742,6 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchComments();
     loadTechnicians();
 
-    // Event listener do formulário de comentários
     document.getElementById('commentForm')?.addEventListener('submit', async (e) => {
         e.preventDefault();
         const text = document.getElementById('commentText').value.trim();
@@ -658,7 +758,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Event listeners para o painel de atribuição de Administrador
     document.getElementById('btnAssignManual')?.addEventListener('click', async () => {
         const techId = document.getElementById('assignTechnicianSelect')?.value;
         if (!techId) { showMessage("{{ __('Selecione um técnico.') }}", true); return; }
