@@ -220,7 +220,7 @@
 
                     <input type="hidden" id="estimatedBudgetInput" name="estimatedBudget">
 
-                    <button type="submit" class="w-full py-2.5 px-3 bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold rounded-xl shadow-sm transition cursor-pointer">
+                    <button type="submit" id="btnSubmitBudget" class="w-full py-2.5 px-3 bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold rounded-xl shadow-sm transition cursor-pointer">
                         {{ __('Submeter Orçamento') }}
                     </button>
                 </form>
@@ -307,7 +307,7 @@ function showMessage(msg, isError = false) {
     if (!el) return;
     el.innerText = msg;
     el.className = `min-h-5 text-xs font-medium px-1 ${isError ? 'text-rose-400' : 'text-emerald-400'}`;
-    setTimeout(() => { if (el) el.innerText = ''; }, 5000);
+    setTimeout(() => { if (el) el.innerText = ''; }, 6000);
 }
 
 function authHeader() {
@@ -486,40 +486,77 @@ async function submitBudget(e) {
         return;
     }
 
-    const budget_details = [];
+    const items = [];
     rows.forEach(row => {
-        budget_details.push({
-            type: row.querySelector('select[name="type"]')?.value || 'labor',
-            description: row.querySelector('input[name="description"]')?.value || 'Item de intervenção',
-            quantity: parseFloat(row.querySelector('input[name="quantity"]')?.value) || 1,
-            unit_price: parseFloat(row.querySelector('input[name="unit_price"]')?.value) || 0
+        const qty = parseFloat(row.querySelector('input[name="quantity"]')?.value) || 1;
+        const price = parseFloat(row.querySelector('input[name="unit_price"]')?.value) || 0;
+        const desc = (row.querySelector('input[name="description"]')?.value || 'Item de intervenção').trim();
+        const type = row.querySelector('select[name="type"]')?.value || 'labor';
+
+        items.push({
+            type: type,
+            description: desc,
+            quantity: qty,
+            unit_price: price,
+            price: price,
+            total: parseFloat((qty * price).toFixed(2))
         });
     });
 
     calculateBudgetTotal();
-    const estimatedBudget = parseFloat(document.getElementById('estimatedBudgetInput')?.value) || 0;
+    const total = parseFloat(document.getElementById('estimatedBudgetInput')?.value) || 0;
 
-    if (estimatedBudget <= 0) {
+    if (total <= 0) {
         showMessage("{{ __('O valor total deve ser superior a 0.00€.') }}", true);
         return;
     }
 
+    const btn = document.getElementById('btnSubmitBudget');
+    if (btn) {
+        btn.disabled = true;
+        btn.innerText = "{{ __('A submeter...') }}";
+    }
+
+    const payload = {
+        estimated_cost: total,
+        estimated_budget: total,
+        estimatedBudget: total,
+        budget_amount: total,
+        amount: total,
+        cost: total,
+        items: items,
+        budget_details: items,
+        materials: items
+    };
+
     try {
-        const res = await fetch(`/tickets/${ticketId}/budget`, {
+        // Envio para a rota de submissão do técnico registada em routes/web.php
+        const res = await fetch(`/tickets/${ticketId}/submit-budget`, {
             method: 'POST',
             headers: { ...authHeader(), 'Content-Type': 'application/json' },
-            body: JSON.stringify({ estimatedBudget, budget_details })
+            body: JSON.stringify(payload)
         });
 
-        const data = await res.json();
+        const data = await res.json().catch(() => ({}));
+
         if (res.ok) {
             showMessage(data.message || "{{ __('Orçamento submetido com sucesso!') }}");
             await fetchTicket();
         } else {
-            showMessage(data.message || "{{ __('Erro ao submeter orçamento.') }}", true);
+            if (data.errors) {
+                const validationMsgs = Object.values(data.errors).flat().join(' | ');
+                showMessage(validationMsgs, true);
+            } else {
+                showMessage(data.message || "{{ __('Erro ao submeter orçamento.') }}", true);
+            }
         }
-    } catch (e) {
+    } catch (err) {
         showMessage("{{ __('Erro ao comunicar com o servidor.') }}", true);
+    } finally {
+        if (btn) {
+            btn.disabled = false;
+            btn.innerText = "{{ __('Submeter Orçamento') }}";
+        }
     }
 }
 

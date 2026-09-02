@@ -154,6 +154,30 @@ function formatDynamicText(text) {
         .replace(/Setor/gi, 'Sector');
 }
 
+/**
+ * Avalia se o equipamento está operacional considerando tickets em aberto ou inativação
+ */
+function isEquipmentOperational(eq) {
+    // 1. Campo explícito calculado pelo controlador
+    if (typeof eq.is_operational !== 'undefined') {
+        return Boolean(eq.is_operational);
+    }
+
+    // 2. Baseado na contagem de tickets ativos
+    if (typeof eq.active_tickets_count !== 'undefined') {
+        const hasTickets = parseInt(eq.active_tickets_count) > 0;
+        const isActive = eq.active !== 0 && eq.active !== false && eq.active !== '0';
+        return !hasTickets && isActive;
+    }
+
+    // 3. Fallbacks de compatibilidade
+    return (
+        (eq.active === 1 || eq.active === '1' || eq.active === true) &&
+        eq.status !== 'inactive' &&
+        eq.status !== 'out_of_service'
+    );
+}
+
 async function loadEquipments() {
     const tableBody = document.getElementById('equipmentTableBody');
     if (!tableBody) return;
@@ -161,19 +185,23 @@ async function loadEquipments() {
     tableBody.innerHTML = `<tr><td colspan="5" class="px-5 py-12 text-center text-xs text-[var(--text-soft)]"><div class="flex items-center justify-center gap-2"><span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>${__('A carregar inventário de equipamentos...')}</div></td></tr>`;
 
     try {
-        const res = await fetch('/equipments', { headers: authHeader() });
+        const q = encodeURIComponent(document.getElementById('filter_q')?.value?.trim() || '');
+        const status = encodeURIComponent(document.getElementById('filter_status')?.value ?? '');
+        
+        const url = `/equipments?per_page=100&q=${q}&status=${status}`;
+        const res = await fetch(url, { headers: authHeader() });
         if (!res.ok) throw new Error(__('Não foi possível carregar os equipamentos de momento.'));
         
         const data = await res.json();
         
-        if (Array.isArray(data)) {
-            equipmentData = data;
+        if (data.equipments && Array.isArray(data.equipments.data)) {
+            equipmentData = data.equipments.data;
+        } else if (Array.isArray(data.data)) {
+            equipmentData = data.data;
         } else if (data.equipments && Array.isArray(data.equipments)) {
             equipmentData = data.equipments;
-        } else if (data.data && Array.isArray(data.data)) {
-            equipmentData = data.data;
-        } else if (data.equipments && data.equipments.data && Array.isArray(data.equipments.data)) {
-            equipmentData = data.equipments.data;
+        } else if (Array.isArray(data)) {
+            equipmentData = data;
         } else {
             equipmentData = [];
         }
@@ -187,7 +215,7 @@ async function loadEquipments() {
 function renderTable() {
     const tableBody = document.getElementById('equipmentTableBody');
     const resultsCount = document.getElementById('resultsCount');
-    const q = document.getElementById('filter_q')?.value.toLowerCase() || '';
+    const q = (document.getElementById('filter_q')?.value || '').toLowerCase().trim();
     const statusFilter = document.getElementById('filter_status')?.value || '';
 
     if (!Array.isArray(equipmentData)) {
@@ -195,8 +223,21 @@ function renderTable() {
     }
 
     let filtered = equipmentData.filter(eq => {
-        const matchQ = !q || (eq.name && eq.name.toLowerCase().includes(q)) || (eq.serial_number && eq.serial_number.toLowerCase().includes(q)) || (eq.code && eq.code.toLowerCase().includes(q));
-        const matchStatus = statusFilter === '' || String(eq.active ?? eq.status) === statusFilter;
+        const matchQ = !q || 
+            (eq.name && eq.name.toLowerCase().includes(q)) || 
+            (eq.serial_number && eq.serial_number.toLowerCase().includes(q)) || 
+            (eq.serial && eq.serial.toLowerCase().includes(q)) || 
+            (eq.code && eq.code.toLowerCase().includes(q));
+
+        const isOp = isEquipmentOperational(eq);
+
+        let matchStatus = true;
+        if (statusFilter === '1') {
+            matchStatus = isOp;
+        } else if (statusFilter === '0') {
+            matchStatus = !isOp;
+        }
+
         return matchQ && matchStatus;
     });
 
@@ -212,12 +253,12 @@ function renderTable() {
     const paginated = filtered.slice(start, start + ROWS_PER_PAGE);
 
     tableBody.innerHTML = paginated.map(eq => {
-        const isOp = eq.active == 1 || eq.status === 'active' || eq.status === 'operational';
+        const isOp = isEquipmentOperational(eq);
         const statusBadge = isOp 
             ? `<span class="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-emerald-500/10 text-emerald-800 dark:text-emerald-400 border border-emerald-500/20 uppercase tracking-tight">${__('Operacional')}</span>`
             : `<span class="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-rose-500/10 text-rose-800 dark:text-rose-400 border border-rose-500/20 uppercase tracking-tight">${__('Fora de Serviço')}</span>`;
 
-        const serial = eq.serial_number || eq.code || '—';
+        const serial = eq.serial_number || eq.serial || eq.code || '—';
         const roomName = eq.room ? formatDynamicText(eq.room.name) : '—';
         const eqName = formatDynamicText(eq.name || '—');
 
@@ -272,8 +313,8 @@ function openEquipmentModal(eq) {
     document.getElementById('equipmentModalTitle').textContent = __('Editar Equipamento');
     document.getElementById('equipmentId').value = eq.id;
     document.getElementById('eqName').value = eq.name || '';
-    document.getElementById('eqSerial').value = eq.serial_number || eq.code || '';
-    document.getElementById('eqStatus').value = (eq.active == 1 || eq.status === 'active') ? '1' : '0';
+    document.getElementById('eqSerial').value = eq.serial_number || eq.serial || eq.code || '';
+    document.getElementById('eqStatus').value = isEquipmentOperational(eq) ? '1' : '0';
     modal.classList.remove('hidden');
     setTimeout(() => modal.classList.remove('opacity-0'), 10);
 }
@@ -308,15 +349,15 @@ async function saveEquipment(e) {
     }
 }
 
-document.getElementById('btnSearch').addEventListener('click', () => { currentPage = 1; renderTable(); });
+document.getElementById('btnSearch').addEventListener('click', () => { currentPage = 1; loadEquipments(); });
 document.getElementById('btnClear').addEventListener('click', () => {
     document.getElementById('filter_q').value = '';
     document.getElementById('filter_status').value = '';
     currentPage = 1;
-    renderTable();
+    loadEquipments();
 });
-document.getElementById('filter_q').addEventListener('keydown', e => { if (e.key === 'Enter') { currentPage = 1; renderTable(); } });
-document.getElementById('filter_status').addEventListener('change', () => { currentPage = 1; renderTable(); });
+document.getElementById('filter_q').addEventListener('keydown', e => { if (e.key === 'Enter') { currentPage = 1; loadEquipments(); } });
+document.getElementById('filter_status').addEventListener('change', () => { currentPage = 1; loadEquipments(); });
 
 window.addEventListener('load', loadEquipments);
 </script>

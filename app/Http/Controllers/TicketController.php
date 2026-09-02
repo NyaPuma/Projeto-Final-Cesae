@@ -51,7 +51,7 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user() ?? Auth::user() ?? $this->authenticatedUser($request);
 
         $data = $request->only(['title', 'description', 'priority', 'equipment_id', 'room_id']);
 
@@ -157,7 +157,7 @@ class TicketController extends Controller
      */
     public function search(Request $request)
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user() ?? Auth::user() ?? $this->authenticatedUser($request);
 
         $query = Ticket::with(['equipment', 'room', 'user', 'status', 'technician', 'attachments']);
 
@@ -169,7 +169,6 @@ class TicketController extends Controller
             });
         }
 
-        // Filtro por Sala adicionado
         if ($request->filled('room_id')) {
             $query->where('room_id', $request->room_id);
         }
@@ -265,7 +264,7 @@ class TicketController extends Controller
      */
     public function assignTechnician(Request $request, int $id)
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user() ?? Auth::user() ?? $this->authenticatedUser($request);
         $this->requireRole($user, [
             User::ROLE_ADMIN,
         ]);
@@ -304,7 +303,7 @@ class TicketController extends Controller
      */
     public function reopenTicket(Request $request, int $id)
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user() ?? Auth::user() ?? $this->authenticatedUser($request);
         $this->requireRole($user, [
             User::ROLE_TECHNICIAN,
             User::ROLE_ADMIN,
@@ -324,7 +323,7 @@ class TicketController extends Controller
      */
     public function cancelTicket(Request $request, int $id)
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user() ?? Auth::user() ?? $this->authenticatedUser($request);
 
         if (! $user->isCommon()) {
             return response()->json(['message' => 'Acesso negado'], 403);
@@ -353,7 +352,7 @@ class TicketController extends Controller
      */
     public function addComment(Request $request, int $id)
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user() ?? Auth::user() ?? $this->authenticatedUser($request);
         $ticket = Ticket::findOrFail($id);
 
         if ($user->isCommon() && (int) $ticket->user_id !== (int) $user->id) {
@@ -390,7 +389,7 @@ class TicketController extends Controller
      */
     public function listComments(Request $request, int $id)
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user() ?? Auth::user() ?? $this->authenticatedUser($request);
         $this->requireRole($user, [
             User::ROLE_TECHNICIAN,
             User::ROLE_ADMIN,
@@ -406,7 +405,7 @@ class TicketController extends Controller
      */
     public function uploadPhoto(Request $request, int $id)
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user() ?? Auth::user() ?? $this->authenticatedUser($request);
         $ticket = Ticket::findOrFail($id);
 
         if ($user->isCommon() && (int) $ticket->user_id !== (int) $user->id) {
@@ -430,7 +429,6 @@ class TicketController extends Controller
         $path = $file->store('ticket_photos', 'public');
         $url = asset("storage/{$path}");
 
-        // Atualizar o campo na própria tabela de tickets
         if (Schema::hasColumn('tickets', 'photo_path')) {
             $ticket->photo_path = $path;
             $ticket->save();
@@ -472,7 +470,7 @@ class TicketController extends Controller
      */
     public function deletePhoto(Request $request, int $id, int $photoId)
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user() ?? Auth::user() ?? $this->authenticatedUser($request);
         $ticket = Ticket::findOrFail($id);
 
         $attachment = TicketAttachment::where('ticket_id', $ticket->id)
@@ -532,7 +530,7 @@ class TicketController extends Controller
      */
     public function startTicket(Request $request, int $id)
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user() ?? Auth::user() ?? $this->authenticatedUser($request);
         $this->requireRole($user, [
             User::ROLE_TECHNICIAN,
             User::ROLE_ADMIN,
@@ -619,7 +617,7 @@ class TicketController extends Controller
      */
     public function closeTicket(Request $request, int $id)
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user() ?? Auth::user() ?? $this->authenticatedUser($request);
         $this->requireRole($user, [
             User::ROLE_TECHNICIAN,
             User::ROLE_ADMIN,
@@ -632,21 +630,18 @@ class TicketController extends Controller
             return response()->json(['message' => 'Apenas tickets em "Em Curso" podem ser fechados.'], 422);
         }
 
-        $request->validate([
-            'minutes_spent'    => ['nullable', 'integer', 'min:0'],
-            'cost'             => ['nullable', 'numeric', 'min:0'],
-            'technical_report' => ['nullable', 'string', 'max:5000'],
-        ]);
+        $cost = $request->input('actual_cost') ?? $request->input('cost');
+        $report = $request->input('report') ?? $request->input('technical_report');
 
-        $closedStatusId = Ticket::getStatusIdByName(Ticket::STATUS_CLOSED);
-
-        $ticket->update([
-            'status_id'        => $closedStatusId,
+        $ticketData = [
+            'status_id'        => Ticket::getStatusIdByName(Ticket::STATUS_CLOSED),
             'closed_at'        => now(),
             'minutes_spent'    => $request->minutes_spent,
-            'cost'             => $request->cost,
-            'technical_report' => $request->technical_report,
-        ]);
+            'cost'             => $cost,
+            'technical_report' => $report,
+        ];
+
+        $ticket->update(array_filter($ticketData, fn($v) => !is_null($v)));
 
         try {
             event(new TicketStatusUpdatedBroadcast($ticket, $oldStatus, Ticket::STATUS_CLOSED));
@@ -665,7 +660,7 @@ class TicketController extends Controller
      */
     public function scheduleTicket(Request $request, int $id)
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user() ?? Auth::user() ?? $this->authenticatedUser($request);
 
         $ticket = Ticket::findOrFail($id);
 
@@ -696,7 +691,7 @@ class TicketController extends Controller
      */
     public function openTickets(Request $request)
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user() ?? Auth::user() ?? $this->authenticatedUser($request);
         $this->requireRole($user, [
             User::ROLE_TECHNICIAN,
             User::ROLE_ADMIN,
@@ -714,7 +709,7 @@ class TicketController extends Controller
 
     public function calendarView(Request $request)
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user() ?? Auth::user() ?? $this->authenticatedUser($request);
 
         return view('calendar', ['user' => $user]);
     }
@@ -724,7 +719,7 @@ class TicketController extends Controller
      */
     public function calendarEvents(Request $request)
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user() ?? Auth::user() ?? $this->authenticatedUser($request);
         $events = Ticket::getScheduledEvents();
 
         return response()->json($events);
@@ -815,30 +810,55 @@ class TicketController extends Controller
 
     /**
      * Submete o custo estimado pelo técnico e aciona o fluxo orçamental.
+     * Suporta de forma flexível: estimatedBudget, estimated_cost, budget_amount e items/budget_details.
      */
     public function submitEstimatedBudget(Request $request, int $id)
     {
         try {
-            $user = $this->authenticatedUser($request);
+            $user = $request->user() ?? Auth::user() ?? $this->authenticatedUser($request);
 
-            $request->validate([
-                'estimatedBudget'            => 'required|numeric|min:0.01',
-                'budget_details'             => 'nullable|array',
-                'budget_details.*.description' => 'required_with:budget_details|string|max:255',
-                'budget_details.*.type'        => 'nullable|string|in:material,labor',
+            // Normalização de entrada antes de validar
+            $estimatedBudget = $request->input('estimatedBudget') 
+                ?? $request->input('estimated_cost') 
+                ?? $request->input('budget_amount') 
+                ?? $request->input('estimated_budget')
+                ?? $request->input('amount')
+                ?? $request->input('cost');
+
+            $details = $request->input('budget_details') 
+                ?? $request->input('items') 
+                ?? $request->input('materials');
+
+            $request->merge([
+                'estimatedBudget' => $estimatedBudget,
+                'budget_details'  => $details,
+            ]);
+
+            $validator = Validator::make($request->all(), [
+                'estimatedBudget'              => 'required|numeric|min:0.01',
+                'budget_details'               => 'nullable|array',
+                'budget_details.*.description' => 'nullable|string|max:255',
+                'budget_details.*.type'        => 'nullable|string',
                 'budget_details.*.quantity'    => 'nullable|numeric|min:0',
                 'budget_details.*.unit_price'  => 'nullable|numeric|min:0',
             ]);
 
-            $ticket = Ticket::findOrFail($id);
-            $estimatedBudget = (float) $request->estimatedBudget;
-            $threshold = 100.00; // Limite de autonomia (100.00€)
-
-            if (Schema::hasColumn('tickets', 'budget_details') && $request->has('budget_details')) {
-                $ticket->budget_details = is_array($request->budget_details) ? json_encode($request->budget_details) : $request->budget_details;
+            if ($validator->fails()) {
+                return response()->json([
+                    'message' => 'Campos do orçamento inválidos.',
+                    'errors'  => $validator->errors()
+                ], 422);
             }
 
-            if (! $ticket->assigned_to) {
+            $ticket = Ticket::findOrFail($id);
+            $estimatedBudget = (float) $estimatedBudget;
+            $threshold = 100.00; // Limiar de aprovação
+
+            if (Schema::hasColumn('tickets', 'budget_details') && $details) {
+                $ticket->budget_details = is_array($details) ? json_encode($details) : $details;
+            }
+
+            if (! $ticket->assigned_to && $user) {
                 $ticket->assigned_to = $user->id;
             }
 
@@ -848,7 +868,11 @@ class TicketController extends Controller
             if (Schema::hasColumn('tickets', 'budget_amount')) {
                 $ticket->budget_amount = $estimatedBudget;
             }
+            if (Schema::hasColumn('tickets', 'estimated_cost')) {
+                $ticket->estimated_cost = $estimatedBudget;
+            }
 
+            // Se acima de 100€ -> Aguarda aprovação
             if ($estimatedBudget > $threshold) {
                 if (Schema::hasColumn('tickets', 'budget_status')) {
                     $ticket->budget_status = Ticket::BUDGET_PENDING;
@@ -904,59 +928,50 @@ class TicketController extends Controller
     }
 
     /**
+     * Decisão de Aprovação/Recusa do Orçamento pelo Administrador
+     */
+    public function decideBudget(Request $request, int $id)
+    {
+        $user = $request->user() ?? Auth::user() ?? $this->authenticatedUser($request);
+        $this->requireRole($user, [User::ROLE_ADMIN]);
+
+        $request->validate([
+            'decision' => 'required|in:approved,rejected',
+        ]);
+
+        $ticket = Ticket::findOrFail($id);
+        $decision = $request->decision;
+
+        if ($decision === 'approved') {
+            $ticket->budget_status = 'approved';
+            $inProgressId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
+            if ($inProgressId) {
+                $ticket->status_id = $inProgressId;
+            }
+        } else {
+            $ticket->budget_status = 'rejected';
+        }
+
+        $ticket->save();
+
+        $this->notifyBudgetEvent(
+            $ticket,
+            $decision,
+            "A administração " . ($decision === 'approved' ? 'aprovou' : 'recusou') . " o orçamento do ticket #{$ticket->id}."
+        );
+
+        return response()->json([
+            'message' => $decision === 'approved' ? __('Orçamento aprovado com sucesso.') : __('Orçamento rejeitado.'),
+            'ticket'  => $ticket->load(['equipment', 'room', 'technician', 'status', 'attachments']),
+        ]);
+    }
+
+    /**
      * Técnico solicita autorização orçamental.
      */
     public function requestBudget(Request $request, int $id)
     {
-        $user = $this->authenticatedUser($request);
-        $this->requireRole($user, [User::ROLE_TECHNICIAN, User::ROLE_ADMIN]);
-
-        $request->validate([
-            'budget_amount'                => 'required|numeric|min:0.01',
-            'budget_details'               => 'nullable|array',
-            'budget_details.*.description' => 'required_with:budget_details|string|max:255',
-            'budget_details.*.quantity'    => 'required_with:budget_details|numeric|min:1',
-            'budget_details.*.unit_price'  => 'required_with:budget_details|numeric|min:0',
-        ]);
-
-        $ticket = Ticket::findOrFail($id);
-        $threshold = 100.00;
-
-        $estimatedBudget = $request->budget_amount;
-
-        if ($request->has('budget_details')) {
-            $ticket->budget_details = $request->budget_details;
-        }
-
-        if ($estimatedBudget > $threshold) {
-            $ticket->budget_requested = true;
-            $ticket->budget_status = Ticket::BUDGET_PENDING;
-            $ticket->budget_amount = $estimatedBudget;
-            $ticket->budget_requested_at = now();
-
-            $pendingStatusId = Ticket::getStatusIdByName(Ticket::STATUS_PENDING_BUDGET);
-            if ($pendingStatusId) {
-                $ticket->status_id = $pendingStatusId;
-            }
-
-            $ticket->save();
-
-            return response()->json([
-                'message' => __('Pedido de orçamento submetido com detalhes. Aguarde aprovação.'),
-                'ticket'  => $ticket->load(['equipment', 'room', 'technician', 'status', 'attachments']),
-            ]);
-        }
-
-        $inProgressId = Ticket::getStatusIdByName(Ticket::STATUS_IN_PROGRESS);
-        if ($inProgressId) {
-            $ticket->status_id = $inProgressId;
-        }
-        $ticket->save();
-
-        return response()->json([
-            'message' => __('Custo dentro do limiar. Intervenção autorizada automaticamente.'),
-            'ticket'  => $ticket->load(['equipment', 'room', 'technician', 'status', 'attachments']),
-        ]);
+        return $this->submitEstimatedBudget($request, $id);
     }
 
     /**
@@ -964,7 +979,7 @@ class TicketController extends Controller
      */
     public function closeTicketFinal(Request $request, int $id)
     {
-        $user = $this->authenticatedUser($request);
+        $user = $request->user() ?? Auth::user() ?? $this->authenticatedUser($request);
         $this->requireRole($user, [User::ROLE_TECHNICIAN, User::ROLE_ADMIN]);
 
         $request->validate([
@@ -1005,7 +1020,6 @@ class TicketController extends Controller
     {
         $ticket = Ticket::findOrFail($id);
 
-        // Bloqueio de negócio: Tickets Críticos não podem ser libertados voluntariamente
         if (mb_strtolower($ticket->priority) === 'crítica') {
             return response()->json([
                 'message' => __('Ocorrências de prioridade Crítica não podem ser libertadas voluntariamente.')
@@ -1037,7 +1051,7 @@ class TicketController extends Controller
 
     public function myTickets(Request $request)
     {
-        $user = $request->user();
+        $user = $request->user() ?? Auth::user();
 
         if (!$user) {
             return response()->json(['message' => 'Utilizador não autenticado.'], 401);
