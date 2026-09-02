@@ -1,5 +1,4 @@
 import './api-client';
-import './analytics';
 import './alpine';
 import { initLocalizationModal } from './components/localization-modal';
 import { initLayout } from './core/layout';

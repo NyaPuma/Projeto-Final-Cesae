@@ -1,73 +1,46 @@
-import { init as initDashboard } from '../pages/dashboard.js';
-import { init as initTicketDetail } from '../pages/ticket-detail.js';
-import { init as initCalendar } from '../pages/calendar.js';
-import { init as initAudits } from '../pages/audits.js';
-import { init as initProfile } from '../pages/profile.js';
-import { init as initRoomsManagement } from '../pages/rooms-management.js';
-import { init as initEquipmentsManagement } from '../pages/equipments-management.js';
-import { init as initTicketCreate } from '../pages/ticket-create.js';
-import { init as initAuthReset } from '../pages/auth-reset.js';
-import { init as initTicketsManagement } from '../pages/tickets-management.js';
-import { init as initUsersManagement } from '../pages/users-management.js';
-import { init as initUsersForm } from '../pages/users-form.js';
-import { init as initEquipmentsForm } from '../pages/equipments-form.js';
-import { init as initRoomsForm } from '../pages/rooms-form.js';
-import { init as initAnalytics } from '../pages/analytics/index.js';
-import { init as initThemeAppearance } from '../pages/definicoes-aparencia.js';
-import { init as initSystemSettings } from '../pages/definicoes-sistema.js';
-import { init as initStockDashboard } from '../pages/stock/dashboard.js';
-import { init as initStockParts } from '../pages/stock/parts.js';
-import { init as initStockPartsForm } from '../pages/stock/parts-form.js';
-import { init as initStockSuppliers } from '../pages/stock/suppliers.js';
-import { init as initStockSuppliersForm } from '../pages/stock/suppliers-form.js';
-import { init as initStockMovements } from '../pages/stock/movements.js';
-import { init as initStockTaxRates } from '../pages/stock/tax-rates.js';
-import { init as initStockCategories } from '../pages/stock/categories.js';
-import { init as initStockPlans } from '../pages/stock/plans.js';
 import { initExportActions, initPrintActions } from '../pages/analytics/export.js';
 import { initPublicTicketForm } from '../pages/ticket-public.js';
-import { init as initSwagger } from '../pages/swagger.js';
 
 const pageRegistry = {
-    dashboard: initDashboard,
-    'ticket-detail': initTicketDetail,
-    calendar: initCalendar,
-    audits: initAudits,
-    profile: initProfile,
-    rooms: initRoomsManagement,
-    equipments: initEquipmentsManagement,
-    tickets: initTicketsManagement,
-    users: initUsersManagement,
-    'users-create': initUsersForm,
-    'users-edit': initUsersForm,
-    'user-detail': initUsersForm,
-    'equipments-create': initEquipmentsForm,
-    'equipments-edit': initEquipmentsForm,
-    'rooms-create': initRoomsForm,
-    'rooms-edit': initRoomsForm,
-    analytics: initAnalytics,
-    'ticket-create': initTicketCreate,
-    'definicoes-aparencia': initThemeAppearance,
-    'definicoes-sistema': initSystemSettings,
-    'auth-reset': initAuthReset,
-    'stock-dashboard': initStockDashboard,
-    'stock-parts': initStockParts,
-    'stock-parts-create': initStockPartsForm,
-    'stock-parts-edit': initStockPartsForm,
-    'stock-suppliers': initStockSuppliers,
-    'stock-suppliers-create': initStockSuppliersForm,
-    'stock-suppliers-edit': initStockSuppliersForm,
-    'stock-movements': initStockMovements,
-    'stock-tax-rates': initStockTaxRates,
-    'stock-categories': initStockCategories,
-    'stock-plans': initStockPlans,
-    docs: initSwagger,
-    'equipment-detail': initEquipmentsManagement,
-    'equipment-qr': initEquipmentsManagement,
-    'room-detail': initRoomsManagement,
-    'stock-part-detail': initStockParts,
-    preferences: () => {},
-    error: () => {},
+    dashboard: () => import('../pages/dashboard.js'),
+    'ticket-detail': () => import('../pages/ticket-detail.js'),
+    calendar: () => import('../pages/calendar.js'),
+    audits: () => import('../pages/audits.js'),
+    profile: () => import('../pages/profile.js'),
+    rooms: () => import('../pages/rooms-management.js'),
+    equipments: () => import('../pages/equipments-management.js'),
+    tickets: () => import('../pages/tickets-management.js'),
+    users: () => import('../pages/users-management.js'),
+    'users-create': () => import('../pages/users-form.js'),
+    'users-edit': () => import('../pages/users-form.js'),
+    'user-detail': () => import('../pages/users-form.js'),
+    'equipments-create': () => import('../pages/equipments-form.js'),
+    'equipments-edit': () => import('../pages/equipments-form.js'),
+    'rooms-create': () => import('../pages/rooms-form.js'),
+    'rooms-edit': () => import('../pages/rooms-form.js'),
+    analytics: () => import('../pages/analytics/index.js'),
+    'ticket-create': () => import('../pages/ticket-create.js'),
+    'definicoes-aparencia': () => import('../pages/definicoes-aparencia.js'),
+    'definicoes-sistema': () => import('../pages/definicoes-sistema.js'),
+    'auth-reset': () => import('../pages/auth-reset.js'),
+    'stock-dashboard': () => import('../pages/stock/dashboard.js'),
+    'stock-parts': () => import('../pages/stock/parts.js'),
+    'stock-parts-create': () => import('../pages/stock/parts-form.js'),
+    'stock-parts-edit': () => import('../pages/stock/parts-form.js'),
+    'stock-suppliers': () => import('../pages/stock/suppliers.js'),
+    'stock-suppliers-create': () => import('../pages/stock/suppliers-form.js'),
+    'stock-suppliers-edit': () => import('../pages/stock/suppliers-form.js'),
+    'stock-movements': () => import('../pages/stock/movements.js'),
+    'stock-tax-rates': () => import('../pages/stock/tax-rates.js'),
+    'stock-categories': () => import('../pages/stock/categories.js'),
+    'stock-plans': () => import('../pages/stock/plans.js'),
+    docs: () => import('../pages/swagger.js'),
+    'equipment-detail': () => import('../pages/equipments-management.js'),
+    'equipment-qr': () => import('../pages/equipments-management.js'),
+    'room-detail': () => import('../pages/rooms-management.js'),
+    'stock-part-detail': () => import('../pages/stock/parts.js'),
+    preferences: () => null,
+    error: () => null,
 };
 
 export function bootPageModules(root = document) {
@@ -81,5 +54,9 @@ export function bootPageModules(root = document) {
         return;
     }
 
-    pageRegistry[page]();
+    pageRegistry[page]().then((module) => {
+        if (module?.init) {
+            module.init();
+        }
+    });
 }
