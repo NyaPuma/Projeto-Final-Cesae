@@ -91,11 +91,6 @@ export function renderPagination(meta, currentPage) {
     const lastPage = meta.last_page ?? 1;
     const page = meta.current_page ?? currentPage;
 
-    if (lastPage <= 1) {
-        pagination.innerHTML = '';
-        return;
-    }
-
     const translations = getPaginationTranslations();
     pagination.innerHTML = `
         <button data-page="${page - 1}" ${page <= 1 ? 'disabled' : ''}

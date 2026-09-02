@@ -85,5 +85,32 @@ class EquipmentsSeeder extends Seeder
                 ]
             );
         }
+
+        // Ensure realistic distribution: ~80% operacional, ~10% manutenção, ~5% avariado, ~5% abatido
+        $totalEquipments = DB::table('equipments')->count();
+        
+        $operationalCount = (int) floor($totalEquipments * 0.80);
+        $maintenanceCount = (int) floor($totalEquipments * 0.10);
+        $brokenCount = (int) floor($totalEquipments * 0.05);
+        $withdrawnCount = $totalEquipments - $operationalCount - $maintenanceCount - $brokenCount;
+
+        // Get all equipment IDs
+        $equipmentIds = DB::table('equipments')->pluck('id')->shuffle()->all();
+        
+        // Mark 80% as operational
+        DB::table('equipments')->whereIn('id', array_slice($equipmentIds, 0, $operationalCount))
+            ->update(['status' => 'operacional']);
+        
+        // Mark 10% as maintenance
+        DB::table('equipments')->whereIn('id', array_slice($equipmentIds, $operationalCount, $maintenanceCount))
+            ->update(['status' => 'manutenção']);
+        
+        // Mark 5% as broken
+        DB::table('equipments')->whereIn('id', array_slice($equipmentIds, $operationalCount + $maintenanceCount, $brokenCount))
+            ->update(['status' => 'avariado']);
+        
+        // Mark remaining as withdrawn
+        DB::table('equipments')->whereIn('id', array_slice($equipmentIds, $operationalCount + $maintenanceCount + $brokenCount))
+            ->update(['status' => 'abatido']);
     }
 }

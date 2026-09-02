@@ -30,9 +30,31 @@ final class UserRepository implements UserRepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function getAll(array $relations = []): LengthAwarePaginator
+    public function getAll(array $relations = [], ?string $search = null, ?string $role = null, ?string $status = null): LengthAwarePaginator
     {
-        return User::with($relations)->latest()->paginate(15);
+        $query = User::with($relations)->latest();
+
+        // Search filter
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
+        // Role filter
+        if ($role) {
+            $query->whereHas('profile', fn ($q) => $q->where('name', $role));
+        }
+
+        // Status filter
+        if ($status === 'active') {
+            $query->where('active', true);
+        } elseif ($status === 'inactive') {
+            $query->where('active', false);
+        }
+
+        return $query->paginate(15);
     }
 
     /**

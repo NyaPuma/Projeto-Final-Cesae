@@ -31,7 +31,9 @@ final class TicketRepository implements TicketRepositoryInterface
      */
     public function getAll(array $relations = []): LengthAwarePaginator
     {
-        return Ticket::with($relations)->latest()->paginate(15);
+        $perPage = config('services.custom.pagination.default_per_page', 15);
+
+        return Ticket::with($relations)->latest()->paginate($perPage);
     }
 
     /**
@@ -63,10 +65,12 @@ final class TicketRepository implements TicketRepositoryInterface
      */
     public function getOpenTickets(): LengthAwarePaginator
     {
+        $perPage = config('services.custom.pagination.default_per_page', 15);
+
         return Ticket::with(['equipment', 'room', 'user', 'status', 'technician'])
             ->open()
             ->latest()
-            ->paginate(15);
+            ->paginate($perPage);
     }
 
     /**
@@ -74,10 +78,12 @@ final class TicketRepository implements TicketRepositoryInterface
      */
     public function getTicketsByTechnician(int $technicianId): LengthAwarePaginator
     {
+        $perPage = config('services.custom.pagination.default_per_page', 15);
+
         return Ticket::with(['equipment', 'room', 'user', 'status', 'technician'])
             ->forTechnician($technicianId)
             ->latest()
-            ->paginate(15);
+            ->paginate($perPage);
     }
 
     /**
@@ -85,9 +91,11 @@ final class TicketRepository implements TicketRepositoryInterface
      */
     public function getTicketsByUser(int $userId): LengthAwarePaginator
     {
+        $perPage = config('services.custom.pagination.default_per_page', 15);
+
         return Ticket::with(['equipment', 'room', 'technician', 'status'])
             ->where('user_id', $userId)
             ->latest()
-            ->paginate(15);
+            ->paginate($perPage);
     }
 }

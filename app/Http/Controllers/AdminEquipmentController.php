@@ -30,8 +30,13 @@ final class AdminEquipmentController extends Controller
         // 1. Authorization via Policy
         $this->authorize('viewAny', Equipment::class);
 
-        // 2. Search for equipment (supports pagination if implemented in the repository)
-        $equipments = $this->equipmentRepository->getAll(['room', 'category']);
+        // 2. Get filters from request
+        $search = $request->input('q');
+        $status = $request->input('status');
+        $category = $request->input('category');
+
+        // 3. Search for equipment with applied filters
+        $equipments = $this->equipmentRepository->getAll(['room', 'category'], $search, $status, $category);
 
         return response()->json([
             'equipments' => EquipmentResource::collection($equipments),

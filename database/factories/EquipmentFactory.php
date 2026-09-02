@@ -22,6 +22,28 @@ class EquipmentFactory extends Factory
             'room_id' => Room::factory(),
             'category_id' => EquipmentCategory::factory(),
             'active' => true,
+            'status' => 'operacional',
         ];
+    }
+
+    public function inactive(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'active' => false,
+        ]);
+    }
+
+    public function inMaintenance(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => 'em manutenção',
+        ]);
+    }
+
+    public function outOfService(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => 'fora de serviço',
+        ]);
     }
 }

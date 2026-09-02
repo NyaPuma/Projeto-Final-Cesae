@@ -24,8 +24,10 @@
         <x-ui.listing.filter-field for="filter_status" :label="__('common.Estado Operacional')">
             <select id="filter_status" class="w-full rounded-xl border border-(--border) bg-(--surface-2) px-3 py-2.5 text-xs text-(--text) outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
                 <option value="">{{ __('common.Todos') }}</option>
-                <option value="active">{{ __('common.Operacional') }}</option>
-                <option value="inactive">{{ __('common.Fora de Serviço') }}</option>
+                <option value="operacional">{{ __('equipment.Operacional') }}</option>
+                <option value="manutenção">{{ __('equipment.Em Manutenção') }}</option>
+                <option value="avariado">{{ __('equipment.Avariado') }}</option>
+                <option value="abatido">{{ __('equipment.Abatido') }}</option>
             </select>
         </x-ui.listing.filter-field>
     </x-ui.listing.filter-panel>

@@ -21,9 +21,31 @@ final class EquipmentRepository implements EquipmentRepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function getAll(array $relations = []): LengthAwarePaginator
+    public function getAll(array $relations = [], ?string $search = null, ?string $status = null, ?string $category = null): LengthAwarePaginator
     {
-        return Equipment::with($relations)->latest()->paginate(15);
+        $query = Equipment::with($relations)->latest();
+
+        // Search filter (name, serial, brand, model)
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('serial', 'like', "%{$search}%")
+                    ->orWhere('brand', 'like', "%{$search}%")
+                    ->orWhere('model', 'like', "%{$search}%");
+            });
+        }
+
+        // Status filter
+        if ($status) {
+            $query->where('status', $status);
+        }
+
+        // Category filter
+        if ($category) {
+            $query->whereHas('category', fn ($q) => $q->where('name', $category));
+        }
+
+        return $query->paginate(15);
     }
 
     /**

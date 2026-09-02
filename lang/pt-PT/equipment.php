@@ -3,6 +3,10 @@
 return [
     'operational' => 'Operacional',
     'inactive' => 'Fora de serviço',
+    'Operacional' => 'Operacional',
+    'Em Manutenção' => 'Em Manutenção',
+    'Avariado' => 'Avariado',
+    'Abatido' => 'Abatido',
     'open_ticket' => 'Abrir Ticket',
     'edit' => 'Editar',
     'details' => 'Ver detalhes',

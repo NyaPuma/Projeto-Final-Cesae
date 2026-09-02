@@ -32,8 +32,13 @@ final class AdminUserController extends Controller
         // 1. Authorization via Policy
         $this->authorize('viewAny', User::class);
 
-        // 2. Search for users with eager loading of profile
-        $users = $this->userRepository->getAll(['profile']);
+        // 2. Get filters from request
+        $search = $request->input('q');
+        $role = $request->input('role');
+        $status = $request->input('status');
+
+        // 3. Search for users with eager loading of profile and applied filters
+        $users = $this->userRepository->getAll(['profile'], $search, $role, $status);
 
         return response()->json([
             'users' => UserResource::collection($users),

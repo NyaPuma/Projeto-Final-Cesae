@@ -5,13 +5,25 @@ import { isTechnician } from '../../core/auth.js';
 const translations = () => window.SGM_EQUIPMENT_I18N || {};
 
 function renderStatusBadge(equipment) {
-    const isActive = equipment.active === true || equipment.active === 1 || equipment.active === '1';
+    const statusColors = {
+        'operacional': 'success',
+        'manutenção': 'warning',
+        'avariado': 'danger',
+        'abatido': 'muted'
+    };
 
-    if (isActive) {
-        return `<span class="inline-flex items-center gap-1 rounded-lg bg-success/10 px-2.5 py-1 text-xs font-bold uppercase tracking-tight text-success">${translations().operational || ''}</span>`;
-    }
+    const statusLabels = {
+        'operacional': translations().operational || 'Operacional',
+        'manutenção': translations().maintenance || 'Em Manutenção',
+        'avariado': translations().broken || 'Avariado',
+        'abatido': translations().withdrawn || 'Abatido'
+    };
 
-    return `<span class="inline-flex items-center gap-1 rounded-lg bg-danger/10 px-2.5 py-1 text-xs font-bold uppercase tracking-tight text-danger">${translations().inactive || ''}</span>`;
+    const status = equipment.status || 'operacional';
+    const color = statusColors[status] || 'muted';
+    const label = statusLabels[status] || status;
+
+    return `<span class="inline-flex items-center gap-1 rounded-lg bg-${color}/10 px-2.5 py-1 text-xs font-bold uppercase tracking-tight text-${color}">${label}</span>`;
 }
 
 function renderEquipmentRow(equipment) {

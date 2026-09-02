@@ -82,5 +82,13 @@ class RoomsSeeder extends Seeder
                 ]
             );
         }
+
+        // Ensure realistic distribution: ~85% active, ~15% inactive
+        $totalRooms = DB::table('rooms')->count();
+        $inactiveCount = (int) floor($totalRooms * 0.15);
+
+        $activeRooms = DB::table('rooms')->where('active', true)->pluck('id')->shuffle()->take($inactiveCount);
+
+        DB::table('rooms')->whereIn('id', $activeRooms)->update(['active' => false]);
     }
 }

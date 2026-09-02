@@ -35,6 +35,12 @@ final class RoomController extends Controller
 
         return response()->json([
             'rooms' => RoomResource::collection($rooms),
+            'meta' => [
+                'current_page' => $rooms->currentPage(),
+                'last_page' => $rooms->lastPage(),
+                'per_page' => $rooms->perPage(),
+                'total' => $rooms->total(),
+            ],
         ]);
     }
 

@@ -25,7 +25,7 @@ interface UserRepositoryInterface
      * @param  array<int, string>  $relations
      * @return LengthAwarePaginator<User>
      */
-    public function getAll(array $relations = []): LengthAwarePaginator;
+    public function getAll(array $relations = [], ?string $search = null, ?string $role = null, ?string $status = null): LengthAwarePaginator;
 
     /**
      * Return all active technicians.

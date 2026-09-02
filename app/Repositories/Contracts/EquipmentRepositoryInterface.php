@@ -20,7 +20,7 @@ interface EquipmentRepositoryInterface
      * @param  array<int, string>  $relations
      * @return LengthAwarePaginator<Equipment>
      */
-    public function getAll(array $relations = []): LengthAwarePaginator;
+    public function getAll(array $relations = [], ?string $search = null, ?string $status = null, ?string $category = null): LengthAwarePaginator;
 
     /**
      * Create a new equipment record.

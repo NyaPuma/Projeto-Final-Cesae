@@ -81,6 +81,35 @@ class TicketsSeeder extends Seeder
             DB::table('tickets')->insertOrIgnore($chunk);
         }
 
+        // Ensure realistic distribution of ticket statuses
+        // ~85% final states (closed/pending/declined), ~15% active states (open/in progress)
+        $totalTickets = DB::table('tickets')->count();
+        
+        $activeCount = (int) floor($totalTickets * 0.15);
+        $finalCount = $totalTickets - $activeCount;
+        
+        // Get all ticket IDs
+        $ticketIds = DB::table('tickets')->pluck('id')->shuffle()->all();
+        
+        // Mark 85% as final states (closed/pending/declined)
+        $finalStatusIds = [
+            $statusIds['fechada'],
+            $statusIds['pendente orçamento'],
+            $statusIds['recusada'],
+        ];
+        
+        DB::table('tickets')->whereIn('id', array_slice($ticketIds, 0, $finalCount))
+            ->update(['status_id' => $finalStatusIds[array_rand($finalStatusIds)]]);
+        
+        // Mark 15% as active states (open/in progress)
+        $activeStatusIds = [
+            $statusIds['aberta'],
+            $statusIds['em curso'],
+        ];
+        
+        DB::table('tickets')->whereIn('id', array_slice($ticketIds, $finalCount))
+            ->update(['status_id' => $activeStatusIds[array_rand($activeStatusIds)]]);
+
         $this->command?->info('Tickets sintéticos semeados com sucesso.');
     }
 }

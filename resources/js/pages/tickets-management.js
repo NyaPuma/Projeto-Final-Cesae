@@ -12,7 +12,7 @@ async function loadTickets(page = 1) {
         if (!data) return;
 
         const tickets = data.tickets?.data ?? data.tickets ?? [];
-        const meta = data.tickets?.meta ?? data.tickets ?? {};
+        const meta = data.meta ?? data.tickets?.meta ?? {};
         const total = meta.total ?? tickets.length;
 
         renderResultsCount(total);

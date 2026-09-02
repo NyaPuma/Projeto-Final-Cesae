@@ -127,6 +127,12 @@ final class TicketController extends Controller
 
         return response()->json([
             'tickets' => TicketResource::collection($tickets),
+            'meta' => [
+                'current_page' => $tickets->currentPage(),
+                'last_page' => $tickets->lastPage(),
+                'per_page' => $tickets->perPage(),
+                'total' => $tickets->total(),
+            ],
         ]);
     }
 

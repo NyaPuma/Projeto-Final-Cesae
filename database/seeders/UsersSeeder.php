@@ -82,6 +82,9 @@ class UsersSeeder extends Seeder
 
             $nameIndex++;
 
+            // Realistic active status: ~85% active, ~15% inactive
+            $isActive = (rand(1, 100) <= 85);
+
             DB::table('users')->updateOrInsert(
                 ['email' => $email],
                 [
@@ -90,7 +93,7 @@ class UsersSeeder extends Seeder
                     'email_verified_at' => now(),
                     'password' => Hash::make('password'),
                     'profile_id' => $profileIds[$profileName] ?? $profileIds['user'],
-                    'active' => true,
+                    'active' => $isActive,
                     'api_token' => User::hashToken(Str::random(60)),
                     'remember_token' => Str::random(10),
                     'created_at' => now(),
@@ -98,5 +101,14 @@ class UsersSeeder extends Seeder
                 ]
             );
         }
+
+        // Ensure realistic distribution by explicitly setting some users as inactive
+        // 15% of users should be inactive
+        $totalUsers = DB::table('users')->count();
+        $inactiveCount = (int) floor($totalUsers * 0.15);
+
+        $activeUsers = DB::table('users')->where('active', true)->pluck('id')->shuffle()->take($inactiveCount);
+
+        DB::table('users')->whereIn('id', $activeUsers)->update(['active' => false]);
     }
 }

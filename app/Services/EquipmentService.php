@@ -22,12 +22,15 @@ final class EquipmentService
             $safeSearch = str_replace(['%', '_'], ['\%', '\_'], $search);
             $query->where(function ($sub) use ($safeSearch): void {
                 $sub->where('name', 'like', "%{$safeSearch}%")
-                    ->orWhere('serial', 'like', "%{$safeSearch}%");
+                    ->orWhere('serial', 'like', "%{$safeSearch}%")
+                    ->orWhere('brand', 'like', "%{$safeSearch}%")
+                    ->orWhere('model', 'like', "%{$safeSearch}%");
             });
         }
 
         if ($status !== null && $status !== '') {
-            $query->where('active', $status === 'active');
+            // Status filter: operacional, manutenção, avariado, abatido
+            $query->where('status', $status);
         }
 
         return $query->orderBy('name')->paginate(15);
