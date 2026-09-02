@@ -56,6 +56,18 @@
 </div>
 
 <script>
+    // Compatibilidade total para qualquer nome de função chamado no botão de cima (Layout)
+    function toggleLangDropdown() {
+        const dropdown = document.getElementById('langDropdown') || document.querySelector('[id*="LangDropdown"]');
+        if (dropdown) dropdown.classList.toggle('hidden');
+    }
+    function togglePublicLangDropdown() {
+        toggleLangDropdown();
+    }
+    function toggleLoginLangDropdown() {
+        toggleLangDropdown();
+    }
+
     function togglePasswordVisibility() {
         const input = document.getElementById('password');
         const btn = document.getElementById('btnTogglePass');
@@ -82,12 +94,15 @@
         btnText.innerText = {!! json_encode(__('A autenticar...')) !!};
 
         try {
+            const csrfTokenMeta = document.querySelector('meta[name="csrf-token"]');
+            const tokenValue = csrfTokenMeta ? csrfTokenMeta.getAttribute('content') : '';
+
             const response = await fetch('/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
+                    'X-CSRF-TOKEN': tokenValue
                 },
                 body: JSON.stringify({ email, password })
             });
