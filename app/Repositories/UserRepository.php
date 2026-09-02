@@ -36,7 +36,7 @@ final class UserRepository implements UserRepositoryInterface
 
         // Search filter
         if ($search && ! $this->containsSqlInjectionPattern($search)) {
-            $safeSearch = addcslashes($search, "\\%_");
+            $safeSearch = addcslashes($search, '\\%_');
             $query->where(function ($q) use ($safeSearch) {
                 $q->where('name', 'like', "%{$safeSearch}%")
                     ->orWhere('email', 'like', "%{$safeSearch}%");
