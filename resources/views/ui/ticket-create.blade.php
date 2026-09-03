@@ -89,30 +89,26 @@
             </div>
 
             {{-- Equipment (Autocomplete) & Image --}}
-            <div class="grid gap-6 lg:grid-cols-2">
-                {{-- EQUIPMENT AUTOCOMPLETE --}}
-                <div class="relative">
-                    <label for="equipmentSearchInput" class="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">
+            <div class="grid gap-4 lg:grid-cols-2">
+                <div>
+                    <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-[var(--text-soft)]">
                         {{ __('equipment.Equipamento / Ativo Afetado *') }}
                     </label>
-
                     <div class="relative">
                         <input type="text" id="equipmentSearchInput" autocomplete="off" placeholder="{{ __('equipment.Escreva para pesquisar equipamento, série ou sala...') }}"
-                            class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-xs text-[var(--text)] outline-none focus:border-primary transition-all">
-                    </div>
-
-                    {{-- Hidden ID for submission --}}
-                    <input type="hidden" id="selectedEquipmentId" name="equipment_id" required>
-
-                    {{-- Suggestions Box / Autocomplete Dropdown --}}
-                    <div id="equipmentSuggestions" class="hidden absolute z-50 mt-1 w-full max-h-52 overflow-y-auto rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-2xl divide-y divide-[var(--border)]/50">
+                            class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-xs text-[var(--text)] outline-none focus:border-primary focus:ring-4 focus:ring-primary/15 transition-all">
+                        <input type="hidden" id="selectedEquipmentId" name="equipment_id" required>
+                        <button type="button" id="equipmentSelectBtn" class="absolute right-2 top-2.5 rounded-xl bg-[var(--surface)] px-3 py-1.5 text-xs font-semibold text-[var(--text)] hover:bg-[var(--surface-2)] transition">
+                            {{ __('common.Adicionar') }}
+                        </button>
+                        <div id="equipmentSuggestions" class="hidden absolute z-50 mt-1 w-full max-h-52 overflow-y-auto rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-2xl divide-y divide-[var(--border)]/50"></div>
                     </div>
                 </div>
 
                 {{-- Upload Image --}}
                 <div>
-                    <span class="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">{{ __('ticket_media.Inserir Imagem (Opcional)') }}</span>
-                    <div class="flex items-center gap-3 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-2">
+                    <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-[var(--text-soft)]">{{ __('ticket_media.Inserir Imagem (Opcional)') }}</label>
+                    <div class="flex items-center gap-3 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3">
                         <label for="ticketImage" class="cursor-pointer rounded-xl bg-[var(--surface)] border border-[var(--border)] px-3 py-1.5 text-xs font-semibold text-[var(--text)] hover:bg-[var(--surface-2)] transition">
                             {{ __('ticket_media.Escolher ficheiro') }}
                         </label>

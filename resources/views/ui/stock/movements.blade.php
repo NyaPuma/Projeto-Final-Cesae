@@ -14,54 +14,68 @@
     </x-slot:actions>
 
     {{-- Quick registration form --}}
-    <div class="mb-6 rounded-2xl border border-(--border) bg-(--surface) p-5 shadow-sm">
-        <h2 class="mb-4 text-xs font-black uppercase tracking-wider text-(--text)">{{ __('common.Registar movimento') }}</h2>
-        <form id="movementForm" class="grid gap-4 md:grid-cols-2 lg:grid-cols-5" novalidate>
-            <div>
-                <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-(--text-soft)" for="mvPartSearch">
-                    {{ __('stock.Peça') }} <span class="text-danger">*</span>
-                </label>
-                <div class="relative">
-                    <input type="text" id="mvPartSearch" name="part_search" autocomplete="off" required
-                        placeholder="{{ __('stock.Pesquise a peça por nome ou referência...') }}"
-                        class="w-full rounded-xl border border-(--border) bg-(--surface-2) px-3 py-2.5 text-xs text-(--text) placeholder-(--text-soft) outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
-                    <input type="hidden" id="mvPart" name="part_id">
-                    <div id="mvPartList" class="hidden absolute z-50 mt-1 w-full max-h-56 overflow-y-auto rounded-2xl border border-(--border) bg-(--surface) shadow-2xl space-y-1 p-1.5"></div>
+    <div class="mb-6 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
+        <h2 class="mb-4 text-xs font-black uppercase tracking-wider text-[var(--text)]">{{ __('common.Registar movimento') }}</h2>
+        <form id="movementForm" class="space-y-4" novalidate>
+            <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                {{-- Part Selection (with Modal) --}}
+                <div>
+                    <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-[var(--text-soft)]">
+                        {{ __('stock.Peça') }} <span class="text-danger">*</span>
+                    </label>
+                    <div class="relative">
+                        <input type="text" id="mvPartSearch" name="part_search" autocomplete="off" required
+                            placeholder="{{ __('stock.Pesquise a peça por nome ou referência...') }}"
+                            class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-xs text-[var(--text)] outline-none focus:border-primary focus:ring-4 focus:ring-primary/15 transition-all">
+                        <input type="hidden" id="mvPart" name="part_id">
+                        <button type="button" id="mvPartSelectBtn" class="absolute right-2 top-2.5 rounded-xl bg-[var(--surface)] px-3 py-1.5 text-xs font-semibold text-[var(--text)] hover:bg-[var(--surface-2)] transition">
+                            {{ __('common.Adicionar') }}
+                        </button>
+                        <div id="mvPartList" class="hidden absolute z-50 mt-1 w-full max-h-52 overflow-y-auto rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-2xl divide-y divide-[var(--border)]/50"></div>
+                    </div>
+                </div>
+
+                {{-- Movement Type --}}
+                <div>
+                    <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-[var(--text-soft)]">
+                        {{ __('common.Tipo') }} <span class="text-danger">*</span>
+                    </label>
+                    <select id="mvType" name="movement_type" required
+                        class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-xs text-[var(--text)] outline-none focus:border-primary focus:ring-4 focus:ring-primary/15 transition-all">
+                        <option value="in">{{ __('common.Entrada') }}</option>
+                        <option value="out">{{ __('common.Saída') }}</option>
+                        <option value="adjust">{{ __('common.Ajuste') }}</option>
+                        <option value="return">{{ __('common.Devolução') }}</option>
+                    </select>
+                </div>
+
+                {{-- Quantity --}}
+                <div>
+                    <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-[var(--text-soft)]">
+                        {{ __('common.Quantidade') }} <span class="text-danger">*</span>
+                    </label>
+                    <input id="mvQty" name="quantity" type="number" step="1" required
+                        placeholder="{{ __('common.Ex: 5') }}"
+                        class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-xs text-[var(--text)] outline-none focus:border-primary focus:ring-4 focus:ring-primary/15 transition-all">
                 </div>
             </div>
+
+            {{-- Reason --}}
             <div>
-                <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-(--text-soft)" for="mvType">
-                    {{ __('common.Tipo') }} <span class="text-danger">*</span>
-                </label>
-                <select id="mvType" name="movement_type" required
-                    class="w-full rounded-xl border border-(--border) bg-(--surface-2) px-3 py-2.5 text-xs text-(--text) outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
-                    <option value="in">{{ __('common.Entrada') }}</option>
-                    <option value="out">{{ __('common.Saída') }}</option>
-                    <option value="adjust">{{ __('common.Ajuste') }}</option>
-                    <option value="return">{{ __('common.Devolução') }}</option>
-                </select>
-            </div>
-            <div>
-                <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-(--text-soft)" for="mvQty">
-                    {{ __('common.Quantidade') }} <span class="text-danger">*</span>
-                </label>
-                <input id="mvQty" name="quantity" type="number" step="1" required
-                    placeholder="{{ __('common.Ex: 5') }}"
-                    class="w-full rounded-xl border border-(--border) bg-(--surface-2) px-3 py-2.5 text-xs text-(--text) placeholder-(--text-soft) outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
-            </div>
-            <div class="lg:col-span-2">
-                <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-(--text-soft)" for="mvReason">
+                <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-[var(--text-soft)]" for="mvReason">
                     {{ __('common.Motivo') }}
                 </label>
                 <input id="mvReason" name="reason" type="text"
                     placeholder="{{ __('stock.Ex: Reposição de stock / Intervenção #1234') }}"
-                    class="w-full rounded-xl border border-(--border) bg-(--surface-2) px-3 py-2.5 text-xs text-(--text) placeholder-(--text-soft) outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
+                    class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-xs text-[var(--text)] outline-none focus:border-primary focus:ring-4 focus:ring-primary/15 transition-all">
             </div>
-            <div class="flex items-end lg:col-span-5">
-                <button type="submit" id="mvSubmit" class="inline-flex items-center justify-center rounded-xl bg-primary px-5 py-2.5 text-xs font-semibold text-white transition hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed">
+
+            {{-- Submit Button --}}
+            <div class="flex flex-wrap items-center gap-3 pt-2">
+                <button type="submit" id="mvSubmit" class="inline-flex items-center justify-center rounded-xl bg-primary px-5 py-3 text-xs font-black uppercase tracking-wider transition hover:opacity-90 disabled:opacity-50 shadow-lg shadow-primary/20">
                     {{ __('common.Registar') }}
                 </button>
-                <p id="mvMessage" class="ml-4 text-xs font-medium text-(--text-soft)"></p>
+                <p id="mvMessage" class="text-xs font-medium text-[var(--text-soft)]"></p>
             </div>
         </form>
     </div>
