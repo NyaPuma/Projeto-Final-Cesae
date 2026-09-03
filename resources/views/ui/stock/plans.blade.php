@@ -25,16 +25,16 @@
                     class="w-full rounded-xl border border-(--border) bg-(--surface-2) px-3 py-2.5 text-xs text-(--text) placeholder-(--text-soft) outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
             </div>
             <div>
-                <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-(--text-soft)" for="plEquipment">
+                <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-(--text-soft)" for="plEquipmentSearch">
                     {{ __('equipment.Equipamento') }} <span class="text-danger">*</span>
                 </label>
-                <select id="plEquipment" name="equipment_id" required
-                    class="w-full rounded-xl border border-(--border) bg-(--surface-2) px-3 py-2.5 text-xs text-(--text) outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
-                    <option value="">{{ __('common.Selecione...') }}</option>
-                    @foreach($equipments as $equipment)
-                        <option value="{{ $equipment->id }}">{{ $equipment->name }}</option>
-                    @endforeach
-                </select>
+                <div class="relative">
+                    <input type="text" id="plEquipmentSearch" name="equipment_search" autocomplete="off" required
+                        placeholder="{{ __('equipment.Escreva para pesquisar equipamento, série ou sala...') }}"
+                        class="w-full rounded-xl border border-(--border) bg-(--surface-2) px-3 py-2.5 text-xs text-(--text) placeholder-(--text-soft) outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
+                    <input type="hidden" id="plEquipment" name="equipment_id">
+                    <div id="plEquipmentList" class="hidden absolute z-50 mt-1 w-full max-h-56 overflow-y-auto rounded-2xl border border-(--border) bg-(--surface) shadow-2xl space-y-1 p-1.5"></div>
+                </div>
             </div>
             <div>
                 <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-(--text-soft)" for="plIntervalType">
@@ -67,13 +67,13 @@
                     {{ __('stock.Peças previstas (deixe em branco se não aplicável)') }}
                 </p>
                 <div id="plPartsContainer" class="space-y-2">
-                    <div class="flex gap-2" data-part-row>
-                        <select name="parts[][part_id]" data-part-id aria-label="{{ __('stock.Peça') }}" class="w-full rounded-xl border border-(--border) bg-(--surface-2) px-3 py-2.5 text-xs text-(--text) outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
-                            <option value="">{{ __('stock.Selecione peça...') }}</option>
-                            @foreach($parts as $part)
-                                <option value="{{ $part->id }}">{{ $part->name }} ({{ $part->sku }})</option>
-                            @endforeach
-                        </select>
+                    <div class="flex gap-2 items-start" data-part-row>
+                        <div class="relative flex-1">
+                            <input type="text" data-part-search autocomplete="off" aria-label="{{ __('stock.Peça') }}" placeholder="{{ __('stock.Pesquise a peça por nome ou referência...') }}"
+                                class="w-full rounded-xl border border-(--border) bg-(--surface-2) px-3 py-2.5 text-xs text-(--text) placeholder-(--text-soft) outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
+                            <input type="hidden" data-part-id aria-label="{{ __('stock.Peça selecionada') }}">
+                            <div data-part-list class="hidden absolute z-50 mt-1 w-full max-h-56 overflow-y-auto rounded-2xl border border-(--border) bg-(--surface) shadow-2xl space-y-1 p-1.5"></div>
+                        </div>
                         <input type="number" min="1" step="1" placeholder="{{ __('common.Qtd') }}" data-expected-qty aria-label="{{ __('common.Quantidade') }}"
                             class="w-28 rounded-xl border border-(--border) bg-(--surface-2) px-3 py-2.5 text-xs text-(--text) placeholder-(--text-soft) outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
                         <button type="button" data-part-row-remove class="rounded-xl border border-danger/25 bg-danger/10 px-3 py-2.5 text-xs font-bold text-danger transition hover:bg-danger/20">✕</button>

@@ -78,7 +78,7 @@ async function loadRecentTickets() {
     const tableContainer = document.getElementById('recentTicketsTable');
     if (!tableContainer) return;
 
-    const endpoints = ['/tickets?page=1&per_page=5', '/admin/tickets?page=1&per_page=5', '/api/tickets?page=1&per_page=5'];
+    const endpoints = ['/dashboard/tickets-active', '/tickets?page=1', '/admin/tickets?page=1', '/api/tickets?page=1'];
     let tickets = [];
 
     for (const ep of endpoints) {
@@ -108,7 +108,7 @@ async function loadRecentTickets() {
                 </tr>
             </thead>
             <tbody class="divide-y divide-(--border)/50 text-(--text)">
-                ${tickets.slice(0, 4).map(t => `
+                ${tickets.map(t => `
                     <tr>
                         <td class="py-2.5 font-mono text-(--text-soft)">#${t.id}</td>
                         <td class="py-2.5 font-semibold truncate max-w-[180px]">${t.title}</td>

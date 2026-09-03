@@ -6,10 +6,12 @@ namespace App\Http\Controllers;
 
 use App\Enums\TicketStatusEnum;
 use App\Enums\UserRoleEnum;
+use App\Http\Resources\TicketResource;
 use App\Models\Audit;
 use App\Models\Equipment;
 use App\Models\EquipmentCategory;
 use App\Models\Room;
+use App\Models\Ticket;
 use App\Models\User;
 use App\Services\EquipmentService;
 use App\Services\ThemePresetService;
@@ -324,6 +326,30 @@ final class UiController extends Controller
 
         return response()->json([
             'picket' => $picket,
+        ]);
+    }
+
+    /**
+     * Returns all active (non-final) tickets for the dashboard's
+     * "Últimas Ocorrências Registadas" list: open, in progress and pending budget.
+     */
+    public function getActiveTickets(Request $request): JsonResponse
+    {
+        $statusService = app(TicketStatusService::class);
+
+        $statusIds = [
+            $statusService->getByName(TicketStatusEnum::Open),
+            $statusService->getByName(TicketStatusEnum::InProgress),
+            $statusService->getByName(TicketStatusEnum::PendingBudget),
+        ];
+
+        $tickets = Ticket::with(['equipment', 'room', 'user', 'status', 'technician'])
+            ->whereIn('status_id', $statusIds)
+            ->latest()
+            ->get();
+
+        return response()->json([
+            'tickets' => TicketResource::collection($tickets),
         ]);
     }
 

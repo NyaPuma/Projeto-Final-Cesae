@@ -2,8 +2,32 @@ import { createPlan, deletePlan, fetchPlan, fetchPlans, updatePlan } from './pla
 import { bindPagination, clearPlanFilters, renderLoadingState } from './plans/dom.js';
 import { renderEmptyState, renderErrorState, renderPagination, renderPlans, renderResultsCount, showFeedback } from './plans/render.js';
 import { plansState, setCurrentPage } from './plans/state.js';
+import { SmartPicker, partShape, equipmentShape } from '../../core/smart-picker.js';
 
 const intervalLabels = { days: 'Days', usage_hours: 'Usage hours', cycles: 'Cycles' };
+
+const partPickerI18n = {
+    loading: window.SGM_UI_I18N?.loading || 'A carregar...',
+    noResults: window.SGM_UI_I18N?.noResults || 'Sem resultados para a pesquisa.',
+    error: window.SGM_UI_I18N?.error || 'Erro ao carregar.',
+};
+
+function initPartRowPicker(row) {
+    const group = row.querySelector('[data-part-search]')?.closest('.relative');
+    if (!group) return null;
+    return new SmartPicker(group, {
+        inputEl: group.querySelector('[data-part-search]'),
+        listEl: group.querySelector('[data-part-list]'),
+        hiddenEl: group.querySelector('[data-part-id]'),
+        endpoint: '/stock/parts',
+        resourceKey: 'parts',
+        shape: partShape,
+        i18n: partPickerI18n,
+    });
+}
+
+let equipmentPicker = null;
+let partRowPickers = [];
 
 async function loadPlans(page = 1) {
     setCurrentPage(page);
@@ -32,20 +56,37 @@ async function loadPlans(page = 1) {
     }
 }
 
-function addPartRow(part = null) {
-    const container = document.getElementById('plPartsContainer');
-    const template = document.querySelector('[data-part-row]');
-    if (!container || !template) return;
-
-    const row = template.cloneNode(true);
+function initPartRow(row, part = null) {
+    row.querySelector('[data-part-search]').value = part ? part.name : '';
     row.querySelector('[data-part-id]').value = part ? part.id : '';
     row.querySelector('[data-expected-qty]').value = part ? part.expected_quantity : '';
 
+    const picker = initPartRowPicker(row);
+    if (picker) {
+        partRowPickers.push(picker);
+        if (part) {
+            picker.shape = { ...partShape, id: () => part.id };
+            picker.setSelected(part.id, part);
+        }
+    }
+
     row.querySelector('[data-part-row-remove]').addEventListener('click', () => {
+        const idx = partRowPickers.indexOf(picker);
+        if (idx !== -1) partRowPickers.splice(idx, 1);
+        if (picker) picker.destroy();
         row.remove();
     });
 
+    return picker;
+}
+
+function addPartRow(part = null) {
+    const container = document.getElementById('plPartsContainer');
+    const template = firstPartRow();
+    if (!container || !template) return;
+    const row = template.cloneNode(true);
     container.appendChild(row);
+    initPartRow(row, part);
 }
 
 function buildPartsPayload() {
@@ -63,7 +104,7 @@ function resetForm() {
     form.dataset.planId = '';
 
     document.getElementById('plName').value = '';
-    document.getElementById('plEquipment').value = '';
+    equipmentPicker?.clear();
     document.getElementById('plIntervalType').value = 'days';
     document.getElementById('plIntervalValue').value = '';
     document.getElementById('plDescription').value = '';
@@ -72,9 +113,9 @@ function resetForm() {
     document.querySelectorAll('#plPartsContainer [data-part-row]').forEach((row, index) => {
         if (index > 0) row.remove();
     });
-    const firstRow = document.querySelector('#plPartsContainer [data-part-row]');
-    firstRow.querySelector('[data-part-id]').value = '';
-    firstRow.querySelector('[data-expected-qty]').value = '';
+    partRowPickers = [];
+    const firstRow = firstPartRow();
+    initPartRow(firstRow, null);
 
     document.getElementById('planFormTitle').textContent = 'New maintenance plan';
     document.getElementById('plMessage').textContent = '';
@@ -140,23 +181,22 @@ async function handleEdit(id) {
         const plan = data.plan ?? {};
 
         document.getElementById('plName').value = plan.name || '';
-        document.getElementById('plEquipment').value = plan.equipment_id || '';
+        equipmentPicker?.setSelected(plan.equipment_id, plan.equipment || null);
         document.getElementById('plIntervalType').value = plan.interval_type || 'days';
         document.getElementById('plIntervalValue').value = plan.interval_value || '';
         document.getElementById('plDescription').value = plan.description || '';
         document.getElementById('plActive').checked = plan.active !== false;
 
+        partRowPickers.forEach((picker) => picker.destroy());
+        partRowPickers = [];
         document.querySelectorAll('#plPartsContainer [data-part-row]').forEach((row, index) => {
             if (index > 0) row.remove();
         });
-        const firstRow = document.querySelector('#plPartsContainer [data-part-row]');
-        firstRow.querySelector('[data-part-id]').value = '';
-        firstRow.querySelector('[data-expected-qty]').value = '';
+        const firstRow = firstPartRow();
 
         (plan.parts ?? []).forEach((part, index) => {
             if (index === 0) {
-                firstRow.querySelector('[data-part-id]').value = part.id;
-                firstRow.querySelector('[data-expected-qty]').value = part.expected_quantity;
+                initPartRow(firstRow, part);
             } else {
                 addPartRow(part);
             }

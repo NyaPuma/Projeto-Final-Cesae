@@ -18,16 +18,16 @@
         <h2 class="mb-4 text-xs font-black uppercase tracking-wider text-(--text)">{{ __('common.Registar movimento') }}</h2>
         <form id="movementForm" class="grid gap-4 md:grid-cols-2 lg:grid-cols-5" novalidate>
             <div>
-                <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-(--text-soft)" for="mvPart">
+                <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-(--text-soft)" for="mvPartSearch">
                     {{ __('stock.Peça') }} <span class="text-danger">*</span>
                 </label>
-                <select id="mvPart" name="part_id" required
-                    class="w-full rounded-xl border border-(--border) bg-(--surface-2) px-3 py-2.5 text-xs text-(--text) outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
-                    <option value="">{{ __('common.Selecione...') }}</option>
-                    @foreach($parts as $part)
-                        <option value="{{ $part->id }}">{{ $part->name }} ({{ $part->sku }}) — @localizedNumber($part->current_stock)</option>
-                    @endforeach
-                </select>
+                <div class="relative">
+                    <input type="text" id="mvPartSearch" name="part_search" autocomplete="off" required
+                        placeholder="{{ __('stock.Pesquise a peça por nome ou referência...') }}"
+                        class="w-full rounded-xl border border-(--border) bg-(--surface-2) px-3 py-2.5 text-xs text-(--text) placeholder-(--text-soft) outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
+                    <input type="hidden" id="mvPart" name="part_id">
+                    <div id="mvPartList" class="hidden absolute z-50 mt-1 w-full max-h-56 overflow-y-auto rounded-2xl border border-(--border) bg-(--surface) shadow-2xl space-y-1 p-1.5"></div>
+                </div>
             </div>
             <div>
                 <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-(--text-soft)" for="mvType">
