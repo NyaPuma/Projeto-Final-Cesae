@@ -19,8 +19,8 @@ class LogTicketWorkflowChangeTest extends TestCase
     #[Test]
     public function it_logs_the_transition_with_valid_status_ids(): void
     {
-        $open = TicketStatus::firstOrCreate(['name' => 'aberta'], ['code' => 'ABERTA']);
-        $inProgress = TicketStatus::firstOrCreate(['name' => 'em curso'], ['code' => 'EM_CURSO']);
+        $open = TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Open->value], ['code' => 'ABERTA']);
+        $inProgress = TicketStatus::firstOrCreate(['name' => TicketStatusEnum::InProgress->value], ['code' => 'EM_CURSO']);
         $ticket = Ticket::factory()->create(['status_id' => $open->id]);
 
         $listener = new LogTicketWorkflowChange;
@@ -40,8 +40,8 @@ class LogTicketWorkflowChangeTest extends TestCase
     #[Test]
     public function it_records_the_changed_by_user_as_technician(): void
     {
-        $open = TicketStatus::firstOrCreate(['name' => 'aberta'], ['code' => 'ABERTA']);
-        TicketStatus::firstOrCreate(['name' => 'em curso'], ['code' => 'EM_CURSO']);
+        $open = TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Open->value], ['code' => 'ABERTA']);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::InProgress->value], ['code' => 'EM_CURSO']);
         $ticket = Ticket::factory()->create(['status_id' => $open->id]);
         $changedBy = User::factory()->create();
 

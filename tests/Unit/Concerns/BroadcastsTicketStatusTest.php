@@ -57,7 +57,7 @@ class BroadcastsTicketStatusTest extends FeatureTestCase
         $user = User::factory()->create();
         $ticket = Ticket::factory()->create(['user_id' => $user->id]);
 
-        $this->makeSubject()->fire($ticket, 'aberta', 'em curso');
+        $this->makeSubject()->fire($ticket, TicketStatusEnum::Open->value, TicketStatusEnum::InProgress->value);
 
         Event::assertDispatched(TicketStatusUpdatedBroadcast::class, function ($event) {
             return $event->oldStatus === TicketStatusEnum::Open

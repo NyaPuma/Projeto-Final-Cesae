@@ -28,12 +28,12 @@ class WorkflowPersistenceTest extends TestCase
 
     protected function seedLookupData(): void
     {
-        TicketStatus::firstOrCreate(['name' => 'aberta'], ['code' => 'ABERTA', 'description' => 'Aberta']);
-        TicketStatus::firstOrCreate(['name' => 'em curso'], ['code' => 'EM_CURSO', 'description' => 'Em curso']);
-        TicketStatus::firstOrCreate(['name' => 'fechada'], ['code' => 'FECHADA', 'description' => 'Fechada']);
-        TicketStatus::firstOrCreate(['name' => 'cancelada'], ['code' => 'CANCELADA', 'description' => 'Cancelada']);
-        TicketStatus::firstOrCreate(['name' => 'pendente orçamento'], ['code' => 'PENDENTE_ORCAMENTO', 'description' => 'Pendente']);
-        TicketStatus::firstOrCreate(['name' => 'recusada'], ['code' => 'RECUSADA', 'description' => 'Recusada']);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Open->value], ['code' => 'ABERTA', 'description' => 'Aberta']);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::InProgress->value], ['code' => 'EM_CURSO', 'description' => 'Em curso']);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Closed->value], ['code' => 'FECHADA', 'description' => 'Fechada']);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Cancelled->value], ['code' => 'CANCELADA', 'description' => 'Cancelada']);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::PendingBudget->value], ['code' => 'PENDENTE_ORCAMENTO', 'description' => 'Pendente']);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Rejected->value], ['code' => 'RECUSADA', 'description' => 'Recusada']);
     }
 
     protected function createAdmin(): User
@@ -85,8 +85,8 @@ class WorkflowPersistenceTest extends TestCase
         ]);
         $ticketId = $response->json('ticket.id');
 
-        $openStatus = TicketStatus::where('name', 'aberta')->first();
-        $inProgressStatus = TicketStatus::where('name', 'em curso')->first();
+        $openStatus = TicketStatus::where('name', TicketStatusEnum::Open->value)->first();
+        $inProgressStatus = TicketStatus::where('name', TicketStatusEnum::InProgress->value)->first();
 
         $ticket = Ticket::find($ticketId);
         $this->assertEquals($openStatus->id, $ticket->status_id);
@@ -115,7 +115,7 @@ class WorkflowPersistenceTest extends TestCase
         ]);
         $ticketId = $response->json('ticket.id');
 
-        $pendingStatus = TicketStatus::where('name', 'pendente orçamento')->first();
+        $pendingStatus = TicketStatus::where('name', TicketStatusEnum::PendingBudget->value)->first();
         $ticket = Ticket::find($ticketId);
         $ticket->update([
             'status_id' => $pendingStatus->id,
@@ -186,7 +186,7 @@ class WorkflowPersistenceTest extends TestCase
 
         $ticket = Ticket::find($ticketId);
 
-        $closedStatus = TicketStatus::where('name', 'fechada')->first();
+        $closedStatus = TicketStatus::where('name', TicketStatusEnum::Closed->value)->first();
         $ticket->update([
             'status_id' => $closedStatus->id,
             'closed_at' => now(),

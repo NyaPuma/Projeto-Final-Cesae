@@ -2,6 +2,7 @@
 
 namespace Tests\Database\Constraints;
 
+use App\Enums\TicketStatusEnum;
 use App\Enums\UserRoleEnum;
 use App\Models\Equipment;
 use App\Models\EquipmentCategory;
@@ -27,12 +28,12 @@ class RelationshipIntegrityTest extends TestCase
 
     protected function seedLookupData(): void
     {
-        TicketStatus::firstOrCreate(['name' => 'aberta'], ['code' => 'ABERTA', 'description' => 'Aberta']);
-        TicketStatus::firstOrCreate(['name' => 'em curso'], ['code' => 'EM_CURSO', 'description' => 'Em curso']);
-        TicketStatus::firstOrCreate(['name' => 'fechada'], ['code' => 'FECHADA', 'description' => 'Fechada']);
-        TicketStatus::firstOrCreate(['name' => 'cancelada'], ['code' => 'CANCELADA', 'description' => 'Cancelada']);
-        TicketStatus::firstOrCreate(['name' => 'pendente orçamento'], ['code' => 'PENDENTE_ORCAMENTO', 'description' => 'Pendente']);
-        TicketStatus::firstOrCreate(['name' => 'recusada'], ['code' => 'RECUSADA', 'description' => 'Recusada']);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Open->value], ['code' => 'ABERTA', 'description' => 'Aberta']);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::InProgress->value], ['code' => 'EM_CURSO', 'description' => 'Em curso']);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Closed->value], ['code' => 'FECHADA', 'description' => 'Fechada']);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Cancelled->value], ['code' => 'CANCELADA', 'description' => 'Cancelada']);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::PendingBudget->value], ['code' => 'PENDENTE_ORCAMENTO', 'description' => 'Pendente']);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Rejected->value], ['code' => 'RECUSADA', 'description' => 'Recusada']);
     }
 
     protected function createAdmin(): User
@@ -116,7 +117,7 @@ class RelationshipIntegrityTest extends TestCase
 
         $ticket = Ticket::find($ticketId);
         $this->assertNotNull($ticket->status);
-        $this->assertEquals('aberta', $ticket->status->name);
+        $this->assertEquals(TicketStatusEnum::Open->value, $ticket->status->name);
     }
 
     public function test_ticket_comment_references_valid_ticket_and_user(): void
@@ -235,7 +236,7 @@ class RelationshipIntegrityTest extends TestCase
 
         $ticket = Ticket::with('status')->find($ticketId);
         $this->assertNotNull($ticket->status);
-        $this->assertEquals('aberta', $ticket->status->name);
+        $this->assertEquals(TicketStatusEnum::Open->value, $ticket->status->name);
     }
 
     public function test_ticket_belongs_to_equipment_and_room(): void
@@ -355,7 +356,7 @@ class RelationshipIntegrityTest extends TestCase
         $room = Room::create(['name' => 'Ticket Room', 'code' => 'RM-'.uniqid(), 'active' => true]);
         $user = $this->createCommonUser();
 
-        $openStatus = TicketStatus::where('name', 'aberta')->first();
+        $openStatus = TicketStatus::where('name', TicketStatusEnum::Open->value)->first();
 
         for ($i = 0; $i < 2; $i++) {
             Ticket::create([

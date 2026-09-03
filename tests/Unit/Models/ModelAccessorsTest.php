@@ -52,7 +52,7 @@ class ModelAccessorsTest extends FeatureTestCase
     public function ticket_open_scope_filters_only_open_tickets(): void
     {
         $open = $this->createTicket();
-        $closed = $this->createTicketWithStatus('fechada');
+        $closed = $this->createTicketWithStatus(TicketStatusEnum::Closed->value);
 
         $ids = Ticket::open()->pluck('id')->all();
 

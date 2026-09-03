@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Web\Controllers;
 
+use App\Enums\TicketStatusEnum;
 use App\Enums\UserRoleEnum;
 use App\Models\Room;
 use App\Models\Ticket;
@@ -128,8 +129,8 @@ class UiControllerTest extends TestCase
 
     public function test_technical_picket_returns_technicians_with_in_progress_counts(): void
     {
-        $inProgress = TicketStatus::create(['name' => 'em curso', 'code' => 'EM_CURSO']);
-        $closed = TicketStatus::create(['name' => 'fechada', 'code' => 'FECHADA']);
+        $inProgress = TicketStatus::create(['name' => TicketStatusEnum::InProgress->value, 'code' => 'EM_CURSO']);
+        $closed = TicketStatus::create(['name' => TicketStatusEnum::Closed->value, 'code' => 'FECHADA']);
 
         $technician = $this->createUserWithToken(UserRoleEnum::Technician->value);
 

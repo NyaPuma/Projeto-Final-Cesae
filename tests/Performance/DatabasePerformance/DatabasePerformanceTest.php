@@ -2,6 +2,7 @@
 
 namespace Tests\Performance\DatabasePerformance;
 
+use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use Tests\Performance\PerformanceTestCase;
 
@@ -67,7 +68,7 @@ class DatabasePerformanceTest extends PerformanceTestCase
         $this->asAdmin();
         $this->startQueryLog();
 
-        $this->getJson('/tickets/search?q=Performance&priority=alta&status=aberta');
+        $this->getJson('/tickets/search?q=Performance&priority=alta&status='.TicketStatusEnum::Open->value);
 
         $queries = $this->stopQueryLog();
 

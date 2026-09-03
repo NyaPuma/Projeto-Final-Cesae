@@ -3,6 +3,7 @@
 namespace Tests\Unit\Actions;
 
 use App\Actions\AssignTechnicianAction;
+use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Services\TicketStatusService;
@@ -56,7 +57,7 @@ class AssignTechnicianActionTest extends FeatureTestCase
         $busyTechnician = $this->createTechnician();
         $freeTechnician = $this->createTechnician();
 
-        $busyTicket = $this->createTicketWithStatus('em curso');
+        $busyTicket = $this->createTicketWithStatus(TicketStatusEnum::InProgress->value);
         $busyTicket->assigned_to = $busyTechnician->id;
         $busyTicket->save();
 

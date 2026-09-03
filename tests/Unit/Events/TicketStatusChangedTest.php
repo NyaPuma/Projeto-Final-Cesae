@@ -16,7 +16,7 @@ class TicketStatusChangedTest extends DatabaseTestCase
     public function it_broadcasts_on_tickets_and_admin_channels(): void
     {
         $ticket = Ticket::factory()->create();
-        $event = new TicketStatusChanged($ticket, 'aberta', 'em curso');
+        $event = new TicketStatusChanged($ticket, TicketStatusEnum::Open, TicketStatusEnum::InProgress);
 
         $channels = $event->broadcastOn();
 
@@ -28,7 +28,7 @@ class TicketStatusChangedTest extends DatabaseTestCase
     public function it_broadcasts_with_correct_event_name(): void
     {
         $ticket = Ticket::factory()->create();
-        $event = new TicketStatusChanged($ticket, 'aberta', 'em curso');
+        $event = new TicketStatusChanged($ticket, TicketStatusEnum::Open, TicketStatusEnum::InProgress);
 
         $this->assertEquals('ticket.status_changed', $event->broadcastAs());
     }
@@ -48,8 +48,8 @@ class TicketStatusChangedTest extends DatabaseTestCase
         $this->assertEquals(TicketStatusEnum::InProgress, $event->newStatus);
         $this->assertEquals($ticket->id, $data['ticket_id']);
         $this->assertEquals($ticket->reference, $data['code']);
-        $this->assertEquals('aberta', $data['old_status']['value']);
-        $this->assertEquals('em curso', $data['new_status']['value']);
+        $this->assertEquals(TicketStatusEnum::Open->value, $data['old_status']['value']);
+        $this->assertEquals(TicketStatusEnum::InProgress->value, $data['new_status']['value']);
         $this->assertFalse($data['is_final']);
     }
 
@@ -57,7 +57,7 @@ class TicketStatusChangedTest extends DatabaseTestCase
     public function it_implements_should_broadcast(): void
     {
         $ticket = Ticket::factory()->create();
-        $event = new TicketStatusChanged($ticket, 'aberta', 'em curso');
+        $event = new TicketStatusChanged($ticket, TicketStatusEnum::Open, TicketStatusEnum::InProgress);
 
         $this->assertInstanceOf(ShouldBroadcast::class, $event);
     }

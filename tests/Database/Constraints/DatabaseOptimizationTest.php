@@ -27,7 +27,7 @@ class DatabaseOptimizationTest extends TestCase
 
     public function test_ticket_status_cache_returns_correct_id(): void
     {
-        $status = TicketStatus::create(['name' => 'aberta', 'description' => 'Aberta']);
+        $status = TicketStatus::create(['name' => TicketStatusEnum::Open->value, 'description' => 'Aberta']);
 
         $result = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
         $this->assertEquals($status->id, $result);
@@ -43,7 +43,7 @@ class DatabaseOptimizationTest extends TestCase
 
     public function test_ticket_status_cache_returns_consistent_results(): void
     {
-        TicketStatus::create(['name' => 'aberta', 'description' => 'Aberta']);
+        TicketStatus::create(['name' => TicketStatusEnum::Open->value, 'description' => 'Aberta']);
 
         $first = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
         $second = app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
@@ -54,12 +54,12 @@ class DatabaseOptimizationTest extends TestCase
 
     public function test_flush_status_cache_clears_cached_values(): void
     {
-        TicketStatus::create(['name' => 'aberta', 'description' => 'Aberta']);
+        TicketStatus::create(['name' => TicketStatusEnum::Open->value, 'description' => 'Aberta']);
 
         app(TicketStatusService::class)->getByName(TicketStatusEnum::Open);
         app(TicketStatusService::class)->flush();
 
-        $status = TicketStatus::where('name', 'aberta')->first();
+        $status = TicketStatus::where('name', TicketStatusEnum::Open->value)->first();
         $this->assertEquals($status->id, app(TicketStatusService::class)->getByName(TicketStatusEnum::Open));
     }
 
@@ -171,12 +171,12 @@ class DatabaseOptimizationTest extends TestCase
 
     protected function seedLookupData(): void
     {
-        TicketStatus::firstOrCreate(['name' => 'aberta'], ['code' => 'ABERTA', 'description' => 'Aberta']);
-        TicketStatus::firstOrCreate(['name' => 'em curso'], ['code' => 'EM_CURSO', 'description' => 'Em curso']);
-        TicketStatus::firstOrCreate(['name' => 'fechada'], ['code' => 'FECHADA', 'description' => 'Fechada']);
-        TicketStatus::firstOrCreate(['name' => 'cancelada'], ['code' => 'CANCELADA', 'description' => 'Cancelada']);
-        TicketStatus::firstOrCreate(['name' => 'pendente orçamento'], ['code' => 'PENDENTE_ORCAMENTO', 'description' => 'Pendente']);
-        TicketStatus::firstOrCreate(['name' => 'recusada'], ['code' => 'RECUSADA', 'description' => 'Recusada']);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Open->value], ['code' => 'ABERTA', 'description' => 'Aberta']);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::InProgress->value], ['code' => 'EM_CURSO', 'description' => 'Em curso']);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Closed->value], ['code' => 'FECHADA', 'description' => 'Fechada']);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Cancelled->value], ['code' => 'CANCELADA', 'description' => 'Cancelada']);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::PendingBudget->value], ['code' => 'PENDENTE_ORCAMENTO', 'description' => 'Pendente']);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Rejected->value], ['code' => 'RECUSADA', 'description' => 'Recusada']);
     }
 
     protected function createAdminUser(): User

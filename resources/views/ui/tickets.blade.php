@@ -23,14 +23,17 @@
                 class="w-full rounded-xl border border-(--border) bg-(--surface-2) px-3 py-2.5 text-xs text-(--text) placeholder-(--text-soft) outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all">
         </x-ui.listing.filter-field>
 
-        <x-ui.listing.filter-field for="filter_status" :label="__('common.Estado')">
-            <select id="filter_status" class="w-full rounded-xl border border-(--border) bg-(--surface-2) px-3 py-2.5 text-xs text-(--text) outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all">
-                <option value="">{{ __('common.Todos') }}</option>
-                <option value="aberta">{{ __('common.Aberta') }}</option>
-                <option value="em curso">{{ __('common.Em Curso') }}</option>
-                <option value="fechada">{{ __('common.Fechada') }}</option>
-            </select>
-        </x-ui.listing.filter-field>
+<x-ui.listing.filter-field for="filter_status" :label="__('common.Estado')">
+    <select id="filter_status" class="w-full rounded-xl border border-(--border) bg-(--surface-2) px-3 py-2.5 text-xs text-(--text) outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all">
+        <option value="">{{ __('common.Todos') }}</option>
+        <option value="{{ \App\Enums\TicketStatusEnum::Open->value }}">{{ __('common.Aberta') }}</option>
+        <option value="{{ \App\Enums\TicketStatusEnum::InProgress->value }}">{{ __('common.Em Curso') }}</option>
+        <option value="{{ \App\Enums\TicketStatusEnum::Closed->value }}">{{ __('common.Fechada') }}</option>
+        <option value="{{ \App\Enums\TicketStatusEnum::Cancelled->value }}">{{ __('ui.Cancelada') }}</option>
+        <option value="{{ \App\Enums\TicketStatusEnum::PendingBudget->value }}">{{ __('common.Pendente Orçamento') }}</option>
+        <option value="{{ \App\Enums\TicketStatusEnum::Rejected->value }}">{{ __('common.Recusada') }}</option>
+    </select>
+</x-ui.listing.filter-field>
 
         <x-ui.listing.filter-field for="filter_priority" :label="__('common.Prioridade')">
             <select id="filter_priority" class="w-full rounded-xl border border-(--border) bg-(--surface-2) px-3 py-2.5 text-xs text-(--text) outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all">

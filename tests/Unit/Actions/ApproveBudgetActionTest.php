@@ -6,6 +6,7 @@ use App\Actions\ApproveBudgetAction;
 use App\DTOs\BudgetDecisionData;
 use App\Enums\BudgetDecisionEnum;
 use App\Enums\BudgetStatusEnum;
+use App\Enums\TicketStatusEnum;
 use App\Enums\UserRoleEnum;
 use App\Models\Ticket;
 use App\Models\TicketStatus;
@@ -51,19 +52,19 @@ class ApproveBudgetActionTest extends DatabaseTestCase
     private function seedTicketStatuses(): void
     {
         // Seed ticket statuses manually
-        TicketStatus::firstOrCreate(['name' => 'aberta'], ['code' => 'ABERTA', 'description' => 'Aberta']);
-        TicketStatus::firstOrCreate(['name' => 'em curso'], ['code' => 'EM_CURSO', 'description' => 'Em Curso']);
-        TicketStatus::firstOrCreate(['name' => 'fechada'], ['code' => 'FECHADA', 'description' => 'Fechada']);
-        TicketStatus::firstOrCreate(['name' => 'cancelada'], ['code' => 'CANCELADA', 'description' => 'Cancelada']);
-        TicketStatus::firstOrCreate(['name' => 'pendente orçamento'], ['code' => 'PENDENTE_ORCAMENTO', 'description' => 'Pendente Orçamento']);
-        TicketStatus::firstOrCreate(['name' => 'recusada'], ['code' => 'RECUSADA', 'description' => 'Recusada']);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Open->value], ['code' => 'ABERTA', 'description' => 'Aberta']);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::InProgress->value], ['code' => 'EM_CURSO', 'description' => 'Em Curso']);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Closed->value], ['code' => 'FECHADA', 'description' => 'Fechada']);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Cancelled->value], ['code' => 'CANCELADA', 'description' => 'Cancelada']);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::PendingBudget->value], ['code' => 'PENDENTE_ORCAMENTO', 'description' => 'Pendente Orçamento']);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Rejected->value], ['code' => 'RECUSADA', 'description' => 'Recusada']);
     }
 
     #[Test]
     public function it_approves_budget_successfully(): void
     {
         $admin = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::Admin->value)->first()->id]);
-        $statusId = TicketStatus::where('name', 'pendente orçamento')->first()->id;
+        $statusId = TicketStatus::where('name', TicketStatusEnum::PendingBudget->value)->first()->id;
         $ticket = Ticket::factory()->create([
             'budget_requested' => true,
             'budget_status' => BudgetStatusEnum::Pending->value,
@@ -84,7 +85,7 @@ class ApproveBudgetActionTest extends DatabaseTestCase
     public function it_rejects_budget_with_feedback(): void
     {
         $admin = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::Admin->value)->first()->id]);
-        $statusId = TicketStatus::where('name', 'pendente orçamento')->first()->id;
+        $statusId = TicketStatus::where('name', TicketStatusEnum::PendingBudget->value)->first()->id;
         $ticket = Ticket::factory()->create([
             'budget_requested' => true,
             'budget_status' => BudgetStatusEnum::Pending->value,
@@ -105,7 +106,7 @@ class ApproveBudgetActionTest extends DatabaseTestCase
     public function it_fails_when_budget_not_requested(): void
     {
         $admin = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::Admin->value)->first()->id]);
-        $statusId = TicketStatus::where('name', 'aberta')->first()->id;
+        $statusId = TicketStatus::where('name', TicketStatusEnum::Open->value)->first()->id;
         $ticket = Ticket::factory()->create([
             'budget_requested' => false,
             'budget_status' => BudgetStatusEnum::Pending->value,
@@ -126,7 +127,7 @@ class ApproveBudgetActionTest extends DatabaseTestCase
     public function it_fails_when_budget_status_not_pending(): void
     {
         $admin = User::factory()->create(['profile_id' => UserProfile::where('name', UserRoleEnum::Admin->value)->first()->id]);
-        $statusId = TicketStatus::where('name', 'aberta')->first()->id;
+        $statusId = TicketStatus::where('name', TicketStatusEnum::Open->value)->first()->id;
         $ticket = Ticket::factory()->create([
             'budget_requested' => true,
             'budget_status' => BudgetStatusEnum::Approved->value,

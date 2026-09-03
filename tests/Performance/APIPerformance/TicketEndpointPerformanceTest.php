@@ -2,6 +2,7 @@
 
 namespace Tests\Performance\APIPerformance;
 
+use App\Enums\TicketStatusEnum;
 use App\Models\TicketStatus;
 use Tests\Performance\PerformanceTestCase;
 
@@ -275,7 +276,7 @@ class TicketEndpointPerformanceTest extends PerformanceTestCase
     {
         $this->seedRooms(5);
         $this->seedEquipments(10);
-        $openStatusId = TicketStatus::where('name', 'aberta')->value('id');
+        $openStatusId = TicketStatus::where('name', TicketStatusEnum::Open->value)->value('id');
         $this->seedTickets(100, ['status_id' => $openStatusId]);
 
         $this->asAdmin();

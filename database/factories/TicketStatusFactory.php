@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\TicketStatusEnum;
 use App\Models\TicketStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -16,12 +17,12 @@ class TicketStatusFactory extends Factory
     {
         return [
             'name' => $this->faker->unique()->randomElement([
-                'aberta',
-                'em curso',
-                'fechada',
-                'cancelada',
-                'pendente orçamento',
-                'recusada',
+                TicketStatusEnum::Open->value,
+                TicketStatusEnum::InProgress->value,
+                TicketStatusEnum::Closed->value,
+                TicketStatusEnum::Cancelled->value,
+                TicketStatusEnum::PendingBudget->value,
+                TicketStatusEnum::Rejected->value,
                 'aguarda peças',
                 'em revisão',
                 'sem rede',

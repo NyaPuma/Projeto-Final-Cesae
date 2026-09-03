@@ -2,6 +2,7 @@
 
 namespace Tests\Performance\SearchPerformance;
 
+use App\Enums\TicketStatusEnum;
 use Tests\Performance\PerformanceTestCase;
 
 class SearchPerformanceTest extends PerformanceTestCase
@@ -49,7 +50,7 @@ class SearchPerformanceTest extends PerformanceTestCase
         $this->asAdmin();
 
         $time = $this->measureTime(function () {
-            $this->getJson('/tickets/search?status=aberta')->assertOk();
+            $this->getJson('/tickets/search?status='.TicketStatusEnum::Open->value)->assertOk();
         });
 
         $this->assertLessThanOrEqual(self::MAX_SEARCH_MS, $time,
@@ -81,7 +82,7 @@ class SearchPerformanceTest extends PerformanceTestCase
         $this->asAdmin();
 
         $time = $this->measureTime(function () {
-            $this->getJson('/tickets/search?q=Performance&priority=alta&status=aberta&date_from='
+            $this->getJson('/tickets/search?q=Performance&priority=alta&status='.TicketStatusEnum::Open->value.'&date_from='
                 .now()->subDays(30)->format('Y-m-d').'&date_to='.now()->format('Y-m-d'))->assertOk();
         });
 

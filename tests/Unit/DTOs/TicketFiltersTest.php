@@ -4,6 +4,7 @@ namespace Tests\Unit\DTOs;
 
 use App\DTOs\TicketFilters;
 use App\Enums\TicketPriorityEnum;
+use App\Enums\TicketStatusEnum;
 use Carbon\CarbonImmutable;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\Test;
@@ -26,7 +27,7 @@ class TicketFiltersTest extends TestCase
         $dto = TicketFilters::fromRequest([
             'q' => '  impressora  ',
             'priority' => 'alta',
-            'status' => 'aberta',
+            'status' => TicketStatusEnum::Open->value,
             'date_from' => '2026-07-01',
             'date_to' => '2026-07-31',
             'user_id' => '5',
@@ -37,7 +38,7 @@ class TicketFiltersTest extends TestCase
 
         $this->assertEquals('impressora', $dto->query);
         $this->assertEquals(TicketPriorityEnum::High, $dto->priority);
-        $this->assertEquals('aberta', $dto->status);
+        $this->assertEquals(TicketStatusEnum::Open->value, $dto->status);
         $this->assertInstanceOf(CarbonImmutable::class, $dto->dateFrom);
         $this->assertEquals('2026-07-01', $dto->dateFrom->toDateString());
         $this->assertEquals(5, $dto->userId);

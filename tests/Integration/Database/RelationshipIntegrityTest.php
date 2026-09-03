@@ -2,6 +2,7 @@
 
 namespace Tests\Integration\Database;
 
+use App\Enums\TicketStatusEnum;
 use App\Enums\UserRoleEnum;
 use App\Models\Equipment;
 use App\Models\EquipmentCategory;
@@ -71,7 +72,7 @@ class RelationshipIntegrityTest extends FeatureTestCase
 
         $ticket = Ticket::with('status')->find($ticketId);
         $this->assertNotNull($ticket->status);
-        $this->assertEquals('aberta', $ticket->status->name);
+        $this->assertEquals(TicketStatusEnum::Open->value, $ticket->status->name);
     }
 
     #[Test]
@@ -195,7 +196,7 @@ class RelationshipIntegrityTest extends FeatureTestCase
         $room = Room::create(['name' => 'Ticket Room', 'active' => true]);
         $user = $this->createRegularUser();
 
-        $openStatus = TicketStatus::where('name', 'aberta')->first();
+        $openStatus = TicketStatus::where('name', TicketStatusEnum::Open->value)->first();
 
         for ($i = 0; $i < 2; $i++) {
             Ticket::create([

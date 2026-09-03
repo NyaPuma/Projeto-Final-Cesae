@@ -64,7 +64,7 @@ class NotificationSeeder extends Seeder
 
         $types = array_keys($typeWeights);
         $typeTotal = array_sum($typeWeights);
-        $now = Carbon::now();
+        $now = Carbon::now('UTC');
 
         $rows = [];
 

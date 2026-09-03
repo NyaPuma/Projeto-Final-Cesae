@@ -3,6 +3,7 @@
 namespace Tests\Unit\Services;
 
 use App\Enums\TicketPriorityEnum;
+use App\Enums\TicketStatusEnum;
 use App\Services\AnalyticsDashboardService;
 use App\Services\TicketStatusService;
 use Illuminate\Support\Facades\Cache;
@@ -73,9 +74,9 @@ class AnalyticsDashboardServiceTest extends FeatureTestCase
     #[Test]
     public function it_counts_tickets_by_current_status(): void
     {
-        $this->createTicketWithStatus('aberta');
-        $this->createTicketWithStatus('em curso');
-        $this->createTicketWithStatus('fechada', ['closed_at' => now()]);
+        $this->createTicketWithStatus(TicketStatusEnum::Open->value);
+        $this->createTicketWithStatus(TicketStatusEnum::InProgress->value);
+        $this->createTicketWithStatus(TicketStatusEnum::Closed->value, ['closed_at' => now()]);
         $this->createTicketWithBudget();
 
         $payload = $this->service->getDashboardPayload();
@@ -132,7 +133,7 @@ class AnalyticsDashboardServiceTest extends FeatureTestCase
     #[Test]
     public function it_includes_recent_audit_activity_with_legible_descriptions(): void
     {
-        $this->createTicketWithStatus('fechada');
+        $this->createTicketWithStatus(TicketStatusEnum::Closed->value);
 
         $payload = $this->service->getDashboardPayload();
 
@@ -148,7 +149,7 @@ class AnalyticsDashboardServiceTest extends FeatureTestCase
         $this->assertSame($first, $second);
 
         Cache::forget('analytics_dashboard_payload');
-        $this->createTicketWithStatus('aberta');
+        $this->createTicketWithStatus(TicketStatusEnum::Open->value);
 
         $third = $this->service->getDashboardPayload();
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Database\Seeders\Data;
 
 use App\Enums\TicketPriorityEnum;
+use App\Enums\TicketStatusEnum;
 use Illuminate\Support\Carbon;
 
 /**
@@ -14,7 +15,7 @@ use Illuminate\Support\Carbon;
  */
 final class TicketDataset
 {
-    public const TARGET_TICKETS = 1500;
+    public const TARGET_TICKETS = 200;
 
     private const LABOUR_RATE_PER_HOUR = 35;
 
@@ -50,13 +51,13 @@ final class TicketDataset
             ], [30, 40, 25, 5]);
 
             $status = $this->weightedPick([
-                'aberta',
-                'em curso',
-                'fechada',
-                'pendente orçamento',
-                'cancelada',
-                'recusada',
-            ], [12, 18, 62, 5, 2, 1]);
+                TicketStatusEnum::Open->value,
+                TicketStatusEnum::InProgress->value,
+                TicketStatusEnum::Closed->value,
+                TicketStatusEnum::PendingBudget->value,
+                TicketStatusEnum::Cancelled->value,
+                TicketStatusEnum::Rejected->value,
+            ], [17, 17, 22, 16, 14, 14]);
 
             $source = $this->weightedPick(['web', 'qr', 'telefone', 'api', 'mobile'], [55, 25, 10, 7, 3]);
 
@@ -73,7 +74,7 @@ final class TicketDataset
             $slaHours = $this->prioritySlaHours($priority);
             $dueAt = $openedAt->copy()->addHours($slaHours);
 
-            $assigned = $status !== 'aberta';
+            $assigned = $status !== TicketStatusEnum::Open->value;
             $assignedTo = $assigned && $technicianIds !== [] ? $technicianIds[random_int(0, count($technicianIds) - 1)] : null;
             $assignedAt = $assigned && $assignedTo !== null
                 ? $openedAt->copy()->addMinutes(random_int(5, 180))
@@ -83,7 +84,7 @@ final class TicketDataset
                 ? $assignedAt->copy()->addMinutes(random_int(2, 45))
                 : null;
 
-            $inProgressAt = in_array($status, ['em curso', 'fechada'], true) && $assignedAt !== null
+            $inProgressAt = in_array($status, [TicketStatusEnum::InProgress->value, TicketStatusEnum::Closed->value], true) && $assignedAt !== null
                 ? $assignedAt->copy()->addMinutes(random_int(5, 90))
                 : null;
 
@@ -96,7 +97,7 @@ final class TicketDataset
             $resolutionSummary = null;
             $closedBy = null;
 
-            if ($status === 'fechada') {
+            if ($status === TicketStatusEnum::Closed->value) {
                 $diffMinutes = $this->closedDiffMinutes();
                 $closedAt = $openedAt->copy()->addMinutes($diffMinutes);
                 $resolvedAt = $closedAt->copy()->subMinutes(random_int(5, 60));
@@ -115,7 +116,7 @@ final class TicketDataset
             $budgetRequested = false;
             $budgetAmount = null;
 
-            if ($status === 'pendente orçamento') {
+            if ($status === TicketStatusEnum::PendingBudget->value) {
                 $budgetStatus = 'pending';
                 $budgetRequested = true;
                 $budgetAmount = round(($minutesSpent ?? random_int(120, 600)) / 60 * self::LABOUR_RATE_PER_HOUR * random_int(100, 140) / 100, 2);
@@ -165,7 +166,7 @@ final class TicketDataset
 
     private function openedAtFor(string $status): Carbon
     {
-        if ($status === 'fechada') {
+        if ($status === TicketStatusEnum::Closed->value) {
             $monthWeights = [10, 12, 14, 17, 20, 27];
             $monthOffset = $this->weightedIndex($monthWeights);
             $start = Carbon::now()->startOfMonth()->subMonths($monthOffset);
@@ -176,9 +177,9 @@ final class TicketDataset
         }
 
         $maxDays = match ($status) {
-            'aberta' => 20,
-            'em curso' => 40,
-            'pendente orçamento' => 45,
+            TicketStatusEnum::Open->value => 20,
+            TicketStatusEnum::InProgress->value => 40,
+            TicketStatusEnum::PendingBudget->value => 45,
             default => 10, // cancelada / recusada
         };
 

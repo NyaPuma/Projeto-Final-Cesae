@@ -83,7 +83,7 @@ class TicketSearchServiceTest extends FeatureTestCase
         $this->createTicket(['title' => 'Ticket fechado', 'status_id' => $closedStatusId]);
         $this->createTicket(['title' => 'Ticket aberto']);
 
-        $result = $this->service->search(new TicketFilters(status: 'fechada'));
+        $result = $this->service->search(new TicketFilters(status: TicketStatusEnum::Closed->value));
 
         $this->assertEquals(1, $result->total());
         $this->assertEquals('Ticket fechado', $result->getCollection()->first()->title);

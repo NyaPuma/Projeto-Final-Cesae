@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\TicketStatusEnum;
 use Database\Seeders\Data\OperationalData;
 use Database\Seeders\Data\TicketDataset;
 use Illuminate\Database\Seeder;
@@ -18,7 +19,7 @@ class TicketsSeeder extends Seeder
         }
 
         $statusIds = DB::table('ticket_statuses')
-            ->whereIn('name', ['aberta', 'em curso', 'fechada', 'pendente orçamento', 'cancelada', 'recusada'])
+            ->whereIn('name', [TicketStatusEnum::Open->value, TicketStatusEnum::InProgress->value, TicketStatusEnum::Closed->value, TicketStatusEnum::PendingBudget->value, TicketStatusEnum::Cancelled->value, TicketStatusEnum::Rejected->value])
             ->pluck('id', 'name')
             ->all();
 
@@ -80,35 +81,6 @@ class TicketsSeeder extends Seeder
         foreach (array_chunk($rows, 500) as $chunk) {
             DB::table('tickets')->insertOrIgnore($chunk);
         }
-
-        // Ensure realistic distribution of ticket statuses
-        // ~85% final states (closed/pending/declined), ~15% active states (open/in progress)
-        $totalTickets = DB::table('tickets')->count();
-
-        $activeCount = (int) floor($totalTickets * 0.15);
-        $finalCount = $totalTickets - $activeCount;
-
-        // Get all ticket IDs
-        $ticketIds = DB::table('tickets')->pluck('id')->shuffle()->all();
-
-        // Mark 85% as final states (closed/pending/declined)
-        $finalStatusIds = [
-            $statusIds['fechada'],
-            $statusIds['pendente orçamento'],
-            $statusIds['recusada'],
-        ];
-
-        DB::table('tickets')->whereIn('id', array_slice($ticketIds, 0, $finalCount))
-            ->update(['status_id' => $finalStatusIds[array_rand($finalStatusIds)]]);
-
-        // Mark 15% as active states (open/in progress)
-        $activeStatusIds = [
-            $statusIds['aberta'],
-            $statusIds['em curso'],
-        ];
-
-        DB::table('tickets')->whereIn('id', array_slice($ticketIds, $finalCount))
-            ->update(['status_id' => $activeStatusIds[array_rand($activeStatusIds)]]);
 
         $this->command?->info('Tickets sintéticos semeados com sucesso.');
     }

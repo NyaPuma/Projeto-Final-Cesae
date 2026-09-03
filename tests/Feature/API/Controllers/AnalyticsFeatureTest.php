@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\API\Controllers;
 
+use App\Enums\TicketStatusEnum;
 use App\Models\Ticket;
 use App\Models\TicketStatus;
 use Tests\Base\FeatureTestCase;
@@ -20,8 +21,8 @@ class AnalyticsFeatureTest extends FeatureTestCase
 
     public function test_admin_can_access_analytics_stats()
     {
-        $statusOpen = TicketStatus::where('name', 'aberta')->first();
-        $statusClosed = TicketStatus::where('name', 'fechada')->first();
+        $statusOpen = TicketStatus::where('name', TicketStatusEnum::Open->value)->first();
+        $statusClosed = TicketStatus::where('name', TicketStatusEnum::Closed->value)->first();
 
         Ticket::factory()->create([
             'status_id' => $statusOpen->id,

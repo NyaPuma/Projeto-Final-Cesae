@@ -48,7 +48,7 @@ While column and table identifiers are in English, the following data values and
    - *Note:* Kept as the default system locale for current Portuguese deployments.
 
 3. **Seeded Type / Status Names in `TicketLookupSeeder`:**
-   - Seeded display names (e.g. `'pendente orçamento'`, `'avaria'`)
+   - Seeded display names now use `TicketStatusEnum` backing values (e.g. `TicketStatusEnum::PendingBudget->value` → `'pendente orçamento'`, `'avaria'`).
    - *Note:* Display labels are managed via i18n (`lang/` files); database codes should eventually be unified to English enum representations.
 
 ---

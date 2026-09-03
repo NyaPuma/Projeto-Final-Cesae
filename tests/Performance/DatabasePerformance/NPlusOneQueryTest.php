@@ -2,6 +2,7 @@
 
 namespace Tests\Performance\DatabasePerformance;
 
+use App\Enums\TicketStatusEnum;
 use App\Enums\UserRoleEnum;
 use App\Models\Equipment;
 use App\Models\Room;
@@ -27,9 +28,9 @@ class NPlusOneQueryTest extends TestCase
         UserProfile::firstOrCreate(['name' => UserRoleEnum::Technician->value]);
         UserProfile::firstOrCreate(['name' => UserRoleEnum::User->value]);
 
-        TicketStatus::firstOrCreate(['name' => 'aberta'], ['code' => 'ABERTA', 'description' => 'Aberta']);
-        TicketStatus::firstOrCreate(['name' => 'em curso'], ['code' => 'EM_CURSO', 'description' => 'Em Curso']);
-        TicketStatus::firstOrCreate(['name' => 'fechada'], ['code' => 'FECHADA', 'description' => 'Fechada']);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Open->value], ['code' => 'ABERTA', 'description' => 'Aberta']);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::InProgress->value], ['code' => 'EM_CURSO', 'description' => 'Em Curso']);
+        TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Closed->value], ['code' => 'FECHADA', 'description' => 'Fechada']);
     }
 
     #[Test]

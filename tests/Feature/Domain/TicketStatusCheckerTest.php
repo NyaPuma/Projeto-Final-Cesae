@@ -54,7 +54,7 @@ class TicketStatusCheckerTest extends DatabaseTestCase
     #[Test]
     public function it_returns_false_for_a_matching_status_id_on_another_ticket(): void
     {
-        $closed = $this->createTicketWithStatus('fechada');
+        $closed = $this->createTicketWithStatus(TicketStatusEnum::Closed->value);
 
         $this->assertFalse($this->checker->hasStatus($closed, TicketStatusEnum::Open));
     }

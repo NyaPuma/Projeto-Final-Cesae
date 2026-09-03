@@ -42,7 +42,7 @@ class TicketLifecycleActionsTest extends DatabaseTestCase
     #[Test]
     public function cancel_action_is_idempotent_when_already_cancelled(): void
     {
-        $ticket = $this->createTicketWithStatus('cancelada');
+        $ticket = $this->createTicketWithStatus(TicketStatusEnum::Cancelled->value);
         $closedAt = $ticket->closed_at;
         $action = app(CancelTicketAction::class);
 
@@ -84,7 +84,7 @@ class TicketLifecycleActionsTest extends DatabaseTestCase
     #[Test]
     public function close_action_is_idempotent_when_already_closed(): void
     {
-        $ticket = $this->createTicketWithStatus('fechada');
+        $ticket = $this->createTicketWithStatus(TicketStatusEnum::Closed->value);
         $action = app(CloseTicketAction::class);
 
         $result = $action->execute($ticket, cost: 999);
@@ -107,7 +107,7 @@ class TicketLifecycleActionsTest extends DatabaseTestCase
     #[Test]
     public function reopen_action_returns_ticket_to_open_state(): void
     {
-        $ticket = $this->createTicketWithStatus('fechada');
+        $ticket = $this->createTicketWithStatus(TicketStatusEnum::Closed->value);
         $action = app(ReopenTicketAction::class);
 
         $result = $action->execute($ticket);
@@ -138,7 +138,7 @@ class TicketLifecycleActionsTest extends DatabaseTestCase
     #[Test]
     public function start_action_is_idempotent_when_already_in_progress(): void
     {
-        $ticket = $this->createTicketWithStatus('em curso');
+        $ticket = $this->createTicketWithStatus(TicketStatusEnum::InProgress->value);
         $inProgressAt = $ticket->in_progress_at;
         $action = app(StartTicketAction::class);
 

@@ -19,8 +19,8 @@ class LogTicketStatusChangeTest extends TestCase
     #[Test]
     public function it_logs_the_transition_to_workflow_history(): void
     {
-        $open = TicketStatus::firstOrCreate(['name' => 'aberta'], ['code' => 'ABERTA']);
-        $inProgress = TicketStatus::firstOrCreate(['name' => 'em curso'], ['code' => 'EM_CURSO']);
+        $open = TicketStatus::firstOrCreate(['name' => TicketStatusEnum::Open->value], ['code' => 'ABERTA']);
+        $inProgress = TicketStatus::firstOrCreate(['name' => TicketStatusEnum::InProgress->value], ['code' => 'EM_CURSO']);
         $ticket = Ticket::factory()->create(['status_id' => $open->id]);
 
         $listener = new LogTicketStatusChange;

@@ -2,6 +2,7 @@
 
 namespace Tests\Database\Seeders;
 
+use App\Enums\TicketStatusEnum;
 use Database\Seeders\BulkOperationalDataSeeder;
 use Database\Seeders\TicketLookupSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -34,6 +35,26 @@ class ComplianceSeedersTest extends TestCase
 
         foreach ($syntheticUsers as $email) {
             $this->assertStringEndsWith('@example.invalid', $email);
+        }
+    }
+
+    public function test_seeded_tickets_cover_all_ticket_status_enum_values(): void
+    {
+        $this->seed([
+            TicketLookupSeeder::class,
+            BulkOperationalDataSeeder::class,
+        ]);
+
+        $present = DB::table('tickets')
+            ->join('ticket_statuses', 'tickets.status_id', '=', 'ticket_statuses.id')
+            ->distinct()
+            ->pluck('ticket_statuses.name');
+
+        foreach (TicketStatusEnum::cases() as $status) {
+            $this->assertTrue(
+                $present->contains($status->value),
+                "O estado {$status->value} deve estar representado nos tickets semeados.",
+            );
         }
     }
 }

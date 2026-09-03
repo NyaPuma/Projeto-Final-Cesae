@@ -2,6 +2,7 @@
 
 namespace Tests\Integration\Database;
 
+use App\Enums\TicketStatusEnum;
 use App\Models\Equipment;
 use App\Models\EquipmentCategory;
 use App\Models\Notification;
@@ -50,7 +51,7 @@ class ForeignKeyIntegrityTest extends FeatureTestCase
 
         $ticket = Ticket::find($ticketId);
         $this->assertNotNull($ticket->status);
-        $this->assertEquals('aberta', $ticket->status->name);
+        $this->assertEquals(TicketStatusEnum::Open->value, $ticket->status->name);
     }
 
     #[Test]
