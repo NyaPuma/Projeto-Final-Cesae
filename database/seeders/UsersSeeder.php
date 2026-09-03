@@ -63,7 +63,7 @@ class UsersSeeder extends Seeder
             );
         }
 
-        $targetCount = 100;
+        $targetCount = 30;
         $currentCount = DB::table('users')->count();
 
         $names = OperationalData::technicianNames();

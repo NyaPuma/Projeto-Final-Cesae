@@ -61,7 +61,7 @@ class EquipmentsSeeder extends Seeder
             );
         }
 
-        $targetCount = 100;
+        $targetCount = 40;
         $currentCount = DB::table('equipments')->count();
         $categoriesIds = array_values($categories);
 

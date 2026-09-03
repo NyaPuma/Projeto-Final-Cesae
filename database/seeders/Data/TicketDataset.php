@@ -15,7 +15,7 @@ use Illuminate\Support\Carbon;
  */
 final class TicketDataset
 {
-    public const TARGET_TICKETS = 200;
+    public const TARGET_TICKETS = 60;
 
     private const LABOUR_RATE_PER_HOUR = 35;
 

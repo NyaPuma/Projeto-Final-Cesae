@@ -55,7 +55,7 @@ class RoomsSeeder extends Seeder
             ]);
         }
 
-        $targetCount = 100;
+        $targetCount = 45;
         $currentCount = DB::table('rooms')->count();
         $buildings = ['Pavilhão Industrial 1', 'Pavilhão Industrial 2', 'Pavilhão Norte', 'Pavilhão Sul', 'Edifício Central'];
         $zones = ['Zona Norte', 'Zona Sul', 'Zona Centro', 'Zona Este'];
