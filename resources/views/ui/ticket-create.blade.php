@@ -105,9 +105,14 @@ window.requireAuthOnLoad = true;
             <div class="grid gap-6 lg:grid-cols-2">
                 {{-- AUTOCOMPLETAR EQUIPAMENTO --}}
                 <div class="relative">
-                    <label class="mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">
-                        {{ __('Equipamento / Ativo Afetado *') }}
-                    </label>
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--text-soft)]">
+                            {{ __('Equipamento / Ativo Afetado *') }}
+                        </label>
+                        <span id="qrDetectedBadge" class="hidden text-[9px] font-black uppercase tracking-wider bg-orange-500/10 text-orange-500 border border-orange-500/20 px-2 py-0.5 rounded-lg">
+                            📷 {{ __('Identificado via QR Code') }}
+                        </span>
+                    </div>
 
                     <div class="relative">
                         <input type="text" id="equipmentSearchInput" autocomplete="off" placeholder="{{ __('Escreva para pesquisar equipamento, série ou sala...') }}"
@@ -190,13 +195,45 @@ function updateFileName(input) {
 
 // Lógica de Autocomplete de Equipamentos
 let allEquipments = [];
-const fallbackEquipments = [
-    { id: 1, name: "Torno CNC KUKA KR210", serial: "SN-KUKA-096", room: { name: "Sala 096" } },
-    { id: 2, name: "Empilhador Elétrico Toyota", serial: "SN-TOY-881", room: { name: "Armazém Sul" } },
-    { id: 3, name: "Sistema de Climatização / AC", serial: "AC-IND-045", room: { name: "Sala 045" } },
-    { id: 4, name: "Compressor de Ar Industrial", serial: "CMP-9002", room: { name: "Oficina B" } },
-    { id: 5, name: "Impressora Industrial HP", serial: "HP-3D-90", room: { name: "Escritório Central" } },
-];
+
+async function preselectEquipmentFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const targetId = urlParams.get('equipment_id') || urlParams.get('equipment') || urlParams.get('eq');
+    if (!targetId) return;
+
+    const searchInput = document.getElementById('equipmentSearchInput');
+    const hiddenIdInput = document.getElementById('selectedEquipmentId');
+    const qrBadge = document.getElementById('qrDetectedBadge');
+
+    // 1. Tentar encontrar na lista já carregada
+    let match = allEquipments.find(e => 
+        String(e.id) === String(targetId) || 
+        String(e.serial_number || e.serial || e.code) === String(targetId)
+    );
+
+    // 2. Se não estiver no lote paginado inicial, efetuar busca direta à API
+    if (!match) {
+        try {
+            const res = await fetch(`/equipments/${targetId}`, { headers: authHeader() });
+            if (res.ok) {
+                const data = await res.json();
+                match = data.equipment || data;
+            }
+        } catch (e) {}
+    }
+
+    if (match) {
+        hiddenIdInput.value = match.id;
+        const roomPart = match.room ? ` (📍 ${match.room.name})` : '';
+        searchInput.value = `${match.name}${roomPart}`;
+        searchInput.classList.add('border-primary', 'bg-orange-500/5');
+        if (qrBadge) qrBadge.classList.remove('hidden');
+    } else {
+        hiddenIdInput.value = targetId;
+        searchInput.value = `Equipamento #${targetId}`;
+        if (qrBadge) qrBadge.classList.remove('hidden');
+    }
+}
 
 async function initAutocomplete() {
     const searchInput = document.getElementById('equipmentSearchInput');
@@ -206,14 +243,14 @@ async function initAutocomplete() {
     if (!searchInput || !suggestionsBox) return;
 
     try {
-        const endpoints = ['/admin/equipment', '/equipments', '/api/equipments'];
+        const endpoints = ['/equipments?per_page=100', '/admin/equipment', '/api/equipments'];
         for (const url of endpoints) {
             try {
                 const res = await fetch(url, { headers: authHeader() });
                 if (res.ok) {
                     const data = await res.json();
-                    const list = data.equipments?.data || data.equipments || data || [];
-                    if (list.length > 0) {
+                    const list = data.equipments?.data || data.equipments || data.data || data || [];
+                    if (Array.isArray(list) && list.length > 0) {
                         allEquipments = list;
                         break;
                     }
@@ -222,13 +259,16 @@ async function initAutocomplete() {
         }
     } catch (e) {}
 
-    if (allEquipments.length === 0) {
-        allEquipments = fallbackEquipments;
-    }
+    // Executa a pré-seleção assim que a lista estiver disponível
+    await preselectEquipmentFromUrl();
 
     searchInput.addEventListener('input', function() {
         const query = this.value.trim().toLowerCase();
         hiddenIdInput.value = '';
+        
+        const qrBadge = document.getElementById('qrDetectedBadge');
+        if (qrBadge) qrBadge.classList.add('hidden');
+        searchInput.classList.remove('border-primary', 'bg-orange-500/5');
 
         if (query.length === 0) {
             suggestionsBox.classList.add('hidden');
@@ -237,7 +277,7 @@ async function initAutocomplete() {
 
         const matches = allEquipments.filter(eq => {
             const nameMatch = (eq.name || '').toLowerCase().includes(query);
-            const serialMatch = (eq.serial || '').toLowerCase().includes(query);
+            const serialMatch = (eq.serial || eq.serial_number || eq.code || '').toLowerCase().includes(query);
             const roomMatch = (eq.room?.name || '').toLowerCase().includes(query);
             return nameMatch || serialMatch || roomMatch;
         });
@@ -250,7 +290,8 @@ async function initAutocomplete() {
 
         suggestionsBox.innerHTML = matches.map(eq => {
             const roomText = eq.room?.name ? ` • 📍 ${eq.room.name}` : '';
-            const serialText = eq.serial ? ` • 🏷️ ${eq.serial}` : '';
+            const serialVal = eq.serial || eq.serial_number || eq.code;
+            const serialText = serialVal ? ` • 🏷️ ${serialVal}` : '';
             return `
                 <div class="equipment-option p-3 hover:bg-[var(--surface-2)] transition cursor-pointer text-xs flex justify-between items-center"
                      data-id="${eq.id}" data-name="${eq.name}">
@@ -322,7 +363,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 formData.append('image', imageInput.files[0]);
 
                 const headers = authHeader();
-                delete headers['Content-Type']; // O navegador define automaticamente multipart/form-data com o boundary
+                delete headers['Content-Type'];
 
                 res = await fetch('/tickets', {
                     method: 'POST',

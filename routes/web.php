@@ -13,6 +13,8 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use App\Models\Equipment;
+use Illuminate\Support\Facades\Schema;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +47,22 @@ Route::post('/login', [AuthController::class, 'login'])
     ->name('login')
     ->middleware(['rate.limit:5,1'])
     ->withoutMiddleware([VerifyCsrfToken::class]);
+
+// Resolução de QR Code de Equipamento
+Route::get('/qr/{code}', function ($code) {
+    // Procura por ID, número de série ou código interno
+    $equipment = Equipment::where('id', $code)
+        ->orWhere('serial_number', $code)
+        ->orWhere('serial', $code)
+        ->orWhere('code', $code)
+        ->first();
+
+    if (!$equipment) {
+        return redirect('/ui/tickets/create')->with('error', 'Equipamento não identificado.');
+    }
+
+    return redirect('/ui/tickets/create?equipment_id=' . $equipment->id);
+})->name('equipment.qr');
 
 /*
 |--------------------------------------------------------------------------
@@ -221,7 +239,7 @@ Route::middleware(['custom.auth'])->group(function () {
         |--------------------------------------------------------------------------
         */
         Route::middleware(['role:developer,programador,integrador,dev'])->group(function () {
-            
+
             Route::get('/docs/openapi', function () {
                 $doc = 'default';
                 $url = url('/docs/openapi.json');
@@ -240,7 +258,8 @@ Route::middleware(['custom.auth'])->group(function () {
                 }
 
                 // Fallback seguro via Swagger UI Oficial em CDN
-                return response()->make(<<<'HTML'
+                return response()->make(
+                    <<<'HTML'
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -275,8 +294,10 @@ Route::middleware(['custom.auth'])->group(function () {
     </script>
 </body>
 </html>
-HTML
-                , 200, ['Content-Type' => 'text/html']);
+HTML,
+                    200,
+                    ['Content-Type' => 'text/html']
+                );
             })->name('docs.openapi');
 
             // Serve a especificação OpenAPI em formato JSON
@@ -305,7 +326,6 @@ HTML
                 ]);
             });
         });
-
     });
 
     // Rota de Agendamento Preventivo
@@ -316,4 +336,24 @@ HTML
         return view('ui.roadmap');
     })->name('ui.roadmap');
 
+    Route::get('/qr/{code}', function ($code) {
+        $equipment = Equipment::where('id', $code)
+            ->when(Schema::hasColumn('equipments', 'serial_number'), function ($q) use ($code) {
+                $q->orWhere('serial_number', $code);
+            })
+            ->when(Schema::hasColumn('equipments', 'serial'), function ($q) use ($code) {
+                $q->orWhere('serial', $code);
+            })
+            ->when(Schema::hasColumn('equipments', 'code'), function ($q) use ($code) {
+                $q->orWhere('code', $code);
+            })
+            ->first();
+
+        if (!$equipment) {
+            // Se não encontrar pelo código ou serial, vai para a página de tickets com o termo de pesquisa
+            return redirect('/ui/tickets/create?equipment=' . urlencode($code));
+        }
+
+        return redirect('/ui/tickets/create?equipment_id=' . $equipment->id);
+    })->name('equipment.qr');
 });
