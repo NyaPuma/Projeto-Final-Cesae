@@ -25,13 +25,9 @@
                     </label>
                     <div class="relative">
                         <input type="text" id="mvPartSearch" name="part_search" autocomplete="off" required
-                            placeholder="{{ __('stock.Pesquise a peça por nome ou referência...') }}"
-                            class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-xs text-[var(--text)] outline-none focus:border-primary focus:ring-4 focus:ring-primary/15 transition-all">
+                            placeholder="{{ __('stock.Clique para selecionar peça...') }}"
+                            class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-xs text-[var(--text)] outline-none focus:border-primary focus:ring-4 focus:ring-primary/15 transition-all cursor-pointer">
                         <input type="hidden" id="mvPart" name="part_id">
-                        <button type="button" id="mvPartSelectBtn" class="absolute right-2 top-2.5 rounded-xl bg-[var(--surface)] px-3 py-1.5 text-xs font-semibold text-[var(--text)] hover:bg-[var(--surface-2)] transition">
-                            {{ __('common.Adicionar') }}
-                        </button>
-                        <div id="mvPartList" class="hidden absolute z-50 mt-1 w-full max-h-52 overflow-y-auto rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-2xl divide-y divide-[var(--border)]/50"></div>
                     </div>
                 </div>
 

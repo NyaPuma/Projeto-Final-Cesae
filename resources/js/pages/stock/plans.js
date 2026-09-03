@@ -2,32 +2,37 @@ import { createPlan, deletePlan, fetchPlan, fetchPlans, updatePlan } from './pla
 import { bindPagination, clearPlanFilters, renderLoadingState } from './plans/dom.js';
 import { renderEmptyState, renderErrorState, renderPagination, renderPlans, renderResultsCount, showFeedback } from './plans/render.js';
 import { plansState, setCurrentPage } from './plans/state.js';
-import { SmartPicker, partShape, equipmentShape } from '../../core/smart-picker.js';
+import { openItemSelectorModal } from '../../components/item-selector-modal.js';
 
 const intervalLabels = { days: 'Days', usage_hours: 'Usage hours', cycles: 'Cycles' };
 
-const partPickerI18n = {
-    loading: window.SGM_UI_I18N?.loading || 'A carregar...',
-    noResults: window.SGM_UI_I18N?.noResults || 'Sem resultados para a pesquisa.',
-    error: window.SGM_UI_I18N?.error || 'Erro ao carregar.',
-};
-
-function initPartRowPicker(row) {
-    const group = row.querySelector('[data-part-search]')?.closest('.relative');
-    if (!group) return null;
-    return new SmartPicker(group, {
-        inputEl: group.querySelector('[data-part-search]'),
-        listEl: group.querySelector('[data-part-list]'),
-        hiddenEl: group.querySelector('[data-part-id]'),
-        endpoint: '/stock/parts',
-        resourceKey: 'parts',
-        shape: partShape,
-        i18n: partPickerI18n,
-    });
-}
-
-let equipmentPicker = null;
 let partRowPickers = [];
+
+function firstPartRow() {
+    const container = document.getElementById('plPartsContainer');
+    if (!container) return null;
+    
+    // Create a template row for parts
+    const template = document.createElement('div');
+    template.dataset.partRow = '';
+    template.className = 'flex items-center gap-2';
+    template.innerHTML = `
+        <input type="text" data-part-search class="flex-1 min-w-0 rounded-lg border border-(--border) bg-(--surface-2) px-2.5 py-1.5 text-xs text-(--text) outline-none transition-all focus:border-primary cursor-pointer" placeholder="Select part...">
+        <input type="hidden" data-part-id value="">
+        <input type="number" data-expected-qty class="w-20 rounded-lg border border-(--border) bg-(--surface-2) px-2 py-1.5 text-xs font-mono text-(--text) outline-none transition-all focus:border-primary" placeholder="Qty" min="1" value="1">
+        <button type="button" data-part-row-remove class="p-1 text-danger/80 hover:text-danger transition cursor-pointer">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+    `;
+    
+    // If container is empty, add the template as the first row
+    if (container.children.length === 0 || container.querySelector('#plNoParts')) {
+        container.innerHTML = '';
+        container.appendChild(template);
+    }
+    
+    return template;
+}
 
 async function loadPlans(page = 1) {
     setCurrentPage(page);
@@ -56,6 +61,36 @@ async function loadPlans(page = 1) {
     }
 }
 
+function initPartRowPicker(row) {
+    const searchInput = row.querySelector('[data-part-search]');
+    const hiddenInput = row.querySelector('[data-part-id]');
+    
+    if (!searchInput || !hiddenInput) return null;
+
+    searchInput.readOnly = true;
+    searchInput.style.cursor = 'pointer';
+
+    searchInput.addEventListener('click', () => {
+        openItemSelectorModal({
+            itemType: 'part',
+            multiSelect: false,
+            triggerInput: searchInput,
+            onConfirm: (selected) => {
+                if (selected && selected.length > 0) {
+                    const part = selected[0];
+                    hiddenInput.value = part.id;
+                    searchInput.value = part.name || '';
+                }
+            },
+        });
+    });
+
+    return { clear: () => {
+        searchInput.value = '';
+        hiddenInput.value = '';
+    }};
+}
+
 function initPartRow(row, part = null) {
     row.querySelector('[data-part-search]').value = part ? part.name : '';
     row.querySelector('[data-part-id]').value = part ? part.id : '';
@@ -64,16 +99,12 @@ function initPartRow(row, part = null) {
     const picker = initPartRowPicker(row);
     if (picker) {
         partRowPickers.push(picker);
-        if (part) {
-            picker.shape = { ...partShape, id: () => part.id };
-            picker.setSelected(part.id, part);
-        }
     }
 
     row.querySelector('[data-part-row-remove]').addEventListener('click', () => {
         const idx = partRowPickers.indexOf(picker);
         if (idx !== -1) partRowPickers.splice(idx, 1);
-        if (picker) picker.destroy();
+        if (picker && picker.clear) picker.clear();
         row.remove();
     });
 
@@ -104,7 +135,8 @@ function resetForm() {
     form.dataset.planId = '';
 
     document.getElementById('plName').value = '';
-    equipmentPicker?.clear();
+    document.getElementById('plEquipmentSearch').value = '';
+    document.getElementById('plEquipment').value = '';
     document.getElementById('plIntervalType').value = 'days';
     document.getElementById('plIntervalValue').value = '';
     document.getElementById('plDescription').value = '';
@@ -113,6 +145,7 @@ function resetForm() {
     document.querySelectorAll('#plPartsContainer [data-part-row]').forEach((row, index) => {
         if (index > 0) row.remove();
     });
+    partRowPickers.forEach(picker => picker?.clear?.());
     partRowPickers = [];
     const firstRow = firstPartRow();
     initPartRow(firstRow, null);
@@ -132,8 +165,31 @@ function showMessage(text, isError) {
 function bindForm() {
     const form = document.getElementById('planForm');
     const submitBtn = document.getElementById('plSubmit');
+    const equipmentSearchInput = document.getElementById('plEquipmentSearch');
+    const equipmentHiddenInput = document.getElementById('plEquipment');
 
     if (!form) return;
+
+    // Initialize equipment selector modal
+    if (equipmentSearchInput && equipmentHiddenInput) {
+        equipmentSearchInput.readOnly = true;
+        equipmentSearchInput.style.cursor = 'pointer';
+
+        equipmentSearchInput.addEventListener('click', () => {
+            openItemSelectorModal({
+                itemType: 'equipment',
+                multiSelect: false,
+                triggerInput: equipmentSearchInput,
+                onConfirm: (selected) => {
+                    if (selected && selected.length > 0) {
+                        const equipment = selected[0];
+                        equipmentHiddenInput.value = equipment.id;
+                        equipmentSearchInput.value = equipment.name || '';
+                    }
+                },
+            });
+        });
+    }
 
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -181,13 +237,14 @@ async function handleEdit(id) {
         const plan = data.plan ?? {};
 
         document.getElementById('plName').value = plan.name || '';
-        equipmentPicker?.setSelected(plan.equipment_id, plan.equipment || null);
+        document.getElementById('plEquipmentSearch').value = plan.equipment?.name || '';
+        document.getElementById('plEquipment').value = plan.equipment_id || '';
         document.getElementById('plIntervalType').value = plan.interval_type || 'days';
         document.getElementById('plIntervalValue').value = plan.interval_value || '';
         document.getElementById('plDescription').value = plan.description || '';
         document.getElementById('plActive').checked = plan.active !== false;
 
-        partRowPickers.forEach((picker) => picker.destroy());
+        partRowPickers.forEach(picker => picker?.clear?.());
         partRowPickers = [];
         document.querySelectorAll('#plPartsContainer [data-part-row]').forEach((row, index) => {
             if (index > 0) row.remove();

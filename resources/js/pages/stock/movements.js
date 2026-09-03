@@ -2,7 +2,7 @@ import { fetchMovements, createMovement } from './movements/api.js';
 import { bindPagination, clearMovementFilters, renderLoadingState } from './movements/dom.js';
 import { renderEmptyState, renderErrorState, renderMovements, renderPagination, renderResultsCount, showFeedback } from './movements/render.js';
 import { movementsState, setCurrentPage } from './movements/state.js';
-import { SmartPicker, partShape } from '../../core/smart-picker.js';
+import { openItemSelectorModal } from '../../components/item-selector-modal.js';
 
 async function loadMovements(page = 1) {
     setCurrentPage(page);
@@ -35,25 +35,31 @@ function bindForm() {
     const form = document.getElementById('movementForm');
     const message = document.getElementById('mvMessage');
     const submitBtn = document.getElementById('mvSubmit');
+    const partSearchInput = document.getElementById('mvPartSearch');
+    const partHiddenInput = document.getElementById('mvPart');
 
     if (!form) return;
 
-    const partPicker = new SmartPicker(
-        document.getElementById('mvPartSearch')?.closest('.relative'),
-        {
-            inputId: 'mvPartSearch',
-            listId: 'mvPartList',
-            hiddenInput: 'mvPart',
-            endpoint: '/stock/parts',
-            resourceKey: 'parts',
-            shape: partShape,
-            i18n: {
-                loading: window.SGM_UI_I18N?.loading || 'A carregar...',
-                noResults: window.SGM_UI_I18N?.noResults || 'Sem resultados para a pesquisa.',
-                error: window.SGM_UI_I18N?.error || 'Erro ao carregar.',
-            },
-        }
-    );
+    // Initialize part selector modal
+    if (partSearchInput && partHiddenInput) {
+        partSearchInput.readOnly = true;
+        partSearchInput.style.cursor = 'pointer';
+
+        partSearchInput.addEventListener('click', () => {
+            openItemSelectorModal({
+                itemType: 'part',
+                multiSelect: false,
+                triggerInput: partSearchInput,
+                onConfirm: (selected) => {
+                    if (selected && selected.length > 0) {
+                        const part = selected[0];
+                        partHiddenInput.value = part.id;
+                        partSearchInput.value = part.name || '';
+                    }
+                },
+            });
+        });
+    }
 
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -76,7 +82,6 @@ function bindForm() {
             message.className = 'text-xs font-medium text-success';
 
             form.reset();
-            partPicker.clear();
             loadMovements(movementsState.currentPage);
         } catch (error) {
             message.textContent = error.message;
