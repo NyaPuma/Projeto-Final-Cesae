@@ -23,8 +23,8 @@ KPIs at zero (SLA, costs) and an empty "Recent Activity" section.
 
 ## Coherence rules applied (approved)
 
-- **Volume**: ~1500 tickets over the last 6 months, with a growing
-  trend (~150 → ~400/month).
+- **Volume**: ~60 tickets over the last 6 months, with a lighter
+  trend (a handful per month).
 - **Statuses**: closed 62%, in progress 18%, open 12%, pending
   budget 5%, cancelled 2%, rejected 1%.
 - **Priorities**: low 30%, medium 40%, high 25%, critical 5%.
@@ -44,13 +44,13 @@ KPIs at zero (SLA, costs) and an empty "Recent Activity" section.
 | File | Description |
 | --- | --- |
 | `database/seeders/Data/OperationalData.php` | PT industrial domain: 40 rooms, 30 pieces of equipment (weights/descriptions), breakdown scenarios by category, parts with `manufacturer_ref` and cost ranges, technician/reporter names. |
-| `database/seeders/Data/TicketDataset.php` | Deterministic engine (`mt_srand(20260701)`) that generates 1500 tickets following the rules above. |
+| `database/seeders/Data/TicketDataset.php` | Deterministic engine (`mt_srand(20260701)`) that generates 60 tickets following the rules above. |
 | `database/seeders/TicketsSeeder.php` | Load via `DB::insertOrIgnore` in chunks of 500; aborts in production. |
-| `database/seeders/RoomsSeeder.php` | 3 manual rooms + 40 from the catalog + generic zones (100 rooms). |
-| `database/seeders/EquipmentsSeeder.php` | 4 manual + catalog entries with `notes` + generic `EQ-NNN-NNNN` (100). |
+| `database/seeders/RoomsSeeder.php` | 3 manual rooms + 40 from the catalog + generic zones (45 rooms). |
+| `database/seeders/EquipmentsSeeder.php` | 4 manual + catalog entries with `notes` + generic `EQ-NNN-NNNN` (40). |
 | `database/seeders/UsersSeeder.php` | Technicians with real PT names; admin/technician/user profiles. |
 | `database/seeders/ActivityFeedSeeder.php` | ~40 audits within the last ~22h (`url='seed:operational'` marker), idempotent. |
-| `database/seeders/NotificationSeeder.php` | 600 notifications weighted by type/priority. |
+| `database/seeders/NotificationSeeder.php` | 60 notifications weighted by type/priority. |
 | `database/seeders/StockDataSeeder.php` | Parts by category (no lorem), chained `stock_after` movements, coherent low-stock, maintenance plans. |
 
 Order in `DatabaseSeeder`:

@@ -38,7 +38,7 @@ class SecurityVulnerabilitiesTest extends TestCase
         // Ensure SQL injection didn't crash the database or return extra users
         $users = $response->json('users');
         $this->assertIsArray($users);
-        $this->assertCount(User::count(), $users);
+        $this->assertCount(min(User::count(), config('services.custom.pagination.default_per_page', 15)), $users['data']);
     }
 
     public function test_xss_payload_in_ticket_description_does_not_execute_raw_script()

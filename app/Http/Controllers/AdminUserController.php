@@ -40,8 +40,9 @@ final class AdminUserController extends Controller
         // 3. Search for users with eager loading of profile and applied filters
         $users = $this->userRepository->getAll(['profile'], $search, $role, $status);
 
+        // 4. Standardized paginated response (preserves data/links/meta structure)
         return response()->json([
-            'users' => UserResource::collection($users),
+            'users' => UserResource::collection($users)->response()->getData(true),
         ]);
     }
 

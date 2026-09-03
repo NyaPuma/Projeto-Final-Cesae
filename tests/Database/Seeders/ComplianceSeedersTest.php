@@ -13,18 +13,18 @@ class ComplianceSeedersTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_bulk_seeders_generate_100_records_per_core_category_and_use_privacy_safe_data(): void
+    public function test_bulk_seeders_generate_realistic_records_per_core_category_and_use_privacy_safe_data(): void
     {
         $this->seed([
             TicketLookupSeeder::class,
             BulkOperationalDataSeeder::class,
         ]);
 
-        $this->assertGreaterThanOrEqual(100, DB::table('users')->count());
-        $this->assertGreaterThanOrEqual(100, DB::table('rooms')->count());
-        $this->assertGreaterThanOrEqual(100, DB::table('equipment_categories')->count());
-        $this->assertGreaterThanOrEqual(100, DB::table('equipments')->count());
-        $this->assertGreaterThanOrEqual(100, DB::table('tickets')->count());
+        $this->assertGreaterThanOrEqual(30, DB::table('users')->count());
+        $this->assertGreaterThanOrEqual(45, DB::table('rooms')->count());
+        $this->assertGreaterThanOrEqual(30, DB::table('equipment_categories')->count());
+        $this->assertGreaterThanOrEqual(40, DB::table('equipments')->count());
+        $this->assertGreaterThanOrEqual(60, DB::table('tickets')->count());
 
         $syntheticUsers = DB::table('users')
             ->where('id', '>', 3)

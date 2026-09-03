@@ -25,7 +25,7 @@ class NotificationSeederTest extends TestCase
         // the session is UTC and the seeder must complete without throwing.
         $this->seed(NotificationSeeder::class);
 
-        $this->assertEquals(600, DB::table('notifications')->count());
+        $this->assertEquals(60, DB::table('notifications')->count());
 
         $createdAtValues = DB::table('notifications')->pluck('created_at');
         $this->assertTrue(

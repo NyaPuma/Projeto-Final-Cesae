@@ -101,6 +101,47 @@ class AdminUserControllerTest extends TestCase
     }
 
     #[Test]
+    public function admin_can_list_users_with_pagination_metadata(): void
+    {
+        User::factory()->count(20)->create([
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->first()->id,
+            'api_token' => fn () => Str::random(60),
+            'active' => true,
+        ]);
+
+        $response = $this->withHeader('X-Auth-Token', $this->admin()->api_token)
+            ->getJson('/api/admin/users');
+
+        $response->assertOk()
+            ->assertJsonStructure([
+                'users' => [
+                    'data',
+                    'meta' => ['current_page', 'last_page', 'total'],
+                ],
+            ]);
+
+        $this->assertSame(2, $response->json('users.meta.last_page'));
+        $this->assertCount(15, $response->json('users.data'));
+    }
+
+    #[Test]
+    public function admin_can_list_users_respecting_page_param(): void
+    {
+        User::factory()->count(20)->create([
+            'profile_id' => UserProfile::where('name', UserRoleEnum::User->value)->first()->id,
+            'api_token' => fn () => Str::random(60),
+            'active' => true,
+        ]);
+
+        $response = $this->withHeader('X-Auth-Token', $this->admin()->api_token)
+            ->getJson('/api/admin/users?page=2');
+
+        $response->assertOk()
+            ->assertJsonPath('users.meta.current_page', 2)
+            ->assertJsonPath('users.meta.total', 21);
+    }
+
+    #[Test]
     public function non_admin_cannot_delete_user(): void
     {
         $user = User::factory()->create([

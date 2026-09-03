@@ -75,7 +75,7 @@ class StockDataSeeder extends Seeder
         |--------------------------------------------------------------------------
         */
 
-        $suppliers = Supplier::factory()->count(8)->create();
+        $suppliers = Supplier::factory()->count(5)->create();
 
         /*
         |--------------------------------------------------------------------------
@@ -90,7 +90,7 @@ class StockDataSeeder extends Seeder
         foreach ($categories as $category) {
             $catalogItems = $catalog[$category->name] ?? [];
 
-            for ($i = 0; $i < 8; $i++) {
+            for ($i = 0; $i < 4; $i++) {
                 $item = $catalogItems[$i] ?? [
                     'name' => 'Peça de reserva '.($i + 1),
                     'brand' => 'Genérico',
@@ -143,7 +143,7 @@ class StockDataSeeder extends Seeder
         $windowStart = Carbon::now()->startOfMonth()->subMonths(5);
         $windowEnd = Carbon::now()->endOfMonth();
 
-        foreach ($parts->take(60) as $part) {
+        foreach ($parts->take(40) as $part) {
             $initial = max(0, $part->current_stock);
             $stockAfter = $initial;
 
@@ -243,7 +243,7 @@ class StockDataSeeder extends Seeder
         |--------------------------------------------------------------------------
         */
 
-        Equipment::query()->active()->inRandomOrder()->limit(15)->get()
+        Equipment::query()->active()->inRandomOrder()->limit(8)->get()
             ->each(function (Equipment $equipment) use ($parts): void {
                 $plan = MaintenancePlan::factory()->create([
                     'equipment_id' => $equipment->id,

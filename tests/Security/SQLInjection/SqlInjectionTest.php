@@ -28,7 +28,7 @@ class SqlInjectionTest extends FeatureTestCase
         $response->assertStatus(200);
         $users = $response->json('users');
         $this->assertIsArray($users);
-        $this->assertCount(User::count(), $users);
+        $this->assertCount(min(User::count(), config('services.custom.pagination.default_per_page', 15)), $users['data']);
     }
 
     #[Test]

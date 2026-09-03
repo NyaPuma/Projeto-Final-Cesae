@@ -68,7 +68,7 @@ class NotificationSeeder extends Seeder
 
         $rows = [];
 
-        for ($i = 1; $i <= 600; $i++) {
+        for ($i = 1; $i <= 60; $i++) {
             $type = $this->weightedPick($types, array_values($typeWeights), $typeTotal);
             $template = $templates[$type];
 
@@ -99,7 +99,7 @@ class NotificationSeeder extends Seeder
             ];
         }
 
-        foreach (array_chunk($rows, 500) as $chunk) {
+        foreach (array_chunk($rows, 100) as $chunk) {
             DB::table('notifications')->insert($chunk);
         }
 
